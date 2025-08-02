@@ -12,10 +12,15 @@ Une application mobile de jeux d'alcool inspirée de TOZ, développée avec Reac
 - **Navigation** : Navigation entre les écrans avec React Navigation
 - **Écran de sélection** : Choix des jeux disponibles
 
+### ✅ Récemment ajoutées
+- **Jeu "6 qui prend !"** : Entièrement implémenté avec toutes les règles officielles
+- **Moteur de jeu** : Logique complète, multijoueur local, écrans de fin
+- **Interface de jeu** : Cartes visuelles, plateau interactif, aide intégrée
+
 ### 🔄 En cours de développement
-- **Jeu "6 qui prend !"** : Premier jeu disponible
-- **Moteur de jeu** : Logique et règles des jeux
-- **Plus de jeux** : Extension avec d'autres jeux d'alcool
+- **Plus de jeux** : Extension avec d'autres jeux d'alcool populaires
+- **Mode multijoueur** : Jeu en réseau entre appareils
+- **IA et solo** : Possibilité de jouer contre l'ordinateur
 
 ## 🛠️ Stack technique
 
@@ -77,7 +82,9 @@ flip-front/
 1. **Ajout de joueurs** : Saisissez les prénoms dans l'écran d'accueil
 2. **Validation** : Au moins 2 joueurs requis, 10 maximum
 3. **Navigation** : Cliquez sur "Jouer !" pour accéder aux jeux
-4. **Sélection** : Choisissez "6 qui prend !" (d'autres jeux arrivent bientôt)
+4. **Sélection** : Choisissez "6 qui prend !" pour commencer une partie
+5. **Jeu** : Chaque joueur sélectionne une carte tour par tour, évitez les têtes de bœuf !
+6. **Fin de partie** : Le joueur avec le moins de points (têtes de bœuf) gagne
 
 ## 🎨 Design
 
@@ -89,12 +96,15 @@ L'interface s'inspire de l'esthétique de TOZ avec :
 
 ## 🔮 Roadmap
 
-- [ ] Implémentation complète du jeu "6 qui prend !"
-- [ ] Ajout d'autres jeux d'alcool populaires
-- [ ] Mode multijoueur en réseau
-- [ ] Personnalisation des avatars
-- [ ] Statistiques et historique
+- [x] **Implémentation complète du jeu "6 qui prend !"** ✅
+- [ ] Ajout d'autres jeux d'alcool populaires (Beer Pong digital, Truth or Dare, etc.)
+- [ ] Mode multijoueur en réseau entre appareils
+- [ ] Intelligence artificielle pour jouer contre l'ordinateur
+- [ ] Personnalisation des avatars et thèmes visuels
+- [ ] Statistiques avancées et historique des parties
 - [ ] Sons et musiques d'ambiance
+- [ ] Tutoriel interactif pour nouveaux joueurs
+- [ ] Variantes du jeu "6 qui prend !" (mode pro, règles spéciales)
 
 ## 🤝 Contribution
 

@@ -14,4 +14,8 @@ export interface Game {
 export type RootStackParamList = {
   Home: undefined;
   GameSelect: { players: Player[] };
-}; 
+  TakeSixGame: { players: Player[] };
+};
+
+// Re-export game types
+export * from './game'; 

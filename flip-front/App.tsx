@@ -3,8 +3,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { PlayersProvider } from './src/contexts/PlayersContext';
+import { GameProvider } from './src/contexts/GameContext';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { GameSelectScreen } from './src/screens/GameSelectScreen';
+import { ImmersiveGameScreen } from './src/screens/ImmersiveGameScreen'; // Remplacement de TakeSixGameScreen
 import { RootStackParamList } from './src/types';
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -12,16 +14,19 @@ const Stack = createStackNavigator<RootStackParamList>();
 export default function App() {
   return (
     <PlayersProvider>
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="GameSelect" component={GameSelectScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <GameProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+              headerShown: false,
+            }}
+          >
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="GameSelect" component={GameSelectScreen} />
+            <Stack.Screen name="TakeSixGame" component={ImmersiveGameScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </GameProvider>
     </PlayersProvider>
   );
 }

@@ -1,0 +1,62 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# 🎯 FL!P – Règles de développement et bonnes pratiques (Cursor)
+## 📁 Structure du projet
+
+src/
+├── components/ # Composants UI découplés
+├── screens/ # Pages principales
+├── contexts/ # États globaux (React Context)
+├── hooks/ # Custom hooks
+├── constants/ # Couleurs, jeux, styles, etc.
+├── types/ # Types globaux
+├── navigation/ # Gestion de la navigation
+├── utils/ # Fonctions utilitaires
+
+markdown
+Copy
+Edit
+
+## ✅ Conventions de code
+
+- Utiliser **imports absolus** via `tsconfig.json` (`baseUrl: "src"`)
+- Pas d'import relatifs à plus de `../..`
+- Composants : 1 fichier = 1 composant
+- Nommer les composants avec une majuscule (`PlayerInput.tsx`)
+- Exporter via `index.ts` uniquement pour les regroupements
+
+## 🧩 Composants
+
+- `components/` contient des *UI pures*, sans logique métier
+- Les composants doivent être réutilisables et isolés
+
+## 📦 Navigation
+
+- `navigation/AppNavigator.tsx` pour centraliser les routes
+- Utiliser `@react-navigation/native-stack`
+
+## 🌐 Langues
+
+- Utiliser `i18next` + `react-i18next`
+- Placer les fichiers dans `src/constants/locales/`
+- Prévoir un changement de langue dynamique
+
+## 💬 Conventions de commit
+
+Utiliser **Conventional Commits** :
+feat: add player input screen
+fix: prevent empty player names
+refactor: extract player logic to context
+
+markdown
+Copy
+Edit
+
+## 🧼 Lint & Format
+
+- Utiliser **ESLint** pour cohérence du code
+- Utiliser **Prettier** pour formatage auto
+- Activer format on save dans Cursor

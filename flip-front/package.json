@@ -15,6 +15,7 @@
     "@react-navigation/stack": "^7.4.2",
     "expo": "~53.0.20",
     "expo-haptics": "~14.1.4",
+    "expo-linear-gradient": "^14.1.5",
     "expo-status-bar": "~2.2.3",
     "i18next": "^25.3.2",
     "react": "19.0.0",
@@ -28,8 +29,12 @@
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@types/react": "~19.0.10",
+    "@typescript-eslint/eslint-plugin": "^8.37.0",
+    "@typescript-eslint/parser": "^8.37.0",
     "eslint": "^9.31.0",
     "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
     "prettier": "^3.6.2",
     "typescript": "~5.8.3"
   },
