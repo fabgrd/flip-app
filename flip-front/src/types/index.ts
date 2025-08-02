@@ -1,17 +1,16 @@
-export interface Player {
-  id: string;
-  name: string;
-}
+// Re-export des types généraux
+export type {
+  Player,
+  Game,
+  RootStackParamList
+} from './games';
 
-export interface Game {
-  id: string;
-  name: string;
-  minPlayers: number;
-  maxPlayers: number;
-  description: string;
-}
-
-export type RootStackParamList = {
-  Home: undefined;
-  GameSelect: { players: Player[] };
-}; 
+// Re-export des types spécifiques aux jeux
+export type {
+  Theme,
+  Question,
+  PlayerAnswer,
+  PurityPlayer,
+  PurityGameState,
+  PurityResults
+} from './games'; 

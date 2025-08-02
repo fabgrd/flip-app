@@ -6,6 +6,7 @@ interface PlayersContextType {
   players: Player[];
   addPlayer: (name: string) => boolean;
   removePlayer: (id: string) => void;
+  updatePlayerAvatar: (id: string, avatar: string) => void;
   clearPlayers: () => void;
   loadPlayers: () => Promise<void>;
   savePlayers: () => Promise<void>;
@@ -20,26 +21,32 @@ export function PlayersProvider({ children }: { children: ReactNode }) {
 
   const addPlayer = (name: string): boolean => {
     if (players.length >= 10) return false;
-    
+
     const trimmedName = name.trim();
     if (trimmedName === '') return false;
-    
+
     // Vérifier si le nom existe déjà
     if (players.some(player => player.name.toLowerCase() === trimmedName.toLowerCase())) {
       return false;
     }
-    
+
     const newPlayer: Player = {
       id: Date.now().toString(),
       name: trimmedName,
     };
-    
+
     setPlayers(prev => [...prev, newPlayer]);
     return true;
   };
 
   const removePlayer = (id: string) => {
     setPlayers(prev => prev.filter(player => player.id !== id));
+  };
+
+  const updatePlayerAvatar = (id: string, avatar: string) => {
+    setPlayers(prev => prev.map(player =>
+      player.id === id ? { ...player, avatar } : player
+    ));
   };
 
   const clearPlayers = () => {
@@ -79,6 +86,7 @@ export function PlayersProvider({ children }: { children: ReactNode }) {
     players,
     addPlayer,
     removePlayer,
+    updatePlayerAvatar,
     clearPlayers,
     loadPlayers,
     savePlayers,

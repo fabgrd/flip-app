@@ -16,7 +16,7 @@ const MIN_PLAYERS = MIN_PLAYERS_GLOBAL;
 
 export function HomeScreen() {
   const navigation = useNavigation<HomeScreenNavigationProp>();
-  const { players, addPlayer, removePlayer } = usePlayers();
+  const { players, addPlayer, removePlayer, updatePlayerAvatar } = usePlayers();
 
   const handleAddPlayer = (name: string): boolean => {
     const success = addPlayer(name);
@@ -65,6 +65,7 @@ export function HomeScreen() {
           <PlayersList
             players={players}
             onRemovePlayer={handleRemovePlayer}
+            onUpdateAvatar={updatePlayerAvatar}
           />
         </View>
 
@@ -97,7 +98,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 40,
   },
-  
+
   appTitle: {
     fontSize: 48,
     fontWeight: 'bold',
@@ -105,42 +106,42 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 8,
   },
-  
+
   appSubtitle: {
     fontSize: 16,
     color: Colors.text.secondary,
     textAlign: 'center',
   },
-  
+
   inputSection: {
     marginBottom: 30,
   },
-  
+
   sectionTitle: {
     fontSize: 20,
     fontWeight: '600',
     color: Colors.text.primary,
     marginBottom: 15,
   },
-  
+
   playersSection: {
     flex: 1,
   },
-  
+
   actionSection: {
     paddingTop: 20,
   },
-  
+
   playButton: {
     marginBottom: 20,
   },
-  
+
   playButtonDisabled: {
     backgroundColor: Colors.button.disabled,
     shadowOpacity: 0,
     elevation: 0,
   },
-  
+
   disabledButtonText: {
     color: Colors.text.secondary,
     fontSize: 16,
