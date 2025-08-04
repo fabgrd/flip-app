@@ -1,4 +1,4 @@
-export type Theme = 'sex' | 'drugs' | 'morality' | 'hygiene' | 'violence' | 'other';
+export type Theme = 'sex' | 'drugs' | 'morality' | 'hygiene';
 
 export type Question = {
     id: string;

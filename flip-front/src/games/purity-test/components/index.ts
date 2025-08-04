@@ -1,2 +1,2 @@
-export { DraggablePlayerCard } from './DraggablePlayerCard';
-export { DropZone } from './DropZone'; 
+export { SwipeableCard } from './SwipeableCard';
+export { CardStack } from './CardStack'; 

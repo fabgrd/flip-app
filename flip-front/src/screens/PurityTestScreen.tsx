@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     View,
     Text,
     StyleSheet,
     TouchableOpacity,
-    ScrollView,
     SafeAreaView,
 } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
@@ -12,7 +11,7 @@ import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../types';
 import { usePurityTest } from '../games/purity-test';
 import { THEME_COLORS, THEME_LABELS } from '../games/purity-test';
-import { DraggablePlayerCard } from '../games/purity-test/components/DraggablePlayerCard';
+import { CardStack } from '../games/purity-test/components';
 import { Colors } from '../constants';
 
 type PurityTestScreenRouteProp = RouteProp<RootStackParamList, 'PurityTest'>;
@@ -29,19 +28,12 @@ export function PurityTestScreen() {
         nextQuestion,
         canProceedToNextQuestion,
         calculateResults,
-        getPlayerAnswer,
         isGameFinished,
         totalQuestions
     } = usePurityTest(players);
 
-    const handleAnswer = (playerId: string, answer: 'yes' | 'no') => {
-        submitAnswer(playerId, answer);
-    };
-
-    const handleNextQuestion = () => {
-        if (canProceedToNextQuestion) {
-            nextQuestion();
-        }
+    const handleSwipe = (playerId: string, direction: 'yes' | 'no') => {
+        submitAnswer(playerId, direction);
     };
 
     const handleFinishGame = () => {
@@ -49,24 +41,26 @@ export function PurityTestScreen() {
         (navigation as any).navigate('PurityResults', { results });
     };
 
-    if (isGameFinished) {
-        return (
-            <SafeAreaView style={styles.container}>
-                <View style={styles.finishedContainer}>
-                    <Text style={styles.finishedTitle}>🎉 Test terminé !</Text>
-                    <Text style={styles.finishedSubtitle}>
-                        Tous les joueurs ont répondu aux {totalQuestions} questions
-                    </Text>
-                    <TouchableOpacity
-                        style={styles.resultsButton}
-                        onPress={handleFinishGame}
-                    >
-                        <Text style={styles.resultsButtonText}>Voir les résultats</Text>
-                    </TouchableOpacity>
-                </View>
-            </SafeAreaView>
-        );
-    }
+    const handleAllCardsComplete = () => {
+        setTimeout(() => {
+            if (canProceedToNextQuestion)
+                nextQuestion();
+        }, 300);
+    };
+
+    useEffect(() => {
+        if (isGameFinished) {
+            const results = calculateResults();
+            (navigation as any).navigate('PurityResults', { results });
+        }
+    }, [isGameFinished]);
+
+    useEffect(() => {
+        if (canProceedToNextQuestion) {
+            nextQuestion();
+        }
+    }, [canProceedToNextQuestion]);
+
 
     if (!currentQuestion) {
         return (
@@ -88,9 +82,6 @@ export function PurityTestScreen() {
                 <View style={styles.progressBar}>
                     <View style={[styles.progressFill, { width: `${progress}%` }]} />
                 </View>
-                <Text style={styles.themeLabel}>
-                    Thème: {THEME_LABELS[currentQuestion.theme]}
-                </Text>
             </View>
 
             {/* Question */}
@@ -103,57 +94,38 @@ export function PurityTestScreen() {
                         {THEME_LABELS[currentQuestion.theme]}
                     </Text>
                 </View>
-                <Text style={styles.questionText}>{currentQuestion.text}</Text>
-            </View>
-
-            {/* Zones de réponse */}
-            <View style={styles.dropZonesContainer}>
-                <View style={[styles.staticDropZone, { backgroundColor: '#FF6B6B' }]}>
-                    <Text style={styles.dropZoneText}>NON</Text>
+                <View style={styles.questionTextContainer}>
+                    <Text style={styles.questionText}>{currentQuestion.text}</Text>
                 </View>
-                <View style={[styles.staticDropZone, { backgroundColor: '#6BCF7F' }]}>
-                    <Text style={styles.dropZoneText}>OUI</Text>
+                <View style={styles.pointsContainer}>
+                    <Text style={styles.pointsText}>
+                        {currentQuestion.points.yes} point{currentQuestion.points.yes > 1 ? 's' : ''}
+                    </Text>
                 </View>
             </View>
 
-            {/* Cartes des joueurs */}
-            <ScrollView style={styles.playersContainer}>
-                {gameState.players.map(player => {
-                    const hasAnswered = getPlayerAnswer(player.id) !== null;
-                    return (
-                        <DraggablePlayerCard
-                            key={player.id}
-                            player={player}
-                            hasAnswered={hasAnswered}
-                            onAnswer={handleAnswer}
-                        />
-                    );
-                })}
-            </ScrollView>
+            {/* Pile de cartes */}
+            <View style={styles.cardsContainer}>
+                <CardStack
+                    players={(() => {
+                        const filteredPlayers = gameState.players.filter(player => {
+                            const hasAnswered = player.answers.some(answer => answer.questionId === currentQuestion.id);
+                            return !hasAnswered;
+                        });
+                        return filteredPlayers;
+                    })()}
+                    onSwipe={handleSwipe}
+                    onComplete={handleAllCardsComplete}
+                />
+            </View>
 
-            {/* Bouton suivant */}
-            <View style={styles.footer}>
-                <TouchableOpacity
-                    style={[
-                        styles.nextButton,
-                        !canProceedToNextQuestion && styles.disabledButton
-                    ]}
-                    onPress={handleNextQuestion}
-                    disabled={!canProceedToNextQuestion}
-                >
-                    <Text style={[
-                        styles.nextButtonText,
-                        !canProceedToNextQuestion && styles.disabledButtonText
-                    ]}>
-                        {gameState.currentQuestionIndex === totalQuestions - 1 ? 'Terminer' : 'Suivant'}
-                    </Text>
-                </TouchableOpacity>
-
-                {!canProceedToNextQuestion && (
-                    <Text style={styles.waitingText}>
-                        En attente des réponses de tous les joueurs...
-                    </Text>
-                )}
+            {/* Indicateur des joueurs restants */}
+            <View style={styles.remainingContainer}>
+                <Text style={styles.remainingText}>
+                    {gameState.players.filter(player =>
+                        !player.answers.some(answer => answer.questionId === currentQuestion.id)
+                    ).length} joueur(s) restant(s)
+                </Text>
             </View>
         </SafeAreaView>
     );
@@ -181,17 +153,11 @@ const styles = StyleSheet.create({
         height: 6,
         backgroundColor: '#E0E0E0',
         borderRadius: 3,
-        marginBottom: 10,
     },
     progressFill: {
         height: '100%',
         backgroundColor: Colors.primary,
         borderRadius: 3,
-    },
-    themeLabel: {
-        fontSize: 14,
-        color: Colors.text.primary,
-        textAlign: 'center',
     },
     questionContainer: {
         padding: 20,
@@ -216,101 +182,55 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontWeight: 'bold',
     },
+    questionTextContainer: {
+        alignItems: 'center',
+    },
     questionText: {
         fontSize: 18,
         color: Colors.text.primary,
         textAlign: 'center',
         lineHeight: 24,
     },
-    dropZonesContainer: {
-        flexDirection: 'row',
-        paddingHorizontal: 16,
-        marginBottom: 16,
+    pointsContainer: {
+        backgroundColor: '#E3F2FD',
+        paddingHorizontal: 8,
+        paddingVertical: 4,
+        borderRadius: 6,
+        alignSelf: 'center',
+        marginTop: 12,
     },
-    staticDropZone: {
-        flex: 1,
-        height: 120,
-        borderRadius: 12,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginHorizontal: 8,
-        borderWidth: 3,
-        borderStyle: 'dashed',
-        borderColor: 'rgba(255, 255, 255, 0.5)',
-    },
-    dropZoneText: {
-        color: Colors.text.white,
-        fontSize: 18,
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
-
-    playersContainer: {
-        flex: 1,
-        paddingHorizontal: 16,
-    },
-    footer: {
-        padding: 20,
-        backgroundColor: Colors.background,
-        borderTopWidth: 1,
-        borderTopColor: '#E0E0E0',
-    },
-    nextButton: {
-        backgroundColor: Colors.primary,
-        paddingVertical: 16,
-        borderRadius: 12,
-        alignItems: 'center',
-    },
-    disabledButton: {
-        backgroundColor: '#E0E0E0',
-    },
-    nextButtonText: {
-        color: Colors.text.white,
-        fontSize: 18,
-        fontWeight: 'bold',
-    },
-    disabledButtonText: {
-        color: Colors.text.primary,
-    },
-    waitingText: {
-        textAlign: 'center',
-        color: Colors.text.primary,
-        fontSize: 14,
-        marginTop: 8,
-    },
-    finishedContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 20,
-    },
-    finishedTitle: {
-        fontSize: 32,
-        fontWeight: 'bold',
+    pointsText: {
         color: Colors.primary,
+        fontSize: 12,
+        fontWeight: '600',
+    },
+    instructionsContainer: {
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+    },
+    instructionsText: {
+        fontSize: 14,
+        color: Colors.text.secondary,
         textAlign: 'center',
-        marginBottom: 16,
+        fontStyle: 'italic',
     },
-    finishedSubtitle: {
-        fontSize: 18,
-        color: Colors.text.primary,
-        textAlign: 'center',
-        marginBottom: 32,
+    cardsContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
-    resultsButton: {
-        backgroundColor: Colors.primary,
-        paddingVertical: 16,
-        paddingHorizontal: 32,
-        borderRadius: 12,
+    remainingContainer: {
+        padding: 20,
+        alignItems: 'center',
     },
-    resultsButtonText: {
-        color: Colors.text.white,
-        fontSize: 18,
-        fontWeight: 'bold',
+    remainingText: {
+        fontSize: 14,
+        color: Colors.text.secondary,
+        fontWeight: '500',
     },
     loadingContainer: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
     },
-}); 
+});

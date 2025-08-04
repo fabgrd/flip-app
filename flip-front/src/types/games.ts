@@ -37,4 +37,5 @@ export type RootStackParamList = {
     GameSelect: { players: Player[] };
     PurityTest: { players: Player[] };
     PurityResults: { results: PurityResults };
+    Settings: undefined;
 }; 

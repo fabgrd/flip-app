@@ -1,0 +1,22 @@
+{
+    "title": "FL!P",
+    "subtitle": "Drinking game with friends",
+    "welcome": "Welcome to FL!P! 🍻",
+    "description": "The ultimate drinking game to spice up your parties with friends!",
+    "addPlayers": {
+        "title": "Add players",
+        "subtitle": "Minimum 2 players, maximum 10",
+        "placeholder": "Player name",
+        "add": "Add",
+        "remove": "Remove",
+        "minPlayers": "Add at least 2 players to start",
+        "maxPlayers": "You've reached the maximum number of players (10)"
+    },
+    "playersList": {
+        "title": "Players ({{count}})",
+        "empty": "No players added"
+    },
+    "actions": {
+        "start": "Start playing!"
+    }
+}

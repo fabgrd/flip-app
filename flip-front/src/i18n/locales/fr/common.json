@@ -1,0 +1,30 @@
+{
+    "buttons": {
+        "back": "Retour",
+        "continue": "Continuer",
+        "start": "Commencer",
+        "finish": "Terminer",
+        "cancel": "Annuler",
+        "save": "Enregistrer",
+        "delete": "Supprimer",
+        "edit": "Modifier",
+        "add": "Ajouter",
+        "close": "Fermer",
+        "confirm": "Confirmer"
+    },
+    "labels": {
+        "players": "Joueurs",
+        "player": "Joueur",
+        "question": "Question",
+        "result": "Résultat",
+        "results": "Résultats",
+        "score": "Score",
+        "loading": "Chargement...",
+        "error": "Erreur"
+    },
+    "messages": {
+        "success": "Succès !",
+        "error": "Une erreur s'est produite",
+        "noData": "Aucune donnée disponible"
+    }
+}

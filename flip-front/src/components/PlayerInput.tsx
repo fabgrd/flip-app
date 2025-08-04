@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, Text, StyleSheet, Alert } from 'react-native';
+import { View, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import { Colors, GlobalStyles } from '../constants';
@@ -16,7 +16,7 @@ export function PlayerInput({ onAddPlayer, maxPlayers, currentPlayerCount }: Pla
 
   const handleAddPlayer = () => {
     const trimmedValue = inputValue.trim();
-    
+
     if (trimmedValue === '') {
       Alert.alert('Erreur', 'Veuillez saisir un prénom');
       return;
@@ -28,10 +28,9 @@ export function PlayerInput({ onAddPlayer, maxPlayers, currentPlayerCount }: Pla
     }
 
     const success = onAddPlayer(trimmedValue);
-    
+
     if (success) {
       setInputValue('');
-      // Feedback haptique lors de l'ajout réussi
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     } else {
       Alert.alert('Erreur', 'Ce prénom existe déjà ou est invalide');
@@ -42,13 +41,9 @@ export function PlayerInput({ onAddPlayer, maxPlayers, currentPlayerCount }: Pla
 
   return (
     <View style={styles.container}>
-      <View style={styles.inputContainer}>
+      <View style={[styles.inputWrapper, isFocused && styles.inputWrapperFocused]}>
         <TextInput
-          style={[
-            GlobalStyles.input,
-            styles.input,
-            isFocused && GlobalStyles.inputFocused
-          ]}
+          style={styles.input}
           value={inputValue}
           onChangeText={setInputValue}
           placeholder="Ajouter un joueur..."
@@ -60,72 +55,52 @@ export function PlayerInput({ onAddPlayer, maxPlayers, currentPlayerCount }: Pla
           autoCorrect={false}
           autoCapitalize="words"
         />
-        
         <TouchableOpacity
-          style={[
-            styles.addButton,
-            !canAddPlayer && styles.addButtonDisabled
-          ]}
+          style={[styles.addButton, !canAddPlayer && styles.addButtonDisabled]}
           onPress={handleAddPlayer}
           disabled={!canAddPlayer}
         >
-          <Ionicons 
-            name="add" 
-            size={24} 
-            color={canAddPlayer ? Colors.text.white : Colors.text.secondary} 
+          <Ionicons
+            name="add"
+            size={24}
+            color={canAddPlayer ? Colors.text.white : Colors.text.secondary}
           />
         </TouchableOpacity>
       </View>
-      
-      <Text style={styles.counterText}>
-        {currentPlayerCount}/{maxPlayers} joueurs
-      </Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    marginBottom: 20,
-  },
-  
-  inputContainer: {
+  container: {},
+
+  inputWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
+    borderRadius: 12,
+    paddingHorizontal: 16,
+    height: 50,
+    borderWidth: 1,
+    borderColor: Colors.text.secondary,
   },
-  
+  inputWrapperFocused: {
+    borderColor: Colors.primary,
+  },
   input: {
     flex: 1,
+    fontSize: 16,
+    color: Colors.text.primary,
   },
-  
   addButton: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: Colors.button.secondary,
-    alignItems: 'center',
+    marginLeft: 12,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: Colors.primary,
     justifyContent: 'center',
-    shadowColor: Colors.button.secondary,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    elevation: 4,
+    alignItems: 'center',
   },
-  
   addButtonDisabled: {
     backgroundColor: Colors.button.disabled,
-    shadowOpacity: 0,
-    elevation: 0,
   },
-  
-  counterText: {
-    fontSize: 12,
-    color: Colors.text.secondary,
-    textAlign: 'right',
-    marginTop: 5,
-  },
-}); 
+});

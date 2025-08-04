@@ -65,6 +65,7 @@ export function PlayersList({ players, onRemovePlayer, onUpdateAvatar }: Players
         data={players}
         renderItem={renderPlayer}
         keyExtractor={(item) => item.id}
+        // @ts-ignore
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.listContent}
       />

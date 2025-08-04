@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { RouteProp } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 import { RootStackParamList, PurityResults } from '../types';
 import { THEME_LABELS, THEME_COLORS } from '../games/purity-test';
 import { Colors } from '../constants';
@@ -19,6 +20,7 @@ export function PurityResultsScreen() {
     const route = useRoute<PurityResultsScreenRouteProp>();
     const navigation = useNavigation();
     const { results } = route.params;
+    const { t } = useTranslation();
 
     const handleBackToHome = () => {
         navigation.navigate('Home' as never);
@@ -34,20 +36,20 @@ export function PurityResultsScreen() {
     };
 
     const getImpurityLevel = (percentage: number) => {
-        if (percentage >= 90) return { label: 'Diabolique', color: '#FD79A8', emoji: '👹' };
-        if (percentage >= 75) return { label: 'Très impur(e)', color: '#FF6B6B', emoji: '😈' };
-        if (percentage >= 60) return { label: 'Coquin(e)', color: '#FFEAA7', emoji: '😏' };
-        if (percentage >= 45) return { label: 'Mitigé(e)', color: '#FFD93D', emoji: '😐' };
-        if (percentage >= 30) return { label: 'Plutôt sage', color: '#4ECDC4', emoji: '🙂' };
-        if (percentage >= 15) return { label: 'Assez pur(e)', color: '#96CEB4', emoji: '😊' };
-        return { label: 'Saint(e)', color: '#6BCF7F', emoji: '😇' };
+        if (percentage <= 10) return { label: t('purityTest:results.impurityLevels.saint'), color: '#6BCF7F', emoji: '😇' };
+        if (percentage <= 25) return { label: t('purityTest:results.impurityLevels.pure'), color: '#96CEB4', emoji: '😊' };
+        if (percentage <= 45) return { label: t('purityTest:results.impurityLevels.mostlyPure'), color: '#4ECDC4', emoji: '🙂' };
+        if (percentage <= 65) return { label: t('purityTest:results.impurityLevels.mixed'), color: '#FFD93D', emoji: '😐' };
+        if (percentage <= 80) return { label: t('purityTest:results.impurityLevels.naughty'), color: '#FFEAA7', emoji: '😏' };
+        if (percentage <= 95) return { label: t('purityTest:results.impurityLevels.veryImpure'), color: '#FF6B6B', emoji: '😈' };
+        return { label: t('purityTest:results.impurityLevels.diabolical'), color: '#FD79A8', emoji: '👹' };
     };
 
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.header}>
-                <Text style={styles.title}>🏆 Résultats du Test d'Impureté</Text>
-                <Text style={styles.subtitle}>Classement par pourcentage d'impureté</Text>
+                <Text style={styles.title}>{t('purityTest:results.title')}</Text>
+                <Text style={styles.subtitle}>{t('purityTest:results.subtitle')}</Text>
             </View>
 
             <ScrollView style={styles.resultsContainer}>
@@ -75,7 +77,7 @@ export function PurityResultsScreen() {
 
                             {/* Détails par thème */}
                             <View style={styles.themesContainer}>
-                                <Text style={styles.themesTitle}>Détail par thème :</Text>
+                                <Text style={styles.themesTitle}>{t('purityTest:results.themeDetails')}</Text>
                                 <View style={styles.themesGrid}>
                                     {Object.entries(result.themePercentages).map(([theme, percentage]) => (
                                         <View key={theme} style={styles.themeItem}>
@@ -98,7 +100,7 @@ export function PurityResultsScreen() {
 
             <View style={styles.footer}>
                 <TouchableOpacity style={styles.backButton} onPress={handleBackToHome}>
-                    <Text style={styles.backButtonText}>Retour à l'accueil</Text>
+                    <Text style={styles.backButtonText}>{t('purityTest:results.backToHome')}</Text>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>

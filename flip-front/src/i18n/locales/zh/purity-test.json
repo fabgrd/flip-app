@@ -1,0 +1,35 @@
+{
+    "game": {
+        "title": "纯洁度测试",
+        "subtitle": "滑动回答",
+        "instructions": "👈 向左滑动表示否 • 向右滑动表示是 👉",
+        "questionCounter": "问题 {{current}} / {{total}}",
+        "remainingPlayers": "剩余{{count}}名玩家",
+        "finished": {
+            "title": "🎉 测试完成！",
+            "subtitle": "所有玩家已回答{{total}}个问题",
+            "viewResults": "查看结果"
+        }
+    },
+    "results": {
+        "title": "🏆 纯洁度测试结果",
+        "subtitle": "按不纯洁度百分比排名",
+        "themeDetails": "主题详情：",
+        "backToHome": "返回主页",
+        "impurityLevels": {
+            "saint": "圣人",
+            "pure": "相当纯洁",
+            "mostlyPure": "比较明智",
+            "mixed": "混合型",
+            "naughty": "顽皮",
+            "veryImpure": "非常不纯洁",
+            "diabolical": "邪恶"
+        }
+    },
+    "themes": {
+        "sex": "性",
+        "drugs": "毒品",
+        "morality": "道德",
+        "hygiene": "卫生"
+    }
+}

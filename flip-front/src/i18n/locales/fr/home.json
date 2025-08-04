@@ -1,0 +1,22 @@
+{
+    "title": "FL!P",
+    "subtitle": "Jeu d'alcool entre amis",
+    "welcome": "Bienvenue dans FL!P ! 🍻",
+    "description": "Le jeu d'alcool ultime pour animer vos soirées entre amis !",
+    "addPlayers": {
+        "title": "Ajouter des joueurs",
+        "subtitle": "Minimum 2 joueurs, maximum 10",
+        "placeholder": "Nom du joueur",
+        "add": "Ajouter",
+        "remove": "Supprimer",
+        "minPlayers": "Ajoutez au moins 2 joueurs pour commencer",
+        "maxPlayers": "Vous avez atteint le nombre maximum de joueurs (10)"
+    },
+    "playersList": {
+        "title": "Joueurs ({{count}})",
+        "empty": "Aucun joueur ajouté"
+    },
+    "actions": {
+        "start": "Commencer à jouer !"
+    }
+}

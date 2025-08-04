@@ -18,5 +18,5 @@ export const AVAILABLE_GAMES: Game[] = [
   // Futurs jeux à ajouter ici
 ];
 
-export const MIN_PLAYERS_GLOBAL = 2;
+export const MIN_PLAYERS_GLOBAL = 1;
 export const MAX_PLAYERS_GLOBAL = 10; 
