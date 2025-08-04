@@ -1,0 +1,787 @@
+{
+    "game": {
+        "title": "Test d'Impureté",
+        "subtitle": "Swipez pour répondre",
+        "instructions": "👈 Swipe à gauche pour NON • Swipe à droite pour OUI 👉",
+        "questionCounter": "Question {{current}} / {{total}}",
+        "remainingPlayers": "{{count}} joueur(s) restant(s)",
+        "finished": {
+            "title": "🎉 Test terminé !",
+            "subtitle": "Tous les joueurs ont répondu aux {{total}} questions",
+            "viewResults": "Voir les résultats"
+        }
+    },
+    "results": {
+        "title": "🏆 Résultats du Test d'Impureté",
+        "subtitle": "Classement par pourcentage d'impureté",
+        "themeDetails": "Détail par thème :",
+        "backToHome": "Retour à l'accueil",
+        "impurityLevels": {
+            "saint": "Ange",
+            "pure": "Sage comme une image",
+            "mostlyPure": "Un brin mauvais",
+            "mixed": "Esprit tordu",
+            "naughty": "Dégénéré",
+            "veryImpure": "Âme damnée",
+            "diabolical": "Diabolique"
+        }
+    },
+    "themes": {
+        "sex": "Sexualité",
+        "drugs": "Drogues",
+        "morality": "Moralité",
+        "hygiene": "Hygiène"
+    },
+    "questions": {
+        "sex": {
+            "level5": [
+                {
+                    "id": "sex_l5_1",
+                    "text": "As-tu déjà eu un rapport avec quelqu'un pendant que quelqu'un d'autre dormait dans la pièce ?",
+                    "points": 5
+                },
+                {
+                    "id": "sex_l5_2",
+                    "text": "As-tu déjà regardé du hentai ?",
+                    "points": 5
+                },
+                {
+                    "id": "sex_l5_3",
+                    "text": "As-tu déjà couché avec quelqu'un de ta famille ?",
+                    "points": 5
+                },
+                {
+                    "id": "sex_l5_4",
+                    "text": "As-tu déjà participé à un plan à 3 ou plus ?",
+                    "points": 5
+                },
+                {
+                    "id": "sex_l5_5",
+                    "text": "As-tu déjà gardé un vêtement ou sous-vêtement porté pour te masturber avec plus tard ?",
+                    "points": 5
+                },
+                {
+                    "id": "sex_l5_6",
+                    "text": "Avez-vous déjà eu des relations sexuelles contre de l'argent ?",
+                    "points": 5
+                },
+                {
+                    "id": "sex_l5_7",
+                    "text": "Avez-vous déjà été infidèle ?",
+                    "points": 5
+                }
+            ],
+            "level4": [
+                {
+                    "id": "sex_l4_1",
+                    "text": "As-tu déjà couché avec un·e pote ?",
+                    "points": 4
+                },
+                {
+                    "id": "sex_l4_2",
+                    "text": "As-tu déjà eu envie de baiser un prof, un supérieur, un tuteur ?",
+                    "points": 4
+                },
+                {
+                    "id": "sex_l4_3",
+                    "text": "As-tu déjà couché avec quelqu'un uniquement pour prouver un truc à quelqu'un d'autre ?",
+                    "points": 4
+                },
+                {
+                    "id": "sex_l4_4",
+                    "text": "As-tu déjà maté un porno en public ?",
+                    "points": 4
+                },
+                {
+                    "id": "sex_l4_5",
+                    "text": "As-tu déjà utilisé un objet du quotidien comme sextoy ?",
+                    "points": 4
+                },
+                {
+                    "id": "sex_l4_6",
+                    "text": "As-tu déjà volontairement zappé la capote ?",
+                    "points": 4
+                },
+                {
+                    "id": "sex_l4_7",
+                    "text": "As-tu déjà eu un orgasme pendant une situation totalement inappropriée ?",
+                    "points": 4
+                },
+                {
+                    "id": "sex_l4_8",
+                    "text": "As-tu déjà stalké sexuellement un·e inconnu·e sur les réseaux après un regard échangé IRL ?",
+                    "points": 4
+                },
+                {
+                    "id": "sex_l4_9",
+                    "text": "As-tu déjà envoyé un message sexe à la mauvaise personne ?",
+                    "points": 4
+                },
+                {
+                    "id": "sex_l4_10",
+                    "text": "Avez-vous déjà eu une IST ?",
+                    "points": 4
+                },
+                {
+                    "id": "sex_l4_11",
+                    "text": "Avez-vous déjà eu des expériences sado-masochistes ?",
+                    "points": 4
+                },
+                {
+                    "id": "sex_l4_12",
+                    "text": "Avez-vous déjà eu des relations sexuelles avec quelqu'un qui était déjà engagée dans une relation avec quelqu'un d'autre ?",
+                    "points": 4
+                }
+            ],
+            "level3": [
+                {
+                    "id": "sex_l3_1",
+                    "text": "As-tu déjà fantasmé sur un personnage de dessin animé ou jeu vidéo ?",
+                    "points": 3
+                },
+                {
+                    "id": "sex_l3_2",
+                    "text": "As-tu déjà simulé un kink pour plaire à quelqu'un ?",
+                    "points": 3
+                },
+                {
+                    "id": "sex_l3_3",
+                    "text": "As-tu déjà pensé à quelqu'un d'autre en plein milieu d'un acte sexuel ?",
+                    "points": 3
+                },
+                {
+                    "id": "sex_l3_4",
+                    "text": "As-tu déjà enregistré une sextape ?",
+                    "points": 3
+                },
+                {
+                    "id": "sex_l3_5",
+                    "text": "As-tu déjà réutilisé un nude que t'avais déjà envoyé à quelqu'un d'autre ?",
+                    "points": 3
+                },
+                {
+                    "id": "sex_l3_6",
+                    "text": "As-tu déjà demandé à quelqu'un de t'appeler \"daddy/mommy\" au lit ?",
+                    "points": 3
+                },
+                {
+                    "id": "sex_l3_7",
+                    "text": "Avez-vous déjà payé pour du sexe ?",
+                    "points": 3
+                },
+                {
+                    "id": "sex_l3_8",
+                    "text": "Avez-vous déjà eu un rapport anal ?",
+                    "points": 3
+                },
+                {
+                    "id": "sex_l3_9",
+                    "text": "Avez-vous déjà eu des relations sexuelles avec plus de deux personnes dans la même semaine ?",
+                    "points": 3
+                },
+                {
+                    "id": "sex_l3_10",
+                    "text": "Avez-vous déjà eu des relations sexuelles avec quelqu'un qui était deux fois plus vieux que vous ?",
+                    "points": 3
+                },
+                {
+                    "id": "sex_l3_11",
+                    "text": "As-tu déjà léché un pied ?",
+                    "points": 3
+                },
+                {
+                    "id": "sex_l3_12",
+                    "text": "As-tu déjà vu la vidéo \"2 girls one cup\" ?",
+                    "points": 3
+                }
+            ],
+            "level2": [
+                {
+                    "id": "sex_l2_1",
+                    "text": "As-tu déjà fait des vocaux crades ?",
+                    "points": 2
+                },
+                {
+                    "id": "sex_l2_2",
+                    "text": "Avez-vous déjà eu des rapports contraires à votre appartenance sexuelle ?",
+                    "points": 2
+                },
+                {
+                    "id": "sex_l2_3",
+                    "text": "Avez-vous déjà utilisé des sex toys ?",
+                    "points": 2
+                },
+                {
+                    "id": "sex_l2_4",
+                    "text": "Avez-vous déjà été responsable de la perte de la virginité de quelqu'un ?",
+                    "points": 2
+                },
+                {
+                    "id": "sex_l2_5",
+                    "text": "Avez-vous déjà eu un coup d'un soir ?",
+                    "points": 2
+                },
+                {
+                    "id": "sex_l2_6",
+                    "text": "Avez-vous déjà simulé l'orgasme ?",
+                    "points": 2
+                },
+                {
+                    "id": "sex_l2_7",
+                    "text": "Avez-vous déjà exhibé vos parties intimes en public ?",
+                    "points": 2
+                }
+            ],
+            "level1": [
+                {
+                    "id": "sex_l1_1",
+                    "text": "As-tu déjà eu des relations sexuelles ?",
+                    "points": 1
+                },
+                {
+                    "id": "sex_l1_2",
+                    "text": "As-tu déjà été impliqué dans des préliminaires ?",
+                    "points": 1
+                },
+                {
+                    "id": "sex_l1_3",
+                    "text": "Vous êtes-vous déjà masturbé ?",
+                    "points": 1
+                },
+                {
+                    "id": "sex_l1_4",
+                    "text": "Avez-vous déjà eu des relations sexuelles que vous regrettez maintenant ?",
+                    "points": 1
+                }
+            ]
+        },
+        "drugs": {
+            "level5": [
+                {
+                    "id": "drugs_l5_1",
+                    "text": "Déjà fait une Overdose ?",
+                    "points": 5
+                },
+                {
+                    "id": "drugs_l5_2",
+                    "text": "Déjà conduit défoncé ?",
+                    "points": 5
+                },
+                {
+                    "id": "drugs_l5_3",
+                    "text": "Sniffé quelque chose ?",
+                    "points": 5
+                },
+                {
+                    "id": "drugs_l5_4",
+                    "text": "Volé pour te payer une dose ?",
+                    "points": 5
+                },
+                {
+                    "id": "drugs_l5_5",
+                    "text": "Pris une drogue expérimentale ?",
+                    "points": 5
+                },
+                {
+                    "id": "drugs_l5_6",
+                    "text": "As-tu déjà conduit en voyant double ?",
+                    "points": 5
+                }
+            ],
+            "level4": [
+                {
+                    "id": "drugs_l4_1",
+                    "text": "Blackout total d'une nuit ?",
+                    "points": 4
+                },
+                {
+                    "id": "drugs_l4_2",
+                    "text": "Bu seul·e ?",
+                    "points": 4
+                },
+                {
+                    "id": "drugs_l4_3",
+                    "text": "Consommé au taf / en cours ?",
+                    "points": 4
+                },
+                {
+                    "id": "drugs_l4_4",
+                    "text": "Vendu de la drogue ?",
+                    "points": 4
+                },
+                {
+                    "id": "drugs_l4_5",
+                    "text": "Fumé un truc inconnu ?",
+                    "points": 4
+                },
+                {
+                    "id": "drugs_l4_6",
+                    "text": "Pris un cacheton ?",
+                    "points": 4
+                },
+                {
+                    "id": "drugs_l4_7",
+                    "text": "Avez-vous déjà bu de l'alcool pour le petit-déjeuner ?",
+                    "points": 4
+                },
+                {
+                    "id": "drugs_l4_8",
+                    "text": "As-tu déjà fait un bad trip ?",
+                    "points": 4
+                }
+            ],
+            "level3": [
+                {
+                    "id": "drugs_l3_1",
+                    "text": "Vomis en boîte / Uber ?",
+                    "points": 3
+                },
+                {
+                    "id": "drugs_l3_2",
+                    "text": "Tenté de rouler sans matos ?",
+                    "points": 3
+                },
+                {
+                    "id": "drugs_l3_3",
+                    "text": "Tapé dans l'alcool des parents ?",
+                    "points": 3
+                },
+                {
+                    "id": "drugs_l3_4",
+                    "text": "Défoncé·e devant les parents ?",
+                    "points": 3
+                },
+                {
+                    "id": "drugs_l3_5",
+                    "text": "Bu dans la rue à la bouteille ?",
+                    "points": 3
+                },
+                {
+                    "id": "drugs_l3_6",
+                    "text": "As-tu déjà vomi sur toi ou quelqu'un d'autre ?",
+                    "points": 3
+                },
+                {
+                    "id": "drugs_l3_7",
+                    "text": "Vous êtes-vous déjà fait sortir de force d'un bar ou d'une boîte de nuit ?",
+                    "points": 3
+                }
+            ],
+            "level2": [
+                {
+                    "id": "drugs_l2_1",
+                    "text": "Pris un shot juste pour le show ?",
+                    "points": 2
+                },
+                {
+                    "id": "drugs_l2_2",
+                    "text": "Vomis dans des toilettes à cause de l'alcool ?",
+                    "points": 2
+                },
+                {
+                    "id": "drugs_l2_3",
+                    "text": "Cuite nécessitant une couverture ?",
+                    "points": 2
+                },
+                {
+                    "id": "drugs_l2_4",
+                    "text": "Bu un fond qui t'appartenait pas ?",
+                    "points": 2
+                },
+                {
+                    "id": "drugs_l2_5",
+                    "text": "Lâché un \"dry month\" au bout de 4j ?",
+                    "points": 2
+                },
+                {
+                    "id": "drugs_l2_6",
+                    "text": "Vous êtes-vous déjà réveillé(e) en vous demandant où vous étiez ?",
+                    "points": 2
+                },
+                {
+                    "id": "drugs_l2_7",
+                    "text": "Avez-vous déjà vomi dans un lieu public ?",
+                    "points": 2
+                }
+            ],
+            "level1": [
+                {
+                    "id": "drugs_l1_1",
+                    "text": "Bu avant l'âge légal ?",
+                    "points": 1
+                },
+                {
+                    "id": "drugs_l1_2",
+                    "text": "Pris du poppers ?",
+                    "points": 1
+                },
+                {
+                    "id": "drugs_l1_3",
+                    "text": "Fumé un joint ?",
+                    "points": 1
+                },
+                {
+                    "id": "drugs_l1_4",
+                    "text": "Mentis sur ta conso ?",
+                    "points": 1
+                },
+                {
+                    "id": "drugs_l1_5",
+                    "text": "Avez-vous déjà été ivre ?",
+                    "points": 1
+                },
+                {
+                    "id": "drugs_l1_6",
+                    "text": "Avez-vous déjà dormi dans les toilettes ?",
+                    "points": 1
+                }
+            ]
+        },
+        "morality": {
+            "level5": [
+                {
+                    "id": "morality_l5_1",
+                    "text": "Fait du chantage émotionnel ?",
+                    "points": 5
+                },
+                {
+                    "id": "morality_l5_2",
+                    "text": "Ruiné la vie de quelqu'un sciemment ?",
+                    "points": 5
+                },
+                {
+                    "id": "morality_l5_3",
+                    "text": "Tabassé quelqu'un sans regret ?",
+                    "points": 5
+                },
+                {
+                    "id": "morality_l5_4",
+                    "text": "Dénoncé un·e pote pour te sauver ?",
+                    "points": 5
+                },
+                {
+                    "id": "morality_l5_5",
+                    "text": "Mentis sous serment / tribunal ?",
+                    "points": 5
+                },
+                {
+                    "id": "morality_l5_6",
+                    "text": "Fait croire à une agression ?",
+                    "points": 5
+                },
+                {
+                    "id": "morality_l5_7",
+                    "text": "Avez-vous déjà profité de quelqu'un pendant qu'il/elle était ivre, drogué(e), ou momentanément handicapé(e) ?",
+                    "points": 5
+                }
+            ],
+            "level4": [
+                {
+                    "id": "morality_l4_1",
+                    "text": "Trahi un ami proche ?",
+                    "points": 4
+                },
+                {
+                    "id": "morality_l4_2",
+                    "text": "Tapé un/une partenaire ?",
+                    "points": 4
+                },
+                {
+                    "id": "morality_l4_3",
+                    "text": "Fait passer quelqu'un pour fou ?",
+                    "points": 4
+                },
+                {
+                    "id": "morality_l4_4",
+                    "text": "Inventé une rumeur violente ?",
+                    "points": 4
+                },
+                {
+                    "id": "morality_l4_5",
+                    "text": "Délaté anonymement un collègue ?",
+                    "points": 4
+                },
+                {
+                    "id": "morality_l4_6",
+                    "text": "T'es réjoui·e du malheur de quelqu'un ?",
+                    "points": 4
+                },
+                {
+                    "id": "morality_l4_7",
+                    "text": "Fait pleurer volontairement ?",
+                    "points": 4
+                },
+                {
+                    "id": "morality_l4_8",
+                    "text": "Harcelé quelqu'un ?",
+                    "points": 4
+                }
+            ],
+            "level3": [
+                {
+                    "id": "morality_l3_1",
+                    "text": "Mentis sur ton passé pour séduire ?",
+                    "points": 3
+                },
+                {
+                    "id": "morality_l3_2",
+                    "text": "Planté un pote pour du sexe ?",
+                    "points": 3
+                },
+                {
+                    "id": "morality_l3_3",
+                    "text": "Caché une grosse erreur au taf ?",
+                    "points": 3
+                },
+                {
+                    "id": "morality_l3_4",
+                    "text": "Volé un proche ?",
+                    "points": 3
+                },
+                {
+                    "id": "morality_l3_5",
+                    "text": "Rabaissé quelqu'un en public ?",
+                    "points": 3
+                },
+                {
+                    "id": "morality_l3_6",
+                    "text": "Jeté une amitié par flemme ?",
+                    "points": 3
+                },
+                {
+                    "id": "morality_l3_7",
+                    "text": "Refusé d'aider juste par rancune ?",
+                    "points": 3
+                },
+                {
+                    "id": "morality_l3_8",
+                    "text": "Avez-vous déjà ri d'une personne mentalement ou physiquement handicapée ?",
+                    "points": 3
+                },
+                {
+                    "id": "morality_l3_9",
+                    "text": "Déjà fait de la garde à vue ?",
+                    "points": 3
+                },
+                {
+                    "id": "morality_l3_10",
+                    "text": "Dit \"je t'aime\" sans le penser ?",
+                    "points": 3
+                }
+            ],
+            "level2": [
+                {
+                    "id": "morality_l2_1",
+                    "text": "Mentis dans un entretien ?",
+                    "points": 2
+                },
+                {
+                    "id": "morality_l2_2",
+                    "text": "Ignoré quelqu'un qui souffrait ?",
+                    "points": 2
+                },
+                {
+                    "id": "morality_l2_3",
+                    "text": "Piégé un pote pour une punition ?",
+                    "points": 2
+                },
+                {
+                    "id": "morality_l2_4",
+                    "text": "Avez-vous déjà ri du malheur de quelqu'un ?",
+                    "points": 2
+                },
+                {
+                    "id": "morality_l2_5",
+                    "text": "Été arrêté par la police ?",
+                    "points": 2
+                }
+            ],
+            "level1": [
+                {
+                    "id": "morality_l1_1",
+                    "text": "Mentis pour éviter un drama ?",
+                    "points": 1
+                },
+                {
+                    "id": "morality_l1_2",
+                    "text": "Inventé une excuse pour ghoster ?",
+                    "points": 1
+                },
+                {
+                    "id": "morality_l1_3",
+                    "text": "Supprimé un message pour cacher ?",
+                    "points": 1
+                },
+                {
+                    "id": "morality_l1_4",
+                    "text": "Ravalé un \"pardon\" que tu devais ?",
+                    "points": 1
+                },
+                {
+                    "id": "morality_l1_5",
+                    "text": "Ignoré un SDF ?",
+                    "points": 1
+                },
+                {
+                    "id": "morality_l1_6",
+                    "text": "Faire semblant d'écouter ?",
+                    "points": 1
+                }
+            ],
+            "levelBonus": [
+                {
+                    "id": "morality_bonus_1",
+                    "text": "Avez-vous déjà travaillé pour une oeuvre caritative ?",
+                    "points": -1
+                },
+                {
+                    "id": "morality_bonus_2",
+                    "text": "Avez-vous déjà donné de l'argent pour une association ?",
+                    "points": -1
+                }
+            ]
+        },
+        "hygiene": {
+            "level5": [
+                {
+                    "id": "hygiene_l5_1",
+                    "text": "Chié à un endroit inapproprié ?",
+                    "points": 5
+                },
+                {
+                    "id": "hygiene_l5_2",
+                    "text": "Utilisé des objets sales pour te nettoyer ou te masturber ?",
+                    "points": 5
+                },
+                {
+                    "id": "hygiene_l5_3",
+                    "text": "Léché/senti tes propres sécrétions \"pour voir\" ?",
+                    "points": 5
+                },
+                {
+                    "id": "hygiene_l5_4",
+                    "text": "Touché ou manipulé tes excréments (ou ceux de quelqu'un) volontairement ?",
+                    "points": 5
+                },
+                {
+                    "id": "hygiene_l5_5",
+                    "text": "Pris plaisir à éclater des boutons infectés d'un·e autre ?",
+                    "points": 5
+                },
+                {
+                    "id": "hygiene_l5_6",
+                    "text": "Fais un pet foireux ?",
+                    "points": 5
+                }
+            ],
+            "level4": [
+                {
+                    "id": "hygiene_l4_1",
+                    "text": "Senti volontairement ton slip ou tes chaussettes sales ?",
+                    "points": 4
+                },
+                {
+                    "id": "hygiene_l4_2",
+                    "text": "Retenu volontairement ta douche pendant plusieurs jours ?",
+                    "points": 4
+                },
+                {
+                    "id": "hygiene_l4_3",
+                    "text": "Ne pas assumer que c'est toi qui pue de la gueule ?",
+                    "points": 4
+                },
+                {
+                    "id": "hygiene_l4_4",
+                    "text": "Réutilisé des sous-vêtements déjà sales ?",
+                    "points": 4
+                },
+                {
+                    "id": "hygiene_l4_5",
+                    "text": "Mis ton doigt dans ton nez puis ailleurs sans réfléchir ?",
+                    "points": 4
+                },
+                {
+                    "id": "hygiene_l4_6",
+                    "text": "Déjà pissé dans une piscine, douche publique ou lavabo ?",
+                    "points": 4
+                }
+            ],
+            "level3": [
+                {
+                    "id": "hygiene_l3_1",
+                    "text": "Raclé une vieille crasse sous tes ongles ?",
+                    "points": 3
+                },
+                {
+                    "id": "hygiene_l3_2",
+                    "text": "Dormi dans des draps crades en te disant \"demain je change\" ?",
+                    "points": 3
+                },
+                {
+                    "id": "hygiene_l3_3",
+                    "text": "Utilisé du déo/du parfum pour couvrir une vraie odeur ?",
+                    "points": 3
+                },
+                {
+                    "id": "hygiene_l3_4",
+                    "text": "Partagé une brosse à dents ?",
+                    "points": 3
+                },
+                {
+                    "id": "hygiene_l3_5",
+                    "text": "Manger ta crotte de nez ?",
+                    "points": 3
+                }
+            ],
+            "level2": [
+                {
+                    "id": "hygiene_l2_1",
+                    "text": "Gardé un vêtement transpirant \"parce qu'il était confortable\" ?",
+                    "points": 2
+                },
+                {
+                    "id": "hygiene_l2_2",
+                    "text": "Séché une douche après le sport ?",
+                    "points": 2
+                }
+            ],
+            "level1": [
+                {
+                    "id": "hygiene_l1_1",
+                    "text": "Pété dans ton lit sous la couette ?",
+                    "points": 1
+                },
+                {
+                    "id": "hygiene_l1_2",
+                    "text": "Oublié de mettre du déodorant un jour pressé ?",
+                    "points": 1
+                },
+                {
+                    "id": "hygiene_l1_3",
+                    "text": "Exploser un bouton ?",
+                    "points": 1
+                },
+                {
+                    "id": "hygiene_l1_4",
+                    "text": "Reniflé pour checker si ça sentait \"trop\" ?",
+                    "points": 1
+                },
+                {
+                    "id": "hygiene_l1_5",
+                    "text": "Ne pas t'être brossé les dents avant de te coucher ?",
+                    "points": 1
+                },
+                {
+                    "id": "hygiene_l1_6",
+                    "text": "Apprécier sentir tes propres pets ?",
+                    "points": 1
+                },
+                {
+                    "id": "hygiene_l1_7",
+                    "text": "Senti un vêtement pour savoir s'il était propre ?",
+                    "points": 1
+                }
+            ]
+        }
+    }
+}

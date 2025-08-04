@@ -1,0 +1,9 @@
+{
+    "screens": {
+        "home": "Accueil",
+        "gameSelect": "Sélection du jeu",
+        "purityTest": "Test d'impureté",
+        "purityResults": "Résultats",
+        "settings": "Paramètres"
+    }
+}

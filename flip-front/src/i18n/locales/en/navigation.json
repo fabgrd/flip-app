@@ -1,0 +1,9 @@
+{
+    "screens": {
+        "home": "Home",
+        "gameSelect": "Game Selection",
+        "purityTest": "Purity Test",
+        "purityResults": "Results",
+        "settings": "Settings"
+    }
+}

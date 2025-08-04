@@ -1,0 +1,13 @@
+{
+    "selection": {
+        "title": "Choisissez votre jeu",
+        "subtitle": "Avec {{count}} joueurs"
+    },
+    "purityTest": {
+        "name": "Test d'Impureté",
+        "description": "Découvrez qui est le plus impur du groupe ! 😈"
+    },
+    "comingSoon": {
+        "message": "Jeu \"{{gameName}}\" sélectionné avec {{playerCount}} joueurs!\nFonctionnalité en cours de développement."
+    }
+}

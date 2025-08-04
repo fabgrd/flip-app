@@ -1,17 +1,15 @@
-export interface Player {
-  id: string;
-  name: string;
-}
 
-export interface Game {
-  id: string;
-  name: string;
-  minPlayers: number;
-  maxPlayers: number;
-  description: string;
-}
+export type {
+  Player,
+  Game,
+  RootStackParamList
+} from './games';
 
-export type RootStackParamList = {
-  Home: undefined;
-  GameSelect: { players: Player[] };
-}; 
+export type {
+  Theme,
+  Question,
+  PlayerAnswer,
+  PurityPlayer,
+  PurityGameState,
+  PurityResults
+} from './games'; 

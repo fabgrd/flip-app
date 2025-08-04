@@ -2,6 +2,8 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { useTranslation } from 'react-i18next';
+import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 
 import { usePlayers } from '../contexts/PlayersContext';
@@ -16,12 +18,12 @@ const MIN_PLAYERS = MIN_PLAYERS_GLOBAL;
 
 export function HomeScreen() {
   const navigation = useNavigation<HomeScreenNavigationProp>();
-  const { players, addPlayer, removePlayer } = usePlayers();
+  const { t } = useTranslation();
+  const { players, addPlayer, removePlayer, updatePlayerAvatar } = usePlayers();
 
   const handleAddPlayer = (name: string): boolean => {
     const success = addPlayer(name);
     if (success) {
-      // Feedback haptique
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     }
     return success;
@@ -39,110 +41,138 @@ export function HomeScreen() {
     }
   };
 
+  const handleSettingsPress = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    navigation.navigate('Settings');
+  };
+
   const canStartGame = players.length >= MIN_PLAYERS;
 
   return (
     <SafeAreaView style={GlobalStyles.container}>
       <View style={GlobalStyles.screen}>
-        {/* Header */}
-        <View style={styles.header}>
-          <Text style={styles.appTitle}>FL!P</Text>
-          <Text style={styles.appSubtitle}>Jeu d'alcool entre amis</Text>
+        {/* Settings Button Top Right */}
+        <View style={styles.settingsTopRightWrapper}>
+          <TouchableOpacity
+            style={styles.settingsButton}
+            onPress={handleSettingsPress}
+          >
+            <Ionicons name="settings" size={24} color={Colors.primary} />
+          </TouchableOpacity>
         </View>
 
-        {/* Ajout de joueurs */}
+        {/* Header */}
+        <View style={styles.headerContent}>
+          <Text style={styles.appTitle}>{t('home:title')}</Text>
+          <Text style={styles.appSubtitle}>{t('home:subtitle')}</Text>
+        </View>
+
+        {/* Add Player Section */}
         <View style={styles.inputSection}>
-          <Text style={styles.sectionTitle}>Ajouter des joueurs</Text>
           <PlayerInput
             onAddPlayer={handleAddPlayer}
             maxPlayers={MAX_PLAYERS}
             currentPlayerCount={players.length}
+
           />
         </View>
 
-        {/* Liste des joueurs */}
+        {/* Players List */}
         <View style={styles.playersSection}>
           <PlayersList
             players={players}
             onRemovePlayer={handleRemovePlayer}
+            onUpdateAvatar={updatePlayerAvatar}
           />
         </View>
+      </View>
 
-        {/* Bouton Jouer */}
-        <View style={styles.actionSection}>
-          <TouchableOpacity
-            style={[
-              GlobalStyles.buttonPrimary,
-              styles.playButton,
-              !canStartGame && styles.playButtonDisabled
-            ]}
-            onPress={handleStartGame}
-            disabled={!canStartGame}
-          >
-            <Text style={[
-              GlobalStyles.buttonText,
-              !canStartGame && styles.disabledButtonText
-            ]}>
-              {canStartGame ? 'Jouer !' : `Il faut au moins ${MIN_PLAYERS} joueurs`}
-            </Text>
-          </TouchableOpacity>
-        </View>
+      {/* Start Game Button */}
+      <View style={styles.footer}>
+        <TouchableOpacity
+          style={[styles.startButton, !canStartGame && styles.startButtonDisabled]}
+          onPress={handleStartGame}
+          disabled={!canStartGame}
+        >
+          <Text style={[styles.startButtonText, !canStartGame && styles.startButtonTextDisabled]}>
+            {t('home:actions.start')}
+          </Text>
+        </TouchableOpacity>
+
+        {!canStartGame && (
+          <Text style={styles.minPlayersText}>
+            {t('home:addPlayers.minPlayers')}
+          </Text>
+        )}
       </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  header: {
-    alignItems: 'center',
-    marginBottom: 40,
+  settingsTopRightWrapper: {
+    position: 'absolute',
+    top: 10,
+    right: 20,
+    zIndex: 1,
   },
-  
+  headerContent: {
+    paddingTop: 64,
+    paddingHorizontal: 20,
+    alignItems: 'center',
+    marginBottom: 24,
+  },
   appTitle: {
     fontSize: 48,
     fontWeight: 'bold',
     color: Colors.primary,
     textAlign: 'center',
-    marginBottom: 8,
   },
-  
   appSubtitle: {
     fontSize: 16,
     color: Colors.text.secondary,
     textAlign: 'center',
+    marginTop: 4,
   },
-  
+  settingsButton: {
+    padding: 8,
+    borderRadius: 20,
+    backgroundColor: `${Colors.primary}10`,
+  },
   inputSection: {
-    marginBottom: 30,
+    marginBottom: 24,
+    paddingHorizontal: 20,
   },
-  
-  sectionTitle: {
-    fontSize: 20,
-    fontWeight: '600',
-    color: Colors.text.primary,
-    marginBottom: 15,
-  },
-  
   playersSection: {
     flex: 1,
   },
-  
-  actionSection: {
-    paddingTop: 20,
+  footer: {
+    padding: 20,
+    paddingTop: 0,
   },
-  
-  playButton: {
-    marginBottom: 20,
+  startButton: {
+    backgroundColor: Colors.primary,
+    paddingVertical: 16,
+    borderRadius: 12,
+    alignItems: 'center',
+    marginBottom: 12,
   },
-  
-  playButtonDisabled: {
-    backgroundColor: Colors.button.disabled,
-    shadowOpacity: 0,
-    elevation: 0,
+  startButtonDisabled: {
+    backgroundColor: Colors.text.secondary,
+    opacity: 0.5,
   },
-  
-  disabledButtonText: {
+  startButtonText: {
+    color: Colors.text.white,
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  startButtonTextDisabled: {
+    color: Colors.text.white,
+  },
+  minPlayersText: {
+    fontSize: 14,
     color: Colors.text.secondary,
-    fontSize: 16,
+    textAlign: 'center',
+    fontStyle: 'italic',
   },
-}); 
+});

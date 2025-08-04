@@ -1,0 +1,35 @@
+{
+    "game": {
+        "title": "Purity Test",
+        "subtitle": "Swipe to answer",
+        "instructions": "👈 Swipe left for NO • Swipe right for YES 👉",
+        "questionCounter": "Question {{current}} / {{total}}",
+        "remainingPlayers": "{{count}} player(s) remaining",
+        "finished": {
+            "title": "🎉 Test completed!",
+            "subtitle": "All players answered {{total}} questions",
+            "viewResults": "View results"
+        }
+    },
+    "results": {
+        "title": "🏆 Purity Test Results",
+        "subtitle": "Ranking by impurity percentage",
+        "themeDetails": "Details by theme:",
+        "backToHome": "Back to home",
+        "impurityLevels": {
+            "saint": "Saint",
+            "pure": "Quite pure",
+            "mostlyPure": "Rather wise",
+            "mixed": "Mixed",
+            "naughty": "Naughty",
+            "veryImpure": "Very impure",
+            "diabolical": "Diabolical"
+        }
+    },
+    "themes": {
+        "sex": "Sexuality",
+        "drugs": "Drugs",
+        "morality": "Morality",
+        "hygiene": "Hygiene"
+    }
+}

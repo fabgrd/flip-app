@@ -1,0 +1,9 @@
+{
+    "screens": {
+        "home": "主页",
+        "gameSelect": "游戏选择",
+        "purityTest": "纯洁度测试",
+        "purityResults": "结果",
+        "settings": "设置"
+    }
+}

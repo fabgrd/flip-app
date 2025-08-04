@@ -1,0 +1,17 @@
+{
+    "title": "设置",
+    "language": {
+        "title": "语言",
+        "subtitle": "选择你的首选语言",
+        "options": {
+            "fr": "Français",
+            "en": "English",
+            "zh": "中文"
+        }
+    },
+    "about": {
+        "title": "关于",
+        "version": "版本 {{version}}",
+        "description": "FL!P - 让你的朋友聚会更有趣的终极饮酒游戏！"
+    }
+}

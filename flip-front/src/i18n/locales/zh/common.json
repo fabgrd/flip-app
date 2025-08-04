@@ -1,0 +1,30 @@
+{
+    "buttons": {
+        "back": "返回",
+        "continue": "继续",
+        "start": "开始",
+        "finish": "完成",
+        "cancel": "取消",
+        "save": "保存",
+        "delete": "删除",
+        "edit": "编辑",
+        "add": "添加",
+        "close": "关闭",
+        "confirm": "确认"
+    },
+    "labels": {
+        "players": "玩家",
+        "player": "玩家",
+        "question": "问题",
+        "result": "结果",
+        "results": "结果",
+        "score": "分数",
+        "loading": "加载中...",
+        "error": "错误"
+    },
+    "messages": {
+        "success": "成功！",
+        "error": "发生错误",
+        "noData": "无可用数据"
+    }
+}
