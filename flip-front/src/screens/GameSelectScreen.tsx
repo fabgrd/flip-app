@@ -5,22 +5,38 @@ import { RouteProp } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 
-import { RootStackParamList, Game } from '../types';
-import { Colors, GlobalStyles, AVAILABLE_GAMES } from '../constants';
+import { RootStackParamList } from '../types';
+import { Colors, GlobalStyles } from '../constants';
+import { navigateToGame, AVAILABLE_GAMES } from '../constants/games';
+import { useTranslation } from 'react-i18next';
+
 
 type GameSelectScreenRouteProp = RouteProp<RootStackParamList, 'GameSelect'>;
+
+interface GameMetadata {
+  id: string;
+  name: string;
+  minPlayers: number;
+  maxPlayers: number;
+  description: string;
+}
 
 export function GameSelectScreen() {
   const route = useRoute<GameSelectScreenRouteProp>();
   const navigation = useNavigation();
   const { players } = route.params;
+  const { t } = useTranslation();
 
-  const handleSelectGame = (game: Game) => {
-    if (game.id === 'purity-test') {
-      (navigation as any).navigate('PurityTest', { players });
-    } else {
-      // Pour l'instant, juste un message car le jeu n'est pas encore implémenté
-      alert(`Jeu "${game.name}" sélectionné avec ${players.length} joueurs!\nFonctionnalité en cours de développement.`);
+  const handleSelectGame = (game: GameMetadata) => {
+    try {
+      navigateToGame(navigation, game.id, players);
+    } catch (error) {
+      // Fallback pour les jeux non encore migrés
+      if (game.id === 'purity-test') {
+        (navigation as any).navigate('PurityTest', { players });
+      } else {
+        alert(`Jeu "${game.name}" sélectionné avec ${players.length} joueurs!\nFonctionnalité en cours de développement.`);
+      }
     }
   };
 
@@ -28,7 +44,7 @@ export function GameSelectScreen() {
     navigation.goBack();
   };
 
-  const renderGame = ({ item, index }: { item: Game; index: number }) => (
+  const renderGame = ({ item, index }: { item: GameMetadata; index: number }) => (
     <Animated.View
       entering={FadeInDown.delay(index * 200)}
     >
@@ -43,63 +59,49 @@ export function GameSelectScreen() {
         <View style={styles.gameContent}>
           <Text style={styles.gameTitle}>{item.name}</Text>
           <Text style={styles.gameInfo}>
-            {item.minPlayers}-{item.maxPlayers} joueurs
+            {item.minPlayers}-{item.maxPlayers} {t('common:labels.players')}
           </Text>
           <Text style={styles.gameDescription}>{item.description}</Text>
         </View>
 
-        <View style={styles.gameArrow}>
-          <Ionicons name="chevron-forward" size={24} color={Colors.text.secondary} />
+        <View style={styles.playButton}>
+          <Ionicons name="play" size={20} color={Colors.primary} />
         </View>
       </TouchableOpacity>
     </Animated.View>
   );
 
   return (
-    <SafeAreaView style={GlobalStyles.container}>
-      <View style={GlobalStyles.screen}>
-        {/* Header */}
-        <View style={styles.header}>
-          <TouchableOpacity
-            style={styles.backButton}
-            onPress={handleGoBack}
-          >
-            <Ionicons name="arrow-back" size={24} color={Colors.primary} />
-          </TouchableOpacity>
+    <SafeAreaView style={[GlobalStyles.container, styles.container]}>
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
+          <Ionicons name="arrow-back" size={24} color={Colors.text.primary} />
+        </TouchableOpacity>
 
-          <View style={styles.headerContent}>
-            <Text style={styles.screenTitle}>Choisir un jeu</Text>
-            <Text style={styles.playersInfo}>
-              {players.length} joueur{players.length > 1 ? 's' : ''} : {players.map(p => p.name).join(', ')}
-            </Text>
-          </View>
-        </View>
-
-        {/* Liste des jeux */}
-        <View style={styles.gamesSection}>
-          <Text style={styles.sectionTitle}>Jeux disponibles</Text>
-
-          <FlatList
-            data={AVAILABLE_GAMES}
-            renderItem={renderGame}
-            keyExtractor={(item) => item.id}
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.gamesList}
-          />
-        </View>
-
-        {/* Info section */}
-        <View style={styles.infoSection}>
-          <Text style={styles.infoText}>
-            Plus de jeux seront bientôt disponibles !
+        <View style={styles.headerContent}>
+          <Text style={styles.headerTitle}>{t('navigation:screens.gameSelect')}</Text>
+          <Text style={styles.headerSubtitle}>
+            {players.length} {t('common:labels.players')} · {t('common:labels.readyToPlay')}
           </Text>
         </View>
       </View>
+
+      <FlatList
+        data={AVAILABLE_GAMES}
+        renderItem={renderGame}
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={styles.gamesList}
+        showsVerticalScrollIndicator={false}
+      />
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+
   header: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -115,14 +117,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  screenTitle: {
+  headerTitle: {
     fontSize: 28,
     fontWeight: 'bold',
     color: Colors.text.primary,
     marginBottom: 4,
   },
 
-  playersInfo: {
+  headerSubtitle: {
     fontSize: 14,
     color: Colors.text.secondary,
   },
@@ -192,7 +194,7 @@ const styles = StyleSheet.create({
     lineHeight: 18,
   },
 
-  gameArrow: {
+  playButton: {
     marginLeft: 12,
   },
 

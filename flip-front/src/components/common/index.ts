@@ -1,5 +1,7 @@
 // =============================================================================
-// HOOKS COMMUNS RÉUTILISABLES
+// COMPOSANTS COMMUNS RÉUTILISABLES
 // =============================================================================
 
-export { useImagePicker } from './useImagePicker'; 
+export { Avatar } from './Avatar';
+export { PlayerInput } from './PlayerInput';
+export { PlayersList } from './PlayersList'; 

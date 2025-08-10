@@ -15,6 +15,8 @@
     "labels": {
         "players": "Joueurs",
         "player": "Joueur",
+        "addPlayer": "Ajouter un joueur",
+        "playerName": "Nom du joueur",
         "question": "Question",
         "result": "Résultat",
         "results": "Résultats",
@@ -25,6 +27,16 @@
     "messages": {
         "success": "Succès !",
         "error": "Une erreur s'est produite",
-        "noData": "Aucune donnée disponible"
+        "noData": "Aucune donnée disponible",
+        "remainingPlayers": " joueur(s) restant(s)",
+        "readyToPlay": "Prêt à jouer",
+        "selectGame": "Choisir un jeu",
+        "noPlayersAdded": "Aucun joueur ajouté",
+        "addAtLeastOnePlayerToStart": "Ajoutez au moins 1 joueur pour commencer"
+    },
+    "errors": {
+        "playerNameRequired": "Veuillez entrer un nom de joueur.",
+        "playerLimitReached": "Vous ne pouvez pas ajouter plus de {{maxPlayers}} joueurs.",
+        "playerNameAlreadyExists": "Ce nom de joueur existe déjà ou la limite est atteinte."
     }
 }

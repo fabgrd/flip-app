@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import './src/i18n'; // Initialize i18n
+import './src/i18n';
 
 import { PlayersProvider } from './src/contexts/PlayersContext';
 import {
