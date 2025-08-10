@@ -1,22 +1,35 @@
-import { Game } from '../types';
+import { gameRegistry } from '../games/gameRegistry';
 
-export const AVAILABLE_GAMES: Game[] = [
-  {
-    id: '6-qui-prend',
-    name: '6 qui prend !',
-    minPlayers: 2,
-    maxPlayers: 10,
-    description: 'Un jeu de cartes stratégique où il faut éviter de prendre des cartes avec des têtes de bœuf. Parfait pour s\'amuser entre amis !',
-  },
-  {
-    id: 'purity-test',
-    name: 'Test de Pureté',
-    minPlayers: 1,
-    maxPlayers: 10,
-    description: 'Un jeu de questions pour découvrir qui est le plus pur du groupe ! Répondez honnêtement aux questions sur différents thèmes.',
-  },
-  // Futurs jeux à ajouter ici
-];
+// =============================================================================
+// RÉCUPÉRATION DES JEUX DEPUIS LE REGISTRE
+// =============================================================================
+
+/**
+ * Liste des jeux disponibles depuis le registre
+ */
+export const AVAILABLE_GAMES = gameRegistry.getAvailableGames();
+
+/**
+ * Récupère les jeux compatibles avec un nombre de joueurs donné
+ */
+export const getCompatibleGames = (playerCount: number) =>
+  gameRegistry.getCompatibleGames(playerCount);
+
+/**
+ * Vérifie si un jeu est disponible
+ */
+export const isGameAvailable = (gameId: string) =>
+  gameRegistry.isGameAvailable(gameId);
+
+// =============================================================================
+// CONSTANTES GLOBALES
+// =============================================================================
 
 export const MIN_PLAYERS_GLOBAL = 1;
-export const MAX_PLAYERS_GLOBAL = 10; 
+export const MAX_PLAYERS_GLOBAL = 10;
+
+// =============================================================================
+// HELPERS POUR LA NAVIGATION
+// =============================================================================
+
+export { navigateToGame, navigateToGameResults } from '../games/gameRegistry'; 

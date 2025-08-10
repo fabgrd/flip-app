@@ -19,7 +19,7 @@ type PurityResultsScreenRouteProp = RouteProp<RootStackParamList, 'PurityResults
 export function PurityResultsScreen() {
     const route = useRoute<PurityResultsScreenRouteProp>();
     const navigation = useNavigation();
-    const { results } = route.params;
+    const results = route.params?.results;
     const { t } = useTranslation();
 
     const handleBackToHome = () => {
@@ -38,11 +38,12 @@ export function PurityResultsScreen() {
     const getImpurityLevel = (percentage: number) => {
         if (percentage <= 10) return { label: t('purityTest:results.impurityLevels.saint'), color: '#6BCF7F', emoji: '😇' };
         if (percentage <= 25) return { label: t('purityTest:results.impurityLevels.pure'), color: '#96CEB4', emoji: '😊' };
-        if (percentage <= 45) return { label: t('purityTest:results.impurityLevels.mostlyPure'), color: '#4ECDC4', emoji: '🙂' };
-        if (percentage <= 65) return { label: t('purityTest:results.impurityLevels.mixed'), color: '#FFD93D', emoji: '😐' };
-        if (percentage <= 80) return { label: t('purityTest:results.impurityLevels.naughty'), color: '#FFEAA7', emoji: '😏' };
-        if (percentage <= 95) return { label: t('purityTest:results.impurityLevels.veryImpure'), color: '#FF6B6B', emoji: '😈' };
-        return { label: t('purityTest:results.impurityLevels.diabolical'), color: '#FD79A8', emoji: '👹' };
+        if (percentage <= 35) return { label: t('purityTest:results.impurityLevels.mostlyPure'), color: '#4ECDC4', emoji: '🙂' };
+        if (percentage <= 45) return { label: t('purityTest:results.impurityLevels.mixed'), color: '#FFD93D', emoji: '😐' };
+        if (percentage <= 55) return { label: t('purityTest:results.impurityLevels.naughty'), color: '#FFEAA7', emoji: '😏' };
+        if (percentage <= 65) return { label: t('purityTest:results.impurityLevels.veryImpure'), color: '#FF6B6B', emoji: '�' };
+        if (percentage <= 75) return { label: t('purityTest:results.impurityLevels.diabolical'), color: '#FD79A8', emoji: '👹' };
+        return { label: t('purityTest:results.impurityLevels.beyondEvil'), color: '#000000', emoji: '💀' };
     };
 
     return (
@@ -53,7 +54,7 @@ export function PurityResultsScreen() {
             </View>
 
             <ScrollView style={styles.resultsContainer}>
-                {results.players.map((result, index) => {
+                {results.players.map((result: any) => {
                     const impurityLevel = getImpurityLevel(result.impurityPercentage);
                     return (
                         <View key={result.player.id} style={styles.playerResult}>
@@ -88,7 +89,7 @@ export function PurityResultsScreen() {
                                             <Text style={styles.themeName}>
                                                 {THEME_LABELS[theme as keyof typeof THEME_LABELS]}
                                             </Text>
-                                            <Text style={styles.themePercentage}>{percentage}%</Text>
+                                            <Text style={styles.themePercentage}>{percentage as number}%</Text>
                                         </View>
                                     ))}
                                 </View>

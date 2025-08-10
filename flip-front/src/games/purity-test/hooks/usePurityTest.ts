@@ -13,53 +13,56 @@ function shuffleArray<T>(array: T[]): T[] {
 }
 
 function generateGameQuestions(t: any): Question[] {
-    const themes: Theme[] = ['sex', 'drugs', 'morality', 'hygiene'];
-    const allQuestions: Question[] = [];
+    const themeQuestionCounts: Record<Theme, number> = {
+        sex: 7,
+        drugs: 8,
+        morality: 3,
+        hygiene: 2
+    };
 
     const fallbackQuestions: Record<Theme, Question[]> = {
         sex: [
-            { id: 'sex_fallback_1', text: 'As-tu déjà eu des relations sexuelles ?', theme: 'sex', points: { yes: 2, no: 0 } },
-            { id: 'sex_fallback_2', text: 'As-tu déjà embrassé quelqu\'un ?', theme: 'sex', points: { yes: 1, no: 0 } },
-            { id: 'sex_fallback_3', text: 'As-tu déjà eu un coup d\'un soir ?', theme: 'sex', points: { yes: 3, no: 0 } },
-            { id: 'sex_fallback_4', text: 'As-tu déjà simulé l\'orgasme ?', theme: 'sex', points: { yes: 2, no: 0 } },
+            { id: 'sex_fallback_1', text: 'eu des relations sexuelles ?', theme: 'sex', points: { yes: 2, no: 0 } },
+            { id: 'sex_fallback_2', text: 'embrassé quelqu\'un ?', theme: 'sex', points: { yes: 1, no: 0 } },
+            { id: 'sex_fallback_3', text: 'eu un coup d\'un soir ?', theme: 'sex', points: { yes: 3, no: 0 } },
+            { id: 'sex_fallback_4', text: 'simulé l\'orgasme ?', theme: 'sex', points: { yes: 2, no: 0 } },
             { id: 'sex_fallback_5', text: 'Vous êtes-vous déjà masturbé ?', theme: 'sex', points: { yes: 1, no: 0 } }
         ],
         drugs: [
-            { id: 'drugs_fallback_1', text: 'As-tu déjà bu de l\'alcool ?', theme: 'drugs', points: { yes: 1, no: 0 } },
-            { id: 'drugs_fallback_2', text: 'As-tu déjà été ivre ?', theme: 'drugs', points: { yes: 2, no: 0 } },
-            { id: 'drugs_fallback_3', text: 'As-tu déjà fumé un joint ?', theme: 'drugs', points: { yes: 2, no: 0 } },
-            { id: 'drugs_fallback_4', text: 'As-tu déjà vomi à cause de l\'alcool ?', theme: 'drugs', points: { yes: 3, no: 0 } },
+            { id: 'drugs_fallback_1', text: 'bu de l\'alcool ?', theme: 'drugs', points: { yes: 1, no: 0 } },
+            { id: 'drugs_fallback_2', text: 'été ivre ?', theme: 'drugs', points: { yes: 2, no: 0 } },
+            { id: 'drugs_fallback_3', text: 'fumé un joint ?', theme: 'drugs', points: { yes: 2, no: 0 } },
+            { id: 'drugs_fallback_4', text: 'vomi à cause de l\'alcool ?', theme: 'drugs', points: { yes: 3, no: 0 } },
             { id: 'drugs_fallback_5', text: 'Bu avant l\'âge légal ?', theme: 'drugs', points: { yes: 1, no: 0 } }
         ],
         morality: [
-            { id: 'morality_fallback_1', text: 'As-tu déjà menti pour éviter un problème ?', theme: 'morality', points: { yes: 1, no: 0 } },
-            { id: 'morality_fallback_2', text: 'As-tu déjà volé quelque chose ?', theme: 'morality', points: { yes: 3, no: 0 } },
-            { id: 'morality_fallback_3', text: 'As-tu déjà triché à un examen ?', theme: 'morality', points: { yes: 2, no: 0 } },
-            { id: 'morality_fallback_4', text: 'As-tu déjà fait pleurer quelqu\'un volontairement ?', theme: 'morality', points: { yes: 4, no: 0 } },
-            { id: 'morality_fallback_5', text: 'As-tu déjà ignoré un SDF ?', theme: 'morality', points: { yes: 1, no: 0 } }
+            { id: 'morality_fallback_1', text: 'menti pour éviter un problème ?', theme: 'morality', points: { yes: 1, no: 0 } },
+            { id: 'morality_fallback_2', text: 'volé quelque chose ?', theme: 'morality', points: { yes: 3, no: 0 } },
+            { id: 'morality_fallback_3', text: 'triché à un examen ?', theme: 'morality', points: { yes: 2, no: 0 } },
+            { id: 'morality_fallback_4', text: 'fait pleurer quelqu\'un volontairement ?', theme: 'morality', points: { yes: 4, no: 0 } },
+            { id: 'morality_fallback_5', text: 'ignoré un SDF ?', theme: 'morality', points: { yes: 1, no: 0 } }
         ],
         hygiene: [
-            { id: 'hygiene_fallback_1', text: 'As-tu déjà oublié de te brosser les dents avant de dormir ?', theme: 'hygiene', points: { yes: 1, no: 0 } },
-            { id: 'hygiene_fallback_2', text: 'As-tu déjà porté le même sous-vêtement plusieurs jours ?', theme: 'hygiene', points: { yes: 2, no: 0 } },
-            { id: 'hygiene_fallback_3', text: 'As-tu déjà mangé quelque chose tombé par terre ?', theme: 'hygiene', points: { yes: 2, no: 0 } },
-            { id: 'hygiene_fallback_4', text: 'As-tu déjà senti un vêtement pour savoir s\'il était propre ?', theme: 'hygiene', points: { yes: 1, no: 0 } },
-            { id: 'hygiene_fallback_5', text: 'As-tu déjà pété dans ton lit sous la couette ?', theme: 'hygiene', points: { yes: 1, no: 0 } }
+            { id: 'hygiene_fallback_1', text: 'oublié de te brosser les dents avant de dormir ?', theme: 'hygiene', points: { yes: 1, no: 0 } },
+            { id: 'hygiene_fallback_2', text: 'porté le même sous-vêtement plusieurs jours ?', theme: 'hygiene', points: { yes: 2, no: 0 } },
+            { id: 'hygiene_fallback_3', text: 'mangé quelque chose tombé par terre ?', theme: 'hygiene', points: { yes: 2, no: 0 } },
+            { id: 'hygiene_fallback_4', text: 'senti un vêtement pour savoir s\'il était propre ?', theme: 'hygiene', points: { yes: 1, no: 0 } },
+            { id: 'hygiene_fallback_5', text: 'pété dans ton lit sous la couette ?', theme: 'hygiene', points: { yes: 1, no: 0 } }
         ],
     };
 
-    themes.forEach(theme => {
+    const allQuestions: Question[] = [];
+
+    (Object.keys(themeQuestionCounts) as Theme[]).forEach(theme => {
+        const requiredCount = themeQuestionCounts[theme];
         const themeQuestions: Question[] = [];
 
-        // Récupérer toutes les questions pour ce thème depuis i18n
         const levels = ['level1', 'level2', 'level3', 'level4', 'level5'];
-        if (theme === 'morality') {
-            levels.push('levelBonus'); // Ajouter les questions bonus pour la moralité
-        }
+        if (theme === 'morality') levels.push('levelBonus');
 
         levels.forEach(level => {
             try {
                 const questionsData = t(`purityTest:questions.${theme}.${level}`, { returnObjects: true });
-
                 if (Array.isArray(questionsData)) {
                     questionsData.forEach((questionData: any) => {
                         themeQuestions.push({
@@ -75,21 +78,19 @@ function generateGameQuestions(t: any): Question[] {
             }
         });
 
-        // Si pas de questions trouvées via i18n, utiliser les questions de fallback
-        if (themeQuestions.length === 0 && fallbackQuestions[theme].length > 0) {
-            themeQuestions.push(...fallbackQuestions[theme]);
+        // Utiliser les fallback si pas assez de questions
+        if (themeQuestions.length < requiredCount) {
+            const needed = requiredCount - themeQuestions.length;
+            themeQuestions.push(...fallbackQuestions[theme].slice(0, needed));
         }
 
-        // Mélanger les questions de ce thème et prendre 5
-        const shuffledThemeQuestions = shuffleArray(themeQuestions);
-        const selectedQuestions = shuffledThemeQuestions.slice(0, 5);
-
-        allQuestions.push(...selectedQuestions);
+        const shuffled = shuffleArray(themeQuestions);
+        allQuestions.push(...shuffled.slice(0, requiredCount));
     });
 
-    // Mélanger toutes les questions pour un ordre aléatoire
     return shuffleArray(allQuestions);
 }
+
 
 export const usePurityTest = (initialPlayers: Player[]) => {
     const { t } = useTranslation();
@@ -190,18 +191,17 @@ export const usePurityTest = (initialPlayers: Player[]) => {
         const playersWithResults = gameState.players.map((player, index) => {
             const totalScore = player.score;
 
-            // Calculer le pourcentage d'impureté basé sur les vrais points
             const impurityPercentage = maxPossibleScore > 0 ? Math.round((totalScore / maxPossibleScore) * 100) : 0;
 
-            // Déterminer le niveau d'impureté
             let impurityLevel: string;
-            if (impurityPercentage <= 10) impurityLevel = 'saint';
-            else if (impurityPercentage <= 25) impurityLevel = 'pure';
+            if (impurityPercentage <= 25) impurityLevel = 'saint';
+            else if (impurityPercentage <= 35) impurityLevel = 'pure';
             else if (impurityPercentage <= 45) impurityLevel = 'mostlyPure';
-            else if (impurityPercentage <= 65) impurityLevel = 'mixed';
-            else if (impurityPercentage <= 80) impurityLevel = 'naughty';
-            else if (impurityPercentage <= 95) impurityLevel = 'veryImpure';
-            else impurityLevel = 'diabolical';
+            else if (impurityPercentage <= 55) impurityLevel = 'mixed';
+            else if (impurityPercentage <= 65) impurityLevel = 'naughty';
+            else if (impurityPercentage <= 75) impurityLevel = 'veryImpure';
+            else if (impurityPercentage <= 85) impurityLevel = 'diabolical';
+            else impurityLevel = 'beyondEvil';
 
             // Calculer les pourcentages par thème
             const themePercentages: Record<Theme, number> = {} as Record<Theme, number>;
@@ -274,4 +274,4 @@ export const usePurityTest = (initialPlayers: Player[]) => {
         isGameFinished: gameState.isGameFinished,
         totalQuestions: gameState.questions.length
     };
-}; 
+};

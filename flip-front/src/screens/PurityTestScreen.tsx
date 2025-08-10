@@ -8,7 +8,8 @@ import {
 } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../types';
+import { useTranslation } from 'react-i18next';
+import { Player, RootStackParamList } from '../types';
 import { usePurityTest } from '../games/purity-test';
 import { THEME_COLORS, THEME_LABELS } from '../games/purity-test';
 import { CardStack } from '../games/purity-test/components';
@@ -19,7 +20,8 @@ type PurityTestScreenRouteProp = RouteProp<RootStackParamList, 'PurityTest'>;
 export function PurityTestScreen() {
     const route = useRoute<PurityTestScreenRouteProp>();
     const navigation = useNavigation();
-    const { players } = route.params;
+    const { t } = useTranslation();
+    const { players } = route.params as { players: Player[] };
     const {
         gameState,
         currentQuestion,
@@ -77,7 +79,7 @@ export function PurityTestScreen() {
             {/* Header avec progression */}
             <View style={styles.header}>
                 <Text style={styles.questionCounter}>
-                    Question {gameState.currentQuestionIndex + 1} / {totalQuestions}
+                    {t('common:labels.question', { current: gameState.currentQuestionIndex + 1, total: totalQuestions })}
                 </Text>
                 <View style={styles.progressBar}>
                     <View style={[styles.progressFill, { width: `${progress}%` }]} />
@@ -95,6 +97,7 @@ export function PurityTestScreen() {
                     </Text>
                 </View>
                 <View style={styles.questionTextContainer}>
+                    <Text style={styles.questionPrefix}>{t('purityTest:game.questionPrefix')}</Text>
                     <Text style={styles.questionText}>{currentQuestion.text}</Text>
                 </View>
                 <View style={styles.pointsContainer}>
@@ -124,7 +127,7 @@ export function PurityTestScreen() {
                 <Text style={styles.remainingText}>
                     {gameState.players.filter(player =>
                         !player.answers.some(answer => answer.questionId === currentQuestion.id)
-                    ).length} joueur(s) restant(s)
+                    ).length} {t('common:messages.remainingPlayers')}
                 </Text>
             </View>
         </SafeAreaView>
@@ -184,6 +187,13 @@ const styles = StyleSheet.create({
     },
     questionTextContainer: {
         alignItems: 'center',
+    },
+    questionPrefix: {
+        fontSize: 16,
+        color: Colors.text.secondary,
+        textAlign: 'center',
+        fontStyle: 'italic',
+        marginBottom: 8,
     },
     questionText: {
         fontSize: 18,

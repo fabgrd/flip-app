@@ -2,7 +2,7 @@
     "screens": {
         "home": "Home",
         "gameSelect": "Game Selection",
-        "purityTest": "Purity Test",
+        "purityTest": "Impurity Test",
         "purityResults": "Results",
         "settings": "Settings"
     }

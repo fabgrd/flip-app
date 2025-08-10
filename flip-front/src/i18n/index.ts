@@ -32,6 +32,8 @@ const LANGUAGE_DETECTOR = {
     },
 };
 
+const NAMESPACES = ['common', 'navigation', 'home', 'games', 'purityTest', 'settings'] as const;
+
 i18n
     .use(LANGUAGE_DETECTOR)
     .use(initReactI18next)
@@ -39,6 +41,9 @@ i18n
         compatibilityJSON: 'v4',
         fallbackLng: 'fr',
         debug: __DEV__,
+        defaultNS: 'common',
+        ns: NAMESPACES as unknown as string[],
+        fallbackNS: 'common',
         interpolation: {
             escapeValue: false,
         },
@@ -47,6 +52,7 @@ i18n
             fr,
             zh,
         },
+        returnNull: false,
     });
 
 export default i18n; 

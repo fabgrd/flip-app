@@ -192,10 +192,10 @@ export function SwipeableCard({ player, onSwipe, onSwipeComplete, isActive = tru
 
                         <Animated.View style={[styles.overlay, overlayStyle]}>
                             <Animated.Text style={[styles.overlayText, yesLabelStyle]}>
-                                OUI ✅
+                                ✅
                             </Animated.Text>
                             <Animated.Text style={[styles.overlayText, noLabelStyle]}>
-                                NON ❌
+                                ❌
                             </Animated.Text>
                         </Animated.View>
                     </Animated.View>
