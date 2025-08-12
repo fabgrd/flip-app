@@ -9,7 +9,7 @@ import * as Haptics from 'expo-haptics';
 import { usePlayers } from '../contexts/PlayersContext';
 import { PlayerInput, PlayersList } from '../components';
 import { RootStackParamList } from '../types';
-import { Colors, GlobalStyles, MIN_PLAYERS_GLOBAL, MAX_PLAYERS_GLOBAL } from '../constants';
+import { GlobalStyles, MIN_PLAYERS_GLOBAL, MAX_PLAYERS_GLOBAL } from '../constants';
 import { useTheme } from '../contexts/ThemeContext';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
@@ -66,7 +66,9 @@ export function HomeScreen() {
         {/* Header */}
         <View style={styles.headerContent}>
           <Text style={[styles.appTitle, { color: theme.colors.primary }]}>{t('home:title')}</Text>
-          <Text style={[styles.appSubtitle, { color: theme.colors.text.secondary }]}>{t('home:subtitle')}</Text>
+          <Text style={[styles.appSubtitle, { color: theme.colors.text.secondary }]}>
+            {t('home:subtitle')}
+          </Text>
         </View>
 
         {/* Add Player Section */}
@@ -75,7 +77,6 @@ export function HomeScreen() {
             onAddPlayer={handleAddPlayer}
             maxPlayers={MAX_PLAYERS}
             currentPlayerCount={players.length}
-
           />
         </View>
 
@@ -92,7 +93,10 @@ export function HomeScreen() {
       {/* Start Game Button */}
       <View style={styles.footer}>
         <TouchableOpacity
-          style={[styles.startButton, { backgroundColor: canStartGame ? theme.colors.primary : theme.colors.button.disabled }]}
+          style={[
+            styles.startButton,
+            { backgroundColor: canStartGame ? theme.colors.primary : theme.colors.button.disabled },
+          ]}
           onPress={handleStartGame}
           disabled={!canStartGame}
         >
@@ -112,56 +116,56 @@ export function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  settingsTopRightWrapper: {
-    position: 'absolute',
-    top: 10,
-    right: 20,
-    zIndex: 1,
-  },
-  headerContent: {
-    paddingTop: 64,
-    paddingHorizontal: 20,
-    alignItems: 'center',
-    marginBottom: 24,
+  appSubtitle: {
+    fontSize: 16,
+    marginTop: 4,
+    textAlign: 'center',
   },
   appTitle: {
     fontSize: 48,
     fontWeight: 'bold',
     textAlign: 'center',
   },
-  appSubtitle: {
-    fontSize: 16,
-    textAlign: 'center',
-    marginTop: 4,
+  footer: {
+    padding: 20,
+    paddingTop: 0,
   },
-  settingsButton: {
-    padding: 8,
-    borderRadius: 20,
+  headerContent: {
+    alignItems: 'center',
+    marginBottom: 24,
+    paddingHorizontal: 20,
+    paddingTop: 64,
   },
   inputSection: {
     marginBottom: 24,
     paddingHorizontal: 20,
   },
+  minPlayersText: {
+    fontSize: 14,
+    fontStyle: 'italic',
+    textAlign: 'center',
+  },
   playersSection: {
     flex: 1,
   },
-  footer: {
-    padding: 20,
-    paddingTop: 0,
+  settingsButton: {
+    borderRadius: 20,
+    padding: 8,
+  },
+  settingsTopRightWrapper: {
+    position: 'absolute',
+    right: 20,
+    top: 10,
+    zIndex: 1,
   },
   startButton: {
-    paddingVertical: 16,
-    borderRadius: 12,
     alignItems: 'center',
+    borderRadius: 12,
     marginBottom: 12,
+    paddingVertical: 16,
   },
   startButtonText: {
     fontSize: 18,
     fontWeight: 'bold',
-  },
-  minPlayersText: {
-    fontSize: 14,
-    textAlign: 'center',
-    fontStyle: 'italic',
   },
 });

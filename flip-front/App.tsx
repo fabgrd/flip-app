@@ -1,15 +1,28 @@
 import React from 'react';
-import { NavigationContainer, DefaultTheme, DarkTheme, Theme as NavTheme } from '@react-navigation/native';
+import {
+  NavigationContainer,
+  DefaultTheme,
+  DarkTheme,
+  Theme as NavTheme,
+} from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import './src/i18n';
 
-import { PlayersProvider } from './src/contexts/PlayersContext';
-import { HomeScreen, GameSelectScreen, PurityTestScreen, PurityResultsScreen, SettingsScreen, CameleonScreen, CameleonResultsScreen } from './src/screens';
-import { RootStackParamList } from './src/types';
 import { PortalProvider } from '@gorhom/portal';
-import { ThemeProvider, useTheme } from './src/contexts/ThemeContext';
 import { View } from 'react-native';
+import { PlayersProvider } from './src/contexts/PlayersContext';
+import {
+  HomeScreen,
+  GameSelectScreen,
+  PurityTestScreen,
+  PurityResultsScreen,
+  SettingsScreen,
+  CameleonScreen,
+  CameleonResultsScreen,
+} from './src/screens';
+import { RootStackParamList } from './src/types';
+import { ThemeProvider, useTheme } from './src/contexts/ThemeContext';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -26,7 +39,11 @@ function ThemedAppNavigator() {
           <Stack.Screen name="PurityResults" component={PurityResultsScreen} />
           <Stack.Screen name="Settings" component={SettingsScreen} />
           <Stack.Screen name="Cameleon" component={CameleonScreen} />
-          <Stack.Screen name="CameleonResults" component={CameleonResultsScreen} options={{ gestureEnabled: false }} />
+          <Stack.Screen
+            name="CameleonResults"
+            component={CameleonResultsScreen}
+            options={{ gestureEnabled: false }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </View>

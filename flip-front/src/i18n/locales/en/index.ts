@@ -7,11 +7,11 @@ import settings from './settings.json';
 import cameleon from './cameleon.json';
 
 export default {
-    common,
-    navigation,
-    home,
-    games,
-    purityTest,
-    settings,
-    cameleon,
-}; 
+  common,
+  navigation,
+  home,
+  games,
+  purityTest,
+  settings,
+  cameleon,
+};

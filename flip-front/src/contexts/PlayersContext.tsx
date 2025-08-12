@@ -26,7 +26,7 @@ export function PlayersProvider({ children }: { children: ReactNode }) {
     if (trimmedName === '') return false;
 
     // Vérifier si le nom existe déjà
-    if (players.some(player => player.name.toLowerCase() === trimmedName.toLowerCase())) {
+    if (players.some((player) => player.name.toLowerCase() === trimmedName.toLowerCase())) {
       return false;
     }
 
@@ -35,18 +35,16 @@ export function PlayersProvider({ children }: { children: ReactNode }) {
       name: trimmedName,
     };
 
-    setPlayers(prev => [...prev, newPlayer]);
+    setPlayers((prev) => [...prev, newPlayer]);
     return true;
   };
 
   const removePlayer = (id: string) => {
-    setPlayers(prev => prev.filter(player => player.id !== id));
+    setPlayers((prev) => prev.filter((player) => player.id !== id));
   };
 
   const updatePlayerAvatar = (id: string, avatar: string) => {
-    setPlayers(prev => prev.map(player =>
-      player.id === id ? { ...player, avatar } : player
-    ));
+    setPlayers((prev) => prev.map((player) => (player.id === id ? { ...player, avatar } : player)));
   };
 
   const clearPlayers = () => {
@@ -92,11 +90,7 @@ export function PlayersProvider({ children }: { children: ReactNode }) {
     savePlayers,
   };
 
-  return (
-    <PlayersContext.Provider value={value}>
-      {children}
-    </PlayersContext.Provider>
-  );
+  return <PlayersContext.Provider value={value}>{children}</PlayersContext.Provider>;
 }
 
 export function usePlayers(): PlayersContextType {
@@ -105,4 +99,4 @@ export function usePlayers(): PlayersContextType {
     throw new Error('usePlayers must be used within a PlayersProvider');
   }
   return context;
-} 
+}

@@ -1,2 +1,2 @@
 export { SwipeableCard } from './SwipeableCard';
-export { CardStack } from './CardStack'; 
+export { CardStack } from './CardStack';
