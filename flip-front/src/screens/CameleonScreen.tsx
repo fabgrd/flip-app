@@ -10,6 +10,7 @@ import { Player, RootStackParamList } from '../types';
 import { useCameleon } from '../games/cameleon';
 import { RevealCard, SettingsPanel, PlayerGrid, MrWhiteGuessModal, ActionBar } from '../games/cameleon/components';
 import { Avatar, PopModal } from '../components/common';
+import { useTheme } from '../contexts/ThemeContext';
 
 type CameleonRouteProp = RouteProp<RootStackParamList, 'Cameleon'>;
 
@@ -182,15 +183,18 @@ export function CameleonScreen() {
         if (mrWhiteToGuessId) setGuess('');
     }, [mrWhiteToGuessId]);
 
+    const { theme } = useTheme();
+
     return (
-        <SafeAreaView style={[GlobalStyles.container, styles.container]}>
+        <SafeAreaView style={[GlobalStyles.container, styles.container, { backgroundColor: theme.colors.background }]}>
             <View style={styles.header}>
-                <Text style={styles.title}>{t('cameleon:game.title')}</Text>
-                <Text style={styles.subtitle}>{t('cameleon:game.subtitle')}</Text>
+                <Text style={[styles.title, { color: theme.colors.primary }]}>{t('cameleon:game.title')}</Text>
+                <Text style={[styles.subtitle, { color: theme.colors.text.secondary }]}>{t('cameleon:game.subtitle')}</Text>
             </View>
 
             {phase === 'settings' && (
-                <Animated.View entering={FadeIn} exiting={FadeOut} style={[styles.settingsBox, { flex: 1 }]}>
+                <Animated.View entering={FadeIn} exiting={FadeOut} style={[styles.settingsBox, { flex: 1, backgroundColor: theme.colors.background, borderColor: theme.colors.border }]}>
+                    {/* SettingsPanel already uses theme via parent-provided callbacks */}
                     <SettingsPanel
                         playersCount={players.length}
                         currentUC={currentUC}
@@ -257,41 +261,41 @@ export function CameleonScreen() {
 const styles = StyleSheet.create({
     container: { flex: 1 },
     header: { padding: 20, alignItems: 'center' },
-    title: { fontSize: 24, fontWeight: 'bold', color: Colors.primary },
-    subtitle: { fontSize: 14, color: Colors.text.secondary, marginTop: 4, textAlign: 'center' },
-    settingsBox: { margin: 16, padding: 16, backgroundColor: Colors.background, borderRadius: 12, borderWidth: 1, borderColor: '#EDEDED' },
-    sectionTitle: { fontSize: 18, fontWeight: 'bold', color: Colors.text.primary, marginBottom: 8, textAlign: 'center' },
-    sectionSubtitle: { fontSize: 14, color: Colors.text.secondary, marginBottom: 8, textAlign: 'center' },
-    counterInfo: { fontSize: 13, color: Colors.text.secondary, marginBottom: 12, textAlign: 'center' },
+    title: { fontSize: 24, fontWeight: 'bold' },
+    subtitle: { fontSize: 14, marginTop: 4, textAlign: 'center' },
+    settingsBox: { margin: 16, padding: 16, borderRadius: 12, borderWidth: 1 },
+    sectionTitle: { fontSize: 18, fontWeight: 'bold', marginBottom: 8, textAlign: 'center' },
+    sectionSubtitle: { fontSize: 14, marginBottom: 8, textAlign: 'center' },
+    counterInfo: { fontSize: 13, marginBottom: 12, textAlign: 'center' },
     row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 },
-    label: { fontSize: 16, color: Colors.text.primary, fontWeight: '600' },
+    label: { fontSize: 16, fontWeight: '600' },
     stepper: { flexDirection: 'row', alignItems: 'center' },
-    stepperBtn: { width: 36, height: 36, borderRadius: 8, backgroundColor: Colors.background, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: '#E0E0E0' },
-    stepperBtnText: { fontSize: 20, color: Colors.text.primary },
-    stepperValue: { width: 40, textAlign: 'center', fontSize: 16, color: Colors.text.primary },
-    primaryBtn: { backgroundColor: Colors.primary, paddingVertical: 14, borderRadius: 12, alignItems: 'center', marginTop: 8 },
-    primaryBtnText: { color: Colors.text.white, fontSize: 16, fontWeight: 'bold' },
+    stepperBtn: { width: 36, height: 36, borderRadius: 8, alignItems: 'center', justifyContent: 'center', borderWidth: 1 },
+    stepperBtnText: { fontSize: 20 },
+    stepperValue: { width: 40, textAlign: 'center', fontSize: 16 },
+    primaryBtn: { paddingVertical: 14, borderRadius: 12, alignItems: 'center', marginTop: 8 },
+    primaryBtnText: { fontSize: 16, fontWeight: 'bold' },
     btnDisabled: { opacity: 0.5 },
-    revealBox: { margin: 16, padding: 16, backgroundColor: Colors.background, borderRadius: 12, borderWidth: 1, borderColor: '#EDEDED' },
+    revealBox: { margin: 16, padding: 16, borderRadius: 12, borderWidth: 1 },
     gridItem: { flexBasis: '33.333%', alignSelf: 'stretch', alignItems: 'center', paddingVertical: 14, height: 134, borderRadius: 12 },
-    gridOrder: { fontSize: 13, color: Colors.primary },
+    gridOrder: { fontSize: 13 },
     statusContainer: { height: 24, alignItems: 'center', justifyContent: 'center', marginTop: 6 },
-    gridName: { fontSize: 13, color: Colors.text.primary, marginTop: 6, maxWidth: 100, textAlign: 'center' },
-    eliminatedPill: { paddingHorizontal: 10, paddingVertical: 3, backgroundColor: Colors.danger, borderRadius: 12 },
-    eliminatedPillText: { color: Colors.text.white, fontSize: 11, fontWeight: '800' },
-    secondaryBtn: { marginTop: 16, backgroundColor: Colors.background, borderWidth: 1, borderColor: Colors.primary, paddingVertical: 12, borderRadius: 12, alignItems: 'center' },
-    secondaryBtnText: { color: Colors.primary, fontSize: 16, fontWeight: '600' },
+    gridName: { fontSize: 13, marginTop: 6, maxWidth: 100, textAlign: 'center' },
+    eliminatedPill: { paddingHorizontal: 10, paddingVertical: 3, borderRadius: 12 },
+    eliminatedPillText: { fontSize: 11, fontWeight: '800' },
+    secondaryBtn: { marginTop: 16, paddingVertical: 12, borderRadius: 12, alignItems: 'center' },
+    secondaryBtnText: { fontSize: 16, fontWeight: '600' },
     ghostBtn: { marginTop: 12, alignItems: 'center', paddingVertical: 10 },
-    ghostBtnText: { color: Colors.text.secondary, fontSize: 14 },
-    selectedItem: { backgroundColor: 'rgba(255,107,107,0.10)', borderColor: Colors.primary, borderWidth: 1.5 },
-    resultCard: { backgroundColor: Colors.background, borderRadius: 12, padding: 16, alignItems: 'center', borderWidth: 1, borderColor: '#EDEDED' },
-    resultTitle: { fontSize: 18, fontWeight: '700', color: Colors.text.primary, marginBottom: 8 },
-    eliminatedName: { fontSize: 20, fontWeight: '800', color: Colors.primary, marginTop: 4 },
-    eliminatedRole: { fontSize: 22, fontWeight: '800', color: Colors.text.primary, marginTop: 4 },
+    ghostBtnText: { fontSize: 14 },
+    selectedItem: { borderWidth: 1.5 },
+    resultCard: { borderRadius: 12, padding: 16, alignItems: 'center', borderWidth: 1 },
+    resultTitle: { fontSize: 18, fontWeight: '700', marginBottom: 8 },
+    eliminatedName: { fontSize: 20, fontWeight: '800', marginTop: 4 },
+    eliminatedRole: { fontSize: 22, fontWeight: '800', marginTop: 4 },
     winnerText: { fontSize: 18, fontWeight: '800', marginTop: 12 },
-    winnerCivilians: { color: '#2E7D32' },
-    winnerUndercover: { color: '#C62828' },
+    winnerCivilians: {},
+    winnerUndercover: {},
     // Mr White
-    mrWhitePrompt: { fontSize: 15, color: Colors.text.secondary, textAlign: 'center', marginTop: 8 },
-    input: { marginTop: 12, borderWidth: 1, borderColor: '#E0E0E0', borderRadius: 10, paddingVertical: 10, paddingHorizontal: 12, minWidth: 220, color: Colors.text.primary },
+    mrWhitePrompt: { fontSize: 15, textAlign: 'center', marginTop: 8 },
+    input: { marginTop: 12, borderWidth: 1, borderRadius: 10, paddingVertical: 10, paddingHorizontal: 12, minWidth: 220 },
 }); 

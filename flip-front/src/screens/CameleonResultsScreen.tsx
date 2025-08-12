@@ -9,6 +9,7 @@ import { Colors, GlobalStyles } from '../constants';
 import { RootStackParamList } from '../types';
 import type { CameleonAssignedPlayer } from '../games/cameleon';
 import { ConfettiBurst } from '../components/common';
+import { useTheme } from '../contexts/ThemeContext';
 
 
 type CameleonResultsRoute = RouteProp<RootStackParamList, 'CameleonResults'>;
@@ -17,6 +18,7 @@ export function CameleonResultsScreen() {
     const { t } = useTranslation();
     const route = useRoute<CameleonResultsRoute>();
     const navigation = useNavigation();
+    const { theme } = useTheme();
 
     const { players } = route.params as { players: CameleonAssignedPlayer[] };
 
@@ -57,7 +59,7 @@ export function CameleonResultsScreen() {
     }, []);
 
     const winnerText = winner === 'civilians' ? t('cameleon:outcome.civiliansWin') : t('cameleon:outcome.undercoverWin');
-    const winnerColor = winner === 'civilians' ? styles.winnerCivilians : styles.winnerUndercover;
+    const winnerBg = winner === 'civilians' ? { backgroundColor: '#1B5E2055' } : { backgroundColor: '#9C191955' };
 
     const handleReplay = () => {
         const nextPlayers = players.map((p) => {
@@ -70,48 +72,48 @@ export function CameleonResultsScreen() {
     };
 
     return (
-        <SafeAreaView style={[GlobalStyles.container, styles.container]}>
+        <SafeAreaView style={[GlobalStyles.container, styles.container, { backgroundColor: theme.colors.background }]}>
             <ConfettiBurst visible={showConfetti} />
 
             <View style={styles.header}>
-                <Text style={styles.title}>{t('cameleon:results.title')}</Text>
-                <Text style={styles.subtitle}>{t('cameleon:results.subtitle')}</Text>
+                <Text style={[styles.title, { color: theme.colors.primary }]}>{t('cameleon:results.title')}</Text>
+                <Text style={[styles.subtitle, { color: theme.colors.text.secondary }]}>{t('cameleon:results.subtitle')}</Text>
             </View>
 
-            <Animated.View entering={FadeIn} style={[styles.winnerBanner, winnerColor, winnerStyle]}>
-                <Text style={styles.winnerText}>🏆 {winnerText}</Text>
+            <Animated.View entering={FadeIn} style={[styles.winnerBanner, winnerBg, winnerStyle]}>
+                <Text style={[styles.winnerText, { color: theme.colors.text.primary }]}>🏆 {winnerText}</Text>
             </Animated.View>
 
-            <View style={styles.card}>
+            <View style={[styles.card, { backgroundColor: theme.colors.background, borderColor: theme.colors.border }]}>
                 {sorted.map((p) => (
-                    <Animated.View key={p.id} entering={ZoomIn} style={styles.row}>
-                        <Text style={styles.name}>{p.name}</Text>
-                        <Text style={styles.role}>{(p.role === 'civilian' ? t('cameleon:roles.civilian') : p.role === 'cameleon' ? t('cameleon:roles.cameleon') : t('cameleon:roles.mrWhite'))}</Text>
+                    <Animated.View key={p.id} entering={ZoomIn} style={[styles.row, { borderBottomColor: theme.colors.border }]}>
+                        <Text style={[styles.name, { color: theme.colors.text.primary }]}>{p.name}</Text>
+                        <Text style={[styles.role, { color: theme.colors.text.secondary }]}>{(p.role === 'civilian' ? t('cameleon:roles.civilian') : p.role === 'cameleon' ? t('cameleon:roles.cameleon') : t('cameleon:roles.mrWhite'))}</Text>
                         <View style={styles.wordCell}>
                             {p.role === 'mrWhite' ? (
                                 <>
-                                    <Text style={[styles.word, p.mrWhiteGuessCorrect && styles.wordCorrect]} numberOfLines={1}>
+                                    <Text style={[styles.word, { color: p.mrWhiteGuessCorrect ? theme.colors.success : theme.colors.text.secondary }, p.mrWhiteGuessCorrect && styles.wordCorrect]} numberOfLines={1}>
                                         {p.mrWhiteGuess ? p.mrWhiteGuess : '—'}
                                     </Text>
                                     {p.mrWhiteGuessCorrect && (
-                                        <Text style={styles.bonusBadge}>+5</Text>
+                                        <Text style={[styles.bonusBadge, { color: theme.colors.success }]}>+5</Text>
                                     )}
                                 </>
                             ) : (
-                                <Text style={styles.word} numberOfLines={1}>{p.secretWord ?? '—'}</Text>
+                                <Text style={[styles.word, { color: theme.colors.text.secondary }]} numberOfLines={1}>{p.secretWord ?? '—'}</Text>
                             )}
                         </View>
-                        <Text style={styles.points}>{p.points}</Text>
+                        <Text style={[styles.points, { color: theme.colors.text.primary }]}>{p.points}</Text>
                     </Animated.View>
                 ))}
             </View>
 
-            <TouchableOpacity style={styles.primaryBtn} onPress={handleReplay}>
-                <Text style={styles.primaryBtnText}>{t('common:buttons.playAgain', 'Rejouer')}</Text>
+            <TouchableOpacity style={[styles.primaryBtn, { backgroundColor: theme.colors.primary }]} onPress={handleReplay}>
+                <Text style={[styles.primaryBtnText, { color: theme.colors.text.white }]}>{t('common:buttons.playAgain', 'Rejouer')}</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.secondaryBtn} onPress={() => navigation.navigate('Home' as never)}>
-                <Text style={styles.secondaryBtnText}>{t('common:buttons.back')}</Text>
+            <TouchableOpacity style={[styles.secondaryBtn, { backgroundColor: theme.colors.background, borderColor: theme.colors.primary }]} onPress={() => navigation.navigate('Home' as never)}>
+                <Text style={[styles.secondaryBtnText, { color: theme.colors.primary }]}>{t('common:buttons.back')}</Text>
             </TouchableOpacity>
         </SafeAreaView>
     );
@@ -120,23 +122,21 @@ export function CameleonResultsScreen() {
 const styles = StyleSheet.create({
     container: { flex: 1 },
     header: { padding: 20, alignItems: 'center' },
-    title: { fontSize: 24, fontWeight: 'bold', color: Colors.primary },
-    subtitle: { fontSize: 14, color: Colors.text.secondary, marginTop: 4, textAlign: 'center' },
+    title: { fontSize: 24, fontWeight: 'bold' },
+    subtitle: { fontSize: 14, marginTop: 4, textAlign: 'center' },
     winnerBanner: { alignSelf: 'center', paddingHorizontal: 16, paddingVertical: 10, borderRadius: 999, marginBottom: 8 },
-    winnerCivilians: { backgroundColor: '#E8F5E9' },
-    winnerUndercover: { backgroundColor: '#FFEBEE' },
-    winnerText: { fontSize: 18, fontWeight: '900', color: Colors.text.primary },
-    card: { margin: 16, padding: 16, backgroundColor: Colors.background, borderRadius: 12, borderWidth: 1, borderColor: '#EDEDED' },
-    row: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: '#EFEFEF' },
-    name: { fontSize: 16, color: Colors.text.primary, fontWeight: '600', flex: 1 },
-    role: { fontSize: 18, color: Colors.text.secondary, width: 110, textAlign: 'center', fontWeight: '800' },
+    winnerText: { fontSize: 18, fontWeight: '900' },
+    card: { margin: 16, padding: 16, borderRadius: 12, borderWidth: 1 },
+    row: { flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 10, borderBottomWidth: 1 },
+    name: { fontSize: 16, fontWeight: '600', flex: 1 },
+    role: { fontSize: 18, width: 110, textAlign: 'center', fontWeight: '800' },
     wordCell: { width: 110, alignItems: 'flex-end' },
-    word: { fontSize: 14, color: Colors.text.secondary },
-    wordCorrect: { color: Colors.success, fontWeight: '800' },
-    bonusBadge: { marginTop: 2, color: Colors.success, fontWeight: '900', fontSize: 12 },
-    points: { width: 50, textAlign: 'right', fontSize: 16, fontWeight: '900', color: Colors.text.primary },
-    primaryBtn: { backgroundColor: Colors.primary, paddingVertical: 14, borderRadius: 12, alignItems: 'center', marginHorizontal: 16, marginTop: 8 },
-    primaryBtnText: { color: Colors.text.white, fontSize: 16, fontWeight: 'bold' },
-    secondaryBtn: { marginTop: 8, backgroundColor: Colors.background, borderWidth: 1, borderColor: Colors.primary, paddingVertical: 12, borderRadius: 12, alignItems: 'center', marginHorizontal: 16 },
-    secondaryBtnText: { color: Colors.primary, fontSize: 16, fontWeight: '600' },
+    word: { fontSize: 14 },
+    wordCorrect: { fontWeight: '800' },
+    bonusBadge: { marginTop: 2, fontWeight: '900', fontSize: 12 },
+    points: { width: 50, textAlign: 'right', fontSize: 16, fontWeight: '900' },
+    primaryBtn: { paddingVertical: 14, borderRadius: 12, alignItems: 'center', marginHorizontal: 16, marginTop: 8 },
+    primaryBtnText: { fontSize: 16, fontWeight: 'bold' },
+    secondaryBtn: { marginTop: 8, borderWidth: 1, paddingVertical: 12, borderRadius: 12, alignItems: 'center', marginHorizontal: 16 },
+    secondaryBtnText: { fontSize: 16, fontWeight: '600' },
 }); 

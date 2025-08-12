@@ -2,6 +2,7 @@ import React, { useEffect, useMemo } from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, Easing } from 'react-native-reanimated';
 import { Colors } from '../../constants';
+import { useTheme } from '../../contexts/ThemeContext';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
@@ -40,6 +41,7 @@ export function ConfettiPiece({ piece, visible }: { piece: ConfettiPieceConfig; 
 }
 
 export function ConfettiBurst({ visible, count = 22 }: { visible: boolean; count?: number }) {
+    const { theme } = useTheme();
     const pieces = useMemo<ConfettiPieceConfig[]>(
         () =>
             Array.from({ length: count }).map((_, i) => ({
@@ -48,10 +50,10 @@ export function ConfettiBurst({ visible, count = 22 }: { visible: boolean; count
                 delay: Math.random() * 300,
                 duration: 1200 + Math.random() * 800,
                 rotate: (Math.random() * 2 - 1) * 60,
-                color: [Colors.primary, Colors.secondary, Colors.accent, Colors.warning, Colors.danger, Colors.success][i % 6],
+                color: [theme.colors.primary, theme.colors.secondary, theme.colors.accent, theme.colors.warning, theme.colors.danger, theme.colors.success][i % 6],
                 size: 6 + Math.random() * 8,
             })),
-        [count]
+        [count, theme.colors]
     );
 
     if (!visible) return null;
