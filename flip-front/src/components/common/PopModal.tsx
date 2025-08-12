@@ -18,7 +18,6 @@ export function PopModal({ visible, title, name, avatar, children, badgeEmoji, b
     if (!visible) return null;
     return (
         <Animated.View entering={ZoomIn} exiting={ZoomOut} style={styles.overlay}>
-            {/* Block interactions behind the modal, but do not close on press */}
             <Pressable style={StyleSheet.absoluteFill} />
             <View style={styles.card} pointerEvents="auto">
                 {name && (

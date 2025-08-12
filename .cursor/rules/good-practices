@@ -1,0 +1,98 @@
+### Projet
+- Application mobile React Native + Expo nommée "FL!P" (dossier: `flip-front`).
+- Langage: TypeScript.
+- Navigation: React Navigation (Stack).
+- i18n: i18next + react-i18next, langues supportées: fr (défaut), en, zh.
+- Gestion joueurs globale: `PlayersContext`.
+- Jeux: architecture modulaire (ex. `src/games/purity-test`).
+
+### Structure importante
+- Code app: `flip-front/src/`
+  - Composants réutilisables: `src/components/`
+  - Constances/Thème: `src/constants/` (`Colors`, `GlobalStyles`, etc.)
+  - Context: `src/contexts/PlayersContext.tsx`
+  - Hooks: `src/hooks/`
+  - Écrans: `src/screens/` (+ index d’exports)
+  - Jeux: `src/games/<game-id>/` (components, hooks, constants, types)
+  - Types globaux et navigation: `src/types/`
+  - i18n: `src/i18n/` avec `index.ts` et `locales/{fr,en,zh}/`
+- Entrée app: `flip-front/App.tsx` (Stack Navigator)
+- Gestion des assets: `flip-front/assets/`
+
+### Démarrage & commandes
+- Gestionnaire de paquets: pnpm (utiliser dans `flip-front`)
+- Lancer: `pnpm start` (ou `npx expo start`)
+- iOS: `pnpm ios` — Android: `pnpm android` — Web: `pnpm web`
+- Ajouter des deps: `pnpm add <pkg>` dans `flip-front`
+
+### Navigation (Stack)
+- Stack créé dans `App.tsx` via `createStackNavigator<RootStackParamList>()`.
+- Écrans existants: `Home`, `GameSelect`, `PurityTest`, `PurityResults`, `Settings`.
+- Exporter tout nouvel écran via `src/screens/index.ts` et l’ajouter au Stack si global.
+- Types navigation: `RootStackParamList` (défini dans `src/types/games.ts`). Les jeux peuvent étendre les routes via la déclaration globale.
+- Toujours utiliser les types `StackNavigationProp`/`useNavigation` typed.
+
+### i18n
+- Initialisation: `src/i18n/index.ts` (namespaces: `common`, `navigation`, `home`, `games`, `purityTest`, `settings`).
+- Fichiers de locales par langue: `src/i18n/locales/{fr,en,zh}/` avec un `index.ts` qui agrège les JSON par namespace.
+- Persistance langue: AsyncStorage sous la clé `user-language`.
+- Utilisation: `const { t } = useTranslation();` + clés namespacées (ex: `t('home:title')`).
+- Lors d’ajouts d’écrans/jeux, créer les entrées de traduction dans chaque langue.
+- Ne jamais hardcoder de texte UI; utiliser i18n.
+
+### Jeux (scalabilité)
+- Chaque jeu vit sous `src/games/<game-id>/` et expose au minimum:
+  - `components/` (UI du jeu), `hooks/` (logique), `constants.ts`, `types.ts`, `index.ts` (exports publics)
+- Ajouter un fichier de traductions dédié par jeu (ex: `purity-test.json`) dans chaque langue.
+- Déclarer les routes spécifiques du jeu via `RootStackParamList` étendu (voir `src/types/games.ts`).
+- Respecter une interface standard réutilisable (voir `GameRule` dans `src/types/games.ts`) pour faciliter l’ajout de nouveaux jeux.
+
+### Conventions de code
+- TypeScript strict sur les API/export. Éviter `any`.
+- Nommage descriptif et explicite (pas de noms 1-2 caractères).
+- Fonctions: verbes; variables: noms/phrases nominatives.
+- Préférer la composition de composants; éviter l’imbrication profonde (>2-3 niveaux).
+- Garder des composants UI "dumb"; déplacer la logique dans des hooks (`src/hooks` ou `src/games/<id>/hooks`).
+- Gestion d’état locale via hooks; état global via context si nécessaire (ex: `PlayersContext`).
+- Styles: utiliser `Colors`, `GlobalStyles` et styles locaux par écran/composant. Pas de styles inline complexes.
+- Commentaires concis pour expliquer le "pourquoi" seulement. Pas de TODO: implémenter directement.
+- Formatage: respecter le style existant, lignes longues wrap, éviter de reformater du code non lié.
+- Pas de commentaires narratifs dans le code.
+
+### UI/UX
+- Utiliser `Colors` et thème centralisé.
+- Icônes: `@expo/vector-icons` (ex: `Ionicons`).
+- Animations: `react-native-reanimated`, `react-native-gesture-handler` si nécessaire.
+- Haptique: `expo-haptics` pour feedback sur actions clés.
+- Accessibilité: textes lisibles, tailles cohérentes, labels i18n.
+
+### Purity Test (existant)
+- Hook principal: `src/games/purity-test/hooks/usePurityTest.ts` (gère état, progression, résultats).
+- Composants cartes: sous `src/games/purity-test/components/`.
+- Écrans: `PurityTestScreen`, `PurityResultsScreen`.
+- Utiliser `gameState.currentQuestionIndex` pour synchronisation et éviter les race conditions.
+
+### Logs & erreurs
+- Garder les `console.log` pour debug local; éviter en prod ou protéger via flag.
+- Toujours gérer les cas "vide/chargement/erreur" (ex: question manquante => état de chargement, texte i18n `common:labels.loading`).
+
+### Tests/build
+- Après changements majeurs (navigation, i18n, nouveaux écrans), lancer l’app et vérifier les écrans clés.
+- Vérifier les types TS et l’absence d’erreurs ESLint.
+
+### Do / Don’t
+- Do:
+  - Utiliser i18n pour toute chaîne UI
+  - Taper la navigation et les props
+  - Ajouter les écrans via `src/screens/index.ts`
+  - Factoriser la logique dans des hooks
+  - Garder les fichiers courts et cohérents
+- Don’t:
+  - Hardcoder des textes ou couleurs
+  - Ajouter des dépendances sans nécessité
+  - Mélanger logique et présentation de façon confuse
+
+### Outils (pour assistants)
+- Préférer des chemins absolus pour les actions système.
+- Lors de modifications de code, effectuer des "edits" ciblés et conserver le style existant.
+- Grouper les lectures de fichiers (IO) et privilégier des recherches sémantiques pour l’exploration. 
