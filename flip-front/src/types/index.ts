@@ -1,7 +1,7 @@
 
 export type {
   Player,
-  Game,
+  GameMetadata,
   RootStackParamList
 } from './games';
 

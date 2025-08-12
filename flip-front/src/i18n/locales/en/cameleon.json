@@ -1,0 +1,59 @@
+{
+    "name": "Chameleon",
+    "description": "Guess the impostors from clues... without revealing your word!",
+    "game": {
+        "title": "Chameleon",
+        "subtitle": "Settings and role distribution"
+    },
+    "settings": {
+        "title": "Settings",
+        "subtitle": "{{count}} players",
+        "undercover": "Undercover",
+        "mrWhite": "Mr White"
+    },
+    "actions": {
+        "start": "Start",
+        "reveal": "Reveal",
+        "seeResults": "See results",
+        "reset": "Reset",
+        "goToVote": "Go to vote",
+        "eliminate": "Eliminate",
+        "submit": "Submit"
+    },
+    "reveal": {
+        "title": "Word reveal",
+        "subtitle": "Pass the phone to each player",
+        "secretWord": "Secret word: {{word}}",
+        "mrWhiteWarning": "You are Mr White! No word for you — bluff smart."
+    },
+    "roles": {
+        "civilian": "Civilian",
+        "cameleon": "Undercover",
+        "mrWhite": "Mr White"
+    },
+    "results": {
+        "title": "Results",
+        "subtitle": "Roles and words"
+    },
+    "outcome": {
+        "civiliansWin": "Civilians win!",
+        "undercoverWin": "Undercover win!"
+    },
+    "badges": {
+        "eliminated": "OUT"
+    },
+    "modals": {
+        "firstPlayer": "{{name}} starts!"
+    },
+    "notices": {
+        "eliminatedRole": "1 {{role}} eliminated"
+    },
+    "counters": {
+        "remainingImpostors": "Impostors remaining: {{count}}"
+    },
+    "mrWhite": {
+        "guessTitle": "Mr White",
+        "guessPrompt": "Oops, you were discovered. You can still try to guess the word. If you find it you’ll know at the end of the game.",
+        "placeholder": "Type your guess here"
+    }
+}

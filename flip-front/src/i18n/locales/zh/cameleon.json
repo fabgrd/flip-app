@@ -1,0 +1,59 @@
+{
+    "name": "变色龙",
+    "description": "从线索中猜出内鬼…同时别暴露你的词！",
+    "game": {
+        "title": "变色龙",
+        "subtitle": "设置与角色分配"
+    },
+    "settings": {
+        "title": "设置",
+        "subtitle": "{{count}} 位玩家",
+        "undercover": "Undercover",
+        "mrWhite": "Mr White"
+    },
+    "actions": {
+        "start": "开始",
+        "reveal": "揭示",
+        "seeResults": "查看结果",
+        "reset": "重置",
+        "goToVote": "进入投票",
+        "eliminate": "淘汰",
+        "submit": "确认"
+    },
+    "reveal": {
+        "title": "词语展示",
+        "subtitle": "把手机依次传给每位玩家",
+        "secretWord": "秘密词语：{{word}}",
+        "mrWhiteWarning": "你是 Mr White！你没有词语——靠演技取胜。"
+    },
+    "roles": {
+        "civilian": "平民",
+        "cameleon": "Undercover",
+        "mrWhite": "Mr White"
+    },
+    "results": {
+        "title": "结果",
+        "subtitle": "角色与词语"
+    },
+    "outcome": {
+        "civiliansWin": "平民胜利！",
+        "undercoverWin": "Undercover 胜利！"
+    },
+    "badges": {
+        "eliminated": "淘汰"
+    },
+    "modals": {
+        "firstPlayer": "{{name}} 先开始！"
+    },
+    "notices": {
+        "eliminatedRole": "淘汰 1 名 {{role}}"
+    },
+    "counters": {
+        "remainingImpostors": "剩余内鬼：{{count}}"
+    },
+    "mrWhite": {
+        "guessTitle": "Mr White",
+        "guessPrompt": "可惜被发现了。你仍可尝试猜出词语。若猜中，将在游戏末尾告知。",
+        "placeholder": "输入你的猜测"
+    }
+}

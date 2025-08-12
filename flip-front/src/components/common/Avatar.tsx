@@ -9,9 +9,11 @@ export interface AvatarProps {
     size?: number;
     onPress?: () => void;
     showEditIcon?: boolean;
+    badgeText?: string;
+    badgeColor?: string;
 }
 
-export function Avatar({ name, avatar, size = 50, onPress, showEditIcon = false }: AvatarProps) {
+export function Avatar({ name, avatar, size = 50, onPress, showEditIcon = false, badgeText, badgeColor = Colors.danger }: AvatarProps) {
     const getInitials = (fullName: string) => {
         return fullName
             .split(' ')
@@ -41,7 +43,15 @@ export function Avatar({ name, avatar, size = 50, onPress, showEditIcon = false 
         width: size,
         height: size,
         borderRadius: size / 2,
-    };
+    } as const;
+
+    const renderBadge = () => (
+        badgeText ? (
+            <View style={[styles.badge, { backgroundColor: badgeColor, top: -4, right: -4 }]}>
+                <Text style={styles.badgeText}>{badgeText}</Text>
+            </View>
+        ) : null
+    );
 
     if (avatar) {
         return (
@@ -52,6 +62,7 @@ export function Avatar({ name, avatar, size = 50, onPress, showEditIcon = false 
                         style={[styles.image, containerStyle]}
                         contentFit="cover"
                     />
+                    {renderBadge()}
                     {showEditIcon && (
                         <View style={styles.editIcon}>
                             <Text style={styles.editIconText}>📷</Text>
@@ -73,6 +84,7 @@ export function Avatar({ name, avatar, size = 50, onPress, showEditIcon = false 
                 <Text style={[styles.initials, { fontSize: size * 0.4 }]}>
                     {getInitials(name)}
                 </Text>
+                {renderBadge()}
                 {showEditIcon && (
                     <View style={styles.editIcon}>
                         <Text style={styles.editIconText}>📷</Text>
@@ -121,5 +133,22 @@ const styles = StyleSheet.create({
     },
     editIconText: {
         fontSize: 10,
+    },
+    badge: {
+        position: 'absolute',
+        minWidth: 22,
+        height: 22,
+        borderRadius: 11,
+        paddingHorizontal: 6,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 2,
+        borderColor: Colors.background,
+    },
+    badgeText: {
+        color: Colors.text.white,
+        fontSize: 10,
+        fontWeight: '800',
+        textTransform: 'uppercase',
     },
 }); 

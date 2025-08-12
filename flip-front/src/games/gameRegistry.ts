@@ -112,6 +112,15 @@ gameRegistry.register({
     description: 'Un jeu de questions pour découvrir qui est le plus pur du groupe !'
 }, { isEnabled: true });
 
+// Nouveau jeu: Cameleon (Undercover-like)
+gameRegistry.register({
+    id: 'cameleon',
+    name: 'Caméléon',
+    minPlayers: 4,
+    maxPlayers: 10,
+    description: 'Devinez les imposteurs à partir d\'indices... sans dévoiler votre mot !'
+}, { isEnabled: true });
+
 // Jeux en développement (exemples)
 // gameRegistry.register(sixQuiPrendGame, { isEnabled: false, developmentOnly: true });
 // gameRegistry.register(undercoverGame, { isEnabled: false, developmentOnly: true });
@@ -137,6 +146,8 @@ export const navigateToGame = (navigation: any, gameId: string, players: any[]) 
     // Navigation vers l'écran du jeu (pour l'instant hard-codé)
     if (gameId === 'purity-test') {
         navigation.navigate('PurityTest', { players });
+    } else if (gameId === 'cameleon') {
+        navigation.navigate('Cameleon', { players });
     }
 };
 
