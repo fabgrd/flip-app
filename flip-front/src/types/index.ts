@@ -1,9 +1,4 @@
-
-export type {
-  Player,
-  GameMetadata,
-  RootStackParamList
-} from './games';
+export type { Player, GameMetadata, RootStackParamList } from './games';
 
 export type {
   Theme,
@@ -11,5 +6,5 @@ export type {
   PlayerAnswer,
   PurityPlayer,
   PurityGameState,
-  PurityResults
-} from './games'; 
+  PurityResults,
+} from './games';

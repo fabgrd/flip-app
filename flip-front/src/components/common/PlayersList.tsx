@@ -2,135 +2,137 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Animated, { FadeInRight, FadeOutLeft } from 'react-native-reanimated';
+import { useTranslation } from 'react-i18next';
 import { Player } from '../../types';
-import { Colors } from '../../constants';
 import { Avatar } from './Avatar';
 import { useImagePicker } from '../../hooks/useImagePicker';
-import { useTranslation } from 'react-i18next';
 import { useTheme } from '../../contexts/ThemeContext';
 
 interface PlayersListProps {
-    players: Player[];
-    onRemovePlayer: (id: string) => void;
-    onUpdateAvatar: (id: string, avatar: string) => void;
+  players: Player[];
+  onRemovePlayer: (id: string) => void;
+  onUpdateAvatar: (id: string, avatar: string) => void;
 }
 
 export function PlayersList({ players, onRemovePlayer, onUpdateAvatar }: PlayersListProps) {
-    const { showImagePicker } = useImagePicker();
-    const { t } = useTranslation();
-    const { theme } = useTheme();
-    const handleAvatarPress = async (player: Player) => {
-        const imageUri = await showImagePicker();
-        if (imageUri) {
-            onUpdateAvatar(player.id, imageUri);
-        }
-    };
-
-    if (players.length === 0) {
-        return (
-            <View style={styles.emptyContainer}>
-                <Text style={[styles.emptyText, { color: theme.colors.text.secondary }]}>{t('messages.noPlayersAdded')}</Text>
-                <Text style={[styles.emptySubText, { color: theme.colors.text.light }]}>{t('messages.addAtLeastOnePlayerToStart')}</Text>
-            </View>
-        );
+  const { showImagePicker } = useImagePicker();
+  const { t } = useTranslation();
+  const { theme } = useTheme();
+  const handleAvatarPress = async (player: Player) => {
+    const imageUri = await showImagePicker();
+    if (imageUri) {
+      onUpdateAvatar(player.id, imageUri);
     }
+  };
 
-    const renderPlayer = ({ item, index }: { item: Player; index: number }) => (
-        <Animated.View
-            entering={FadeInRight.delay(index * 100)}
-            exiting={FadeOutLeft}
-            style={[styles.playerItem, { backgroundColor: theme.colors.surface }]}
-        >
-            <View style={styles.playerInfo}>
-                <Avatar
-                    name={item.name}
-                    avatar={item.avatar}
-                    size={50}
-                    onPress={() => handleAvatarPress(item)}
-                    showEditIcon={true}
-                />
-                <Text style={[styles.playerName, { color: theme.colors.text.primary }]}>{item.name}</Text>
-            </View>
-
-            <TouchableOpacity
-                style={styles.removeButton}
-                onPress={() => onRemovePlayer(item.id)}
-            >
-                <Ionicons name="close" size={20} color={theme.colors.danger} />
-            </TouchableOpacity>
-        </Animated.View>
-    );
-
+  if (players.length === 0) {
     return (
-        <View style={styles.container}>
-            <Text style={[styles.listTitle, { color: theme.colors.text.primary }]}>{t('labels.players')} ({players.length})</Text>
-            <FlatList
-                data={players}
-                renderItem={renderPlayer}
-                keyExtractor={(item) => item.id}
-                // @ts-ignore
-                showsVerticalScrollIndicator={false}
-                contentContainerStyle={styles.listContent}
-            />
-        </View>
+      <View style={styles.emptyContainer}>
+        <Text style={[styles.emptyText, { color: theme.colors.text.secondary }]}>
+          {t('messages.noPlayersAdded')}
+        </Text>
+        <Text style={[styles.emptySubText, { color: theme.colors.text.light }]}>
+          {t('messages.addAtLeastOnePlayerToStart')}
+        </Text>
+      </View>
     );
+  }
+
+  const renderPlayer = ({ item, index }: { item: Player; index: number }) => (
+    <Animated.View
+      entering={FadeInRight.delay(index * 100)}
+      exiting={FadeOutLeft}
+      style={[styles.playerItem, { backgroundColor: theme.colors.surface }]}
+    >
+      <View style={styles.playerInfo}>
+        <Avatar
+          name={item.name}
+          avatar={item.avatar}
+          size={50}
+          onPress={() => handleAvatarPress(item)}
+          showEditIcon
+        />
+        <Text style={[styles.playerName, { color: theme.colors.text.primary }]}>{item.name}</Text>
+      </View>
+
+      <TouchableOpacity style={styles.removeButton} onPress={() => onRemovePlayer(item.id)}>
+        <Ionicons name="close" size={20} color={theme.colors.danger} />
+      </TouchableOpacity>
+    </Animated.View>
+  );
+
+  return (
+    <View style={styles.container}>
+      <Text style={[styles.listTitle, { color: theme.colors.text.primary }]}>
+        {t('labels.players')} ({players.length})
+      </Text>
+      <FlatList
+        data={players}
+        renderItem={renderPlayer}
+        keyExtractor={(item) => item.id}
+        // @ts-ignore
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.listContent}
+      />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        marginBottom: 20,
-    },
+  container: {
+    flex: 1,
+    marginBottom: 20,
+  },
 
-    listTitle: {
-        fontSize: 18,
-        fontWeight: '600',
-        marginBottom: 15,
-    },
+  emptyContainer: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+    paddingVertical: 40,
+  },
 
-    listContent: {
-        gap: 12,
-    },
+  emptySubText: {
+    fontSize: 14,
+    textAlign: 'center',
+  },
 
-    playerItem: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingHorizontal: 16,
-        paddingVertical: 12,
-        borderRadius: 12,
-    },
+  emptyText: {
+    fontSize: 16,
+    marginBottom: 5,
+  },
 
-    playerInfo: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        flex: 1,
-        gap: 12,
-    },
+  listContent: {
+    gap: 12,
+  },
 
-    playerName: {
-        fontSize: 16,
-        fontWeight: '500',
-    },
+  listTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: 15,
+  },
 
-    removeButton: {
-        padding: 8,
-    },
+  playerInfo: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    flex: 1,
+    gap: 12,
+  },
 
-    emptyContainer: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingVertical: 40,
-    },
+  playerItem: {
+    alignItems: 'center',
+    borderRadius: 12,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+  },
 
-    emptyText: {
-        fontSize: 16,
-        marginBottom: 5,
-    },
+  playerName: {
+    fontSize: 16,
+    fontWeight: '500',
+  },
 
-    emptySubText: {
-        fontSize: 14,
-        textAlign: 'center',
-    },
-}); 
+  removeButton: {
+    padding: 8,
+  },
+});

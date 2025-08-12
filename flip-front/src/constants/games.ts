@@ -18,8 +18,7 @@ export const getCompatibleGames = (playerCount: number) =>
 /**
  * Vérifie si un jeu est disponible
  */
-export const isGameAvailable = (gameId: string) =>
-  gameRegistry.isGameAvailable(gameId);
+export const isGameAvailable = (gameId: string) => gameRegistry.isGameAvailable(gameId);
 
 // =============================================================================
 // CONSTANTES GLOBALES
@@ -32,4 +31,4 @@ export const MAX_PLAYERS_GLOBAL = 10;
 // HELPERS POUR LA NAVIGATION
 // =============================================================================
 
-export { navigateToGame, navigateToGameResults } from '../games/gameRegistry'; 
+export { navigateToGame, navigateToGameResults } from '../games/gameRegistry';

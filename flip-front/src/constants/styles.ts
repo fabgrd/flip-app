@@ -2,39 +2,14 @@ import { StyleSheet } from 'react-native';
 import { Colors } from './colors';
 
 export const GlobalStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.background,
-  },
-  
-  screen: {
-    flex: 1,
-    padding: 20,
-    paddingTop: 60,
-  },
-  
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: Colors.text.primary,
-    textAlign: 'center',
-    marginBottom: 30,
-  },
-  
-  subtitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: Colors.text.secondary,
-    marginBottom: 15,
-  },
-  
   buttonPrimary: {
+    alignItems: 'center',
     backgroundColor: Colors.button.primary,
+    borderRadius: 25,
+    elevation: 6,
+    justifyContent: 'center',
     paddingHorizontal: 30,
     paddingVertical: 15,
-    borderRadius: 25,
-    alignItems: 'center',
-    justifyContent: 'center',
     shadowColor: Colors.button.primary,
     shadowOffset: {
       width: 0,
@@ -42,16 +17,16 @@ export const GlobalStyles = StyleSheet.create({
     },
     shadowOpacity: 0.3,
     shadowRadius: 8,
-    elevation: 6,
   },
-  
+
   buttonSecondary: {
+    alignItems: 'center',
     backgroundColor: Colors.button.secondary,
+    borderRadius: 25,
+    elevation: 6,
+    justifyContent: 'center',
     paddingHorizontal: 30,
     paddingVertical: 15,
-    borderRadius: 25,
-    alignItems: 'center',
-    justifyContent: 'center',
     shadowColor: Colors.button.secondary,
     shadowOffset: {
       width: 0,
@@ -59,26 +34,51 @@ export const GlobalStyles = StyleSheet.create({
     },
     shadowOpacity: 0.3,
     shadowRadius: 8,
-    elevation: 6,
   },
-  
+
   buttonText: {
     color: Colors.text.white,
     fontSize: 18,
     fontWeight: 'bold',
   },
-  
+
+  container: {
+    backgroundColor: Colors.background,
+    flex: 1,
+  },
+
   input: {
     backgroundColor: Colors.surface,
+    borderColor: 'transparent',
     borderRadius: 15,
+    borderWidth: 2,
+    fontSize: 16,
     paddingHorizontal: 20,
     paddingVertical: 15,
-    fontSize: 16,
-    borderWidth: 2,
-    borderColor: 'transparent',
   },
-  
+
   inputFocused: {
     borderColor: Colors.primary,
   },
-}); 
+
+  screen: {
+    flex: 1,
+    padding: 20,
+    paddingTop: 60,
+  },
+
+  subtitle: {
+    color: Colors.text.secondary,
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: 15,
+  },
+
+  title: {
+    color: Colors.text.primary,
+    fontSize: 32,
+    fontWeight: 'bold',
+    marginBottom: 30,
+    textAlign: 'center',
+  },
+});
