@@ -1,0 +1,59 @@
+{
+    "name": "Caméléon",
+    "description": "Devinez les imposteurs à partir d’indices... sans dévoiler votre mot !",
+    "game": {
+        "title": "Caméléon",
+        "subtitle": "Réglages et distribution des rôles"
+    },
+    "settings": {
+        "title": "Réglages",
+        "subtitle": "{{count}} joueurs",
+        "undercover": "Undercover",
+        "mrWhite": "Mr White"
+    },
+    "actions": {
+        "start": "Démarrer",
+        "reveal": "Révéler",
+        "seeResults": "Voir les résultats",
+        "reset": "Réinitialiser",
+        "goToVote": "Passer au vote",
+        "eliminate": "Éliminer",
+        "submit": "Valider"
+    },
+    "reveal": {
+        "title": "Révélation des mots",
+        "subtitle": "Passez le téléphone à chaque joueur",
+        "secretWord": "Mot secret: {{word}}",
+        "mrWhiteWarning": "Tu es Mr White ! Aucun mot pour toi, bluffe intelligemment."
+    },
+    "roles": {
+        "civilian": "Civil",
+        "cameleon": "Undercover",
+        "mrWhite": "Mr White"
+    },
+    "results": {
+        "title": "Résultats",
+        "subtitle": "Rôles et mots"
+    },
+    "outcome": {
+        "civiliansWin": "Les civils gagnent !",
+        "undercoverWin": "Les Undercover gagnent !"
+    },
+    "badges": {
+        "eliminated": "KO"
+    },
+    "modals": {
+        "firstPlayer": "{{name}} commence !"
+    },
+    "notices": {
+        "eliminatedRole": "1 {{role}} éliminé"
+    },
+    "counters": {
+        "remainingImpostors": "Imposteurs restants: {{count}}"
+    },
+    "mrWhite": {
+        "guessTitle": "Mr White",
+        "guessPrompt": "Mince, tu as été découvert. Tu peux quand même tenter de trouver le mot. Si tu trouves tu le sauras à la fin du jeu",
+        "placeholder": "Tape ton mot ici"
+    }
+}

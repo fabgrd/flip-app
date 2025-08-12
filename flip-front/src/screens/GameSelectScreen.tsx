@@ -34,6 +34,8 @@ export function GameSelectScreen() {
       // Fallback pour les jeux non encore migrés
       if (game.id === 'purity-test') {
         (navigation as any).navigate('PurityTest', { players });
+      } else if (game.id === 'cameleon') {
+        (navigation as any).navigate('Cameleon', { players });
       } else {
         alert(`Jeu "${game.name}" sélectionné avec ${players.length} joueurs!\nFonctionnalité en cours de développement.`);
       }

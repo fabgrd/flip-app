@@ -32,7 +32,7 @@ const LANGUAGE_DETECTOR = {
     },
 };
 
-const NAMESPACES = ['common', 'navigation', 'home', 'games', 'purityTest', 'settings'] as const;
+const NAMESPACES = ['common', 'navigation', 'home', 'games', 'purityTest', 'settings', 'cameleon'] as const;
 
 i18n
     .use(LANGUAGE_DETECTOR)

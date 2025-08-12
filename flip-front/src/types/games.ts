@@ -58,6 +58,12 @@ export type RootStackParamList = {
     GameSelect: { players: Player[] };
     Settings: undefined;
 
+    // Jeux
+    PurityTest: { players: Player[] };
+    PurityResults: { results: PurityResults };
+    Cameleon: { players: Player[] };
+    CameleonResults: { players: any };
+
     // Routes dynamiques des jeux (seront étendues par chaque jeu)
     [key: string]: any;
 };
