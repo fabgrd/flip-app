@@ -10,6 +10,7 @@ import { usePlayers } from '../contexts/PlayersContext';
 import { PlayerInput, PlayersList } from '../components';
 import { RootStackParamList } from '../types';
 import { Colors, GlobalStyles, MIN_PLAYERS_GLOBAL, MAX_PLAYERS_GLOBAL } from '../constants';
+import { useTheme } from '../contexts/ThemeContext';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -20,6 +21,7 @@ export function HomeScreen() {
   const navigation = useNavigation<HomeScreenNavigationProp>();
   const { t } = useTranslation();
   const { players, addPlayer, removePlayer, updatePlayerAvatar } = usePlayers();
+  const { theme } = useTheme();
 
   const handleAddPlayer = (name: string): boolean => {
     const success = addPlayer(name);
@@ -49,22 +51,22 @@ export function HomeScreen() {
   const canStartGame = players.length >= MIN_PLAYERS;
 
   return (
-    <SafeAreaView style={GlobalStyles.container}>
+    <SafeAreaView style={[GlobalStyles.container, { backgroundColor: theme.colors.background }]}>
       <View style={GlobalStyles.screen}>
         {/* Settings Button Top Right */}
         <View style={styles.settingsTopRightWrapper}>
           <TouchableOpacity
-            style={styles.settingsButton}
+            style={[styles.settingsButton, { backgroundColor: `${theme.colors.primary}10` }]}
             onPress={handleSettingsPress}
           >
-            <Ionicons name="settings" size={24} color={Colors.primary} />
+            <Ionicons name="settings" size={24} color={theme.colors.primary} />
           </TouchableOpacity>
         </View>
 
         {/* Header */}
         <View style={styles.headerContent}>
-          <Text style={styles.appTitle}>{t('home:title')}</Text>
-          <Text style={styles.appSubtitle}>{t('home:subtitle')}</Text>
+          <Text style={[styles.appTitle, { color: theme.colors.primary }]}>{t('home:title')}</Text>
+          <Text style={[styles.appSubtitle, { color: theme.colors.text.secondary }]}>{t('home:subtitle')}</Text>
         </View>
 
         {/* Add Player Section */}
@@ -90,17 +92,17 @@ export function HomeScreen() {
       {/* Start Game Button */}
       <View style={styles.footer}>
         <TouchableOpacity
-          style={[styles.startButton, !canStartGame && styles.startButtonDisabled]}
+          style={[styles.startButton, { backgroundColor: canStartGame ? theme.colors.primary : theme.colors.button.disabled }]}
           onPress={handleStartGame}
           disabled={!canStartGame}
         >
-          <Text style={[styles.startButtonText, !canStartGame && styles.startButtonTextDisabled]}>
+          <Text style={[styles.startButtonText, { color: theme.colors.text.white }]}>
             {t('home:actions.start')}
           </Text>
         </TouchableOpacity>
 
         {!canStartGame && (
-          <Text style={styles.minPlayersText}>
+          <Text style={[styles.minPlayersText, { color: theme.colors.text.secondary }]}>
             {t('home:addPlayers.minPlayers')}
           </Text>
         )}
@@ -125,19 +127,16 @@ const styles = StyleSheet.create({
   appTitle: {
     fontSize: 48,
     fontWeight: 'bold',
-    color: Colors.primary,
     textAlign: 'center',
   },
   appSubtitle: {
     fontSize: 16,
-    color: Colors.text.secondary,
     textAlign: 'center',
     marginTop: 4,
   },
   settingsButton: {
     padding: 8,
     borderRadius: 20,
-    backgroundColor: `${Colors.primary}10`,
   },
   inputSection: {
     marginBottom: 24,
@@ -151,27 +150,17 @@ const styles = StyleSheet.create({
     paddingTop: 0,
   },
   startButton: {
-    backgroundColor: Colors.primary,
     paddingVertical: 16,
     borderRadius: 12,
     alignItems: 'center',
     marginBottom: 12,
   },
-  startButtonDisabled: {
-    backgroundColor: Colors.text.secondary,
-    opacity: 0.5,
-  },
   startButtonText: {
-    color: Colors.text.white,
     fontSize: 18,
     fontWeight: 'bold',
   },
-  startButtonTextDisabled: {
-    color: Colors.text.white,
-  },
   minPlayersText: {
     fontSize: 14,
-    color: Colors.text.secondary,
     textAlign: 'center',
     fontStyle: 'italic',
   },

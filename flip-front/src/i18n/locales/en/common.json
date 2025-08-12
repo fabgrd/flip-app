@@ -10,7 +10,8 @@
         "edit": "Edit",
         "add": "Add",
         "close": "Close",
-        "confirm": "Confirm"
+        "confirm": "Confirm",
+        "playAgain": "Play again"
     },
     "labels": {
         "players": "Players",
@@ -22,14 +23,14 @@
         "results": "Results",
         "score": "Score",
         "loading": "Loading...",
-        "error": "Error"
+        "error": "Error",
+        "readyToPlay": "Ready to play"
     },
     "messages": {
         "success": "Success!",
         "error": "An error occurred",
         "noData": "No data available",
         "remainingPlayers": " player(s) remaining",
-        "readyToPlay": "Ready to play",
         "selectGame": "Select a game",
         "noPlayersAdded": "No players added",
         "addAtLeastOnePlayerToStart": "Add at least 1 player to start"

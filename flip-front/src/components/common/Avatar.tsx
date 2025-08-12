@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Image } from 'expo-image';
 import { Colors } from '../../constants';
+import { useTheme } from '../../contexts/ThemeContext';
 
 export interface AvatarProps {
     name: string;
@@ -13,7 +14,8 @@ export interface AvatarProps {
     badgeColor?: string;
 }
 
-export function Avatar({ name, avatar, size = 50, onPress, showEditIcon = false, badgeText, badgeColor = Colors.danger }: AvatarProps) {
+export function Avatar({ name, avatar, size = 50, onPress, showEditIcon = false, badgeText, badgeColor }: AvatarProps) {
+    const { theme } = useTheme();
     const getInitials = (fullName: string) => {
         return fullName
             .split(' ')
@@ -25,12 +27,12 @@ export function Avatar({ name, avatar, size = 50, onPress, showEditIcon = false,
 
     const getBackgroundColor = (fullName: string) => {
         const colors = [
-            Colors.primary,
-            Colors.secondary,
-            Colors.accent,
-            Colors.success,
-            Colors.warning,
-            Colors.danger,
+            theme.colors.primary,
+            theme.colors.secondary,
+            theme.colors.accent,
+            theme.colors.success,
+            theme.colors.warning,
+            theme.colors.danger,
         ];
         let hash = 0;
         for (let i = 0; i < fullName.length; i++) {
@@ -47,8 +49,8 @@ export function Avatar({ name, avatar, size = 50, onPress, showEditIcon = false,
 
     const renderBadge = () => (
         badgeText ? (
-            <View style={[styles.badge, { backgroundColor: badgeColor, top: -4, right: -4 }]}>
-                <Text style={styles.badgeText}>{badgeText}</Text>
+            <View style={[styles.badge, { backgroundColor: badgeColor ?? theme.colors.danger, top: -4, right: -4, borderColor: theme.colors.background }]}>
+                <Text style={[styles.badgeText, { color: theme.colors.text.white }]}>{badgeText}</Text>
             </View>
         ) : null
     );
@@ -59,12 +61,12 @@ export function Avatar({ name, avatar, size = 50, onPress, showEditIcon = false,
                 <View style={[styles.container, containerStyle]}>
                     <Image
                         source={{ uri: avatar }}
-                        style={[styles.image, containerStyle]}
+                        style={[styles.image, containerStyle, { borderColor: theme.colors.background }]}
                         contentFit="cover"
                     />
                     {renderBadge()}
                     {showEditIcon && (
-                        <View style={styles.editIcon}>
+                        <View style={[styles.editIcon, { backgroundColor: theme.colors.primary, borderColor: theme.colors.background }]}>
                             <Text style={styles.editIconText}>📷</Text>
                         </View>
                     )}
@@ -79,14 +81,14 @@ export function Avatar({ name, avatar, size = 50, onPress, showEditIcon = false,
                 styles.container,
                 styles.defaultAvatar,
                 containerStyle,
-                { backgroundColor: getBackgroundColor(name) }
+                { backgroundColor: getBackgroundColor(name), borderColor: theme.colors.background }
             ]}>
-                <Text style={[styles.initials, { fontSize: size * 0.4 }]}>
+                <Text style={[styles.initials, { fontSize: size * 0.4, color: theme.colors.text.white }]}>
                     {getInitials(name)}
                 </Text>
                 {renderBadge()}
                 {showEditIcon && (
-                    <View style={styles.editIcon}>
+                    <View style={[styles.editIcon, { backgroundColor: theme.colors.primary, borderColor: theme.colors.background }]}>
                         <Text style={styles.editIconText}>📷</Text>
                     </View>
                 )}
@@ -106,30 +108,25 @@ const styles = StyleSheet.create({
     },
     image: {
         borderWidth: 2,
-        borderColor: Colors.background,
     },
     defaultAvatar: {
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 2,
-        borderColor: Colors.background,
     },
     initials: {
-        color: Colors.text.white,
         fontWeight: 'bold',
     },
     editIcon: {
         position: 'absolute',
         bottom: -2,
         right: -2,
-        backgroundColor: Colors.primary,
         borderRadius: 12,
         width: 24,
         height: 24,
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 2,
-        borderColor: Colors.background,
     },
     editIconText: {
         fontSize: 10,
@@ -143,10 +140,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderWidth: 2,
-        borderColor: Colors.background,
     },
     badgeText: {
-        color: Colors.text.white,
         fontSize: 10,
         fontWeight: '800',
         textTransform: 'uppercase',

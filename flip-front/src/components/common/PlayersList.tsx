@@ -7,6 +7,7 @@ import { Colors } from '../../constants';
 import { Avatar } from './Avatar';
 import { useImagePicker } from '../../hooks/useImagePicker';
 import { useTranslation } from 'react-i18next';
+import { useTheme } from '../../contexts/ThemeContext';
 
 interface PlayersListProps {
     players: Player[];
@@ -17,6 +18,7 @@ interface PlayersListProps {
 export function PlayersList({ players, onRemovePlayer, onUpdateAvatar }: PlayersListProps) {
     const { showImagePicker } = useImagePicker();
     const { t } = useTranslation();
+    const { theme } = useTheme();
     const handleAvatarPress = async (player: Player) => {
         const imageUri = await showImagePicker();
         if (imageUri) {
@@ -27,8 +29,8 @@ export function PlayersList({ players, onRemovePlayer, onUpdateAvatar }: Players
     if (players.length === 0) {
         return (
             <View style={styles.emptyContainer}>
-                <Text style={styles.emptyText}>{t('messages.noPlayersAdded')}</Text>
-                <Text style={styles.emptySubText}>{t('messages.addAtLeastOnePlayerToStart')}</Text>
+                <Text style={[styles.emptyText, { color: theme.colors.text.secondary }]}>{t('messages.noPlayersAdded')}</Text>
+                <Text style={[styles.emptySubText, { color: theme.colors.text.light }]}>{t('messages.addAtLeastOnePlayerToStart')}</Text>
             </View>
         );
     }
@@ -37,7 +39,7 @@ export function PlayersList({ players, onRemovePlayer, onUpdateAvatar }: Players
         <Animated.View
             entering={FadeInRight.delay(index * 100)}
             exiting={FadeOutLeft}
-            style={styles.playerItem}
+            style={[styles.playerItem, { backgroundColor: theme.colors.surface }]}
         >
             <View style={styles.playerInfo}>
                 <Avatar
@@ -47,21 +49,21 @@ export function PlayersList({ players, onRemovePlayer, onUpdateAvatar }: Players
                     onPress={() => handleAvatarPress(item)}
                     showEditIcon={true}
                 />
-                <Text style={styles.playerName}>{item.name}</Text>
+                <Text style={[styles.playerName, { color: theme.colors.text.primary }]}>{item.name}</Text>
             </View>
 
             <TouchableOpacity
                 style={styles.removeButton}
                 onPress={() => onRemovePlayer(item.id)}
             >
-                <Ionicons name="close" size={20} color={Colors.danger} />
+                <Ionicons name="close" size={20} color={theme.colors.danger} />
             </TouchableOpacity>
         </Animated.View>
     );
 
     return (
         <View style={styles.container}>
-            <Text style={styles.listTitle}>{t('labels.players')} ({players.length})</Text>
+            <Text style={[styles.listTitle, { color: theme.colors.text.primary }]}>{t('labels.players')} ({players.length})</Text>
             <FlatList
                 data={players}
                 renderItem={renderPlayer}
@@ -83,7 +85,6 @@ const styles = StyleSheet.create({
     listTitle: {
         fontSize: 18,
         fontWeight: '600',
-        color: Colors.text.primary,
         marginBottom: 15,
     },
 
@@ -95,7 +96,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        backgroundColor: Colors.surface,
         paddingHorizontal: 16,
         paddingVertical: 12,
         borderRadius: 12,
@@ -110,7 +110,6 @@ const styles = StyleSheet.create({
 
     playerName: {
         fontSize: 16,
-        color: Colors.text.primary,
         fontWeight: '500',
     },
 
@@ -127,13 +126,11 @@ const styles = StyleSheet.create({
 
     emptyText: {
         fontSize: 16,
-        color: Colors.text.secondary,
         marginBottom: 5,
     },
 
     emptySubText: {
         fontSize: 14,
-        color: Colors.text.light,
         textAlign: 'center',
     },
 }); 

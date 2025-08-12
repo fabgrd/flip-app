@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next';
 import { RootStackParamList, PurityResults } from '../types';
 import { THEME_LABELS, THEME_COLORS } from '../games/purity-test';
 import { Colors } from '../constants';
+import { useTheme } from '../contexts/ThemeContext';
 
 type PurityResultsScreenRouteProp = RouteProp<RootStackParamList, 'PurityResults'>;
 
@@ -21,6 +22,7 @@ export function PurityResultsScreen() {
     const navigation = useNavigation();
     const results = route.params?.results;
     const { t } = useTranslation();
+    const { theme } = useTheme();
 
     const handleBackToHome = () => {
         navigation.navigate('Home' as never);
@@ -41,30 +43,30 @@ export function PurityResultsScreen() {
         if (percentage <= 35) return { label: t('purityTest:results.impurityLevels.mostlyPure'), color: '#4ECDC4', emoji: '🙂' };
         if (percentage <= 45) return { label: t('purityTest:results.impurityLevels.mixed'), color: '#FFD93D', emoji: '😐' };
         if (percentage <= 55) return { label: t('purityTest:results.impurityLevels.naughty'), color: '#FFEAA7', emoji: '😏' };
-        if (percentage <= 65) return { label: t('purityTest:results.impurityLevels.veryImpure'), color: '#FF6B6B', emoji: '�' };
+        if (percentage <= 65) return { label: t('purityTest:results.impurityLevels.veryImpure'), color: '#FF6B6B', emoji: '😈' };
         if (percentage <= 75) return { label: t('purityTest:results.impurityLevels.diabolical'), color: '#FD79A8', emoji: '👹' };
         return { label: t('purityTest:results.impurityLevels.beyondEvil'), color: '#000000', emoji: '💀' };
     };
 
     return (
-        <SafeAreaView style={styles.container}>
-            <View style={styles.header}>
-                <Text style={styles.title}>{t('purityTest:results.title')}</Text>
-                <Text style={styles.subtitle}>{t('purityTest:results.subtitle')}</Text>
+        <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.surface }]}>
+            <View style={[styles.header, { backgroundColor: theme.colors.background, borderBottomColor: theme.colors.border }]}>
+                <Text style={[styles.title, { color: theme.colors.primary }]}>{t('purityTest:results.title')}</Text>
+                <Text style={[styles.subtitle, { color: theme.colors.text.secondary }]}>{t('purityTest:results.subtitle')}</Text>
             </View>
 
             <ScrollView style={styles.resultsContainer}>
                 {results.players.map((result: any) => {
                     const impurityLevel = getImpurityLevel(result.impurityPercentage);
                     return (
-                        <View key={result.player.id} style={styles.playerResult}>
+                        <View key={result.player.id} style={[styles.playerResult, { backgroundColor: theme.colors.background }]}>
                             <View style={styles.playerHeader}>
                                 <View style={styles.rankContainer}>
                                     <Text style={styles.rankEmoji}>{getRankEmoji(result.rank)}</Text>
-                                    <Text style={styles.rankNumber}>#{result.rank}</Text>
+                                    <Text style={[styles.rankNumber, { color: theme.colors.text.secondary }]}>#{result.rank}</Text>
                                 </View>
                                 <View style={styles.playerInfo}>
-                                    <Text style={styles.playerName}>{result.player.name}</Text>
+                                    <Text style={[styles.playerName, { color: theme.colors.text.primary }]}>{result.player.name}</Text>
                                     <Text style={[styles.purityLevel, { color: impurityLevel.color }]}>
                                         {impurityLevel.emoji} {impurityLevel.label}
                                     </Text>
@@ -77,19 +79,16 @@ export function PurityResultsScreen() {
                             </View>
 
                             {/* Détails par thème */}
-                            <View style={styles.themesContainer}>
-                                <Text style={styles.themesTitle}>{t('purityTest:results.themeDetails')}</Text>
+                            <View style={[styles.themesContainer, { borderTopColor: theme.colors.border }]}>
+                                <Text style={[styles.themesTitle, { color: theme.colors.text.primary }]}>{t('purityTest:results.themeDetails')}</Text>
                                 <View style={styles.themesGrid}>
-                                    {Object.entries(result.themePercentages).map(([theme, percentage]) => (
-                                        <View key={theme} style={styles.themeItem}>
-                                            <View style={[
-                                                styles.themeIndicator,
-                                                { backgroundColor: THEME_COLORS[theme as keyof typeof THEME_COLORS] }
-                                            ]} />
-                                            <Text style={styles.themeName}>
-                                                {THEME_LABELS[theme as keyof typeof THEME_LABELS]}
+                                    {Object.entries(result.themePercentages).map(([themeKey, percentage]) => (
+                                        <View key={themeKey} style={styles.themeItem}>
+                                            <View style={[styles.themeIndicator, { backgroundColor: THEME_COLORS[themeKey as keyof typeof THEME_COLORS] }]} />
+                                            <Text style={[styles.themeName, { color: theme.colors.text.secondary }]}>
+                                                {THEME_LABELS[themeKey as keyof typeof THEME_LABELS]}
                                             </Text>
-                                            <Text style={styles.themePercentage}>{percentage as number}%</Text>
+                                            <Text style={[styles.themePercentage, { color: theme.colors.text.primary }]}>{percentage as number}%</Text>
                                         </View>
                                     ))}
                                 </View>
@@ -99,9 +98,9 @@ export function PurityResultsScreen() {
                 })}
             </ScrollView>
 
-            <View style={styles.footer}>
-                <TouchableOpacity style={styles.backButton} onPress={handleBackToHome}>
-                    <Text style={styles.backButtonText}>{t('purityTest:results.backToHome')}</Text>
+            <View style={[styles.footer, { backgroundColor: theme.colors.background, borderTopColor: theme.colors.border }]}>
+                <TouchableOpacity style={[styles.backButton, { backgroundColor: theme.colors.primary }]} onPress={handleBackToHome}>
+                    <Text style={[styles.backButtonText, { color: theme.colors.text.white }]}>{t('purityTest:results.backToHome')}</Text>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
@@ -111,25 +110,20 @@ export function PurityResultsScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Colors.surface,
     },
     header: {
         padding: 20,
-        backgroundColor: Colors.background,
         alignItems: 'center',
         borderBottomWidth: 1,
-        borderBottomColor: '#E0E0E0',
     },
     title: {
         fontSize: 24,
         fontWeight: 'bold',
-        color: Colors.primary,
         textAlign: 'center',
         marginBottom: 8,
     },
     subtitle: {
         fontSize: 16,
-        color: Colors.text.secondary,
         textAlign: 'center',
     },
     resultsContainer: {
@@ -137,7 +131,6 @@ const styles = StyleSheet.create({
         padding: 16,
     },
     playerResult: {
-        backgroundColor: Colors.background,
         borderRadius: 12,
         padding: 16,
         marginBottom: 16,
@@ -164,7 +157,6 @@ const styles = StyleSheet.create({
     rankNumber: {
         fontSize: 14,
         fontWeight: 'bold',
-        color: Colors.text.secondary,
     },
     playerInfo: {
         flex: 1,
@@ -172,7 +164,6 @@ const styles = StyleSheet.create({
     playerName: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: Colors.text.primary,
         marginBottom: 4,
     },
     purityLevel: {
@@ -188,13 +179,11 @@ const styles = StyleSheet.create({
     },
     themesContainer: {
         borderTopWidth: 1,
-        borderTopColor: '#E0E0E0',
         paddingTop: 16,
     },
     themesTitle: {
         fontSize: 16,
         fontWeight: 'bold',
-        color: Colors.text.primary,
         marginBottom: 12,
     },
     themesGrid: {
@@ -217,29 +206,23 @@ const styles = StyleSheet.create({
     themeName: {
         flex: 1,
         fontSize: 12,
-        color: Colors.text.secondary,
     },
     themePercentage: {
         fontSize: 12,
         fontWeight: 'bold',
-        color: Colors.text.primary,
         minWidth: 30,
         textAlign: 'right',
     },
     footer: {
         padding: 20,
-        backgroundColor: Colors.background,
         borderTopWidth: 1,
-        borderTopColor: '#E0E0E0',
     },
     backButton: {
-        backgroundColor: Colors.primary,
         paddingVertical: 16,
         borderRadius: 12,
         alignItems: 'center',
     },
     backButtonText: {
-        color: Colors.text.white,
         fontSize: 18,
         fontWeight: 'bold',
     },

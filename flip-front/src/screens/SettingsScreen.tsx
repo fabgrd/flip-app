@@ -6,11 +6,13 @@ import {
     TouchableOpacity,
     SafeAreaView,
     ScrollView,
+    Switch,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '../constants';
+import { useTheme } from '../contexts/ThemeContext';
 
 const LANGUAGES = [
     { code: 'fr', name: 'Français', flag: '🇫🇷' },
@@ -21,6 +23,7 @@ const LANGUAGES = [
 export function SettingsScreen() {
     const navigation = useNavigation();
     const { t, i18n } = useTranslation();
+    const { theme, preference, setPreference, toggleDarkMode } = useTheme();
 
     const handleLanguageChange = async (languageCode: string) => {
         await i18n.changeLanguage(languageCode);
@@ -30,42 +33,57 @@ export function SettingsScreen() {
         navigation.goBack();
     };
 
+    const isDark = theme.mode === 'dark';
+
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.surface }]}>
             {/* Header */}
-            <View style={styles.header}>
+            <View style={[styles.header, { backgroundColor: theme.colors.background, borderBottomColor: theme.colors.border }]}>
                 <TouchableOpacity style={styles.backButton} onPress={handleBackPress}>
-                    <Ionicons name="arrow-back" size={24} color={Colors.primary} />
+                    <Ionicons name="arrow-back" size={24} color={theme.colors.primary} />
                 </TouchableOpacity>
-                <Text style={styles.headerTitle}>{t('settings:title')}</Text>
+                <Text style={[styles.headerTitle, { color: theme.colors.text.primary }]}>{t('settings:title')}</Text>
                 <View style={styles.placeholder} />
             </View>
 
             <ScrollView style={styles.content}>
+                {/* Theme Section */}
+                <View style={styles.section}>
+                    <Text style={[styles.sectionTitle, { color: theme.colors.text.primary }]}>{t('settings:appearance.title', 'Apparence')}</Text>
+                    <Text style={[styles.sectionSubtitle, { color: theme.colors.text.secondary }]}>{t('settings:appearance.subtitle', 'Thème clair/sombre')}</Text>
+
+                    <View style={[styles.rowBetween, { backgroundColor: theme.colors.background, borderColor: theme.colors.border }]}>
+                        <Text style={[styles.rowText, { color: theme.colors.text.primary }]}>{t('settings:appearance.darkMode', 'Dark Mode')}</Text>
+                        <Switch value={isDark} onValueChange={toggleDarkMode} trackColor={{ true: theme.colors.primary }} thumbColor={isDark ? theme.colors.primary : '#fff'} />
+                    </View>
+                </View>
+
                 {/* Language Section */}
                 <View style={styles.section}>
-                    <Text style={styles.sectionTitle}>{t('settings:language.title')}</Text>
-                    <Text style={styles.sectionSubtitle}>{t('settings:language.subtitle')}</Text>
+                    <Text style={[styles.sectionTitle, { color: theme.colors.text.primary }]}>{t('settings:language.title')}</Text>
+                    <Text style={[styles.sectionSubtitle, { color: theme.colors.text.secondary }]}>{t('settings:language.subtitle')}</Text>
 
-                    <View style={styles.languageOptions}>
+                    <View style={[styles.languageOptions, { backgroundColor: theme.colors.background, borderRadius: 12 }]}>
                         {LANGUAGES.map((language) => (
                             <TouchableOpacity
                                 key={language.code}
                                 style={[
                                     styles.languageOption,
-                                    i18n.language === language.code && styles.languageOptionSelected
+                                    { borderBottomColor: theme.colors.border },
+                                    i18n.language === language.code && { backgroundColor: `${theme.colors.primary}10` }
                                 ]}
                                 onPress={() => handleLanguageChange(language.code)}
                             >
                                 <Text style={styles.languageFlag}>{language.flag}</Text>
                                 <Text style={[
                                     styles.languageName,
-                                    i18n.language === language.code && styles.languageNameSelected
+                                    { color: theme.colors.text.primary },
+                                    i18n.language === language.code && { color: theme.colors.primary }
                                 ]}>
                                     {language.name}
                                 </Text>
                                 {i18n.language === language.code && (
-                                    <Ionicons name="checkmark" size={20} color={Colors.primary} />
+                                    <Ionicons name="checkmark" size={20} color={theme.colors.primary} />
                                 )}
                             </TouchableOpacity>
                         ))}
@@ -74,11 +92,11 @@ export function SettingsScreen() {
 
                 {/* About Section */}
                 <View style={styles.section}>
-                    <Text style={styles.sectionTitle}>{t('settings:about.title')}</Text>
-                    <Text style={styles.aboutDescription}>
+                    <Text style={[styles.sectionTitle, { color: theme.colors.text.primary }]}>{t('settings:about.title')}</Text>
+                    <Text style={[styles.aboutDescription, { color: theme.colors.text.secondary }]}>
                         {t('settings:about.description')}
                     </Text>
-                    <Text style={styles.version}>
+                    <Text style={[styles.version, { color: theme.colors.text.secondary }]}>
                         {t('settings:about.version', { version: '1.0.0' })}
                     </Text>
                 </View>
@@ -90,16 +108,13 @@ export function SettingsScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Colors.surface,
     },
     header: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: 20,
-        backgroundColor: Colors.background,
         borderBottomWidth: 1,
-        borderBottomColor: '#E0E0E0',
     },
     backButton: {
         padding: 8,
@@ -107,7 +122,6 @@ const styles = StyleSheet.create({
     headerTitle: {
         fontSize: 20,
         fontWeight: 'bold',
-        color: Colors.text.primary,
     },
     placeholder: {
         width: 40,
@@ -122,17 +136,13 @@ const styles = StyleSheet.create({
     sectionTitle: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: Colors.text.primary,
         marginBottom: 8,
     },
     sectionSubtitle: {
         fontSize: 14,
-        color: Colors.text.secondary,
         marginBottom: 16,
     },
     languageOptions: {
-        backgroundColor: Colors.background,
-        borderRadius: 12,
         overflow: 'hidden',
     },
     languageOption: {
@@ -140,10 +150,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 16,
         borderBottomWidth: 1,
-        borderBottomColor: '#E0E0E0',
-    },
-    languageOptionSelected: {
-        backgroundColor: `${Colors.primary}10`,
     },
     languageFlag: {
         fontSize: 24,
@@ -152,21 +158,26 @@ const styles = StyleSheet.create({
     languageName: {
         flex: 1,
         fontSize: 16,
-        color: Colors.text.primary,
-    },
-    languageNameSelected: {
-        color: Colors.primary,
-        fontWeight: '600',
     },
     aboutDescription: {
         fontSize: 14,
-        color: Colors.text.secondary,
         lineHeight: 20,
         marginBottom: 12,
     },
     version: {
         fontSize: 12,
-        color: Colors.text.secondary,
         fontStyle: 'italic',
+    },
+    rowBetween: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: 16,
+        borderRadius: 12,
+        borderWidth: 1,
+    },
+    rowText: {
+        fontSize: 16,
+        fontWeight: '500',
     },
 }); 

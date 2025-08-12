@@ -9,6 +9,11 @@
             "zh": "中文"
         }
     },
+    "appearance": {
+        "title": "外观",
+        "subtitle": "明/暗 主题",
+        "darkMode": "深色模式"
+    },
     "about": {
         "title": "关于",
         "version": "版本 {{version}}",

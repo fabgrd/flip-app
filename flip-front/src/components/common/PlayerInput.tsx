@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '../../constants';
 import { useTranslation } from 'react-i18next';
+import { useTheme } from '../../contexts/ThemeContext';
 
 interface PlayerInputProps {
     onAddPlayer: (name: string) => boolean;
@@ -13,6 +14,7 @@ interface PlayerInputProps {
 export function PlayerInput({ onAddPlayer, maxPlayers, currentPlayerCount }: PlayerInputProps) {
     const [playerName, setPlayerName] = useState('');
     const { t } = useTranslation();
+    const { theme } = useTheme();
     const handleAddPlayer = () => {
         const trimmedName = playerName.trim();
 
@@ -39,13 +41,13 @@ export function PlayerInput({ onAddPlayer, maxPlayers, currentPlayerCount }: Pla
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>{t('labels.addPlayer')}</Text>
+            <Text style={[styles.title, { color: theme.colors.text.primary }]}>{t('labels.addPlayer')}</Text>
 
-            <View style={[styles.inputContainer, isMaxReached && styles.inputDisabled]}>
+            <View style={[styles.inputContainer, { backgroundColor: theme.colors.surface }, isMaxReached && styles.inputDisabled]}>
                 <TextInput
-                    style={styles.input}
+                    style={[styles.input, { color: theme.colors.text.primary }]}
                     placeholder={t('labels.playerName')}
-                    placeholderTextColor={Colors.text.light}
+                    placeholderTextColor={theme.colors.text.light}
                     value={playerName}
                     onChangeText={setPlayerName}
                     onSubmitEditing={handleAddPlayer}
@@ -55,20 +57,20 @@ export function PlayerInput({ onAddPlayer, maxPlayers, currentPlayerCount }: Pla
                 />
 
                 <TouchableOpacity
-                    style={[styles.addButton, isMaxReached && styles.addButtonDisabled]}
+                    style={[styles.addButton, { backgroundColor: isMaxReached || !playerName.trim() ? theme.colors.button.disabled : theme.colors.primary }]}
                     onPress={handleAddPlayer}
                     disabled={isMaxReached || !playerName.trim()}
                 >
                     <Ionicons
                         name="add"
                         size={24}
-                        color={isMaxReached || !playerName.trim() ? Colors.text.light : Colors.text.white}
+                        color={isMaxReached || !playerName.trim() ? theme.colors.text.light : theme.colors.text.white}
                     />
                 </TouchableOpacity>
             </View>
 
             {isMaxReached && (
-                <Text style={styles.limitText}>
+                <Text style={[styles.limitText, { color: theme.colors.text.secondary }]}>
                     {t('errors.playerLimitReached', { maxPlayers })}
                 </Text>
             )}
@@ -84,14 +86,12 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 18,
         fontWeight: '600',
-        color: Colors.text.primary,
         marginBottom: 12,
     },
 
     inputContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: Colors.surface,
         borderRadius: 12,
         paddingLeft: 16,
         paddingRight: 4,
@@ -105,12 +105,10 @@ const styles = StyleSheet.create({
     input: {
         flex: 1,
         fontSize: 16,
-        color: Colors.text.primary,
         paddingVertical: 16,
     },
 
     addButton: {
-        backgroundColor: Colors.primary,
         borderRadius: 8,
         width: 48,
         height: 48,
@@ -118,13 +116,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 
-    addButtonDisabled: {
-        backgroundColor: Colors.surface,
-    },
-
     limitText: {
         fontSize: 14,
-        color: Colors.text.secondary,
         marginTop: 8,
         textAlign: 'center',
         fontStyle: 'italic',

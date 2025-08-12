@@ -6,9 +6,10 @@ import { Ionicons } from '@expo/vector-icons';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 
 import { RootStackParamList } from '../types';
-import { Colors, GlobalStyles } from '../constants';
+import { GlobalStyles } from '../constants';
 import { navigateToGame, AVAILABLE_GAMES } from '../constants/games';
 import { useTranslation } from 'react-i18next';
+import { useTheme } from '../contexts/ThemeContext';
 
 
 type GameSelectScreenRouteProp = RouteProp<RootStackParamList, 'GameSelect'>;
@@ -26,6 +27,7 @@ export function GameSelectScreen() {
   const navigation = useNavigation();
   const { players } = route.params;
   const { t } = useTranslation();
+  const { theme } = useTheme();
 
   const handleSelectGame = (game: GameMetadata) => {
     try {
@@ -51,38 +53,38 @@ export function GameSelectScreen() {
       entering={FadeInDown.delay(index * 200)}
     >
       <TouchableOpacity
-        style={styles.gameCard}
+        style={[styles.gameCard, { backgroundColor: theme.colors.surface, shadowColor: theme.colors.primary }]}
         onPress={() => handleSelectGame(item)}
       >
-        <View style={styles.gameIcon}>
-          <Ionicons name="game-controller" size={32} color={Colors.text.white} />
+        <View style={[styles.gameIcon, { backgroundColor: theme.colors.primary }]}>
+          <Ionicons name="game-controller" size={32} color={theme.colors.text.white} />
         </View>
 
         <View style={styles.gameContent}>
-          <Text style={styles.gameTitle}>{item.name}</Text>
-          <Text style={styles.gameInfo}>
+          <Text style={[styles.gameTitle, { color: theme.colors.text.primary }]}>{item.name}</Text>
+          <Text style={[styles.gameInfo, { color: theme.colors.text.secondary }]}>
             {item.minPlayers}-{item.maxPlayers} {t('common:labels.players')}
           </Text>
-          <Text style={styles.gameDescription}>{item.description}</Text>
+          <Text style={[styles.gameDescription, { color: theme.colors.text.secondary }]}>{item.description}</Text>
         </View>
 
         <View style={styles.playButton}>
-          <Ionicons name="play" size={20} color={Colors.primary} />
+          <Ionicons name="play" size={20} color={theme.colors.primary} />
         </View>
       </TouchableOpacity>
     </Animated.View>
   );
 
   return (
-    <SafeAreaView style={[GlobalStyles.container, styles.container]}>
+    <SafeAreaView style={[GlobalStyles.container, styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
-          <Ionicons name="arrow-back" size={24} color={Colors.text.primary} />
+          <Ionicons name="arrow-back" size={24} color={theme.colors.text.primary} />
         </TouchableOpacity>
 
         <View style={styles.headerContent}>
-          <Text style={styles.headerTitle}>{t('navigation:screens.gameSelect')}</Text>
-          <Text style={styles.headerSubtitle}>
+          <Text style={[styles.headerTitle, { color: theme.colors.text.primary }]}>{t('navigation:screens.gameSelect')}</Text>
+          <Text style={[styles.headerSubtitle, { color: theme.colors.text.secondary }]}>
             {players.length} {t('common:labels.players')} · {t('common:labels.readyToPlay')}
           </Text>
         </View>
@@ -122,13 +124,11 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: Colors.text.primary,
     marginBottom: 4,
   },
 
   headerSubtitle: {
     fontSize: 14,
-    color: Colors.text.secondary,
   },
 
   gamesSection: {
@@ -138,7 +138,6 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 20,
     fontWeight: '600',
-    color: Colors.text.primary,
     marginBottom: 20,
   },
 
@@ -149,10 +148,8 @@ const styles = StyleSheet.create({
   gameCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: Colors.surface,
     padding: 20,
     borderRadius: 16,
-    shadowColor: Colors.primary,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -166,7 +163,6 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 30,
-    backgroundColor: Colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 16,
@@ -179,20 +175,17 @@ const styles = StyleSheet.create({
   gameTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: Colors.text.primary,
     marginBottom: 4,
   },
 
   gameInfo: {
     fontSize: 12,
-    color: Colors.text.secondary,
     marginBottom: 8,
     fontWeight: '500',
   },
 
   gameDescription: {
     fontSize: 14,
-    color: Colors.text.secondary,
     lineHeight: 18,
   },
 
@@ -207,7 +200,6 @@ const styles = StyleSheet.create({
 
   infoText: {
     fontSize: 14,
-    color: Colors.text.light,
     fontStyle: 'italic',
   },
 }); 

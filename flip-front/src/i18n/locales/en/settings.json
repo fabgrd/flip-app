@@ -9,6 +9,11 @@
             "zh": "中文"
         }
     },
+    "appearance": {
+        "title": "Appearance",
+        "subtitle": "Light/Dark theme",
+        "darkMode": "Dark Mode"
+    },
     "about": {
         "title": "About",
         "version": "Version {{version}}",

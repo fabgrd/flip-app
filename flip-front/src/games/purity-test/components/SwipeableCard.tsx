@@ -16,6 +16,7 @@ import * as Haptics from 'expo-haptics';
 import { Avatar } from '../../../components';
 import { Colors } from '../../../constants';
 import { PurityPlayer } from '../types';
+import { useTheme } from '../../../contexts/ThemeContext';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const SWIPE_THRESHOLD = SCREEN_WIDTH * 0.3; // 30% de l'écran
@@ -35,6 +36,7 @@ export function SwipeableCard({ player, onSwipe, onSwipeComplete, isActive = tru
     const translateY = useSharedValue(0);
     const scale = useSharedValue(isActive ? 1 : 0.95);
     const opacity = useSharedValue(isActive ? 1 : 0.8);
+    const { theme } = useTheme();
 
     const triggerHaptic = () => {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
@@ -138,19 +140,19 @@ export function SwipeableCard({ player, onSwipe, onSwipeComplete, isActive = tru
     const cardBackgroundStyle = useAnimatedStyle(() => {
         const rightColor = interpolateColor(
             translateX.value,
-            [0, SWIPE_THRESHOLD, SWIPE_THRESHOLD * 1.5],
-            ['#FFFFFF', '#E8F5E8', '#C8E6C9']
+            [0, SWIPE_THRESHOLD],
+            [theme.colors.background, '#1B5E2022']
         );
 
         const leftColor = interpolateColor(
             translateX.value,
-            [-SWIPE_THRESHOLD * 1.5, -SWIPE_THRESHOLD, 0],
-            ['#FFCDD2', '#FFE8E8', '#FFFFFF']
+            [-SWIPE_THRESHOLD, 0],
+            ['#9C191922', theme.colors.background]
         );
 
         const backgroundColor = translateX.value > 0 ? rightColor : leftColor;
 
-        return { backgroundColor };
+        return { backgroundColor, borderColor: theme.colors.primary } as any;
     });
 
     const overlayStyle = useAnimatedStyle(() => {
@@ -182,13 +184,13 @@ export function SwipeableCard({ player, onSwipe, onSwipeComplete, isActive = tru
             {/* Carte principale */}
             <PanGestureHandler onGestureEvent={gestureHandler} enabled={isActive}>
                 <Animated.View style={[styles.card, cardStyle]}>
-                    <Animated.View style={[styles.cardContent, cardBackgroundStyle]}>
+                    <Animated.View style={[styles.cardContent, cardBackgroundStyle, { borderColor: theme.colors.primary }]}>
                         <Avatar
                             name={player.name}
                             avatar={player.avatar}
                             size={80}
                         />
-                        <Text style={styles.playerName}>{player.name}</Text>
+                        <Text style={[styles.playerName, { color: theme.colors.text.primary }]}>{player.name}</Text>
 
                         <Animated.View style={[styles.overlay, overlayStyle]}>
                             <Animated.Text style={[styles.overlayText, yesLabelStyle]}>
@@ -231,12 +233,10 @@ const styles = StyleSheet.create({
         padding: 20,
         gap: 20,
         borderWidth: 2,
-        borderColor: Colors.primary,
     },
     playerName: {
         fontSize: 24,
         fontWeight: 'bold',
-        color: Colors.text.primary,
         textAlign: 'center',
     },
     overlay: {

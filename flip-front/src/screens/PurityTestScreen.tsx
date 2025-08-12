@@ -14,6 +14,7 @@ import { usePurityTest } from '../games/purity-test';
 import { THEME_COLORS, THEME_LABELS } from '../games/purity-test';
 import { CardStack } from '../games/purity-test/components';
 import { Colors } from '../constants';
+import { useTheme } from '../contexts/ThemeContext';
 
 type PurityTestScreenRouteProp = RouteProp<RootStackParamList, 'PurityTest'>;
 
@@ -33,6 +34,7 @@ export function PurityTestScreen() {
         isGameFinished,
         totalQuestions
     } = usePurityTest(players);
+    const { theme } = useTheme();
 
     const handleSwipe = (playerId: string, direction: 'yes' | 'no') => {
         submitAnswer(playerId, direction);
@@ -66,42 +68,42 @@ export function PurityTestScreen() {
 
     if (!currentQuestion) {
         return (
-            <SafeAreaView style={styles.container}>
+            <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.surface }]}>
                 <View style={styles.loadingContainer}>
-                    <Text>Chargement...</Text>
+                    <Text style={{ color: theme.colors.text.primary }}>Chargement...</Text>
                 </View>
             </SafeAreaView>
         );
     }
 
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.surface }]}>
             {/* Header avec progression */}
-            <View style={styles.header}>
-                <Text style={styles.questionCounter}>
+            <View style={[styles.header, { backgroundColor: theme.colors.background, borderBottomColor: theme.colors.border }]}>
+                <Text style={[styles.questionCounter, { color: theme.colors.primary }]}>
                     {t('common:labels.question', { current: gameState.currentQuestionIndex + 1, total: totalQuestions })}
                 </Text>
-                <View style={styles.progressBar}>
-                    <View style={[styles.progressFill, { width: `${progress}%` }]} />
+                <View style={[styles.progressBar, { backgroundColor: theme.colors.border }]}>
+                    <View style={[styles.progressFill, { width: `${progress}%`, backgroundColor: theme.colors.primary }]} />
                 </View>
             </View>
 
             {/* Question */}
-            <View style={styles.questionContainer}>
+            <View style={[styles.questionContainer, { backgroundColor: theme.colors.background }]}>
                 <View style={[
                     styles.questionTheme,
                     { backgroundColor: THEME_COLORS[currentQuestion.theme] }
                 ]}>
-                    <Text style={styles.questionThemeText}>
+                    <Text style={[styles.questionThemeText, { color: theme.colors.text.white }]}>
                         {THEME_LABELS[currentQuestion.theme]}
                     </Text>
                 </View>
                 <View style={styles.questionTextContainer}>
-                    <Text style={styles.questionPrefix}>{t('purityTest:game.questionPrefix')}</Text>
-                    <Text style={styles.questionText}>{currentQuestion.text}</Text>
+                    <Text style={[styles.questionPrefix, { color: theme.colors.text.secondary }]}>{t('purityTest:game.questionPrefix')}</Text>
+                    <Text style={[styles.questionText, { color: theme.colors.text.primary }]}>{currentQuestion.text}</Text>
                 </View>
-                <View style={styles.pointsContainer}>
-                    <Text style={styles.pointsText}>
+                <View style={[styles.pointsContainer, { backgroundColor: `${theme.colors.primary}15` }]}>
+                    <Text style={[styles.pointsText, { color: theme.colors.primary }]}>
                         {currentQuestion.points.yes} point{currentQuestion.points.yes > 1 ? 's' : ''}
                     </Text>
                 </View>
@@ -124,7 +126,7 @@ export function PurityTestScreen() {
 
             {/* Indicateur des joueurs restants */}
             <View style={styles.remainingContainer}>
-                <Text style={styles.remainingText}>
+                <Text style={[styles.remainingText, { color: theme.colors.text.secondary }]}>
                     {gameState.players.filter(player =>
                         !player.answers.some(answer => answer.questionId === currentQuestion.id)
                     ).length} {t('common:messages.remainingPlayers')}
@@ -137,34 +139,27 @@ export function PurityTestScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Colors.surface,
     },
     header: {
         padding: 20,
-        backgroundColor: Colors.background,
         borderBottomWidth: 1,
-        borderBottomColor: '#E0E0E0',
     },
     questionCounter: {
         fontSize: 16,
         fontWeight: 'bold',
-        color: Colors.primary,
         textAlign: 'center',
         marginBottom: 10,
     },
     progressBar: {
         height: 6,
-        backgroundColor: '#E0E0E0',
         borderRadius: 3,
     },
     progressFill: {
         height: '100%',
-        backgroundColor: Colors.primary,
         borderRadius: 3,
     },
     questionContainer: {
         padding: 20,
-        backgroundColor: Colors.background,
         margin: 16,
         borderRadius: 12,
         shadowColor: '#000',
@@ -181,7 +176,6 @@ const styles = StyleSheet.create({
         marginBottom: 16,
     },
     questionThemeText: {
-        color: Colors.text.white,
         fontSize: 12,
         fontWeight: 'bold',
     },
@@ -190,19 +184,16 @@ const styles = StyleSheet.create({
     },
     questionPrefix: {
         fontSize: 16,
-        color: Colors.text.secondary,
         textAlign: 'center',
         fontStyle: 'italic',
         marginBottom: 8,
     },
     questionText: {
         fontSize: 18,
-        color: Colors.text.primary,
         textAlign: 'center',
         lineHeight: 24,
     },
     pointsContainer: {
-        backgroundColor: '#E3F2FD',
         paddingHorizontal: 8,
         paddingVertical: 4,
         borderRadius: 6,
@@ -210,7 +201,6 @@ const styles = StyleSheet.create({
         marginTop: 12,
     },
     pointsText: {
-        color: Colors.primary,
         fontSize: 12,
         fontWeight: '600',
     },
@@ -220,7 +210,6 @@ const styles = StyleSheet.create({
     },
     instructionsText: {
         fontSize: 14,
-        color: Colors.text.secondary,
         textAlign: 'center',
         fontStyle: 'italic',
     },
@@ -235,7 +224,6 @@ const styles = StyleSheet.create({
     },
     remainingText: {
         fontSize: 14,
-        color: Colors.text.secondary,
         fontWeight: '500',
     },
     loadingContainer: {
