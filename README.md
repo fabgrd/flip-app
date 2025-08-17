@@ -1,23 +1,6 @@
 # FL!P - Jeu d'alcool entre amis 🍻
 
-Une application mobile de jeux d'alcool inspirée de TOZ, développée avec React Native et Expo.
-
-## 🚀 Fonctionnalités
-
-### ✅ Implémentées
-
-- **Écran d'accueil** : Ajout/suppression de joueurs (2-10 maximum)
-- **Interface intuitive** : Design moderne avec couleurs vives et animations
-- **Feedback haptique** : Vibrations lors des interactions
-- **Persistance** : Sauvegarde des noms avec AsyncStorage
-- **Navigation** : Navigation entre les écrans avec React Navigation
-- **Écran de sélection** : Choix des jeux disponibles
-
-### 🔄 En cours de développement
-
-- **Jeu "6 qui prend !"** : Premier jeu disponible
-- **Moteur de jeu** : Logique et règles des jeux
-- **Plus de jeux** : Extension avec d'autres jeux d'alcool
+Une application mobile de jeux d'alcool, développée avec React Native et Expo.
 
 ## 🛠️ Stack technique
 
