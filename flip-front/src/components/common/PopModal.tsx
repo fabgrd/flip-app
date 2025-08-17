@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import Animated, { ZoomIn, ZoomOut } from 'react-native-reanimated';
-import { Avatar } from './Avatar';
 import { useTheme } from '../../contexts/ThemeContext';
+import { Avatar } from './Avatar';
 
 export interface PopModalProps {
   visible: boolean;

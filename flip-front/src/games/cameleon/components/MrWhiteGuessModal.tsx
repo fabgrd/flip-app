@@ -1,5 +1,6 @@
+import { TFunction } from 'i18next';
 import React from 'react';
-import { Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
 import { PopModal } from '../../../components/common/PopModal';
 import { useTheme } from '../../../contexts/ThemeContext';
 
@@ -10,7 +11,7 @@ interface MrWhiteGuessModalProps {
   guess: string;
   onChangeGuess: (g: string) => void;
   onSubmit: () => void;
-  t: (key: string, opts?: any) => string;
+  t: TFunction;
 }
 
 export function MrWhiteGuessModal({

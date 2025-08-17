@@ -1,14 +1,14 @@
-import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, FlatList } from 'react-native';
-import { useRoute, useNavigation, RouteProp } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import React from 'react';
+import { FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 
 import { useTranslation } from 'react-i18next';
-import { RootStackParamList } from '../types';
-import { GlobalStyles } from '../constants';
-import { navigateToGame, AVAILABLE_GAMES } from '../constants/games';
+import { createGlobalStyles } from '../constants';
+import { AVAILABLE_GAMES, navigateToGame } from '../constants/games';
 import { useTheme } from '../contexts/ThemeContext';
+import { RootStackParamList } from '../types';
 
 type GameSelectScreenRouteProp = RouteProp<RootStackParamList, 'GameSelect'>;
 
@@ -26,19 +26,19 @@ export function GameSelectScreen() {
   const { players } = route.params;
   const { t } = useTranslation();
   const { theme } = useTheme();
-
+  const GlobalStyles = createGlobalStyles(theme);
   const handleSelectGame = (game: GameMetadata) => {
     try {
       navigateToGame(navigation, game.id, players);
     } catch (error) {
       // Fallback pour les jeux non encore migrés
       if (game.id === 'purity-test') {
-        (navigation as any).navigate('PurityTest', { players });
+        navigation.navigate('PurityTest', { players });
       } else if (game.id === 'cameleon') {
-        (navigation as any).navigate('Cameleon', { players });
+        navigation.navigate('Cameleon', { players });
       } else {
         alert(
-          `Jeu "${game.name}" sélectionné avec ${players.length} joueurs!\nFonctionnalité en cours de développement.`,
+          `Game "${game.name}" selected with ${players.length} players!\nFeature under development.`,
         );
       }
     }

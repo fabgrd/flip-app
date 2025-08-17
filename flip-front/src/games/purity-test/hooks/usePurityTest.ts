@@ -1,7 +1,8 @@
-import { useState, useCallback, useMemo } from 'react';
+import { TFunction } from 'i18next';
+import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Player } from '../../../types';
-import { PlayerAnswer, Question, Theme, PurityGameState, PurityResults } from '../types';
+import { PlayerAnswer, PurityGameState, PurityResults, Question, Theme } from '../types';
 
 function shuffleArray<T>(array: T[]): T[] {
   const shuffled = [...array];
@@ -12,7 +13,7 @@ function shuffleArray<T>(array: T[]): T[] {
   return shuffled;
 }
 
-function generateGameQuestions(t: any): Question[] {
+function generateGameQuestions(t: TFunction): Question[] {
   const themeQuestionCounts: Record<Theme, number> = {
     sex: 7,
     drugs: 8,
@@ -24,26 +25,26 @@ function generateGameQuestions(t: any): Question[] {
     sex: [
       {
         id: 'sex_fallback_1',
-        text: 'eu des relations sexuelles ?',
+        text: 'have sex with someone ?',
         theme: 'sex',
         points: { yes: 2, no: 0 },
       },
       {
         id: 'sex_fallback_2',
-        text: "embrassé quelqu'un ?",
+        text: 'kissed someone ?',
         theme: 'sex',
         points: { yes: 1, no: 0 },
       },
       {
         id: 'sex_fallback_3',
-        text: "eu un coup d'un soir ?",
+        text: 'had sex with someone once ?',
         theme: 'sex',
         points: { yes: 3, no: 0 },
       },
-      { id: 'sex_fallback_4', text: "simulé l'orgasme ?", theme: 'sex', points: { yes: 2, no: 0 } },
+      { id: 'sex_fallback_4', text: 'faked an orgasm ?', theme: 'sex', points: { yes: 2, no: 0 } },
       {
         id: 'sex_fallback_5',
-        text: 'Vous êtes-vous déjà masturbé ?',
+        text: 'have you ever masturbated ?',
         theme: 'sex',
         points: { yes: 1, no: 0 },
       },
@@ -51,26 +52,26 @@ function generateGameQuestions(t: any): Question[] {
     drugs: [
       {
         id: 'drugs_fallback_1',
-        text: "bu de l'alcool ?",
+        text: 'drunk ?',
         theme: 'drugs',
         points: { yes: 1, no: 0 },
       },
-      { id: 'drugs_fallback_2', text: 'été ivre ?', theme: 'drugs', points: { yes: 2, no: 0 } },
+      { id: 'drugs_fallback_2', text: 'drunk ?', theme: 'drugs', points: { yes: 2, no: 0 } },
       {
         id: 'drugs_fallback_3',
-        text: 'fumé un joint ?',
+        text: 'smoked a joint ?',
         theme: 'drugs',
         points: { yes: 2, no: 0 },
       },
       {
         id: 'drugs_fallback_4',
-        text: "vomi à cause de l'alcool ?",
+        text: 'vomited because of alcohol ?',
         theme: 'drugs',
         points: { yes: 3, no: 0 },
       },
       {
         id: 'drugs_fallback_5',
-        text: "Bu avant l'âge légal ?",
+        text: 'used drugs before the legal age ?',
         theme: 'drugs',
         points: { yes: 1, no: 0 },
       },
@@ -78,31 +79,31 @@ function generateGameQuestions(t: any): Question[] {
     morality: [
       {
         id: 'morality_fallback_1',
-        text: 'menti pour éviter un problème ?',
+        text: 'lied to avoid a problem ?',
         theme: 'morality',
         points: { yes: 1, no: 0 },
       },
       {
         id: 'morality_fallback_2',
-        text: 'volé quelque chose ?',
+        text: 'stole something ?',
         theme: 'morality',
         points: { yes: 3, no: 0 },
       },
       {
         id: 'morality_fallback_3',
-        text: 'triché à un examen ?',
+        text: 'cheated on an exam ?',
         theme: 'morality',
         points: { yes: 2, no: 0 },
       },
       {
         id: 'morality_fallback_4',
-        text: "fait pleurer quelqu'un volontairement ?",
+        text: 'made someone cry on purpose ?',
         theme: 'morality',
         points: { yes: 4, no: 0 },
       },
       {
         id: 'morality_fallback_5',
-        text: 'ignoré un SDF ?',
+        text: 'ignored a homeless person ?',
         theme: 'morality',
         points: { yes: 1, no: 0 },
       },
@@ -110,31 +111,31 @@ function generateGameQuestions(t: any): Question[] {
     hygiene: [
       {
         id: 'hygiene_fallback_1',
-        text: 'oublié de te brosser les dents avant de dormir ?',
+        text: 'forgot to brush your teeth before sleeping ?',
         theme: 'hygiene',
         points: { yes: 1, no: 0 },
       },
       {
         id: 'hygiene_fallback_2',
-        text: 'porté le même sous-vêtement plusieurs jours ?',
+        text: 'wore the same underwear for several days ?',
         theme: 'hygiene',
         points: { yes: 2, no: 0 },
       },
       {
         id: 'hygiene_fallback_3',
-        text: 'mangé quelque chose tombé par terre ?',
+        text: 'ate something that fell on the ground ?',
         theme: 'hygiene',
         points: { yes: 2, no: 0 },
       },
       {
         id: 'hygiene_fallback_4',
-        text: "senti un vêtement pour savoir s'il était propre ?",
+        text: 'felt a shirt to know if it was clean ?',
         theme: 'hygiene',
         points: { yes: 1, no: 0 },
       },
       {
         id: 'hygiene_fallback_5',
-        text: 'pété dans ton lit sous la couette ?',
+        text: 'peed in your bed under the blanket ?',
         theme: 'hygiene',
         points: { yes: 1, no: 0 },
       },
@@ -154,12 +155,12 @@ function generateGameQuestions(t: any): Question[] {
       try {
         const questionsData = t(`purityTest:questions.${theme}.${level}`, { returnObjects: true });
         if (Array.isArray(questionsData)) {
-          questionsData.forEach((questionData: any) => {
+          questionsData.forEach((questionData: Question) => {
             themeQuestions.push({
               id: questionData.id,
               text: questionData.text,
               theme,
-              points: { yes: questionData.points, no: 0 },
+              points: { yes: questionData.points.yes, no: questionData.points.no },
             });
           });
         }
@@ -284,7 +285,7 @@ export const usePurityTest = (initialPlayers: Player[]) => {
     }, 0);
 
     const playersWithResults = gameState.players
-      .map((player, index) => {
+      .map((player) => {
         const totalScore = player.score;
 
         const impurityPercentage =
@@ -325,7 +326,7 @@ export const usePurityTest = (initialPlayers: Player[]) => {
         rank: index + 1,
       }));
 
-    return { players: playersWithResults };
+    return { players: playersWithResults as unknown as PurityResults['players'] };
   }, [gameState.players, gameState.questions]);
 
   const resetGame = useCallback(() => {

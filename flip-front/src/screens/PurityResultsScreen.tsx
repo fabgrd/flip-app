@@ -1,10 +1,12 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, SafeAreaView } from 'react-native';
-import { useRoute, useNavigation, RouteProp } from '@react-navigation/native';
+import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
-import { RootStackParamList } from '../types';
-import { THEME_LABELS, THEME_COLORS } from '../games/purity-test';
+
 import { useTheme } from '../contexts/ThemeContext';
+import { THEME_COLORS, THEME_LABELS } from '../games/purity-test';
+import { RootStackParamList, Theme } from '../types';
 
 type PurityResultsScreenRouteProp = RouteProp<RootStackParamList, 'PurityResults'>;
 
@@ -16,7 +18,7 @@ export function PurityResultsScreen() {
   const { theme } = useTheme();
 
   const handleBackToHome = () => {
-    navigation.navigate('Home' as never);
+    navigation.navigate('Home');
   };
 
   const getRankEmoji = (rank: number) => {
@@ -87,7 +89,7 @@ export function PurityResultsScreen() {
       </View>
 
       <ScrollView style={styles.resultsContainer}>
-        {results.players.map((result: any) => {
+        {results.players.map((result) => {
           const impurityLevel = getImpurityLevel(result.impurityPercentage);
           return (
             <View
@@ -127,14 +129,14 @@ export function PurityResultsScreen() {
                       <View
                         style={[
                           styles.themeIndicator,
-                          { backgroundColor: THEME_COLORS[themeKey as keyof typeof THEME_COLORS] },
+                          { backgroundColor: THEME_COLORS[themeKey as Theme] },
                         ]}
                       />
                       <Text style={[styles.themeName, { color: theme.colors.text.secondary }]}>
-                        {THEME_LABELS[themeKey as keyof typeof THEME_LABELS]}
+                        {THEME_LABELS[themeKey as Theme]}
                       </Text>
                       <Text style={[styles.themePercentage, { color: theme.colors.text.primary }]}>
-                        {percentage as number}%
+                        {percentage}%
                       </Text>
                     </View>
                   ))}

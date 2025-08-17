@@ -1,16 +1,16 @@
-import React from 'react';
+import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
   SafeAreaView,
   ScrollView,
+  StyleSheet,
   Switch,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { useTranslation } from 'react-i18next';
-import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../contexts/ThemeContext';
 
 const LANGUAGES = [
@@ -22,7 +22,8 @@ const LANGUAGES = [
 export function SettingsScreen() {
   const navigation = useNavigation();
   const { t, i18n } = useTranslation();
-  const { theme, preference, setPreference, toggleDarkMode } = useTheme();
+  const { theme, toggleDarkMode } = useTheme();
+  const [isDark] = useState(theme.mode === 'dark');
 
   const handleLanguageChange = async (languageCode: string) => {
     await i18n.changeLanguage(languageCode);
@@ -31,8 +32,6 @@ export function SettingsScreen() {
   const handleBackPress = () => {
     navigation.goBack();
   };
-
-  const isDark = theme.mode === 'dark';
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.surface }]}>
@@ -56,10 +55,10 @@ export function SettingsScreen() {
         {/* Theme Section */}
         <View style={styles.section}>
           <Text style={[styles.sectionTitle, { color: theme.colors.text.primary }]}>
-            {t('settings:appearance.title', 'Apparence')}
+            {t('settings:appearance.title')}
           </Text>
           <Text style={[styles.sectionSubtitle, { color: theme.colors.text.secondary }]}>
-            {t('settings:appearance.subtitle', 'Thème clair/sombre')}
+            {t('settings:appearance.subtitle')}
           </Text>
 
           <View
@@ -69,7 +68,7 @@ export function SettingsScreen() {
             ]}
           >
             <Text style={[styles.rowText, { color: theme.colors.text.primary }]}>
-              {t('settings:appearance.darkMode', 'Dark Mode')}
+              {t('settings:appearance.darkMode')}
             </Text>
             <Switch
               value={isDark}

@@ -1,5 +1,6 @@
-import { useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
+import { t } from 'i18next';
+import { useState } from 'react';
 import { Alert } from 'react-native';
 
 export const useImagePicker = () => {
@@ -8,11 +9,7 @@ export const useImagePicker = () => {
   const requestPermissions = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (status !== 'granted') {
-      Alert.alert(
-        'Permission requise',
-        "Nous avons besoin d'accéder à votre galerie pour ajouter une photo de profil.",
-        [{ text: 'OK' }],
-      );
+      Alert.alert(t('errors.permissionRequired'));
       return false;
     }
     return true;
@@ -29,7 +26,7 @@ export const useImagePicker = () => {
       }
 
       const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        mediaTypes: ['images'],
         allowsEditing: true,
         aspect: [1, 1], // Format carré pour l'avatar
         quality: 0.7,
@@ -44,7 +41,7 @@ export const useImagePicker = () => {
       return null;
     } catch (error) {
       setIsLoading(false);
-      Alert.alert('Erreur', "Impossible de sélectionner l'image.");
+      Alert.alert(t('errors.imageSelectionFailed'));
       return null;
     }
   };
@@ -55,11 +52,7 @@ export const useImagePicker = () => {
     try {
       const { status } = await ImagePicker.requestCameraPermissionsAsync();
       if (status !== 'granted') {
-        Alert.alert(
-          'Permission requise',
-          "Nous avons besoin d'accéder à votre caméra pour prendre une photo.",
-          [{ text: 'OK' }],
-        );
+        Alert.alert(t('errors.permissionRequired'));
         setIsLoading(false);
         return null;
       }
@@ -79,7 +72,7 @@ export const useImagePicker = () => {
       return null;
     } catch (error) {
       setIsLoading(false);
-      Alert.alert('Erreur', 'Impossible de prendre la photo.');
+      Alert.alert(t('errors.photoTakingFailed'));
       return null;
     }
   };
@@ -87,25 +80,25 @@ export const useImagePicker = () => {
   const showImagePicker = (): Promise<string | null> => {
     return new Promise((resolve) => {
       Alert.alert(
-        'Ajouter une photo',
-        'Choisissez une option',
+        t('errors.addPhoto'),
+        t('chooseOption'),
         [
           {
-            text: 'Galerie',
+            text: t('errors.gallery'),
             onPress: async () => {
               const uri = await pickImage();
               resolve(uri);
             },
           },
           {
-            text: 'Appareil photo',
+            text: t('errors.camera'),
             onPress: async () => {
               const uri = await takePhoto();
               resolve(uri);
             },
           },
           {
-            text: 'Annuler',
+            text: t('errors.cancel'),
             style: 'cancel',
             onPress: () => resolve(null),
           },

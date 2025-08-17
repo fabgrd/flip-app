@@ -1,21 +1,21 @@
-import React, { useMemo, useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, FlatList } from 'react-native';
-import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
-import { useRoute, useNavigation, RouteProp } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
-import { GlobalStyles } from '../constants';
-import { Player, RootStackParamList } from '../types';
+import { PopModal } from '../components/common';
+import { createGlobalStyles } from '../constants';
+import { useTheme } from '../contexts/ThemeContext';
 import { useCameleon } from '../games/cameleon';
 import {
+  ActionBar,
+  MrWhiteGuessModal,
+  PlayerGrid,
   RevealCard,
   SettingsPanel,
-  PlayerGrid,
-  MrWhiteGuessModal,
-  ActionBar,
 } from '../games/cameleon/components';
-import { Avatar, PopModal } from '../components/common';
-import { useTheme } from '../contexts/ThemeContext';
+import { Player, RootStackParamList } from '../types';
 
 type CameleonRouteProp = RouteProp<RootStackParamList, 'Cameleon'>;
 
@@ -29,10 +29,8 @@ export function CameleonScreen() {
     gameState,
     defaultDistribution,
     startGame,
-    resetGame,
     phase,
     currentRevealPlayer,
-    revealIndex,
     revealNext,
     clueOrder,
     beginVote,
@@ -40,7 +38,6 @@ export function CameleonScreen() {
     selectElimination,
     confirmElimination,
     gameOver,
-    winner,
     proceedAfterResults,
     mrWhiteToGuessId,
     submitMrWhiteGuess,
@@ -108,7 +105,7 @@ export function CameleonScreen() {
   useEffect(() => {
     if (phase === 'results' && gameOver) {
       const timer = setTimeout(
-        () => (navigation as any).navigate('CameleonResults', { players: gameState.players }),
+        () => navigation.navigate('CameleonResults', { players: gameState.players }),
         800,
       );
       return () => clearTimeout(timer);
@@ -123,93 +120,93 @@ export function CameleonScreen() {
   }, [clueOrder, gameState.players]);
 
   // Alive impostors counter (combined cameleon + mrWhite)
-  const aliveImpostors = useMemo(
-    () =>
-      gameState.players.filter(
-        (p) => !p.isEliminated && (p.role === 'cameleon' || p.role === 'mrWhite'),
-      ).length,
-    [gameState.players],
-  );
+  // const aliveImpostors = useMemo(
+  //   () =>
+  //     gameState.players.filter(
+  //       (p) => !p.isEliminated && (p.role === 'cameleon' || p.role === 'mrWhite'),
+  //     ).length,
+  //   [gameState.players],
+  // );
 
-  const renderMainGrid = () => {
-    const isVote = phase === 'vote' || phase === 'results';
-    return (
-      <View style={{ paddingHorizontal: 12, flex: 1 }}>
-        <Text style={styles.sectionTitle}>{t('cameleon:game.subtitle')}</Text>
-        <Text style={styles.counterInfo}>
-          {t('cameleon:counters.remainingImpostors', { count: aliveImpostors })}
-        </Text>
+  // const renderMainGrid = () => {
+  //   const isVote = phase === 'vote' || phase === 'results';
+  //   return (
+  //     <View style={{ paddingHorizontal: 12, flex: 1 }}>
+  //       <Text style={styles.sectionTitle}>{t('cameleon:game.subtitle')}</Text>
+  //       <Text style={styles.counterInfo}>
+  //         {t('cameleon:counters.remainingImpostors', { count: aliveImpostors })}
+  //       </Text>
 
-        <FlatList
-          style={{ flex: 1 }}
-          data={orderedPlayers}
-          keyExtractor={(item) => item.id}
-          numColumns={3}
-          renderItem={({ item, index }) => {
-            const inner = (
-              <>
-                <Avatar name={item.name} avatar={item.avatar} size={72} />
-                <View style={styles.statusContainer}>
-                  {item.isEliminated ? (
-                    <View style={styles.eliminatedPill}>
-                      <Text style={styles.eliminatedPillText}>
-                        {t('cameleon:badges.eliminated')}
-                      </Text>
-                    </View>
-                  ) : (
-                    <Text style={styles.gridOrder}>{index + 1}</Text>
-                  )}
-                </View>
-                <Text style={styles.gridName} numberOfLines={1}>
-                  {item.name}
-                </Text>
-              </>
-            );
-            if (isVote && !item.isEliminated) {
-              return (
-                <TouchableOpacity
-                  style={[
-                    styles.gridItem,
-                    selectedForElimination === item.id && styles.selectedItem,
-                  ]}
-                  onPress={() => selectElimination(item.id)}
-                >
-                  {inner}
-                </TouchableOpacity>
-              );
-            }
-            return (
-              <View
-                style={[
-                  styles.gridItem,
-                  selectedForElimination === item.id && isVote && styles.selectedItem,
-                ]}
-              >
-                {inner}
-              </View>
-            );
-          }}
-        />
+  //       <FlatList
+  //         style={{ flex: 1 }}
+  //         data={orderedPlayers}
+  //         keyExtractor={(item) => item.id}
+  //         numColumns={3}
+  //         renderItem={({ item, index }) => {
+  //           const inner = (
+  //             <>
+  //               <Avatar name={item.name} avatar={item.avatar} size={72} />
+  //               <View style={styles.statusContainer}>
+  //                 {item.isEliminated ? (
+  //                   <View style={styles.eliminatedPill}>
+  //                     <Text style={styles.eliminatedPillText}>
+  //                       {t('cameleon:badges.eliminated')}
+  //                     </Text>
+  //                   </View>
+  //                 ) : (
+  //                   <Text style={styles.gridOrder}>{index + 1}</Text>
+  //                 )}
+  //               </View>
+  //               <Text style={styles.gridName} numberOfLines={1}>
+  //                 {item.name}
+  //               </Text>
+  //             </>
+  //           );
+  //           if (isVote && !item.isEliminated) {
+  //             return (
+  //               <TouchableOpacity
+  //                 style={[
+  //                   styles.gridItem,
+  //                   selectedForElimination === item.id && styles.selectedItem,
+  //                 ]}
+  //                 onPress={() => selectElimination(item.id)}
+  //               >
+  //                 {inner}
+  //               </TouchableOpacity>
+  //             );
+  //           }
+  //           return (
+  //             <View
+  //               style={[
+  //                 styles.gridItem,
+  //                 selectedForElimination === item.id && isVote && styles.selectedItem,
+  //               ]}
+  //             >
+  //               {inner}
+  //             </View>
+  //           );
+  //         }}
+  //       />
 
-        {isVote ? (
-          <TouchableOpacity
-            style={[styles.primaryBtn, !selectedForElimination && styles.btnDisabled]}
-            onPress={confirmElimination}
-            disabled={!selectedForElimination}
-          >
-            <Text style={styles.primaryBtnText}>{t('cameleon:actions.eliminate')}</Text>
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity style={styles.secondaryBtn} onPress={beginVote}>
-            <Text style={styles.secondaryBtnText}>{t('cameleon:actions.goToVote')}</Text>
-          </TouchableOpacity>
-        )}
-      </View>
-    );
-  };
+  //       {isVote ? (
+  //         <TouchableOpacity
+  //           style={[styles.primaryBtn, !selectedForElimination && styles.btnDisabled]}
+  //           onPress={confirmElimination}
+  //           disabled={!selectedForElimination}
+  //         >
+  //           <Text style={styles.primaryBtnText}>{t('cameleon:actions.eliminate')}</Text>
+  //         </TouchableOpacity>
+  //       ) : (
+  //         <TouchableOpacity style={styles.secondaryBtn} onPress={beginVote}>
+  //           <Text style={styles.secondaryBtnText}>{t('cameleon:actions.goToVote')}</Text>
+  //         </TouchableOpacity>
+  //       )}
+  //     </View>
+  //   );
+  // };
 
   // Planned impostors count for settings screen (combined UC + MW)
-  const plannedImpostors = currentUC + currentMW;
+  // const plannedImpostors = currentUC + currentMW;
 
   // First player for start modal
   const firstPlayerForModal = useMemo(() => {
@@ -229,11 +226,12 @@ export function CameleonScreen() {
   }, [mrWhiteToGuessId]);
 
   const { theme } = useTheme();
+  const globalStyles = createGlobalStyles(theme);
 
   return (
     <SafeAreaView
       style={[
-        GlobalStyles.container,
+        globalStyles.container,
         styles.container,
         { backgroundColor: theme.colors.background },
       ]}
@@ -298,7 +296,7 @@ export function CameleonScreen() {
       {(phase === 'clues' || phase === 'vote' || phase === 'results') && (
         <>
           <PlayerGrid
-            players={orderedPlayers as any}
+            players={orderedPlayers}
             isVote={phase === 'vote' || phase === 'results'}
             clueOrder={clueOrder}
             selectedForElimination={selectedForElimination}

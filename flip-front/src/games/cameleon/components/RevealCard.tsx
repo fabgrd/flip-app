@@ -1,11 +1,12 @@
+import { TFunction } from 'i18next';
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withTiming,
   interpolate,
   runOnJS,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
 } from 'react-native-reanimated';
 import { useTheme } from '../../../contexts/ThemeContext';
 
@@ -14,7 +15,7 @@ interface RevealCardProps {
   roleLabel: string;
   secretWord: string | null;
   onNext: () => void;
-  t: (key: string, opts?: any) => string;
+  t: TFunction;
 }
 
 export function RevealCard({ name, roleLabel, secretWord, onNext, t }: RevealCardProps) {
@@ -25,12 +26,12 @@ export function RevealCard({ name, roleLabel, secretWord, onNext, t }: RevealCar
 
   const frontStyle = useAnimatedStyle(() => ({
     transform: [{ rotateY: `${interpolate(rotation.value, [0, 1], [0, 180])}deg` }],
-    backfaceVisibility: 'hidden' as any,
+    backfaceVisibility: 'hidden',
   }));
 
   const backStyle = useAnimatedStyle(() => ({
     transform: [{ rotateY: `${interpolate(rotation.value, [0, 1], [180, 360])}deg` }],
-    backfaceVisibility: 'hidden' as any,
+    backfaceVisibility: 'hidden',
     position: 'absolute',
     top: 0,
     left: 0,
@@ -182,7 +183,7 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     letterSpacing: 1,
     textAlign: 'center',
-    textTransform: 'uppercase' as any,
+    textTransform: 'uppercase',
   },
   wrapper: { alignItems: 'center', flex: 1, justifyContent: 'center', paddingHorizontal: 16 },
 });

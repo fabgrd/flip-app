@@ -2,6 +2,9 @@
     "errors": {
         "playerNameRequired": "请输入玩家名称。",
         "playerNameAlreadyExists": "玩家名称已存在。",
-        "playerLimitReached": "您不能添加超过 {{maxPlayers}} 个玩家。"
+        "playerLimitReached": "您不能添加超过 {{maxPlayers}} 个玩家。",
+        "permissionRequired": "我们需要访问您的图库以添加个人资料图片。",
+        "imageSelectionFailed": "无法选择图片。",
+        "photoTakingFailed": "无法拍摄照片。"
     }
 }

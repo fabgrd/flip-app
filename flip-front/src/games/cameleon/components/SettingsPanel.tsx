@@ -1,5 +1,6 @@
+import { TFunction } from 'i18next';
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useTheme } from '../../../contexts/ThemeContext';
 
 interface SettingsPanelProps {
@@ -11,7 +12,7 @@ interface SettingsPanelProps {
   onChangeUC: (value: number) => void;
   onChangeMW: (value: number) => void;
   onStart: () => void;
-  t: (key: string, opts?: any) => string;
+  t: TFunction;
 }
 
 export function SettingsPanel({

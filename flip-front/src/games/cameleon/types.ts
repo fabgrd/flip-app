@@ -9,6 +9,8 @@ export interface CameleonAssignedPlayer extends Player {
   scoreBonus?: number;
   mrWhiteGuess?: string;
   mrWhiteGuessCorrect?: boolean;
+  points?: number;
+  score?: number;
 }
 
 export interface CameleonWordPair {

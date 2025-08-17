@@ -1,5 +1,6 @@
+import { TFunction } from 'i18next';
 import React from 'react';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useTheme } from '../../../contexts/ThemeContext';
 
 interface ActionBarProps {
@@ -7,7 +8,7 @@ interface ActionBarProps {
   selectedForElimination?: string | null;
   onConfirmElimination: () => void;
   onBeginVote: () => void;
-  t: (key: string, opts?: any) => string;
+  t: TFunction;
 }
 
 export function ActionBar({

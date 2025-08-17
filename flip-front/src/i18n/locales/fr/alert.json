@@ -2,6 +2,14 @@
     "errors": {
         "playerNameRequired": "Veuillez entrer un nom de joueur.",
         "playerNameAlreadyExists": "Ce nom de joueur existe déjà.",
-        "playerLimitReached": "Vous ne pouvez pas ajouter plus de {{maxPlayers}} joueurs."
+        "playerLimitReached": "Vous ne pouvez pas ajouter plus de {{maxPlayers}} joueurs.",
+        "permissionRequired": "Nous avons besoin d'accéder à votre galerie pour ajouter une photo de profil.",
+        "imageSelectionFailed": "Impossible de sélectionner l'image.",
+        "photoTakingFailed": "Impossible de prendre la photo.",
+        "addPhoto": "Ajouter une photo",
+        "chooseOption": "Choisir une option",
+        "gallery": "Galerie",
+        "camera": "Caméra",
+        "cancel": "Annuler"
     }
 }

@@ -35,5 +35,7 @@ export type PurityResults = {
     impurityPercentage: number;
     rank: number;
     themePercentages: Record<Theme, number>;
+    score: number;
+    scoreBonus: number;
   }>;
 };

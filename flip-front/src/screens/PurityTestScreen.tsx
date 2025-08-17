@@ -1,11 +1,11 @@
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
-import { useRoute, useNavigation, RouteProp } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
-import { Player, RootStackParamList } from '../types';
-import { usePurityTest, THEME_COLORS, THEME_LABELS } from '../games/purity-test';
-import { CardStack } from '../games/purity-test/components';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '../contexts/ThemeContext';
+import { THEME_COLORS, THEME_LABELS, usePurityTest } from '../games/purity-test';
+import { CardStack } from '../games/purity-test/components';
+import { Player, RootStackParamList } from '../types';
 
 type PurityTestScreenRouteProp = RouteProp<RootStackParamList, 'PurityTest'>;
 
@@ -31,10 +31,10 @@ export function PurityTestScreen() {
     submitAnswer(playerId, direction);
   };
 
-  const handleFinishGame = () => {
-    const results = calculateResults();
-    (navigation as any).navigate('PurityResults', { results });
-  };
+  // const handleFinishGame = () => {
+  //   const results = calculateResults();
+  //   navigation.navigate('PurityResults', { results });
+  // };
 
   const handleAllCardsComplete = () => {
     setTimeout(() => {
@@ -45,7 +45,7 @@ export function PurityTestScreen() {
   useEffect(() => {
     if (isGameFinished) {
       const results = calculateResults();
-      (navigation as any).navigate('PurityResults', { results });
+      navigation.navigate('PurityResults', { results });
     }
   }, [isGameFinished]);
 

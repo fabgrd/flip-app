@@ -1,8 +1,9 @@
+import { TFunction } from 'i18next';
 import React from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
-import type { CameleonAssignedPlayer } from '../types';
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Avatar } from '../../../components/common/Avatar';
 import { useTheme } from '../../../contexts/ThemeContext';
+import type { CameleonAssignedPlayer } from '../types';
 
 interface PlayerGridProps {
   players: CameleonAssignedPlayer[];
@@ -10,7 +11,7 @@ interface PlayerGridProps {
   clueOrder?: string[];
   selectedForElimination?: string | null;
   onSelect?: (id: string) => void;
-  t: (key: string, opts?: any) => string;
+  t: TFunction;
 }
 
 export function PlayerGrid({

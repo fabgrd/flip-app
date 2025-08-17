@@ -1,21 +1,19 @@
+import * as Haptics from 'expo-haptics';
 import React from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
-  useAnimatedGestureHandler,
+  interpolate,
+  interpolateColor,
+  runOnJS,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
   withTiming,
-  interpolate,
-  interpolateColor,
-  runOnJS,
-  Extrapolate,
 } from 'react-native-reanimated';
-import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
-import * as Haptics from 'expo-haptics';
 import { Avatar } from '../../../components';
-import { PurityPlayer } from '../types';
 import { useTheme } from '../../../contexts/ThemeContext';
+import { PurityPlayer } from '../types';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const SWIPE_THRESHOLD = SCREEN_WIDTH * 0.3; // 30% de l'écran
@@ -49,56 +47,52 @@ export function SwipeableCard({
   const handleSwipeComplete = (direction: 'yes' | 'no') => {
     triggerHaptic();
     onSwipe(direction);
-
-    // Notifier la fin de l'animation après un délai
     setTimeout(() => {
       onSwipeComplete?.();
-    }, 350); // Légèrement après la durée de l'animation (300ms)
+    }, 350);
   };
 
-  const gestureHandler = useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
-    onStart: () => {
+  // Nouvelle API Gesture
+  const panGesture = Gesture.Pan()
+    .enabled(isActive)
+    .onStart(() => {
       if (!isActive) return;
       scale.value = withSpring(1.05);
-    },
-    onActive: (event) => {
+    })
+    .onUpdate((event) => {
       if (!isActive) return;
       translateX.value = event.translationX;
-      translateY.value = event.translationY * 0.1; // Effet subtil vertical
-    },
-    onEnd: (event) => {
+      translateY.value = event.translationY * 0.1;
+    })
+    .onEnd(() => {
       if (!isActive) return;
 
       const shouldSwipeLeft = translateX.value < -SWIPE_THRESHOLD;
       const shouldSwipeRight = translateX.value > SWIPE_THRESHOLD;
 
       if (shouldSwipeLeft) {
-        // Swipe vers la gauche = NON
         translateX.value = withTiming(-SCREEN_WIDTH * 1.5, { duration: 300 });
         translateY.value = withTiming(translateY.value + 50, { duration: 300 });
         opacity.value = withTiming(0, { duration: 300 });
         runOnJS(handleSwipeComplete)('no');
       } else if (shouldSwipeRight) {
-        // Swipe vers la droite = OUI
         translateX.value = withTiming(SCREEN_WIDTH * 1.5, { duration: 300 });
         translateY.value = withTiming(translateY.value + 50, { duration: 300 });
         opacity.value = withTiming(0, { duration: 300 });
         runOnJS(handleSwipeComplete)('yes');
       } else {
-        // Retour au centre
         translateX.value = withSpring(0);
         translateY.value = withSpring(0);
         scale.value = withSpring(isActive ? 1 : 0.95);
       }
-    },
-  });
+    });
 
   const cardStyle = useAnimatedStyle(() => {
     const rotate = interpolate(
       translateX.value,
       [-SCREEN_WIDTH, 0, SCREEN_WIDTH],
       [-ROTATION_ANGLE, 0, ROTATION_ANGLE],
-      Extrapolate.CLAMP,
+      'clamp',
     );
 
     return {
@@ -114,7 +108,7 @@ export function SwipeableCard({
   });
 
   const yesLabelStyle = useAnimatedStyle(() => {
-    const progress = interpolate(translateX.value, [0, SWIPE_THRESHOLD], [0, 1], Extrapolate.CLAMP);
+    const progress = interpolate(translateX.value, [0, SWIPE_THRESHOLD], [0, 1], 'clamp');
 
     return {
       opacity: withTiming(progress, { duration: 200 }),
@@ -123,12 +117,7 @@ export function SwipeableCard({
   });
 
   const noLabelStyle = useAnimatedStyle(() => {
-    const progress = interpolate(
-      translateX.value,
-      [-SWIPE_THRESHOLD, 0],
-      [1, 0],
-      Extrapolate.CLAMP,
-    );
+    const progress = interpolate(translateX.value, [-SWIPE_THRESHOLD, 0], [1, 0], 'clamp');
 
     return {
       opacity: withTiming(progress, { duration: 200 }),
@@ -151,7 +140,7 @@ export function SwipeableCard({
 
     const backgroundColor = translateX.value > 0 ? rightColor : leftColor;
 
-    return { backgroundColor, borderColor: theme.colors.primary } as any;
+    return { backgroundColor, borderColor: theme.colors.primary };
   });
 
   const overlayStyle = useAnimatedStyle(() => {
@@ -159,14 +148,14 @@ export function SwipeableCard({
       translateX.value,
       [SWIPE_THRESHOLD * 0.3, SWIPE_THRESHOLD],
       [0, 0.8],
-      Extrapolate.CLAMP,
+      'clamp',
     );
 
     const noOpacity = interpolate(
       translateX.value,
       [-SWIPE_THRESHOLD, -SWIPE_THRESHOLD * 0.3],
       [0.8, 0],
-      Extrapolate.CLAMP,
+      'clamp',
     );
 
     const showYes = translateX.value > SWIPE_THRESHOLD * 0.3;
@@ -180,8 +169,7 @@ export function SwipeableCard({
 
   return (
     <View style={styles.container}>
-      {/* Carte principale */}
-      <PanGestureHandler onGestureEvent={gestureHandler} enabled={isActive}>
+      <GestureDetector gesture={panGesture}>
         <Animated.View style={[styles.card, cardStyle]}>
           <Animated.View
             style={[styles.cardContent, cardBackgroundStyle, { borderColor: theme.colors.primary }]}
@@ -197,7 +185,7 @@ export function SwipeableCard({
             </Animated.View>
           </Animated.View>
         </Animated.View>
-      </PanGestureHandler>
+      </GestureDetector>
     </View>
   );
 }

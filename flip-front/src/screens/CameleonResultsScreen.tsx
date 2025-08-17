@@ -1,20 +1,20 @@
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect, useMemo, useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
+import { useTranslation } from 'react-i18next';
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Animated, {
   FadeIn,
   ZoomIn,
-  withSpring,
-  useSharedValue,
   useAnimatedStyle,
+  useSharedValue,
+  withSpring,
 } from 'react-native-reanimated';
-import { useRoute, useNavigation, RouteProp } from '@react-navigation/native';
-import { useTranslation } from 'react-i18next';
 
-import { GlobalStyles } from '../constants';
-import { RootStackParamList } from '../types';
-import type { CameleonAssignedPlayer } from '../games/cameleon';
 import { ConfettiBurst } from '../components/common';
+import { createGlobalStyles } from '../constants';
 import { useTheme } from '../contexts/ThemeContext';
+import type { CameleonAssignedPlayer } from '../games/cameleon';
+import { RootStackParamList } from '../types';
 
 type CameleonResultsRoute = RouteProp<RootStackParamList, 'CameleonResults'>;
 
@@ -23,7 +23,7 @@ export function CameleonResultsScreen() {
   const route = useRoute<CameleonResultsRoute>();
   const navigation = useNavigation();
   const { theme } = useTheme();
-
+  const GlobalStyles = createGlobalStyles(theme);
   const { players } = route.params as { players: CameleonAssignedPlayer[] };
 
   const winner: 'civilians' | 'undercover' = useMemo(() => {
@@ -42,10 +42,10 @@ export function CameleonResultsScreen() {
 
   const withCumulativePoints = useMemo(() => {
     return players.map((p) => {
-      const prev = (p as any).score ?? 0;
+      const prev = p.score ?? 0;
       const round = computeRoundPoints(p);
-      const bonus = (p as any).scoreBonus ?? 0;
-      return { ...p, points: prev + round + bonus } as any;
+      const bonus = p.scoreBonus ?? 0;
+      return { ...p, points: prev + round + bonus };
     });
   }, [players, winner]);
 
@@ -73,12 +73,12 @@ export function CameleonResultsScreen() {
 
   const handleReplay = () => {
     const nextPlayers = players.map((p) => {
-      const prev = (p as any).score ?? 0;
+      const prev = p.score ?? 0;
       const round = computeRoundPoints(p);
-      const bonus = (p as any).scoreBonus ?? 0;
-      return { ...p, score: prev + round + bonus, scoreBonus: 0 } as any;
+      const bonus = p.scoreBonus ?? 0;
+      return { ...p, score: prev + round + bonus, scoreBonus: 0 };
     });
-    (navigation as any).navigate('Cameleon', { players: nextPlayers });
+    navigation.navigate('Cameleon', { players: nextPlayers });
   };
 
   return (

@@ -8,12 +8,12 @@
 
 // Import des types du purity-test pour compatibilité
 import type {
-  Theme,
-  Question,
   PlayerAnswer,
-  PurityPlayer,
   PurityGameState,
+  PurityPlayer,
   PurityResults,
+  Question,
+  Theme,
 } from '../games/purity-test/types';
 
 export interface Player {
@@ -37,7 +37,7 @@ export interface GameMetadata {
 // INTERFACE STANDARD POUR TOUS LES JEUX
 // =============================================================================
 
-export interface GameRule<TGameState = any, TGameResult = any> {
+export interface GameRule<TGameState, TGameResult> {
   /** Métadonnées du jeu */
   metadata: GameMetadata;
 
@@ -76,9 +76,10 @@ export type RootStackParamList = {
   PurityTest: { players: Player[] };
   PurityResults: { results: PurityResults };
   Cameleon: { players: Player[] };
-  CameleonResults: { players: any };
+  CameleonResults: { players: Player[] };
 
   // Routes dynamiques des jeux (seront étendues par chaque jeu)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 };
 
@@ -99,13 +100,13 @@ export interface BaseGameResult {
     player: Player;
     rank: number;
     score?: number;
-    stats?: Record<string, any>;
+    stats?: Record<string, string | number | boolean>;
   }>;
   gameMetadata: GameMetadata;
   duration: number; // en secondes
 }
 
-export type { Theme, Question, PlayerAnswer, PurityPlayer, PurityGameState, PurityResults };
+export type { PlayerAnswer, PurityGameState, PurityPlayer, PurityResults, Question, Theme };
 
 // Extensions pour la navigation des jeux spécifiques
 declare global {

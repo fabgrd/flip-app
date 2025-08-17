@@ -1,16 +1,16 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { useTranslation } from 'react-i18next';
-import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import { usePlayers } from '../contexts/PlayersContext';
 import { PlayerInput, PlayersList } from '../components';
-import { RootStackParamList } from '../types';
-import { GlobalStyles, MIN_PLAYERS_GLOBAL, MAX_PLAYERS_GLOBAL } from '../constants';
+import { MAX_PLAYERS_GLOBAL, MIN_PLAYERS_GLOBAL, createGlobalStyles } from '../constants';
+import { usePlayers } from '../contexts/PlayersContext';
 import { useTheme } from '../contexts/ThemeContext';
+import { RootStackParamList } from '../types';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -22,7 +22,7 @@ export function HomeScreen() {
   const { t } = useTranslation();
   const { players, addPlayer, removePlayer, updatePlayerAvatar } = usePlayers();
   const { theme } = useTheme();
-
+  const GlobalStyles = createGlobalStyles(theme);
   const handleAddPlayer = (name: string): boolean => {
     const success = addPlayer(name);
     if (success) {
