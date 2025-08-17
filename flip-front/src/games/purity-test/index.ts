@@ -1,3 +1,3 @@
 export * from './types';
 export * from './constants';
-export * from './hooks/usePurityTest'; 
+export * from './hooks/usePurityTest';

@@ -3,31 +3,33 @@ import type { Player } from '../../types';
 export type CameleonRole = 'civilian' | 'cameleon' | 'mrWhite';
 
 export interface CameleonAssignedPlayer extends Player {
-    role: CameleonRole;
-    secretWord: string | null;
-    isEliminated: boolean;
-    scoreBonus?: number;
-    mrWhiteGuess?: string;
-    mrWhiteGuessCorrect?: boolean;
+  role: CameleonRole;
+  secretWord: string | null;
+  isEliminated: boolean;
+  scoreBonus?: number;
+  mrWhiteGuess?: string;
+  mrWhiteGuessCorrect?: boolean;
+  points?: number;
+  score?: number;
 }
 
 export interface CameleonWordPair {
-    civilianWord: string;
-    cameleonWord: string;
+  civilianWord: string;
+  cameleonWord: string;
 }
 
 export interface CameleonGameState {
-    players: CameleonAssignedPlayer[];
-    wordPair: CameleonWordPair | null;
-    round: number;
-    started: boolean;
+  players: CameleonAssignedPlayer[];
+  wordPair: CameleonWordPair | null;
+  round: number;
+  started: boolean;
 }
 
 export interface CameleonRoleDistribution {
-    undercovers: number;
-    mrWhites: number;
+  undercovers: number;
+  mrWhites: number;
 }
 
 export interface StartCameleonOptions {
-    overrideDistribution?: Partial<CameleonRoleDistribution>;
-} 
+  overrideDistribution?: Partial<CameleonRoleDistribution>;
+}

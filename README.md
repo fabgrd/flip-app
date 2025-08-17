@@ -5,6 +5,7 @@ Une application mobile de jeux d'alcool inspirée de TOZ, développée avec Reac
 ## 🚀 Fonctionnalités
 
 ### ✅ Implémentées
+
 - **Écran d'accueil** : Ajout/suppression de joueurs (2-10 maximum)
 - **Interface intuitive** : Design moderne avec couleurs vives et animations
 - **Feedback haptique** : Vibrations lors des interactions
@@ -13,6 +14,7 @@ Une application mobile de jeux d'alcool inspirée de TOZ, développée avec Reac
 - **Écran de sélection** : Choix des jeux disponibles
 
 ### 🔄 En cours de développement
+
 - **Jeu "6 qui prend !"** : Premier jeu disponible
 - **Moteur de jeu** : Logique et règles des jeux
 - **Plus de jeux** : Extension avec d'autres jeux d'alcool
@@ -82,10 +84,65 @@ flip-front/
 ## 🎨 Design
 
 L'interface s'inspire de l'esthétique de TOZ avec :
+
 - **Couleurs vives** : Rouge, turquoise, bleu ciel
 - **Typographie fun** : Police grasse et contrastée
 - **Animations fluides** : Transitions et feedback visuel
 - **UX intuitive** : Navigation simple et claire
+
+## 🧹 Qualité de code (Lint & Format)
+
+- **Sur VS Code (déjà préconfiguré dans `.vscode/settings.json`)**
+
+  - Formatage auto: `editor.formatOnSave: true`
+  - Corrections ESLint auto: `editor.codeActionsOnSave: ["source.fixAll.eslint", "source.organizeImports"]`
+  - Effet: suppression des imports inutilisés, organisation des imports, formatage Prettier.
+
+- **Commandes utiles**
+
+  - Linter (lecture seule):
+    ```bash
+    pnpm lint
+    ```
+  - Linter + auto-fix:
+    ```bash
+    pnpm lint:fix
+    ```
+  - Formater tout le projet (Prettier):
+    ```bash
+    pnpm format
+    ```
+  - Vérifier le formatage sans modifier:
+    ```bash
+    pnpm format:check
+    ```
+  - Cibler un dossier/fichier:
+    ```bash
+    pnpm exec eslint src/screens --ext .ts,.tsx --fix
+    pnpm exec eslint src/screens/CameleonScreen.tsx --fix
+    ```
+
+- **Hook pre-commit (auto sur fichiers stagés)**
+
+  - Le projet utilise Husky + lint-staged (auto-fix + format sur `git commit`).
+  - Si nécessaire après un clone, pointez les hooks Git vers `flip-front/.husky`:
+    ```bash
+    git config core.hooksPath flip-front/.husky
+    ```
+  - Pour lancer le même traitement à la main sur fichiers stagés:
+    ```bash
+    pnpm exec lint-staged
+    ```
+
+- **Ce qui est auto-fixé vs manuel**
+  - Auto: imports inutilisés, organisation des imports, style Prettier.
+  - Manuel:
+    - Variables non utilisées → supprimer ou préfixer avec `_` (ex: `_event`).
+    - Chaînes FR détectées → déplacer dans l'i18n ou, temporairement, désactiver la règle ligne par ligne:
+      ```ts
+      // eslint-disable-next-line no-restricted-syntax
+      const label = "Mon texte temporaire";
+      ```
 
 ## 🔮 Roadmap
 
@@ -99,6 +156,7 @@ L'interface s'inspire de l'esthétique de TOZ avec :
 ## 🤝 Contribution
 
 Les contributions sont les bienvenues ! N'hésitez pas à :
+
 - Reporter des bugs
 - Proposer de nouvelles fonctionnalités
 - Améliorer le code existant

@@ -1,5 +1,6 @@
 export { Colors } from './colors';
-export { GlobalStyles } from './styles';
-export { AVAILABLE_GAMES, MIN_PLAYERS_GLOBAL, MAX_PLAYERS_GLOBAL } from './games';
-export { lightTheme, darkTheme } from './themes';
-export type { Theme } from './themes'; 
+export { AVAILABLE_GAMES, MAX_PLAYERS_GLOBAL, MIN_PLAYERS_GLOBAL } from './games';
+export { createGlobalStyles } from './styles';
+export { darkTheme, lightTheme } from './themes';
+export type { Theme } from './themes';
+

@@ -1,0 +1,163 @@
+# FL!P App - Development Rules & Best Practices
+
+## Project Overview
+
+- React Native + Expo mobile app called "FL!P" (folder: `flip-front`)
+- Language: TypeScript with strict typing
+- Navigation: React Navigation (Stack)
+- i18n: i18next + react-i18next, supported languages: fr (default), en, zh
+- Global player management: `PlayersContext` + `ThemeContext`
+- Games: modular architecture (e.g., `src/games/purity-test`, `src/games/cameleon`)
+
+## Project Structure
+
+```
+flip-front/src/
+├── components/          # Reusable UI components
+├── constants/           # Theme system, colors, styles
+├── contexts/           # React contexts (PlayersContext, ThemeContext)
+├── games/              # Game modules (purity-test, cameleon, etc.)
+├── hooks/              # Custom hooks
+├── i18n/               # Internationalization
+├── screens/            # App screens + index exports
+└── types/              # Global types and navigation
+```
+
+## Theme System (CRITICAL)
+
+- **NO STATIC COLORS**: Use dynamic theme system only
+- Themes defined in `src/constants/themes.ts` (lightTheme, darkTheme)
+- Styles: Use `createGlobalStyles(theme)` function, NOT static `GlobalStyles`
+- Pattern in components:
+  ```typescript
+  const { theme } = useTheme();
+  const globalStyles = createGlobalStyles(theme);
+  // Use globalStyles.container, theme.colors.primary, etc.
+  ```
+
+## Import Rules (CRITICAL)
+
+- **ABSOLUTE IMPORTS ONLY**: Always use absolute paths from project root
+- React Native imports first, then blank line
+- Third-party imports (navigation, i18n, etc.), then blank line
+- Internal imports (components, constants, contexts, etc.)
+- Order internal imports: constants → contexts → games → types
+- Example:
+
+  ```typescript
+  import React from 'react';
+  import { View, Text } from 'react-native';
+
+  import { useNavigation } from '@react-navigation/native';
+  import { useTranslation } from 'react-i18next';
+
+  import { createGlobalStyles } from '../constants';
+  import { useTheme } from '../contexts/ThemeContext';
+  import { useCameleon } from '../games/cameleon';
+  import { Player } from '../types';
+  ```
+
+## Code Quality Rules
+
+- **NO FRENCH IN CODE**: All variables, functions, comments in English only
+- **NO `any` TYPE**: Use proper TypeScript typing always
+- **NO UNUSED VARIABLES**: Remove or prefix with `_` if intentionally unused
+- **NO INLINE STYLES**: Use StyleSheet.create or theme-based styles
+- Clean imports: Remove unused imports immediately
+- Descriptive naming: Use full words, not abbreviations
+
+## Package Management
+
+- Use `pnpm` in `flip-front` directory
+- Commands: `pnpm start`, `pnpm ios`, `pnpm android`, `pnpm web`
+- Install deps: `pnpm add <package>` in flip-front
+
+## Navigation
+
+- Stack created in `App.tsx` via `createStackNavigator<RootStackParamList>()`
+- Export new screens via `src/screens/index.ts`
+- Always use typed navigation: `useNavigation<StackNavigationProp<RootStackParamList, 'ScreenName'>>()`
+- Navigation calls: Use `navigation.navigate('Screen', { params })`, not `(navigation as any)`
+
+## Internationalization (i18n)
+
+- Initialization: `src/i18n/index.ts` (namespaces: common, navigation, home, games, etc.)
+- Locale files: `src/i18n/locales/{fr,en,zh}/` with index.ts aggregating JSON by namespace
+- Usage: `const { t } = useTranslation();` + namespaced keys (e.g., `t('home:title')`)
+- **NEVER hardcode UI text**: Always use i18n keys
+- Add translations in ALL languages when adding new screens/games
+
+## Game Architecture
+
+- Each game lives under `src/games/<game-id>/` with:
+  - `components/` (game UI), `hooks/` (game logic), `constants.ts`, `types.ts`, `index.ts`
+- Add dedicated translation file per game (e.g., `cameleon.json`) in each language
+- Declare game-specific routes via extended `RootStackParamList`
+- Follow standard reusable interface (see `GameRule` in `src/types/games.ts`)
+
+## Component Best Practices
+
+- Prefer composition over deep nesting (>2-3 levels)
+- Keep UI components "dumb": move logic to custom hooks
+- Local state via hooks; global state via context when necessary
+- Use theme system for all styling
+- Add proper TypeScript types for all props and component interfaces
+
+## UI/UX Guidelines
+
+- Use centralized theme system and `createGlobalStyles(theme)`
+- Icons: `@expo/vector-icons` (preferably `Ionicons`)
+- Animations: `react-native-reanimated`, `react-native-gesture-handler`
+- Haptic feedback: `expo-haptics` for key user actions
+- Accessibility: readable texts, consistent sizes, i18n labels
+
+## Error Handling & Debugging
+
+- Handle empty/loading/error states (e.g., missing question → loading state with `common:labels.loading`)
+- Keep `console.log` for local debug only; remove or protect with flags for production
+- Always check TypeScript errors and ESLint warnings
+
+## Do's and Don'ts
+
+### ✅ DO
+
+- Use i18n for ALL UI strings
+- Type navigation and component props properly
+- Export screens via `src/screens/index.ts`
+- Factor logic into custom hooks
+- Keep files short and focused
+- Use absolute import paths
+- Follow theme system consistently
+- Remove unused code immediately
+
+### ❌ DON'T
+
+- Hardcode texts, colors, or styles
+- Use `any` type or `as any` casts
+- Add dependencies without necessity
+- Mix logic and presentation confusingly
+- Use French in code (variables, functions, comments)
+- Use relative imports
+- Use static GlobalStyles (use createGlobalStyles instead)
+- Leave unused variables/imports
+
+## File Naming & Organization
+
+- Use PascalCase for React components and screen files
+- Use camelCase for hooks, utilities, and regular functions
+- Keep related files grouped in appropriate directories
+- Export public APIs through index.ts files
+
+## Testing & Build
+
+- Test major changes (navigation, i18n, new screens) by running the app
+- Verify TypeScript compilation and ESLint compliance
+- Check theme switching works properly across light/dark modes
+
+## Development Tools (for AI assistants)
+
+- Prefer absolute paths for system actions
+- Make targeted "edits" preserving existing style when modifying code
+- Group file reads (IO operations) and prefer semantic searches for exploration
+- Always use the updated theme system when working with styles
+- Ensure proper import organization when creating/modifying files

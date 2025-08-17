@@ -4,6 +4,7 @@
 
 // Registre des jeux
 import { gameRegistry } from './gameRegistry';
+
 export { navigateToGame, navigateToGameResults } from './gameRegistry';
 export type { GameRegistryEntry } from './gameRegistry';
 
@@ -21,10 +22,10 @@ export * from './purity-test';
  * Helper pour valider si un nombre de joueurs est valide pour un jeu
  */
 export const validatePlayerCount = (gameId: string, playerCount: number): boolean => {
-    const game = gameRegistry.getGame(gameId);
-    if (!game) return false;
+  const game = gameRegistry.getGame(gameId);
+  if (!game) return false;
 
-    return playerCount >= game.minPlayers && playerCount <= game.maxPlayers;
+  return playerCount >= game.minPlayers && playerCount <= game.maxPlayers;
 };
 
 /**
@@ -36,9 +37,9 @@ export const getAvailableGames = () => gameRegistry.getAvailableGames();
  * Helper pour obtenir les jeux compatibles avec un nombre de joueurs
  */
 export const getCompatibleGames = (playerCount: number) =>
-    gameRegistry.getCompatibleGames(playerCount);
+  gameRegistry.getCompatibleGames(playerCount);
 
 /**
  * Helper pour obtenir un jeu par son ID
  */
-export const getGameById = (gameId: string) => gameRegistry.getGame(gameId); 
+export const getGameById = (gameId: string) => gameRegistry.getGame(gameId);

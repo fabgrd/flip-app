@@ -2,4 +2,4 @@
 // HOOKS COMMUNS RÉUTILISABLES
 // =============================================================================
 
-export { useImagePicker } from './useImagePicker'; 
+export { useImagePicker } from './useImagePicker';
