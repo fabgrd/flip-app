@@ -1,0 +1,44 @@
+{
+  "game": {
+    "name": "Left or Right",
+    "description": "Discover your friends' political orientations!",
+    "questionPrefix": "In your opinion, this is rather...",
+    "leftChoice": "It's left-wing",
+    "rightChoice": "It's right-wing", 
+    "swipeLeft": "Swipe left",
+    "swipeRight": "Swipe right"
+  },
+  "results": {
+    "title": "Political Results",
+    "leftOrientation": "Rather left-wing",
+    "rightOrientation": "Rather right-wing",
+    "centrist": "Centrist",
+    "extremeLeft": "Very left-wing",
+    "extremeRight": "Very right-wing",
+    "percentageLeft": "{{percentage}}% left",
+    "percentageRight": "{{percentage}}% right",
+    "dominantOrientation": "Dominant orientation",
+    "politicalProfile": "Political profile"
+  },
+  "orientations": {
+    "veryLeft": "Very left-wing",
+    "left": "Left-wing",
+    "centerLeft": "Center-left",
+    "center": "Center",
+    "centerRight": "Center-right", 
+    "right": "Right-wing",
+    "veryRight": "Very right-wing"
+  },
+  "questions": {
+    "pol_1": "Buy condoms",
+    "pol_2": "Chop wood for heating",
+    "pol_3": "Play paddle tennis",
+    "pol_4": "Shop at the local market",
+    "pol_5": "Watch a rugby match while drinking beer",
+    "pol_6": "Buy an electric bike",
+    "pol_7": "Invest in the stock market",
+    "pol_8": "Participate in a demonstration",
+    "pol_9": "Install solar panels",
+    "pol_10": "Eat red meat every day"
+  }
+}

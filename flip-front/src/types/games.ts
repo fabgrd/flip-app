@@ -1,12 +1,12 @@
 // =============================================================================
-// TYPES GÉNÉRAUX POUR TOUS LES JEUX
+// GENERAL TYPES FOR ALL GAMES
 // =============================================================================
 
 // =============================================================================
-// TYPES SPÉCIFIQUES AUX JEUX (Legacy - À migrer progressivement)
+// GAME-SPECIFIC TYPES (Legacy - To be migrated progressively)
 // =============================================================================
 
-// Import des types du purity-test pour compatibilité
+// Import purity-test types for compatibility
 import type {
   PlayerAnswer,
   PurityGameState,
@@ -19,7 +19,7 @@ import type {
 export interface Player {
   id: string;
   name: string;
-  avatar?: string; // URI de l'image ou undefined pour utiliser l'avatar par défaut
+  avatar?: string; // Image URI or undefined to use default avatar
 }
 
 export interface GameMetadata {
@@ -28,35 +28,35 @@ export interface GameMetadata {
   minPlayers: number;
   maxPlayers: number;
   description: string;
-  estimatedDuration?: number; // en minutes
+  estimatedDuration?: number; // in minutes
   category?: 'party' | 'strategy' | 'trivia' | 'action';
   difficulty?: 'easy' | 'medium' | 'hard';
 }
 
 // =============================================================================
-// INTERFACE STANDARD POUR TOUS LES JEUX
+// STANDARD INTERFACE FOR ALL GAMES
 // =============================================================================
 
 export interface GameRule<TGameState, TGameResult> {
-  /** Métadonnées du jeu */
+  /** Game metadata */
   metadata: GameMetadata;
 
-  /** Validation des joueurs pour ce jeu */
+  /** Player validation for this game */
   validatePlayers: (players: Player[]) => { isValid: boolean; error?: string };
 
-  /** Initialisation de l'état du jeu */
+  /** Game state initialization */
   initializeGame: (players: Player[]) => TGameState;
 
-  /** Calcul des résultats finaux */
+  /** Final results calculation */
   calculateResults: (gameState: TGameState) => TGameResult;
 
-  /** Composant de l'écran principal du jeu */
+  /** Main game screen component */
   GameScreen: React.ComponentType<{ players: Player[] }>;
 
-  /** Composant des résultats (optionnel) */
+  /** Results component (optional) */
   ResultsScreen?: React.ComponentType<{ results: TGameResult }>;
 
-  /** Configuration des routes de navigation */
+  /** Navigation routes configuration */
   routes: {
     game: string;
     results?: string;
@@ -64,7 +64,7 @@ export interface GameRule<TGameState, TGameResult> {
 }
 
 // =============================================================================
-// TYPES DE NAVIGATION
+// NAVIGATION TYPES
 // =============================================================================
 
 export type RootStackParamList = {
@@ -72,19 +72,23 @@ export type RootStackParamList = {
   GameSelect: { players: Player[] };
   Settings: undefined;
 
-  // Jeux
+  // Games
   PurityTest: { players: Player[] };
   PurityResults: { results: PurityResults };
   Cameleon: { players: Player[] };
   CameleonResults: { players: Player[] };
 
-  // Routes dynamiques des jeux (seront étendues par chaque jeu)
+  // Left Right game
+  LeftRight: { players: Player[] };
+  LeftRightResults: { results: import('../games/left-right/types').PoliticalResults };
+
+  // Dynamic game routes (will be extended by each game)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 };
 
 // =============================================================================
-// TYPES COMMUNS RÉUTILISABLES
+// REUSABLE COMMON TYPES
 // =============================================================================
 
 export interface BaseGameState {
@@ -103,12 +107,12 @@ export interface BaseGameResult {
     stats?: Record<string, string | number | boolean>;
   }>;
   gameMetadata: GameMetadata;
-  duration: number; // en secondes
+  duration: number; // in seconds
 }
 
 export type { PlayerAnswer, PurityGameState, PurityPlayer, PurityResults, Question, Theme };
 
-// Extensions pour la navigation des jeux spécifiques
+// Extensions for specific game navigation
 declare global {
   namespace ReactNavigation {
     interface RootParamList extends RootStackParamList {

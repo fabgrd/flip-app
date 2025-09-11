@@ -1,28 +1,30 @@
-import React from 'react';
 import {
-  NavigationContainer,
-  DefaultTheme,
   DarkTheme,
+  DefaultTheme,
+  NavigationContainer,
   Theme as NavTheme,
 } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import React from 'react';
 
 import './src/i18n';
 
 import { PortalProvider } from '@gorhom/portal';
 import { View } from 'react-native';
 import { PlayersProvider } from './src/contexts/PlayersContext';
+import { ThemeProvider, useTheme } from './src/contexts/ThemeContext';
 import {
-  HomeScreen,
-  GameSelectScreen,
-  PurityTestScreen,
-  PurityResultsScreen,
-  SettingsScreen,
-  CameleonScreen,
   CameleonResultsScreen,
+  CameleonScreen,
+  GameSelectScreen,
+  HomeScreen,
+  LeftRightResultsScreen,
+  LeftRightScreen,
+  PurityResultsScreen,
+  PurityTestScreen,
+  SettingsScreen,
 } from './src/screens';
 import { RootStackParamList } from './src/types';
-import { ThemeProvider, useTheme } from './src/contexts/ThemeContext';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -42,6 +44,12 @@ function ThemedAppNavigator() {
           <Stack.Screen
             name="CameleonResults"
             component={CameleonResultsScreen}
+            options={{ gestureEnabled: false }}
+          />
+          <Stack.Screen name="LeftRight" component={LeftRightScreen} />
+          <Stack.Screen
+            name="LeftRightResults"
+            component={LeftRightResultsScreen}
             options={{ gestureEnabled: false }}
           />
         </Stack.Navigator>

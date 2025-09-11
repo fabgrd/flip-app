@@ -1,11 +1,13 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { SwipeableCard as BaseSwipeableCard } from '../../../components';
-import { PurityPlayer } from '../types';
+import { POLITICAL_COLORS, POLITICAL_EMOJIS } from '../constants';
+import { PoliticalOrientation, PoliticalPlayer } from '../types';
 
 interface SwipeableCardProps {
-  player: PurityPlayer;
-  onSwipe: (direction: 'yes' | 'no') => void;
+  player: PoliticalPlayer;
+  onSwipe: (direction: PoliticalOrientation) => void;
   onSwipeComplete?: () => void;
   isActive?: boolean;
   zIndex?: number;
@@ -18,24 +20,26 @@ export function SwipeableCard({
   isActive = true,
   zIndex = 1,
 }: SwipeableCardProps) {
+  const { t } = useTranslation();
+
   const leftDirection = {
-    key: 'no',
-    color: '#9C1919',
+    key: 'left',
+    color: POLITICAL_COLORS.left,
     overlayColor: 'rgba(244, 67, 54, 0.9)',
-    emoji: '❌',
-    label: 'No',
+    emoji: POLITICAL_EMOJIS.left,
+    label: t('leftRight:game.leftChoice'),
   };
 
   const rightDirection = {
-    key: 'yes',
-    color: '#1B5E20',
+    key: 'right',
+    color: POLITICAL_COLORS.right,
     overlayColor: 'rgba(76, 175, 80, 0.9)',
-    emoji: '✅',
-    label: 'Yes',
+    emoji: POLITICAL_EMOJIS.right,
+    label: t('leftRight:game.rightChoice'),
   };
 
   const handleSwipe = (direction: string) => {
-    onSwipe(direction as 'yes' | 'no');
+    onSwipe(direction as PoliticalOrientation);
   };
 
   return (

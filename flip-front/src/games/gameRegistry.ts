@@ -1,8 +1,8 @@
-// Imports temporairement commentés en attendant la finalisation des types
-// import { GameRule, GameMetadata } from '../types';
-// import { purityTestGame } from './purity-test/gameRule';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { Player, RootStackParamList } from '../types';
+import { PurityResults } from './purity-test/types';
 
-// Types temporaires pour l'implémentation
+// Game metadata interface for registry
 interface GameMetadata {
   id: string;
   name: string;
@@ -12,7 +12,7 @@ interface GameMetadata {
 }
 
 // =============================================================================
-// REGISTRE CENTRAL DES JEUX
+// CENTRAL GAME REGISTRY
 // =============================================================================
 
 export interface GameRegistryEntry {
@@ -25,7 +25,7 @@ class GameRegistry {
   private games = new Map<string, GameRegistryEntry>();
 
   /**
-   * Enregistre un nouveau jeu dans le registre
+   * Registers a new game in the registry
    */
   register(
     metadata: GameMetadata,
@@ -38,7 +38,7 @@ class GameRegistry {
   }
 
   /**
-   * Récupère un jeu par son ID
+   * Gets a game by its ID
    */
   getGame(gameId: string): GameMetadata | null {
     const entry = this.games.get(gameId);
@@ -46,7 +46,7 @@ class GameRegistry {
   }
 
   /**
-   * Récupère tous les jeux disponibles
+   * Gets all available games
    */
   getAvailableGames(): GameMetadata[] {
     const isDev = __DEV__;
@@ -57,7 +57,7 @@ class GameRegistry {
   }
 
   /**
-   * Récupère les jeux compatibles avec un nombre de joueurs donné
+   * Gets games compatible with a given number of players
    */
   getCompatibleGames(playerCount: number): GameMetadata[] {
     return this.getAvailableGames().filter(
@@ -66,7 +66,7 @@ class GameRegistry {
   }
 
   /**
-   * Vérifie si un jeu existe et est activé
+   * Checks if a game exists and is enabled
    */
   isGameAvailable(gameId: string): boolean {
     const entry = this.games.get(gameId);
@@ -74,7 +74,7 @@ class GameRegistry {
   }
 
   /**
-   * Active/désactive un jeu
+   * Enables/disables a game
    */
   setGameEnabled(gameId: string, enabled: boolean): boolean {
     const entry = this.games.get(gameId);
@@ -86,7 +86,7 @@ class GameRegistry {
   }
 
   /**
-   * Liste tous les jeux (même désactivés) pour l'administration
+   * Lists all games (even disabled) for administration
    */
   getAllGames(): Array<{ metadata: GameMetadata; isEnabled: boolean; developmentOnly?: boolean }> {
     return Array.from(this.games.values()).map((entry) => ({
@@ -98,76 +98,98 @@ class GameRegistry {
 }
 
 // =============================================================================
-// INSTANCE SINGLETON DU REGISTRE
+// SINGLETON REGISTRY INSTANCE
 // =============================================================================
 
 export const gameRegistry = new GameRegistry();
 
 // =============================================================================
-// ENREGISTREMENT DES JEUX
+// GAME REGISTRATION
 // =============================================================================
 
-// Jeux en production (temporairement en dur)
+// Production games (temporarily hardcoded)
 gameRegistry.register(
   {
     id: 'purity-test',
-    name: "Test d'Impureté",
+    name: 'Purity Test',
     minPlayers: 1,
     maxPlayers: 10,
-    description: 'Un jeu de questions pour découvrir qui est le plus pur du groupe !',
+    description: 'A question game to discover who is the purest in the group!',
   },
   { isEnabled: true },
 );
 
-// Nouveau jeu: Cameleon (Undercover-like)
+// New game: Cameleon (Undercover-like)
 gameRegistry.register(
   {
     id: 'cameleon',
-    name: 'Caméléon',
+    name: 'Chameleon',
     minPlayers: 4,
     maxPlayers: 10,
-    description: "Devinez les imposteurs à partir d'indices... sans dévoiler votre mot !",
+    description: 'Guess the impostors from clues... without revealing your word!',
   },
   { isEnabled: true },
 );
 
-// Jeux en développement (exemples)
+// New game: Left or Right (Political orientation game)
+gameRegistry.register(
+  {
+    id: 'left-right',
+    name: 'Left or Right',
+    minPlayers: 1,
+    maxPlayers: 10,
+    description: 'Discover political orientations through fun activities!',
+  },
+  { isEnabled: true },
+);
+
+// Development games (examples)
 // gameRegistry.register(sixQuiPrendGame, { isEnabled: false, developmentOnly: true });
 // gameRegistry.register(undercoverGame, { isEnabled: false, developmentOnly: true });
 
 // =============================================================================
-// HELPERS POUR LA NAVIGATION
+// NAVIGATION HELPERS
 // =============================================================================
 
 /**
- * Helper pour naviguer vers un jeu (version simplifiée temporaire)
+ * Helper to navigate to a game (temporary simplified version)
  */
-export const navigateToGame = (navigation: any, gameId: string, players: any[]) => {
+export const navigateToGame = (
+  navigation: StackNavigationProp<RootStackParamList>,
+  gameId: string,
+  players: Player[],
+) => {
   const game = gameRegistry.getGame(gameId);
   if (!game) {
-    throw new Error(`Jeu "${gameId}" non trouvé ou désactivé`);
+    throw new Error(`game "${gameId}" not found or disabled`);
   }
 
-  // Validation basique des joueurs
+  // Basic player validation
   if (players.length < game.minPlayers || players.length > game.maxPlayers) {
     throw new Error(
-      `Nombre de joueurs invalide pour ce jeu (${game.minPlayers}-${game.maxPlayers})`,
+      `Invalid number of players for this game (${game.minPlayers}-${game.maxPlayers})`,
     );
   }
 
-  // Navigation vers l'écran du jeu (pour l'instant hard-codé)
+  // Navigation to game screen (currently hardcoded)
   if (gameId === 'purity-test') {
     navigation.navigate('PurityTest', { players });
   } else if (gameId === 'cameleon') {
     navigation.navigate('Cameleon', { players });
+  } else if (gameId === 'left-right') {
+    navigation.navigate('LeftRight', { players });
   }
 };
 
 /**
- * Helper pour naviguer vers les résultats d'un jeu (version simplifiée temporaire)
+ * Helper to navigate to game results (temporary simplified version)
  */
-export const navigateToGameResults = (navigation: any, gameId: string, results: any) => {
-  // Pour l'instant hard-codé
+export const navigateToGameResults = (
+  navigation: StackNavigationProp<RootStackParamList>,
+  gameId: string,
+  results: PurityResults,
+) => {
+  // Currently hardcoded
   if (gameId === 'purity-test') {
     navigation.navigate('PurityResults', { results });
   }

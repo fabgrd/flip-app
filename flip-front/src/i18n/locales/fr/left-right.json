@@ -1,0 +1,44 @@
+{
+  "game": {
+    "name": "Gauche ou Droite",
+    "description": "Découvrez les orientations politiques de vos amis !",
+    "questionPrefix": "Selon vous, c'est plutôt...",
+    "leftChoice": "C'est de gauche",
+    "rightChoice": "C'est de droite",
+    "swipeLeft": "Glissez à gauche",
+    "swipeRight": "Glissez à droite"
+  },
+  "results": {
+    "title": "Résultats politiques",
+    "leftOrientation": "Plutôt de gauche",
+    "rightOrientation": "Plutôt de droite",
+    "centrist": "Centriste",
+    "extremeLeft": "Très à gauche",
+    "extremeRight": "Très à droite",
+    "percentageLeft": "{{percentage}}% gauche",
+    "percentageRight": "{{percentage}}% droite",
+    "dominantOrientation": "Orientation dominante",
+    "politicalProfile": "Profil politique"
+  },
+  "orientations": {
+    "veryLeft": "Très à gauche",
+    "left": "À gauche", 
+    "centerLeft": "Centre-gauche",
+    "center": "Centre",
+    "centerRight": "Centre-droite",
+    "right": "À droite",
+    "veryRight": "Très à droite"
+  },
+  "questions": {
+    "pol_1": "Acheter des préservatifs",
+    "pol_2": "Couper du bois pour se chauffer",
+    "pol_3": "Jouer au paddle",
+    "pol_4": "Faire ses courses au marché local",
+    "pol_5": "Regarder un match de rugby en buvant une bière",
+    "pol_6": "Acheter un vélo électrique",
+    "pol_7": "Investir en bourse",
+    "pol_8": "Participer à une manifestation",
+    "pol_9": "Installer des panneaux solaires",
+    "pol_10": "Manger de la viande rouge tous les jours"
+  }
+}

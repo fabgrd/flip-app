@@ -1,7 +1,9 @@
-export { HomeScreen } from './HomeScreen';
-export { GameSelectScreen } from './GameSelectScreen';
-export { PurityTestScreen } from './PurityTestScreen';
-export { PurityResultsScreen } from './PurityResultsScreen';
-export { SettingsScreen } from './SettingsScreen';
-export { CameleonScreen } from './CameleonScreen';
 export { CameleonResultsScreen } from './CameleonResultsScreen';
+export { CameleonScreen } from './CameleonScreen';
+export { GameSelectScreen } from './GameSelectScreen';
+export { HomeScreen } from './HomeScreen';
+export { LeftRightResultsScreen } from './LeftRightResultsScreen';
+export { LeftRightScreen } from './LeftRightScreen';
+export { PurityResultsScreen } from './PurityResultsScreen';
+export { PurityTestScreen } from './PurityTestScreen';
+export { SettingsScreen } from './SettingsScreen';
