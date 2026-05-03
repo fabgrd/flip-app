@@ -3,7 +3,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import * as Haptics from 'expo-haptics';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 
 import { ChunkyButton, DotBackground, PlayerInput, PlayersList } from '../components';
 import { MAX_PLAYERS_GLOBAL, MIN_PLAYERS_GLOBAL } from '../constants';
@@ -48,13 +48,16 @@ export function HomeScreen() {
             Fl<Text style={styles.logoAccent}>!</Text>p
           </Text>
         </View>
-        <TouchableOpacity
-          style={styles.settingsBtn}
+        <ChunkyButton
+          size="sm"
+          square
+          color={T.paper}
+          textColor={T.ink}
+          shadowColor={T.ink}
           onPress={() => navigation.navigate('Settings')}
-          activeOpacity={0.85}
         >
           <SettingsIcon />
-        </TouchableOpacity>
+        </ChunkyButton>
       </View>
 
       {/* Hero text */}
@@ -142,22 +145,6 @@ const styles = StyleSheet.create({
     lineHeight: 44,
   },
   logoAccent: { color: T.tomato },
-
-  settingsBtn: {
-    width: 44,
-    height: 44,
-    borderRadius: 14,
-    backgroundColor: T.paper,
-    borderWidth: 2,
-    borderColor: T.ink,
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
-  },
 
   hero: {
     paddingHorizontal: 20,

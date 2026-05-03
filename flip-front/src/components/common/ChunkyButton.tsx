@@ -8,13 +8,18 @@ interface ChunkyButtonProps {
   textColor?: string;
   children: React.ReactNode;
   disabled?: boolean;
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'xs' | 'sm' | 'md' | 'lg';
   full?: boolean;
   style?: ViewStyle;
   shadowColor?: string;
+  square?: boolean;
+  metrics?: Partial<{ height: number; fontSize: number; paddingH: number; radius: number }>;
+  buttonStyle?: ViewStyle;
+  shadowStyle?: ViewStyle;
 }
 
 const SIZES = {
+  xs: { height: 36, fontSize: 13, paddingH: 12, radius: T.rSm },
   sm: { height: 44, fontSize: 14, paddingH: 16, radius: T.rSm },
   md: { height: 56, fontSize: 16, paddingH: 22, radius: T.rMd },
   lg: { height: 62, fontSize: 18, paddingH: 26, radius: T.rMd },
@@ -30,10 +35,13 @@ export function ChunkyButton({
   full = false,
   style,
   shadowColor = T.ink,
+  square = false,
+  metrics,
+  buttonStyle,
+  shadowStyle,
 }: ChunkyButtonProps) {
-  const s = SIZES[size];
   const fg = textColor ?? (color === T.lemon || color === T.pink ? T.ink : '#fff');
-
+  const s = { ...SIZES[size], ...(metrics ?? {}) };
   const anim = useRef(new Animated.Value(0)).current;
 
   const onPressIn = () => {
@@ -56,6 +64,13 @@ export function ChunkyButton({
     ...(style as ViewStyle),
   };
 
+  const buttonSizing: ViewStyle = {
+    height: s.height,
+    borderRadius: s.radius,
+    paddingHorizontal: square ? 0 : s.paddingH,
+    width: square ? s.height : undefined,
+  };
+
   return (
     <View style={[styles.wrapper, containerStyle]}>
       {/* Static shadow layer */}
@@ -67,6 +82,7 @@ export function ChunkyButton({
             borderRadius: s.radius,
             backgroundColor: shadowColor,
           },
+          shadowStyle,
         ]}
       />
       {/* Animated button layer */}
@@ -74,11 +90,10 @@ export function ChunkyButton({
         style={[
           styles.btn,
           {
-            height: s.height,
-            borderRadius: s.radius,
             backgroundColor: disabled ? `${color}88` : color,
-            paddingHorizontal: s.paddingH,
           },
+          buttonSizing,
+          buttonStyle,
           translateStyle,
         ]}
       >

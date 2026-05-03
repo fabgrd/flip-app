@@ -1,6 +1,7 @@
 import { TFunction } from 'i18next';
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { ChunkyButton } from '../../../components/common/ChunkyButton';
 import { T } from '../../../constants/flipTokens';
 import type { CameleonTheme } from '../types';
 
@@ -45,54 +46,73 @@ export function SettingsPanel({
       {/* Undercover stepper */}
       <Text style={styles.sectionLabel}>{t('cameleon:settings.undercover', 'Undercover')}</Text>
       <View style={styles.stepperCard}>
-        <TouchableOpacity
-          style={styles.stepBtn}
+        <ChunkyButton
+          size="sm"
+          square
+          color={T.bg}
+          textColor={T.ink}
+          shadowColor={T.ink}
+          metrics={{ height: 52, radius: T.rSm, paddingH: 0, fontSize: 26 }}
           onPress={() => onChangeUC(Math.max(0, currentUC - 1))}
-          activeOpacity={0.8}
         >
           <Text style={styles.stepBtnText}>−</Text>
-        </TouchableOpacity>
+        </ChunkyButton>
         <Text style={styles.stepValue}>{currentUC}</Text>
-        <TouchableOpacity
-          style={styles.stepBtn}
+        <ChunkyButton
+          size="sm"
+          square
+          color={T.bg}
+          textColor={T.ink}
+          shadowColor={T.ink}
+          metrics={{ height: 52, radius: T.rSm, paddingH: 0, fontSize: 26 }}
           onPress={() => onChangeUC(currentUC + 1)}
-          activeOpacity={0.8}
         >
           <Text style={styles.stepBtnText}>+</Text>
-        </TouchableOpacity>
+        </ChunkyButton>
       </View>
 
       {/* Mr White stepper */}
       <Text style={styles.sectionLabel}>{t('cameleon:settings.mrWhite', 'Mr White')}</Text>
       <View style={styles.stepperCard}>
-        <TouchableOpacity
-          style={styles.stepBtn}
+        <ChunkyButton
+          size="sm"
+          square
+          color={T.bg}
+          textColor={T.ink}
+          shadowColor={T.ink}
+          metrics={{ height: 52, radius: T.rSm, paddingH: 0, fontSize: 26 }}
           onPress={() => onChangeMW(Math.max(0, currentMW - 1))}
-          activeOpacity={0.8}
         >
           <Text style={styles.stepBtnText}>−</Text>
-        </TouchableOpacity>
+        </ChunkyButton>
         <Text style={styles.stepValue}>{currentMW}</Text>
-        <TouchableOpacity
-          style={styles.stepBtn}
+        <ChunkyButton
+          size="sm"
+          square
+          color={T.bg}
+          textColor={T.ink}
+          shadowColor={T.ink}
+          metrics={{ height: 52, radius: T.rSm, paddingH: 0, fontSize: 26 }}
           onPress={() => onChangeMW(currentMW + 1)}
-          activeOpacity={0.8}
         >
           <Text style={styles.stepBtnText}>+</Text>
-        </TouchableOpacity>
+        </ChunkyButton>
       </View>
 
       {/* Start button */}
-      <TouchableOpacity
-        style={[styles.startBtn, !canStart && styles.startBtnDisabled]}
+      <ChunkyButton
+        full
+        size="md"
+        color={T.ink}
+        textColor="#fff"
+        shadowColor={T.tomato}
+        metrics={{ fontSize: 18 }}
         onPress={onStart}
         disabled={!canStart}
-        activeOpacity={0.85}
+        style={styles.startBtn}
       >
-        <Text style={styles.startBtnText}>
-          {t('cameleon:actions.start', 'Distribuer les rôles')}
-        </Text>
-      </TouchableOpacity>
+        {t('cameleon:actions.start', 'Distribuer les rôles')}
+      </ChunkyButton>
     </View>
   );
 }
@@ -150,33 +170,8 @@ const styles = StyleSheet.create({
     shadowRadius: 0,
     elevation: 3,
   },
-  stepBtn: {
-    width: 52,
-    height: 52,
-    borderRadius: T.rSm,
-    borderWidth: 2,
-    borderColor: T.ink,
-    backgroundColor: T.bg,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   stepBtnText: { color: T.ink, fontSize: 26, fontWeight: '900', lineHeight: 30 },
   stepValue: { color: T.ink, fontSize: 28, fontWeight: '900', width: 52, textAlign: 'center' },
 
-  startBtn: {
-    backgroundColor: T.ink,
-    borderWidth: 2,
-    borderColor: T.ink,
-    borderRadius: T.rMd,
-    paddingVertical: 20,
-    alignItems: 'center',
-    marginTop: 4,
-    shadowColor: T.tomato,
-    shadowOffset: { width: 5, height: 5 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 5,
-  },
-  startBtnDisabled: { opacity: 0.45 },
-  startBtnText: { color: '#fff', fontSize: 18, fontWeight: '900', letterSpacing: -0.3 },
+  startBtn: { marginTop: 4 },
 });

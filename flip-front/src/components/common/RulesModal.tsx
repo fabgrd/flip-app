@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Animated, { FadeIn, FadeOut, ZoomIn, ZoomOut } from 'react-native-reanimated';
 import { T } from '../../constants/flipTokens';
+import { ChunkyButton } from './ChunkyButton';
 
 interface Rule {
   n: string;
@@ -20,13 +21,16 @@ export function RulesButton({ rules, title, accentColor = T.mint }: RulesModalPr
 
   return (
     <>
-      <TouchableOpacity
-        style={[styles.triggerBtn, { backgroundColor: T.paper }]}
+      <ChunkyButton
+        size="xs"
+        square
+        color={T.paper}
+        textColor={T.ink}
+        shadowColor={T.ink}
         onPress={() => setVisible(true)}
-        activeOpacity={0.85}
       >
         <Text style={styles.triggerText}>?</Text>
-      </TouchableOpacity>
+      </ChunkyButton>
 
       <Modal
         visible={visible}
@@ -48,9 +52,17 @@ export function RulesButton({ rules, title, accentColor = T.mint }: RulesModalPr
             {/* Header */}
             <View style={[styles.cardHeader, { backgroundColor: accentColor }]}>
               <Text style={styles.cardTitle}>{title}</Text>
-              <TouchableOpacity onPress={() => setVisible(false)} style={styles.closeBtn}>
+              <ChunkyButton
+                size="xs"
+                square
+                color={T.paper}
+                textColor={T.ink}
+                shadowColor={T.ink}
+                metrics={{ height: 30, radius: 9, paddingH: 0, fontSize: 13 }}
+                onPress={() => setVisible(false)}
+              >
                 <Text style={styles.closeBtnText}>✕</Text>
-              </TouchableOpacity>
+              </ChunkyButton>
             </View>
 
             <ScrollView
@@ -70,13 +82,18 @@ export function RulesButton({ rules, title, accentColor = T.mint }: RulesModalPr
               ))}
             </ScrollView>
 
-            <TouchableOpacity
+            <ChunkyButton
+              full
+              size="sm"
+              color={T.ink}
+              textColor="#fff"
+              shadowColor={T.ink}
+              metrics={{ fontSize: 16 }}
               style={styles.doneBtn}
               onPress={() => setVisible(false)}
-              activeOpacity={0.85}
             >
-              <Text style={styles.doneBtnText}>OK, j'ai compris !</Text>
-            </TouchableOpacity>
+              {"OK, j'ai compris !"}
+            </ChunkyButton>
           </Animated.View>
         </Animated.View>
       </Modal>
@@ -85,20 +102,6 @@ export function RulesButton({ rules, title, accentColor = T.mint }: RulesModalPr
 }
 
 const styles = StyleSheet.create({
-  triggerBtn: {
-    width: 36,
-    height: 36,
-    borderRadius: 12,
-    borderWidth: 2,
-    borderColor: T.ink,
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
-  },
   triggerText: { color: T.ink, fontSize: 16, fontWeight: '900' },
 
   overlay: {
@@ -134,16 +137,6 @@ const styles = StyleSheet.create({
     borderBottomColor: T.ink,
   },
   cardTitle: { color: T.ink, fontSize: 20, fontWeight: '900', letterSpacing: -0.5 },
-  closeBtn: {
-    width: 30,
-    height: 30,
-    borderRadius: 9,
-    backgroundColor: T.paper,
-    borderWidth: 1.5,
-    borderColor: T.ink,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   closeBtnText: { color: T.ink, fontSize: 13, fontWeight: '900' },
 
   rulesContent: { padding: 18, gap: 4 },
@@ -172,15 +165,5 @@ const styles = StyleSheet.create({
   ruleTitle: { color: T.ink, fontSize: 15, fontWeight: '800' },
   ruleDesc: { color: T.inkSoft, fontSize: 13, marginTop: 2, lineHeight: 18 },
 
-  doneBtn: {
-    backgroundColor: T.ink,
-    margin: 16,
-    marginTop: 8,
-    borderRadius: T.rMd,
-    paddingVertical: 14,
-    alignItems: 'center',
-    borderWidth: 2,
-    borderColor: T.ink,
-  },
-  doneBtnText: { color: '#fff', fontSize: 16, fontWeight: '900' },
+  doneBtn: { margin: 16, marginTop: 8 },
 });

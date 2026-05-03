@@ -1,10 +1,10 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Animated, { FadeInRight, FadeOutLeft } from 'react-native-reanimated';
-import { useTranslation } from 'react-i18next';
-import { Player } from '../../types';
-import { useImagePicker } from '../../hooks/useImagePicker';
 import { T } from '../../constants/flipTokens';
+import { useImagePicker } from '../../hooks/useImagePicker';
+import { Player } from '../../types';
 
 const ACCENT_COLORS = [T.tomato, T.cobalt, T.lemon, T.mint, T.violet, T.pink];
 
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   },
   countText: { color: '#fff', fontSize: 11, fontWeight: '900' },
 
-  list: { gap: 10 },
+  list: { gap: 10, paddingRight: 4, paddingBottom: 4 },
 
   playerRow: {
     flexDirection: 'row',

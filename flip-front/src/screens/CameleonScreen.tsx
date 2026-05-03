@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import Animated, { FadeIn, FadeInDown, FadeOut, ZoomIn, ZoomOut } from 'react-native-reanimated';
 
-import { DotBackground, PopModal, RulesButton } from '../components/common';
+import { ChunkyButton, DotBackground, PopModal, RulesButton } from '../components/common';
 import { T } from '../constants/flipTokens';
 import { useCameleon } from '../games/cameleon';
 import {
@@ -207,13 +207,16 @@ export function CameleonScreen() {
             </View>
             <View style={styles.headerActions}>
               {/* Theme button */}
-              <TouchableOpacity
-                style={styles.themeBtn}
+              <ChunkyButton
+                size="xs"
+                square
+                color={T.paper}
+                textColor={T.ink}
+                shadowColor={T.ink}
                 onPress={() => setThemeModalVisible(true)}
-                activeOpacity={0.85}
               >
                 <Text style={styles.themeBtnEmoji}>{themeButtonEmoji}</Text>
-              </TouchableOpacity>
+              </ChunkyButton>
               <RulesButton rules={CAMELEON_RULES} title="Le Caméléon" accentColor={T.mint} />
             </View>
           </View>
@@ -234,7 +237,7 @@ export function CameleonScreen() {
                   Math.min(players.length - 1 - currentUC, Math.min(val, maxImpostors - currentUC)),
                 )
               }
-              onChangeTheme={() => {}}
+              onChangeTheme={() => { }}
               onStart={handleStart}
               t={t}
             />
@@ -330,12 +333,17 @@ export function CameleonScreen() {
                 <Text style={styles.modalTitle}>Thème du jeu</Text>
                 <Text style={styles.modalSubtitle}>Sélectionne un ou plusieurs thèmes</Text>
               </View>
-              <TouchableOpacity
-                style={styles.modalClose}
+              <ChunkyButton
+                size="xs"
+                square
+                color={T.paper}
+                textColor={T.ink}
+                shadowColor={T.ink}
+                metrics={{ height: 28, radius: 8, paddingH: 0, fontSize: 12 }}
                 onPress={() => setThemeModalVisible(false)}
               >
                 <Text style={styles.modalCloseText}>✕</Text>
-              </TouchableOpacity>
+              </ChunkyButton>
             </View>
             <ScrollView
               contentContainerStyle={styles.modalContent}
@@ -371,13 +379,18 @@ export function CameleonScreen() {
                 );
               })}
             </ScrollView>
-            <TouchableOpacity
+            <ChunkyButton
+              full
+              size="sm"
+              color={T.ink}
+              textColor="#fff"
+              shadowColor={T.ink}
+              metrics={{ fontSize: 16 }}
               style={styles.modalDoneBtn}
               onPress={() => setThemeModalVisible(false)}
-              activeOpacity={0.85}
             >
-              <Text style={styles.modalDoneBtnText}>Valider</Text>
-            </TouchableOpacity>
+              Valider
+            </ChunkyButton>
           </Animated.View>
         </Animated.View>
       </Modal>
@@ -455,21 +468,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 4,
   },
-  themeBtn: {
-    width: 36,
-    height: 36,
-    borderRadius: 12,
-    borderWidth: 2,
-    borderColor: T.ink,
-    backgroundColor: T.paper,
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
-  },
   themeBtnEmoji: { fontSize: 18 },
 
   // Theme modal
@@ -506,16 +504,6 @@ const styles = StyleSheet.create({
   },
   modalTitle: { color: T.ink, fontSize: 18, fontWeight: '900', letterSpacing: -0.5 },
   modalSubtitle: { color: T.inkSoft, fontSize: 12, marginTop: 2 },
-  modalClose: {
-    width: 28,
-    height: 28,
-    borderRadius: 8,
-    backgroundColor: T.paper,
-    borderWidth: 1.5,
-    borderColor: T.ink,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   modalCloseText: { color: T.ink, fontSize: 12, fontWeight: '900' },
   modalContent: { padding: 12, gap: 8 },
 
@@ -559,17 +547,7 @@ const styles = StyleSheet.create({
   },
   checkboxActive: { backgroundColor: T.mint, borderColor: T.paper },
   checkmark: { color: T.ink, fontSize: 13, fontWeight: '900' },
-  modalDoneBtn: {
-    backgroundColor: T.ink,
-    margin: 12,
-    marginTop: 4,
-    borderRadius: T.rMd,
-    paddingVertical: 14,
-    alignItems: 'center',
-    borderWidth: 2,
-    borderColor: T.ink,
-  },
-  modalDoneBtnText: { color: '#fff', fontSize: 16, fontWeight: '900' },
+  modalDoneBtn: { margin: 12, marginTop: 4 },
 
   // Clues/vote header
   header: { paddingHorizontal: 20, paddingTop: 12, paddingBottom: 8 },

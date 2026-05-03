@@ -1,6 +1,7 @@
 import { TFunction } from 'i18next';
 import React from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TextInput } from 'react-native';
+import { ChunkyButton } from '../../../components/common/ChunkyButton';
 import { PopModal } from '../../../components/common/PopModal';
 import { T } from '../../../constants/flipTokens';
 
@@ -43,14 +44,18 @@ export function MrWhiteGuessModal({
         returnKeyType="done"
         onSubmitEditing={onSubmit}
       />
-      <TouchableOpacity
-        style={[styles.primaryBtn, guess.trim().length === 0 && styles.btnDisabled]}
+      <ChunkyButton
+        size="sm"
+        color={T.ink}
+        textColor="#fff"
+        shadowColor={T.mint}
+        metrics={{ fontSize: 16 }}
         onPress={onSubmit}
         disabled={guess.trim().length === 0}
-        activeOpacity={0.85}
+        style={styles.primaryBtn}
       >
-        <Text style={styles.primaryBtnText}>{t('cameleon:actions.submit', 'Soumettre')}</Text>
-      </TouchableOpacity>
+        {t('cameleon:actions.submit', 'Soumettre')}
+      </ChunkyButton>
     </PopModal>
   );
 }
@@ -70,21 +75,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
   },
-  primaryBtn: {
-    backgroundColor: T.ink,
-    borderWidth: 2,
-    borderColor: T.ink,
-    borderRadius: T.rMd,
-    alignItems: 'center',
-    marginTop: 12,
-    paddingVertical: 16,
-    paddingHorizontal: 28,
-    shadowColor: T.mint,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 4,
-  },
-  primaryBtnText: { color: '#fff', fontSize: 16, fontWeight: '900', letterSpacing: -0.3 },
-  btnDisabled: { opacity: 0.4 },
+  primaryBtn: { marginTop: 12 },
 });

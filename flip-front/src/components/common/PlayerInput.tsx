@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { Alert, StyleSheet, Text, TextInput, View } from 'react-native';
 import { T } from '../../constants/flipTokens';
+import { ChunkyButton } from './ChunkyButton';
 
 interface PlayerInputProps {
   onAddPlayer: (name: string) => boolean;
@@ -48,14 +49,17 @@ export function PlayerInput({ onAddPlayer, maxPlayers, currentPlayerCount }: Pla
           maxLength={20}
           editable={!isMaxReached}
         />
-        <TouchableOpacity
-          style={[styles.addBtn, !canAdd && styles.addBtnDisabled]}
+        <ChunkyButton
+          size="sm"
+          color={T.ink}
+          textColor="#fff"
+          shadowColor={T.ink}
           onPress={handleAdd}
           disabled={!canAdd}
-          activeOpacity={0.85}
+          style={styles.addBtn}
         >
-          <Text style={styles.addBtnText}>Ajouter +</Text>
-        </TouchableOpacity>
+          Ajouter +
+        </ChunkyButton>
       </View>
       {isMaxReached && (
         <Text style={styles.limitText}>{t('errors.playerLimitReached', { maxPlayers })}</Text>
@@ -93,16 +97,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
 
-  addBtn: {
-    backgroundColor: T.ink,
-    borderWidth: 2,
-    borderColor: T.ink,
-    borderRadius: T.rSm,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-  },
-  addBtnDisabled: { opacity: 0.4 },
-  addBtnText: { color: '#fff', fontSize: 14, fontWeight: '900' },
+  addBtn: { marginRight: 0, marginBottom: 0 },
 
   limitText: {
     color: T.muted,
