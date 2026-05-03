@@ -15,7 +15,6 @@ import Animated, { FadeIn, FadeInDown, FadeOut, ZoomIn, ZoomOut } from 'react-na
 import { DotBackground, PopModal, RulesButton } from '../components/common';
 import { T } from '../constants/flipTokens';
 import { useCameleon } from '../games/cameleon';
-import { CAMELEON_THEME_OPTIONS } from '../games/cameleon/constants';
 import {
   ActionBar,
   MrWhiteGuessModal,
@@ -23,8 +22,9 @@ import {
   RevealCard,
   SettingsPanel,
 } from '../games/cameleon/components';
-import { Player, RootStackParamList } from '../types';
+import { CAMELEON_THEME_OPTIONS } from '../games/cameleon/constants';
 import type { CameleonTheme } from '../games/cameleon/types';
+import { Player, RootStackParamList } from '../types';
 
 type CameleonRouteProp = RouteProp<RootStackParamList, 'Cameleon'>;
 
@@ -49,6 +49,9 @@ const THEME_META: Record<CameleonTheme, { emoji: string; desc: string }> = {
   football: { emoji: '⚽', desc: 'Foot & culture pop' },
   hot: { emoji: '🔥', desc: 'Adulte & osé' },
   wtf: { emoji: '🤪', desc: 'Complètement WTF' },
+  sousculture: { emoji: '🕶️', desc: 'Culture underground' },
+  rap: { emoji: '🎤', desc: 'Rap & punchlines' },
+  decadence: { emoji: '🍸', desc: 'Ambiance décadente' },
 };
 
 export function CameleonScreen() {
@@ -77,7 +80,7 @@ export function CameleonScreen() {
 
   const [overrideUC, setOverrideUC] = useState<number | undefined>(undefined);
   const [overrideMW, setOverrideMW] = useState<number | undefined>(undefined);
-  const [selectedTheme, setSelectedTheme] = useState<CameleonTheme>('random');
+  const [selectedThemes, setSelectedThemes] = useState<CameleonTheme[]>(['random']);
   const [themeModalVisible, setThemeModalVisible] = useState(false);
 
   const currentUC = overrideUC ?? defaultDistribution.undercovers;
@@ -92,7 +95,7 @@ export function CameleonScreen() {
   const handleStart = () => {
     startGame({
       overrideDistribution: { undercovers: currentUC, mrWhites: currentMW },
-      theme: selectedTheme,
+      themes: selectedThemes,
     });
   };
 
@@ -164,7 +167,29 @@ export function CameleonScreen() {
   }, [mrWhiteToGuessId]);
 
   const bgColor = phase === 'settings' ? T.mint : phase === 'reveal' ? T.paper : T.bg;
-  const activeMeta = THEME_META[selectedTheme];
+
+  // Theme button: show emoji of active selection
+  // If random or multiple → 🎲, otherwise the single theme emoji
+  const themeButtonEmoji = (() => {
+    if (selectedThemes.includes('random') || selectedThemes.length === 0) return '🎲';
+    if (selectedThemes.length === 1) return THEME_META[selectedThemes[0]].emoji;
+    return '🎨';
+  })();
+
+  const toggleTheme = (theme: CameleonTheme) => {
+    if (theme === 'random') {
+      // Random sélectionne tout et désélectionne les autres
+      setSelectedThemes(['random']);
+      return;
+    }
+    setSelectedThemes((prev) => {
+      const withoutRandom = prev.filter((t) => t !== 'random');
+      const isOn = withoutRandom.includes(theme);
+      const next = isOn ? withoutRandom.filter((t) => t !== theme) : [...withoutRandom, theme];
+      // Si rien n'est sélectionné, revenir à random
+      return next.length === 0 ? ['random'] : next;
+    });
+  };
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: bgColor }]}>
@@ -187,7 +212,7 @@ export function CameleonScreen() {
                 onPress={() => setThemeModalVisible(true)}
                 activeOpacity={0.85}
               >
-                <Text style={styles.themeBtnEmoji}>{activeMeta.emoji}</Text>
+                <Text style={styles.themeBtnEmoji}>{themeButtonEmoji}</Text>
               </TouchableOpacity>
               <RulesButton rules={CAMELEON_RULES} title="Le Caméléon" accentColor={T.mint} />
             </View>
@@ -198,7 +223,7 @@ export function CameleonScreen() {
               playersCount={players.length}
               currentUC={currentUC}
               currentMW={currentMW}
-              selectedTheme={selectedTheme}
+              selectedTheme={selectedThemes[0] ?? 'random'}
               maxImpostors={maxImpostors}
               canStart={canStart}
               onChangeUC={(val) =>
@@ -209,7 +234,7 @@ export function CameleonScreen() {
                   Math.min(players.length - 1 - currentUC, Math.min(val, maxImpostors - currentUC)),
                 )
               }
-              onChangeTheme={setSelectedTheme}
+              onChangeTheme={() => {}}
               onStart={handleStart}
               t={t}
             />
@@ -221,6 +246,7 @@ export function CameleonScreen() {
       {phase === 'reveal' && currentRevealPlayer && (
         <View style={styles.flex}>
           <RevealCard
+            key={currentRevealPlayer.id}
             name={currentRevealPlayer.name}
             roleLabel={
               currentRevealPlayer.role === 'mrWhite'
@@ -300,7 +326,10 @@ export function CameleonScreen() {
             style={styles.modalCard}
           >
             <View style={styles.modalHeader}>
-              <Text style={styles.modalTitle}>Thème du jeu</Text>
+              <View>
+                <Text style={styles.modalTitle}>Thème du jeu</Text>
+                <Text style={styles.modalSubtitle}>Sélectionne un ou plusieurs thèmes</Text>
+              </View>
               <TouchableOpacity
                 style={styles.modalClose}
                 onPress={() => setThemeModalVisible(false)}
@@ -314,15 +343,15 @@ export function CameleonScreen() {
             >
               {CAMELEON_THEME_OPTIONS.map((opt, i) => {
                 const meta = THEME_META[opt.value];
-                const active = selectedTheme === opt.value;
+                const isRandom = opt.value === 'random';
+                const active = isRandom
+                  ? selectedThemes.includes('random')
+                  : !selectedThemes.includes('random') && selectedThemes.includes(opt.value);
                 return (
                   <Animated.View key={opt.value} entering={FadeInDown.delay(i * 40)}>
                     <TouchableOpacity
                       style={[styles.themeRow, active && styles.themeRowActive]}
-                      onPress={() => {
-                        setSelectedTheme(opt.value);
-                        setThemeModalVisible(false);
-                      }}
+                      onPress={() => toggleTheme(opt.value)}
                       activeOpacity={0.85}
                     >
                       <Text style={styles.themeRowEmoji}>{meta.emoji}</Text>
@@ -331,15 +360,24 @@ export function CameleonScreen() {
                           {t(opt.labelKey)}
                         </Text>
                         <Text style={[styles.themeRowDesc, active && styles.themeRowDescActive]}>
-                          {meta.desc}
+                          {isRandom ? 'Tous les mots mélangés' : meta.desc}
                         </Text>
                       </View>
-                      {active && <Text style={styles.themeRowCheck}>✓</Text>}
+                      <View style={[styles.checkbox, active && styles.checkboxActive]}>
+                        {active && <Text style={styles.checkmark}>✓</Text>}
+                      </View>
                     </TouchableOpacity>
                   </Animated.View>
                 );
               })}
             </ScrollView>
+            <TouchableOpacity
+              style={styles.modalDoneBtn}
+              onPress={() => setThemeModalVisible(false)}
+              activeOpacity={0.85}
+            >
+              <Text style={styles.modalDoneBtnText}>Valider</Text>
+            </TouchableOpacity>
           </Animated.View>
         </Animated.View>
       </Modal>
@@ -467,6 +505,7 @@ const styles = StyleSheet.create({
     backgroundColor: T.mint,
   },
   modalTitle: { color: T.ink, fontSize: 18, fontWeight: '900', letterSpacing: -0.5 },
+  modalSubtitle: { color: T.inkSoft, fontSize: 12, marginTop: 2 },
   modalClose: {
     width: 28,
     height: 28,
@@ -507,6 +546,30 @@ const styles = StyleSheet.create({
   themeRowDesc: { color: T.muted, fontSize: 12, marginTop: 2 },
   themeRowDescActive: { color: 'rgba(255,255,255,0.6)' },
   themeRowCheck: { color: T.mint, fontSize: 20, fontWeight: '900' },
+  checkbox: {
+    width: 24,
+    height: 24,
+    borderRadius: 7,
+    borderWidth: 2,
+    borderColor: T.ink,
+    backgroundColor: T.bg,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexShrink: 0,
+  },
+  checkboxActive: { backgroundColor: T.mint, borderColor: T.paper },
+  checkmark: { color: T.ink, fontSize: 13, fontWeight: '900' },
+  modalDoneBtn: {
+    backgroundColor: T.ink,
+    margin: 12,
+    marginTop: 4,
+    borderRadius: T.rMd,
+    paddingVertical: 14,
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: T.ink,
+  },
+  modalDoneBtnText: { color: '#fff', fontSize: 16, fontWeight: '900' },
 
   // Clues/vote header
   header: { paddingHorizontal: 20, paddingTop: 12, paddingBottom: 8 },

@@ -1,4 +1,3 @@
-import { t } from 'i18next';
 import { CameleonRoleDistribution, CameleonTheme, CameleonWordPair } from './types';
 
 export const DEFAULT_DISTRIBUTION_BY_PLAYER_COUNT: Record<number, CameleonRoleDistribution> = {
@@ -11,104 +10,204 @@ export const DEFAULT_DISTRIBUTION_BY_PLAYER_COUNT: Record<number, CameleonRoleDi
   10: { undercovers: 3, mrWhites: 1 },
 };
 
-const DAILY_WORD_PAIRS: CameleonWordPair[] = [
-  { civilianWord: t('cameleon:wordPairs.chat'), cameleonWord: t('cameleon:wordPairs.tigre') },
-  { civilianWord: t('cameleon:wordPairs.plage'), cameleonWord: t('cameleon:wordPairs.desert') },
-  { civilianWord: t('cameleon:wordPairs.pizza'), cameleonWord: t('cameleon:wordPairs.tarte') },
-  { civilianWord: t('cameleon:wordPairs.avion'), cameleonWord: t('cameleon:wordPairs.fusee') },
-  { civilianWord: t('cameleon:wordPairs.hiver'), cameleonWord: t('cameleon:wordPairs.automne') },
-  {
-    civilianWord: t('cameleon:wordPairs.infirmier'),
-    cameleonWord: t('cameleon:wordPairs.medecin'),
-  },
-  {
-    civilianWord: t('cameleon:wordPairs.boulanger'),
-    cameleonWord: t('cameleon:wordPairs.patissier'),
-  },
-  { civilianWord: t('cameleon:wordPairs.cinema'), cameleonWord: t('cameleon:wordPairs.theatre') },
-  { civilianWord: t('cameleon:wordPairs.concert'), cameleonWord: t('cameleon:wordPairs.festival') },
-  { civilianWord: t('cameleon:wordPairs.foret'), cameleonWord: t('cameleon:wordPairs.jungle') },
-  { civilianWord: t('cameleon:wordPairs.neige'), cameleonWord: t('cameleon:wordPairs.glace') },
-  { civilianWord: t('cameleon:wordPairs.biere'), cameleonWord: t('cameleon:wordPairs.vin') },
+// ─────────────────────────────────────────────────────────────
+// DAILY — vie quotidienne, métiers, lieux, objets courants
+// ─────────────────────────────────────────────────────────────
+const DAILY: CameleonWordPair[] = [
+  { civilianWord: 'Chat', cameleonWord: 'Tigre' },
+  { civilianWord: 'Chien', cameleonWord: 'Loup' },
+  { civilianWord: 'Plage', cameleonWord: 'Piscine' },
+  { civilianWord: 'Pizza', cameleonWord: 'Tarte flambée' },
+  { civilianWord: 'Avion', cameleonWord: 'Hélicoptère' },
+  { civilianWord: 'Hiver', cameleonWord: 'Automne' },
+  { civilianWord: 'Infirmier', cameleonWord: 'Médecin' },
+  { civilianWord: 'Boulanger', cameleonWord: 'Pâtissier' },
+  { civilianWord: 'Cinéma', cameleonWord: 'Théâtre' },
+  { civilianWord: 'Concert', cameleonWord: 'Festival' },
+  { civilianWord: 'Forêt', cameleonWord: 'Jungle' },
+  { civilianWord: 'Neige', cameleonWord: 'Grêle' },
+  { civilianWord: 'Voiture', cameleonWord: 'Moto' },
+  { civilianWord: 'Lit', cameleonWord: 'Canapé' },
+  { civilianWord: 'Café', cameleonWord: 'Thé' },
+  { civilianWord: 'Vélo', cameleonWord: 'Trottinette' },
+  { civilianWord: 'Supermarché', cameleonWord: 'Épicerie' },
+  { civilianWord: 'Mairie', cameleonWord: 'Préfecture' },
+  { civilianWord: 'Camembert', cameleonWord: 'Brie' },
+  { civilianWord: 'Boulangerie', cameleonWord: 'Sandwicherie' },
+  { civilianWord: 'Musée', cameleonWord: "Galerie d'art" },
+  { civilianWord: 'Médecin', cameleonWord: 'Pharmacien' },
+  { civilianWord: 'Train', cameleonWord: 'Bus' },
+  { civilianWord: 'Bibliothèque', cameleonWord: 'Librairie' },
+  { civilianWord: 'Vacances', cameleonWord: 'Week-end' },
+  { civilianWord: 'Maison', cameleonWord: 'Appartement' },
+  { civilianWord: 'Pluie', cameleonWord: 'Brume' },
+  { civilianWord: 'Montagne', cameleonWord: 'Colline' },
+  { civilianWord: 'Chaussures', cameleonWord: 'Baskets' },
+  { civilianWord: 'Réveil', cameleonWord: 'Alarme de téléphone' },
 ];
 
-const FOOTBALL_WORD_PAIRS: CameleonWordPair[] = [
-  { civilianWord: t('cameleon:wordPairs.football'), cameleonWord: t('cameleon:wordPairs.rugby') },
-  {
-    civilianWord: t('cameleon:wordPairs.gta'),
-    cameleonWord: t('cameleon:wordPairs.redDeadRedemption'),
-  },
-  {
-    civilianWord: t('cameleon:wordPairs.onePiece'),
-    cameleonWord: t('cameleon:wordPairs.dragonBall'),
-  },
-  { civilianWord: t('cameleon:wordPairs.cinema'), cameleonWord: t('cameleon:wordPairs.theatre') },
-  { civilianWord: t('cameleon:wordPairs.concert'), cameleonWord: t('cameleon:wordPairs.festival') },
-  { civilianWord: t('cameleon:wordPairs.neige'), cameleonWord: t('cameleon:wordPairs.glace') },
+// ─────────────────────────────────────────────────────────────
+// FOOTBALL & CULTURE POP — sport, gaming, séries, musique, réseaux
+// ─────────────────────────────────────────────────────────────
+const SOUSCULTURE: CameleonWordPair[] = [
+  { civilianWord: 'Football', cameleonWord: 'Rugby' },
+  { civilianWord: 'Handball', cameleonWord: 'Basket' },
+  { civilianWord: 'Le Mans', cameleonWord: 'Monaco (F1)' },
+  { civilianWord: 'GTA', cameleonWord: 'Red Dead Redemption' },
+  { civilianWord: 'Fortnite', cameleonWord: 'PUBG' },
+  { civilianWord: 'PS5', cameleonWord: 'Xbox' },
+  { civilianWord: 'Minecraft', cameleonWord: 'Roblox' },
+  { civilianWord: 'League of Legends', cameleonWord: 'Dota 2' },
+  { civilianWord: 'One Piece', cameleonWord: 'Dragon Ball' },
+  { civilianWord: 'Naruto', cameleonWord: 'Bleach' },
+  { civilianWord: 'Marvel', cameleonWord: 'DC Comics' },
+  { civilianWord: 'Netflix', cameleonWord: 'Disney+' },
+  { civilianWord: 'Breaking Bad', cameleonWord: 'Peaky Blinders' },
+  { civilianWord: 'TikTok', cameleonWord: 'Instagram' },
+  { civilianWord: 'Snapchat', cameleonWord: 'Telegram' },
+  { civilianWord: 'Rap', cameleonWord: 'R&B' },
+  { civilianWord: 'Beyoncé', cameleonWord: 'Rihanna' },
+  { civilianWord: 'PNL', cameleonWord: 'Nekfeu' },
+  { civilianWord: 'Nike', cameleonWord: 'Adidas' },
+  { civilianWord: 'Supreme', cameleonWord: 'Palace' },
+  { civilianWord: 'iPhone', cameleonWord: 'Samsung Galaxy' },
+  { civilianWord: 'YouTube', cameleonWord: 'Twitch' },
+  { civilianWord: 'Spotify', cameleonWord: 'Deezer' },
+  { civilianWord: 'Festival (musique)', cameleonWord: 'Rave' },
 ];
 
-const HOT_WORD_PAIRS: CameleonWordPair[] = [
-  {
-    civilianWord: t('cameleon:wordPairs.marijuana'),
-    cameleonWord: t('cameleon:wordPairs.hashish'),
-  },
-  {
-    civilianWord: t('cameleon:wordPairs.bouzelouf'),
-    cameleonWord: t('cameleon:wordPairs.tastyCrousty'),
-  },
-  {
-    civilianWord: t('cameleon:wordPairs.biteDeCheval'),
-    cameleonWord: t('cameleon:wordPairs.couilleDeTaureau'),
-  },
-  {
-    civilianWord: t('cameleon:wordPairs.saintNectaire'),
-    cameleonWord: t('cameleon:wordPairs.camembert'),
-  },
-  { civilianWord: t('cameleon:wordPairs.pet'), cameleonWord: t('cameleon:wordPairs.rot') },
-  { civilianWord: t('cameleon:wordPairs.vomi'), cameleonWord: t('cameleon:wordPairs.caca') },
-  { civilianWord: t('cameleon:wordPairs.OM'), cameleonWord: t('cameleon:wordPairs.OL') },
+// ─────────────────────────────────────────────────────────────
+// FOOT — juste du foot wesh
+// ─────────────────────────────────────────────────────────────
+const FOOTBALL: CameleonWordPair[] = [
+  { civilianWord: 'Football', cameleonWord: 'Rugby' },
+  { civilianWord: 'OM', cameleonWord: 'OL' },
+  { civilianWord: 'Arsenal', cameleonWord: 'Tottenham' },
+  { civilianWord: 'Messi', cameleonWord: 'Ronaldo' },
+  { civilianWord: 'Ligue 1', cameleonWord: 'Premier League' },
+  { civilianWord: 'Coupe du monde', cameleonWord: 'Euro' },
+  { civilianWord: 'Mbappé', cameleonWord: 'Dembélé' },
+  { civilianWord: 'Zidane', cameleonWord: 'Platini' },
+  { civilianWord: 'Neymar', cameleonWord: 'Suarez' },
+  { civilianWord: 'Benzema', cameleonWord: 'Giroud' },
+  { civilianWord: 'Lloris', cameleonWord: 'Lucas Chevalier' },
+  { civilianWord: 'Maradona', cameleonWord: 'Pelé' },
+  { civilianWord: 'Real Madrid', cameleonWord: 'Atlético Madrid' },
+  { civilianWord: 'Manchester United', cameleonWord: 'Manchester City' },
+  { civilianWord: 'Bayern Munich', cameleonWord: 'Borussia Dortmund' },
+  { civilianWord: 'Ligue des Champions', cameleonWord: 'Europa League' },
+];
+// ─────────────────────────────────────────────────────────────
+// RAP — rappeurs français, hip-hop FR
+// ─────────────────────────────────────────────────────────────
+const RAP: CameleonWordPair[] = [
+  { civilianWord: 'PNL', cameleonWord: 'Nekfeu' },
+  { civilianWord: 'Booba', cameleonWord: 'Kaaris' },
+  { civilianWord: 'Freeze Corleone', cameleonWord: 'Kalash Criminel' },
+  { civilianWord: 'Jul', cameleonWord: 'Maes' },
+  { civilianWord: 'Vald', cameleonWord: 'Gringe' },
+  { civilianWord: 'Orelsan', cameleonWord: 'Roméo Elvis' },
+  { civilianWord: 'Sadek', cameleonWord: 'Rohff' },
+  { civilianWord: 'Jcvd', cameleonWord: 'Heuss l\'enfoiré' },
+  { civilianWord: 'Moha La Squale', cameleonWord: '13 Block' },
+  { civilianWord: 'Lacrim', cameleonWord: 'Kof Kof' },
 ];
 
-const WTF_WORD_PAIRS: CameleonWordPair[] = [
-  {
-    civilianWord: t('cameleon:wordPairs.bombonnne'),
-    cameleonWord: t('cameleon:wordPairs.ballon'),
-  },
-  {
-    civilianWord: t('cameleon:wordPairs.rouge'),
-    cameleonWord: t('cameleon:wordPairs.porto'),
-  },
-  {
-    civilianWord: t('cameleon:wordPairs.gland'),
-    cameleonWord: t('cameleon:wordPairs.freine'),
-  },
-  { civilianWord: t('cameleon:wordPairs.chat'), cameleonWord: t('cameleon:wordPairs.tigre') },
-  { civilianWord: t('cameleon:wordPairs.plage'), cameleonWord: t('cameleon:wordPairs.desert') },
+// ─────────────────────────────────────────────────────────────
+// HOT — sexe, drague, adulte
+// ─────────────────────────────────────────────────────────────
+const HOT: CameleonWordPair[] = [
+  { civilianWord: 'OnlyFans', cameleonWord: 'Mym' },
+  { civilianWord: 'Pornhub', cameleonWord: 'Xvideos' },
+  { civilianWord: 'Gland', cameleonWord: 'Frein (anatomique)' },
+  { civilianWord: 'Baiser', cameleonWord: 'Sucer' },
+  { civilianWord: 'Pénis', cameleonWord: 'Clitoris' },
 ];
 
-const RANDOM_WORD_PAIRS: CameleonWordPair[] = [
-  ...DAILY_WORD_PAIRS,
-  ...FOOTBALL_WORD_PAIRS,
-  ...HOT_WORD_PAIRS,
-  ...WTF_WORD_PAIRS,
+// ─────────────────────────────────────────────────────────────
+// DECADENCE — alcool, drogue, substances, fêtes excessives
+// ─────────────────────────────────────────────────────────────
+const DECADENCE: CameleonWordPair[] = [
+  { civilianWord: 'Marijuana', cameleonWord: 'Hashisch' },
+  { civilianWord: 'Coke', cameleonWord: 'MDMA' },
+  { civilianWord: 'Chicha', cameleonWord: 'Pétard' },
+  { civilianWord: 'Gueule de bois', cameleonWord: 'Bad trip' },
+  { civilianWord: 'Binge drinking', cameleonWord: 'Prégame' },
+  { civilianWord: 'Vodka', cameleonWord: 'Rhum' },
+  { civilianWord: 'Bière', cameleonWord: 'Cidre' },
+  { civilianWord: 'Cuite', cameleonWord: 'Défonce' },
 ];
+
+// ─────────────────────────────────────────────────────────────
+// WTF — absurde, bizarre, improbable, références de groupe
+// ─────────────────────────────────────────────────────────────
+const WTF: CameleonWordPair[] = [
+  { civilianWord: 'Bouzelouf', cameleonWord: 'Tasty Crousty' },
+  { civilianWord: 'Bite de cheval', cameleonWord: 'Couille de taureau' },
+  { civilianWord: 'Ballon (protoxyde)', cameleonWord: 'Bombonne de protoxyde' },
+  { civilianWord: 'Pet', cameleonWord: 'Rot' },
+  { civilianWord: 'Vomi', cameleonWord: 'Caca' },
+  { civilianWord: 'Rouge qui tache', cameleonWord: 'Porto' },
+  { civilianWord: 'Cheval de Troie', cameleonWord: 'Ransomware' },
+  { civilianWord: 'Jean-Michel', cameleonWord: 'Gérard' },
+  { civilianWord: 'Skibidi toilet', cameleonWord: 'Sigma grindset' },
+  { civilianWord: 'Soupe de cailloux', cameleonWord: 'Smoothie de terre' },
+  { civilianWord: 'Caillou (dessin animé)', cameleonWord: 'Oui-Oui' },
+];
+
+// ─────────────────────────────────────────────────────────────
+// RANDOM = union de tous les thèmes
+// ─────────────────────────────────────────────────────────────
+const ALL: CameleonWordPair[] = [...DAILY, ...SOUSCULTURE, ...RAP, ...FOOTBALL, ...HOT, ...DECADENCE, ...WTF];
 
 export const CAMELEON_THEME_OPTIONS: Array<{ value: CameleonTheme; labelKey: string }> = [
   { value: 'random', labelKey: 'cameleon:themes.random' },
   { value: 'daily', labelKey: 'cameleon:themes.daily' },
+  { value: 'sousculture', labelKey: 'cameleon:themes.sousculture' },
+  { value: 'rap', labelKey: 'cameleon:themes.rap' },
   { value: 'football', labelKey: 'cameleon:themes.football' },
   { value: 'hot', labelKey: 'cameleon:themes.hot' },
+  { value: 'decadence', labelKey: 'cameleon:themes.decadence' },
   { value: 'wtf', labelKey: 'cameleon:themes.wtf' },
 ];
 
-export const WORD_PAIRS_BY_THEME: Record<CameleonTheme, CameleonWordPair[]> = {
-  random: RANDOM_WORD_PAIRS,
-  daily: DAILY_WORD_PAIRS,
-  football: FOOTBALL_WORD_PAIRS,
-  hot: HOT_WORD_PAIRS,
-  wtf: WTF_WORD_PAIRS,
+export const WORD_PAIRS_BY_THEME: Record<Exclude<CameleonTheme, 'random'>, CameleonWordPair[]> = {
+  daily: DAILY,
+  sousculture: SOUSCULTURE,
+  rap: RAP,
+  football: FOOTBALL,
+  hot: HOT,
+  decadence: DECADENCE,
+  wtf: WTF,
 };
 
+/**
+ * Retourne les paires pour une sélection de thèmes.
+ * Si 'random' est inclus (ou liste vide), retourne toutes les paires.
+ * Déduplique si un même thème apparaît plusieurs fois.
+ */
+export function getWordPairsForThemes(themes: CameleonTheme[]): CameleonWordPair[] {
+  if (themes.length === 0 || themes.includes('random')) return ALL;
+
+  const seen = new Set<string>();
+  const result: CameleonWordPair[] = [];
+
+  for (const theme of themes) {
+    if (theme === 'random') continue;
+    const pairs = WORD_PAIRS_BY_THEME[theme] ?? [];
+    for (const pair of pairs) {
+      const key = `${pair.civilianWord}|${pair.cameleonWord}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        result.push(pair);
+      }
+    }
+  }
+
+  return result.length > 0 ? result : ALL;
+}
+
+// compat: ancienne signature pour ne pas casser d'autres éventuels imports
 export function getWordPairsForTheme(theme: CameleonTheme): CameleonWordPair[] {
-  return WORD_PAIRS_BY_THEME[theme] ?? RANDOM_WORD_PAIRS;
+  return getWordPairsForThemes([theme]);
 }

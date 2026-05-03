@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 import type { Player } from '../../../types';
-import { DEFAULT_DISTRIBUTION_BY_PLAYER_COUNT, getWordPairsForTheme } from '../constants';
+import { DEFAULT_DISTRIBUTION_BY_PLAYER_COUNT, getWordPairsForThemes } from '../constants';
 import type {
   CameleonAssignedPlayer,
   CameleonGameState,
@@ -43,7 +43,7 @@ export function useCameleon(initialPlayers: Player[]) {
     wordPair: null,
     round: 0,
     started: false,
-    theme: 'random',
+    themes: ['random'] as CameleonTheme[],
   });
 
   const [phase, setPhase] = useState<CameleonPhase>('settings');
@@ -69,7 +69,7 @@ export function useCameleon(initialPlayers: Player[]) {
   const startGame = useCallback(
     (options?: StartCameleonOptions) => {
       const override = options?.overrideDistribution ?? {};
-      const theme = options?.theme ?? 'random';
+      const themes = options?.themes ?? ['random'];
       const maxImpostors = Math.floor(playerCount / 2);
       let undercovers = Math.max(
         0,
@@ -93,8 +93,7 @@ export function useCameleon(initialPlayers: Player[]) {
       const civilians = Math.max(0, playerCount - undercovers - mrWhites);
 
       const shuffledPlayers = shuffleArray(initialPlayers);
-      const themeWordPairs = getWordPairsForTheme(theme);
-      const availableWordPairs = themeWordPairs.length > 0 ? themeWordPairs : getWordPairsForTheme('random');
+      const availableWordPairs = getWordPairsForThemes(themes);
       const wordPair = availableWordPairs[Math.floor(Math.random() * availableWordPairs.length)];
 
       const assigned: CameleonAssignedPlayer[] = [];
@@ -134,7 +133,7 @@ export function useCameleon(initialPlayers: Player[]) {
         wordPair,
         round: 1,
         started: true,
-        theme,
+        themes,
       });
       setRevealIndex(0);
       setSelectedForElimination(null);
@@ -299,7 +298,7 @@ export function useCameleon(initialPlayers: Player[]) {
       wordPair: null,
       round: 0,
       started: false,
-      theme: 'random',
+      themes: ['random'] as CameleonTheme[],
     });
     setRevealIndex(0);
     setClueOrder([]);

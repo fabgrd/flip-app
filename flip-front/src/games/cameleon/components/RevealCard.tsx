@@ -1,8 +1,7 @@
 import { TFunction } from 'i18next';
 import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import Animated, {
-  interpolate,
   runOnJS,
   useAnimatedStyle,
   useSharedValue,
@@ -19,75 +18,51 @@ interface RevealCardProps {
 }
 
 export function RevealCard({ name, roleLabel, secretWord, onNext, t }: RevealCardProps) {
-  const rotation = useSharedValue(0);
-  const [flipped, setFlipped] = useState(false);
-  const [isAnimating, setIsAnimating] = useState(false);
+  const [revealed, setRevealed] = useState(false);
+  const frontOpacity = useSharedValue(1);
+  const backOpacity = useSharedValue(0);
 
-  const frontStyle = useAnimatedStyle(() => ({
-    transform: [{ rotateY: `${interpolate(rotation.value, [0, 1], [0, 180])}deg` }],
-    backfaceVisibility: 'hidden',
-  }));
+  const frontStyle = useAnimatedStyle(() => ({ opacity: frontOpacity.value }));
+  const backStyle = useAnimatedStyle(() => ({ opacity: backOpacity.value }));
 
-  const backStyle = useAnimatedStyle(() => ({
-    transform: [{ rotateY: `${interpolate(rotation.value, [0, 1], [180, 360])}deg` }],
-    backfaceVisibility: 'hidden',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-  }));
-
-  const handleFlip = () => {
-    if (isAnimating) return;
-    if (!flipped) {
-      setIsAnimating(true);
-      rotation.value = withTiming(1, { duration: 500 }, (finished) => {
-        if (finished) {
-          runOnJS(setIsAnimating)(false);
-          runOnJS(setFlipped)(true);
-        }
-      });
-    } else {
-      setIsAnimating(true);
-      onNext();
-      rotation.value = 0;
-      setFlipped(false);
-      setTimeout(() => setIsAnimating(false), 250);
-    }
+  const handleReveal = () => {
+    frontOpacity.value = withTiming(0, { duration: 220 }, (finished) => {
+      if (finished) {
+        runOnJS(setRevealed)(true);
+        backOpacity.value = withTiming(1, { duration: 220 });
+      }
+    });
   };
 
   return (
     <View style={styles.wrapper}>
-      <View style={styles.cardOuter}>
-        {/* FRONT — handoff screen: dark background */}
-        <Animated.View style={[styles.face, styles.frontFace, frontStyle]}>
-          {/* Player initial avatar */}
+      <View style={styles.card}>
+        {/* ── FRONT — handoff ── */}
+        <Animated.View
+          style={[StyleSheet.absoluteFill, styles.face, styles.frontFace, frontStyle]}
+          // @ts-ignore pointerEvents is valid on Animated.View
+          pointerEvents={revealed ? 'none' : 'auto'}
+        >
           <View style={styles.playerAvatar}>
             <Text style={styles.playerAvatarText}>{name[0]?.toUpperCase() ?? '?'}</Text>
           </View>
 
           <Text style={styles.handoffTitle}>{name},</Text>
           <Text style={styles.handoffSubtitle}>passe le tel</Text>
-
           <Text style={styles.handoffHint}>Trouve un coin discret avant d'appuyer.</Text>
 
-          <TouchableOpacity
-            style={[styles.revealBtn, isAnimating && styles.btnDisabled]}
-            onPress={handleFlip}
-            disabled={isAnimating}
-            activeOpacity={0.85}
-          >
-            <Text style={styles.revealBtnText}>
-              {t('cameleon:actions.reveal', 'Révéler mon rôle')}
-            </Text>
-          </TouchableOpacity>
+          <FlipButton color={T.lemon} textColor={T.ink} onPress={handleReveal}>
+            {t('cameleon:actions.reveal', 'Révéler mon rôle')}
+          </FlipButton>
         </Animated.View>
 
-        {/* BACK — role reveal */}
-        <Animated.View style={[styles.face, styles.backFace, backStyle]}>
+        {/* ── BACK — role reveal ── */}
+        <Animated.View
+          style={[StyleSheet.absoluteFill, styles.face, styles.backFace, backStyle]}
+          // @ts-ignore
+          pointerEvents={revealed ? 'auto' : 'none'}
+        >
           {secretWord === null ? (
-            /* Cameleon reveal */
             <View style={styles.backContent}>
               <View style={styles.cameleonBadge}>
                 <Text style={styles.cameleonBadgeText}>TU ES LE CAMÉLÉON</Text>
@@ -102,7 +77,6 @@ export function RevealCard({ name, roleLabel, secretWord, onNext, t }: RevealCar
               </View>
             </View>
           ) : (
-            /* Word reveal */
             <View style={styles.backContent}>
               <Text style={styles.wordCategory}>{roleLabel.toUpperCase()}</Text>
               <View style={styles.wordCard}>
@@ -112,26 +86,52 @@ export function RevealCard({ name, roleLabel, secretWord, onNext, t }: RevealCar
             </View>
           )}
 
-          <TouchableOpacity
-            style={[styles.nextBtn, isAnimating && styles.btnDisabled]}
-            onPress={handleFlip}
-            disabled={isAnimating}
-            activeOpacity={0.85}
-          >
-            <Text style={styles.nextBtnText}>
-              {t('common:buttons.continue', "J'ai vu — suivant")}
-            </Text>
-          </TouchableOpacity>
+          <FlipButton color={T.ink} textColor="#fff" shadowColor={T.mint} onPress={onNext}>
+            {t('common:buttons.continue', "J'ai vu — suivant")}
+          </FlipButton>
         </Animated.View>
       </View>
     </View>
   );
 }
 
+// ── Bouton avec effet cartoon press (Pressable inline) ──
+function FlipButton({
+  onPress,
+  color,
+  textColor,
+  shadowColor = T.ink,
+  children,
+}: {
+  onPress: () => void;
+  color: string;
+  textColor: string;
+  shadowColor?: string;
+  children: string;
+}) {
+  return (
+    <Pressable
+      onPress={onPress}
+      style={({ pressed }) => [
+        styles.btn,
+        {
+          backgroundColor: color,
+          shadowColor,
+          shadowOffset: pressed ? { width: 0, height: 0 } : { width: 4, height: 4 },
+          shadowOpacity: pressed ? 0 : 1,
+          transform: pressed ? [{ translateX: 4 as number }, { translateY: 4 as number }] : [],
+        },
+      ]}
+    >
+      <Text style={[styles.btnText, { color: textColor }]}>{children}</Text>
+    </Pressable>
+  );
+}
+
 const styles = StyleSheet.create({
   wrapper: { alignItems: 'center', flex: 1, justifyContent: 'center', paddingHorizontal: 16 },
 
-  cardOuter: {
+  card: {
     width: '100%',
     height: 420,
     maxWidth: 400,
@@ -139,11 +139,6 @@ const styles = StyleSheet.create({
   },
 
   face: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
     borderRadius: T.rLg,
     borderWidth: 2,
     borderColor: T.ink,
@@ -156,16 +151,9 @@ const styles = StyleSheet.create({
     shadowRadius: 0,
     elevation: 5,
   },
+  frontFace: { backgroundColor: T.ink },
+  backFace: { backgroundColor: T.paper },
 
-  frontFace: {
-    backgroundColor: T.ink,
-  },
-
-  backFace: {
-    backgroundColor: T.paper,
-  },
-
-  // Front content
   playerAvatar: {
     width: 72,
     height: 72,
@@ -180,6 +168,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 4, height: 4 },
     shadowOpacity: 1,
     shadowRadius: 0,
+    elevation: 3,
   },
   playerAvatarText: { color: '#fff', fontSize: 32, fontWeight: '900' },
 
@@ -207,24 +196,6 @@ const styles = StyleSheet.create({
     marginBottom: 28,
   },
 
-  revealBtn: {
-    backgroundColor: T.lemon,
-    borderWidth: 2,
-    borderColor: T.ink,
-    borderRadius: T.rMd,
-    paddingVertical: 16,
-    paddingHorizontal: 28,
-    alignSelf: 'stretch',
-    alignItems: 'center',
-    shadowColor: T.lemon,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 4,
-  },
-  revealBtnText: { color: T.ink, fontSize: 17, fontWeight: '900', letterSpacing: -0.3 },
-
-  // Back content
   backContent: { flex: 1, alignItems: 'center', justifyContent: 'center', width: '100%' },
 
   cameleonBadge: {
@@ -248,7 +219,6 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
     textTransform: 'uppercase',
   },
-
   cameleonCard: {
     backgroundColor: T.ink,
     borderRadius: T.rMd,
@@ -316,8 +286,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
 
-  nextBtn: {
-    backgroundColor: T.ink,
+  btn: {
     borderWidth: 2,
     borderColor: T.ink,
     borderRadius: T.rMd,
@@ -325,13 +294,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 28,
     alignSelf: 'stretch',
     alignItems: 'center',
-    shadowColor: T.mint,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 1,
     shadowRadius: 0,
     elevation: 4,
   },
-  nextBtnText: { color: '#fff', fontSize: 17, fontWeight: '900', letterSpacing: -0.3 },
-
-  btnDisabled: { opacity: 0.4 },
+  btnText: { fontSize: 17, fontWeight: '900', letterSpacing: -0.3 },
 });
