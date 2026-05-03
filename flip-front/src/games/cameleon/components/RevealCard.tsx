@@ -7,17 +7,19 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import { Avatar } from '../../../components/common/Avatar';
 import { T } from '../../../constants/flipTokens';
 
 interface RevealCardProps {
   name: string;
+  avatar?: string;
   roleLabel: string;
   secretWord: string | null;
   onNext: () => void;
   t: TFunction;
 }
 
-export function RevealCard({ name, roleLabel, secretWord, onNext, t }: RevealCardProps) {
+export function RevealCard({ name, avatar, roleLabel, secretWord, onNext, t }: RevealCardProps) {
   const [revealed, setRevealed] = useState(false);
   const frontOpacity = useSharedValue(1);
   const backOpacity = useSharedValue(0);
@@ -43,9 +45,7 @@ export function RevealCard({ name, roleLabel, secretWord, onNext, t }: RevealCar
           // @ts-ignore pointerEvents is valid on Animated.View
           pointerEvents={revealed ? 'none' : 'auto'}
         >
-          <View style={styles.playerAvatar}>
-            <Text style={styles.playerAvatarText}>{name[0]?.toUpperCase() ?? '?'}</Text>
-          </View>
+          <Avatar name={name} avatar={avatar} size={72} />
 
           <Text style={styles.handoffTitle}>{name},</Text>
           <Text style={styles.handoffSubtitle}>passe le tel</Text>
@@ -154,23 +154,6 @@ const styles = StyleSheet.create({
   frontFace: { backgroundColor: T.ink },
   backFace: { backgroundColor: T.paper },
 
-  playerAvatar: {
-    width: 72,
-    height: 72,
-    borderRadius: 20,
-    backgroundColor: T.tomato,
-    borderWidth: 2,
-    borderColor: T.paper,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 20,
-    shadowColor: T.tomato,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
-  },
-  playerAvatarText: { color: '#fff', fontSize: 32, fontWeight: '900' },
 
   handoffTitle: {
     color: '#fff',

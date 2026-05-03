@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Animated, { FadeIn, FadeOut, ZoomIn, ZoomOut } from 'react-native-reanimated';
 import { T } from '../../constants/flipTokens';
-import { ChunkyButton } from './ChunkyButton';
 import { FlatChunkyButton } from './FlatChunkyButton';
 
 interface Rule {
@@ -81,18 +80,16 @@ export function RulesButton({ rules, title, accentColor = T.mint }: RulesModalPr
               ))}
             </ScrollView>
 
-            <ChunkyButton
-              full
+            <FlatChunkyButton
               size="sm"
               color={T.ink}
               textColor="#fff"
-              shadowColor={T.ink}
               metrics={{ fontSize: 16 }}
               style={styles.doneBtn}
               onPress={() => setVisible(false)}
             >
               {"OK, j'ai compris !"}
-            </ChunkyButton>
+            </FlatChunkyButton>
           </Animated.View>
         </Animated.View>
       </Modal>
@@ -164,5 +161,5 @@ const styles = StyleSheet.create({
   ruleTitle: { color: T.ink, fontSize: 15, fontWeight: '800' },
   ruleDesc: { color: T.inkSoft, fontSize: 13, marginTop: 2, lineHeight: 18 },
 
-  doneBtn: { margin: 16, marginTop: 8 },
+  doneBtn: { margin: 16, marginTop: 8, alignSelf: 'center', minWidth: 220 },
 });

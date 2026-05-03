@@ -121,7 +121,7 @@ export function GameSelectScreen() {
 
                 {isFavorite && (
                   <View style={styles.favBadge}>
-                    <Text style={styles.favBadgeText}>🔥 favori</Text>
+                    <Text style={styles.favBadgeText}>Nouveau</Text>
                   </View>
                 )}
               </TouchableOpacity>
@@ -250,7 +250,7 @@ const styles = StyleSheet.create({
 
   favBadge: {
     position: 'absolute',
-    top: -8,
+    top: 8,
     right: 14,
     backgroundColor: T.tomato,
     borderWidth: 2,

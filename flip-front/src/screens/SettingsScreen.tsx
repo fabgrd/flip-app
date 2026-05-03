@@ -1,4 +1,3 @@
-import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -11,6 +10,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { Feather } from '@expo/vector-icons';
+import { DotBackground, FlatChunkyButton } from '../components';
+import { T } from '../constants/flipTokens';
 import { useTheme } from '../contexts/ThemeContext';
 
 const LANGUAGES = [
@@ -34,107 +36,77 @@ export function SettingsScreen() {
   };
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.surface }]}>
+    <SafeAreaView style={styles.container}>
+      <DotBackground opacity={0.06} />
       {/* Header */}
-      <View
-        style={[
-          styles.header,
-          { backgroundColor: theme.colors.background, borderBottomColor: theme.colors.border },
-        ]}
-      >
-        <TouchableOpacity style={styles.backButton} onPress={handleBackPress}>
-          <Ionicons name="arrow-back" size={24} color={theme.colors.primary} />
-        </TouchableOpacity>
-        <Text style={[styles.headerTitle, { color: theme.colors.text.primary }]}>
-          {t('settings:title')}
-        </Text>
-        <View style={styles.placeholder} />
+      <View style={styles.header}>
+        <FlatChunkyButton size="sm" square color={T.paper} textColor={T.ink} onPress={handleBackPress}>
+          <Feather name="arrow-left" size={18} color={T.ink} />
+        </FlatChunkyButton>
+        <View style={styles.headerTitleWrap}>
+          <Text style={styles.headerTitle}>{t('settings:title')}</Text>
+          <Text style={styles.headerSub}>{t('settings:appearance.subtitle')}</Text>
+        </View>
+        <View style={styles.headerSpacer} />
       </View>
 
-      <ScrollView style={styles.content}>
-        {/* Theme Section */}
+      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+        {/* Appearance */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: theme.colors.text.primary }]}>
-            {t('settings:appearance.title')}
-          </Text>
-          <Text style={[styles.sectionSubtitle, { color: theme.colors.text.secondary }]}>
-            {t('settings:appearance.subtitle')}
-          </Text>
-
-          <View
-            style={[
-              styles.rowBetween,
-              { backgroundColor: theme.colors.background, borderColor: theme.colors.border },
-            ]}
-          >
-            <Text style={[styles.rowText, { color: theme.colors.text.primary }]}>
-              {t('settings:appearance.darkMode')}
-            </Text>
-            <Switch
-              value={isDark}
-              onValueChange={toggleDarkMode}
-              trackColor={{ true: theme.colors.primary }}
-              thumbColor={isDark ? theme.colors.primary : '#fff'}
-            />
+          <Text style={styles.sectionTitle}>{t('settings:appearance.title')}</Text>
+          <View style={styles.card}>
+            <View style={styles.rowBetween}>
+              <View style={styles.rowTextWrap}>
+                <Text style={styles.rowTitle}>{t('settings:appearance.darkMode')}</Text>
+                <Text style={styles.rowSub}>Mode nuit, ambiance plus douce.</Text>
+              </View>
+              <Switch
+                value={isDark}
+                onValueChange={toggleDarkMode}
+                trackColor={{ true: T.ink, false: `${T.ink}30` }}
+                thumbColor={isDark ? T.lemon : T.paper}
+              />
+            </View>
           </View>
         </View>
 
-        {/* Language Section */}
+        {/* Language */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: theme.colors.text.primary }]}>
-            {t('settings:language.title')}
-          </Text>
-          <Text style={[styles.sectionSubtitle, { color: theme.colors.text.secondary }]}>
-            {t('settings:language.subtitle')}
-          </Text>
-
-          <View
-            style={[
-              styles.languageOptions,
-              { backgroundColor: theme.colors.background, borderRadius: 12 },
-            ]}
-          >
-            {LANGUAGES.map((language) => (
-              <TouchableOpacity
-                key={language.code}
-                style={[
-                  styles.languageOption,
-                  { borderBottomColor: theme.colors.border },
-                  i18n.language === language.code && {
-                    backgroundColor: `${theme.colors.primary}10`,
-                  },
-                ]}
-                onPress={() => handleLanguageChange(language.code)}
-              >
-                <Text style={styles.languageFlag}>{language.flag}</Text>
-                <Text
+          <Text style={styles.sectionTitle}>{t('settings:language.title')}</Text>
+          <View style={styles.card}>
+            {LANGUAGES.map((language, idx) => {
+              const isActive = i18n.language === language.code;
+              return (
+                <TouchableOpacity
+                  key={language.code}
                   style={[
-                    styles.languageName,
-                    { color: theme.colors.text.primary },
-                    i18n.language === language.code && { color: theme.colors.primary },
+                    styles.languageRow,
+                    isActive && styles.languageRowActive,
+                    idx === LANGUAGES.length - 1 && styles.languageRowLast,
                   ]}
+                  onPress={() => handleLanguageChange(language.code)}
+                  activeOpacity={0.85}
                 >
-                  {language.name}
-                </Text>
-                {i18n.language === language.code && (
-                  <Ionicons name="checkmark" size={20} color={theme.colors.primary} />
-                )}
-              </TouchableOpacity>
-            ))}
+                  <Text style={styles.languageFlag}>{language.flag}</Text>
+                  <Text style={[styles.languageName, isActive && styles.languageNameActive]}>
+                    {language.name}
+                  </Text>
+                  {isActive && <Feather name="check" size={18} color={T.mint} />}
+                </TouchableOpacity>
+              );
+            })}
           </View>
         </View>
 
-        {/* About Section */}
+        {/* About */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: theme.colors.text.primary }]}>
-            {t('settings:about.title')}
-          </Text>
-          <Text style={[styles.aboutDescription, { color: theme.colors.text.secondary }]}>
-            {t('settings:about.description')}
-          </Text>
-          <Text style={[styles.version, { color: theme.colors.text.secondary }]}>
-            {t('settings:about.version', { version: '1.0.0' })}
-          </Text>
+          <Text style={styles.sectionTitle}>{t('settings:about.title')}</Text>
+          <View style={[styles.card, styles.aboutCard]}>
+            <Text style={styles.aboutDescription}>{t('settings:about.description')}</Text>
+            <View style={styles.versionPill}>
+              <Text style={styles.versionText}>{t('settings:about.version', { version: '1.0.0' })}</Text>
+            </View>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -142,78 +114,88 @@ export function SettingsScreen() {
 }
 
 const styles = StyleSheet.create({
-  aboutDescription: {
-    fontSize: 14,
-    lineHeight: 20,
-    marginBottom: 12,
-  },
-  backButton: {
-    padding: 8,
-  },
-  container: {
-    flex: 1,
-  },
-  content: {
-    flex: 1,
-    padding: 20,
-  },
+  container: { flex: 1, backgroundColor: T.bg },
+
   header: {
-    alignItems: 'center',
-    borderBottomWidth: 1,
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'space-between',
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingTop: 8,
+    paddingBottom: 10,
   },
+  headerTitleWrap: { flex: 1, paddingHorizontal: 12 },
   headerTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    color: T.ink,
+    fontSize: 28,
+    fontWeight: '900',
+    letterSpacing: -1,
+    lineHeight: 30,
   },
-  languageFlag: {
-    fontSize: 24,
-    marginRight: 12,
-  },
-  languageName: {
-    flex: 1,
-    fontSize: 16,
-  },
-  languageOption: {
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    flexDirection: 'row',
-    padding: 16,
-  },
-  languageOptions: {
-    overflow: 'hidden',
-  },
-  placeholder: {
-    width: 40,
-  },
-  rowBetween: {
-    alignItems: 'center',
-    borderRadius: 12,
-    borderWidth: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 16,
-  },
-  rowText: {
-    fontSize: 16,
-    fontWeight: '500',
-  },
-  section: {
-    marginBottom: 32,
-  },
-  sectionSubtitle: {
-    fontSize: 14,
-    marginBottom: 16,
-  },
+  headerSub: { color: T.inkSoft, fontSize: 12, marginTop: 2 },
+  headerSpacer: { width: 44 },
+
+  content: { paddingHorizontal: 20, paddingBottom: 40, gap: 18 },
+
+  section: { gap: 10 },
   sectionTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 8,
+    color: T.ink,
+    fontSize: 14,
+    fontWeight: '900',
+    letterSpacing: 1.2,
+    textTransform: 'uppercase',
   },
-  version: {
-    fontSize: 12,
-    fontStyle: 'italic',
+
+  card: {
+    backgroundColor: T.paper,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: T.rLg,
+    padding: 14,
   },
+
+  rowBetween: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 12,
+  },
+  rowTextWrap: { flex: 1 },
+  rowTitle: { color: T.ink, fontSize: 16, fontWeight: '800' },
+  rowSub: { color: T.muted, fontSize: 12, marginTop: 4 },
+
+  languageRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    paddingVertical: 12,
+    paddingHorizontal: 12,
+    borderRadius: T.rMd,
+    borderWidth: 2,
+    borderColor: T.ink,
+    backgroundColor: T.bg,
+    marginBottom: 10,
+  },
+  languageRowActive: {
+    backgroundColor: T.ink,
+    transform: [{ translateX: 3 }, { translateY: 3 }],
+  },
+  languageRowLast: { marginBottom: 0 },
+  languageFlag: { fontSize: 20 },
+  languageName: { flex: 1, color: T.ink, fontSize: 16, fontWeight: '800' },
+  languageNameActive: { color: '#fff' },
+
+  aboutCard: { paddingVertical: 18 },
+  aboutDescription: { color: T.inkSoft, fontSize: 14, lineHeight: 20 },
+  versionPill: {
+    alignSelf: 'flex-start',
+    backgroundColor: T.lemon,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: 999,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    marginTop: 12,
+  },
+  versionText: { color: T.ink, fontSize: 12, fontWeight: '900' },
 });

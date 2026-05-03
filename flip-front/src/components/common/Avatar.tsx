@@ -38,18 +38,15 @@ export function Avatar({
 }: AvatarProps) {
   const bg = getAccentColor(name);
   const radius = Math.round(size * 0.28);
+  const borderWidth = 2;
 
   const containerStyle = {
     width: size,
     height: size,
     borderRadius: radius,
-    borderWidth: 2,
+    borderWidth,
     borderColor: T.ink,
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
+    overflow: 'hidden' as const,
   };
 
   const renderBadge = () =>
@@ -63,11 +60,7 @@ export function Avatar({
     return (
       <TouchableOpacity onPress={onPress} disabled={!onPress}>
         <View style={[styles.container, containerStyle]}>
-          <Image
-            source={{ uri: avatar }}
-            style={[styles.image, { width: size, height: size, borderRadius: radius }]}
-            contentFit="cover"
-          />
+          <Image source={{ uri: avatar }} style={styles.image} contentFit="cover" />
           {renderBadge()}
           {showEditIcon && (
             <View style={styles.editIcon}>
@@ -137,6 +130,6 @@ const styles = StyleSheet.create({
     width: 22,
   },
   editIconText: { fontSize: 10 },
-  image: {},
+  image: { width: '100%', height: '100%' },
   initials: { fontWeight: '900' },
 });

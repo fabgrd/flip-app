@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import Animated, { FadeIn, FadeInDown, FadeOut, ZoomIn, ZoomOut } from 'react-native-reanimated';
 
-import { ChunkyButton, DotBackground, FlatChunkyButton, PopModal, RulesButton } from '../components/common';
+import { DotBackground, FlatChunkyButton, PopModal, RulesButton } from '../components/common';
 import { T } from '../constants/flipTokens';
 import { useCameleon } from '../games/cameleon';
 import {
@@ -250,6 +250,7 @@ export function CameleonScreen() {
           <RevealCard
             key={currentRevealPlayer.id}
             name={currentRevealPlayer.name}
+            avatar={currentRevealPlayer.avatar}
             roleLabel={
               currentRevealPlayer.role === 'mrWhite'
                 ? t('cameleon:roles.mrWhite')
@@ -377,18 +378,16 @@ export function CameleonScreen() {
                 );
               })}
             </ScrollView>
-            <ChunkyButton
-              full
+            <FlatChunkyButton
               size="sm"
               color={T.ink}
               textColor="#fff"
-              shadowColor={T.ink}
               metrics={{ fontSize: 16 }}
               style={styles.modalDoneBtn}
               onPress={() => setThemeModalVisible(false)}
             >
               Valider
-            </ChunkyButton>
+            </FlatChunkyButton>
           </Animated.View>
         </Animated.View>
       </Modal>
@@ -545,7 +544,7 @@ const styles = StyleSheet.create({
   },
   checkboxActive: { backgroundColor: T.mint, borderColor: T.paper },
   checkmark: { color: T.ink, fontSize: 13, fontWeight: '900' },
-  modalDoneBtn: { margin: 12, marginTop: 4 },
+  modalDoneBtn: { margin: 12, marginTop: 4, alignSelf: 'center', minWidth: 220 },
 
   // Clues/vote header
   header: { paddingHorizontal: 20, paddingTop: 12, paddingBottom: 8 },

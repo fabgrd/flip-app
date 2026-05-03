@@ -1,3 +1,4 @@
+import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import * as Haptics from 'expo-haptics';
@@ -5,7 +6,13 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 
-import { ChunkyButton, DotBackground, FlatChunkyButton, PlayerInput, PlayersList } from '../components';
+import {
+  ChunkyButton,
+  DotBackground,
+  FlatChunkyButton,
+  PlayerInput,
+  PlayersList,
+} from '../components';
 import { MAX_PLAYERS_GLOBAL, MIN_PLAYERS_GLOBAL } from '../constants';
 import { T } from '../constants/flipTokens';
 import { usePlayers } from '../contexts/PlayersContext';
@@ -55,7 +62,7 @@ export function HomeScreen() {
           textColor={T.ink}
           onPress={() => navigation.navigate('Settings')}
         >
-          <SettingsIcon />
+          <Feather name="settings" size={18} color={T.ink} />
         </FlatChunkyButton>
       </View>
 
@@ -109,14 +116,6 @@ export function HomeScreen() {
         )}
       </View>
     </SafeAreaView>
-  );
-}
-
-function SettingsIcon() {
-  return (
-    <View>
-      <Text style={{ fontSize: 18 }}>⚙️</Text>
-    </View>
   );
 }
 

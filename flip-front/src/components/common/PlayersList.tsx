@@ -5,6 +5,7 @@ import Animated, { FadeInRight, FadeOutLeft } from 'react-native-reanimated';
 import { T } from '../../constants/flipTokens';
 import { useImagePicker } from '../../hooks/useImagePicker';
 import { Player } from '../../types';
+import { Avatar } from './Avatar';
 
 const ACCENT_COLORS = [T.tomato, T.cobalt, T.lemon, T.mint, T.violet, T.pink];
 
@@ -33,19 +34,15 @@ export function PlayersList({ players, onRemovePlayer, onUpdateAvatar }: Players
   }
 
   const renderPlayer = ({ item, index }: { item: Player; index: number }) => {
-    const accent = ACCENT_COLORS[index % ACCENT_COLORS.length];
-    const isLight = accent === T.lemon || accent === T.pink;
     return (
       <Animated.View entering={FadeInRight.delay(index * 80)} exiting={FadeOutLeft}>
         <View style={styles.playerRow}>
-          {/* Color accent initial badge */}
-          <TouchableOpacity onPress={() => handleAvatarPress(item)} activeOpacity={0.85}>
-            <View style={[styles.playerBadge, { backgroundColor: accent }]}>
-              <Text style={[styles.playerBadgeText, { color: isLight ? T.ink : '#fff' }]}>
-                {item.name.charAt(0).toUpperCase()}
-              </Text>
-            </View>
-          </TouchableOpacity>
+          <Avatar
+            name={item.name}
+            avatar={item.avatar}
+            size={40}
+            onPress={() => handleAvatarPress(item)}
+          />
 
           <Text style={styles.playerName} numberOfLines={1}>
             {item.name}
@@ -129,17 +126,6 @@ const styles = StyleSheet.create({
     shadowRadius: 0,
     elevation: 3,
   },
-
-  playerBadge: {
-    width: 40,
-    height: 40,
-    borderRadius: 12,
-    borderWidth: 2,
-    borderColor: T.ink,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  playerBadgeText: { fontSize: 18, fontWeight: '900' },
 
   playerName: {
     flex: 1,
