@@ -1,3 +1,4 @@
+import alert from './alert.json';
 import cameleon from './cameleon.json';
 import common from './common.json';
 import games from './games.json';
@@ -8,6 +9,7 @@ import purityTest from './purity-test.json';
 import settings from './settings.json';
 
 export default {
+  alert,
   common,
   navigation,
   home,

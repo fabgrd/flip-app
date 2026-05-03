@@ -3,6 +3,7 @@ import { Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'rea
 import Animated, { FadeIn, FadeOut, ZoomIn, ZoomOut } from 'react-native-reanimated';
 import { T } from '../../constants/flipTokens';
 import { ChunkyButton } from './ChunkyButton';
+import { FlatChunkyButton } from './FlatChunkyButton';
 
 interface Rule {
   n: string;
@@ -21,16 +22,15 @@ export function RulesButton({ rules, title, accentColor = T.mint }: RulesModalPr
 
   return (
     <>
-      <ChunkyButton
+      <FlatChunkyButton
         size="xs"
         square
         color={T.paper}
         textColor={T.ink}
-        shadowColor={T.ink}
         onPress={() => setVisible(true)}
       >
         <Text style={styles.triggerText}>?</Text>
-      </ChunkyButton>
+      </FlatChunkyButton>
 
       <Modal
         visible={visible}
@@ -52,17 +52,16 @@ export function RulesButton({ rules, title, accentColor = T.mint }: RulesModalPr
             {/* Header */}
             <View style={[styles.cardHeader, { backgroundColor: accentColor }]}>
               <Text style={styles.cardTitle}>{title}</Text>
-              <ChunkyButton
+              <FlatChunkyButton
                 size="xs"
                 square
                 color={T.paper}
                 textColor={T.ink}
-                shadowColor={T.ink}
                 metrics={{ height: 30, radius: 9, paddingH: 0, fontSize: 13 }}
                 onPress={() => setVisible(false)}
               >
                 <Text style={styles.closeBtnText}>✕</Text>
-              </ChunkyButton>
+              </FlatChunkyButton>
             </View>
 
             <ScrollView

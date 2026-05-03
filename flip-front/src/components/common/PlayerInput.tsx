@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Alert, StyleSheet, Text, TextInput, View } from 'react-native';
 import { T } from '../../constants/flipTokens';
-import { ChunkyButton } from './ChunkyButton';
+import { FlatChunkyButton } from './FlatChunkyButton';
 
 interface PlayerInputProps {
   onAddPlayer: (name: string) => boolean;
@@ -49,17 +49,16 @@ export function PlayerInput({ onAddPlayer, maxPlayers, currentPlayerCount }: Pla
           maxLength={20}
           editable={!isMaxReached}
         />
-        <ChunkyButton
+        <FlatChunkyButton
           size="sm"
           color={T.ink}
           textColor="#fff"
-          shadowColor={T.ink}
           onPress={handleAdd}
           disabled={!canAdd}
           style={styles.addBtn}
         >
           Ajouter +
-        </ChunkyButton>
+        </FlatChunkyButton>
       </View>
       {isMaxReached && (
         <Text style={styles.limitText}>{t('errors.playerLimitReached', { maxPlayers })}</Text>

@@ -5,7 +5,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 
-import { ChunkyButton, DotBackground, PlayerInput, PlayersList } from '../components';
+import { ChunkyButton, DotBackground, FlatChunkyButton, PlayerInput, PlayersList } from '../components';
 import { MAX_PLAYERS_GLOBAL, MIN_PLAYERS_GLOBAL } from '../constants';
 import { T } from '../constants/flipTokens';
 import { usePlayers } from '../contexts/PlayersContext';
@@ -48,16 +48,15 @@ export function HomeScreen() {
             Fl<Text style={styles.logoAccent}>!</Text>p
           </Text>
         </View>
-        <ChunkyButton
+        <FlatChunkyButton
           size="sm"
           square
           color={T.paper}
           textColor={T.ink}
-          shadowColor={T.ink}
           onPress={() => navigation.navigate('Settings')}
         >
           <SettingsIcon />
-        </ChunkyButton>
+        </FlatChunkyButton>
       </View>
 
       {/* Hero text */}

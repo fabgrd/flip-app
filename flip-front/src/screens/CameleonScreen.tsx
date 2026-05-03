@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import Animated, { FadeIn, FadeInDown, FadeOut, ZoomIn, ZoomOut } from 'react-native-reanimated';
 
-import { ChunkyButton, DotBackground, PopModal, RulesButton } from '../components/common';
+import { ChunkyButton, DotBackground, FlatChunkyButton, PopModal, RulesButton } from '../components/common';
 import { T } from '../constants/flipTokens';
 import { useCameleon } from '../games/cameleon';
 import {
@@ -207,16 +207,15 @@ export function CameleonScreen() {
             </View>
             <View style={styles.headerActions}>
               {/* Theme button */}
-              <ChunkyButton
+              <FlatChunkyButton
                 size="xs"
                 square
                 color={T.paper}
                 textColor={T.ink}
-                shadowColor={T.ink}
                 onPress={() => setThemeModalVisible(true)}
               >
                 <Text style={styles.themeBtnEmoji}>{themeButtonEmoji}</Text>
-              </ChunkyButton>
+              </FlatChunkyButton>
               <RulesButton rules={CAMELEON_RULES} title="Le Caméléon" accentColor={T.mint} />
             </View>
           </View>
@@ -333,17 +332,16 @@ export function CameleonScreen() {
                 <Text style={styles.modalTitle}>Thème du jeu</Text>
                 <Text style={styles.modalSubtitle}>Sélectionne un ou plusieurs thèmes</Text>
               </View>
-              <ChunkyButton
+              <FlatChunkyButton
                 size="xs"
                 square
                 color={T.paper}
                 textColor={T.ink}
-                shadowColor={T.ink}
                 metrics={{ height: 28, radius: 8, paddingH: 0, fontSize: 12 }}
                 onPress={() => setThemeModalVisible(false)}
               >
                 <Text style={styles.modalCloseText}>✕</Text>
-              </ChunkyButton>
+              </FlatChunkyButton>
             </View>
             <ScrollView
               contentContainerStyle={styles.modalContent}

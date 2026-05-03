@@ -5,6 +5,11 @@
         "playerLimitReached": "You cannot add more than {{maxPlayers}} players.",
         "permissionRequired": "We need to access your gallery to add a profile picture.",
         "imageSelectionFailed": "Failed to select image.",
-        "photoTakingFailed": "Failed to take photo."
+        "photoTakingFailed": "Failed to take photo.",
+        "addPhoto": "Add a photo",
+        "chooseOption": "Choose an option",
+        "gallery": "Gallery",
+        "camera": "Camera",
+        "cancel": "Cancel"
     }
 }

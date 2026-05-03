@@ -1,6 +1,6 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Import translations
 import en from './locales/en';
@@ -22,7 +22,7 @@ const LANGUAGE_DETECTOR = {
       callback('fr');
     }
   },
-  init: () => {},
+  init: () => { },
   cacheUserLanguage: async (language: string) => {
     try {
       await AsyncStorage.setItem('user-language', language);
@@ -33,6 +33,7 @@ const LANGUAGE_DETECTOR = {
 };
 
 const NAMESPACES = [
+  'alert',
   'common',
   'navigation',
   'home',
