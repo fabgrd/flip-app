@@ -3,8 +3,8 @@ import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 
-import { createGlobalStyles } from '../constants';
-import { useTheme } from '../contexts/ThemeContext';
+import { DotBackground, RulesButton } from '../components/common';
+import { T } from '../constants/flipTokens';
 import { POLITICAL_COLORS } from '../games/left-right';
 import { CardStack } from '../games/left-right/components';
 import { useLeftRight } from '../games/left-right/hooks/useLeftRight';
@@ -28,8 +28,6 @@ export function LeftRightScreen() {
     isGameFinished,
     totalQuestions,
   } = useLeftRight(players);
-  const { theme } = useTheme();
-  const globalStyles = createGlobalStyles(theme);
 
   const handleSwipe = (playerId: string, direction: 'left' | 'right') => {
     submitAnswer(playerId, direction);
@@ -49,105 +47,103 @@ export function LeftRightScreen() {
   }, [isGameFinished, calculateResults, navigation]);
 
   useEffect(() => {
-    if (canProceedToNextQuestion && !isGameFinished) {
-      nextQuestion();
-    }
+    if (canProceedToNextQuestion && !isGameFinished) nextQuestion();
   }, [canProceedToNextQuestion, nextQuestion, isGameFinished]);
 
   if (!currentQuestion) {
     return (
-      <SafeAreaView style={[globalStyles.container, { backgroundColor: theme.colors.surface }]}>
-        <View style={globalStyles.centerContainer}>
-          <Text style={[globalStyles.text, { color: theme.colors.text.primary }]}>
-            {t('common:labels.loading')}
-          </Text>
+      <SafeAreaView style={styles.screen}>
+        <View style={styles.loading}>
+          <Text style={styles.loadingText}>{t('common:labels.loading')}</Text>
         </View>
       </SafeAreaView>
     );
   }
 
+  const remaining = gameState.players.filter(
+    (p) => !p.answers.some((a) => a.questionId === currentQuestion.id),
+  ).length;
+
+  const LEFT_RIGHT_RULES = [
+    {
+      n: '1',
+      title: 'Une phrase apparaît',
+      desc: 'Elle décrit une opinion politique ou une valeur.',
+    },
+    {
+      n: '2',
+      title: 'Chacun joue tour à tour',
+      desc: 'Glisse vers la gauche ou la droite selon tes convictions.',
+    },
+    {
+      n: '3',
+      title: 'Résultats collectifs',
+      desc: 'On révèle le spectre politique de chaque joueur à la fin.',
+    },
+  ];
+
   return (
-    <SafeAreaView style={[globalStyles.container, { backgroundColor: theme.colors.surface }]}>
-      {/* Header with progress */}
-      <View
-        style={[
-          styles.header,
-          { backgroundColor: theme.colors.background, borderBottomColor: theme.colors.border },
-        ]}
-      >
-        <Text style={[styles.questionCounter, { color: theme.colors.primary }]}>
-          {t('common:labels.question', {
-            current: gameState.currentQuestionIndex + 1,
-            total: totalQuestions,
-          })}
-        </Text>
-        <View style={[styles.progressBar, { backgroundColor: theme.colors.border }]}>
-          <View
-            style={[
-              styles.progressFill,
-              { width: `${progress}%`, backgroundColor: theme.colors.primary },
-            ]}
-          />
+    <SafeAreaView style={styles.screen}>
+      <DotBackground color={T.ink} opacity={0.06} />
+      {/* Header / progress */}
+      <View style={styles.header}>
+        <View style={styles.headerRow}>
+          <View style={styles.chip}>
+            <Text style={styles.chipText}>
+              {t('common:labels.question')} {gameState.currentQuestionIndex + 1}/{totalQuestions}
+            </Text>
+          </View>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+            <Text style={styles.remainingText}>
+              {remaining} restant{remaining > 1 ? 's' : ''}
+            </Text>
+            <RulesButton rules={LEFT_RIGHT_RULES} title="Gauche ou Droite" accentColor={T.lemon} />
+          </View>
+        </View>
+        <View style={styles.progressBar}>
+          <View style={[styles.progressFill, { width: `${progress}%` as `${number}%` }]} />
         </View>
       </View>
 
-      {/* Question */}
-      <View style={[styles.questionContainer, { backgroundColor: theme.colors.background }]}>
-        <View style={styles.questionTextContainer}>
-          <Text style={[styles.questionPrefix, { color: theme.colors.text.secondary }]}>
-            {t('leftRight:game.questionPrefix')}
-          </Text>
-          <Text style={[styles.questionText, { color: theme.colors.text.primary }]}>
-            {currentQuestion.text}
-          </Text>
-        </View>
+      {/* Question card */}
+      <View style={styles.questionCard}>
+        <Text style={styles.questionPrefix}>{t('leftRight:game.questionPrefix')}</Text>
+        <Text style={styles.questionText}>{currentQuestion.text}</Text>
+      </View>
 
-        {/* Political indicators */}
-        <View style={styles.indicatorsContainer}>
-          <View style={[styles.politicalIndicator, { backgroundColor: POLITICAL_COLORS.left }]}>
-            <Text style={styles.indicatorEmoji}>✊🌱</Text>
-            <Text style={styles.indicatorText}>{t('leftRight:game.leftChoice')}</Text>
-          </View>
-          <View style={[styles.politicalIndicator, { backgroundColor: POLITICAL_COLORS.right }]}>
-            <Text style={styles.indicatorEmoji}>🦅💼</Text>
-            <Text style={styles.indicatorText}>{t('leftRight:game.rightChoice')}</Text>
-          </View>
+      {/* Political direction indicators */}
+      <View style={styles.indicators}>
+        <View
+          style={[styles.indicator, { backgroundColor: POLITICAL_COLORS.left, borderColor: T.ink }]}
+        >
+          <Text style={styles.indicatorEmoji}>✊🌱</Text>
+          <Text style={styles.indicatorLabel}>{t('leftRight:game.leftChoice')}</Text>
+        </View>
+        <View
+          style={[
+            styles.indicator,
+            { backgroundColor: POLITICAL_COLORS.right, borderColor: T.ink },
+          ]}
+        >
+          <Text style={styles.indicatorEmoji}>🦅💼</Text>
+          <Text style={styles.indicatorLabel}>{t('leftRight:game.rightChoice')}</Text>
         </View>
       </View>
 
       {/* Card stack */}
-      <View style={styles.cardsContainer}>
+      <View style={styles.cardsArea}>
         <CardStack
-          players={(() => {
-            const filteredPlayers = gameState.players.filter((player) => {
-              const hasAnswered = player.answers.some(
-                (answer) => answer.questionId === currentQuestion.id,
-              );
-              return !hasAnswered;
-            });
-            return filteredPlayers;
-          })()}
+          players={gameState.players.filter(
+            (p) => !p.answers.some((a) => a.questionId === currentQuestion.id),
+          )}
           onSwipe={handleSwipe}
           onComplete={handleAllCardsComplete}
         />
       </View>
 
-      {/* Remaining players indicator */}
-      <View style={styles.remainingContainer}>
-        <Text style={[styles.remainingText, { color: theme.colors.text.secondary }]}>
-          {
-            gameState.players.filter(
-              (player) =>
-                !player.answers.some((answer) => answer.questionId === currentQuestion.id),
-            ).length
-          }{' '}
-          {t('common:messages.remainingPlayers')}
-        </Text>
-      </View>
-
-      {/* Instructions */}
-      <View style={styles.instructionsContainer}>
-        <Text style={[styles.instructionsText, { color: theme.colors.text.secondary }]}>
+      {/* Swipe hint */}
+      <View style={styles.hint}>
+        <Text style={styles.hintText}>
           {t('leftRight:game.swipeLeft')} ← | → {t('leftRight:game.swipeRight')}
         </Text>
       </View>
@@ -156,93 +152,107 @@ export function LeftRightScreen() {
 }
 
 const styles = StyleSheet.create({
-  cardsContainer: {
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'center',
-  },
+  screen: { flex: 1, backgroundColor: T.gaucheDroiteAccent ?? T.lemon },
+
+  loading: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+  loadingText: { color: T.ink, fontSize: 16 },
+
   header: {
-    borderBottomWidth: 1,
-    padding: 20,
-  },
-  indicatorEmoji: {
-    fontSize: 20,
-    marginBottom: 4,
-  },
-  indicatorText: {
-    color: 'white',
-    fontSize: 12,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  indicatorsContainer: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginTop: 20,
-    width: '100%',
-  },
-  instructionsContainer: {
-    alignItems: 'center',
     paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingTop: 8,
+    paddingBottom: 12,
   },
-  instructionsText: {
-    fontSize: 14,
-    fontStyle: 'italic',
-    textAlign: 'center',
-  },
-  politicalIndicator: {
+  headerRow: {
+    flexDirection: 'row',
     alignItems: 'center',
-    borderRadius: 12,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
+    justifyContent: 'space-between',
+    marginBottom: 10,
   },
+  chip: {
+    backgroundColor: T.paper,
+    borderWidth: 1.5,
+    borderColor: T.ink,
+    borderRadius: 999,
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+  },
+  chipText: { color: T.ink, fontSize: 12, fontWeight: '800', letterSpacing: 0.5 },
+  remainingText: { color: T.inkSoft, fontSize: 13, fontWeight: '700' },
+
   progressBar: {
-    borderRadius: 3,
-    height: 6,
+    height: 8,
+    backgroundColor: `${T.ink}20`,
+    borderRadius: 999,
+    borderWidth: 1.5,
+    borderColor: T.ink,
+    overflow: 'hidden',
   },
   progressFill: {
-    borderRadius: 3,
     height: '100%',
+    backgroundColor: T.ink,
+    borderRadius: 999,
   },
-  questionContainer: {
-    borderRadius: 12,
-    elevation: 3,
-    margin: 16,
+
+  questionCard: {
+    backgroundColor: T.paper,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: T.rLg,
+    marginHorizontal: 20,
+    marginBottom: 12,
     padding: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-  },
-  questionCounter: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    textAlign: 'center',
+    shadowColor: T.ink,
+    shadowOffset: { width: 5, height: 5 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 4,
   },
   questionPrefix: {
-    fontSize: 16,
-    fontStyle: 'italic',
-    marginBottom: 8,
+    color: T.muted,
+    fontSize: 12,
+    fontWeight: '700',
+    letterSpacing: 1,
+    textTransform: 'uppercase',
+    marginBottom: 6,
     textAlign: 'center',
   },
   questionText: {
+    color: T.ink,
     fontSize: 20,
-    fontWeight: 'bold',
-    lineHeight: 28,
+    fontWeight: '900',
+    letterSpacing: -0.5,
+    lineHeight: 26,
     textAlign: 'center',
   },
-  questionTextContainer: {
+
+  indicators: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingHorizontal: 20,
+    marginBottom: 8,
+    gap: 10,
+  },
+  indicator: {
+    flex: 1,
     alignItems: 'center',
+    borderWidth: 2,
+    borderRadius: T.rSm,
+    paddingVertical: 8,
+    shadowColor: T.ink,
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 3,
   },
-  remainingContainer: {
+  indicatorEmoji: { fontSize: 18, marginBottom: 2 },
+  indicatorLabel: { color: '#fff', fontSize: 12, fontWeight: '900', textAlign: 'center' },
+
+  cardsArea: {
+    flex: 1,
     alignItems: 'center',
-    padding: 20,
+    justifyContent: 'center',
   },
-  remainingText: {
-    fontSize: 14,
-    fontWeight: '500',
-  },
+
+  hint: { alignItems: 'center', paddingBottom: 20 },
+  hintText: { color: T.inkSoft, fontSize: 13, fontStyle: 'italic' },
 });

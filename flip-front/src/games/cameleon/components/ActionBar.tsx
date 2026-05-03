@@ -1,7 +1,7 @@
 import { TFunction } from 'i18next';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useTheme } from '../../../contexts/ThemeContext';
+import { T } from '../../../constants/flipTokens';
 
 interface ActionBarProps {
   isVote: boolean;
@@ -18,33 +18,23 @@ export function ActionBar({
   onBeginVote,
   t,
 }: ActionBarProps) {
-  const { theme } = useTheme();
   return (
     <View style={styles.container}>
       {isVote ? (
         <TouchableOpacity
-          style={[
-            styles.primaryBtn,
-            { backgroundColor: theme.colors.primary },
-            !selectedForElimination && styles.btnDisabled,
-          ]}
+          style={[styles.primaryBtn, !selectedForElimination && styles.btnDisabled]}
           onPress={onConfirmElimination}
           disabled={!selectedForElimination}
+          activeOpacity={0.85}
         >
-          <Text style={[styles.primaryBtnText, { color: theme.colors.text.white }]}>
-            {t('cameleon:actions.eliminate')}
+          <Text style={styles.primaryBtnText}>
+            {t('cameleon:actions.eliminate', 'Valider le vote')}
           </Text>
         </TouchableOpacity>
       ) : (
-        <TouchableOpacity
-          style={[
-            styles.secondaryBtn,
-            { backgroundColor: theme.colors.background, borderColor: theme.colors.primary },
-          ]}
-          onPress={onBeginVote}
-        >
-          <Text style={[styles.secondaryBtnText, { color: theme.colors.primary }]}>
-            {t('cameleon:actions.goToVote')}
+        <TouchableOpacity style={styles.secondaryBtn} onPress={onBeginVote} activeOpacity={0.85}>
+          <Text style={styles.secondaryBtnText}>
+            {t('cameleon:actions.goToVote', 'Passer au vote')}
           </Text>
         </TouchableOpacity>
       )}
@@ -53,16 +43,44 @@ export function ActionBar({
 }
 
 const styles = StyleSheet.create({
-  btnDisabled: { opacity: 0.5 },
-  container: { paddingBottom: 16, paddingHorizontal: 12, paddingTop: 8 },
-  primaryBtn: { alignItems: 'center', borderRadius: 12, paddingVertical: 14 },
-  primaryBtnText: { fontSize: 16, fontWeight: 'bold' },
-  secondaryBtn: {
-    alignItems: 'center',
-    borderRadius: 12,
-    borderWidth: 1,
-    marginTop: 8,
-    paddingVertical: 12,
+  container: {
+    paddingBottom: 24,
+    paddingHorizontal: 16,
+    paddingTop: 12,
+    backgroundColor: T.bg,
+    borderTopWidth: 2,
+    borderTopColor: `${T.ink}20`,
   },
-  secondaryBtnText: { fontSize: 16, fontWeight: '600' },
+
+  primaryBtn: {
+    backgroundColor: T.ink,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: T.rMd,
+    paddingVertical: 18,
+    alignItems: 'center',
+    shadowColor: T.tomato,
+    shadowOffset: { width: 5, height: 5 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 5,
+  },
+  primaryBtnText: { color: '#fff', fontSize: 17, fontWeight: '900', letterSpacing: -0.3 },
+
+  secondaryBtn: {
+    backgroundColor: T.paper,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: T.rMd,
+    paddingVertical: 18,
+    alignItems: 'center',
+    shadowColor: T.ink,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 4,
+  },
+  secondaryBtnText: { color: T.ink, fontSize: 17, fontWeight: '800', letterSpacing: -0.3 },
+
+  btnDisabled: { opacity: 0.4 },
 });

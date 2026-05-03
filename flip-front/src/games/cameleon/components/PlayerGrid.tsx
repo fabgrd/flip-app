@@ -2,7 +2,7 @@ import { TFunction } from 'i18next';
 import React from 'react';
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Avatar } from '../../../components/common/Avatar';
-import { useTheme } from '../../../contexts/ThemeContext';
+import { T } from '../../../constants/flipTokens';
 import type { CameleonAssignedPlayer } from '../types';
 
 interface PlayerGridProps {
@@ -28,72 +28,64 @@ export function PlayerGrid({
           .map((id) => players.find((p) => p.id === id)!)
           .filter(Boolean) as CameleonAssignedPlayer[])
       : players;
-  const { theme } = useTheme();
 
   return (
-    <View style={{ paddingHorizontal: 12, flex: 1 }}>
+    <View style={styles.container}>
       <FlatList
         style={{ flex: 1 }}
         data={ordered}
         keyExtractor={(item) => item.id}
-        numColumns={3}
+        numColumns={2}
+        columnWrapperStyle={styles.row}
         renderItem={({ item, index }) => {
-          const inner = (
-            <>
-              <Avatar name={item.name} avatar={item.avatar} size={72} />
-              <View style={styles.statusContainer}>
-                {item.isEliminated ? (
-                  <View style={[styles.eliminatedPill, { backgroundColor: theme.colors.danger }]}>
-                    <Text style={[styles.eliminatedPillText, { color: theme.colors.text.white }]}>
-                      {t('cameleon:badges.eliminated')}
-                    </Text>
-                  </View>
-                ) : (
-                  <Text style={[styles.gridOrder, { color: theme.colors.primary }]}>
+          const selected = selectedForElimination === item.id && isVote;
+          const canSelect = isVote && !item.isEliminated && onSelect;
+
+          const card = (
+            <View
+              style={[
+                styles.playerCard,
+                selected && styles.playerCardSelected,
+                item.isEliminated && styles.playerCardEliminated,
+              ]}
+            >
+              {/* Order badge */}
+              {item.isEliminated ? (
+                <View style={styles.eliminatedBadge}>
+                  <Text style={styles.eliminatedBadgeText}>
+                    {t('cameleon:badges.eliminated', 'Éliminé')}
+                  </Text>
+                </View>
+              ) : (
+                <View style={[styles.orderBadge, selected && styles.orderBadgeSelected]}>
+                  <Text style={[styles.orderBadgeText, selected && styles.orderBadgeTextSelected]}>
                     {index + 1}
                   </Text>
-                )}
-              </View>
+                </View>
+              )}
+
+              <Avatar name={item.name} avatar={item.avatar} size={60} />
               <Text
-                style={[styles.gridName, { color: theme.colors.text.primary }]}
+                style={[styles.playerName, selected && styles.playerNameSelected]}
                 numberOfLines={1}
               >
                 {item.name}
               </Text>
-            </>
+            </View>
           );
-          const selected = selectedForElimination === item.id && isVote;
-          if (isVote && !item.isEliminated && onSelect) {
+
+          if (canSelect) {
             return (
               <TouchableOpacity
-                style={[
-                  styles.gridItem,
-                  selected && {
-                    backgroundColor: `${theme.colors.primary}10`,
-                    borderColor: theme.colors.primary,
-                    borderWidth: 1.5,
-                  },
-                ]}
+                style={styles.playerCardWrapper}
                 onPress={() => onSelect(item.id)}
+                activeOpacity={0.85}
               >
-                {inner}
+                {card}
               </TouchableOpacity>
             );
           }
-          return (
-            <View
-              style={[
-                styles.gridItem,
-                selected && {
-                  backgroundColor: `${theme.colors.primary}10`,
-                  borderColor: theme.colors.primary,
-                  borderWidth: 1.5,
-                },
-              ]}
-            >
-              {inner}
-            </View>
-          );
+          return <View style={styles.playerCardWrapper}>{card}</View>;
         }}
       />
     </View>
@@ -101,18 +93,80 @@ export function PlayerGrid({
 }
 
 const styles = StyleSheet.create({
-  eliminatedPill: { borderRadius: 12, paddingHorizontal: 10, paddingVertical: 3 },
-  eliminatedPillText: { fontSize: 11, fontWeight: '800' },
-  gridItem: {
+  container: { flex: 1, paddingHorizontal: 16, paddingTop: 8 },
+  row: { gap: 10, marginBottom: 10 },
+
+  playerCardWrapper: { flex: 1 },
+
+  playerCard: {
+    backgroundColor: T.paper,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: T.rMd,
+    paddingVertical: 16,
+    paddingHorizontal: 10,
     alignItems: 'center',
-    alignSelf: 'stretch',
-    borderRadius: 12,
-    flexBasis: '33.333%',
-    height: 134,
-    paddingVertical: 14,
+    gap: 8,
+    shadowColor: T.ink,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 3,
+    minHeight: 120,
+    justifyContent: 'center',
   },
-  gridName: { fontSize: 13, marginTop: 6, maxWidth: 100, textAlign: 'center' },
-  gridOrder: { fontSize: 13 },
-  selectedItem: { borderWidth: 1.5 },
-  statusContainer: { alignItems: 'center', height: 24, justifyContent: 'center', marginTop: 6 },
+
+  playerCardSelected: {
+    backgroundColor: T.tomato,
+    transform: [{ translateX: 4 }, { translateY: 4 }],
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0,
+    elevation: 0,
+  },
+
+  playerCardEliminated: { opacity: 0.4 },
+
+  orderBadge: {
+    position: 'absolute',
+    top: 8,
+    left: 10,
+    width: 22,
+    height: 22,
+    borderRadius: 8,
+    backgroundColor: T.bg,
+    borderWidth: 1.5,
+    borderColor: T.ink,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  orderBadgeSelected: { backgroundColor: T.ink },
+  orderBadgeText: { color: T.ink, fontSize: 11, fontWeight: '900' },
+  orderBadgeTextSelected: { color: '#fff' },
+
+  eliminatedBadge: {
+    position: 'absolute',
+    top: 8,
+    left: 10,
+    backgroundColor: T.inkSoft,
+    borderRadius: 999,
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+  },
+  eliminatedBadgeText: {
+    color: '#fff',
+    fontSize: 9,
+    fontWeight: '900',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+
+  playerName: {
+    color: T.ink,
+    fontSize: 14,
+    fontWeight: '800',
+    letterSpacing: -0.2,
+    maxWidth: 100,
+    textAlign: 'center',
+  },
+  playerNameSelected: { color: '#fff' },
 });

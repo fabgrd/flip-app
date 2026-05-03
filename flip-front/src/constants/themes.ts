@@ -32,61 +32,61 @@ export type Theme = {
 export const lightTheme: Theme = {
   mode: 'light',
   colors: {
-    primary: '#FF6B6B',
-    secondary: '#4ECDC4',
-    accent: '#45B7D1',
-    success: '#96CEB4',
-    warning: '#FFEAA7',
-    danger: '#FD79A8',
+    primary: '#FF5B3A',    // tomato
+    secondary: '#4FCB8A',  // mint
+    accent: '#2447FF',     // cobalt
+    success: '#4FCB8A',
+    warning: '#FFD23F',    // lemon
+    danger: '#FF5B3A',
 
-    background: '#FFFFFF',
-    surface: '#F8F9FA',
+    background: '#F5EFE3', // warm cream
+    surface: '#FBF7EC',    // paper
 
     text: {
-      primary: '#2D3436',
-      secondary: '#636E72',
-      light: '#DDD',
+      primary: '#181613',  // ink
+      secondary: '#3A342A', // inkSoft
+      light: '#8B8273',    // muted
       white: '#FFFFFF',
     },
 
     button: {
-      primary: '#FF6B6B',
-      secondary: '#4ECDC4',
-      disabled: '#B2BEC3',
+      primary: '#FF5B3A',
+      secondary: '#4FCB8A',
+      disabled: '#8B8273',
     },
 
-    border: '#E0E0E0',
-    overlay: 'rgba(0,0,0,0.4)',
+    border: '#181613',     // ink border for design system
+    overlay: 'rgba(24,22,19,0.5)',
   },
 };
 
 export const darkTheme: Theme = {
   mode: 'dark',
   colors: {
-    primary: '#FF6B6B',
-    secondary: '#4ECDC4',
-    accent: '#45B7D1',
-    success: '#8BC6A9',
-    warning: '#FFDE7A',
-    danger: '#FF8FB4',
+    primary: '#FF5B3A',
+    secondary: '#4FCB8A',
+    accent: '#2447FF',
+    success: '#4FCB8A',
+    warning: '#FFD23F',
+    danger: '#FF5B3A',
 
-    background: '#111315',
-    surface: '#1A1D1F',
+    background: '#181613', // ink bg
+    surface: '#23201B',
 
     text: {
-      primary: '#EAECEF',
-      secondary: '#A1A6AB',
-      light: '#6B7176',
+      primary: '#FBF7EC',  // paper
+      secondary: '#C4B99A',
+      light: '#8B8273',
       white: '#FFFFFF',
     },
 
     button: {
-      primary: '#FF6B6B',
-      secondary: '#4ECDC4',
-      disabled: '#3A3F44',
+      primary: '#FF5B3A',
+      secondary: '#4FCB8A',
+      disabled: '#3A342A',
     },
 
-    border: '#2A2F34',
-    overlay: 'rgba(0,0,0,0.6)',
+    border: '#FBF7EC',
+    overlay: 'rgba(0,0,0,0.65)',
   },
 };

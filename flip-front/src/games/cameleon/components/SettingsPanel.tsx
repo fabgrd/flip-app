@@ -1,16 +1,19 @@
 import { TFunction } from 'i18next';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useTheme } from '../../../contexts/ThemeContext';
+import { T } from '../../../constants/flipTokens';
+import type { CameleonTheme } from '../types';
 
 interface SettingsPanelProps {
   playersCount: number;
   currentUC: number;
   currentMW: number;
+  selectedTheme: CameleonTheme;
   maxImpostors: number;
   canStart: boolean;
   onChangeUC: (value: number) => void;
   onChangeMW: (value: number) => void;
+  onChangeTheme: (theme: CameleonTheme) => void;
   onStart: () => void;
   t: TFunction;
 }
@@ -19,103 +22,75 @@ export function SettingsPanel({
   playersCount,
   currentUC,
   currentMW,
-  maxImpostors,
   canStart,
   onChangeUC,
   onChangeMW,
   onStart,
   t,
 }: SettingsPanelProps) {
-  const plannedImpostors = currentUC + currentMW;
-  const { theme } = useTheme();
   return (
-    <View
-      style={[
-        styles.box,
-        { flex: 1, backgroundColor: theme.colors.background, borderColor: theme.colors.border },
-      ]}
-    >
-      <Text style={[styles.title, { color: theme.colors.text.primary }]}>
-        {t('cameleon:settings.title')}
-      </Text>
-      <Text style={[styles.subtitle, { color: theme.colors.text.secondary }]}>
-        {t('cameleon:settings.subtitle', { count: playersCount })}
-      </Text>
-
-      <Text style={[styles.info, { color: theme.colors.text.secondary }]}>
-        {t('cameleon:counters.remainingImpostors', { count: plannedImpostors })} · Max{' '}
-        {maxImpostors}
-      </Text>
-
-      <View style={styles.row}>
-        <Text style={[styles.label, { color: theme.colors.text.primary }]}>
-          {t('cameleon:settings.undercover')}
-        </Text>
-        <View style={styles.stepper}>
-          <TouchableOpacity
-            onPress={() => onChangeUC(Math.max(0, currentUC - 1))}
-            style={[
-              styles.stepperBtn,
-              { backgroundColor: theme.colors.background, borderColor: theme.colors.border },
-            ]}
-          >
-            <Text style={[styles.stepperBtnText, { color: theme.colors.text.primary }]}>-</Text>
-          </TouchableOpacity>
-          <Text style={[styles.stepperValue, { color: theme.colors.text.primary }]}>
-            {currentUC}
-          </Text>
-          <TouchableOpacity
-            onPress={() => onChangeUC(currentUC + 1)}
-            style={[
-              styles.stepperBtn,
-              { backgroundColor: theme.colors.background, borderColor: theme.colors.border },
-            ]}
-          >
-            <Text style={[styles.stepperBtnText, { color: theme.colors.text.primary }]}>+</Text>
-          </TouchableOpacity>
+    <View style={styles.container}>
+      {/* Stats */}
+      <View style={styles.statsRow}>
+        <View style={[styles.statCard, { backgroundColor: T.paper }]}>
+          <Text style={styles.statValue}>{playersCount}</Text>
+          <Text style={styles.statLabel}>{t('cameleon:settings.players', 'Joueurs')}</Text>
+        </View>
+        <View style={[styles.statCard, { backgroundColor: T.lemon }]}>
+          <Text style={styles.statValue}>{currentUC + currentMW}</Text>
+          <Text style={styles.statLabel}>{t('cameleon:settings.impostors', 'Imposteurs')}</Text>
         </View>
       </View>
 
-      <View style={styles.row}>
-        <Text style={[styles.label, { color: theme.colors.text.primary }]}>
-          {t('cameleon:settings.mrWhite')}
-        </Text>
-        <View style={styles.stepper}>
-          <TouchableOpacity
-            onPress={() => onChangeMW(Math.max(0, currentMW - 1))}
-            style={[
-              styles.stepperBtn,
-              { backgroundColor: theme.colors.background, borderColor: theme.colors.border },
-            ]}
-          >
-            <Text style={[styles.stepperBtnText, { color: theme.colors.text.primary }]}>-</Text>
-          </TouchableOpacity>
-          <Text style={[styles.stepperValue, { color: theme.colors.text.primary }]}>
-            {currentMW}
-          </Text>
-          <TouchableOpacity
-            onPress={() => onChangeMW(currentMW + 1)}
-            style={[
-              styles.stepperBtn,
-              { backgroundColor: theme.colors.background, borderColor: theme.colors.border },
-            ]}
-          >
-            <Text style={[styles.stepperBtnText, { color: theme.colors.text.primary }]}>+</Text>
-          </TouchableOpacity>
-        </View>
+      {/* Undercover stepper */}
+      <Text style={styles.sectionLabel}>{t('cameleon:settings.undercover', 'Undercover')}</Text>
+      <View style={styles.stepperCard}>
+        <TouchableOpacity
+          style={styles.stepBtn}
+          onPress={() => onChangeUC(Math.max(0, currentUC - 1))}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.stepBtnText}>−</Text>
+        </TouchableOpacity>
+        <Text style={styles.stepValue}>{currentUC}</Text>
+        <TouchableOpacity
+          style={styles.stepBtn}
+          onPress={() => onChangeUC(currentUC + 1)}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.stepBtnText}>+</Text>
+        </TouchableOpacity>
       </View>
 
+      {/* Mr White stepper */}
+      <Text style={styles.sectionLabel}>{t('cameleon:settings.mrWhite', 'Mr White')}</Text>
+      <View style={styles.stepperCard}>
+        <TouchableOpacity
+          style={styles.stepBtn}
+          onPress={() => onChangeMW(Math.max(0, currentMW - 1))}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.stepBtnText}>−</Text>
+        </TouchableOpacity>
+        <Text style={styles.stepValue}>{currentMW}</Text>
+        <TouchableOpacity
+          style={styles.stepBtn}
+          onPress={() => onChangeMW(currentMW + 1)}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.stepBtnText}>+</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Start button */}
       <TouchableOpacity
-        style={[
-          styles.primaryBtn,
-          { backgroundColor: theme.colors.primary },
-          !canStart && styles.btnDisabled,
-        ]}
+        style={[styles.startBtn, !canStart && styles.startBtnDisabled]}
         onPress={onStart}
         disabled={!canStart}
+        activeOpacity={0.85}
       >
-        <Text style={[styles.primaryBtnText, { color: theme.colors.text.white }]}>
-          {t('cameleon:actions.reveal')}
+        <Text style={styles.startBtnText}>
+          {t('cameleon:actions.start', 'Distribuer les rôles')}
         </Text>
       </TouchableOpacity>
     </View>
@@ -123,29 +98,85 @@ export function SettingsPanel({
 }
 
 const styles = StyleSheet.create({
-  box: { borderRadius: 12, borderWidth: 1, margin: 16, padding: 16 },
-  btnDisabled: { opacity: 0.5 },
-  info: { fontSize: 13, marginBottom: 12, textAlign: 'center' },
-  label: { fontSize: 16, fontWeight: '600' },
-  primaryBtn: { alignItems: 'center', borderRadius: 12, marginTop: 8, paddingVertical: 14 },
-  primaryBtnText: { fontSize: 16, fontWeight: 'bold' },
-  row: {
+  container: { padding: 20, paddingBottom: 40 },
+
+  statsRow: { flexDirection: 'row', gap: 10, marginBottom: 28 },
+  statCard: {
+    flex: 1,
     alignItems: 'center',
+    paddingVertical: 20,
+    borderRadius: T.rMd,
+    borderWidth: 2,
+    borderColor: T.ink,
+    shadowColor: T.ink,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 3,
+  },
+  statValue: { color: T.ink, fontSize: 36, fontWeight: '900', letterSpacing: -1 },
+  statLabel: {
+    color: T.inkSoft,
+    fontSize: 12,
+    fontWeight: '700',
+    marginTop: 4,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+
+  sectionLabel: {
+    color: T.muted,
+    fontSize: 11,
+    fontWeight: '700',
+    letterSpacing: 1.5,
+    textTransform: 'uppercase',
+    marginBottom: 8,
+  },
+
+  stepperCard: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 12,
-  },
-  stepper: { alignItems: 'center', flexDirection: 'row' },
-  stepperBtn: {
     alignItems: 'center',
-    borderRadius: 8,
-    borderWidth: 1,
-    height: 36,
-    justifyContent: 'center',
-    width: 36,
+    justifyContent: 'space-between',
+    backgroundColor: T.paper,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: T.rMd,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    marginBottom: 22,
+    shadowColor: T.ink,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 3,
   },
-  stepperBtnText: { fontSize: 20 },
-  stepperValue: { fontSize: 16, textAlign: 'center', width: 40 },
-  subtitle: { fontSize: 14, marginBottom: 8, textAlign: 'center' },
-  title: { fontSize: 18, fontWeight: 'bold', marginBottom: 8, textAlign: 'center' },
+  stepBtn: {
+    width: 52,
+    height: 52,
+    borderRadius: T.rSm,
+    borderWidth: 2,
+    borderColor: T.ink,
+    backgroundColor: T.bg,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  stepBtnText: { color: T.ink, fontSize: 26, fontWeight: '900', lineHeight: 30 },
+  stepValue: { color: T.ink, fontSize: 28, fontWeight: '900', width: 52, textAlign: 'center' },
+
+  startBtn: {
+    backgroundColor: T.ink,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: T.rMd,
+    paddingVertical: 20,
+    alignItems: 'center',
+    marginTop: 4,
+    shadowColor: T.tomato,
+    shadowOffset: { width: 5, height: 5 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 5,
+  },
+  startBtnDisabled: { opacity: 0.45 },
+  startBtnText: { color: '#fff', fontSize: 18, fontWeight: '900', letterSpacing: -0.3 },
 });

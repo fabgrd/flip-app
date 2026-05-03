@@ -155,12 +155,17 @@ function generateGameQuestions(t: TFunction): Question[] {
       try {
         const questionsData = t(`purityTest:questions.${theme}.${level}`, { returnObjects: true });
         if (Array.isArray(questionsData)) {
-          questionsData.forEach((questionData: Question) => {
+          questionsData.forEach((questionData: { id: string; text: string; points: number | { yes: number; no: number } }) => {
+            const rawPoints = questionData.points;
+            const points: { yes: number; no: number } =
+              typeof rawPoints === 'number'
+                ? { yes: rawPoints, no: 0 }
+                : rawPoints;
             themeQuestions.push({
               id: questionData.id,
               text: questionData.text,
               theme,
-              points: { yes: questionData.points.yes, no: questionData.points.no },
+              points,
             });
           });
         }

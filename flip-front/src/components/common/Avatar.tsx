@@ -1,7 +1,7 @@
 import { Image } from 'expo-image';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useTheme } from '../../contexts/ThemeContext';
+import { T } from '../../constants/flipTokens';
 
 export interface AvatarProps {
   name: string;
@@ -13,6 +13,20 @@ export interface AvatarProps {
   badgeColor?: string;
 }
 
+const ACCENT_COLORS = [T.tomato, T.cobalt, T.mint, T.violet, T.lemon, T.pink];
+
+function getAccentColor(name: string): string {
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) {
+    hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return ACCENT_COLORS[Math.abs(hash) % ACCENT_COLORS.length];
+}
+
+function getTextColor(bg: string): string {
+  return bg === T.lemon || bg === T.pink ? T.ink : '#fff';
+}
+
 export function Avatar({
   name,
   avatar,
@@ -22,52 +36,26 @@ export function Avatar({
   badgeText,
   badgeColor,
 }: AvatarProps) {
-  const { theme } = useTheme();
-  const getInitials = (fullName: string) => {
-    return fullName
-      .split(' ')
-      .map((word) => word.charAt(0))
-      .join('')
-      .toUpperCase()
-      .slice(0, 2);
-  };
-
-  const getBackgroundColor = (fullName: string) => {
-    const colors = [
-      theme.colors.primary,
-      theme.colors.secondary,
-      theme.colors.accent,
-      theme.colors.success,
-      theme.colors.warning,
-      theme.colors.danger,
-    ];
-    let hash = 0;
-    for (let i = 0; i < fullName.length; i++) {
-      hash = fullName.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    return colors[Math.abs(hash) % colors.length];
-  };
+  const bg = getAccentColor(name);
+  const radius = Math.round(size * 0.28);
 
   const containerStyle = {
     width: size,
     height: size,
-    borderRadius: size / 2,
-  } as const;
+    borderRadius: radius,
+    borderWidth: 2,
+    borderColor: T.ink,
+    shadowColor: T.ink,
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 3,
+  };
 
   const renderBadge = () =>
     badgeText ? (
-      <View
-        style={[
-          styles.badge,
-          {
-            backgroundColor: badgeColor ?? theme.colors.danger,
-            top: -4,
-            right: -4,
-            borderColor: theme.colors.background,
-          },
-        ]}
-      >
-        <Text style={[styles.badgeText, { color: theme.colors.text.white }]}>{badgeText}</Text>
+      <View style={[styles.badge, { backgroundColor: badgeColor ?? T.tomato, top: -6, right: -6 }]}>
+        <Text style={styles.badgeText}>{badgeText}</Text>
       </View>
     ) : null;
 
@@ -77,17 +65,12 @@ export function Avatar({
         <View style={[styles.container, containerStyle]}>
           <Image
             source={{ uri: avatar }}
-            style={[styles.image, containerStyle, { borderColor: theme.colors.background }]}
+            style={[styles.image, { width: size, height: size, borderRadius: radius }]}
             contentFit="cover"
           />
           {renderBadge()}
           {showEditIcon && (
-            <View
-              style={[
-                styles.editIcon,
-                { backgroundColor: theme.colors.primary, borderColor: theme.colors.background },
-              ]}
-            >
+            <View style={styles.editIcon}>
               <Text style={styles.editIconText}>📷</Text>
             </View>
           )}
@@ -99,24 +82,14 @@ export function Avatar({
   return (
     <TouchableOpacity onPress={onPress} disabled={!onPress}>
       <View
-        style={[
-          styles.container,
-          styles.defaultAvatar,
-          containerStyle,
-          { backgroundColor: getBackgroundColor(name), borderColor: theme.colors.background },
-        ]}
+        style={[styles.container, styles.defaultAvatar, containerStyle, { backgroundColor: bg }]}
       >
-        <Text style={[styles.initials, { fontSize: size * 0.4, color: theme.colors.text.white }]}>
-          {getInitials(name)}
+        <Text style={[styles.initials, { fontSize: size * 0.38, color: getTextColor(bg) }]}>
+          {name.charAt(0).toUpperCase()}
         </Text>
         {renderBadge()}
         {showEditIcon && (
-          <View
-            style={[
-              styles.editIcon,
-              { backgroundColor: theme.colors.primary, borderColor: theme.colors.background },
-            ]}
-          >
+          <View style={styles.editIcon}>
             <Text style={styles.editIconText}>📷</Text>
           </View>
         )}
@@ -128,8 +101,9 @@ export function Avatar({
 const styles = StyleSheet.create({
   badge: {
     alignItems: 'center',
-    borderRadius: 11,
+    borderRadius: 999,
     borderWidth: 2,
+    borderColor: T.ink,
     height: 22,
     justifyContent: 'center',
     minWidth: 22,
@@ -137,41 +111,32 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   badgeText: {
+    color: '#fff',
     fontSize: 10,
-    fontWeight: '800',
+    fontWeight: '900',
     textTransform: 'uppercase',
   },
   container: {
-    elevation: 3,
     position: 'relative',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
   },
   defaultAvatar: {
     alignItems: 'center',
-    borderWidth: 2,
     justifyContent: 'center',
   },
   editIcon: {
     alignItems: 'center',
-    borderRadius: 12,
+    backgroundColor: T.tomato,
+    borderRadius: 10,
     borderWidth: 2,
-    bottom: -2,
-    height: 24,
+    borderColor: T.ink,
+    bottom: -4,
+    height: 22,
     justifyContent: 'center',
     position: 'absolute',
-    right: -2,
-    width: 24,
+    right: -4,
+    width: 22,
   },
-  editIconText: {
-    fontSize: 10,
-  },
-  image: {
-    borderWidth: 2,
-  },
-  initials: {
-    fontWeight: 'bold',
-  },
+  editIconText: { fontSize: 10 },
+  image: {},
+  initials: { fontWeight: '900' },
 });

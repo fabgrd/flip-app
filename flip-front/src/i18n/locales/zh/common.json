@@ -22,7 +22,12 @@
         "results": "结果",
         "score": "分数",
         "loading": "加载中...",
-        "error": "错误"
+        "error": "错误",
+        "readyToPlay": "准备好了"
+    },
+    "actions": {
+        "playAgain": "再玩一次",
+        "backToHome": "返回主页"
     },
     "messages": {
         "success": "成功！",

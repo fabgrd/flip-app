@@ -2,7 +2,7 @@ import { TFunction } from 'i18next';
 import React from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
 import { PopModal } from '../../../components/common/PopModal';
-import { useTheme } from '../../../contexts/ThemeContext';
+import { T } from '../../../constants/flipTokens';
 
 interface MrWhiteGuessModalProps {
   visible: boolean;
@@ -23,7 +23,6 @@ export function MrWhiteGuessModal({
   onSubmit,
   t,
 }: MrWhiteGuessModalProps) {
-  const { theme } = useTheme();
   return (
     <PopModal
       visible={visible}
@@ -31,18 +30,13 @@ export function MrWhiteGuessModal({
       name={name}
       avatar={avatar}
     >
-      <Text style={[styles.prompt, { color: theme.colors.text.secondary }]}>
-        {t('cameleon:mrWhite.guessPrompt')}
-      </Text>
+      <Text style={styles.prompt}>{t('cameleon:mrWhite.guessPrompt')}</Text>
       <TextInput
-        style={[
-          styles.input,
-          { borderColor: theme.colors.border, color: theme.colors.text.primary },
-        ]}
+        style={styles.input}
         value={guess}
         onChangeText={onChangeGuess}
         placeholder={t('cameleon:mrWhite.placeholder')}
-        placeholderTextColor={theme.colors.text.light}
+        placeholderTextColor={T.muted}
         autoFocus
         autoCapitalize="none"
         autoCorrect={false}
@@ -50,33 +44,47 @@ export function MrWhiteGuessModal({
         onSubmitEditing={onSubmit}
       />
       <TouchableOpacity
-        style={[
-          styles.primaryBtn,
-          { backgroundColor: theme.colors.primary },
-          guess.trim().length === 0 && styles.btnDisabled,
-        ]}
+        style={[styles.primaryBtn, guess.trim().length === 0 && styles.btnDisabled]}
         onPress={onSubmit}
         disabled={guess.trim().length === 0}
+        activeOpacity={0.85}
       >
-        <Text style={[styles.primaryBtnText, { color: theme.colors.text.white }]}>
-          {t('cameleon:actions.submit')}
-        </Text>
+        <Text style={styles.primaryBtnText}>{t('cameleon:actions.submit', 'Soumettre')}</Text>
       </TouchableOpacity>
     </PopModal>
   );
 }
 
 const styles = StyleSheet.create({
-  btnDisabled: { opacity: 0.5 },
+  prompt: { color: T.inkSoft, fontSize: 15, marginTop: 8, textAlign: 'center' },
   input: {
-    borderRadius: 10,
-    borderWidth: 1,
-    marginTop: 12,
+    backgroundColor: T.bg,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: T.rSm,
+    marginTop: 14,
     minWidth: 220,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    color: T.ink,
+    fontSize: 16,
+    fontWeight: '700',
   },
-  primaryBtn: { alignItems: 'center', borderRadius: 12, marginTop: 8, paddingVertical: 14 },
-  primaryBtnText: { fontSize: 16, fontWeight: 'bold' },
-  prompt: { fontSize: 15, marginTop: 8, textAlign: 'center' },
+  primaryBtn: {
+    backgroundColor: T.ink,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: T.rMd,
+    alignItems: 'center',
+    marginTop: 12,
+    paddingVertical: 16,
+    paddingHorizontal: 28,
+    shadowColor: T.mint,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 4,
+  },
+  primaryBtnText: { color: '#fff', fontSize: 16, fontWeight: '900', letterSpacing: -0.3 },
+  btnDisabled: { opacity: 0.4 },
 });

@@ -35,6 +35,10 @@
         "noPlayersAdded": "No players added",
         "addAtLeastOnePlayerToStart": "Add at least 1 player to start"
     },
+    "actions": {
+        "playAgain": "Play again",
+        "backToHome": "Back to home"
+    },
     "errors": {
         "playerNameRequired": "Please enter a player name.",
         "playerLimitReached": "You cannot add more than {{maxPlayers}} players.",

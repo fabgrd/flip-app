@@ -8,8 +8,12 @@
     "settings": {
         "title": "Réglages",
         "subtitle": "{{count}} joueurs",
+        "players": "Joueurs",
+        "impostors": "Imposteurs",
         "undercover": "Undercover",
-        "mrWhite": "Mr White"
+        "mrWhite": "Mr White",
+        "theme": "Thème",
+        "themeHint": "Choisis l’ambiance avant de lancer la manche."
     },
     "actions": {
         "start": "Démarrer",
@@ -56,6 +60,18 @@
         "guessPrompt": "Mince, tu as été découvert. Tu peux quand même tenter de trouver le mot. Si tu trouves tu le sauras à la fin du jeu",
         "placeholder": "Tape ton mot ici"
     },
+    "themes": {
+        "random": "Aléatoire",
+        "randomDesc": "Mélange tous les univers",
+        "daily": "Vie quotidienne",
+        "dailyDesc": "Mots simples et lisibles",
+        "football": "Football",
+        "footballDesc": "Culture sport et rivalités",
+        "hot": "Hot",
+        "hotDesc": "Ambiance plus piquante",
+        "wtf": "WTF",
+        "wtfDesc": "Paires absurdes, sales ou WTF"
+    },
     "wordPairs": {
         "chat": "Chat",
         "tigre": "Tigre",
@@ -88,7 +104,24 @@
         "gta": "GTA",
         "redDeadRedemption": "Red Dead Redemption",
         "onePiece": "One Piece",
-        "dragonBall": "Dragon Ball"
+        "dragonBall": "Dragon Ball",
+        "bouzelouf": "Bouzelouf (tête de mouton grillée)",
+        "tastyCrousty": "Tasty Crousty",
+        "biteDeCheval": "Bite de cheval",
+        "couilleDeTaureau": "Couille de taureau",
+        "saintNectaire": "Saint Nectaire",
+        "camembert": "Camembert",
+        "bombonnne": "Bombonnne (à ballon)",
+        "ballon": "Ballon",
+        "rouge": "Rouge qui tache",
+        "porto": "Porto",
+        "gland": "Gland",
+        "freine": "Frein (bite)",
+        "pet": "Pet",
+        "rot": "Rot",
+        "vomi": "Vomi",
+        "caca": "Caca",
+        "OM": "OM",
+        "OL": "OL"
     }
 }
-

@@ -40,6 +40,7 @@ const NAMESPACES = [
   'purityTest',
   'settings',
   'cameleon',
+  'leftRight',
 ] as const;
 
 i18n

@@ -22,7 +22,12 @@
         "results": "Résultats",
         "score": "Score",
         "loading": "Chargement...",
-        "error": "Erreur"
+        "error": "Erreur",
+        "readyToPlay": "Prêt à jouer"
+    },
+    "actions": {
+        "playAgain": "Rejouer",
+        "backToHome": "Retour à l'accueil"
     },
     "messages": {
         "success": "Succès !",
