@@ -13,7 +13,7 @@ import {
   View,
 } from 'react-native';
 
-import { DotBackground } from '../components/common';
+import { DotBackground, GameMenuActions, MedusaIcon } from '../components';
 import { T } from '../constants/flipTokens';
 import { MedusaPair, MedusaRoundHistory, MedusaStep } from '../games/medusa';
 import { Player, RootStackParamList } from '../types';
@@ -104,13 +104,22 @@ const u = StyleSheet.create({
 
 // ─── Rules ────────────────────────────────────────────────────────────────────
 
-function MDRules({ onStart, onExit }: { onStart: () => void; onExit: () => void }) {
+function MDRules({
+  onStart,
+  onExit,
+  onSettings,
+}: {
+  onStart: () => void;
+  onExit: () => void;
+  onSettings: () => void;
+}) {
   const RULES = [
     { n: '1', t: 'Tout le monde regarde en bas', d: 'Le joueur actif dit « Regardez en bas ! » et le groupe obéit les yeux fermés.' },
     { n: '2', t: '3… 2… 1… MÉDUSA !', d: 'Au signal, tout le monde lève la tête et fixe un autre joueur.' },
     { n: '3', t: 'Eye contact = pénalité', d: 'Si deux joueurs se regardent dans les yeux : 1 gorgée chacun.' },
     { n: '4', t: 'Pas de contact = safe', d: 'Si personne ne te fixe en retour, tu survis. Joueur suivant, à toi.' },
   ];
+  const rulesModal = RULES.map((rule) => ({ n: rule.n, title: rule.t, desc: rule.d }));
 
   return (
     <SafeAreaView style={rls.screen}>
@@ -120,17 +129,17 @@ function MDRules({ onStart, onExit }: { onStart: () => void; onExit: () => void 
         <TouchableOpacity style={rls.backBtn} onPress={onExit} activeOpacity={0.85}>
           <Text style={rls.backBtnText}>←</Text>
         </TouchableOpacity>
+        <GameMenuActions
+          showDice={false}
+          onPressSettings={onSettings}
+          rules={{ rules: rulesModal, title: 'Médusa', accentColor: T.cobalt }}
+        />
       </View>
 
       <View style={rls.titleArea}>
-        {/* Medusa icon top-right: eye with snakes */}
+        {/* Medusa icon top-right */}
         <View style={rls.iconWrap}>
-          <View style={rls.iconEye}>
-            <View style={rls.iconPupil} />
-          </View>
-          {[0, 1, 2, 3].map((i) => (
-            <View key={i} style={[rls.snake, { left: 8 + i * 14, transform: [{ rotate: `${-20 + i * 12}deg` }] }]} />
-          ))}
+          <MedusaIcon size={86} />
         </View>
 
         <Chip color={T.paper}>Jeu n°5</Chip>
@@ -163,7 +172,13 @@ function MDRules({ onStart, onExit }: { onStart: () => void; onExit: () => void 
 
 const rls = StyleSheet.create({
   screen: { flex: 1, backgroundColor: T.cobalt },
-  header: { paddingHorizontal: 20, paddingTop: 8 },
+  header: {
+    paddingHorizontal: 20,
+    paddingTop: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
   backBtn: {
     width: 44, height: 44, borderRadius: 14,
     backgroundColor: T.paper, borderWidth: 2, borderColor: T.ink,
@@ -172,18 +187,7 @@ const rls = StyleSheet.create({
   },
   backBtnText: { fontSize: 20, color: T.ink, fontWeight: '900' },
   titleArea: { paddingHorizontal: 20, paddingTop: 16 },
-  iconWrap: { position: 'absolute', right: 24, top: 20, width: 92, height: 92 },
-  iconEye: {
-    width: 60, height: 36, borderRadius: 18, borderWidth: 2.5, borderColor: T.ink,
-    backgroundColor: T.paper, alignItems: 'center', justifyContent: 'center',
-    position: 'absolute', bottom: 0, left: 16,
-    shadowColor: T.ink, shadowOffset: { width: 4, height: 4 }, shadowOpacity: 1, shadowRadius: 0, elevation: 4,
-  },
-  iconPupil: { width: 20, height: 20, borderRadius: 10, backgroundColor: T.cobalt, borderWidth: 2, borderColor: T.ink },
-  snake: {
-    position: 'absolute', top: 4, width: 4, height: 28,
-    backgroundColor: T.mint, borderRadius: 2,
-  },
+  iconWrap: { position: 'absolute', right: 16, top: 18 },
   title: {
     color: '#fff', fontSize: 68, fontWeight: '900',
     letterSpacing: -2.5, lineHeight: 64, marginTop: 12,
@@ -718,7 +722,13 @@ export function MedusaScreen() {
   };
 
   if (step === 'rules') {
-    return <MDRules onStart={() => setStep('caller')} onExit={() => (navigation as any).goBack()} />;
+    return (
+      <MDRules
+        onStart={() => setStep('caller')}
+        onExit={() => (navigation as any).goBack()}
+        onSettings={() => (navigation as any).navigate('Settings')}
+      />
+    );
   }
   if (step === 'caller') {
     return (

@@ -1,4 +1,5 @@
 export type Theme = 'sex' | 'drugs' | 'morality' | 'hygiene';
+export type LevelKey = 'level1' | 'level2' | 'level3' | 'level4' | 'level5' | 'levelBonus';
 
 export type Question = {
   id: string;
@@ -38,4 +39,10 @@ export type PurityResults = {
     score: number;
     scoreBonus: number;
   }>;
+};
+
+export type PurityQuestionConfig = {
+  themeCounts: Record<Theme, number>;
+  levelCounts: Record<LevelKey, number>;
+  totalQuestions?: number;
 };

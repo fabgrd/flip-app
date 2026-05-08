@@ -13,7 +13,7 @@ import {
   View,
 } from 'react-native';
 
-import { DotBackground } from '../components/common';
+import { DotBackground, GameMenuActions, ParanoiaIcon } from '../components';
 import { T } from '../constants/flipTokens';
 import { PARANOIA_QUESTIONS, PLAYER_COLORS, ParanoiaHistoryEntry, ParanoiaOrder, ParanoiaStep } from '../games/paranoia';
 import { Player, RootStackParamList } from '../types';
@@ -140,13 +140,22 @@ function PlayerAvatar({ idx, size = 44, radius = 12 }: { idx: number; size?: num
 
 // ─── Screen: Rules ────────────────────────────────────────────────────────────
 
-function PNRules({ onStart, onExit }: { onStart: () => void; onExit: () => void }) {
+function PNRules({
+  onStart,
+  onExit,
+  onSettings,
+}: {
+  onStart: () => void;
+  onExit: () => void;
+  onSettings: () => void;
+}) {
   const RULES = [
     { n: '1', t: 'Le questionneur voit une question', d: 'Genre « qui craquerait en prison ? ». Il la garde secrète.' },
     { n: '2', t: 'La cible voit la question et choisit', d: "Elle désigne quelqu'un dans le groupe. À voix haute." },
     { n: '3', t: 'Le groupe entend la réponse, pas la question', d: 'Tout le monde panique : pourquoi MOI ?' },
     { n: '4', t: 'Pile ou face — ça révèle ou pas', d: "Si la cible perd au flip, la question s'affiche pour tout le monde." },
   ];
+  const rulesModal = RULES.map((rule) => ({ n: rule.n, title: rule.t, desc: rule.d }));
 
   return (
     <SafeAreaView style={rules.screen}>
@@ -156,17 +165,17 @@ function PNRules({ onStart, onExit }: { onStart: () => void; onExit: () => void 
         <TouchableOpacity style={rules.backBtn} onPress={onExit} activeOpacity={0.85}>
           <Text style={rules.backBtnText}>←</Text>
         </TouchableOpacity>
+        <GameMenuActions
+          showDice={false}
+          onPressSettings={onSettings}
+          rules={{ rules: rulesModal, title: 'Paranoïa', accentColor: T.tomato }}
+        />
       </View>
 
       <View style={rules.titleArea}>
-        {/* Coin icon top-right */}
-        <View style={rules.coinIconWrap}>
-          <View style={rules.coinIcon}>
-            <Text style={rules.coinQ}>?</Text>
-          </View>
-          <View style={rules.eyeWrap}>
-            <View style={rules.eye}><View style={rules.eyePupil} /></View>
-          </View>
+        {/* Paranoia icon top-right */}
+        <View style={rules.iconWrap}>
+          <ParanoiaIcon size={80} />
         </View>
 
         <Chip color={T.paper}>Jeu n°4</Chip>
@@ -199,7 +208,13 @@ function PNRules({ onStart, onExit }: { onStart: () => void; onExit: () => void 
 
 const rules = StyleSheet.create({
   screen: { flex: 1, backgroundColor: T.tomato },
-  header: { paddingHorizontal: 20, paddingTop: 8 },
+  header: {
+    paddingHorizontal: 20,
+    paddingTop: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
   backBtn: {
     width: 44, height: 44, borderRadius: 14,
     backgroundColor: T.paper, borderWidth: 2, borderColor: T.ink,
@@ -208,23 +223,7 @@ const rules = StyleSheet.create({
   },
   backBtnText: { fontSize: 20, color: T.ink, fontWeight: '900' },
   titleArea: { paddingHorizontal: 20, paddingTop: 16, paddingBottom: 0 },
-  coinIconWrap: { position: 'absolute', right: 24, top: 24 },
-  coinIcon: {
-    width: 72, height: 72, borderRadius: 36,
-    backgroundColor: T.lemon, borderWidth: 2.5, borderColor: T.ink,
-    alignItems: 'center', justifyContent: 'center',
-    shadowColor: T.ink, shadowOffset: { width: 4, height: 4 }, shadowOpacity: 1, shadowRadius: 0, elevation: 4,
-  },
-  coinQ: { color: T.ink, fontSize: 32, fontWeight: '900' },
-  eyeWrap: { position: 'absolute', top: -10, right: -10 },
-  eye: {
-    width: 28, height: 16, borderRadius: 8,
-    backgroundColor: T.paper, borderWidth: 2, borderColor: T.ink,
-    alignItems: 'center', justifyContent: 'center',
-  },
-  eyePupil: {
-    width: 8, height: 8, borderRadius: 4, backgroundColor: T.ink,
-  },
+  iconWrap: { position: 'absolute', right: 16, top: 18 },
   title: {
     color: '#fff', fontSize: 68, fontWeight: '900',
     letterSpacing: -2.5, lineHeight: 64, marginTop: 12,
@@ -797,7 +796,13 @@ export function ParanoiaScreen() {
   };
 
   if (step === 'rules') {
-    return <PNRules onStart={() => setStep('q-handoff')} onExit={() => (navigation as any).goBack()} />;
+    return (
+      <PNRules
+        onStart={() => setStep('q-handoff')}
+        onExit={() => (navigation as any).goBack()}
+        onSettings={() => (navigation as any).navigate('Settings')}
+      />
+    );
   }
 
   if (step === 'q-handoff') {

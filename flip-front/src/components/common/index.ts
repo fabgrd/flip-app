@@ -7,6 +7,7 @@ export { ChunkyButton } from './ChunkyButton';
 export { ConfettiBurst, ConfettiPiece } from './Confetti';
 export { DotBackground } from './DotBackground';
 export { FlatChunkyButton } from './FlatChunkyButton';
+export { GameMenuActions, GameMenuHeader } from './GameMenuHeader';
 export { PlayerInput } from './PlayerInput';
 export { PlayersList } from './PlayersList';
 export { PopModal } from './PopModal';

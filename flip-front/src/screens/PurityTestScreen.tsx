@@ -1,21 +1,322 @@
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-
-import { DotBackground, RulesButton } from '../components/common';
+import Slider from '@react-native-community/slider';
+import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { DotBackground, GameMenuActions, PureteIcon, RulesButton } from '../components';
 import { T } from '../constants/flipTokens';
-import { THEME_COLORS, THEME_LABELS, usePurityTest } from '../games/purity-test';
+import { THEME_COLORS, THEME_LABELS } from '../games/purity-test/constants';
+import { usePurityTest } from '../games/purity-test/hooks/usePurityTest';
+import type { LevelKey, Theme } from '../games/purity-test/types';
 import { CardStack } from '../games/purity-test/components';
 import { Player, RootStackParamList } from '../types';
 
 type PurityTestScreenRouteProp = RouteProp<RootStackParamList, 'PurityTest'>;
+
+const PURITY_RULES = [
+  { n: '1', title: 'Lis la question', desc: 'As-tu déjà fait ça ? Sois honnête (ou pas).' },
+  {
+    n: '2',
+    title: 'Glisse oui ou non',
+    desc: "Droite = oui, gauche = non. Chaque oui = points d'impureté.",
+  },
+  {
+    n: '3',
+    title: 'Résultats',
+    desc: "Le score final révèle ton niveau de pureté… ou d'impureté 😈",
+  },
+];
+
+const LEVEL_KEYS: LevelKey[] = ['level1', 'level2', 'level3', 'level4', 'level5'];
+
+const LEVEL_LABELS: Record<LevelKey, string> = {
+  level1: 'Soft',
+  level2: 'Chill',
+  level3: 'Medium',
+  level4: 'Hot',
+  level5: 'Hard',
+  levelBonus: 'Bonus',
+};
+
+const LEVEL_COLORS = ['#8BC4A0', '#6BB5DE', '#F4C542', '#F4834F', '#E05252'];
+
+function maxLevelToLevelCounts(maxLevel: LevelKey): Record<LevelKey, number> {
+  const maxIdx = LEVEL_KEYS.indexOf(maxLevel);
+  const counts: Record<LevelKey, number> = { level1: 0, level2: 0, level3: 0, level4: 0, level5: 0, levelBonus: 0 };
+  LEVEL_KEYS.forEach((key, i) => { counts[key] = i <= maxIdx ? 5 : 0; });
+  return counts;
+}
+
+function PurityRules({
+  onStart,
+  onExit,
+  onSettings,
+  themeCounts,
+  maxLevel,
+  onChangeThemeCount,
+  onChangeMaxLevel,
+}: {
+  onStart: () => void;
+  onExit: () => void;
+  onSettings: () => void;
+  themeCounts: Record<Theme, number>;
+  maxLevel: LevelKey;
+  onChangeThemeCount: (theme: Theme, value: number) => void;
+  onChangeMaxLevel: (level: LevelKey) => void;
+}) {
+  const themeTotal = Object.values(themeCounts).reduce((sum, val) => sum + val, 0);
+  const maxIdx = LEVEL_KEYS.indexOf(maxLevel);
+
+  return (
+    <SafeAreaView style={pr.screen}>
+      <DotBackground color={T.paper} opacity={0.08} />
+
+      <View style={pr.header}>
+        <TouchableOpacity style={pr.backBtn} onPress={onExit} activeOpacity={0.85}>
+          <Text style={pr.backBtnText}>←</Text>
+        </TouchableOpacity>
+        <GameMenuActions
+          showDice={false}
+          onPressSettings={onSettings}
+          rules={{ rules: PURITY_RULES, title: 'Test de Pureté', accentColor: T.violet }}
+        />
+      </View>
+
+      <View style={pr.titleArea}>
+        <View style={pr.iconWrap}>
+          <PureteIcon size={86} />
+        </View>
+
+        <View style={pr.chip}>
+          <Text style={pr.chipText}>Jeu n°3</Text>
+        </View>
+        <Text style={pr.title}>Test{'\n'}de Pureté</Text>
+      </View>
+
+      <View style={pr.cardWrap}>
+        <ScrollView contentContainerStyle={pr.cardScroll} showsVerticalScrollIndicator={false}>
+          <View style={pr.card}>
+            <Text style={pr.cardLabel}>COMMENT ON JOUE</Text>
+            {PURITY_RULES.map((rule, i) => (
+              <View key={rule.n} style={[pr.ruleRow, i < PURITY_RULES.length - 1 && pr.ruleRowDivider]}>
+                <View style={pr.ruleNum}>
+                  <Text style={pr.ruleNumText}>{rule.n}</Text>
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={pr.ruleTitle}>{rule.title}</Text>
+                  <Text style={pr.ruleDesc}>{rule.desc}</Text>
+                </View>
+              </View>
+            ))}
+          </View>
+
+          <View style={pr.card}>
+            <Text style={pr.cardLabel}>REPARTITION DES THEMES</Text>
+            <Text style={pr.helperText}>Total: {themeTotal} questions</Text>
+            {(Object.keys(themeCounts) as Theme[]).map((theme) => (
+              <View key={theme} style={pr.sliderRow}>
+                <View style={pr.sliderHeader}>
+                  <Text style={pr.sliderLabel}>{THEME_LABELS[theme]}</Text>
+                  <Text style={pr.sliderValue}>{themeCounts[theme]}</Text>
+                </View>
+                <Slider
+                  minimumValue={0}
+                  maximumValue={10}
+                  step={1}
+                  value={themeCounts[theme]}
+                  onValueChange={(value: number) => onChangeThemeCount(theme, value)}
+                  minimumTrackTintColor={THEME_COLORS[theme]}
+                  maximumTrackTintColor="#E6E2DD"
+                  thumbTintColor={T.ink}
+                />
+              </View>
+            ))}
+          </View>
+
+          <View style={pr.card}>
+            <Text style={pr.cardLabel}>NIVEAU DE QUESTIONS</Text>
+            <Text style={pr.helperText}>Questions jusqu'au niveau sélectionné</Text>
+            <View style={pr.levelRow}>
+              {LEVEL_KEYS.map((level, i) => {
+                const isActive = i <= maxIdx;
+                const isSelected = level === maxLevel;
+                return (
+                  <TouchableOpacity
+                    key={level}
+                    style={[
+                      pr.levelBtn,
+                      isActive && { backgroundColor: LEVEL_COLORS[i], borderColor: T.ink },
+                      isSelected && pr.levelBtnSelected,
+                    ]}
+                    onPress={() => onChangeMaxLevel(level)}
+                    activeOpacity={0.75}
+                  >
+                    <Text style={[pr.levelBtnText, isActive && pr.levelBtnTextActive]}>
+                      {LEVEL_LABELS[level]}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          </View>
+        </ScrollView>
+      </View>
+
+      <View style={pr.footer}>
+        <TouchableOpacity style={pr.startBtn} onPress={onStart} activeOpacity={0.85}>
+          <Text style={pr.startBtnText}>Commencer le test</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
+  );
+}
+
+const pr = StyleSheet.create({
+  screen: { flex: 1, backgroundColor: T.violet },
+  header: {
+    paddingHorizontal: 20,
+    paddingTop: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  backBtn: {
+    width: 44,
+    height: 44,
+    borderRadius: 14,
+    backgroundColor: T.paper,
+    borderWidth: 2,
+    borderColor: T.ink,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: T.ink,
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 3,
+  },
+  backBtnText: { fontSize: 20, color: T.ink, fontWeight: '900' },
+  titleArea: { paddingHorizontal: 20, paddingTop: 16 },
+  iconWrap: { position: 'absolute', right: 16, top: 18 },
+  chip: {
+    backgroundColor: T.paper,
+    borderWidth: 1.5,
+    borderColor: T.ink,
+    borderRadius: 999,
+    paddingHorizontal: 12,
+    paddingVertical: 5,
+    alignSelf: 'flex-start',
+  },
+  chipText: { color: T.ink, fontSize: 12, fontWeight: '800', letterSpacing: 0.5 },
+  title: {
+    color: '#fff',
+    fontSize: 58,
+    fontWeight: '900',
+    letterSpacing: -2,
+    lineHeight: 56,
+    marginTop: 12,
+  },
+  cardWrap: { paddingHorizontal: 20, paddingTop: 24, flex: 1 },
+  cardScroll: { paddingBottom: 12, gap: 16 },
+  card: {
+    backgroundColor: T.paper,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: 24,
+    padding: 20,
+    shadowColor: T.ink,
+    shadowOffset: { width: 5, height: 5 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 4,
+  },
+  cardLabel: {
+    color: T.muted,
+    fontSize: 11,
+    fontWeight: '700',
+    letterSpacing: 1.5,
+    textTransform: 'uppercase',
+    marginBottom: 12,
+  },
+  ruleRow: { flexDirection: 'row', gap: 14, paddingVertical: 10 },
+  ruleRowDivider: { borderBottomWidth: 1, borderBottomColor: `${T.muted}66` },
+  ruleNum: {
+    width: 32,
+    height: 32,
+    borderRadius: 10,
+    flexShrink: 0,
+    backgroundColor: T.violet,
+    borderWidth: 2,
+    borderColor: T.ink,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  ruleNumText: { color: '#fff', fontSize: 15, fontWeight: '900' },
+  ruleTitle: { color: T.ink, fontSize: 16, fontWeight: '800', letterSpacing: -0.3 },
+  ruleDesc: { color: T.inkSoft, fontSize: 13, marginTop: 2, lineHeight: 18 },
+  helperText: { color: T.inkSoft, fontSize: 12, marginBottom: 12 },
+  sliderRow: { marginBottom: 14 },
+  sliderHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 6,
+  },
+  sliderLabel: { color: T.ink, fontSize: 14, fontWeight: '800' },
+  sliderValue: { color: T.ink, fontSize: 13, fontWeight: '900' },
+  levelRow: { flexDirection: 'row', gap: 8, flexWrap: 'wrap' },
+  levelBtn: {
+    flex: 1,
+    minWidth: 56,
+    paddingVertical: 10,
+    paddingHorizontal: 4,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: '#E6E2DD',
+    backgroundColor: '#F5F2ED',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  levelBtnSelected: {
+    shadowColor: T.ink,
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 3,
+  },
+  levelBtnText: { color: T.muted, fontSize: 11, fontWeight: '800', textAlign: 'center' },
+  levelBtnTextActive: { color: T.ink },
+  footer: { padding: 20, paddingBottom: 32 },
+  startBtn: {
+    backgroundColor: T.ink,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: T.rMd,
+    paddingVertical: 18,
+    alignItems: 'center',
+    shadowColor: T.paper,
+    shadowOffset: { width: 5, height: 5 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 5,
+  },
+  startBtnText: { color: '#fff', fontSize: 17, fontWeight: '900', letterSpacing: -0.3 },
+});
 
 export function PurityTestScreen() {
   const route = useRoute<PurityTestScreenRouteProp>();
   const navigation = useNavigation();
   const { t } = useTranslation();
   const { players } = route.params as { players: Player[] };
+  const [showRules, setShowRules] = useState(true);
+  const [themeCounts, setThemeCounts] = useState<Record<Theme, number>>({
+    sex: 5,
+    drugs: 5,
+    morality: 5,
+    hygiene: 5,
+  });
+  const [maxLevel, setMaxLevel] = useState<LevelKey>('level5');
+  const levelCounts = maxLevelToLevelCounts(maxLevel);
   const {
     gameState,
     currentQuestion,
@@ -26,6 +327,7 @@ export function PurityTestScreen() {
     calculateResults,
     isGameFinished,
     totalQuestions,
+    resetGame,
   } = usePurityTest(players);
 
   const handleSwipe = (playerId: string, direction: 'yes' | 'no') => {
@@ -49,6 +351,25 @@ export function PurityTestScreen() {
     if (canProceedToNextQuestion) nextQuestion();
   }, [canProceedToNextQuestion]);
 
+  if (showRules) {
+    return (
+      <PurityRules
+        onStart={() => {
+          resetGame({ themeCounts, levelCounts });
+          setShowRules(false);
+        }}
+        onExit={() => navigation.goBack()}
+        onSettings={() => navigation.navigate('Settings')}
+        themeCounts={themeCounts}
+        maxLevel={maxLevel}
+        onChangeThemeCount={(theme, value) =>
+          setThemeCounts((prev) => ({ ...prev, [theme]: Math.round(value) }))
+        }
+        onChangeMaxLevel={setMaxLevel}
+      />
+    );
+  }
+
   if (!currentQuestion) {
     return (
       <SafeAreaView style={styles.screen}>
@@ -64,20 +385,6 @@ export function PurityTestScreen() {
   ).length;
 
   const themeColor = THEME_COLORS[currentQuestion.theme] ?? T.violet;
-
-  const PURITY_RULES = [
-    { n: '1', title: 'Lis la question', desc: 'As-tu déjà fait ça ? Sois honnête (ou pas).' },
-    {
-      n: '2',
-      title: 'Glisse oui ou non',
-      desc: "Droite = oui, gauche = non. Chaque oui = points d'impureté.",
-    },
-    {
-      n: '3',
-      title: 'Résultats',
-      desc: "Le score final révèle ton niveau de pureté… ou d'impureté 😈",
-    },
-  ];
 
   return (
     <SafeAreaView style={styles.screen}>

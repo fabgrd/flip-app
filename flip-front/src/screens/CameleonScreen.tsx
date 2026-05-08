@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import Animated, { FadeIn, FadeInDown, FadeOut, ZoomIn, ZoomOut } from 'react-native-reanimated';
 
-import { DotBackground, FlatChunkyButton, PopModal, RulesButton } from '../components/common';
+import { DotBackground, FlatChunkyButton, GameMenuHeader, PopModal } from '../components/common';
 import { T } from '../constants/flipTokens';
 import { useCameleon } from '../games/cameleon';
 import {
@@ -168,14 +168,6 @@ export function CameleonScreen() {
 
   const bgColor = phase === 'settings' ? T.mint : phase === 'reveal' ? T.paper : T.bg;
 
-  // Theme button: show emoji of active selection
-  // If random or multiple → 🎲, otherwise the single theme emoji
-  const themeButtonEmoji = (() => {
-    if (selectedThemes.includes('random') || selectedThemes.length === 0) return '🎲';
-    if (selectedThemes.length === 1) return THEME_META[selectedThemes[0]].emoji;
-    return '🎨';
-  })();
-
   const toggleTheme = (theme: CameleonTheme) => {
     if (theme === 'random') {
       // Random sélectionne tout et désélectionne les autres
@@ -200,25 +192,13 @@ export function CameleonScreen() {
       {/* ── SETTINGS ── */}
       {phase === 'settings' && (
         <>
-          <View style={styles.settingsHeader}>
-            <View>
-              <Text style={styles.settingsChip}>Jeu n°1</Text>
-              <Text style={styles.settingsTitle}>Le{'\n'}Caméléon</Text>
-            </View>
-            <View style={styles.headerActions}>
-              {/* Theme button */}
-              <FlatChunkyButton
-                size="xs"
-                square
-                color={T.paper}
-                textColor={T.ink}
-                onPress={() => setThemeModalVisible(true)}
-              >
-                <Text style={styles.themeBtnEmoji}>{themeButtonEmoji}</Text>
-              </FlatChunkyButton>
-              <RulesButton rules={CAMELEON_RULES} title="Le Caméléon" accentColor={T.mint} />
-            </View>
-          </View>
+          <GameMenuHeader
+            chipLabel="Jeu n°1"
+            title={'Le\nCaméléon'}
+            onPressDice={() => setThemeModalVisible(true)}
+            onPressSettings={() => navigation.navigate('Settings')}
+            rules={{ rules: CAMELEON_RULES, title: 'Le Caméléon', accentColor: T.mint }}
+          />
 
           <Animated.View entering={FadeIn} exiting={FadeOut} style={styles.flex}>
             <SettingsPanel
@@ -426,46 +406,6 @@ export function CameleonScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1 },
   flex: { flex: 1 },
-
-  settingsHeader: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    paddingTop: 12,
-  },
-  settingsChip: {
-    color: T.ink,
-    fontSize: 12,
-    fontWeight: '800',
-    letterSpacing: 1,
-    textTransform: 'uppercase',
-    backgroundColor: T.paper,
-    borderWidth: 1.5,
-    borderColor: T.ink,
-    borderRadius: 999,
-    paddingHorizontal: 12,
-    paddingVertical: 4,
-    alignSelf: 'flex-start',
-    marginBottom: 10,
-    overflow: 'hidden',
-  },
-  settingsTitle: {
-    color: T.ink,
-    fontSize: 52,
-    fontWeight: '900',
-    letterSpacing: -2.5,
-    lineHeight: 50,
-    marginBottom: 8,
-  },
-
-  headerActions: {
-    flexDirection: 'row',
-    gap: 8,
-    alignItems: 'center',
-    paddingTop: 4,
-  },
-  themeBtnEmoji: { fontSize: 18 },
 
   // Theme modal
   modalOverlay: {
