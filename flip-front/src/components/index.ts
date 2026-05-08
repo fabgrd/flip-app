@@ -4,6 +4,7 @@
 
 // Composants communs réutilisables
 export * from './common';
+export * from './icons';
 
 // Legacy exports (à supprimer progressivement)
 export { PlayerInput } from './common/PlayerInput';

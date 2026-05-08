@@ -20,6 +20,8 @@ import {
   HomeScreen,
   LeftRightResultsScreen,
   LeftRightScreen,
+  MedusaScreen,
+  ParanoiaScreen,
   PurityResultsScreen,
   PurityTestScreen,
   SettingsScreen,
@@ -52,6 +54,8 @@ function ThemedAppNavigator() {
             component={LeftRightResultsScreen}
             options={{ gestureEnabled: false }}
           />
+          <Stack.Screen name="Paranoia" component={ParanoiaScreen} />
+          <Stack.Screen name="Medusa" component={MedusaScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </View>

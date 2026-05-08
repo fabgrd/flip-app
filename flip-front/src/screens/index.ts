@@ -6,4 +6,6 @@ export { LeftRightResultsScreen } from './LeftRightResultsScreen';
 export { LeftRightScreen } from './LeftRightScreen';
 export { PurityResultsScreen } from './PurityResultsScreen';
 export { PurityTestScreen } from './PurityTestScreen';
+export { MedusaScreen } from './MedusaScreen';
+export { ParanoiaScreen } from './ParanoiaScreen';
 export { SettingsScreen } from './SettingsScreen';

@@ -82,6 +82,12 @@ export type RootStackParamList = {
   LeftRight: { players: Player[] };
   LeftRightResults: { results: import('../games/left-right/types').PoliticalResults };
 
+  // Paranoia
+  Paranoia: { players: Player[] };
+
+  // Medusa
+  Medusa: { players: Player[] };
+
   // Dynamic game routes (will be extended by each game)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;

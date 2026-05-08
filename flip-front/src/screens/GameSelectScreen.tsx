@@ -4,37 +4,64 @@ import React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 
-import { ChunkyButton, DotBackground } from '../components';
+import {
+  ChameleonIcon,
+  ChunkyButton,
+  DotBackground,
+  GaucheDroiteIcon,
+  MedusaIcon,
+  ParanoiaIcon,
+  PureteIcon,
+} from '../components';
 import { T } from '../constants/flipTokens';
 import { navigateToGame } from '../constants/games';
 import { RootStackParamList } from '../types';
 
 type GameSelectRouteProp = RouteProp<RootStackParamList, 'GameSelect'>;
 
-const GAME_META: Record<
-  string,
-  { color: keyof typeof T; tagline: string; emoji: string; players: string; time: string }
-> = {
+type GameMeta = {
+  color: keyof typeof T;
+  tagline: string;
+  Icon: React.ComponentType<{ size?: number }>;
+  players: string;
+  time: string;
+};
+
+const GAME_META: Record<string, GameMeta> = {
   cameleon: {
     color: 'mint',
     tagline: "Démasque l'imposteur",
-    emoji: '🦎',
+    Icon: ChameleonIcon,
     players: '4–10',
     time: '15 min',
   },
   'left-right': {
     color: 'lemon',
     tagline: "Place la phrase sur l'échiquier politique",
-    emoji: '⚖️',
+    Icon: GaucheDroiteIcon,
     players: '2–∞',
     time: '10 min',
   },
   'purity-test': {
     color: 'violet',
     tagline: 'Combien de péchés à ton actif ?',
-    emoji: '😇',
+    Icon: PureteIcon,
     players: 'Solo+',
     time: '5 min',
+  },
+  paranoia: {
+    color: 'tomato',
+    tagline: 'Qui a dit ton prénom… et pourquoi ?',
+    Icon: ParanoiaIcon,
+    players: '4–10',
+    time: '15 min',
+  },
+  medusa: {
+    color: 'cobalt',
+    tagline: 'Lève les yeux… et croise le regard',
+    Icon: MedusaIcon,
+    players: '5+',
+    time: '10 min',
   },
 };
 
@@ -44,6 +71,8 @@ export function GameSelectScreen() {
   const { players } = route.params;
 
   const games = [
+    { id: 'medusa', name: 'Médusa', minPlayers: 5, maxPlayers: 20, description: '' },
+    { id: 'paranoia', name: 'Paranoïa', minPlayers: 4, maxPlayers: 10, description: '' },
     { id: 'cameleon', name: 'Caméléon', minPlayers: 4, maxPlayers: 10, description: '' },
     { id: 'left-right', name: 'Gauche ou Droite', minPlayers: 2, maxPlayers: 99, description: '' },
     { id: 'purity-test', name: 'Test de Pureté', minPlayers: 1, maxPlayers: 99, description: '' },
@@ -55,6 +84,8 @@ export function GameSelectScreen() {
     } catch {
       if (gameId === 'purity-test') navigation.navigate('PurityTest', { players });
       else if (gameId === 'cameleon') navigation.navigate('Cameleon', { players });
+      else if (gameId === 'paranoia') navigation.navigate('Paranoia', { players });
+      else if (gameId === 'medusa') navigation.navigate('Medusa', { players });
     }
   };
 
@@ -83,12 +114,13 @@ export function GameSelectScreen() {
           const meta = GAME_META[game.id] ?? {
             color: 'tomato',
             tagline: '',
-            emoji: '🎮',
+            Icon: ChameleonIcon,
             players: '2+',
             time: '–',
           };
           const bgColor = T[meta.color as keyof typeof T] as string;
           const isFavorite = i === 0;
+          const Icon = meta.Icon;
 
           return (
             <Animated.View key={game.id} entering={FadeInDown.delay(i * 120)}>
@@ -99,7 +131,7 @@ export function GameSelectScreen() {
               >
                 {/* Icon panel */}
                 <View style={styles.gameIconPanel}>
-                  <Text style={styles.gameEmoji}>{meta.emoji}</Text>
+                  <Icon size={64} />
                 </View>
 
                 {/* Content */}
@@ -208,7 +240,6 @@ const styles = StyleSheet.create({
     borderRightColor: T.ink,
     backgroundColor: 'rgba(255,255,255,0.2)',
   },
-  gameEmoji: { fontSize: 44 },
 
   gameContent: {
     flex: 1,
