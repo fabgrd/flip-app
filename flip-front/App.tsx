@@ -14,6 +14,7 @@ import { View } from 'react-native';
 import { PlayersProvider } from './src/contexts/PlayersContext';
 import { ThemeProvider, useTheme } from './src/contexts/ThemeContext';
 import {
+  AperoScreen,
   CameleonResultsScreen,
   CameleonScreen,
   GameSelectScreen,
@@ -56,6 +57,7 @@ function ThemedAppNavigator() {
           />
           <Stack.Screen name="Paranoia" component={ParanoiaScreen} />
           <Stack.Screen name="Medusa" component={MedusaScreen} />
+          <Stack.Screen name="Apero" component={AperoScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </View>

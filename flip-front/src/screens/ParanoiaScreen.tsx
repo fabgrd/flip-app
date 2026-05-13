@@ -619,7 +619,7 @@ function PNReveal({
         ) : (
           <Card>
             <Text style={rev.wonText}>
-              <Text style={{ fontWeight: '900' }}>{targetName}</Text> garde la question pour iel-même.
+              <Text style={{ fontWeight: '900' }}>{targetName}</Text> garde la question pour lui-même.
               {' '}Le groupe reste dans le flou.{' '}
               <Text style={{ fontWeight: '900' }}>{questionerName}</Text> peut sourire dans son coin.
             </Text>

@@ -5,6 +5,7 @@ import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } fr
 import Animated, { FadeInDown } from 'react-native-reanimated';
 
 import {
+  AperoIcon,
   ChameleonIcon,
   ChunkyButton,
   DotBackground,
@@ -63,6 +64,13 @@ const GAME_META: Record<string, GameMeta> = {
     players: '5+',
     time: '10 min',
   },
+  apero: {
+    color: 'pink',
+    tagline: 'Devine la carte du donneur ou tu bois',
+    Icon: AperoIcon,
+    players: '2+',
+    time: '20 min',
+  },
 };
 
 export function GameSelectScreen() {
@@ -71,6 +79,7 @@ export function GameSelectScreen() {
   const { players } = route.params;
 
   const games = [
+    { id: 'apero', name: 'L\'Apéro', minPlayers: 2, maxPlayers: 99, description: '' },
     { id: 'medusa', name: 'Médusa', minPlayers: 5, maxPlayers: 20, description: '' },
     { id: 'paranoia', name: 'Paranoïa', minPlayers: 4, maxPlayers: 10, description: '' },
     { id: 'cameleon', name: 'Caméléon', minPlayers: 4, maxPlayers: 10, description: '' },
@@ -86,6 +95,7 @@ export function GameSelectScreen() {
       else if (gameId === 'cameleon') navigation.navigate('Cameleon', { players });
       else if (gameId === 'paranoia') navigation.navigate('Paranoia', { players });
       else if (gameId === 'medusa') navigation.navigate('Medusa', { players });
+      else if (gameId === 'apero') navigation.navigate('Apero', { players });
     }
   };
 
