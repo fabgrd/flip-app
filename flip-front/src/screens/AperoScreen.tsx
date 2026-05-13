@@ -406,22 +406,15 @@ const pk = StyleSheet.create({
 
 // ─── Main round ───────────────────────────────────────────────────────────────
 
-function APRound({ card, guesser, dealer, played, streak, cardNum, total, onDone, onRequestPass }: {
+function APRound({ card, guesser, dealer, exhaustedVals, streak, cardNum, total, onDone, onRequestPass }: {
   card: ApCard; guesser: Player; dealer: Player;
-  played: PlayedCard[]; streak: number; cardNum: number; total: number;
+  exhaustedVals: ApVal[]; streak: number; cardNum: number; total: number;
   onDone: (found: boolean, penalty: number) => void;
   onRequestPass: () => void;
 }) {
   const [phase, setPhase] = useState<RoundPhase>('g1');
   const [g1, setG1] = useState<ApVal | null>(null);
   const [g2, setG2] = useState<ApVal | null>(null);
-
-  // Values where all 4 cards are already out — disabled in picker
-  const exhaustedVals = React.useMemo(() => {
-    const counts: Partial<Record<ApVal, number>> = {};
-    played.forEach(c => { counts[c.v] = (counts[c.v] ?? 0) + 1; });
-    return AP_VALS.filter(v => (counts[v] ?? 0) >= 4);
-  }, [played]);
 
   // ── Animations ──
   // Card scale (apPop on reveal) + shake (apShake on hint)
@@ -526,21 +519,7 @@ function APRound({ card, guesser, dealer, played, streak, cardNum, total, onDone
     : { opacity: entryOpacity, transform: [{ scale: entryScale }] };
 
   return (
-    <SafeAreaView style={rd.screen}>
-      <DotBackground opacity={0.04} />
-
-      {/* Top bar */}
-      <View style={rd.topBar}>
-        <Chip color={T.pink} textColor="#fff">🃏 {dealer.name}</Chip>
-        <View style={{ flexDirection: 'row', gap: 6 }}>
-          <Chip color={T.paper}>{cardNum}/{total}</Chip>
-          <Chip color={streak >= 3 ? T.lemon : T.paper}>Série {streak}</Chip>
-        </View>
-      </View>
-
-      {/* Bridge — always visible */}
-      <APBridge cards={played} />
-
+    <>
       {/* Centered game area */}
       <View style={rd.gameArea}>
         {/* Card */}
@@ -631,16 +610,11 @@ function APRound({ card, guesser, dealer, played, streak, cardNum, total, onDone
           )}
         </View>
       )}
-    </SafeAreaView>
+    </>
   );
 }
 
 const rd = StyleSheet.create({
-  screen: { flex: 1, backgroundColor: T.bg },
-  topBar: {
-    paddingHorizontal: 14, paddingVertical: 6,
-    flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: 6,
-  },
   // Flex-centered game area — fills remaining space and centers content vertically
   gameArea: {
     flex: 1, alignItems: 'center', justifyContent: 'center',
@@ -869,6 +843,11 @@ const en = StyleSheet.create({
   rankScore: { fontSize: 26, fontWeight: '900' },
 });
 
+const playTopBar = {
+  paddingHorizontal: 14, paddingVertical: 6,
+  flexDirection: 'row' as const, justifyContent: 'space-between' as const, alignItems: 'center' as const, gap: 6,
+};
+
 // ─── Main state machine ───────────────────────────────────────────────────────
 
 function AperoGame({ players, onExit }: { players: Player[]; onExit: () => void }) {
@@ -944,19 +923,45 @@ function AperoGame({ players, onExit }: { players: Player[]; onExit: () => void 
 
   if (step === 'play') {
     if (cardPos >= deck.length) { setStep('end'); return null; }
+
+    const exhaustedVals = AP_VALS.filter(v => {
+      let count = 0;
+      for (const c of played) { if (c.v === v) count++; }
+      return count >= 4;
+    });
+
     return (
-      <APRound
-        key={cardPos}
-        card={deck[cardPos]}
-        guesser={players[curGuesserIdx]}
-        dealer={players[dealerIdx]}
-        played={played}
-        streak={streak}
-        cardNum={cardPos + 1}
-        total={deck.length}
-        onDone={advanceRound}
-        onRequestPass={() => setStep('dealer-win')}
-      />
+      <View style={{ flex: 1, backgroundColor: T.bg }}>
+        <SafeAreaView style={{ flex: 1 }}>
+          <DotBackground opacity={0.04} />
+
+          {/* Persistent header — never remounts */}
+          <View style={playTopBar}>
+            <Chip color={T.pink} textColor="#fff">🃏 {players[dealerIdx].name}</Chip>
+            <View style={{ flexDirection: 'row', gap: 6 }}>
+              <Chip color={T.paper}>{cardPos + 1}/{deck.length}</Chip>
+              <Chip color={streak >= 3 ? T.lemon : T.paper}>Série {streak}</Chip>
+            </View>
+          </View>
+
+          {/* Persistent bridge — never remounts */}
+          <APBridge cards={played} />
+
+          {/* Round content — remounts per card, only game area + footer */}
+          <APRound
+            key={cardPos}
+            card={deck[cardPos]}
+            guesser={players[curGuesserIdx]}
+            dealer={players[dealerIdx]}
+            exhaustedVals={exhaustedVals}
+            streak={streak}
+            cardNum={cardPos + 1}
+            total={deck.length}
+            onDone={advanceRound}
+            onRequestPass={() => setStep('dealer-win')}
+          />
+        </SafeAreaView>
+      </View>
     );
   }
 
