@@ -17,6 +17,7 @@ import {
   AperoScreen,
   CameleonResultsScreen,
   CameleonScreen,
+  CastingScreen,
   GameSelectScreen,
   HomeScreen,
   LeftRightResultsScreen,
@@ -58,6 +59,7 @@ function ThemedAppNavigator() {
           <Stack.Screen name="Paranoia" component={ParanoiaScreen} />
           <Stack.Screen name="Medusa" component={MedusaScreen} />
           <Stack.Screen name="Apero" component={AperoScreen} />
+          <Stack.Screen name="Casting" component={CastingScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </View>

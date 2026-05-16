@@ -6,6 +6,7 @@ import Animated, { FadeInDown } from 'react-native-reanimated';
 
 import {
   AperoIcon,
+  CastingIcon,
   ChameleonIcon,
   ChunkyButton,
   DotBackground,
@@ -71,6 +72,13 @@ const GAME_META: Record<string, GameMeta> = {
     players: '2+',
     time: '20 min',
   },
+  casting: {
+    color: 'castingOrange',
+    tagline: 'Joue la scène selon ton chiffre secret',
+    Icon: CastingIcon,
+    players: '3–11',
+    time: '20 min',
+  },
 };
 
 export function GameSelectScreen() {
@@ -79,6 +87,7 @@ export function GameSelectScreen() {
   const { players } = route.params;
 
   const games = [
+    { id: 'casting', name: 'Le Casting', minPlayers: 3, maxPlayers: 11, description: '' },
     { id: 'apero', name: 'L\'Apéro', minPlayers: 2, maxPlayers: 99, description: '' },
     { id: 'medusa', name: 'Médusa', minPlayers: 5, maxPlayers: 20, description: '' },
     { id: 'paranoia', name: 'Paranoïa', minPlayers: 4, maxPlayers: 10, description: '' },
@@ -96,6 +105,7 @@ export function GameSelectScreen() {
       else if (gameId === 'paranoia') navigation.navigate('Paranoia', { players });
       else if (gameId === 'medusa') navigation.navigate('Medusa', { players });
       else if (gameId === 'apero') navigation.navigate('Apero', { players });
+      else if (gameId === 'casting') navigation.navigate('Casting', { players });
     }
   };
 

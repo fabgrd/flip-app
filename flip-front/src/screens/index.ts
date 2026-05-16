@@ -9,4 +9,5 @@ export { PurityTestScreen } from './PurityTestScreen';
 export { MedusaScreen } from './MedusaScreen';
 export { ParanoiaScreen } from './ParanoiaScreen';
 export { AperoScreen } from './AperoScreen';
+export { CastingScreen } from './CastingScreen';
 export { SettingsScreen } from './SettingsScreen';

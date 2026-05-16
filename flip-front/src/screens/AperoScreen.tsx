@@ -135,8 +135,8 @@ const u = StyleSheet.create({
 
 // ─── Bridge ───────────────────────────────────────────────────────────────────
 
-const CW = 44;
-const CH = 60;
+const CW = 50;
+const CH = 68;
 const SOFF = 5;
 
 const ROW1: ApVal[] = ['2', '3', '4', '5', '6', '7'];
@@ -193,7 +193,7 @@ function APBridge({ cards }: { cards: PlayedCard[] }) {
 
 const br = StyleSheet.create({
   wrap: {
-    paddingHorizontal: 10, paddingTop: 6, paddingBottom: 8,
+    paddingHorizontal: 8, paddingTop: 6, paddingBottom: 8,
     backgroundColor: T.bgAlt,
     borderBottomWidth: 1, borderBottomColor: `${T.ink}20`,
   },
@@ -218,49 +218,53 @@ const br = StyleSheet.create({
   // Found: solid cream background, mint border — no transparency
   cardFound: { backgroundColor: T.paper, borderColor: T.mint, borderWidth: 2 },
   cardFlipped: { backgroundColor: T.pink, borderColor: T.pink },
-  cardVal: { fontSize: 17, fontWeight: '900', lineHeight: 19 },
-  cardSuit: { fontSize: 14, lineHeight: 15, marginTop: 1 },
+  cardVal: { fontSize: 19, fontWeight: '900', lineHeight: 21 },
+  cardSuit: { fontSize: 15, lineHeight: 16, marginTop: 1 },
 });
 
 // ─── Value picker ─────────────────────────────────────────────────────────────
 
+// Same row split as the bridge so A always sits right of R
+const VP_ROW1: ApVal[] = ['2', '3', '4', '5', '6', '7'];
+const VP_ROW2: ApVal[] = ['8', '9', '10', 'V', 'D', 'R', 'A'];
+
 function APValuePicker({ onPick, disabled = [] }: {
   onPick: (v: ApVal) => void; disabled?: ApVal[];
 }) {
+  const renderBtn = (v: ApVal) => {
+    const dis = disabled.includes(v);
+    return (
+      <TouchableOpacity
+        key={v}
+        onPress={() => !dis && onPick(v)}
+        activeOpacity={dis ? 1 : 0.75}
+        style={[vp.btn, dis && vp.btnDis]}
+      >
+        <Text style={[vp.btnText, dis && vp.btnDisText, v === '10' && vp.btnText10]}>{v}</Text>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <View style={vp.wrap}>
-      {AP_VALS.map(v => {
-        const dis = disabled.includes(v);
-        return (
-          <TouchableOpacity
-            key={v}
-            onPress={() => !dis && onPick(v)}
-            activeOpacity={dis ? 1 : 0.75}
-            style={[vp.btn, dis && vp.btnDis]}
-          >
-            {/* same width for all including '10' */}
-            <Text style={[vp.btnText, dis && vp.btnDisText, v === '10' && vp.btnText10]}>{v}</Text>
-          </TouchableOpacity>
-        );
-      })}
+      <View style={vp.row}>{VP_ROW1.map(renderBtn)}</View>
+      <View style={vp.row}>{VP_ROW2.map(renderBtn)}</View>
     </View>
   );
 }
 
 const vp = StyleSheet.create({
-  wrap: {
-    flexDirection: 'row', flexWrap: 'wrap', gap: 6,
-    justifyContent: 'center', maxWidth: 360, alignSelf: 'center', paddingHorizontal: 10,
-  },
+  wrap: { alignSelf: 'center', gap: 5 },
+  row: { flexDirection: 'row', gap: 5, justifyContent: 'center' },
   btn: {
-    width: 44, height: 54, borderRadius: 9,
+    width: 48, height: 58, borderRadius: 10,
     borderWidth: 2, borderColor: T.ink, backgroundColor: T.paper,
     alignItems: 'center', justifyContent: 'center',
     shadowColor: T.ink, shadowOffset: { width: 3, height: 3 }, shadowOpacity: 1, shadowRadius: 0, elevation: 3,
   },
   btnDis: { backgroundColor: T.bgAlt, shadowOpacity: 0, elevation: 0, opacity: 0.35 },
-  btnText: { color: T.ink, fontSize: 18, fontWeight: '900' },
-  btnText10: { fontSize: 15, letterSpacing: -1 }, // slightly smaller to fit in same width
+  btnText: { color: T.ink, fontSize: 19, fontWeight: '900' },
+  btnText10: { fontSize: 15, letterSpacing: -1 },
   btnDisText: { color: T.muted },
 });
 

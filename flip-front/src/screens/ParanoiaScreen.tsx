@@ -480,32 +480,35 @@ function PNCoinFlip({
   const spinAnim = useRef(new Animated.Value(0)).current;
 
   const flip = () => {
+    // Determine result before animating so visual matches outcome
+    const result: 'pile' | 'face' = Math.random() < 0.5 ? 'pile' : 'face';
     setFlipping(true);
+    spinAnim.setValue(0);
     Animated.timing(spinAnim, {
-      toValue: 1980,
+      toValue: 1800, // 5 full turns — always lands at 0° (front face, no mirroring)
       duration: 1400,
       easing: Easing.out(Easing.cubic),
       useNativeDriver: true,
     }).start(() => {
-      const result: 'pile' | 'face' = Math.random() < 0.5 ? 'pile' : 'face';
       setCoin(result);
       setFlipping(false);
     });
   };
 
   const rotateY = spinAnim.interpolate({
-    inputRange: [0, 1980],
-    outputRange: ['0deg', '1980deg'],
+    inputRange: [0, 1800],
+    outputRange: ['0deg', '1800deg'],
   });
 
   const titleText =
     coin != null
       ? chosenSide === coin ? 'Tu gardes le secret 🤫' : "C'est révélé… 😬"
-      : chosenSide ? 'Lance la pièce' : 'Choisis ton camp';
+      : chosenSide ? 'Lance la pièce !' : 'Choisis ton camp';
 
   const coinBg = coin === 'face' ? T.tomato : T.lemon;
   const coinTextColor = coin === 'face' ? '#fff' : T.ink;
-  const coinLabel = coin != null ? coin.toUpperCase() : 'PILE';
+  // Hide text during spin — a circle mid-air shows nothing readable
+  const coinLabel = flipping ? '' : (coin ?? 'pile').toUpperCase();
 
   return (
     <SafeAreaView style={cf.screen}>

@@ -22,6 +22,7 @@ export const T = {
   chameleonAccent: '#4FCB8A',
   gaucheDroiteAccent: '#FFD23F',
   pureteAccent: '#9B5BFF',
+  castingOrange: '#FF8C42',
 
   // Radii
   rXs: 8,

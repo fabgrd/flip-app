@@ -4,3 +4,4 @@ export { PureteIcon } from './PureteIcon';
 export { ParanoiaIcon } from './ParanoiaIcon';
 export { MedusaIcon } from './MedusaIcon';
 export { AperoIcon } from './AperoIcon';
+export { CastingIcon } from './CastingIcon';
