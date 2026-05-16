@@ -4,7 +4,6 @@ import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
   interpolate,
-  interpolateColor,
   runOnJS,
   useAnimatedStyle,
   useSharedValue,
@@ -12,13 +11,15 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
-import { useTheme } from '../../contexts/ThemeContext';
+import { T } from '../../constants/flipTokens';
 import { Player } from '../../types';
 import { Avatar } from './Avatar';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const SWIPE_THRESHOLD = SCREEN_WIDTH * 0.3;
-const ROTATION_ANGLE = 30;
+const ROTATION_ANGLE = 18;
+const CARD_WIDTH = SCREEN_WIDTH * 0.82;
+const CARD_HEIGHT = 320;
 
 export interface SwipeDirection {
   key: string;
@@ -51,7 +52,6 @@ export function SwipeableCard({
   const translateY = useSharedValue(0);
   const scale = useSharedValue(isActive ? 1 : 0.95);
   const opacity = useSharedValue(isActive ? 1 : 0.8);
-  const { theme } = useTheme();
 
   const triggerHaptic = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
@@ -69,12 +69,12 @@ export function SwipeableCard({
     .enabled(isActive)
     .onStart(() => {
       if (!isActive) return;
-      scale.value = withSpring(1.05);
+      scale.value = withSpring(1.04, { damping: 15 });
     })
     .onUpdate((event) => {
       if (!isActive) return;
       translateX.value = event.translationX;
-      translateY.value = event.translationY * 0.1;
+      translateY.value = event.translationY * 0.12;
     })
     .onEnd(() => {
       if (!isActive) return;
@@ -84,29 +84,29 @@ export function SwipeableCard({
 
       if (shouldSwipeLeft) {
         translateX.value = withTiming(-SCREEN_WIDTH * 1.5, { duration: 300 });
-        translateY.value = withTiming(translateY.value + 50, { duration: 300 });
-        opacity.value = withTiming(0, { duration: 300 });
+        translateY.value = withTiming(translateY.value + 60, { duration: 300 });
+        opacity.value = withTiming(0, { duration: 280 });
         runOnJS(handleSwipeComplete)(leftDirection.key);
       } else if (shouldSwipeRight) {
         translateX.value = withTiming(SCREEN_WIDTH * 1.5, { duration: 300 });
-        translateY.value = withTiming(translateY.value + 50, { duration: 300 });
-        opacity.value = withTiming(0, { duration: 300 });
+        translateY.value = withTiming(translateY.value + 60, { duration: 300 });
+        opacity.value = withTiming(0, { duration: 280 });
         runOnJS(handleSwipeComplete)(rightDirection.key);
       } else {
-        translateX.value = withSpring(0);
-        translateY.value = withSpring(0);
-        scale.value = withSpring(isActive ? 1 : 0.95);
+        translateX.value = withSpring(0, { damping: 18 });
+        translateY.value = withSpring(0, { damping: 18 });
+        scale.value = withSpring(isActive ? 1 : 0.95, { damping: 15 });
       }
     });
 
-  const cardStyle = useAnimatedStyle(() => {
+  // Card transform
+  const cardAnimStyle = useAnimatedStyle(() => {
     const rotate = interpolate(
       translateX.value,
       [-SCREEN_WIDTH, 0, SCREEN_WIDTH],
       [-ROTATION_ANGLE, 0, ROTATION_ANGLE],
       'clamp',
     );
-
     return {
       transform: [
         { translateX: translateX.value },
@@ -119,87 +119,53 @@ export function SwipeableCard({
     };
   });
 
-  const leftLabelStyle = useAnimatedStyle(() => {
-    const progress = interpolate(translateX.value, [-SWIPE_THRESHOLD, 0], [1, 0], 'clamp');
-
+  // Left sticker badge — fades + scales in when swiping left
+  const leftBadgeStyle = useAnimatedStyle(() => {
+    const progress = interpolate(translateX.value, [-SWIPE_THRESHOLD, -SWIPE_THRESHOLD * 0.2], [1, 0], 'clamp');
     return {
-      opacity: withTiming(progress, { duration: 200 }),
-      transform: [{ scale: withTiming(0.8 + progress * 0.2, { duration: 200 }) }],
+      opacity: progress,
+      transform: [{ scale: 0.7 + progress * 0.3 }],
     };
   });
 
-  const rightLabelStyle = useAnimatedStyle(() => {
-    const progress = interpolate(translateX.value, [0, SWIPE_THRESHOLD], [0, 1], 'clamp');
-
+  // Right sticker badge
+  const rightBadgeStyle = useAnimatedStyle(() => {
+    const progress = interpolate(translateX.value, [SWIPE_THRESHOLD * 0.2, SWIPE_THRESHOLD], [0, 1], 'clamp');
     return {
-      opacity: withTiming(progress, { duration: 200 }),
-      transform: [{ scale: withTiming(0.8 + progress * 0.2, { duration: 200 }) }],
-    };
-  });
-
-  const cardBackgroundStyle = useAnimatedStyle(() => {
-    const rightColor = interpolateColor(
-      translateX.value,
-      [0, SWIPE_THRESHOLD],
-      [theme.colors.background, `${rightDirection.color}22`],
-    );
-
-    const leftColor = interpolateColor(
-      translateX.value,
-      [-SWIPE_THRESHOLD, 0],
-      [`${leftDirection.color}22`, theme.colors.background],
-    );
-
-    const backgroundColor = translateX.value > 0 ? rightColor : leftColor;
-
-    return { backgroundColor, borderColor: theme.colors.primary };
-  });
-
-  const overlayStyle = useAnimatedStyle(() => {
-    const rightOpacity = interpolate(
-      translateX.value,
-      [SWIPE_THRESHOLD * 0.3, SWIPE_THRESHOLD],
-      [0, 0.8],
-      'clamp',
-    );
-
-    const leftOpacity = interpolate(
-      translateX.value,
-      [-SWIPE_THRESHOLD, -SWIPE_THRESHOLD * 0.3],
-      [0.8, 0],
-      'clamp',
-    );
-
-    const showRight = translateX.value > SWIPE_THRESHOLD * 0.3;
-    const showLeft = translateX.value < -SWIPE_THRESHOLD * 0.3;
-
-    return {
-      opacity: showRight ? rightOpacity : showLeft ? leftOpacity : 0,
-      backgroundColor: showRight ? rightDirection.overlayColor : leftDirection.overlayColor,
+      opacity: progress,
+      transform: [{ scale: 0.7 + progress * 0.3 }],
     };
   });
 
   return (
     <View style={styles.container}>
       <GestureDetector gesture={panGesture}>
-        <Animated.View style={[styles.card, cardStyle]}>
-          <Animated.View
-            style={[styles.cardContent, cardBackgroundStyle, { borderColor: theme.colors.primary }]}
-          >
-            <Avatar name={player.name} avatar={player.avatar} size={80} />
-            <Text style={[styles.playerName, { color: theme.colors.text.primary }]}>
-              {player.name}
-            </Text>
+        <Animated.View style={[styles.cardOuter, cardAnimStyle]}>
+          <View style={styles.cardInner}>
 
-            <Animated.View style={[styles.overlay, overlayStyle]}>
-              <Animated.Text style={[styles.overlayText, leftLabelStyle]}>
-                {leftDirection.emoji}
-              </Animated.Text>
-              <Animated.Text style={[styles.overlayText, rightLabelStyle]}>
-                {rightDirection.emoji}
-              </Animated.Text>
+            {/* Avatar */}
+            <Avatar name={player.name} avatar={player.avatar} size={88} />
+
+            {/* Player name */}
+            <Text style={styles.playerName}>{player.name}</Text>
+
+            {/* Left direction badge */}
+            <Animated.View style={[styles.badgeLeft, leftBadgeStyle]}>
+              <View style={[styles.badge, { backgroundColor: leftDirection.color }]}>
+                <Text style={styles.badgeEmoji}>{leftDirection.emoji}</Text>
+                <Text style={styles.badgeText}>{leftDirection.label.toUpperCase()}</Text>
+              </View>
             </Animated.View>
-          </Animated.View>
+
+            {/* Right direction badge */}
+            <Animated.View style={[styles.badgeRight, rightBadgeStyle]}>
+              <View style={[styles.badge, { backgroundColor: rightDirection.color }]}>
+                <Text style={styles.badgeEmoji}>{rightDirection.emoji}</Text>
+                <Text style={styles.badgeText}>{rightDirection.label.toUpperCase()}</Text>
+              </View>
+            </Animated.View>
+
+          </View>
         </Animated.View>
       </GestureDetector>
     </View>
@@ -207,25 +173,6 @@ export function SwipeableCard({
 }
 
 const styles = StyleSheet.create({
-  card: {
-    borderRadius: 20,
-    elevation: 10,
-    height: 300,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.3,
-    shadowRadius: 20,
-    width: SCREEN_WIDTH * 0.8,
-  },
-  cardContent: {
-    alignItems: 'center',
-    borderRadius: 20,
-    borderWidth: 2,
-    flex: 1,
-    gap: 20,
-    justifyContent: 'center',
-    padding: 20,
-  },
   container: {
     alignItems: 'center',
     height: '100%',
@@ -233,26 +180,75 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: '100%',
   },
-  overlay: {
+
+  // Outer card — chunky static ink shadow (risograph style)
+  cardOuter: {
+    width: CARD_WIDTH,
+    height: CARD_HEIGHT,
+    borderRadius: T.rLg,
+    shadowColor: T.ink,
+    shadowOffset: { width: 6, height: 6 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 8,
+  },
+
+  // Inner card — solid paper background + ink border
+  cardInner: {
+    flex: 1,
+    borderRadius: T.rLg,
+    borderWidth: 2.5,
+    borderColor: T.ink,
+    backgroundColor: T.paper,
     alignItems: 'center',
-    borderRadius: 20,
-    bottom: 0,
     justifyContent: 'center',
-    left: 0,
-    position: 'absolute',
-    right: 0,
-    top: 0,
-    zIndex: 10,
+    gap: 16,
+    padding: 28,
+    overflow: 'hidden',
   },
-  overlayText: {
-    color: '#FFFFFF',
-    fontSize: 32,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
+
   playerName: {
-    fontSize: 24,
-    fontWeight: 'bold',
+    color: T.ink,
+    fontSize: 34,
+    fontWeight: '900',
+    letterSpacing: -1.2,
     textAlign: 'center',
+    lineHeight: 36,
+  },
+
+  // Directional sticker badges that appear on swipe
+  badgeLeft: {
+    position: 'absolute',
+    top: 20,
+    left: 16,
+    transform: [{ rotate: '-12deg' }],
+  },
+  badgeRight: {
+    position: 'absolute',
+    top: 20,
+    right: 16,
+    transform: [{ rotate: '12deg' }],
+  },
+  badge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    borderWidth: 2.5,
+    borderColor: T.ink,
+    borderRadius: 999,
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    shadowColor: T.ink,
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 4,
+  },
+  badgeEmoji: { fontSize: 20 },
+  badgeText: {
+    color: T.ink,
+    fontSize: 13,
+    fontWeight: '900',
+    letterSpacing: 0.5,
   },
 });
