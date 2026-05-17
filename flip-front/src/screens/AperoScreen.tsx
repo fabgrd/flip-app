@@ -1274,7 +1274,7 @@ function AperoGame({ players, onExit }: { players: Player[]; onExit: () => void 
   };
 
   if (step === 'rules') {
-    return <APRules onStart={() => setStep('pick')} onExit={onExit} onSettings={() => {}} />;
+    return <APRules onStart={() => setStep('pick')} onExit={onExit} onSettings={() => { }} />;
   }
 
   if (step === 'pick') {

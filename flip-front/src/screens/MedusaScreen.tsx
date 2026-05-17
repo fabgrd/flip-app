@@ -1,6 +1,7 @@
 // Médusa — eye contact game
 // Flow: rules → caller → countdown 3,2,1 MÉDUSA → report pairs → round results → next caller → end
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import * as Haptics from 'expo-haptics';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   Animated,
@@ -79,12 +80,22 @@ function MDRules({
       <DotBackground color={T.ink} opacity={0.1} />
 
       <View style={rls.header}>
-        <TouchableOpacity style={rls.backBtn} onPress={onExit} activeOpacity={0.85}>
+        <TouchableOpacity
+          style={rls.backBtn}
+          onPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+            onExit();
+          }}
+          activeOpacity={0.85}
+        >
           <Text style={rls.backBtnText}>←</Text>
         </TouchableOpacity>
         <GameMenuActions
           showDice={false}
-          onPressSettings={onSettings}
+          onPressSettings={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+            onSettings();
+          }}
           rules={{ rules: rulesModal, title: 'Médusa', accentColor: T.cobalt }}
         />
       </View>
@@ -117,7 +128,14 @@ function MDRules({
       </View>
 
       <View style={rls.footer}>
-        <InkButton onPress={onStart}>Que la chasse commence</InkButton>
+        <InkButton
+          onPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+            onStart();
+          }}
+        >
+          Que la chasse commence
+        </InkButton>
       </View>
     </SafeAreaView>
   );
@@ -231,7 +249,13 @@ function MDCaller({
         </View>
 
         <View style={cal.footer}>
-          <InkButton color={T.cobalt} onPress={onStart}>
+          <InkButton
+            color={T.cobalt}
+            onPress={() => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+              onStart();
+            }}
+          >
             Tout le monde est prêt → Lancer
           </InkButton>
         </View>
@@ -300,6 +324,7 @@ function MDCountdown({ onDone }: { onDone: () => void }) {
 
   useEffect(() => {
     if (phase >= 0 && phase < 3) {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
       scaleAnim.setValue(0.3);
       Animated.spring(scaleAnim, {
         toValue: 1,
@@ -311,6 +336,7 @@ function MDCountdown({ onDone }: { onDone: () => void }) {
       return () => clearTimeout(t);
     }
     if (phase === 3) {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       scaleAnim.setValue(0.3);
       Animated.spring(scaleAnim, {
         toValue: 1,
@@ -390,19 +416,27 @@ function MDReport({
 
   const toggle = (idx: number) => {
     if (selecting === null) {
+      Haptics.selectionAsync();
       setSelecting(idx);
     } else if (selecting === idx) {
+      Haptics.selectionAsync();
       setSelecting(null);
     } else {
       const exists = pairs.some(
         (p) => (p.a === selecting && p.b === idx) || (p.a === idx && p.b === selecting),
       );
-      if (!exists) setPairs([...pairs, { a: selecting, b: idx }]);
+      if (!exists) {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+        setPairs([...pairs, { a: selecting, b: idx }]);
+      }
       setSelecting(null);
     }
   };
 
-  const removePair = (i: number) => setPairs(pairs.filter((_, j) => j !== i));
+  const removePair = (i: number) => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    setPairs(pairs.filter((_, j) => j !== i));
+  };
 
   return (
     <SafeAreaView style={rep.screen}>
@@ -477,11 +511,24 @@ function MDReport({
 
       <View style={rep.footer}>
         {pairs.length > 0 ? (
-          <InkButton color={T.tomato} onPress={onConfirm}>
+          <InkButton
+            color={T.tomato}
+            onPress={() => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+              onConfirm();
+            }}
+          >
             {`Confirmer · ${pairs.length} paire${pairs.length > 1 ? 's' : ''}`}
           </InkButton>
         ) : (
-          <InkButton onPress={onConfirm}>Personne ne s'est regardé</InkButton>
+          <InkButton
+            onPress={() => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+              onConfirm();
+            }}
+          >
+            Personne ne s'est regardé
+          </InkButton>
         )}
       </View>
     </SafeAreaView>
@@ -655,7 +702,14 @@ function MDResults({
           </View>
         )}
 
-        <InkButton onPress={onNext}>{isLast ? 'Voir le bilan final' : 'Tour suivant →'}</InkButton>
+        <InkButton
+          onPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+            onNext();
+          }}
+        >
+          {isLast ? 'Voir le bilan final' : 'Tour suivant →'}
+        </InkButton>
       </ScrollView>
     </SafeAreaView>
   );
@@ -780,8 +834,22 @@ function MDEnd({
         ))}
 
         <View style={{ gap: 10, marginTop: 8 }}>
-          <InkButton onPress={onRestart}>Rejouer</InkButton>
-          <TouchableOpacity style={en.secondaryBtn} onPress={onExit} activeOpacity={0.85}>
+          <InkButton
+            onPress={() => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+              onRestart();
+            }}
+          >
+            Rejouer
+          </InkButton>
+          <TouchableOpacity
+            style={en.secondaryBtn}
+            onPress={() => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+              onExit();
+            }}
+            activeOpacity={0.85}
+          >
             <Text style={en.secondaryBtnText}>Retour au hub</Text>
           </TouchableOpacity>
         </View>

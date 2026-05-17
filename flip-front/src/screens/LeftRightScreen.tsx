@@ -16,11 +16,11 @@ const LEFT_RIGHT_RULES = [
   {
     n: '1',
     title: 'Une phrase apparaît',
-    desc: 'Elle décrit une opinion politique ou une valeur.',
+    desc: 'Elle raconte une situation courante.',
   },
   {
     n: '2',
-    title: 'Chacun joue tour à tour',
+    title: 'Chacun choisit si c\'est un truc de gauche ou de droite',
     desc: 'Glisse vers la gauche ou la droite selon tes convictions.',
   },
   {
