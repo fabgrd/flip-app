@@ -13,7 +13,17 @@ import {
   View,
 } from 'react-native';
 
-import { DotBackground, GameMenuActions, MedusaIcon } from '../components';
+import {
+  DotBackground,
+  GameCard,
+  GameChip,
+  GameMenuActions,
+  InkButton,
+  InitialAvatar,
+  MedusaIcon,
+  StickerBadge,
+} from '../components';
+import { getPlayerBgColor, getPlayerColorName, getPlayerTextColor } from '../constants';
 import { T } from '../constants/flipTokens';
 import { MedusaPair, MedusaRoundHistory, MedusaStep } from '../games/medusa';
 import { Player, RootStackParamList } from '../types';
@@ -22,85 +32,9 @@ type MedusaScreenRouteProp = RouteProp<RootStackParamList, 'Medusa'>;
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
-const PLAYER_COLORS = ['tomato', 'cobalt', 'lemon', 'mint', 'violet', 'pink'] as const;
-const LIGHT_COLORS = ['lemon', 'pink'];
-
-function pColor(idx: number) { return PLAYER_COLORS[idx % PLAYER_COLORS.length]; }
-function pBg(idx: number): string { return (T as unknown as Record<string, string>)[pColor(idx)] ?? T.tomato; }
-function pText(idx: number): string { return LIGHT_COLORS.includes(pColor(idx)) ? T.ink : '#fff'; }
-
-// ─── Shared UI ────────────────────────────────────────────────────────────────
-
-function Chip({ color, textColor = T.ink, children }: { color: string; textColor?: string; children: React.ReactNode }) {
-  return (
-    <View style={[u.chip, { backgroundColor: color }]}>
-      <Text style={[u.chipText, { color: textColor }]}>{children}</Text>
-    </View>
-  );
-}
-
-function Card({ color = T.paper, style, children }: { color?: string; style?: object; children: React.ReactNode }) {
-  return <View style={[u.card, { backgroundColor: color }, style]}>{children}</View>;
-}
-
-function InkBtn({ label, onPress, disabled, color = T.ink, textColor = '#fff' }: {
-  label: string; onPress?: () => void; disabled?: boolean; color?: string; textColor?: string;
-}) {
-  return (
-    <TouchableOpacity
-      style={[u.inkBtn, { backgroundColor: color, borderColor: color }, disabled && u.inkBtnDisabled]}
-      onPress={disabled ? undefined : onPress}
-      activeOpacity={0.85}
-    >
-      <Text style={[u.inkBtnText, { color: textColor }]}>{label}</Text>
-    </TouchableOpacity>
-  );
-}
-
-function Sticker({ color, rotation, textColor = T.ink, children }: {
-  color: string; rotation: number; textColor?: string; children: string;
-}) {
-  return (
-    <View style={[u.sticker, { backgroundColor: color, transform: [{ rotate: `${rotation}deg` }] }]}>
-      <Text style={[u.stickerText, { color: textColor }]}>{children}</Text>
-    </View>
-  );
-}
-
-function Avatar({ idx, size = 40, radius = 12 }: { idx: number; size?: number; radius?: number }) {
-  return (
-    <View style={{ width: size, height: size, borderRadius: radius, backgroundColor: pBg(idx), borderWidth: 2, borderColor: T.ink, alignItems: 'center', justifyContent: 'center' }}>
-      <Text style={{ color: pText(idx), fontSize: size * 0.4, fontWeight: '900' }}>
-        {String.fromCharCode(65 + idx)}
-      </Text>
-    </View>
-  );
-}
-
-const u = StyleSheet.create({
-  chip: {
-    borderWidth: 1.5, borderColor: T.ink, borderRadius: 999,
-    paddingHorizontal: 12, paddingVertical: 5, alignSelf: 'flex-start',
-    shadowColor: T.ink, shadowOffset: { width: 2, height: 2 }, shadowOpacity: 1, shadowRadius: 0, elevation: 2,
-  },
-  chipText: { fontSize: 12, fontWeight: '800', letterSpacing: 0.5 },
-  card: {
-    borderWidth: 2, borderColor: T.ink, borderRadius: 22, padding: 18,
-    shadowColor: T.ink, shadowOffset: { width: 5, height: 5 }, shadowOpacity: 1, shadowRadius: 0, elevation: 4,
-  },
-  inkBtn: {
-    borderWidth: 2, borderRadius: T.rMd, paddingVertical: 18, alignItems: 'center',
-    shadowColor: T.ink, shadowOffset: { width: 5, height: 5 }, shadowOpacity: 1, shadowRadius: 0, elevation: 5,
-  },
-  inkBtnDisabled: { opacity: 0.4 },
-  inkBtnText: { fontSize: 17, fontWeight: '900', letterSpacing: -0.3 },
-  sticker: {
-    borderWidth: 2, borderColor: T.ink, borderRadius: 999,
-    paddingHorizontal: 16, paddingVertical: 8, alignSelf: 'center',
-    shadowColor: T.ink, shadowOffset: { width: 3, height: 3 }, shadowOpacity: 1, shadowRadius: 0, elevation: 3,
-  },
-  stickerText: { fontSize: 13, fontWeight: '900', letterSpacing: 1 },
-});
+function pColor(idx: number) { return getPlayerColorName(idx); }
+function pBg(idx: number): string { return getPlayerBgColor(idx); }
+function pText(idx: number): string { return getPlayerTextColor(idx); }
 
 // ─── Rules ────────────────────────────────────────────────────────────────────
 
@@ -142,12 +76,12 @@ function MDRules({
           <MedusaIcon size={86} />
         </View>
 
-        <Chip color={T.paper}>Jeu n°5</Chip>
+        <GameChip color={T.paper}>Jeu n°5</GameChip>
         <Text style={rls.title}>Médusa</Text>
       </View>
 
       <View style={rls.cardWrap}>
-        <Card>
+        <GameCard style={{ borderRadius: 22, padding: 18 }}>
           <Text style={rls.cardLabel}>COMMENT ON JOUE</Text>
           {RULES.map((s, i) => (
             <View key={s.n} style={[rls.ruleRow, i < RULES.length - 1 && rls.divider]}>
@@ -160,11 +94,11 @@ function MDRules({
               </View>
             </View>
           ))}
-        </Card>
+        </GameCard>
       </View>
 
       <View style={rls.footer}>
-        <InkBtn label="Que la chasse commence" onPress={onStart} />
+        <InkButton onPress={onStart}>Que la chasse commence</InkButton>
       </View>
     </SafeAreaView>
   );
@@ -220,11 +154,15 @@ function MDCaller({ playerIdx, playerName, roundNum, totalRounds, onStart }: {
             <Text style={cal.roundBadgeText}>TOUR {roundNum} / {totalRounds}</Text>
           </View>
 
-          <View style={[cal.avatar, { backgroundColor: pBg(playerIdx), shadowColor: T.cobalt }]}>
-            <Text style={[cal.avatarText, { color: pText(playerIdx) }]}>
-              {playerName[0].toUpperCase()}
-            </Text>
-          </View>
+          <InitialAvatar
+            index={playerIdx}
+            label={playerName[0].toUpperCase()}
+            size={120}
+            radius={32}
+            borderColor={T.paper}
+            shadowColor={T.cobalt}
+            style={{ borderWidth: 3, shadowOffset: { width: 8, height: 8 }, elevation: 8 }}
+          />
 
           <Text style={cal.name}>{playerName},{'\n'}c'est toi</Text>
           <Text style={cal.sub}>
@@ -234,7 +172,9 @@ function MDCaller({ playerIdx, playerName, roundNum, totalRounds, onStart }: {
         </View>
 
         <View style={cal.footer}>
-          <InkBtn label="Tout le monde est prêt → Lancer" onPress={onStart} color={T.cobalt} />
+          <InkButton color={T.cobalt} onPress={onStart}>
+            Tout le monde est prêt → Lancer
+          </InkButton>
         </View>
       </SafeAreaView>
     </View>
@@ -366,7 +306,7 @@ function MDReport({ players, callerName, pairs, setPairs, onConfirm }: {
       <DotBackground opacity={0.06} />
 
       <View style={rep.header}>
-        <Chip color={T.cobalt} textColor="#fff">Médusa · résolution</Chip>
+        <GameChip color={T.cobalt} textColor="#fff">Médusa · résolution</GameChip>
         <Text style={rep.title}>Qui s'est{'\n'}regardé ?</Text>
         <Text style={rep.sub}>Tapez deux joueurs qui ont croisé le regard.</Text>
       </View>
@@ -423,13 +363,11 @@ function MDReport({ players, callerName, pairs, setPairs, onConfirm }: {
 
       <View style={rep.footer}>
         {pairs.length > 0 ? (
-          <InkBtn
-            label={`Confirmer · ${pairs.length} paire${pairs.length > 1 ? 's' : ''}`}
-            onPress={onConfirm}
-            color={T.tomato}
-          />
+          <InkButton color={T.tomato} onPress={onConfirm}>
+            {`Confirmer · ${pairs.length} paire${pairs.length > 1 ? 's' : ''}`}
+          </InkButton>
         ) : (
-          <InkBtn label="Personne ne s'est regardé" onPress={onConfirm} />
+          <InkButton onPress={onConfirm}>Personne ne s'est regardé</InkButton>
         )}
       </View>
     </SafeAreaView>
@@ -503,9 +441,9 @@ function MDResults({ players, pairs, roundNum, totalRounds, onNext }: {
       <DotBackground color={T.ink} opacity={0.1} />
 
       <View style={res.top}>
-        <Sticker color={T.paper} rotation={-6} textColor={T.ink}>
+        <StickerBadge color={T.paper} rotation={-6} textColor={T.ink}>
           {hasCatches ? 'CONTACT !' : 'TOUT LE MONDE EST SAFE'}
-        </Sticker>
+        </StickerBadge>
         <Text style={[res.verdict, { color: hasCatches ? '#fff' : T.ink }]}>
           {hasCatches ? 'Attrapés !' : 'Bien joué !'}
         </Text>
@@ -519,18 +457,18 @@ function MDResults({ players, pairs, roundNum, totalRounds, onNext }: {
       <ScrollView contentContainerStyle={res.content} showsVerticalScrollIndicator={false}>
         {/* Caught pairs */}
         {pairs.map((pair, i) => (
-          <Card key={i} style={{ padding: 14 }}>
+          <GameCard key={i} style={{ padding: 14, borderRadius: 22 }}>
             <View style={res.pairRow}>
-              <Avatar idx={pair.a} size={40} radius={12} />
+              <InitialAvatar index={pair.a} size={40} radius={12} />
               <View style={{ flex: 1, alignItems: 'center' }}>
                 <Text style={res.pairNames}>
                   {players[pair.a].name} <Text style={{ color: T.tomato }}>↔</Text> {players[pair.b].name}
                 </Text>
                 <Text style={res.pairPenalty}>1 GORGÉE CHACUN</Text>
               </View>
-              <Avatar idx={pair.b} size={40} radius={12} />
+              <InitialAvatar index={pair.b} size={40} radius={12} />
             </View>
-          </Card>
+          </GameCard>
         ))}
 
         {/* Safe players */}
@@ -541,16 +479,15 @@ function MDResults({ players, pairs, roundNum, totalRounds, onNext }: {
             </Text>
             <View style={res.safeRow}>
               {safePlayers.map((p, i) => (
-                <Chip key={i} color={T.paper}>✓ {p.name}</Chip>
+                <GameChip key={i} color={T.paper}>✓ {p.name}</GameChip>
               ))}
             </View>
           </View>
         )}
 
-        <InkBtn
-          label={isLast ? 'Voir le bilan final' : 'Tour suivant →'}
-          onPress={onNext}
-        />
+        <InkButton onPress={onNext}>
+          {isLast ? 'Voir le bilan final' : 'Tour suivant →'}
+        </InkButton>
       </ScrollView>
     </SafeAreaView>
   );
@@ -585,21 +522,23 @@ function MDEnd({ players, penalties, history, onExit, onRestart }: {
       <DotBackground opacity={0.06} />
 
       <View style={en.hero}>
-        <Sticker color={T.cobalt} rotation={-4} textColor="#fff">FIN DE PARTIE</Sticker>
+        <StickerBadge color={T.cobalt} rotation={-4} textColor="#fff">
+          FIN DE PARTIE
+        </StickerBadge>
         <Text style={en.title}>Le bilan{'\n'}des regards</Text>
       </View>
 
       <ScrollView contentContainerStyle={en.content} showsVerticalScrollIndicator={false}>
         {/* Stats */}
         <View style={en.statsRow}>
-          <Card color={T.cobalt} style={{ flex: 1, padding: 14 }}>
+          <GameCard color={T.cobalt} style={{ flex: 1, padding: 14, borderRadius: 22 }}>
             <Text style={en.statLabel}>TOURS JOUÉS</Text>
             <Text style={en.statValue}>{history.length}</Text>
-          </Card>
-          <Card color={T.tomato} style={{ flex: 1, padding: 14 }}>
+          </GameCard>
+          <GameCard color={T.tomato} style={{ flex: 1, padding: 14, borderRadius: 22 }}>
             <Text style={en.statLabel}>EYE CONTACTS</Text>
             <Text style={en.statValue}>{totalContacts}</Text>
-          </Card>
+          </GameCard>
         </View>
 
         {/* Ranking */}
@@ -612,7 +551,7 @@ function MDEnd({ players, penalties, history, onExit, onRestart }: {
               <View style={[en.rankNum, { backgroundColor: isTop ? 'rgba(255,255,255,0.2)' : T.bgAlt }]}>
                 <Text style={[en.rankNumText, { color: isTop ? '#fff' : T.ink }]}>#{i + 1}</Text>
               </View>
-              <Avatar idx={idx} size={36} radius={10} />
+              <InitialAvatar index={idx} size={36} radius={10} />
               <View style={{ flex: 1 }}>
                 <Text style={[en.rankName, { color: isTop ? '#fff' : T.ink }]}>{p.name}</Text>
                 <Text style={[en.rankSub, { color: isTop ? 'rgba(255,255,255,0.7)' : T.muted }]}>
@@ -641,7 +580,7 @@ function MDEnd({ players, penalties, history, onExit, onRestart }: {
         ))}
 
         <View style={{ gap: 10, marginTop: 8 }}>
-          <InkBtn label="Rejouer" onPress={onRestart} />
+          <InkButton onPress={onRestart}>Rejouer</InkButton>
           <TouchableOpacity style={en.secondaryBtn} onPress={onExit} activeOpacity={0.85}>
             <Text style={en.secondaryBtnText}>Retour au hub</Text>
           </TouchableOpacity>

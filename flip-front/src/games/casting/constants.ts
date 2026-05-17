@@ -36,5 +36,4 @@ export const CASTING_LABELS: Record<number, string> = {
   10: 'Oscar',
 };
 
-export const PLAYER_COLORS = ['tomato', 'cobalt', 'lemon', 'mint', 'violet', 'pink'] as const;
-export const LIGHT_COLORS = ['lemon', 'pink'] as const;
+export { PLAYER_COLORS, LIGHT_COLORS } from '../../constants/playerColors';

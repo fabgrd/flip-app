@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 import type { Player } from '../../../types';
+import { shuffleArray } from '../../../utils/array';
 import { DEFAULT_DISTRIBUTION_BY_PLAYER_COUNT, getWordPairsForThemes } from '../constants';
 import type {
   CameleonAssignedPlayer,
@@ -8,15 +9,6 @@ import type {
   CameleonTheme,
   StartCameleonOptions,
 } from '../types';
-
-function shuffleArray<T>(array: T[]): T[] {
-  const copy = [...array];
-  for (let i = copy.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [copy[i], copy[j]] = [copy[j], copy[i]];
-  }
-  return copy;
-}
 
 export type CameleonPhase = 'settings' | 'reveal' | 'clues' | 'vote' | 'results';
 

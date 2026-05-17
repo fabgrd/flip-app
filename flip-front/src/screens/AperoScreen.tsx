@@ -12,7 +12,19 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { CardCrosshatch, DotBackground, GameMenuActions, isRedSuit, PlayingCardBack, PlayingCardFace } from '../components';
+import {
+  CardCrosshatch,
+  DotBackground,
+  GameCard,
+  GameChip,
+  GameMenuActions,
+  InkButton,
+  StickerBadge,
+  isRedSuit,
+  PlayingCardBack,
+  PlayingCardFace,
+} from '../components';
+import { getPlayerBgColor, getPlayerColorName, getPlayerTextColor } from '../constants';
 import { AperoIcon } from '../components/icons/AperoIcon';
 import { T } from '../constants/flipTokens';
 import { Player, RootStackParamList } from '../types';
@@ -60,78 +72,9 @@ function apDeck(): ApCard[] {
 
 // ─── Player colors ────────────────────────────────────────────────────────────
 
-const PLAYER_COLORS = ['tomato', 'cobalt', 'lemon', 'mint', 'violet', 'pink'] as const;
-const LIGHT_COLORS = ['lemon', 'pink'];
-function pColor(idx: number) { return PLAYER_COLORS[idx % PLAYER_COLORS.length]; }
-function pBg(idx: number): string { return (T as unknown as Record<string, string>)[pColor(idx)] ?? T.tomato; }
-function pText(idx: number): string { return LIGHT_COLORS.includes(pColor(idx)) ? T.ink : '#fff'; }
-
-// ─── Shared UI ────────────────────────────────────────────────────────────────
-
-function Chip({ color, textColor = T.ink, style, children }: {
-  color: string; textColor?: string; style?: object; children: React.ReactNode;
-}) {
-  return (
-    <View style={[u.chip, { backgroundColor: color }, style]}>
-      <Text style={[u.chipText, { color: textColor }]}>{children as string}</Text>
-    </View>
-  );
-}
-
-function Card({ color = T.paper, style, children }: {
-  color?: string; style?: object; children: React.ReactNode;
-}) {
-  return <View style={[u.card, { backgroundColor: color }, style]}>{children}</View>;
-}
-
-function InkBtn({ label, onPress, disabled, color = T.ink, textColor = '#fff' }: {
-  label: string; onPress?: () => void; disabled?: boolean; color?: string; textColor?: string;
-}) {
-  return (
-    <TouchableOpacity
-      style={[u.inkBtn, { backgroundColor: color }, disabled && u.inkBtnDisabled]}
-      onPress={disabled ? undefined : onPress}
-      activeOpacity={0.85}
-    >
-      <Text style={[u.inkBtnText, { color: textColor }]}>{label}</Text>
-    </TouchableOpacity>
-  );
-}
-
-function Sticker({ color, rotation, textColor = T.ink, children }: {
-  color: string; rotation: number; textColor?: string; children: string;
-}) {
-  return (
-    <View style={[u.sticker, { backgroundColor: color, transform: [{ rotate: `${rotation}deg` }] }]}>
-      <Text style={[u.stickerText, { color: textColor }]}>{children}</Text>
-    </View>
-  );
-}
-
-const u = StyleSheet.create({
-  chip: {
-    borderWidth: 1.5, borderColor: T.ink, borderRadius: 999,
-    paddingHorizontal: 12, paddingVertical: 5, alignSelf: 'flex-start',
-    shadowColor: T.ink, shadowOffset: { width: 2, height: 2 }, shadowOpacity: 1, shadowRadius: 0, elevation: 2,
-  },
-  chipText: { fontSize: 11, fontWeight: '800', letterSpacing: 0.5 },
-  card: {
-    borderWidth: 2, borderColor: T.ink, borderRadius: 22, padding: 18,
-    shadowColor: T.ink, shadowOffset: { width: 5, height: 5 }, shadowOpacity: 1, shadowRadius: 0, elevation: 4,
-  },
-  inkBtn: {
-    borderWidth: 2, borderColor: T.ink, borderRadius: T.rMd, paddingVertical: 18, alignItems: 'center',
-    shadowColor: T.ink, shadowOffset: { width: 5, height: 5 }, shadowOpacity: 1, shadowRadius: 0, elevation: 5,
-  },
-  inkBtnDisabled: { opacity: 0.4 },
-  inkBtnText: { fontSize: 17, fontWeight: '900', letterSpacing: -0.3 },
-  sticker: {
-    borderWidth: 2, borderColor: T.ink, borderRadius: 999,
-    paddingHorizontal: 16, paddingVertical: 8, alignSelf: 'center',
-    shadowColor: T.ink, shadowOffset: { width: 3, height: 3 }, shadowOpacity: 1, shadowRadius: 0, elevation: 3,
-  },
-  stickerText: { fontSize: 14, fontWeight: '900', letterSpacing: 1 },
-});
+function pColor(idx: number) { return getPlayerColorName(idx); }
+function pBg(idx: number): string { return getPlayerBgColor(idx); }
+function pText(idx: number): string { return getPlayerTextColor(idx); }
 
 // ─── Bridge ───────────────────────────────────────────────────────────────────
 
@@ -302,12 +245,12 @@ function APRules({ onStart, onExit, onSettings }: {
           <View style={rls.iconWrap}>
             <AperoIcon size={92} />
           </View>
-          <Chip color={T.paper}>Jeu n°6</Chip>
+          <GameChip color={T.paper} textStyle={{ fontSize: 11 }}>Jeu n°6</GameChip>
           <Text style={rls.title}>L'Apéro</Text>
         </View>
 
         <View style={rls.cardWrap}>
-          <Card>
+          <GameCard style={{ borderRadius: 22, padding: 18 }}>
             <Text style={rls.cardLabel}>COMMENT ON JOUE</Text>
             {RULES.map((s, i) => (
               <View key={s.n} style={[rls.ruleRow, i < RULES.length - 1 && rls.divider]}>
@@ -320,11 +263,11 @@ function APRules({ onStart, onExit, onSettings }: {
                 </View>
               </View>
             ))}
-          </Card>
+          </GameCard>
         </View>
 
         <View style={rls.footer}>
-          <InkBtn label="Distribuer les cartes" onPress={onStart} />
+          <InkButton onPress={onStart}>Distribuer les cartes</InkButton>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -371,7 +314,9 @@ function APPickDealer({ players, onPick }: { players: Player[]; onPick: (i: numb
     <View style={{ flex: 1, backgroundColor: T.ink }}>
       <SafeAreaView style={{ flex: 1 }}>
         <View style={pk.center}>
-          <Sticker color={T.pink} rotation={-4} textColor="#fff">QUI EST LE DONNEUR ?</Sticker>
+          <StickerBadge color={T.pink} rotation={-4} textColor="#fff">
+            QUI EST LE DONNEUR ?
+          </StickerBadge>
           <Text style={pk.title}>Choisis qui{'\n'}tient le tel</Text>
           <Text style={pk.sub}>Le donneur pioche et subit les conséquences.</Text>
         </View>
@@ -559,13 +504,14 @@ function APRound({ card, guesser, dealer, exhaustedVals, streak, cardNum, total,
 
           {phase === 'g2' && hint && (
             <View style={{ alignItems: 'center', gap: 8, width: '100%' }}>
-              <Chip
+              <GameChip
                 color={hint === 'plus' ? T.tomato : T.cobalt}
                 textColor="#fff"
                 style={{ alignSelf: 'center' }}
+                textStyle={{ fontSize: 11 }}
               >
                 C'est {hint} que {apName(g1!)}
-              </Chip>
+              </GameChip>
               <Text style={rd.phaseTitle}>Deuxième chance !</Text>
               <Text style={rd.phaseSub}>Dernier essai, {guesser.name}</Text>
               <APValuePicker onPick={doG2} disabled={g1 ? [g1, ...exhaustedVals] : exhaustedVals} />
@@ -576,13 +522,13 @@ function APRound({ card, guesser, dealer, exhaustedVals, streak, cardNum, total,
             <View style={{ alignItems: 'center', gap: 8 }}>
               {found ? (
                 <>
-                  <Sticker color={T.mint} rotation={-4}>TROUVÉ !</Sticker>
+                  <StickerBadge color={T.mint} rotation={-4}>TROUVÉ !</StickerBadge>
                   <Text style={rd.resultTitle}>{dealer.name} boit 2 gorgées</Text>
                   <Text style={rd.phaseSub}>Série du donneur remise à zéro</Text>
                 </>
               ) : (
                 <>
-                  <Sticker color={T.tomato} rotation={4} textColor="#fff">RATÉ !</Sticker>
+                  <StickerBadge color={T.tomato} rotation={4} textColor="#fff">RATÉ !</StickerBadge>
                   <Text style={rd.resultTitle}>{guesser.name} boit {penalty} gorgée{penalty > 1 ? 's' : ''}</Text>
                   {finalGuess && (
                     <Text style={rd.phaseMono}>
@@ -599,18 +545,14 @@ function APRound({ card, guesser, dealer, exhaustedVals, streak, cardNum, total,
       {(phase === 'result' || streak >= 3) && (
         <View style={rd.footer}>
           {phase === 'result' && (
-            <InkBtn
-              label={cardNum >= total ? 'Voir le bilan →' : 'Carte suivante →'}
-              onPress={() => onDone(found, penalty)}
-            />
+            <InkButton onPress={() => onDone(found, penalty)}>
+              {cardNum >= total ? 'Voir le bilan →' : 'Carte suivante →'}
+            </InkButton>
           )}
           {streak >= 3 && (
-            <InkBtn
-              label="Donner le tas →"
-              onPress={onRequestPass}
-              color={T.paper}
-              textColor={T.ink}
-            />
+            <InkButton color={T.paper} textColor={T.ink} onPress={onRequestPass}>
+              Donner le tas →
+            </InkButton>
           )}
         </View>
       )}
@@ -659,20 +601,22 @@ function APSpecialFlip({ played, dealer, quadVal, onNext }: {
         <DotBackground color={T.ink} opacity={0.08} />
         <ScrollView contentContainerStyle={sf.center}>
           <Animated.View style={{ transform: [{ scale: popAnim }], opacity: popOpacity }}>
-            <Sticker color={T.tomato} rotation={-6} textColor="#fff">★ QUADRUPLÉ !</Sticker>
+            <StickerBadge color={T.tomato} rotation={-6} textColor="#fff">
+              ★ QUADRUPLÉ !
+            </StickerBadge>
           </Animated.View>
           <Text style={sf.title}>Les 4 {apName(quadVal)}{'\n'}sont sortis !</Text>
           <Text style={sf.sub}>Les 4 cartes se retournent sur la traversée.</Text>
-          <Card style={{ alignSelf: 'stretch', marginTop: 8 }}>
+          <GameCard style={{ alignSelf: 'stretch', marginTop: 8, borderRadius: 22, padding: 18 }}>
             <Text style={sf.bonusText}>{dealer.name} boit 2 gorgées</Text>
             <Text style={sf.bonusSub}>Pénalité du quadruplé</Text>
-          </Card>
+          </GameCard>
           <View style={{ alignSelf: 'stretch', marginTop: 16 }}>
             <APBridge cards={played} />
           </View>
         </ScrollView>
         <View style={sf.footer}>
-          <InkBtn label="Continuer →" onPress={onNext} />
+          <InkButton onPress={onNext}>Continuer →</InkButton>
         </View>
       </SafeAreaView>
     </View>
@@ -698,7 +642,7 @@ function APDealerPass({ dealer, players, dealerIdx, onPass }: {
       <SafeAreaView style={{ flex: 1 }}>
         <DotBackground color={T.ink} opacity={0.08} />
         <View style={dp.header}>
-          <Sticker color={T.paper} rotation={-6}>DONNER LE TAS</Sticker>
+          <StickerBadge color={T.paper} rotation={-6}>DONNER LE TAS</StickerBadge>
           <Text style={dp.title}>{dealer.name}{'\n'}passe la main</Text>
           <Text style={dp.sub}>Choisis à qui passer le tas.</Text>
         </View>
@@ -749,7 +693,7 @@ function APEnd({ players, sips, played, foundTotal, onExit }: {
       <DotBackground opacity={0.06} />
       <ScrollView contentContainerStyle={{ paddingBottom: 40 }}>
         <View style={en.header}>
-          <Sticker color={T.pink} rotation={-4} textColor="#fff">FIN DE PARTIE</Sticker>
+          <StickerBadge color={T.pink} rotation={-4} textColor="#fff">FIN DE PARTIE</StickerBadge>
           <Text style={en.title}>Le bilan{'\n'}de l'apéro</Text>
         </View>
 
@@ -805,8 +749,10 @@ function APEnd({ players, sips, played, foundTotal, onExit }: {
         </View>
 
         <View style={{ paddingHorizontal: 20, gap: 10 }}>
-          <InkBtn label="Rejouer" onPress={onExit} />
-          <InkBtn label="Retour au hub" onPress={onExit} color={T.paper} textColor={T.ink} />
+          <InkButton onPress={onExit}>Rejouer</InkButton>
+          <InkButton color={T.paper} textColor={T.ink} onPress={onExit}>
+            Retour au hub
+          </InkButton>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -941,10 +887,16 @@ function AperoGame({ players, onExit }: { players: Player[]; onExit: () => void 
 
           {/* Persistent header — never remounts */}
           <View style={playTopBar}>
-            <Chip color={T.pink} textColor="#fff">🃏 {players[dealerIdx].name}</Chip>
+            <GameChip color={T.pink} textColor="#fff" textStyle={{ fontSize: 11 }}>
+              🃏 {players[dealerIdx].name}
+            </GameChip>
             <View style={{ flexDirection: 'row', gap: 6 }}>
-              <Chip color={T.paper}>{cardPos + 1}/{deck.length}</Chip>
-              <Chip color={streak >= 3 ? T.lemon : T.paper}>Série {streak}</Chip>
+              <GameChip color={T.paper} textStyle={{ fontSize: 11 }}>
+                {cardPos + 1}/{deck.length}
+              </GameChip>
+              <GameChip color={streak >= 3 ? T.lemon : T.paper} textStyle={{ fontSize: 11 }}>
+                Série {streak}
+              </GameChip>
             </View>
           </View>
 

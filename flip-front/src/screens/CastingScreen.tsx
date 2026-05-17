@@ -12,14 +12,22 @@ import {
   View,
 } from 'react-native';
 
-import { CastingIcon, DotBackground, GameMenuActions } from '../components';
+import {
+  CastingIcon,
+  DotBackground,
+  GameCard,
+  GameChip,
+  GameMenuActions,
+  InkButton,
+  InitialAvatar,
+  StickerBadge,
+} from '../components';
+import { getPlayerBgColor, getPlayerColorName, getPlayerTextColor } from '../constants';
 import { T } from '../constants/flipTokens';
 import {
   CASTING_LABELS,
   CASTING_ORANGE,
   CASTING_SCENARIOS,
-  LIGHT_COLORS,
-  PLAYER_COLORS,
 } from '../games/casting';
 import { CastingResult } from '../games/casting/types';
 import { Player, RootStackParamList } from '../types';
@@ -39,193 +47,20 @@ type CastingStep =
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function playerColor(idx: number): string {
-  return PLAYER_COLORS[idx % PLAYER_COLORS.length];
+  return getPlayerColorName(idx);
 }
 
 function playerBg(idx: number): string {
-  return (T as unknown as Record<string, string>)[playerColor(idx)] ?? T.tomato;
+  return getPlayerBgColor(idx);
 }
 
 function avatarTextColor(idx: number): string {
-  return (LIGHT_COLORS as readonly string[]).includes(playerColor(idx)) ? T.ink : '#fff';
+  return getPlayerTextColor(idx);
 }
 
 function pickRandom<T>(arr: T[]): T {
   return arr[Math.floor(Math.random() * arr.length)];
 }
-
-// ─── Shared UI ────────────────────────────────────────────────────────────────
-
-function Chip({
-  color,
-  textColor = T.ink,
-  children,
-}: {
-  color: string;
-  textColor?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <View style={[sh.chip, { backgroundColor: color }]}>
-      <Text style={[sh.chipText, { color: textColor }]}>{children}</Text>
-    </View>
-  );
-}
-
-function Card({
-  color = T.paper,
-  children,
-  style,
-}: {
-  color?: string;
-  children: React.ReactNode;
-  style?: object;
-}) {
-  return (
-    <View style={[sh.card, { backgroundColor: color }, style]}>
-      {children}
-    </View>
-  );
-}
-
-function InkButton({
-  children,
-  onPress,
-  disabled,
-  color = T.ink,
-  textColor = '#fff',
-}: {
-  children: React.ReactNode;
-  onPress?: () => void;
-  disabled?: boolean;
-  color?: string;
-  textColor?: string;
-}) {
-  return (
-    <TouchableOpacity
-      style={[sh.inkBtn, { backgroundColor: color }, disabled && sh.inkBtnDisabled]}
-      onPress={disabled ? undefined : onPress}
-      activeOpacity={0.85}
-    >
-      <Text style={[sh.inkBtnText, { color: textColor }]}>{children}</Text>
-    </TouchableOpacity>
-  );
-}
-
-function Sticker({
-  color,
-  rotation,
-  children,
-  textColor = T.ink,
-}: {
-  color: string;
-  rotation: number;
-  children: string;
-  textColor?: string;
-}) {
-  return (
-    <View
-      style={[sh.sticker, { backgroundColor: color, transform: [{ rotate: `${rotation}deg` }] }]}
-    >
-      <Text style={[sh.stickerText, { color: textColor }]}>{children}</Text>
-    </View>
-  );
-}
-
-function Avatar({
-  playerIdx,
-  size = 44,
-  radius = 12,
-  borderColor = T.ink,
-  shadowColor = CASTING_ORANGE,
-}: {
-  playerIdx: number;
-  size?: number;
-  radius?: number;
-  borderColor?: string;
-  shadowColor?: string;
-}) {
-  const letter = String.fromCharCode(65 + (playerIdx % 26));
-  return (
-    <View
-      style={{
-        width: size,
-        height: size,
-        borderRadius: radius,
-        backgroundColor: playerBg(playerIdx),
-        borderWidth: 2,
-        borderColor,
-        alignItems: 'center',
-        justifyContent: 'center',
-        shadowColor,
-        shadowOffset: { width: 6, height: 6 },
-        shadowOpacity: 1,
-        shadowRadius: 0,
-        elevation: 6,
-      }}
-    >
-      <Text style={{ color: avatarTextColor(playerIdx), fontSize: size * 0.4, fontWeight: '900' }}>
-        {letter}
-      </Text>
-    </View>
-  );
-}
-
-const sh = StyleSheet.create({
-  chip: {
-    borderWidth: 1.5,
-    borderColor: T.ink,
-    borderRadius: 999,
-    paddingHorizontal: 12,
-    paddingVertical: 5,
-    alignSelf: 'flex-start',
-    shadowColor: T.ink,
-    shadowOffset: { width: 2, height: 2 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 2,
-  },
-  chipText: { fontSize: 12, fontWeight: '800', letterSpacing: 0.5 },
-  card: {
-    borderWidth: 2,
-    borderColor: T.ink,
-    borderRadius: 24,
-    padding: 20,
-    shadowColor: T.ink,
-    shadowOffset: { width: 5, height: 5 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 4,
-  },
-  inkBtn: {
-    borderWidth: 2,
-    borderColor: T.ink,
-    borderRadius: T.rMd,
-    paddingVertical: 18,
-    alignItems: 'center',
-    shadowColor: T.paper,
-    shadowOffset: { width: 5, height: 5 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 5,
-  },
-  inkBtnDisabled: { opacity: 0.35 },
-  inkBtnText: { fontSize: 17, fontWeight: '900', letterSpacing: -0.3 },
-  sticker: {
-    borderWidth: 2,
-    borderColor: T.ink,
-    borderRadius: 999,
-    paddingHorizontal: 18,
-    paddingVertical: 8,
-    alignSelf: 'center',
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
-  },
-  stickerText: { fontSize: 13, fontWeight: '900', letterSpacing: 1 },
-});
 
 // ─── Rules ────────────────────────────────────────────────────────────────────
 
@@ -289,7 +124,7 @@ function CARules({
         <View style={rls.iconWrap}>
           <CastingIcon size={88} />
         </View>
-        <Chip color={T.paper}>Jeu n°7</Chip>
+        <GameChip color={T.paper}>Jeu n°7</GameChip>
         <Text style={rls.title}>Le{'\n'}Casting</Text>
       </View>
 
@@ -298,7 +133,7 @@ function CARules({
         contentContainerStyle={rls.scroll}
         showsVerticalScrollIndicator={false}
       >
-        <Card>
+        <GameCard>
           <Text style={rls.cardLabel}>COMMENT ON JOUE</Text>
           {STEPS.map((s, i) => (
             <View
@@ -314,7 +149,7 @@ function CARules({
               </View>
             </View>
           ))}
-        </Card>
+        </GameCard>
 
         <View style={rls.drinkCard}>
           <Text style={rls.drinkLabel}>GORGÉES</Text>
@@ -545,13 +380,13 @@ function CAScenario({
     <SafeAreaView style={{ flex: 1, backgroundColor: CASTING_ORANGE }}>
       <DotBackground color={T.ink} opacity={0.07} />
       <View style={sc.header}>
-        <Chip color={T.paper}>Le Devin · {devin.name}</Chip>
+        <GameChip color={T.paper}>Le Devin · {devin.name}</GameChip>
       </View>
       <View style={sc.body}>
         <Text style={sc.mono}>LE SCÉNARIO</Text>
-        <Card style={{ padding: 28 }}>
+        <GameCard style={{ padding: 28 }}>
           <Text style={sc.scenarioText}>« {scenario} »</Text>
-        </Card>
+        </GameCard>
         <Text style={sc.hint}>
           Lis ce scénario à voix haute.{'\n'}Ensuite, passe le tel à chaque acteur pour qu'il voie
           son chiffre.
@@ -619,7 +454,13 @@ function CAHandoff({
     <SafeAreaView style={{ flex: 1, backgroundColor: T.ink }}>
       <View style={hf.body}>
         <Text style={hf.counter}>{pos + 1} / {total}</Text>
-        <Avatar playerIdx={playerIdx} size={120} radius={32} borderColor={T.paper} />
+        <InitialAvatar
+          index={playerIdx}
+          size={120}
+          radius={32}
+          borderColor={T.paper}
+          shadowColor={CASTING_ORANGE}
+        />
         <Text style={hf.name}>{player.name},{'\n'}passe au tel</Text>
         <Text style={hf.sub}>Regarde ton chiffre en secret avant d'appuyer.</Text>
       </View>
@@ -701,9 +542,9 @@ function CARevealNumber({
     <SafeAreaView style={{ flex: 1, backgroundColor: T.paper }}>
       <DotBackground opacity={0.05} />
       <View style={rn.header}>
-        <Chip color={CASTING_ORANGE} textColor="#fff">
+        <GameChip color={CASTING_ORANGE} textColor="#fff">
           {player.name}
-        </Chip>
+        </GameChip>
       </View>
 
       <View style={rn.body}>
@@ -726,9 +567,9 @@ function CARevealNumber({
               <Text style={[rn.numberSub, { color: numFg }]}>/10</Text>
             </View>
 
-            <Sticker color={numBg} rotation={-4} textColor={numFg}>
+            <StickerBadge color={numBg} rotation={-4} textColor={numFg}>
               {label.toUpperCase()}
-            </Sticker>
+            </StickerBadge>
 
             <View style={rn.scenarioHint}>
               <Text style={rn.scenarioMono}>SCÉNARIO</Text>
@@ -863,20 +704,20 @@ function CAPerform({
           ACTION !
         </Animated.Text>
 
-        <Card style={{ width: '100%', maxWidth: 320 }}>
+        <GameCard style={{ width: '100%', maxWidth: 320 }}>
           <Text style={pf.scenarioMono}>SCÉNARIO</Text>
           <Text style={pf.scenarioText}>« {scenario} »</Text>
-        </Card>
+        </GameCard>
 
         <View style={pf.actorsRow}>
           {actors.map((a, i) => (
-            <Chip
+            <GameChip
               key={a.id}
               color={playerBg(actorIndices[i])}
               textColor={avatarTextColor(actorIndices[i])}
             >
               {a.name}
-            </Chip>
+            </GameChip>
           ))}
         </View>
 
@@ -966,14 +807,14 @@ function CAGuessPlayer({
     <SafeAreaView style={{ flex: 1, backgroundColor: T.bg }}>
       <DotBackground opacity={0.06} />
       <View style={gp.header}>
-        <Chip color={CASTING_ORANGE} textColor="#fff">
+        <GameChip color={CASTING_ORANGE} textColor="#fff">
           Devin · {devin.name}
-        </Chip>
-        <Chip color={T.paper}>{pos + 1}/{total}</Chip>
+        </GameChip>
+        <GameChip color={T.paper}>{pos + 1}/{total}</GameChip>
       </View>
 
       <View style={gp.body}>
-        <Avatar playerIdx={actorIdx} size={88} radius={24} />
+        <InitialAvatar index={actorIdx} size={88} radius={24} shadowColor={CASTING_ORANGE} />
         <Text style={gp.question}>
           Quel chiffre avait{'\n'}{actor.name} ?
         </Text>
@@ -1164,9 +1005,9 @@ function CAResults({
       <DotBackground opacity={0.06} />
       <ScrollView contentContainerStyle={res.scroll} showsVerticalScrollIndicator={false}>
         {/* Header */}
-        <Sticker color={CASTING_ORANGE} rotation={-3} textColor="#fff">
+        <StickerBadge color={CASTING_ORANGE} rotation={-3} textColor="#fff">
           LE VERDICT
-        </Sticker>
+        </StickerBadge>
         <Text style={res.title}>Les résultats{'\n'}du casting</Text>
 
         {/* Stats */}
@@ -1215,7 +1056,7 @@ function CAResults({
           const tagFg = r.tag === 'PRESQUE' ? T.ink : '#fff';
           return (
             <View key={r.playerIdx} style={res.actorCard}>
-              <Avatar playerIdx={r.playerIdx} size={36} radius={10} shadowColor="transparent" />
+              <InitialAvatar index={r.playerIdx} size={36} radius={10} shadowColor="transparent" />
               <View style={{ flex: 1 }}>
                 <Text style={res.actorName}>{r.player.name}</Text>
                 <View style={res.actorNums}>
@@ -1254,7 +1095,7 @@ function CAResults({
               <View style={[res.rankNum, isTop && { backgroundColor: 'rgba(255,255,255,0.25)' }]}>
                 <Text style={[res.rankNumText, isTop && { color: '#fff' }]}>#{i + 1}</Text>
               </View>
-              <Avatar playerIdx={item.idx} size={34} radius={10} shadowColor="transparent" />
+              <InitialAvatar index={item.idx} size={34} radius={10} shadowColor="transparent" />
               <View style={{ flex: 1 }}>
                 <Text style={[res.rankName, isTop && { color: '#fff' }]}>
                   {item.player.name}

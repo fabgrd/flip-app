@@ -18,4 +18,4 @@ export const PARANOIA_QUESTIONS = [
   "Qui serait le plus corruptible ?",
 ];
 
-export const PLAYER_COLORS = ['tomato', 'cobalt', 'lemon', 'mint', 'violet', 'pink'] as const;
+export { PLAYER_COLORS } from '../../constants/playerColors';

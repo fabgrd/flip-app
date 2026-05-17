@@ -13,27 +13,29 @@ import {
   View,
 } from 'react-native';
 
-import { DotBackground, GameMenuActions, ParanoiaIcon } from '../components';
+import {
+  DotBackground,
+  GameCard,
+  GameChip,
+  GameMenuActions,
+  InkButton,
+  InitialAvatar,
+  ParanoiaIcon,
+  StickerBadge,
+} from '../components';
+import { getPlayerBgColor, getPlayerColorName, getPlayerTextColor } from '../constants';
+import { shuffleArray } from '../utils/array';
 import { T } from '../constants/flipTokens';
-import { PARANOIA_QUESTIONS, PLAYER_COLORS, ParanoiaHistoryEntry, ParanoiaOrder, ParanoiaStep } from '../games/paranoia';
+import { PARANOIA_QUESTIONS, ParanoiaHistoryEntry, ParanoiaOrder, ParanoiaStep } from '../games/paranoia';
 import { Player, RootStackParamList } from '../types';
 
 type ParanoiaScreenRouteProp = RouteProp<RootStackParamList, 'Paranoia'>;
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
-function shuffle<T>(arr: T[]): T[] {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
 function buildOrder(players: Player[]): ParanoiaOrder[] {
   const idxs = players.map((_, i) => i).sort(() => Math.random() - 0.5);
-  const qs = shuffle([...PARANOIA_QUESTIONS]).slice(0, players.length);
+  const qs = shuffleArray([...PARANOIA_QUESTIONS]).slice(0, players.length);
   return idxs.map((qIdx, i) => {
     let tIdx = Math.floor(Math.random() * players.length);
     while (tIdx === qIdx) tIdx = Math.floor(Math.random() * players.length);
@@ -42,100 +44,15 @@ function buildOrder(players: Player[]): ParanoiaOrder[] {
 }
 
 function playerColor(idx: number): string {
-  return PLAYER_COLORS[idx % PLAYER_COLORS.length];
+  return getPlayerColorName(idx);
 }
 
 function playerBg(idx: number): string {
-  return (T as unknown as Record<string, string>)[playerColor(idx)] ?? T.tomato;
+  return getPlayerBgColor(idx);
 }
 
-const LIGHT_COLORS = ['lemon', 'pink'];
 function avatarTextColor(idx: number): string {
-  return LIGHT_COLORS.includes(playerColor(idx)) ? T.ink : '#fff';
-}
-
-// ─── Shared UI ────────────────────────────────────────────────────────────────
-
-function Chip({ color, textColor = T.ink, children }: { color: string; textColor?: string; children: React.ReactNode }) {
-  return (
-    <View style={[chip.wrap, { backgroundColor: color }]}>
-      <Text style={[chip.text, { color: textColor }]}>{children}</Text>
-    </View>
-  );
-}
-const chip = StyleSheet.create({
-  wrap: {
-    borderWidth: 1.5, borderColor: T.ink, borderRadius: 999,
-    paddingHorizontal: 12, paddingVertical: 5,
-    alignSelf: 'flex-start',
-    shadowColor: T.ink, shadowOffset: { width: 2, height: 2 }, shadowOpacity: 1, shadowRadius: 0, elevation: 2,
-  },
-  text: { fontSize: 12, fontWeight: '800', letterSpacing: 0.5 },
-});
-
-function Card({ color = T.paper, children, style }: { color?: string; children: React.ReactNode; style?: object }) {
-  return (
-    <View style={[card.wrap, { backgroundColor: color }, style]}>
-      {children}
-    </View>
-  );
-}
-const card = StyleSheet.create({
-  wrap: {
-    borderWidth: 2, borderColor: T.ink, borderRadius: 24, padding: 20,
-    shadowColor: T.ink, shadowOffset: { width: 5, height: 5 }, shadowOpacity: 1, shadowRadius: 0, elevation: 4,
-  },
-});
-
-function InkButton({ children, onPress, disabled }: { children: React.ReactNode; onPress?: () => void; disabled?: boolean }) {
-  return (
-    <TouchableOpacity
-      style={[inkBtn.wrap, disabled && inkBtn.disabled]}
-      onPress={disabled ? undefined : onPress}
-      activeOpacity={0.85}
-    >
-      <Text style={inkBtn.text}>{children}</Text>
-    </TouchableOpacity>
-  );
-}
-const inkBtn = StyleSheet.create({
-  wrap: {
-    backgroundColor: T.ink, borderWidth: 2, borderColor: T.ink, borderRadius: T.rMd,
-    paddingVertical: 18, alignItems: 'center',
-    shadowColor: T.paper, shadowOffset: { width: 5, height: 5 }, shadowOpacity: 1, shadowRadius: 0, elevation: 5,
-  },
-  disabled: { opacity: 0.4 },
-  text: { color: '#fff', fontSize: 17, fontWeight: '900', letterSpacing: -0.3 },
-});
-
-function Sticker({ color, rotation, children }: { color: string; rotation: number; children: string }) {
-  return (
-    <View style={[stk.wrap, { backgroundColor: color, transform: [{ rotate: `${rotation}deg` }] }]}>
-      <Text style={stk.text}>{children}</Text>
-    </View>
-  );
-}
-const stk = StyleSheet.create({
-  wrap: {
-    borderWidth: 2, borderColor: T.ink, borderRadius: 999,
-    paddingHorizontal: 16, paddingVertical: 8, alignSelf: 'center',
-    shadowColor: T.ink, shadowOffset: { width: 3, height: 3 }, shadowOpacity: 1, shadowRadius: 0, elevation: 3,
-  },
-  text: { color: T.ink, fontSize: 13, fontWeight: '900', letterSpacing: 1 },
-});
-
-function PlayerAvatar({ idx, size = 44, radius = 12 }: { idx: number; size?: number; radius?: number }) {
-  return (
-    <View style={{
-      width: size, height: size, borderRadius: radius,
-      backgroundColor: playerBg(idx), borderWidth: 2, borderColor: T.ink,
-      alignItems: 'center', justifyContent: 'center',
-    }}>
-      <Text style={{ color: avatarTextColor(idx), fontSize: size * 0.4, fontWeight: '900' }}>
-        {String.fromCharCode(65 + idx)}
-      </Text>
-    </View>
-  );
+  return getPlayerTextColor(idx);
 }
 
 // ─── Screen: Rules ────────────────────────────────────────────────────────────
@@ -178,12 +95,12 @@ function PNRules({
           <ParanoiaIcon size={80} />
         </View>
 
-        <Chip color={T.paper}>Jeu n°4</Chip>
+        <GameChip color={T.paper}>Jeu n°4</GameChip>
         <Text style={rules.title}>Paranoïa</Text>
       </View>
 
       <View style={rules.cardWrap}>
-        <Card>
+        <GameCard>
           <Text style={rules.cardLabel}>COMMENT ON JOUE</Text>
           {RULES.map((s, i) => (
             <View key={s.n} style={[rules.ruleRow, i < RULES.length - 1 && rules.ruleRowDivider]}>
@@ -196,11 +113,11 @@ function PNRules({
               </View>
             </View>
           ))}
-        </Card>
+        </GameCard>
       </View>
 
       <View style={rules.footer}>
-        <InkButton onPress={onStart}>Lancer la paranoïa</InkButton>
+        <InkButton shadowColor={T.paper} onPress={onStart}>Lancer la paranoïa</InkButton>
       </View>
     </SafeAreaView>
   );
@@ -264,27 +181,29 @@ function PNHandoff({
             <Text style={ho.roleBadgeText}>RÔLE · {role.toUpperCase()}</Text>
           </View>
 
-          <View style={[ho.avatar, {
-            backgroundColor: playerBg(playerIdx),
-            shadowColor: accentColor,
-          }]}>
-            <Text style={[ho.avatarText, { color: avatarTextColor(playerIdx) }]}>
-              {playerName[0].toUpperCase()}
-            </Text>
-          </View>
+          <InitialAvatar
+            index={playerIdx}
+            label={playerName[0].toUpperCase()}
+            size={120}
+            radius={32}
+            borderColor={T.ink}
+            shadowColor={accentColor}
+          />
 
           <Text style={ho.name}>{playerName},{'\n'}passe au tel</Text>
           <Text style={ho.subtitle}>{subtitle}</Text>
         </View>
 
         <View style={ho.footer}>
-          <TouchableOpacity
-            style={[ho.btn, { backgroundColor: accentColor, borderColor: accentColor }]}
+          <InkButton
+            color={accentColor}
+            textColor={btnTextColor}
+            borderColor={accentColor}
+            shadowColor={accentColor}
             onPress={onReady}
-            activeOpacity={0.85}
           >
-            <Text style={[ho.btnText, { color: btnTextColor }]}>C'est moi — afficher</Text>
-          </TouchableOpacity>
+            C'est moi — afficher
+          </InkButton>
         </View>
       </SafeAreaView>
     </View>
@@ -299,13 +218,6 @@ const ho = StyleSheet.create({
     transform: [{ rotate: '-4deg' }],
   },
   roleBadgeText: { color: '#fff', fontSize: 12, fontWeight: '900', letterSpacing: 1.5 },
-  avatar: {
-    width: 120, height: 120, borderRadius: 32,
-    borderWidth: 3, borderColor: T.paper,
-    alignItems: 'center', justifyContent: 'center',
-    shadowOffset: { width: 8, height: 8 }, shadowOpacity: 1, shadowRadius: 0, elevation: 8,
-  },
-  avatarText: { fontSize: 56, fontWeight: '900' },
   name: {
     color: '#fff', fontSize: 42, fontWeight: '900',
     letterSpacing: -1.5, lineHeight: 44, textAlign: 'center',
@@ -315,12 +227,6 @@ const ho = StyleSheet.create({
     textAlign: 'center', maxWidth: 280, lineHeight: 22,
   },
   footer: { padding: 20, paddingBottom: 32 },
-  btn: {
-    borderWidth: 2, borderColor: T.ink, borderRadius: T.rMd,
-    paddingVertical: 18, alignItems: 'center',
-    shadowColor: T.ink, shadowOffset: { width: 5, height: 5 }, shadowOpacity: 1, shadowRadius: 0, elevation: 5,
-  },
-  btnText: { fontSize: 17, fontWeight: '900', letterSpacing: -0.3 },
 });
 
 // ─── Screen: Question Show ────────────────────────────────────────────────────
@@ -335,31 +241,31 @@ function PNQuestionShow({
     <SafeAreaView style={qs.screen}>
       <DotBackground opacity={0.05} />
       <View style={qs.header}>
-        <Chip color={T.tomato} textColor="#fff">Questionneur · {questionerName}</Chip>
+        <GameChip color={T.tomato} textColor="#fff">Questionneur · {questionerName}</GameChip>
       </View>
       <View style={qs.body}>
         <Text style={qs.label}>TA QUESTION SECRÈTE</Text>
-        <Card color={T.lemon} style={{ padding: 28 }}>
+        <GameCard color={T.lemon} style={{ padding: 28 }}>
           <Text style={qs.questionText}>« {question} »</Text>
-        </Card>
+        </GameCard>
 
         <View style={{ marginTop: 24 }}>
           <Text style={qs.label}>TU LA POSES À</Text>
-          <Card style={{ padding: 14 }}>
+          <GameCard style={{ padding: 14 }}>
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
-              <PlayerAvatar idx={targetIdx} size={44} radius={12} />
+              <InitialAvatar index={targetIdx} size={44} radius={12} />
               <View>
                 <Text style={qs.targetLabel}>LA CIBLE</Text>
                 <Text style={qs.targetName}>{targetName}</Text>
               </View>
             </View>
-          </Card>
+          </GameCard>
         </View>
 
         <Text style={qs.hint}>Pose la question à voix haute… mais sans la dire 😶</Text>
       </View>
       <View style={qs.footer}>
-        <InkButton onPress={onNext}>Passer le tel à {targetName}</InkButton>
+        <InkButton shadowColor={T.paper} onPress={onNext}>Passer le tel à {targetName}</InkButton>
       </View>
     </SafeAreaView>
   );
@@ -393,13 +299,13 @@ function PNTargetPick({
     <SafeAreaView style={tp.screen}>
       <DotBackground color={T.ink} opacity={0.1} />
       <View style={tp.header}>
-        <Chip color={T.paper}>Cible · {targetName}</Chip>
+        <GameChip color={T.paper}>Cible · {targetName}</GameChip>
       </View>
       <View style={tp.questionArea}>
         <Text style={tp.label}>LA QUESTION</Text>
-        <Card style={{ padding: 18 }}>
+        <GameCard style={{ padding: 18 }}>
           <Text style={tp.questionText}>« {question} »</Text>
-        </Card>
+        </GameCard>
       </View>
       <View style={tp.pickHeader}>
         <Text style={tp.pickTitle}>Réponds <Text style={{ fontStyle: 'italic' }}>à voix haute.</Text></Text>
@@ -417,7 +323,7 @@ function PNTargetPick({
               onPress={() => setAnswer(i)}
               activeOpacity={0.85}
             >
-              <PlayerAvatar idx={i} size={36} radius={10} />
+              <InitialAvatar index={i} size={36} radius={10} />
               <Text style={tp.playerName}>{p.name}</Text>
             </TouchableOpacity>
           );
@@ -425,7 +331,9 @@ function PNTargetPick({
       </ScrollView>
 
       <View style={tp.footer}>
-        <InkButton onPress={onNext} disabled={answer == null}>Pile ou face →</InkButton>
+        <InkButton shadowColor={T.paper} onPress={onNext} disabled={answer == null}>
+          Pile ou face →
+        </InkButton>
       </View>
     </SafeAreaView>
   );
@@ -514,7 +422,7 @@ function PNCoinFlip({
     <SafeAreaView style={cf.screen}>
       <DotBackground opacity={0.06} />
       <View style={cf.header}>
-        <Chip color={T.violet} textColor="#fff">Cible · {targetName}</Chip>
+        <GameChip color={T.violet} textColor="#fff">Cible · {targetName}</GameChip>
       </View>
 
       <View style={cf.center}>
@@ -549,11 +457,11 @@ function PNCoinFlip({
 
       <View style={cf.footer}>
         {coin == null ? (
-          <InkButton onPress={flip} disabled={!chosenSide || flipping}>
+          <InkButton shadowColor={T.paper} onPress={flip} disabled={!chosenSide || flipping}>
             {flipping ? 'Ça tourne…' : 'Lancer 🪙'}
           </InkButton>
         ) : (
-          <InkButton onPress={onNext}>Voir le verdict →</InkButton>
+          <InkButton shadowColor={T.paper} onPress={onNext}>Voir le verdict →</InkButton>
         )}
       </View>
     </SafeAreaView>
@@ -600,9 +508,9 @@ function PNReveal({
       <DotBackground color={T.ink} opacity={0.1} />
 
       <View style={rev.top}>
-        <Sticker color={T.paper} rotation={-6}>
+        <StickerBadge color={T.paper} rotation={-6}>
           {won ? '🤫 SECRET GARDÉ' : '😈 RÉVÉLATION'}
-        </Sticker>
+        </StickerBadge>
         <Text style={[rev.verdict, { color: won ? T.ink : '#fff' }]}>
           {won ? 'Sauvé.' : 'Cramé !'}
         </Text>
@@ -610,28 +518,28 @@ function PNReveal({
 
       <View style={rev.cardArea}>
         {!won ? (
-          <Card>
+          <GameCard>
             <Text style={rev.cardLabel}>LA QUESTION ÉTAIT</Text>
             <Text style={rev.revealQuestion}>« {question} »</Text>
             <View style={rev.answerRow}>
               <Text style={rev.answerLabel}>RÉPONSE →</Text>
-              <PlayerAvatar idx={pickedPlayerIdx} size={32} radius={10} />
+              <InitialAvatar index={pickedPlayerIdx} size={32} radius={10} />
               <Text style={rev.answerName}>{pickedPlayerName}</Text>
             </View>
-          </Card>
+          </GameCard>
         ) : (
-          <Card>
+          <GameCard>
             <Text style={rev.wonText}>
               <Text style={{ fontWeight: '900' }}>{targetName}</Text> garde la question pour lui-même.
               {' '}Le groupe reste dans le flou.{' '}
               <Text style={{ fontWeight: '900' }}>{questionerName}</Text> peut sourire dans son coin.
             </Text>
-          </Card>
+          </GameCard>
         )}
       </View>
 
       <View style={rev.footer}>
-        <InkButton onPress={onNext}>Tour suivant →</InkButton>
+        <InkButton shadowColor={T.paper} onPress={onNext}>Tour suivant →</InkButton>
       </View>
     </SafeAreaView>
   );
@@ -676,19 +584,19 @@ function PNEnd({
       <DotBackground opacity={0.06} />
 
       <View style={end.hero}>
-        <Sticker color={T.tomato} rotation={-4}>FIN DE PARTIE</Sticker>
+        <StickerBadge color={T.tomato} rotation={-4}>FIN DE PARTIE</StickerBadge>
         <Text style={end.title}>Le récap{'\n'}des secrets 🕵️</Text>
       </View>
 
       <View style={end.statsRow}>
-        <Card color={T.mint} style={{ flex: 1, padding: 14 }}>
+        <GameCard color={T.mint} style={{ flex: 1, padding: 14 }}>
           <Text style={end.statLabel}>GARDÉS</Text>
           <Text style={end.statValue}>{keptCount}</Text>
-        </Card>
-        <Card color={T.tomato} style={{ flex: 1, padding: 14 }}>
+        </GameCard>
+        <GameCard color={T.tomato} style={{ flex: 1, padding: 14 }}>
           <Text style={end.statLabel}>RÉVÉLÉS</Text>
           <Text style={end.statValue}>{revealedCount}</Text>
-        </Card>
+        </GameCard>
       </View>
 
       <ScrollView contentContainerStyle={end.list} showsVerticalScrollIndicator={false}>
@@ -713,7 +621,7 @@ function PNEnd({
         ))}
 
         <View style={end.btnStack}>
-          <InkButton onPress={onRestart}>Rejouer</InkButton>
+          <InkButton shadowColor={T.paper} onPress={onRestart}>Rejouer</InkButton>
           <TouchableOpacity style={end.secondaryBtn} onPress={onExit} activeOpacity={0.85}>
             <Text style={end.secondaryBtnText}>Retour au hub</Text>
           </TouchableOpacity>
