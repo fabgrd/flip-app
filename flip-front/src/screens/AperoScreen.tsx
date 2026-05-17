@@ -14,11 +14,11 @@ import {
 } from 'react-native';
 import {
   CardCrosshatch,
+  ChunkyButton,
   DotBackground,
   GameCard,
   GameChip,
   GameMenuActions,
-  InkButton,
   isRedSuit,
   PlayingCardBack,
   PlayingCardFace,
@@ -310,9 +310,9 @@ function APRules({
     <SafeAreaView style={rls.screen}>
       <DotBackground color={T.ink} opacity={0.1} />
       <View style={rls.header}>
-        <TouchableOpacity style={rls.backBtn} onPress={onExit} activeOpacity={0.85}>
+        <ChunkyButton square size="sm" color={T.paper} onPress={onExit}>
           <Text style={rls.backBtnText}>←</Text>
-        </TouchableOpacity>
+        </ChunkyButton>
         <GameMenuActions
           showDice={false}
           onPressSettings={onSettings}
@@ -351,7 +351,7 @@ function APRules({
         </View>
 
         <View style={rls.footer}>
-          <InkButton onPress={onStart}>Distribuer les cartes</InkButton>
+          <ChunkyButton full color={T.paper} onPress={onStart}>Distribuer les cartes</ChunkyButton>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -367,21 +367,6 @@ const rls = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  backBtn: {
-    width: 44,
-    height: 44,
-    borderRadius: 14,
-    backgroundColor: T.paper,
-    borderWidth: 2,
-    borderColor: T.ink,
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
-  },
   backBtnText: { fontSize: 20, color: T.ink, fontWeight: '900' },
   titleArea: { paddingHorizontal: 20, paddingTop: 16, paddingBottom: 16 },
   iconWrap: { position: 'absolute', right: 16, top: 16, transform: [{ rotate: '-8deg' }] },
@@ -390,7 +375,7 @@ const rls = StyleSheet.create({
     fontSize: 64,
     fontWeight: '900',
     letterSpacing: -2.5,
-    lineHeight: 60,
+    lineHeight: 68,
     marginTop: 12,
   },
   cardWrap: { paddingHorizontal: 20 },
@@ -435,19 +420,20 @@ function APPickDealer({ players, onPick }: { players: Player[]; onPick: (i: numb
         </View>
         <View style={pk.grid}>
           {players.map((p, i) => (
-            <TouchableOpacity
+            <ChunkyButton
               key={i}
+              style={{ width: '47%' }}
+              color={T.paper}
+              shadowColor={T.pink}
+              metrics={{ height: 68, radius: 18, paddingH: 0 }}
+              innerStyle={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', padding: 14, gap: 10 }}
               onPress={() => onPick(i)}
-              activeOpacity={0.85}
-              style={pk.playerBtn}
             >
               <View style={[pk.avatar, { backgroundColor: pBg(i) }]}>
                 <Text style={[pk.avatarText, { color: pText(i) }]}>{p.name[0].toUpperCase()}</Text>
               </View>
-              <Text style={pk.name} numberOfLines={1}>
-                {p.name}
-              </Text>
-            </TouchableOpacity>
+              <Text style={pk.name} numberOfLines={1}>{p.name}</Text>
+            </ChunkyButton>
           ))}
         </View>
       </SafeAreaView>
@@ -767,14 +753,14 @@ function APRound({
       {(phase === 'result' || streak >= 3) && (
         <View style={rd.footer}>
           {phase === 'result' && (
-            <InkButton onPress={() => onDone(found, penalty)}>
+            <ChunkyButton full color={T.pink} onPress={() => onDone(found, penalty)}>
               {cardNum >= total ? 'Voir le bilan →' : 'Carte suivante →'}
-            </InkButton>
+            </ChunkyButton>
           )}
           {streak >= 3 && (
-            <InkButton color={T.paper} textColor={T.ink} onPress={onRequestPass}>
+            <ChunkyButton full color={T.paper} textColor={T.ink} onPress={onRequestPass}>
               Donner le tas →
-            </InkButton>
+            </ChunkyButton>
           )}
         </View>
       )}
@@ -871,7 +857,7 @@ function APSpecialFlip({
           </View>
         </ScrollView>
         <View style={sf.footer}>
-          <InkButton onPress={onNext}>Continuer →</InkButton>
+          <ChunkyButton full color={T.ink} onPress={onNext}>Continuer →</ChunkyButton>
         </View>
       </SafeAreaView>
     </View>
@@ -932,21 +918,19 @@ function APDealerPass({
           {players.map(
             (p, i) =>
               i !== dealerIdx && (
-                <TouchableOpacity
+                <ChunkyButton
                   key={i}
+                  style={{ width: '47%' }}
+                  color={T.paper}
+                  metrics={{ height: 68, radius: 18, paddingH: 0 }}
+                  innerStyle={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', padding: 14, gap: 10 }}
                   onPress={() => onPass(i)}
-                  activeOpacity={0.85}
-                  style={dp.playerBtn}
                 >
                   <View style={[dp.avatar, { backgroundColor: pBg(i) }]}>
-                    <Text style={[dp.avatarText, { color: pText(i) }]}>
-                      {p.name[0].toUpperCase()}
-                    </Text>
+                    <Text style={[dp.avatarText, { color: pText(i) }]}>{p.name[0].toUpperCase()}</Text>
                   </View>
-                  <Text style={dp.name} numberOfLines={1}>
-                    {p.name}
-                  </Text>
-                </TouchableOpacity>
+                  <Text style={dp.name} numberOfLines={1}>{p.name}</Text>
+                </ChunkyButton>
               ),
           )}
         </View>
@@ -1116,10 +1100,10 @@ function APEnd({
         </View>
 
         <View style={{ paddingHorizontal: 20, gap: 10 }}>
-          <InkButton onPress={onExit}>Rejouer</InkButton>
-          <InkButton color={T.paper} textColor={T.ink} onPress={onExit}>
+          <ChunkyButton full color={T.pink} onPress={onExit}>Rejouer</ChunkyButton>
+          <ChunkyButton full color={T.paper} textColor={T.ink} onPress={onExit}>
             Retour au hub
-          </InkButton>
+          </ChunkyButton>
         </View>
       </ScrollView>
     </SafeAreaView>

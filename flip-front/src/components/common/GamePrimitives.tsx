@@ -4,7 +4,6 @@ import {
   StyleSheet,
   Text,
   TextStyle,
-  TouchableOpacity,
   View,
   ViewStyle,
 } from 'react-native';
@@ -42,46 +41,6 @@ export function GameCard({
   return <View style={[styles.card, { backgroundColor: color }, style]}>{children}</View>;
 }
 
-export function InkButton({
-  children,
-  onPress,
-  disabled,
-  color = T.ink,
-  textColor = '#fff',
-  borderColor,
-  shadowColor = T.ink,
-  style,
-  textStyle,
-}: {
-  children: React.ReactNode;
-  onPress?: () => void;
-  disabled?: boolean;
-  color?: string;
-  textColor?: string;
-  borderColor?: string;
-  shadowColor?: string;
-  style?: StyleProp<ViewStyle>;
-  textStyle?: StyleProp<TextStyle>;
-}) {
-  return (
-    <TouchableOpacity
-      style={[
-        styles.inkBtn,
-        {
-          backgroundColor: color,
-          borderColor: borderColor ?? color,
-          shadowColor,
-        },
-        disabled && styles.inkBtnDisabled,
-        style,
-      ]}
-      onPress={disabled ? undefined : onPress}
-      activeOpacity={0.85}
-    >
-      <Text style={[styles.inkBtnText, { color: textColor }, textStyle]}>{children}</Text>
-    </TouchableOpacity>
-  );
-}
 
 export function StickerBadge({
   color,
@@ -137,18 +96,6 @@ const styles = StyleSheet.create({
     shadowRadius: 0,
     elevation: 4,
   },
-  inkBtn: {
-    borderWidth: 2,
-    borderRadius: T.rMd,
-    paddingVertical: 18,
-    alignItems: 'center',
-    shadowOffset: { width: 5, height: 5 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 5,
-  },
-  inkBtnDisabled: { opacity: 0.4 },
-  inkBtnText: { fontSize: 17, fontWeight: '900', letterSpacing: -0.3 },
   sticker: {
     borderWidth: 2,
     borderColor: T.ink,

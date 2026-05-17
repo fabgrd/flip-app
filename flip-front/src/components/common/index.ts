@@ -8,7 +8,7 @@ export { ConfettiBurst, ConfettiPiece } from './Confetti';
 export { DotBackground } from './DotBackground';
 export { FlatChunkyButton } from './FlatChunkyButton';
 export { GameMenuActions, GameMenuHeader } from './GameMenuHeader';
-export { GameCard, GameChip, InkButton, StickerBadge } from './GamePrimitives';
+export { GameCard, GameChip, StickerBadge } from './GamePrimitives';
 export { InitialAvatar } from './InitialAvatar';
 export { PlayerInput } from './PlayerInput';
 export { PlayersList } from './PlayersList';

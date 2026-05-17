@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     fontSize: 64,
     fontWeight: '900',
     letterSpacing: -3,
-    lineHeight: 62,
+    lineHeight: 68,
   },
   heroSub: {
     fontSize: 15,

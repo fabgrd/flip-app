@@ -14,12 +14,12 @@ import {
 
 import {
   CastingIcon,
+  ChunkyButton,
   DotBackground,
   GameCard,
   GameChip,
   GameMenuActions,
   InitialAvatar,
-  InkButton,
   StickerBadge,
 } from '../components';
 import { getPlayerBgColor, getPlayerTextColor } from '../constants';
@@ -102,9 +102,9 @@ function CARules({
       <DotBackground color={T.ink} opacity={0.08} />
 
       <View style={rls.header}>
-        <TouchableOpacity style={rls.backBtn} onPress={onExit} activeOpacity={0.85}>
+        <ChunkyButton square size="sm" color={T.paper} onPress={onExit}>
           <Text style={rls.backBtnText}>←</Text>
-        </TouchableOpacity>
+        </ChunkyButton>
         <GameMenuActions
           showDice={false}
           onPressSettings={onSettings}
@@ -151,7 +151,7 @@ function CARules({
           ))}
         </View>
 
-        <InkButton onPress={onStart}>Lancer le casting</InkButton>
+        <ChunkyButton full color={T.paper} onPress={onStart}>Lancer le casting</ChunkyButton>
       </ScrollView>
     </SafeAreaView>
   );
@@ -166,21 +166,6 @@ const rls = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  backBtn: {
-    width: 44,
-    height: 44,
-    borderRadius: 14,
-    backgroundColor: T.paper,
-    borderWidth: 2,
-    borderColor: T.ink,
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
-  },
   backBtnText: { fontSize: 20, color: T.ink, fontWeight: '900' },
   titleArea: { paddingHorizontal: 20, paddingTop: 16, paddingBottom: 4 },
   iconWrap: { position: 'absolute', right: 16, top: 20, transform: [{ rotate: '8deg' }] },
@@ -189,7 +174,7 @@ const rls = StyleSheet.create({
     fontSize: 64,
     fontWeight: '900',
     letterSpacing: -2.5,
-    lineHeight: 58,
+    lineHeight: 68,
     marginTop: 10,
   },
   scroll: { padding: 20, gap: 14, paddingBottom: 40 },
@@ -255,19 +240,20 @@ function CAPickDevin({ players, onPick }: { players: Player[]; onPick: (idx: num
 
         <View style={pd.grid}>
           {players.map((p, i) => (
-            <TouchableOpacity
+            <ChunkyButton
               key={p.id}
-              style={pd.playerBtn}
+              style={{ width: '47%' }}
+              color={T.paper}
+              shadowColor={CASTING_ORANGE}
+              metrics={{ height: 68, radius: 18, paddingH: 0 }}
+              innerStyle={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', padding: 14, gap: 10 }}
               onPress={() => onPick(i)}
-              activeOpacity={0.8}
             >
               <View style={[pd.playerAvatar, { backgroundColor: playerBg(i) }]}>
-                <Text style={[pd.playerAvatarText, { color: avatarTextColor(i) }]}>
-                  {p.name[0].toUpperCase()}
-                </Text>
+                <Text style={[pd.playerAvatarText, { color: avatarTextColor(i) }]}>{p.name[0].toUpperCase()}</Text>
               </View>
               <Text style={pd.playerName}>{p.name}</Text>
-            </TouchableOpacity>
+            </ChunkyButton>
           ))}
         </View>
       </View>
@@ -371,7 +357,7 @@ function CAScenario({
         </Text>
       </View>
       <View style={sc.footer}>
-        <InkButton onPress={onNext}>Distribuer les chiffres →</InkButton>
+        <ChunkyButton full color={T.paper} onPress={onNext}>Distribuer les chiffres →</ChunkyButton>
       </View>
     </SafeAreaView>
   );
@@ -442,14 +428,14 @@ function CAHandoff({
           shadowColor={CASTING_ORANGE}
         />
         <Text style={hf.name}>
-          {player.name},{'\n'}passe au tel
+          Donnes le tel à {player.name}
         </Text>
         <Text style={hf.sub}>Regarde ton chiffre en secret avant d'appuyer.</Text>
       </View>
       <View style={hf.footer}>
-        <InkButton onPress={onReady} color={CASTING_ORANGE} textColor="#fff">
+        <ChunkyButton full color={CASTING_ORANGE} shadowColor={CASTING_ORANGE} onPress={onReady}>
           Je suis seul·e — révéler
-        </InkButton>
+        </ChunkyButton>
       </View>
     </SafeAreaView>
   );
@@ -562,9 +548,9 @@ function CARevealNumber({
       </View>
 
       <View style={rn.footer}>
-        <InkButton onPress={revealed ? onNext : undefined} disabled={!revealed}>
+        <ChunkyButton full color={CASTING_ORANGE} onPress={revealed ? onNext : undefined} disabled={!revealed}>
           J'ai vu — passer au suivant
-        </InkButton>
+        </ChunkyButton>
       </View>
     </SafeAreaView>
   );
@@ -706,9 +692,9 @@ function CAPerform({
         </Text>
       </View>
       <View style={pf.footer}>
-        <InkButton onPress={onNext} color={CASTING_ORANGE} textColor="#fff">
+        <ChunkyButton full color={CASTING_ORANGE} shadowColor={CASTING_ORANGE} onPress={onNext}>
           Tout le monde a joué → Jugement
-        </InkButton>
+        </ChunkyButton>
       </View>
     </SafeAreaView>
   );
@@ -828,12 +814,14 @@ function CAGuessPlayer({
       </View>
 
       <View style={gp.footer}>
-        <InkButton
+        <ChunkyButton
+          full
+          color={CASTING_ORANGE}
           onPress={guess !== null ? () => onGuess(guess!) : undefined}
           disabled={guess === null}
         >
           {pos + 1 < total ? 'Joueur suivant →' : 'Voir le verdict →'}
-        </InkButton>
+        </ChunkyButton>
       </View>
     </SafeAreaView>
   );
@@ -1102,10 +1090,10 @@ function CAResults({
         })}
 
         {/* CTAs */}
-        <InkButton onPress={onExit}>Rejouer</InkButton>
-        <TouchableOpacity style={res.secondaryBtn} onPress={onExit} activeOpacity={0.85}>
-          <Text style={res.secondaryBtnText}>Retour au hub</Text>
-        </TouchableOpacity>
+        <ChunkyButton full color={CASTING_ORANGE} onPress={onExit}>Rejouer</ChunkyButton>
+        <ChunkyButton full color={T.paper} textColor={T.ink} onPress={onExit}>
+          Retour au hub
+        </ChunkyButton>
       </ScrollView>
     </SafeAreaView>
   );
@@ -1230,16 +1218,6 @@ const res = StyleSheet.create({
   devinBadge: { fontSize: 9, opacity: 0.6, letterSpacing: 1, fontWeight: '700' },
   rankSub: { color: T.muted, fontSize: 10, fontWeight: '700', letterSpacing: 0.5, marginTop: 1 },
   rankSips: { fontSize: 26, fontWeight: '900' },
-  secondaryBtn: {
-    backgroundColor: T.paper,
-    borderWidth: 2,
-    borderColor: T.ink,
-    borderRadius: T.rMd,
-    paddingVertical: 14,
-    alignItems: 'center',
-    marginTop: 2,
-  },
-  secondaryBtnText: { color: T.ink, fontSize: 15, fontWeight: '800' },
 });
 
 // ─── Orchestrator ─────────────────────────────────────────────────────────────

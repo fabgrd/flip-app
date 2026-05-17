@@ -16,6 +16,7 @@ interface ChunkyButtonProps {
   metrics?: Partial<{ height: number; fontSize: number; paddingH: number; radius: number }>;
   buttonStyle?: ViewStyle;
   shadowStyle?: ViewStyle;
+  innerStyle?: ViewStyle;
 }
 
 const SIZES = {
@@ -24,6 +25,11 @@ const SIZES = {
   md: { height: 56, fontSize: 16, paddingH: 22, radius: T.rMd },
   lg: { height: 62, fontSize: 18, paddingH: 26, radius: T.rMd },
 };
+
+// Colors where the button fill is light — use dark ink text by default.
+const LIGHT_BUTTON_COLORS: string[] = [T.lemon, T.pink, T.paper, T.bg, T.bgAlt, T.mint];
+
+const SHADOW_OFFSET = 4;
 
 export function ChunkyButton({
   onPress,
@@ -39,8 +45,9 @@ export function ChunkyButton({
   metrics,
   buttonStyle,
   shadowStyle,
+  innerStyle,
 }: ChunkyButtonProps) {
-  const fg = textColor ?? (color === T.lemon || color === T.pink ? T.ink : '#fff');
+  const fg = textColor ?? (LIGHT_BUTTON_COLORS.includes(color) ? T.ink : '#fff');
   const s = { ...SIZES[size], ...(metrics ?? {}) };
   const anim = useRef(new Animated.Value(0)).current;
 
@@ -53,14 +60,16 @@ export function ChunkyButton({
 
   const translateStyle = {
     transform: [
-      { translateX: anim.interpolate({ inputRange: [0, 1], outputRange: [0, 4] }) },
-      { translateY: anim.interpolate({ inputRange: [0, 1], outputRange: [0, 4] }) },
+      { translateX: anim.interpolate({ inputRange: [0, 1], outputRange: [0, SHADOW_OFFSET] }) },
+      { translateY: anim.interpolate({ inputRange: [0, 1], outputRange: [0, SHADOW_OFFSET] }) },
     ],
   };
 
+  // Padding reserves space for the shadow without overflowing the parent.
   const containerStyle: ViewStyle = {
-    width: full ? '100%' : undefined,
     alignSelf: full ? 'stretch' : 'flex-start',
+    paddingRight: SHADOW_OFFSET,
+    paddingBottom: SHADOW_OFFSET,
     ...(style as ViewStyle),
   };
 
@@ -73,12 +82,11 @@ export function ChunkyButton({
 
   return (
     <View style={[styles.wrapper, containerStyle]}>
-      {/* Static shadow layer */}
+      {/* Shadow layer — absolute, offset SHADOW_OFFSET px to the bottom-right of the button */}
       <View
         style={[
           styles.shadow,
           {
-            height: s.height,
             borderRadius: s.radius,
             backgroundColor: shadowColor,
           },
@@ -103,12 +111,12 @@ export function ChunkyButton({
           onPressOut={onPressOut}
           disabled={disabled}
           activeOpacity={1}
-          style={styles.inner}
+          style={[styles.inner, innerStyle]}
         >
-          {typeof children === 'string' ? (
-            <Text style={[styles.text, { color: fg, fontSize: s.fontSize }]}>{children}</Text>
-          ) : (
+          {React.isValidElement(children) ? (
             children
+          ) : (
+            <Text style={[styles.text, { color: fg, fontSize: s.fontSize }]}>{children}</Text>
           )}
         </TouchableOpacity>
       </Animated.View>
@@ -118,25 +126,23 @@ export function ChunkyButton({
 
 const styles = StyleSheet.create({
   wrapper: {
-    // Extra space for the shadow offset
-    marginBottom: 4,
-    marginRight: 4,
+    // No margin — padding on the container handles shadow space without overflow.
   },
   shadow: {
     borderWidth: 2,
     borderColor: T.ink,
     position: 'absolute',
-    bottom: -4,
-    right: -4,
-    left: 0,
-    top: 4,
+    // Offset SHADOW_OFFSET px to the right and bottom of the button (which sits at top:0, left:0).
+    left: SHADOW_OFFSET,
+    top: SHADOW_OFFSET,
+    right: 0,
+    bottom: 0,
   },
   btn: {
     borderWidth: 2,
     borderColor: T.ink,
     alignItems: 'center',
     justifyContent: 'center',
-    position: 'relative',
   },
   inner: {
     width: '100%',

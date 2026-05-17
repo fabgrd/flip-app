@@ -25,7 +25,7 @@ export const isGameAvailable = (gameId: string) => gameRegistry.isGameAvailable(
 // =============================================================================
 
 export const MIN_PLAYERS_GLOBAL = 1;
-export const MAX_PLAYERS_GLOBAL = 10;
+export const MAX_PLAYERS_GLOBAL = 30;
 
 // =============================================================================
 // HELPERS POUR LA NAVIGATION

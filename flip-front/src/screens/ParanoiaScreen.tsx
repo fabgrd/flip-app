@@ -14,12 +14,12 @@ import {
 } from 'react-native';
 
 import {
+  ChunkyButton,
   DotBackground,
   GameCard,
   GameChip,
   GameMenuActions,
   InitialAvatar,
-  InkButton,
   ParanoiaIcon,
   StickerBadge,
 } from '../components';
@@ -87,9 +87,9 @@ function PNRules({
       <DotBackground color={T.ink} opacity={0.1} />
 
       <View style={rules.header}>
-        <TouchableOpacity style={rules.backBtn} onPress={onExit} activeOpacity={0.85}>
+        <ChunkyButton square size="sm" color={T.paper} onPress={onExit}>
           <Text style={rules.backBtnText}>←</Text>
-        </TouchableOpacity>
+        </ChunkyButton>
         <GameMenuActions
           showDice={false}
           onPressSettings={onSettings}
@@ -125,9 +125,9 @@ function PNRules({
       </View>
 
       <View style={rules.footer}>
-        <InkButton shadowColor={T.paper} onPress={onStart}>
+        <ChunkyButton full color={T.paper} onPress={onStart}>
           Lancer la paranoïa
-        </InkButton>
+        </ChunkyButton>
       </View>
     </SafeAreaView>
   );
@@ -142,21 +142,6 @@ const rules = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  backBtn: {
-    width: 44,
-    height: 44,
-    borderRadius: 14,
-    backgroundColor: T.paper,
-    borderWidth: 2,
-    borderColor: T.ink,
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
-  },
   backBtnText: { fontSize: 20, color: T.ink, fontWeight: '900' },
   titleArea: { paddingHorizontal: 20, paddingTop: 16, paddingBottom: 0 },
   iconWrap: { position: 'absolute', right: 16, top: 18 },
@@ -165,7 +150,7 @@ const rules = StyleSheet.create({
     fontSize: 68,
     fontWeight: '900',
     letterSpacing: -2.5,
-    lineHeight: 64,
+    lineHeight: 72,
     marginTop: 12,
   },
   cardWrap: { paddingHorizontal: 20, paddingTop: 24, flex: 1 },
@@ -233,21 +218,21 @@ function PNHandoff({
           />
 
           <Text style={ho.name}>
-            {playerName},{'\n'}passe au tel
+            Donnes le tel à {playerName}
           </Text>
           <Text style={ho.subtitle}>{subtitle}</Text>
         </View>
 
         <View style={ho.footer}>
-          <InkButton
+          <ChunkyButton
+            full
             color={accentColor}
             textColor={btnTextColor}
-            borderColor={accentColor}
             shadowColor={accentColor}
             onPress={onReady}
           >
             C'est moi — afficher
-          </InkButton>
+          </ChunkyButton>
         </View>
       </SafeAreaView>
     </View>
@@ -334,9 +319,9 @@ function PNQuestionShow({
         <Text style={qs.hint}>Pose la question à voix haute… mais sans la dire 😶</Text>
       </View>
       <View style={qs.footer}>
-        <InkButton shadowColor={T.paper} onPress={onNext}>
+        <ChunkyButton full color={T.tomato} onPress={onNext}>
           Passer le tel à {targetName}
-        </InkButton>
+        </ChunkyButton>
       </View>
     </SafeAreaView>
   );
@@ -428,9 +413,9 @@ function PNTargetPick({
       </ScrollView>
 
       <View style={tp.footer}>
-        <InkButton shadowColor={T.paper} onPress={onNext} disabled={answer == null}>
+        <ChunkyButton full color={T.paper} onPress={onNext} disabled={answer == null}>
           Pile ou face →
-        </InkButton>
+        </ChunkyButton>
       </View>
     </SafeAreaView>
   );
@@ -587,13 +572,13 @@ function PNCoinFlip({
 
       <View style={cf.footer}>
         {coin == null ? (
-          <InkButton shadowColor={T.paper} onPress={flip} disabled={!chosenSide || flipping}>
+          <ChunkyButton full color={T.ink} onPress={flip} disabled={!chosenSide || flipping}>
             {flipping ? 'Ça tourne…' : 'Lancer 🪙'}
-          </InkButton>
+          </ChunkyButton>
         ) : (
-          <InkButton shadowColor={T.paper} onPress={onNext}>
+          <ChunkyButton full color={T.ink} onPress={onNext}>
             Voir le verdict →
-          </InkButton>
+          </ChunkyButton>
         )}
       </View>
     </SafeAreaView>
@@ -712,9 +697,9 @@ function PNReveal({
       </View>
 
       <View style={rev.footer}>
-        <InkButton shadowColor={T.paper} onPress={onNext}>
+        <ChunkyButton full color={T.paper} onPress={onNext}>
           Tour suivant →
-        </InkButton>
+        </ChunkyButton>
       </View>
     </SafeAreaView>
   );
@@ -813,12 +798,12 @@ function PNEnd({
         ))}
 
         <View style={end.btnStack}>
-          <InkButton shadowColor={T.paper} onPress={onRestart}>
+          <ChunkyButton full color={T.tomato} onPress={onRestart}>
             Rejouer
-          </InkButton>
-          <TouchableOpacity style={end.secondaryBtn} onPress={onExit} activeOpacity={0.85}>
-            <Text style={end.secondaryBtnText}>Retour au hub</Text>
-          </TouchableOpacity>
+          </ChunkyButton>
+          <ChunkyButton full color={T.paper} textColor={T.ink} onPress={onExit}>
+            Retour au hub
+          </ChunkyButton>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -871,20 +856,6 @@ const end = StyleSheet.create({
     lineHeight: 18,
   },
   btnStack: { gap: 10, marginTop: 8 },
-  secondaryBtn: {
-    backgroundColor: T.paper,
-    borderWidth: 2,
-    borderColor: T.ink,
-    borderRadius: T.rMd,
-    paddingVertical: 15,
-    alignItems: 'center',
-    shadowColor: T.ink,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 4,
-  },
-  secondaryBtnText: { color: T.ink, fontSize: 16, fontWeight: '800', letterSpacing: -0.3 },
 });
 
 // ─── Main Component ───────────────────────────────────────────────────────────

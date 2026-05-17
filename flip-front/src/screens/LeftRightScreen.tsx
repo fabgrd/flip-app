@@ -1,9 +1,9 @@
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 
-import { DotBackground, GameMenuActions, GaucheDroiteIcon, RulesButton } from '../components';
+import { ChunkyButton, DotBackground, GameMenuActions, GaucheDroiteIcon, RulesButton } from '../components';
 import { T } from '../constants/flipTokens';
 import { POLITICAL_COLORS } from '../games/left-right';
 import { CardStack } from '../games/left-right/components';
@@ -44,9 +44,9 @@ function LRRules({
       <DotBackground color={T.ink} opacity={0.08} />
 
       <View style={lrRules.header}>
-        <TouchableOpacity style={lrRules.backBtn} onPress={onExit} activeOpacity={0.85}>
+        <ChunkyButton square size="sm" color={T.paper} onPress={onExit}>
           <Text style={lrRules.backBtnText}>←</Text>
-        </TouchableOpacity>
+        </ChunkyButton>
         <GameMenuActions
           showDice={false}
           onPressSettings={onSettings}
@@ -86,9 +86,9 @@ function LRRules({
       </View>
 
       <View style={lrRules.footer}>
-        <TouchableOpacity style={lrRules.startBtn} onPress={onStart} activeOpacity={0.85}>
-          <Text style={lrRules.startBtnText}>Lancer le duel</Text>
-        </TouchableOpacity>
+        <ChunkyButton full color={T.ink} textColor="#fff" onPress={onStart}>
+          Lancer le duel
+        </ChunkyButton>
       </View>
     </SafeAreaView>
   );
@@ -102,21 +102,6 @@ const lrRules = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-  },
-  backBtn: {
-    width: 44,
-    height: 44,
-    borderRadius: 14,
-    backgroundColor: T.paper,
-    borderWidth: 2,
-    borderColor: T.ink,
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
   },
   backBtnText: { fontSize: 20, color: T.ink, fontWeight: '900' },
   titleArea: { paddingHorizontal: 20, paddingTop: 16 },
@@ -136,7 +121,7 @@ const lrRules = StyleSheet.create({
     fontSize: 58,
     fontWeight: '900',
     letterSpacing: -2,
-    lineHeight: 56,
+    lineHeight: 62,
     marginTop: 12,
   },
   cardWrap: { paddingHorizontal: 20, paddingTop: 24, flex: 1 },
@@ -177,20 +162,6 @@ const lrRules = StyleSheet.create({
   ruleTitle: { color: T.ink, fontSize: 16, fontWeight: '800', letterSpacing: -0.3 },
   ruleDesc: { color: T.inkSoft, fontSize: 13, marginTop: 2, lineHeight: 18 },
   footer: { padding: 20, paddingBottom: 32 },
-  startBtn: {
-    backgroundColor: T.ink,
-    borderWidth: 2,
-    borderColor: T.ink,
-    borderRadius: T.rMd,
-    paddingVertical: 18,
-    alignItems: 'center',
-    shadowColor: T.paper,
-    shadowOffset: { width: 5, height: 5 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 5,
-  },
-  startBtnText: { color: '#fff', fontSize: 17, fontWeight: '900', letterSpacing: -0.3 },
 });
 
 export function LeftRightScreen() {

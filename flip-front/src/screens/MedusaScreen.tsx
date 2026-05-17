@@ -15,12 +15,12 @@ import {
 } from 'react-native';
 
 import {
+  ChunkyButton,
   DotBackground,
   GameCard,
   GameChip,
   GameMenuActions,
   InitialAvatar,
-  InkButton,
   MedusaIcon,
   StickerBadge,
 } from '../components';
@@ -80,16 +80,17 @@ function MDRules({
       <DotBackground color={T.ink} opacity={0.1} />
 
       <View style={rls.header}>
-        <TouchableOpacity
-          style={rls.backBtn}
+        <ChunkyButton
+          square
+          size="sm"
+          color={T.paper}
           onPress={() => {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
             onExit();
           }}
-          activeOpacity={0.85}
         >
           <Text style={rls.backBtnText}>←</Text>
-        </TouchableOpacity>
+        </ChunkyButton>
         <GameMenuActions
           showDice={false}
           onPressSettings={() => {
@@ -128,14 +129,16 @@ function MDRules({
       </View>
 
       <View style={rls.footer}>
-        <InkButton
+        <ChunkyButton
+          full
+          color={T.paper}
           onPress={() => {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
             onStart();
           }}
         >
           Que la chasse commence
-        </InkButton>
+        </ChunkyButton>
       </View>
     </SafeAreaView>
   );
@@ -150,21 +153,6 @@ const rls = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  backBtn: {
-    width: 44,
-    height: 44,
-    borderRadius: 14,
-    backgroundColor: T.paper,
-    borderWidth: 2,
-    borderColor: T.ink,
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
-  },
   backBtnText: { fontSize: 20, color: T.ink, fontWeight: '900' },
   titleArea: { paddingHorizontal: 20, paddingTop: 16 },
   iconWrap: { position: 'absolute', right: 16, top: 18 },
@@ -173,7 +161,7 @@ const rls = StyleSheet.create({
     fontSize: 68,
     fontWeight: '900',
     letterSpacing: -2.5,
-    lineHeight: 64,
+    lineHeight: 72,
     marginTop: 12,
   },
   cardWrap: { paddingHorizontal: 20, paddingTop: 24, flex: 1 },
@@ -249,15 +237,17 @@ function MDCaller({
         </View>
 
         <View style={cal.footer}>
-          <InkButton
-            color={T.cobalt}
+          <ChunkyButton
+            full
+            color={T.paper}
+            shadowColor={T.cobalt}
             onPress={() => {
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
               onStart();
             }}
           >
             Tout le monde est prêt → Lancer
-          </InkButton>
+          </ChunkyButton>
         </View>
       </SafeAreaView>
     </View>
@@ -511,7 +501,8 @@ function MDReport({
 
       <View style={rep.footer}>
         {pairs.length > 0 ? (
-          <InkButton
+          <ChunkyButton
+            full
             color={T.tomato}
             onPress={() => {
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
@@ -519,16 +510,18 @@ function MDReport({
             }}
           >
             {`Confirmer · ${pairs.length} paire${pairs.length > 1 ? 's' : ''}`}
-          </InkButton>
+          </ChunkyButton>
         ) : (
-          <InkButton
+          <ChunkyButton
+            full
+            color={T.ink}
             onPress={() => {
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
               onConfirm();
             }}
           >
             Personne ne s'est regardé
-          </InkButton>
+          </ChunkyButton>
         )}
       </View>
     </SafeAreaView>
@@ -702,14 +695,16 @@ function MDResults({
           </View>
         )}
 
-        <InkButton
+        <ChunkyButton
+          full
+          color={T.paper}
           onPress={() => {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
             onNext();
           }}
         >
           {isLast ? 'Voir le bilan final' : 'Tour suivant →'}
-        </InkButton>
+        </ChunkyButton>
       </ScrollView>
     </SafeAreaView>
   );
@@ -834,24 +829,27 @@ function MDEnd({
         ))}
 
         <View style={{ gap: 10, marginTop: 8 }}>
-          <InkButton
+          <ChunkyButton
+            full
+            color={T.cobalt}
             onPress={() => {
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
               onRestart();
             }}
           >
             Rejouer
-          </InkButton>
-          <TouchableOpacity
-            style={en.secondaryBtn}
+          </ChunkyButton>
+          <ChunkyButton
+            full
+            color={T.paper}
+            textColor={T.ink}
             onPress={() => {
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
               onExit();
             }}
-            activeOpacity={0.85}
           >
-            <Text style={en.secondaryBtnText}>Retour au hub</Text>
-          </TouchableOpacity>
+            Retour au hub
+          </ChunkyButton>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -926,20 +924,6 @@ const en = StyleSheet.create({
   },
   historyBadgeText: { color: '#fff', fontSize: 10, fontWeight: '900', letterSpacing: 1 },
   historyText: { color: T.inkSoft, fontSize: 13, flex: 1 },
-  secondaryBtn: {
-    backgroundColor: T.paper,
-    borderWidth: 2,
-    borderColor: T.ink,
-    borderRadius: T.rMd,
-    paddingVertical: 15,
-    alignItems: 'center',
-    shadowColor: T.ink,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 4,
-  },
-  secondaryBtnText: { color: T.ink, fontSize: 16, fontWeight: '800', letterSpacing: -0.3 },
 });
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
