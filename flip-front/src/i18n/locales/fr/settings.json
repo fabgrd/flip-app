@@ -1,22 +1,22 @@
 {
-    "title": "Paramètres",
-    "language": {
-        "title": "Langue",
-        "subtitle": "Choisissez votre langue préférée",
-        "options": {
-            "fr": "Français",
-            "en": "English",
-            "zh": "中文"
-        }
-    },
-    "appearance": {
-        "title": "Apparence",
-        "subtitle": "Thème clair/sombre",
-        "darkMode": "Mode sombre"
-    },
-    "about": {
-        "title": "À propos",
-        "version": "Version {{version}}",
-        "description": "FL!P - Le jeu d'alcool ultime pour animer vos soirées entre amis !"
+  "title": "Paramètres",
+  "language": {
+    "title": "Langue",
+    "subtitle": "Choisissez votre langue préférée",
+    "options": {
+      "fr": "Français",
+      "en": "English",
+      "zh": "中文"
     }
+  },
+  "appearance": {
+    "title": "Apparence",
+    "subtitle": "Thème clair/sombre",
+    "darkMode": "Mode sombre"
+  },
+  "about": {
+    "title": "À propos",
+    "version": "Version {{version}}",
+    "description": "FL!P - Le jeu d'alcool ultime pour animer vos soirées entre amis !"
+  }
 }

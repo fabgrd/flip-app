@@ -42,8 +42,17 @@ const LEVEL_COLORS = ['#8BC4A0', '#6BB5DE', '#F4C542', '#F4834F', '#E05252'];
 
 function maxLevelToLevelCounts(maxLevel: LevelKey): Record<LevelKey, number> {
   const maxIdx = LEVEL_KEYS.indexOf(maxLevel);
-  const counts: Record<LevelKey, number> = { level1: 0, level2: 0, level3: 0, level4: 0, level5: 0, levelBonus: 0 };
-  LEVEL_KEYS.forEach((key, i) => { counts[key] = i <= maxIdx ? 5 : 0; });
+  const counts: Record<LevelKey, number> = {
+    level1: 0,
+    level2: 0,
+    level3: 0,
+    level4: 0,
+    level5: 0,
+    levelBonus: 0,
+  };
+  LEVEL_KEYS.forEach((key, i) => {
+    counts[key] = i <= maxIdx ? 5 : 0;
+  });
   return counts;
 }
 
@@ -98,7 +107,10 @@ function PurityRules({
           <View style={pr.card}>
             <Text style={pr.cardLabel}>COMMENT ON JOUE</Text>
             {PURITY_RULES.map((rule, i) => (
-              <View key={rule.n} style={[pr.ruleRow, i < PURITY_RULES.length - 1 && pr.ruleRowDivider]}>
+              <View
+                key={rule.n}
+                style={[pr.ruleRow, i < PURITY_RULES.length - 1 && pr.ruleRowDivider]}
+              >
                 <View style={pr.ruleNum}>
                   <Text style={pr.ruleNumText}>{rule.n}</Text>
                 </View>

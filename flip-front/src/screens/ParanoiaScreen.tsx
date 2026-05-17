@@ -1,7 +1,7 @@
 // Paranoïa — secret question, target picks, coin flip reveals or hides
 // Flow: rules → handoff Q → q-show → handoff Target → t-pick → coin → reveal → next/end
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   Animated,
   Easing,
@@ -18,16 +18,20 @@ import {
   GameCard,
   GameChip,
   GameMenuActions,
-  InkButton,
   InitialAvatar,
+  InkButton,
   ParanoiaIcon,
   StickerBadge,
 } from '../components';
-import { getPlayerBgColor, getPlayerColorName, getPlayerTextColor } from '../constants';
-import { shuffleArray } from '../utils/array';
 import { T } from '../constants/flipTokens';
-import { PARANOIA_QUESTIONS, ParanoiaHistoryEntry, ParanoiaOrder, ParanoiaStep } from '../games/paranoia';
+import {
+  PARANOIA_QUESTIONS,
+  ParanoiaHistoryEntry,
+  ParanoiaOrder,
+  ParanoiaStep,
+} from '../games/paranoia';
 import { Player, RootStackParamList } from '../types';
+import { shuffleArray } from '../utils/array';
 
 type ParanoiaScreenRouteProp = RouteProp<RootStackParamList, 'Paranoia'>;
 
@@ -43,18 +47,6 @@ function buildOrder(players: Player[]): ParanoiaOrder[] {
   });
 }
 
-function playerColor(idx: number): string {
-  return getPlayerColorName(idx);
-}
-
-function playerBg(idx: number): string {
-  return getPlayerBgColor(idx);
-}
-
-function avatarTextColor(idx: number): string {
-  return getPlayerTextColor(idx);
-}
-
 // ─── Screen: Rules ────────────────────────────────────────────────────────────
 
 function PNRules({
@@ -67,10 +59,26 @@ function PNRules({
   onSettings: () => void;
 }) {
   const RULES = [
-    { n: '1', t: 'Le questionneur voit une question', d: 'Genre « qui craquerait en prison ? ». Il la garde secrète.' },
-    { n: '2', t: 'La cible voit la question et choisit', d: "Elle désigne quelqu'un dans le groupe. À voix haute." },
-    { n: '3', t: 'Le groupe entend la réponse, pas la question', d: 'Tout le monde panique : pourquoi MOI ?' },
-    { n: '4', t: 'Pile ou face — ça révèle ou pas', d: "Si la cible perd au flip, la question s'affiche pour tout le monde." },
+    {
+      n: '1',
+      t: 'Le questionneur voit une question',
+      d: 'Genre « qui craquerait en prison ? ». Il la garde secrète.',
+    },
+    {
+      n: '2',
+      t: 'La cible voit la question et choisit',
+      d: "Elle désigne quelqu'un dans le groupe. À voix haute.",
+    },
+    {
+      n: '3',
+      t: 'Le groupe entend la réponse, pas la question',
+      d: 'Tout le monde panique : pourquoi MOI ?',
+    },
+    {
+      n: '4',
+      t: 'Pile ou face — ça révèle ou pas',
+      d: "Si la cible perd au flip, la question s'affiche pour tout le monde.",
+    },
   ];
   const rulesModal = RULES.map((rule) => ({ n: rule.n, title: rule.t, desc: rule.d }));
 
@@ -117,7 +125,9 @@ function PNRules({
       </View>
 
       <View style={rules.footer}>
-        <InkButton shadowColor={T.paper} onPress={onStart}>Lancer la paranoïa</InkButton>
+        <InkButton shadowColor={T.paper} onPress={onStart}>
+          Lancer la paranoïa
+        </InkButton>
       </View>
     </SafeAreaView>
   );
@@ -133,29 +143,52 @@ const rules = StyleSheet.create({
     justifyContent: 'space-between',
   },
   backBtn: {
-    width: 44, height: 44, borderRadius: 14,
-    backgroundColor: T.paper, borderWidth: 2, borderColor: T.ink,
-    alignItems: 'center', justifyContent: 'center',
-    shadowColor: T.ink, shadowOffset: { width: 3, height: 3 }, shadowOpacity: 1, shadowRadius: 0, elevation: 3,
+    width: 44,
+    height: 44,
+    borderRadius: 14,
+    backgroundColor: T.paper,
+    borderWidth: 2,
+    borderColor: T.ink,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: T.ink,
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 3,
   },
   backBtnText: { fontSize: 20, color: T.ink, fontWeight: '900' },
   titleArea: { paddingHorizontal: 20, paddingTop: 16, paddingBottom: 0 },
   iconWrap: { position: 'absolute', right: 16, top: 18 },
   title: {
-    color: '#fff', fontSize: 68, fontWeight: '900',
-    letterSpacing: -2.5, lineHeight: 64, marginTop: 12,
+    color: '#fff',
+    fontSize: 68,
+    fontWeight: '900',
+    letterSpacing: -2.5,
+    lineHeight: 64,
+    marginTop: 12,
   },
   cardWrap: { paddingHorizontal: 20, paddingTop: 24, flex: 1 },
   cardLabel: {
-    color: T.muted, fontSize: 11, fontWeight: '700',
-    letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 12,
+    color: T.muted,
+    fontSize: 11,
+    fontWeight: '700',
+    letterSpacing: 1.5,
+    textTransform: 'uppercase',
+    marginBottom: 12,
   },
   ruleRow: { flexDirection: 'row', gap: 14, paddingVertical: 10 },
   ruleRowDivider: { borderBottomWidth: 1, borderBottomColor: `${T.muted}66` },
   ruleNum: {
-    width: 32, height: 32, borderRadius: 10, flexShrink: 0,
-    backgroundColor: T.tomato, borderWidth: 2, borderColor: T.ink,
-    alignItems: 'center', justifyContent: 'center',
+    width: 32,
+    height: 32,
+    borderRadius: 10,
+    flexShrink: 0,
+    backgroundColor: T.tomato,
+    borderWidth: 2,
+    borderColor: T.ink,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   ruleNumText: { color: '#fff', fontSize: 15, fontWeight: '900' },
   ruleTitle: { color: T.ink, fontSize: 16, fontWeight: '800', letterSpacing: -0.3 },
@@ -166,10 +199,19 @@ const rules = StyleSheet.create({
 // ─── Screen: Handoff ──────────────────────────────────────────────────────────
 
 function PNHandoff({
-  playerIdx, playerName, role, subtitle, accentColor, onReady,
+  playerIdx,
+  playerName,
+  role,
+  subtitle,
+  accentColor,
+  onReady,
 }: {
-  playerIdx: number; playerName: string; role: string;
-  subtitle: string; accentColor: string; onReady: () => void;
+  playerIdx: number;
+  playerName: string;
+  role: string;
+  subtitle: string;
+  accentColor: string;
+  onReady: () => void;
 }) {
   const btnTextColor = accentColor === T.lemon ? T.ink : '#fff';
 
@@ -190,7 +232,9 @@ function PNHandoff({
             shadowColor={accentColor}
           />
 
-          <Text style={ho.name}>{playerName},{'\n'}passe au tel</Text>
+          <Text style={ho.name}>
+            {playerName},{'\n'}passe au tel
+          </Text>
           <Text style={ho.subtitle}>{subtitle}</Text>
         </View>
 
@@ -212,19 +256,35 @@ function PNHandoff({
 
 const ho = StyleSheet.create({
   screen: { flex: 1 },
-  center: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 30, gap: 24 },
+  center: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 30,
+    gap: 24,
+  },
   roleBadge: {
-    borderWidth: 2, borderRadius: 999, paddingHorizontal: 18, paddingVertical: 8,
+    borderWidth: 2,
+    borderRadius: 999,
+    paddingHorizontal: 18,
+    paddingVertical: 8,
     transform: [{ rotate: '-4deg' }],
   },
   roleBadgeText: { color: '#fff', fontSize: 12, fontWeight: '900', letterSpacing: 1.5 },
   name: {
-    color: '#fff', fontSize: 42, fontWeight: '900',
-    letterSpacing: -1.5, lineHeight: 44, textAlign: 'center',
+    color: '#fff',
+    fontSize: 42,
+    fontWeight: '900',
+    letterSpacing: -1.5,
+    lineHeight: 44,
+    textAlign: 'center',
   },
   subtitle: {
-    color: 'rgba(255,255,255,0.7)', fontSize: 16,
-    textAlign: 'center', maxWidth: 280, lineHeight: 22,
+    color: 'rgba(255,255,255,0.7)',
+    fontSize: 16,
+    textAlign: 'center',
+    maxWidth: 280,
+    lineHeight: 22,
   },
   footer: { padding: 20, paddingBottom: 32 },
 });
@@ -232,16 +292,25 @@ const ho = StyleSheet.create({
 // ─── Screen: Question Show ────────────────────────────────────────────────────
 
 function PNQuestionShow({
-  questionerName, targetIdx, targetName, question, onNext,
+  questionerName,
+  targetIdx,
+  targetName,
+  question,
+  onNext,
 }: {
-  questionerName: string; targetIdx: number; targetName: string;
-  question: string; onNext: () => void;
+  questionerName: string;
+  targetIdx: number;
+  targetName: string;
+  question: string;
+  onNext: () => void;
 }) {
   return (
     <SafeAreaView style={qs.screen}>
       <DotBackground opacity={0.05} />
       <View style={qs.header}>
-        <GameChip color={T.tomato} textColor="#fff">Questionneur · {questionerName}</GameChip>
+        <GameChip color={T.tomato} textColor="#fff">
+          Questionneur · {questionerName}
+        </GameChip>
       </View>
       <View style={qs.body}>
         <Text style={qs.label}>TA QUESTION SECRÈTE</Text>
@@ -265,7 +334,9 @@ function PNQuestionShow({
         <Text style={qs.hint}>Pose la question à voix haute… mais sans la dire 😶</Text>
       </View>
       <View style={qs.footer}>
-        <InkButton shadowColor={T.paper} onPress={onNext}>Passer le tel à {targetName}</InkButton>
+        <InkButton shadowColor={T.paper} onPress={onNext}>
+          Passer le tel à {targetName}
+        </InkButton>
       </View>
     </SafeAreaView>
   );
@@ -276,10 +347,20 @@ const qs = StyleSheet.create({
   header: { paddingHorizontal: 20, paddingTop: 8 },
   body: { flex: 1, paddingHorizontal: 20, paddingTop: 20, justifyContent: 'center' },
   label: {
-    color: T.muted, fontSize: 11, fontWeight: '700',
-    letterSpacing: 2, textTransform: 'uppercase', marginBottom: 10,
+    color: T.muted,
+    fontSize: 11,
+    fontWeight: '700',
+    letterSpacing: 2,
+    textTransform: 'uppercase',
+    marginBottom: 10,
   },
-  questionText: { color: T.ink, fontSize: 30, fontWeight: '900', letterSpacing: -1, lineHeight: 34 },
+  questionText: {
+    color: T.ink,
+    fontSize: 30,
+    fontWeight: '900',
+    letterSpacing: -1,
+    lineHeight: 34,
+  },
   targetLabel: { color: T.muted, fontSize: 10, fontWeight: '700', letterSpacing: 1.5 },
   targetName: { color: T.ink, fontSize: 22, fontWeight: '900', letterSpacing: -0.5 },
   hint: { color: T.inkSoft, fontSize: 14, fontStyle: 'italic', marginTop: 18 },
@@ -289,11 +370,21 @@ const qs = StyleSheet.create({
 // ─── Screen: Target Pick ──────────────────────────────────────────────────────
 
 function PNTargetPick({
-  targetName, question, players, excludeIdx, answer, setAnswer, onNext,
+  targetName,
+  question,
+  players,
+  excludeIdx,
+  answer,
+  setAnswer,
+  onNext,
 }: {
-  targetName: string; question: string; players: Player[];
-  excludeIdx: number; answer: number | null;
-  setAnswer: (i: number) => void; onNext: () => void;
+  targetName: string;
+  question: string;
+  players: Player[];
+  excludeIdx: number;
+  answer: number | null;
+  setAnswer: (i: number) => void;
+  onNext: () => void;
 }) {
   return (
     <SafeAreaView style={tp.screen}>
@@ -308,11 +399,17 @@ function PNTargetPick({
         </GameCard>
       </View>
       <View style={tp.pickHeader}>
-        <Text style={tp.pickTitle}>Réponds <Text style={{ fontStyle: 'italic' }}>à voix haute.</Text></Text>
+        <Text style={tp.pickTitle}>
+          Réponds <Text style={{ fontStyle: 'italic' }}>à voix haute.</Text>
+        </Text>
         <Text style={tp.pickSub}>Et désigne ici la personne dans l'app.</Text>
       </View>
 
-      <ScrollView style={tp.grid} contentContainerStyle={tp.gridContent} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={tp.grid}
+        contentContainerStyle={tp.gridContent}
+        showsVerticalScrollIndicator={false}
+      >
         {players.map((p, i) => {
           if (i === excludeIdx) return null;
           const isSelected = answer === i;
@@ -344,24 +441,46 @@ const tp = StyleSheet.create({
   header: { paddingHorizontal: 20, paddingTop: 8 },
   questionArea: { paddingHorizontal: 20, paddingTop: 14 },
   label: {
-    color: 'rgba(255,255,255,0.7)', fontSize: 11, fontWeight: '700',
-    letterSpacing: 2, textTransform: 'uppercase', marginBottom: 8,
+    color: 'rgba(255,255,255,0.7)',
+    fontSize: 11,
+    fontWeight: '700',
+    letterSpacing: 2,
+    textTransform: 'uppercase',
+    marginBottom: 8,
   },
-  questionText: { color: T.ink, fontSize: 20, fontWeight: '800', letterSpacing: -0.4, lineHeight: 26 },
+  questionText: {
+    color: T.ink,
+    fontSize: 20,
+    fontWeight: '800',
+    letterSpacing: -0.4,
+    lineHeight: 26,
+  },
   pickHeader: { paddingHorizontal: 20, paddingTop: 18, paddingBottom: 8 },
   pickTitle: { color: '#fff', fontSize: 22, fontWeight: '900', letterSpacing: -0.5 },
   pickSub: { color: 'rgba(255,255,255,0.85)', fontSize: 14, marginTop: 3 },
   grid: { flex: 1 },
   gridContent: {
-    flexDirection: 'row', flexWrap: 'wrap', gap: 10,
-    paddingHorizontal: 20, paddingBottom: 8,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
+    paddingHorizontal: 20,
+    paddingBottom: 8,
   },
   playerBtn: {
     width: '47%',
-    backgroundColor: T.paper, borderWidth: 2, borderColor: T.ink,
-    borderRadius: 18, padding: 14,
-    flexDirection: 'row', alignItems: 'center', gap: 10,
-    shadowColor: T.ink, shadowOffset: { width: 4, height: 4 }, shadowOpacity: 1, shadowRadius: 0, elevation: 4,
+    backgroundColor: T.paper,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: 18,
+    padding: 14,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    shadowColor: T.ink,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 4,
   },
   playerBtnSelected: {
     backgroundColor: T.lemon,
@@ -375,7 +494,12 @@ const tp = StyleSheet.create({
 // ─── Screen: Coin Flip ────────────────────────────────────────────────────────
 
 function PNCoinFlip({
-  targetName, chosenSide, setChosenSide, coin, setCoin, onNext,
+  targetName,
+  chosenSide,
+  setChosenSide,
+  coin,
+  setCoin,
+  onNext,
 }: {
   targetName: string;
   chosenSide: 'pile' | 'face' | null;
@@ -410,8 +534,12 @@ function PNCoinFlip({
 
   const titleText =
     coin != null
-      ? chosenSide === coin ? 'Tu gardes le secret 🤫' : "C'est révélé… 😬"
-      : chosenSide ? 'Lance la pièce !' : 'Choisis ton camp';
+      ? chosenSide === coin
+        ? 'Tu gardes le secret 🤫'
+        : "C'est révélé… 😬"
+      : chosenSide
+        ? 'Lance la pièce !'
+        : 'Choisis ton camp';
 
   const coinBg = coin === 'face' ? T.tomato : T.lemon;
   const coinTextColor = coin === 'face' ? '#fff' : T.ink;
@@ -422,7 +550,9 @@ function PNCoinFlip({
     <SafeAreaView style={cf.screen}>
       <DotBackground opacity={0.06} />
       <View style={cf.header}>
-        <GameChip color={T.violet} textColor="#fff">Cible · {targetName}</GameChip>
+        <GameChip color={T.violet} textColor="#fff">
+          Cible · {targetName}
+        </GameChip>
       </View>
 
       <View style={cf.center}>
@@ -461,7 +591,9 @@ function PNCoinFlip({
             {flipping ? 'Ça tourne…' : 'Lancer 🪙'}
           </InkButton>
         ) : (
-          <InkButton shadowColor={T.paper} onPress={onNext}>Voir le verdict →</InkButton>
+          <InkButton shadowColor={T.paper} onPress={onNext}>
+            Voir le verdict →
+          </InkButton>
         )}
       </View>
     </SafeAreaView>
@@ -471,26 +603,55 @@ function PNCoinFlip({
 const cf = StyleSheet.create({
   screen: { flex: 1, backgroundColor: T.bg },
   header: { paddingHorizontal: 20, paddingTop: 8 },
-  center: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 28, paddingHorizontal: 24 },
+  center: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 28,
+    paddingHorizontal: 24,
+  },
   title: {
-    color: T.ink, fontSize: 30, fontWeight: '900',
-    letterSpacing: -1, textAlign: 'center', lineHeight: 32,
+    color: T.ink,
+    fontSize: 30,
+    fontWeight: '900',
+    letterSpacing: -1,
+    textAlign: 'center',
+    lineHeight: 32,
   },
   coin: {
-    width: 220, height: 220, borderRadius: 110,
-    borderWidth: 4, borderColor: T.ink,
-    alignItems: 'center', justifyContent: 'center',
-    shadowColor: T.ink, shadowOffset: { width: 6, height: 6 }, shadowOpacity: 1, shadowRadius: 0, elevation: 6,
+    width: 220,
+    height: 220,
+    borderRadius: 110,
+    borderWidth: 4,
+    borderColor: T.ink,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: T.ink,
+    shadowOffset: { width: 6, height: 6 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 6,
   },
   coinText: { fontSize: 48, fontWeight: '900', letterSpacing: -2 },
   sideRow: { flexDirection: 'row', gap: 12 },
   sideBtn: {
-    width: 110, height: 56, borderRadius: 18,
-    borderWidth: 2, borderColor: T.ink,
-    alignItems: 'center', justifyContent: 'center',
-    shadowColor: T.ink, shadowOffset: { width: 4, height: 4 }, shadowOpacity: 1, shadowRadius: 0, elevation: 4,
+    width: 110,
+    height: 56,
+    borderRadius: 18,
+    borderWidth: 2,
+    borderColor: T.ink,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: T.ink,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 4,
   },
-  sideBtnSelected: { shadowOffset: { width: 0, height: 0 }, transform: [{ translateX: 4 }, { translateY: 4 }] },
+  sideBtnSelected: {
+    shadowOffset: { width: 0, height: 0 },
+    transform: [{ translateX: 4 }, { translateY: 4 }],
+  },
   sideBtnText: { fontSize: 18, fontWeight: '900', letterSpacing: -0.4 },
   footer: { padding: 20, paddingBottom: 32 },
 });
@@ -498,10 +659,21 @@ const cf = StyleSheet.create({
 // ─── Screen: Reveal ───────────────────────────────────────────────────────────
 
 function PNReveal({
-  won, questionerName, targetName, question, pickedPlayerIdx, pickedPlayerName, onNext,
+  won,
+  questionerName,
+  targetName,
+  question,
+  pickedPlayerIdx,
+  pickedPlayerName,
+  onNext,
 }: {
-  won: boolean; questionerName: string; targetName: string;
-  question: string; pickedPlayerIdx: number; pickedPlayerName: string; onNext: () => void;
+  won: boolean;
+  questionerName: string;
+  targetName: string;
+  question: string;
+  pickedPlayerIdx: number;
+  pickedPlayerName: string;
+  onNext: () => void;
 }) {
   return (
     <SafeAreaView style={[rev.screen, { backgroundColor: won ? T.mint : T.tomato }]}>
@@ -530,16 +702,19 @@ function PNReveal({
         ) : (
           <GameCard>
             <Text style={rev.wonText}>
-              <Text style={{ fontWeight: '900' }}>{targetName}</Text> garde la question pour lui-même.
-              {' '}Le groupe reste dans le flou.{' '}
-              <Text style={{ fontWeight: '900' }}>{questionerName}</Text> peut sourire dans son coin.
+              <Text style={{ fontWeight: '900' }}>{targetName}</Text> garde la question pour
+              lui-même. Le groupe reste dans le flou.{' '}
+              <Text style={{ fontWeight: '900' }}>{questionerName}</Text> peut sourire dans son
+              coin.
             </Text>
           </GameCard>
         )}
       </View>
 
       <View style={rev.footer}>
-        <InkButton shadowColor={T.paper} onPress={onNext}>Tour suivant →</InkButton>
+        <InkButton shadowColor={T.paper} onPress={onNext}>
+          Tour suivant →
+        </InkButton>
       </View>
     </SafeAreaView>
   );
@@ -550,15 +725,29 @@ const rev = StyleSheet.create({
   top: { paddingTop: 40, paddingHorizontal: 20, alignItems: 'center', gap: 20 },
   verdict: { fontSize: 72, fontWeight: '900', letterSpacing: -3, lineHeight: 68 },
   cardArea: { flex: 1, paddingHorizontal: 20, paddingTop: 20, justifyContent: 'center' },
-  cardLabel: { color: T.muted, fontSize: 11, fontWeight: '700', letterSpacing: 2, textTransform: 'uppercase' },
+  cardLabel: {
+    color: T.muted,
+    fontSize: 11,
+    fontWeight: '700',
+    letterSpacing: 2,
+    textTransform: 'uppercase',
+  },
   revealQuestion: {
-    color: T.ink, fontSize: 26, fontWeight: '900',
-    lineHeight: 30, letterSpacing: -0.8, marginTop: 8,
+    color: T.ink,
+    fontSize: 26,
+    fontWeight: '900',
+    lineHeight: 30,
+    letterSpacing: -0.8,
+    marginTop: 8,
   },
   answerRow: {
-    flexDirection: 'row', alignItems: 'center', gap: 10,
-    marginTop: 16, paddingTop: 14,
-    borderTopWidth: 1, borderTopColor: `${T.muted}55`,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    marginTop: 16,
+    paddingTop: 14,
+    borderTopWidth: 1,
+    borderTopColor: `${T.muted}55`,
   },
   answerLabel: { color: T.muted, fontSize: 11, fontWeight: '700', letterSpacing: 1.5 },
   answerName: { color: T.ink, fontSize: 20, fontWeight: '900', letterSpacing: -0.4 },
@@ -569,7 +758,10 @@ const rev = StyleSheet.create({
 // ─── Screen: End ──────────────────────────────────────────────────────────────
 
 function PNEnd({
-  history, players, onExit, onRestart,
+  history,
+  players,
+  onExit,
+  onRestart,
 }: {
   history: ParanoiaHistoryEntry[];
   players: Player[];
@@ -584,7 +776,9 @@ function PNEnd({
       <DotBackground opacity={0.06} />
 
       <View style={end.hero}>
-        <StickerBadge color={T.tomato} rotation={-4}>FIN DE PARTIE</StickerBadge>
+        <StickerBadge color={T.tomato} rotation={-4}>
+          FIN DE PARTIE
+        </StickerBadge>
         <Text style={end.title}>Le récap{'\n'}des secrets 🕵️</Text>
       </View>
 
@@ -614,14 +808,14 @@ function PNEnd({
                 <Text style={{ fontWeight: '900', color: T.ink }}>{players[h.a]?.name}</Text>
               </Text>
             </View>
-            {h.revealed && (
-              <Text style={end.revealedQ}>« {h.question} »</Text>
-            )}
+            {h.revealed && <Text style={end.revealedQ}>« {h.question} »</Text>}
           </View>
         ))}
 
         <View style={end.btnStack}>
-          <InkButton shadowColor={T.paper} onPress={onRestart}>Rejouer</InkButton>
+          <InkButton shadowColor={T.paper} onPress={onRestart}>
+            Rejouer
+          </InkButton>
           <TouchableOpacity style={end.secondaryBtn} onPress={onExit} activeOpacity={0.85}>
             <Text style={end.secondaryBtnText}>Retour au hub</Text>
           </TouchableOpacity>
@@ -635,34 +829,60 @@ const end = StyleSheet.create({
   screen: { flex: 1, backgroundColor: T.bg },
   hero: { padding: 20, paddingBottom: 4, gap: 16, alignItems: 'flex-start' },
   title: {
-    color: T.ink, fontSize: 44, fontWeight: '900',
-    letterSpacing: -1.5, lineHeight: 46,
+    color: T.ink,
+    fontSize: 44,
+    fontWeight: '900',
+    letterSpacing: -1.5,
+    lineHeight: 46,
   },
   statsRow: { flexDirection: 'row', gap: 10, paddingHorizontal: 20, paddingBottom: 4 },
   statLabel: { color: '#fff', fontSize: 10, fontWeight: '700', letterSpacing: 1.5, opacity: 0.85 },
   statValue: { color: '#fff', fontSize: 36, fontWeight: '900', letterSpacing: -1 },
   list: { padding: 20, paddingTop: 12, paddingBottom: 40, gap: 8 },
   historyCard: {
-    backgroundColor: T.paper, borderWidth: 2, borderColor: T.ink,
-    borderRadius: 16, padding: 12,
-    shadowColor: T.ink, shadowOffset: { width: 3, height: 3 }, shadowOpacity: 1, shadowRadius: 0, elevation: 3,
+    backgroundColor: T.paper,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: 16,
+    padding: 12,
+    shadowColor: T.ink,
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 3,
   },
   historyRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   badge: {
-    borderWidth: 1.5, borderColor: T.ink,
-    borderRadius: 6, paddingHorizontal: 8, paddingVertical: 3, flexShrink: 0,
+    borderWidth: 1.5,
+    borderColor: T.ink,
+    borderRadius: 6,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    flexShrink: 0,
   },
   badgeText: { color: '#fff', fontSize: 10, fontWeight: '900', letterSpacing: 1 },
   historyText: { flex: 1, fontSize: 13, color: T.inkSoft },
   revealedQ: {
-    marginTop: 6, color: T.ink, fontSize: 13,
-    fontWeight: '700', fontStyle: 'italic', lineHeight: 18,
+    marginTop: 6,
+    color: T.ink,
+    fontSize: 13,
+    fontWeight: '700',
+    fontStyle: 'italic',
+    lineHeight: 18,
   },
   btnStack: { gap: 10, marginTop: 8 },
   secondaryBtn: {
-    backgroundColor: T.paper, borderWidth: 2, borderColor: T.ink,
-    borderRadius: T.rMd, paddingVertical: 15, alignItems: 'center',
-    shadowColor: T.ink, shadowOffset: { width: 4, height: 4 }, shadowOpacity: 1, shadowRadius: 0, elevation: 4,
+    backgroundColor: T.paper,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: T.rMd,
+    paddingVertical: 15,
+    alignItems: 'center',
+    shadowColor: T.ink,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 4,
   },
   secondaryBtnText: { color: T.ink, fontSize: 16, fontWeight: '800', letterSpacing: -0.3 },
 });
@@ -674,7 +894,6 @@ export function ParanoiaScreen() {
   const navigation = useNavigation();
   const { players } = route.params as { players: Player[] };
 
-  const [orderKey, setOrderKey] = useState(0);
   const [order] = useState<ParanoiaOrder[]>(() => buildOrder(players));
   const [step, setStep] = useState<ParanoiaStep>('rules');
   const [round, setRound] = useState(0);
@@ -690,7 +909,11 @@ export function ParanoiaScreen() {
   const goToNext = () => {
     const won = chosenSide === coin;
     const entry: ParanoiaHistoryEntry = {
-      q: cur.q, t: cur.t, a: answer!, question: cur.question, revealed: !won,
+      q: cur.q,
+      t: cur.t,
+      a: answer!,
+      question: cur.question,
+      revealed: !won,
     };
     const nextHistory = [...history, entry];
     setHistory(nextHistory);
@@ -719,9 +942,12 @@ export function ParanoiaScreen() {
   if (step === 'q-handoff') {
     return (
       <PNHandoff
-        playerIdx={cur.q} playerName={questioner.name}
-        role="questioneur" subtitle="Tu vas voir une question. Garde-la secrète."
-        accentColor={T.tomato} onReady={() => setStep('q-show')}
+        playerIdx={cur.q}
+        playerName={questioner.name}
+        role="questioneur"
+        subtitle="Tu vas voir une question. Garde-la secrète."
+        accentColor={T.tomato}
+        onReady={() => setStep('q-show')}
       />
     );
   }
@@ -730,8 +956,10 @@ export function ParanoiaScreen() {
     return (
       <PNQuestionShow
         questionerName={questioner.name}
-        targetIdx={cur.t} targetName={target.name}
-        question={cur.question} onNext={() => setStep('t-handoff')}
+        targetIdx={cur.t}
+        targetName={target.name}
+        question={cur.question}
+        onNext={() => setStep('t-handoff')}
       />
     );
   }
@@ -739,9 +967,12 @@ export function ParanoiaScreen() {
   if (step === 't-handoff') {
     return (
       <PNHandoff
-        playerIdx={cur.t} playerName={target.name}
-        role="cible" subtitle="Une question te concerne. Tu vas voir laquelle."
-        accentColor={T.violet} onReady={() => setStep('t-pick')}
+        playerIdx={cur.t}
+        playerName={target.name}
+        role="cible"
+        subtitle="Une question te concerne. Tu vas voir laquelle."
+        accentColor={T.violet}
+        onReady={() => setStep('t-pick')}
       />
     );
   }
@@ -749,9 +980,12 @@ export function ParanoiaScreen() {
   if (step === 't-pick') {
     return (
       <PNTargetPick
-        targetName={target.name} question={cur.question}
-        players={players} excludeIdx={cur.t}
-        answer={answer} setAnswer={setAnswer}
+        targetName={target.name}
+        question={cur.question}
+        players={players}
+        excludeIdx={cur.t}
+        answer={answer}
+        setAnswer={setAnswer}
         onNext={() => setStep('coin')}
       />
     );
@@ -761,8 +995,10 @@ export function ParanoiaScreen() {
     return (
       <PNCoinFlip
         targetName={target.name}
-        chosenSide={chosenSide} setChosenSide={setChosenSide}
-        coin={coin} setCoin={setCoin}
+        chosenSide={chosenSide}
+        setChosenSide={setChosenSide}
+        coin={coin}
+        setCoin={setCoin}
         onNext={() => setStep('reveal')}
       />
     );
@@ -773,9 +1009,11 @@ export function ParanoiaScreen() {
     return (
       <PNReveal
         won={won}
-        questionerName={questioner.name} targetName={target.name}
+        questionerName={questioner.name}
+        targetName={target.name}
         question={cur.question}
-        pickedPlayerIdx={answer ?? 0} pickedPlayerName={players[answer ?? 0]?.name ?? ''}
+        pickedPlayerIdx={answer ?? 0}
+        pickedPlayerName={players[answer ?? 0]?.name ?? ''}
         onNext={goToNext}
       />
     );
@@ -784,7 +1022,8 @@ export function ParanoiaScreen() {
   if (step === 'end') {
     return (
       <PNEnd
-        history={history} players={players}
+        history={history}
+        players={players}
         onExit={() => (navigation as any).navigate('Home')}
         onRestart={() => {
           setStep('rules');

@@ -11,7 +11,7 @@
   "results": {
     "title": "政治结果",
     "leftOrientation": "偏左翼",
-    "rightOrientation": "偏右翼", 
+    "rightOrientation": "偏右翼",
     "centrist": "中间派",
     "extremeLeft": "极左翼",
     "extremeRight": "极右翼",
@@ -26,7 +26,7 @@
     "centerLeft": "中左",
     "center": "中间",
     "centerRight": "中右",
-    "right": "右翼", 
+    "right": "右翼",
     "veryRight": "极右翼"
   },
   "questions": {

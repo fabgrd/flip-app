@@ -121,7 +121,12 @@ export function SwipeableCard({
 
   // Left sticker badge — fades + scales in when swiping left
   const leftBadgeStyle = useAnimatedStyle(() => {
-    const progress = interpolate(translateX.value, [-SWIPE_THRESHOLD, -SWIPE_THRESHOLD * 0.2], [1, 0], 'clamp');
+    const progress = interpolate(
+      translateX.value,
+      [-SWIPE_THRESHOLD, -SWIPE_THRESHOLD * 0.2],
+      [1, 0],
+      'clamp',
+    );
     return {
       opacity: progress,
       transform: [{ scale: 0.7 + progress * 0.3 }],
@@ -130,7 +135,12 @@ export function SwipeableCard({
 
   // Right sticker badge
   const rightBadgeStyle = useAnimatedStyle(() => {
-    const progress = interpolate(translateX.value, [SWIPE_THRESHOLD * 0.2, SWIPE_THRESHOLD], [0, 1], 'clamp');
+    const progress = interpolate(
+      translateX.value,
+      [SWIPE_THRESHOLD * 0.2, SWIPE_THRESHOLD],
+      [0, 1],
+      'clamp',
+    );
     return {
       opacity: progress,
       transform: [{ scale: 0.7 + progress * 0.3 }],
@@ -142,7 +152,6 @@ export function SwipeableCard({
       <GestureDetector gesture={panGesture}>
         <Animated.View style={[styles.cardOuter, cardAnimStyle]}>
           <View style={styles.cardInner}>
-
             {/* Avatar */}
             <Avatar name={player.name} avatar={player.avatar} size={88} />
 
@@ -164,7 +173,6 @@ export function SwipeableCard({
                 <Text style={styles.badgeText}>{rightDirection.label.toUpperCase()}</Text>
               </View>
             </Animated.View>
-
           </View>
         </Animated.View>
       </GestureDetector>

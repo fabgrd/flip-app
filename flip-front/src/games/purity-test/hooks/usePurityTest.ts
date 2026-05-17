@@ -29,7 +29,10 @@ const DEFAULT_LEVEL_COUNTS: Record<LevelKey, number> = {
   levelBonus: 0,
 };
 
-function normalizeWeights<T extends string>(weights: Record<T, number>, keys: T[]): Record<T, number> {
+function normalizeWeights<T extends string>(
+  weights: Record<T, number>,
+  keys: T[],
+): Record<T, number> {
   const total = keys.reduce((sum, key) => sum + Math.max(0, weights[key] ?? 0), 0);
   if (total <= 0) {
     const equal = Math.round(100 / keys.length);
@@ -59,14 +62,18 @@ function allocateCounts<T extends string>(weights: Record<T, number>, keys: T[],
     remaining -= 1;
     idx += 1;
   }
-  return base.reduce((acc, entry) => ({ ...acc, [entry.key]: entry.count }), {} as Record<T, number>);
+  return base.reduce(
+    (acc, entry) => ({ ...acc, [entry.key]: entry.count }),
+    {} as Record<T, number>,
+  );
 }
 
 function generateGameQuestions(t: TFunction, config?: PurityQuestionConfig): Question[] {
   const themeCounts = config?.themeCounts ?? DEFAULT_THEME_COUNTS;
   const levelCounts = config?.levelCounts ?? DEFAULT_LEVEL_COUNTS;
   const computedTotal = Object.values(themeCounts).reduce((sum, val) => sum + Math.max(0, val), 0);
-  const totalQuestions = config?.totalQuestions ?? (computedTotal > 0 ? computedTotal : DEFAULT_TOTAL_QUESTIONS);
+  const totalQuestions =
+    config?.totalQuestions ?? (computedTotal > 0 ? computedTotal : DEFAULT_TOTAL_QUESTIONS);
 
   const fallbackQuestions: Record<Theme, Question[]> = {
     sex: [
@@ -217,19 +224,23 @@ function generateGameQuestions(t: TFunction, config?: PurityQuestionConfig): Que
       try {
         const questionsData = t(`purityTest:questions.${theme}.${level}`, { returnObjects: true });
         if (Array.isArray(questionsData)) {
-          questionsData.forEach((questionData: { id: string; text: string; points: number | { yes: number; no: number } }) => {
-            const rawPoints = questionData.points;
-            const points: { yes: number; no: number } =
-              typeof rawPoints === 'number'
-                ? { yes: rawPoints, no: 0 }
-                : rawPoints;
-            levelBuckets[level].push({
-              id: questionData.id,
-              text: questionData.text,
-              theme,
-              points,
-            });
-          });
+          questionsData.forEach(
+            (questionData: {
+              id: string;
+              text: string;
+              points: number | { yes: number; no: number };
+            }) => {
+              const rawPoints = questionData.points;
+              const points: { yes: number; no: number } =
+                typeof rawPoints === 'number' ? { yes: rawPoints, no: 0 } : rawPoints;
+              levelBuckets[level].push({
+                id: questionData.id,
+                text: questionData.text,
+                theme,
+                points,
+              });
+            },
+          );
         }
       } catch (error) {
         console.warn(`Could not load questions for ${theme}.${level}`);

@@ -19,13 +19,13 @@ import {
   GameChip,
   GameMenuActions,
   InkButton,
-  StickerBadge,
   isRedSuit,
   PlayingCardBack,
   PlayingCardFace,
+  StickerBadge,
 } from '../components';
-import { getPlayerBgColor, getPlayerColorName, getPlayerTextColor } from '../constants';
 import { AperoIcon } from '../components/icons/AperoIcon';
+import { getPlayerBgColor, getPlayerTextColor } from '../constants';
 import { T } from '../constants/flipTokens';
 import { Player, RootStackParamList } from '../types';
 
@@ -37,14 +37,27 @@ const AP_VALS = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'V', 'D', 'R', 'A
 type ApVal = (typeof AP_VALS)[number];
 
 const AP_PTS: Record<ApVal, number> = {
-  '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8,
-  '9': 9, '10': 10, V: 11, D: 12, R: 13, A: 14,
+  '2': 2,
+  '3': 3,
+  '4': 4,
+  '5': 5,
+  '6': 6,
+  '7': 7,
+  '8': 8,
+  '9': 9,
+  '10': 10,
+  V: 11,
+  D: 12,
+  R: 13,
+  A: 14,
 };
 
 const AP_SUITS = ['♠', '♥', '♦', '♣'] as const;
 const AP_NAMES: Partial<Record<ApVal, string>> = { A: 'As', V: 'Valet', D: 'Dame', R: 'Roi' };
 
-function apName(v: ApVal): string { return AP_NAMES[v] ?? v; }
+function apName(v: ApVal): string {
+  return AP_NAMES[v] ?? v;
+}
 const apIsRed = isRedSuit;
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -72,9 +85,12 @@ function apDeck(): ApCard[] {
 
 // ─── Player colors ────────────────────────────────────────────────────────────
 
-function pColor(idx: number) { return getPlayerColorName(idx); }
-function pBg(idx: number): string { return getPlayerBgColor(idx); }
-function pText(idx: number): string { return getPlayerTextColor(idx); }
+function pBg(idx: number): string {
+  return getPlayerBgColor(idx);
+}
+function pText(idx: number): string {
+  return getPlayerTextColor(idx);
+}
 
 // ─── Bridge ───────────────────────────────────────────────────────────────────
 
@@ -88,7 +104,7 @@ const ROW2: ApVal[] = ['8', '9', '10', 'V', 'D', 'R', 'A'];
 function APBridge({ cards }: { cards: PlayedCard[] }) {
   const groups: Record<string, PlayedCard[]> = {};
   for (const v of AP_VALS) groups[v] = [];
-  cards.forEach(c => groups[c.v].push(c));
+  cards.forEach((c) => groups[c.v].push(c));
 
   const renderSlot = (val: ApVal) => {
     const pile = groups[val];
@@ -105,11 +121,14 @@ function APBridge({ cards }: { cards: PlayedCard[] }) {
             const isFlipped = c.flipped;
             const isFound = c.found && !isFlipped;
             return (
-              <View key={i} style={[
-                br.card,
-                { top: i * SOFF, zIndex: i },
-                isFlipped ? br.cardFlipped : isFound ? br.cardFound : br.cardNormal,
-              ]}>
+              <View
+                key={i}
+                style={[
+                  br.card,
+                  { top: i * SOFF, zIndex: i },
+                  isFlipped ? br.cardFlipped : isFound ? br.cardFound : br.cardNormal,
+                ]}
+              >
                 {isFlipped && <CardCrosshatch width={CW} height={CH} />}
                 {!isFlipped && (
                   <>
@@ -127,7 +146,9 @@ function APBridge({ cards }: { cards: PlayedCard[] }) {
 
   return (
     <View style={br.wrap}>
-      <Text style={br.label}>TRAVERSÉE · {cards.length} CARTE{cards.length > 1 ? 'S' : ''}</Text>
+      <Text style={br.label}>
+        TRAVERSÉE · {cards.length} CARTE{cards.length > 1 ? 'S' : ''}
+      </Text>
       <View style={br.row}>{ROW1.map(renderSlot)}</View>
       <View style={[br.row, { marginTop: 4 }]}>{ROW2.map(renderSlot)}</View>
     </View>
@@ -136,27 +157,43 @@ function APBridge({ cards }: { cards: PlayedCard[] }) {
 
 const br = StyleSheet.create({
   wrap: {
-    paddingHorizontal: 8, paddingTop: 6, paddingBottom: 8,
+    paddingHorizontal: 8,
+    paddingTop: 6,
+    paddingBottom: 8,
     backgroundColor: T.bgAlt,
-    borderBottomWidth: 1, borderBottomColor: `${T.ink}20`,
+    borderBottomWidth: 1,
+    borderBottomColor: `${T.ink}20`,
   },
   label: { color: T.muted, fontSize: 9, fontWeight: '700', letterSpacing: 1.5, marginBottom: 5 },
   row: { flexDirection: 'row', gap: 3, justifyContent: 'center' },
   emptySlot: {
-    width: CW, height: CH, borderRadius: 6,
-    borderWidth: 1.5, borderColor: `${T.muted}50`,
-    alignItems: 'center', justifyContent: 'center',
+    width: CW,
+    height: CH,
+    borderRadius: 6,
+    borderWidth: 1.5,
+    borderColor: `${T.muted}50`,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   emptySlotText: { color: T.muted, fontSize: 13, fontWeight: '700', opacity: 0.4 },
   card: {
-    position: 'absolute', left: 0, overflow: 'hidden',
-    width: CW, height: CH, borderRadius: 6,
-    alignItems: 'center', justifyContent: 'center',
+    position: 'absolute',
+    left: 0,
+    overflow: 'hidden',
+    width: CW,
+    height: CH,
+    borderRadius: 6,
+    alignItems: 'center',
+    justifyContent: 'center',
     borderWidth: 1.5,
   },
   cardNormal: {
-    backgroundColor: T.paper, borderColor: T.ink,
-    shadowColor: T.ink, shadowOffset: { width: 1, height: 1 }, shadowOpacity: 0.2, shadowRadius: 0,
+    backgroundColor: T.paper,
+    borderColor: T.ink,
+    shadowColor: T.ink,
+    shadowOffset: { width: 1, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 0,
   },
   // Found: solid cream background, mint border — no transparency
   cardFound: { backgroundColor: T.paper, borderColor: T.mint, borderWidth: 2 },
@@ -171,8 +208,12 @@ const br = StyleSheet.create({
 const VP_ROW1: ApVal[] = ['2', '3', '4', '5', '6', '7'];
 const VP_ROW2: ApVal[] = ['8', '9', '10', 'V', 'D', 'R', 'A'];
 
-function APValuePicker({ onPick, disabled = [] }: {
-  onPick: (v: ApVal) => void; disabled?: ApVal[];
+function APValuePicker({
+  onPick,
+  disabled = [],
+}: {
+  onPick: (v: ApVal) => void;
+  disabled?: ApVal[];
 }) {
   const renderBtn = (v: ApVal) => {
     const dis = disabled.includes(v);
@@ -200,10 +241,19 @@ const vp = StyleSheet.create({
   wrap: { alignSelf: 'center', gap: 5 },
   row: { flexDirection: 'row', gap: 5, justifyContent: 'center' },
   btn: {
-    width: 48, height: 58, borderRadius: 10,
-    borderWidth: 2, borderColor: T.ink, backgroundColor: T.paper,
-    alignItems: 'center', justifyContent: 'center',
-    shadowColor: T.ink, shadowOffset: { width: 3, height: 3 }, shadowOpacity: 1, shadowRadius: 0, elevation: 3,
+    width: 48,
+    height: 58,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: T.ink,
+    backgroundColor: T.paper,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: T.ink,
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 3,
   },
   btnDis: { backgroundColor: T.bgAlt, shadowOpacity: 0, elevation: 0, opacity: 0.35 },
   btnText: { color: T.ink, fontSize: 19, fontWeight: '900' },
@@ -213,18 +263,48 @@ const vp = StyleSheet.create({
 
 // ─── Rules ────────────────────────────────────────────────────────────────────
 
-function APRules({ onStart, onExit, onSettings }: {
-  onStart: () => void; onExit: () => void; onSettings: () => void;
+function APRules({
+  onStart,
+  onExit,
+  onSettings,
+}: {
+  onStart: () => void;
+  onExit: () => void;
+  onSettings: () => void;
 }) {
   const RULES = [
-    { n: '1', t: 'Le donneur pioche une carte', d: 'La carte reste cachée. Le joueur actif tente de la deviner.' },
-    { n: '2', t: 'Premier essai — plus ou moins ?', d: 'Le joueur dit un chiffre. L\'app répond « c\'est plus » ou « c\'est moins ».' },
-    { n: '3', t: 'Deuxième essai — dernière chance', d: 'Si raté, le joueur boit la différence entre sa réponse et la carte.' },
-    { n: '4', t: 'Trouvé ? Le donneur trinque', d: 'Si un joueur trouve, le donneur boit 2 gorgées et sa série repart à zéro.' },
-    { n: '5', t: '3 tours safe = le donneur passe', d: 'Si personne ne trouve en 3 tours, le donneur file le tel à un autre.' },
-    { n: '★', t: 'Règle spéciale : le quadruplé', d: 'Quand les 4 cartes d\'une même valeur sont sorties, elles se retournent et le donneur boit 2 de plus.' },
+    {
+      n: '1',
+      t: 'Le donneur pioche une carte',
+      d: 'La carte reste cachée. Le joueur actif tente de la deviner.',
+    },
+    {
+      n: '2',
+      t: 'Premier essai — plus ou moins ?',
+      d: "Le joueur dit un chiffre. L'app répond « c'est plus » ou « c'est moins ».",
+    },
+    {
+      n: '3',
+      t: 'Deuxième essai — dernière chance',
+      d: 'Si raté, le joueur boit la différence entre sa réponse et la carte.',
+    },
+    {
+      n: '4',
+      t: 'Trouvé ? Le donneur trinque',
+      d: 'Si un joueur trouve, le donneur boit 2 gorgées et sa série repart à zéro.',
+    },
+    {
+      n: '5',
+      t: '3 tours safe = le donneur passe',
+      d: 'Si personne ne trouve en 3 tours, le donneur file le tel à un autre.',
+    },
+    {
+      n: '★',
+      t: 'Règle spéciale : le quadruplé',
+      d: "Quand les 4 cartes d'une même valeur sont sorties, elles se retournent et le donneur boit 2 de plus.",
+    },
   ];
-  const rulesModal = RULES.map(r => ({ n: r.n, title: r.t, desc: r.d }));
+  const rulesModal = RULES.map((r) => ({ n: r.n, title: r.t, desc: r.d }));
 
   return (
     <SafeAreaView style={rls.screen}>
@@ -236,7 +316,7 @@ function APRules({ onStart, onExit, onSettings }: {
         <GameMenuActions
           showDice={false}
           onPressSettings={onSettings}
-          rules={{ rules: rulesModal, title: 'L\'Apéro', accentColor: T.pink }}
+          rules={{ rules: rulesModal, title: "L'Apéro", accentColor: T.pink }}
         />
       </View>
 
@@ -245,7 +325,9 @@ function APRules({ onStart, onExit, onSettings }: {
           <View style={rls.iconWrap}>
             <AperoIcon size={92} />
           </View>
-          <GameChip color={T.paper} textStyle={{ fontSize: 11 }}>Jeu n°6</GameChip>
+          <GameChip color={T.paper} textStyle={{ fontSize: 11 }}>
+            Jeu n°6
+          </GameChip>
           <Text style={rls.title}>L'Apéro</Text>
         </View>
 
@@ -255,7 +337,9 @@ function APRules({ onStart, onExit, onSettings }: {
             {RULES.map((s, i) => (
               <View key={s.n} style={[rls.ruleRow, i < RULES.length - 1 && rls.divider]}>
                 <View style={[rls.ruleNum, { backgroundColor: s.n === '★' ? T.lemon : T.pink }]}>
-                  <Text style={[rls.ruleNumText, { color: s.n === '★' ? T.ink : '#fff' }]}>{s.n}</Text>
+                  <Text style={[rls.ruleNumText, { color: s.n === '★' ? T.ink : '#fff' }]}>
+                    {s.n}
+                  </Text>
                 </View>
                 <View style={{ flex: 1 }}>
                   <Text style={rls.ruleTitle}>{s.t}</Text>
@@ -277,29 +361,58 @@ function APRules({ onStart, onExit, onSettings }: {
 const rls = StyleSheet.create({
   screen: { flex: 1, backgroundColor: T.pink },
   header: {
-    paddingHorizontal: 20, paddingTop: 8,
-    flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    paddingTop: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   backBtn: {
-    width: 44, height: 44, borderRadius: 14,
-    backgroundColor: T.paper, borderWidth: 2, borderColor: T.ink,
-    alignItems: 'center', justifyContent: 'center',
-    shadowColor: T.ink, shadowOffset: { width: 3, height: 3 }, shadowOpacity: 1, shadowRadius: 0, elevation: 3,
+    width: 44,
+    height: 44,
+    borderRadius: 14,
+    backgroundColor: T.paper,
+    borderWidth: 2,
+    borderColor: T.ink,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: T.ink,
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 3,
   },
   backBtnText: { fontSize: 20, color: T.ink, fontWeight: '900' },
   titleArea: { paddingHorizontal: 20, paddingTop: 16, paddingBottom: 16 },
   iconWrap: { position: 'absolute', right: 16, top: 16, transform: [{ rotate: '-8deg' }] },
   title: {
-    color: '#fff', fontSize: 64, fontWeight: '900',
-    letterSpacing: -2.5, lineHeight: 60, marginTop: 12,
+    color: '#fff',
+    fontSize: 64,
+    fontWeight: '900',
+    letterSpacing: -2.5,
+    lineHeight: 60,
+    marginTop: 12,
   },
   cardWrap: { paddingHorizontal: 20 },
-  cardLabel: { color: T.muted, fontSize: 11, fontWeight: '700', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 12 },
+  cardLabel: {
+    color: T.muted,
+    fontSize: 11,
+    fontWeight: '700',
+    letterSpacing: 1.5,
+    textTransform: 'uppercase',
+    marginBottom: 12,
+  },
   ruleRow: { flexDirection: 'row', gap: 12, paddingVertical: 9 },
   divider: { borderBottomWidth: 1, borderBottomColor: `${T.muted}40` },
   ruleNum: {
-    width: 30, height: 30, borderRadius: 9, flexShrink: 0,
-    borderWidth: 2, borderColor: T.ink, alignItems: 'center', justifyContent: 'center',
+    width: 30,
+    height: 30,
+    borderRadius: 9,
+    flexShrink: 0,
+    borderWidth: 2,
+    borderColor: T.ink,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   ruleNumText: { fontSize: 14, fontWeight: '900' },
   ruleTitle: { color: T.ink, fontSize: 16, fontWeight: '800', letterSpacing: -0.3 },
@@ -322,11 +435,18 @@ function APPickDealer({ players, onPick }: { players: Player[]; onPick: (i: numb
         </View>
         <View style={pk.grid}>
           {players.map((p, i) => (
-            <TouchableOpacity key={i} onPress={() => onPick(i)} activeOpacity={0.85} style={pk.playerBtn}>
+            <TouchableOpacity
+              key={i}
+              onPress={() => onPick(i)}
+              activeOpacity={0.85}
+              style={pk.playerBtn}
+            >
               <View style={[pk.avatar, { backgroundColor: pBg(i) }]}>
                 <Text style={[pk.avatarText, { color: pText(i) }]}>{p.name[0].toUpperCase()}</Text>
               </View>
-              <Text style={pk.name} numberOfLines={1}>{p.name}</Text>
+              <Text style={pk.name} numberOfLines={1}>
+                {p.name}
+              </Text>
             </TouchableOpacity>
           ))}
         </View>
@@ -336,18 +456,48 @@ function APPickDealer({ players, onPick }: { players: Player[]; onPick: (i: numb
 }
 
 const pk = StyleSheet.create({
-  center: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 24, gap: 16 },
-  title: { color: '#fff', fontSize: 40, fontWeight: '900', letterSpacing: -1.5, lineHeight: 42, textAlign: 'center' },
+  center: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 24,
+    gap: 16,
+  },
+  title: {
+    color: '#fff',
+    fontSize: 40,
+    fontWeight: '900',
+    letterSpacing: -1.5,
+    lineHeight: 42,
+    textAlign: 'center',
+  },
   sub: { color: 'rgba(255,255,255,0.6)', fontSize: 14, textAlign: 'center' },
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, padding: 20, paddingBottom: 32 },
   playerBtn: {
-    width: '47%', backgroundColor: T.paper, borderWidth: 2, borderColor: T.ink,
-    borderRadius: 18, padding: 14, flexDirection: 'row', alignItems: 'center', gap: 10,
-    shadowColor: T.pink, shadowOffset: { width: 4, height: 4 }, shadowOpacity: 1, shadowRadius: 0, elevation: 4,
+    width: '47%',
+    backgroundColor: T.paper,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: 18,
+    padding: 14,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    shadowColor: T.pink,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 4,
   },
   avatar: {
-    width: 40, height: 40, borderRadius: 12, flexShrink: 0,
-    borderWidth: 2, borderColor: T.ink, alignItems: 'center', justifyContent: 'center',
+    width: 40,
+    height: 40,
+    borderRadius: 12,
+    flexShrink: 0,
+    borderWidth: 2,
+    borderColor: T.ink,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   avatarText: { fontSize: 18, fontWeight: '900' },
   name: { flex: 1, fontSize: 16, fontWeight: '800', color: T.ink, letterSpacing: -0.3 },
@@ -355,9 +505,24 @@ const pk = StyleSheet.create({
 
 // ─── Main round ───────────────────────────────────────────────────────────────
 
-function APRound({ card, guesser, dealer, exhaustedVals, streak, cardNum, total, onDone, onRequestPass }: {
-  card: ApCard; guesser: Player; dealer: Player;
-  exhaustedVals: ApVal[]; streak: number; cardNum: number; total: number;
+function APRound({
+  card,
+  guesser,
+  dealer,
+  exhaustedVals,
+  streak,
+  cardNum,
+  total,
+  onDone,
+  onRequestPass,
+}: {
+  card: ApCard;
+  guesser: Player;
+  dealer: Player;
+  exhaustedVals: ApVal[];
+  streak: number;
+  cardNum: number;
+  total: number;
   onDone: (found: boolean, penalty: number) => void;
   onRequestPass: () => void;
 }) {
@@ -381,7 +546,12 @@ function APRound({ card, guesser, dealer, exhaustedVals, streak, cardNum, total,
     entryTranslateY.setValue(18);
     entryOpacity.setValue(0);
     Animated.parallel([
-      Animated.timing(entryTranslateY, { toValue: 0, duration: 280, easing: Easing.out(Easing.cubic), useNativeDriver: true }),
+      Animated.timing(entryTranslateY, {
+        toValue: 0,
+        duration: 280,
+        easing: Easing.out(Easing.cubic),
+        useNativeDriver: true,
+      }),
       Animated.timing(entryOpacity, { toValue: 1, duration: 280, useNativeDriver: true }),
     ]).start();
   };
@@ -406,10 +576,22 @@ function APRound({ card, guesser, dealer, exhaustedVals, streak, cardNum, total,
       case 'g1': {
         startSlide();
         // Start pulse loop
-        pulseRef.current = Animated.loop(Animated.sequence([
-          Animated.timing(pulseScale, { toValue: 1.06, duration: 800, easing: Easing.inOut(Easing.ease), useNativeDriver: true }),
-          Animated.timing(pulseScale, { toValue: 1, duration: 800, easing: Easing.inOut(Easing.ease), useNativeDriver: true }),
-        ]));
+        pulseRef.current = Animated.loop(
+          Animated.sequence([
+            Animated.timing(pulseScale, {
+              toValue: 1.06,
+              duration: 800,
+              easing: Easing.inOut(Easing.ease),
+              useNativeDriver: true,
+            }),
+            Animated.timing(pulseScale, {
+              toValue: 1,
+              duration: 800,
+              easing: Easing.inOut(Easing.ease),
+              useNativeDriver: true,
+            }),
+          ]),
+        );
         pulseRef.current.start();
         break;
       }
@@ -429,38 +611,61 @@ function APRound({ card, guesser, dealer, exhaustedVals, streak, cardNum, total,
       case 'g2': {
         startSlide();
         // Resume pulse
-        pulseRef.current = Animated.loop(Animated.sequence([
-          Animated.timing(pulseScale, { toValue: 1.06, duration: 800, easing: Easing.inOut(Easing.ease), useNativeDriver: true }),
-          Animated.timing(pulseScale, { toValue: 1, duration: 800, easing: Easing.inOut(Easing.ease), useNativeDriver: true }),
-        ]));
+        pulseRef.current = Animated.loop(
+          Animated.sequence([
+            Animated.timing(pulseScale, {
+              toValue: 1.06,
+              duration: 800,
+              easing: Easing.inOut(Easing.ease),
+              useNativeDriver: true,
+            }),
+            Animated.timing(pulseScale, {
+              toValue: 1,
+              duration: 800,
+              easing: Easing.inOut(Easing.ease),
+              useNativeDriver: true,
+            }),
+          ]),
+        );
         pulseRef.current.start();
         break;
       }
       case 'result': {
         // Pop the revealed card
         cardScale.setValue(0.4);
-        Animated.spring(cardScale, { toValue: 1, friction: 5, tension: 120, useNativeDriver: true }).start();
+        Animated.spring(cardScale, {
+          toValue: 1,
+          friction: 5,
+          tension: 120,
+          useNativeDriver: true,
+        }).start();
         // Pop the result content with a slight delay
         startPop(80);
         break;
       }
     }
-    return () => { pulseRef.current?.stop(); };
+    return () => {
+      pulseRef.current?.stop();
+    };
   }, [phase]);
 
   const doG1 = (val: ApVal) => {
     setG1(val);
     if (AP_PTS[val] === card.p) setPhase('result');
-    else { setPhase('hint'); setTimeout(() => setPhase('g2'), 1600); }
+    else {
+      setPhase('hint');
+      setTimeout(() => setPhase('g2'), 1600);
+    }
   };
-  const doG2 = (val: ApVal) => { setG2(val); setPhase('result'); };
+  const doG2 = (val: ApVal) => {
+    setG2(val);
+    setPhase('result');
+  };
 
   const found = (g1 !== null && AP_PTS[g1] === card.p) || (g2 !== null && AP_PTS[g2] === card.p);
   const hint = g1 ? (card.p > AP_PTS[g1] ? 'plus' : 'moins') : null;
   const finalGuess = g2 ?? g1;
   const penalty = finalGuess && !found ? Math.abs(AP_PTS[finalGuess] - card.p) : 0;
-  const red = apIsRed(card.s);
-
   // Content animation style: slide for g1/g2, pop for hint/result
   const isSlidePhase = phase === 'g1' || phase === 'g2';
   const contentAnimStyle = isSlidePhase
@@ -472,12 +677,16 @@ function APRound({ card, guesser, dealer, exhaustedVals, streak, cardNum, total,
       {/* Centered game area */}
       <View style={rd.gameArea}>
         {/* Card */}
-        <Animated.View style={{ transform: [{ scale: phase === 'result' ? cardScale : pulseScale }, { translateX: shakeX }] }}>
+        <Animated.View
+          style={{
+            transform: [
+              { scale: phase === 'result' ? cardScale : pulseScale },
+              { translateX: shakeX },
+            ],
+          }}
+        >
           {phase === 'result' ? (
-            <PlayingCardFace
-              value={card.v} suit={card.s}
-              shadowColor={found ? T.mint : T.ink}
-            />
+            <PlayingCardFace value={card.v} suit={card.s} shadowColor={found ? T.mint : T.ink} />
           ) : (
             <PlayingCardBack />
           )}
@@ -495,10 +704,16 @@ function APRound({ card, guesser, dealer, exhaustedVals, streak, cardNum, total,
 
           {phase === 'hint' && hint && (
             <View style={{ alignItems: 'center', gap: 10 }}>
-              <View style={[rd.hintBadge, { backgroundColor: hint === 'plus' ? T.tomato : T.cobalt }]}>
-                <Text style={rd.hintText}>C'est {hint} {hint === 'plus' ? '↑' : '↓'}</Text>
+              <View
+                style={[rd.hintBadge, { backgroundColor: hint === 'plus' ? T.tomato : T.cobalt }]}
+              >
+                <Text style={rd.hintText}>
+                  C'est {hint} {hint === 'plus' ? '↑' : '↓'}
+                </Text>
               </View>
-              <Text style={rd.phaseSub}>Tu as dit {apName(g1!)} ({AP_PTS[g1!]} pts)</Text>
+              <Text style={rd.phaseSub}>
+                Tu as dit {apName(g1!)} ({AP_PTS[g1!]} pts)
+              </Text>
             </View>
           )}
 
@@ -522,17 +737,24 @@ function APRound({ card, guesser, dealer, exhaustedVals, streak, cardNum, total,
             <View style={{ alignItems: 'center', gap: 8 }}>
               {found ? (
                 <>
-                  <StickerBadge color={T.mint} rotation={-4}>TROUVÉ !</StickerBadge>
+                  <StickerBadge color={T.mint} rotation={-4}>
+                    TROUVÉ !
+                  </StickerBadge>
                   <Text style={rd.resultTitle}>{dealer.name} boit 2 gorgées</Text>
                   <Text style={rd.phaseSub}>Série du donneur remise à zéro</Text>
                 </>
               ) : (
                 <>
-                  <StickerBadge color={T.tomato} rotation={4} textColor="#fff">RATÉ !</StickerBadge>
-                  <Text style={rd.resultTitle}>{guesser.name} boit {penalty} gorgée{penalty > 1 ? 's' : ''}</Text>
+                  <StickerBadge color={T.tomato} rotation={4} textColor="#fff">
+                    RATÉ !
+                  </StickerBadge>
+                  <Text style={rd.resultTitle}>
+                    {guesser.name} boit {penalty} gorgée{penalty > 1 ? 's' : ''}
+                  </Text>
                   {finalGuess && (
                     <Text style={rd.phaseMono}>
-                      |{apName(finalGuess)} − {apName(card.v)}| = |{AP_PTS[finalGuess]} − {card.p}| = {penalty}
+                      |{apName(finalGuess)} − {apName(card.v)}| = |{AP_PTS[finalGuess]} − {card.p}|
+                      = {penalty}
                     </Text>
                   )}
                 </>
@@ -563,27 +785,57 @@ function APRound({ card, guesser, dealer, exhaustedVals, streak, cardNum, total,
 const rd = StyleSheet.create({
   // Flex-centered game area — fills remaining space and centers content vertically
   gameArea: {
-    flex: 1, alignItems: 'center', justifyContent: 'center',
-    paddingHorizontal: 20, gap: 20,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+    gap: 20,
   },
   phaseWrap: { alignItems: 'center', width: '100%' },
-  phaseTitle: { color: T.ink, fontSize: 20, fontWeight: '900', letterSpacing: -0.5, textAlign: 'center' },
+  phaseTitle: {
+    color: T.ink,
+    fontSize: 20,
+    fontWeight: '900',
+    letterSpacing: -0.5,
+    textAlign: 'center',
+  },
   phaseSub: { color: T.muted, fontSize: 13, textAlign: 'center' },
   phaseMono: { color: T.muted, fontSize: 12, textAlign: 'center', fontVariant: ['tabular-nums'] },
   hintBadge: {
-    paddingHorizontal: 28, paddingVertical: 12, borderRadius: 18,
-    borderWidth: 2.5, borderColor: T.ink,
-    shadowColor: T.ink, shadowOffset: { width: 5, height: 5 }, shadowOpacity: 1, shadowRadius: 0, elevation: 5,
+    paddingHorizontal: 28,
+    paddingVertical: 12,
+    borderRadius: 18,
+    borderWidth: 2.5,
+    borderColor: T.ink,
+    shadowColor: T.ink,
+    shadowOffset: { width: 5, height: 5 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 5,
   },
   hintText: { color: '#fff', fontSize: 32, fontWeight: '900', letterSpacing: -1 },
-  resultTitle: { color: T.ink, fontSize: 22, fontWeight: '900', textAlign: 'center', letterSpacing: -0.5 },
+  resultTitle: {
+    color: T.ink,
+    fontSize: 22,
+    fontWeight: '900',
+    textAlign: 'center',
+    letterSpacing: -0.5,
+  },
   footer: { padding: 20, paddingBottom: 32, gap: 10 },
 });
 
 // ─── Quadruplé special flip ───────────────────────────────────────────────────
 
-function APSpecialFlip({ played, dealer, quadVal, onNext }: {
-  played: PlayedCard[]; dealer: Player; quadVal: ApVal; onNext: () => void;
+function APSpecialFlip({
+  played,
+  dealer,
+  quadVal,
+  onNext,
+}: {
+  played: PlayedCard[];
+  dealer: Player;
+  quadVal: ApVal;
+  onNext: () => void;
 }) {
   const popAnim = useRef(new Animated.Value(0.4)).current;
   const popOpacity = useRef(new Animated.Value(0)).current;
@@ -605,7 +857,10 @@ function APSpecialFlip({ played, dealer, quadVal, onNext }: {
               ★ QUADRUPLÉ !
             </StickerBadge>
           </Animated.View>
-          <Text style={sf.title}>Les 4 {apName(quadVal)}{'\n'}sont sortis !</Text>
+          <Text style={sf.title}>
+            Les 4 {apName(quadVal)}
+            {'\n'}sont sortis !
+          </Text>
           <Text style={sf.sub}>Les 4 cartes se retournent sur la traversée.</Text>
           <GameCard style={{ alignSelf: 'stretch', marginTop: 8, borderRadius: 22, padding: 18 }}>
             <Text style={sf.bonusText}>{dealer.name} boit 2 gorgées</Text>
@@ -624,8 +879,22 @@ function APSpecialFlip({ played, dealer, quadVal, onNext }: {
 }
 
 const sf = StyleSheet.create({
-  center: { alignItems: 'center', paddingHorizontal: 20, paddingTop: 40, paddingBottom: 20, gap: 12 },
-  title: { color: T.ink, fontSize: 44, fontWeight: '900', letterSpacing: -2, lineHeight: 44, textAlign: 'center', marginTop: 16 },
+  center: {
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingTop: 40,
+    paddingBottom: 20,
+    gap: 12,
+  },
+  title: {
+    color: T.ink,
+    fontSize: 44,
+    fontWeight: '900',
+    letterSpacing: -2,
+    lineHeight: 44,
+    textAlign: 'center',
+    marginTop: 16,
+  },
   sub: { color: T.inkSoft, fontSize: 16, textAlign: 'center', maxWidth: 280 },
   bonusText: { color: T.tomato, fontSize: 24, fontWeight: '900', textAlign: 'center' },
   bonusSub: { color: T.muted, fontSize: 13, marginTop: 4, textAlign: 'center' },
@@ -634,27 +903,52 @@ const sf = StyleSheet.create({
 
 // ─── Dealer pass ──────────────────────────────────────────────────────────────
 
-function APDealerPass({ dealer, players, dealerIdx, onPass }: {
-  dealer: Player; players: Player[]; dealerIdx: number; onPass: (i: number) => void;
+function APDealerPass({
+  dealer,
+  players,
+  dealerIdx,
+  onPass,
+}: {
+  dealer: Player;
+  players: Player[];
+  dealerIdx: number;
+  onPass: (i: number) => void;
 }) {
   return (
     <View style={{ flex: 1, backgroundColor: T.mint }}>
       <SafeAreaView style={{ flex: 1 }}>
         <DotBackground color={T.ink} opacity={0.08} />
         <View style={dp.header}>
-          <StickerBadge color={T.paper} rotation={-6}>DONNER LE TAS</StickerBadge>
-          <Text style={dp.title}>{dealer.name}{'\n'}passe la main</Text>
+          <StickerBadge color={T.paper} rotation={-6}>
+            DONNER LE TAS
+          </StickerBadge>
+          <Text style={dp.title}>
+            {dealer.name}
+            {'\n'}passe la main
+          </Text>
           <Text style={dp.sub}>Choisis à qui passer le tas.</Text>
         </View>
         <View style={dp.grid}>
-          {players.map((p, i) => i !== dealerIdx && (
-            <TouchableOpacity key={i} onPress={() => onPass(i)} activeOpacity={0.85} style={dp.playerBtn}>
-              <View style={[dp.avatar, { backgroundColor: pBg(i) }]}>
-                <Text style={[dp.avatarText, { color: pText(i) }]}>{p.name[0].toUpperCase()}</Text>
-              </View>
-              <Text style={dp.name} numberOfLines={1}>{p.name}</Text>
-            </TouchableOpacity>
-          ))}
+          {players.map(
+            (p, i) =>
+              i !== dealerIdx && (
+                <TouchableOpacity
+                  key={i}
+                  onPress={() => onPass(i)}
+                  activeOpacity={0.85}
+                  style={dp.playerBtn}
+                >
+                  <View style={[dp.avatar, { backgroundColor: pBg(i) }]}>
+                    <Text style={[dp.avatarText, { color: pText(i) }]}>
+                      {p.name[0].toUpperCase()}
+                    </Text>
+                  </View>
+                  <Text style={dp.name} numberOfLines={1}>
+                    {p.name}
+                  </Text>
+                </TouchableOpacity>
+              ),
+          )}
         </View>
       </SafeAreaView>
     </View>
@@ -662,18 +956,54 @@ function APDealerPass({ dealer, players, dealerIdx, onPass }: {
 }
 
 const dp = StyleSheet.create({
-  header: { paddingHorizontal: 20, paddingTop: 24, paddingBottom: 16, alignItems: 'center', gap: 12 },
-  title: { color: T.ink, fontSize: 40, fontWeight: '900', letterSpacing: -1.5, lineHeight: 42, textAlign: 'center' },
+  header: {
+    paddingHorizontal: 20,
+    paddingTop: 24,
+    paddingBottom: 16,
+    alignItems: 'center',
+    gap: 12,
+  },
+  title: {
+    color: T.ink,
+    fontSize: 40,
+    fontWeight: '900',
+    letterSpacing: -1.5,
+    lineHeight: 42,
+    textAlign: 'center',
+  },
   sub: { color: T.inkSoft, fontSize: 15, textAlign: 'center', lineHeight: 22 },
-  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, paddingHorizontal: 20, paddingBottom: 32 },
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
+    paddingHorizontal: 20,
+    paddingBottom: 32,
+  },
   playerBtn: {
-    width: '47%', backgroundColor: T.paper, borderWidth: 2, borderColor: T.ink,
-    borderRadius: 18, padding: 14, flexDirection: 'row', alignItems: 'center', gap: 10,
-    shadowColor: T.ink, shadowOffset: { width: 4, height: 4 }, shadowOpacity: 1, shadowRadius: 0, elevation: 4,
+    width: '47%',
+    backgroundColor: T.paper,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: 18,
+    padding: 14,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    shadowColor: T.ink,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 4,
   },
   avatar: {
-    width: 40, height: 40, borderRadius: 12, flexShrink: 0,
-    borderWidth: 2, borderColor: T.ink, alignItems: 'center', justifyContent: 'center',
+    width: 40,
+    height: 40,
+    borderRadius: 12,
+    flexShrink: 0,
+    borderWidth: 2,
+    borderColor: T.ink,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   avatarText: { fontSize: 18, fontWeight: '900' },
   name: { flex: 1, fontSize: 16, fontWeight: '800', color: T.ink, letterSpacing: -0.3 },
@@ -681,9 +1011,18 @@ const dp = StyleSheet.create({
 
 // ─── End screen ───────────────────────────────────────────────────────────────
 
-function APEnd({ players, sips, played, foundTotal, onExit }: {
-  players: Player[]; sips: number[]; played: PlayedCard[];
-  foundTotal: number; onExit: () => void;
+function APEnd({
+  players,
+  sips,
+  played,
+  foundTotal,
+  onExit,
+}: {
+  players: Player[];
+  sips: number[];
+  played: PlayedCard[];
+  foundTotal: number;
+  onExit: () => void;
 }) {
   const ranked = players.map((p, i) => ({ ...p, idx: i, s: sips[i] })).sort((a, b) => b.s - a.s);
   const totalSips = sips.reduce((a, b) => a + b, 0);
@@ -693,7 +1032,9 @@ function APEnd({ players, sips, played, foundTotal, onExit }: {
       <DotBackground opacity={0.06} />
       <ScrollView contentContainerStyle={{ paddingBottom: 40 }}>
         <View style={en.header}>
-          <StickerBadge color={T.pink} rotation={-4} textColor="#fff">FIN DE PARTIE</StickerBadge>
+          <StickerBadge color={T.pink} rotation={-4} textColor="#fff">
+            FIN DE PARTIE
+          </StickerBadge>
           <Text style={en.title}>Le bilan{'\n'}de l'apéro</Text>
         </View>
 
@@ -702,7 +1043,7 @@ function APEnd({ players, sips, played, foundTotal, onExit }: {
             { label: 'CARTES', val: played.length, bg: T.pink },
             { label: 'TROUVÉES', val: foundTotal, bg: T.mint },
             { label: 'GORGÉES', val: totalSips, bg: T.tomato },
-          ].map(s => (
+          ].map((s) => (
             <View key={s.label} style={[en.statCard, { backgroundColor: s.bg }]}>
               <Text style={en.statLabel}>{s.label}</Text>
               <Text style={en.statVal}>{s.val}</Text>
@@ -720,28 +1061,54 @@ function APEnd({ players, sips, played, foundTotal, onExit }: {
             {ranked.map((p, i) => {
               const isTop = i === 0 && p.s > 0;
               return (
-                <View key={p.idx} style={[en.rankRow, { backgroundColor: isTop ? T.pink : T.paper }]}>
-                  <View style={[en.rankNum, {
-                    backgroundColor: isTop ? 'rgba(255,255,255,0.25)' : T.bgAlt,
-                    borderColor: isTop ? 'rgba(255,255,255,0.3)' : T.ink,
-                  }]}>
-                    <Text style={[en.rankNumText, { color: isTop ? '#fff' : T.ink }]}>#{i + 1}</Text>
+                <View
+                  key={p.idx}
+                  style={[en.rankRow, { backgroundColor: isTop ? T.pink : T.paper }]}
+                >
+                  <View
+                    style={[
+                      en.rankNum,
+                      {
+                        backgroundColor: isTop ? 'rgba(255,255,255,0.25)' : T.bgAlt,
+                        borderColor: isTop ? 'rgba(255,255,255,0.3)' : T.ink,
+                      },
+                    ]}
+                  >
+                    <Text style={[en.rankNumText, { color: isTop ? '#fff' : T.ink }]}>
+                      #{i + 1}
+                    </Text>
                   </View>
-                  <View style={[en.rankAvatar, {
-                    backgroundColor: pBg(p.idx),
-                    borderColor: isTop ? 'rgba(255,255,255,0.4)' : T.ink,
-                  }]}>
-                    <Text style={[en.rankAvatarText, { color: pText(p.idx) }]}>{p.name[0].toUpperCase()}</Text>
+                  <View
+                    style={[
+                      en.rankAvatar,
+                      {
+                        backgroundColor: pBg(p.idx),
+                        borderColor: isTop ? 'rgba(255,255,255,0.4)' : T.ink,
+                      },
+                    ]}
+                  >
+                    <Text style={[en.rankAvatarText, { color: pText(p.idx) }]}>
+                      {p.name[0].toUpperCase()}
+                    </Text>
                   </View>
                   <View style={{ flex: 1 }}>
                     <Text style={[en.rankName, { color: isTop ? '#fff' : T.ink }]}>{p.name}</Text>
-                    <Text style={[en.rankSips, { color: isTop ? 'rgba(255,255,255,0.7)' : T.muted }]}>
+                    <Text
+                      style={[en.rankSips, { color: isTop ? 'rgba(255,255,255,0.7)' : T.muted }]}
+                    >
                       {p.s === 0 ? 'SOBRE' : `${p.s} GORGÉE${p.s > 1 ? 'S' : ''}`}
                     </Text>
                   </View>
-                  <Text style={[en.rankScore, {
-                    color: isTop ? T.lemon : p.s === 0 ? T.mint : T.tomato,
-                  }]}>{p.s}</Text>
+                  <Text
+                    style={[
+                      en.rankScore,
+                      {
+                        color: isTop ? T.lemon : p.s === 0 ? T.mint : T.tomato,
+                      },
+                    ]}
+                  >
+                    {p.s}
+                  </Text>
                 </View>
               );
             })}
@@ -762,30 +1129,69 @@ function APEnd({ players, sips, played, foundTotal, onExit }: {
 const en = StyleSheet.create({
   screen: { flex: 1, backgroundColor: T.bg },
   header: { padding: 20, gap: 16 },
-  title: { color: T.ink, fontSize: 44, fontWeight: '900', letterSpacing: -1.5, lineHeight: 44, marginTop: 4 },
+  title: {
+    color: T.ink,
+    fontSize: 44,
+    fontWeight: '900',
+    letterSpacing: -1.5,
+    lineHeight: 44,
+    marginTop: 4,
+  },
   statsRow: { flexDirection: 'row', gap: 8, paddingHorizontal: 20, marginBottom: 14 },
   statCard: {
-    flex: 1, borderRadius: 16, padding: 12,
-    borderWidth: 2, borderColor: T.ink,
-    shadowColor: T.ink, shadowOffset: { width: 3, height: 3 }, shadowOpacity: 1, shadowRadius: 0, elevation: 3,
+    flex: 1,
+    borderRadius: 16,
+    padding: 12,
+    borderWidth: 2,
+    borderColor: T.ink,
+    shadowColor: T.ink,
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 3,
   },
   statLabel: { color: '#fff', fontSize: 9, fontWeight: '700', letterSpacing: 1, opacity: 0.85 },
   statVal: { color: '#fff', fontSize: 28, fontWeight: '900' },
   rankWrap: { paddingHorizontal: 20, marginBottom: 20 },
-  rankLabel: { color: T.muted, fontSize: 11, fontWeight: '700', letterSpacing: 1.5, marginBottom: 8 },
+  rankLabel: {
+    color: T.muted,
+    fontSize: 11,
+    fontWeight: '700',
+    letterSpacing: 1.5,
+    marginBottom: 8,
+  },
   rankRow: {
-    flexDirection: 'row', alignItems: 'center', gap: 10, padding: 12,
-    borderRadius: 16, borderWidth: 2, borderColor: T.ink,
-    shadowColor: T.ink, shadowOffset: { width: 4, height: 4 }, shadowOpacity: 1, shadowRadius: 0, elevation: 4,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    padding: 12,
+    borderRadius: 16,
+    borderWidth: 2,
+    borderColor: T.ink,
+    shadowColor: T.ink,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 4,
   },
   rankNum: {
-    width: 26, height: 26, borderRadius: 7, flexShrink: 0,
-    borderWidth: 1.5, alignItems: 'center', justifyContent: 'center',
+    width: 26,
+    height: 26,
+    borderRadius: 7,
+    flexShrink: 0,
+    borderWidth: 1.5,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   rankNumText: { fontSize: 11, fontWeight: '800' },
   rankAvatar: {
-    width: 34, height: 34, borderRadius: 10, flexShrink: 0,
-    borderWidth: 2, alignItems: 'center', justifyContent: 'center',
+    width: 34,
+    height: 34,
+    borderRadius: 10,
+    flexShrink: 0,
+    borderWidth: 2,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   rankAvatarText: { fontSize: 15, fontWeight: '900' },
   rankName: { fontSize: 16, fontWeight: '800', letterSpacing: -0.3 },
@@ -794,8 +1200,12 @@ const en = StyleSheet.create({
 });
 
 const playTopBar = {
-  paddingHorizontal: 14, paddingVertical: 6,
-  flexDirection: 'row' as const, justifyContent: 'space-between' as const, alignItems: 'center' as const, gap: 6,
+  paddingHorizontal: 14,
+  paddingVertical: 6,
+  flexDirection: 'row' as const,
+  justifyContent: 'space-between' as const,
+  alignItems: 'center' as const,
+  gap: 6,
 };
 
 // ─── Main state machine ───────────────────────────────────────────────────────
@@ -813,7 +1223,7 @@ function AperoGame({ players, onExit }: { players: Player[]; onExit: () => void 
   const [lastQuad, setLastQuad] = useState<ApVal | null>(null);
 
   const guessers = React.useMemo(
-    () => players.map((_, i) => i).filter(i => i !== dealerIdx),
+    () => players.map((_, i) => i).filter((i) => i !== dealerIdx),
     [dealerIdx, players.length],
   );
   const curGuesserIdx = guessers.length > 0 ? guessers[rot % guessers.length] : 0;
@@ -838,10 +1248,10 @@ function AperoGame({ players, onExit }: { players: Player[]; onExit: () => void 
     const newRot = rot + 1;
 
     // Quadruplé: all 4 cards of this value are now out — dealer drinks 2 extra
-    const quadCount = newPlayed.filter(c => c.v === card.v).length;
+    const quadCount = newPlayed.filter((c) => c.v === card.v).length;
     if (quadCount === 4) {
       ns[dealerIdx] += 2;
-      const withFlipped = newPlayed.map(c => c.v === card.v ? { ...c, flipped: true } : c);
+      const withFlipped = newPlayed.map((c) => (c.v === card.v ? { ...c, flipped: true } : c));
       setSips([...ns]);
       setPlayed(withFlipped);
       setFoundTotal(nFound);
@@ -868,15 +1278,28 @@ function AperoGame({ players, onExit }: { players: Player[]; onExit: () => void 
   }
 
   if (step === 'pick') {
-    return <APPickDealer players={players} onPick={i => { setDealerIdx(i); setStep('play'); }} />;
+    return (
+      <APPickDealer
+        players={players}
+        onPick={(i) => {
+          setDealerIdx(i);
+          setStep('play');
+        }}
+      />
+    );
   }
 
   if (step === 'play') {
-    if (cardPos >= deck.length) { setStep('end'); return null; }
+    if (cardPos >= deck.length) {
+      setStep('end');
+      return null;
+    }
 
-    const exhaustedVals = AP_VALS.filter(v => {
+    const exhaustedVals = AP_VALS.filter((v) => {
       let count = 0;
-      for (const c of played) { if (c.v === v) count++; }
+      for (const c of played) {
+        if (c.v === v) count++;
+      }
       return count >= 4;
     });
 
@@ -938,7 +1361,7 @@ function AperoGame({ players, onExit }: { players: Player[]; onExit: () => void 
         dealer={players[dealerIdx]}
         players={players}
         dealerIdx={dealerIdx}
-        onPass={i => {
+        onPass={(i) => {
           setDealerIdx(i);
           setStreak(0);
           setRot(0);
@@ -949,7 +1372,15 @@ function AperoGame({ players, onExit }: { players: Player[]; onExit: () => void 
   }
 
   if (step === 'end') {
-    return <APEnd players={players} sips={sips} played={played} foundTotal={foundTotal} onExit={onExit} />;
+    return (
+      <APEnd
+        players={players}
+        sips={sips}
+        played={played}
+        foundTotal={foundTotal}
+        onExit={onExit}
+      />
+    );
   }
 
   return null;

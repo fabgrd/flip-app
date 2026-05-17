@@ -69,19 +69,13 @@ export function SwipeableCardStack<T extends { id: string }, D>({
   return (
     <View style={[styles.container, { height: SCREEN_HEIGHT * heightRatio }]}>
       {items.length > 2 && (
-        <Animated.View
-          key={`third-${items[2]?.id}`}
-          style={[styles.cardContainer, thirdCardStyle]}
-        >
+        <Animated.View key={`third-${items[2]?.id}`} style={[styles.cardContainer, thirdCardStyle]}>
           <CardComponent item={items[2]} onSwipe={() => {}} isActive={false} zIndex={1} />
         </Animated.View>
       )}
 
       {items.length > 1 && (
-        <Animated.View
-          key={`second-${items[1]?.id}`}
-          style={[styles.cardContainer, nextCardStyle]}
-        >
+        <Animated.View key={`second-${items[1]?.id}`} style={[styles.cardContainer, nextCardStyle]}>
           <CardComponent item={items[1]} onSwipe={() => {}} isActive={false} zIndex={2} />
         </Animated.View>
       )}

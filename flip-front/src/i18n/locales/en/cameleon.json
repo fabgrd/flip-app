@@ -1,127 +1,127 @@
 {
-    "name": "Chameleon",
-    "description": "Guess the impostors from clues... without revealing your word!",
-    "game": {
-        "title": "Chameleon",
-        "subtitle": "Settings and role distribution"
-    },
-    "settings": {
-        "title": "Settings",
-        "subtitle": "{{count}} players",
-        "players": "Players",
-        "impostors": "Impostors",
-        "undercover": "Undercover",
-        "mrWhite": "Mr White",
-        "theme": "Theme",
-        "themeHint": "Pick the vibe before starting the round."
-    },
-    "actions": {
-        "start": "Start",
-        "reveal": "Reveal",
-        "seeResults": "See results",
-        "reset": "Reset",
-        "goToVote": "Go to vote",
-        "eliminate": "Eliminate",
-        "submit": "Submit"
-    },
-    "reveal": {
-        "title": "Word reveal",
-        "subtitle": "Pass the phone to each player",
-        "secretWord": "Secret word: {{word}}",
-        "mrWhiteWarning": "You are Mr White! No word for you — bluff smart."
-    },
-    "roles": {
-        "civilian": "Civilian",
-        "cameleon": "Undercover",
-        "mrWhite": "Mr White"
-    },
-    "results": {
-        "title": "Results",
-        "subtitle": "Roles and words"
-    },
-    "outcome": {
-        "civiliansWin": "Civilians win!",
-        "undercoverWin": "Undercover win!"
-    },
-    "badges": {
-        "eliminated": "OUT"
-    },
-    "modals": {
-        "firstPlayer": "{{name}} starts!"
-    },
-    "notices": {
-        "eliminatedRole": "1 {{role}} eliminated"
-    },
-    "counters": {
-        "remainingImpostors": "Impostors remaining: {{count}}"
-    },
-    "mrWhite": {
-        "guessTitle": "Mr White",
-        "guessPrompt": "Oops, you were discovered. You can still try to guess the word. If you find it you’ll know at the end of the game.",
-        "placeholder": "Type your guess here"
-    },
-    "themes": {
-        "random": "Random",
-        "randomDesc": "Mix all universes",
-        "daily": "Daily life",
-        "dailyDesc": "Simple, readable words",
-        "football": "Football",
-        "footballDesc": "Sport culture and rivalries",
-        "hot": "Hot",
-        "hotDesc": "A spicier atmosphere",
-        "wtf": "WTF",
-        "wtfDesc": "Absurd, dirty, weird pairs"
-    },
-    "wordPairs": {
-        "chat": "Cat",
-        "tigre": "Tiger",
-        "plage": "Beach",
-        "desert": "Desert",
-        "pizza": "Pizza",
-        "tarte": "Pie",
-        "avion": "Airplane",
-        "fusee": "Rocket",
-        "hiver": "Winter",
-        "automne": "Autumn",
-        "infirmier": "Nurse",
-        "medecin": "Doctor",
-        "boulanger": "Baker",
-        "patissier": "Pastry chef",
-        "football": "Football",
-        "rugby": "Rugby",
-        "cinema": "Cinema",
-        "theatre": "Theater",
-        "concert": "Concert",
-        "festival": "Festival",
-        "foret": "Forest",
-        "jungle": "Jungle",
-        "marijuana": "Marijuana",
-        "hashish": "Hashish",
-        "bouzelouf": "Bouzelouf (grilled sheep head)",
-        "tastyCrousty": "Tasty Crousty",
-        "biteDeCheval": "Horse bit",
-        "couilleDeTaureau": "Bull testicle",
-        "saintNectaire": "Saint Nectaire",
-        "camembert": "Camembert",
-        "bombonnne": "Bombonnne (balloon)",
-        "ballon": "Balloon",
-        "rouge": "Stainy red",
-        "porto": "Port",
-        "gland": "Acorn",
-        "freine": "Brake",
-        "pet": "Fart",
-        "rot": "Burp",
-        "vomi": "Vomit",
-        "caca": "Poop",
-        "OM": "OM",
-        "OL": "OL",
-        "neige": "Snow",
-        "glace": "Ice",
-        "biere": "Beer",
-        "vin": "Wine",
-        "gta": "GTA",
-        "redDeadRedemption": "Red Dead Redemption",
-        "onePiece": "One Piece",
-        "dragonBall": "Dragon Ball"
-    }
+  "name": "Chameleon",
+  "description": "Guess the impostors from clues... without revealing your word!",
+  "game": {
+    "title": "Chameleon",
+    "subtitle": "Settings and role distribution"
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "{{count}} players",
+    "players": "Players",
+    "impostors": "Impostors",
+    "undercover": "Undercover",
+    "mrWhite": "Mr White",
+    "theme": "Theme",
+    "themeHint": "Pick the vibe before starting the round."
+  },
+  "actions": {
+    "start": "Start",
+    "reveal": "Reveal",
+    "seeResults": "See results",
+    "reset": "Reset",
+    "goToVote": "Go to vote",
+    "eliminate": "Eliminate",
+    "submit": "Submit"
+  },
+  "reveal": {
+    "title": "Word reveal",
+    "subtitle": "Pass the phone to each player",
+    "secretWord": "Secret word: {{word}}",
+    "mrWhiteWarning": "You are Mr White! No word for you — bluff smart."
+  },
+  "roles": {
+    "civilian": "Civilian",
+    "cameleon": "Undercover",
+    "mrWhite": "Mr White"
+  },
+  "results": {
+    "title": "Results",
+    "subtitle": "Roles and words"
+  },
+  "outcome": {
+    "civiliansWin": "Civilians win!",
+    "undercoverWin": "Undercover win!"
+  },
+  "badges": {
+    "eliminated": "OUT"
+  },
+  "modals": {
+    "firstPlayer": "{{name}} starts!"
+  },
+  "notices": {
+    "eliminatedRole": "1 {{role}} eliminated"
+  },
+  "counters": {
+    "remainingImpostors": "Impostors remaining: {{count}}"
+  },
+  "mrWhite": {
+    "guessTitle": "Mr White",
+    "guessPrompt": "Oops, you were discovered. You can still try to guess the word. If you find it you’ll know at the end of the game.",
+    "placeholder": "Type your guess here"
+  },
+  "themes": {
+    "random": "Random",
+    "randomDesc": "Mix all universes",
+    "daily": "Daily life",
+    "dailyDesc": "Simple, readable words",
+    "football": "Football",
+    "footballDesc": "Sport culture and rivalries",
+    "hot": "Hot",
+    "hotDesc": "A spicier atmosphere",
+    "wtf": "WTF",
+    "wtfDesc": "Absurd, dirty, weird pairs"
+  },
+  "wordPairs": {
+    "chat": "Cat",
+    "tigre": "Tiger",
+    "plage": "Beach",
+    "desert": "Desert",
+    "pizza": "Pizza",
+    "tarte": "Pie",
+    "avion": "Airplane",
+    "fusee": "Rocket",
+    "hiver": "Winter",
+    "automne": "Autumn",
+    "infirmier": "Nurse",
+    "medecin": "Doctor",
+    "boulanger": "Baker",
+    "patissier": "Pastry chef",
+    "football": "Football",
+    "rugby": "Rugby",
+    "cinema": "Cinema",
+    "theatre": "Theater",
+    "concert": "Concert",
+    "festival": "Festival",
+    "foret": "Forest",
+    "jungle": "Jungle",
+    "marijuana": "Marijuana",
+    "hashish": "Hashish",
+    "bouzelouf": "Bouzelouf (grilled sheep head)",
+    "tastyCrousty": "Tasty Crousty",
+    "biteDeCheval": "Horse bit",
+    "couilleDeTaureau": "Bull testicle",
+    "saintNectaire": "Saint Nectaire",
+    "camembert": "Camembert",
+    "bombonnne": "Bombonnne (balloon)",
+    "ballon": "Balloon",
+    "rouge": "Stainy red",
+    "porto": "Port",
+    "gland": "Acorn",
+    "freine": "Brake",
+    "pet": "Fart",
+    "rot": "Burp",
+    "vomi": "Vomit",
+    "caca": "Poop",
+    "OM": "OM",
+    "OL": "OL",
+    "neige": "Snow",
+    "glace": "Ice",
+    "biere": "Beer",
+    "vin": "Wine",
+    "gta": "GTA",
+    "redDeadRedemption": "Red Dead Redemption",
+    "onePiece": "One Piece",
+    "dragonBall": "Dragon Ball"
+  }
 }

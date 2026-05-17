@@ -25,8 +25,8 @@ export function PlayerGrid({
   const ordered =
     clueOrder.length > 0
       ? (clueOrder
-        .map((id) => players.find((p) => p.id === id)!)
-        .filter(Boolean) as CameleonAssignedPlayer[])
+          .map((id) => players.find((p) => p.id === id)!)
+          .filter(Boolean) as CameleonAssignedPlayer[])
       : players;
 
   return (

@@ -34,13 +34,7 @@ export function GameMenuActions({
   return (
     <View style={[styles.actions, style]}>
       {showDice && onPressDice && (
-        <FlatChunkyButton
-          size="xs"
-          square
-          color={T.paper}
-          textColor={T.ink}
-          onPress={onPressDice}
-        >
+        <FlatChunkyButton size="xs" square color={T.paper} textColor={T.ink} onPress={onPressDice}>
           <MaterialCommunityIcons name="dice-5-outline" size={18} color={T.ink} />
         </FlatChunkyButton>
       )}
@@ -53,11 +47,7 @@ export function GameMenuActions({
       >
         <MaterialCommunityIcons name="cog-outline" size={18} color={T.ink} />
       </FlatChunkyButton>
-      <RulesButton
-        rules={rules.rules}
-        title={rules.title}
-        accentColor={rules.accentColor}
-      />
+      <RulesButton rules={rules.rules} title={rules.title} accentColor={rules.accentColor} />
     </View>
   );
 }

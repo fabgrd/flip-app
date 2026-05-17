@@ -1,13 +1,13 @@
 {
-    "selection": {
-        "title": "Choose your game",
-        "subtitle": "With {{count}} players"
-    },
-    "purityTest": {
-        "name": "Impurity Test",
-        "description": "Find out who's the most impure in the group! 😈"
-    },
-    "comingSoon": {
-        "message": "Game \"{{gameName}}\" selected with {{playerCount}} players!\nFeature under development."
-    }
+  "selection": {
+    "title": "Choose your game",
+    "subtitle": "With {{count}} players"
+  },
+  "purityTest": {
+    "name": "Impurity Test",
+    "description": "Find out who's the most impure in the group! 😈"
+  },
+  "comingSoon": {
+    "message": "Game \"{{gameName}}\" selected with {{playerCount}} players!\nFeature under development."
+  }
 }

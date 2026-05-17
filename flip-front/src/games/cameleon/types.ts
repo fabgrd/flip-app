@@ -1,7 +1,15 @@
 import type { Player } from '../../types';
 
 export type CameleonRole = 'civilian' | 'cameleon' | 'mrWhite';
-export type CameleonTheme = 'random' | 'daily' | 'sousculture' | 'rap' | 'football' | 'hot' | 'decadence' | 'wtf';
+export type CameleonTheme =
+  | 'random'
+  | 'daily'
+  | 'sousculture'
+  | 'rap'
+  | 'football'
+  | 'hot'
+  | 'decadence'
+  | 'wtf';
 
 export interface CameleonAssignedPlayer extends Player {
   role: CameleonRole;

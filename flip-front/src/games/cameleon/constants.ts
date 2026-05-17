@@ -108,7 +108,7 @@ const RAP: CameleonWordPair[] = [
   { civilianWord: 'Vald', cameleonWord: 'Gringe' },
   { civilianWord: 'Orelsan', cameleonWord: 'Roméo Elvis' },
   { civilianWord: 'Sadek', cameleonWord: 'Rohff' },
-  { civilianWord: 'Jcvd', cameleonWord: 'Heuss l\'enfoiré' },
+  { civilianWord: 'Jcvd', cameleonWord: "Heuss l'enfoiré" },
   { civilianWord: 'Moha La Squale', cameleonWord: '13 Block' },
   { civilianWord: 'Lacrim', cameleonWord: 'Kof Kof' },
 ];
@@ -158,7 +158,15 @@ const WTF: CameleonWordPair[] = [
 // ─────────────────────────────────────────────────────────────
 // RANDOM = union de tous les thèmes
 // ─────────────────────────────────────────────────────────────
-const ALL: CameleonWordPair[] = [...DAILY, ...SOUSCULTURE, ...RAP, ...FOOTBALL, ...HOT, ...DECADENCE, ...WTF];
+const ALL: CameleonWordPair[] = [
+  ...DAILY,
+  ...SOUSCULTURE,
+  ...RAP,
+  ...FOOTBALL,
+  ...HOT,
+  ...DECADENCE,
+  ...WTF,
+];
 
 export const CAMELEON_THEME_OPTIONS: Array<{ value: CameleonTheme; labelKey: string }> = [
   { value: 'random', labelKey: 'cameleon:themes.random' },

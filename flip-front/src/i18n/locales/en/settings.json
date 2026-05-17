@@ -1,22 +1,22 @@
 {
-    "title": "Settings",
-    "language": {
-        "title": "Language",
-        "subtitle": "Choose your preferred language",
-        "options": {
-            "fr": "Français",
-            "en": "English",
-            "zh": "中文"
-        }
-    },
-    "appearance": {
-        "title": "Appearance",
-        "subtitle": "Light/Dark theme",
-        "darkMode": "Dark Mode"
-    },
-    "about": {
-        "title": "About",
-        "version": "Version {{version}}",
-        "description": "FL!P - The ultimate drinking game to spice up your parties with friends!"
+  "title": "Settings",
+  "language": {
+    "title": "Language",
+    "subtitle": "Choose your preferred language",
+    "options": {
+      "fr": "Français",
+      "en": "English",
+      "zh": "中文"
     }
+  },
+  "appearance": {
+    "title": "Appearance",
+    "subtitle": "Light/Dark theme",
+    "darkMode": "Dark Mode"
+  },
+  "about": {
+    "title": "About",
+    "version": "Version {{version}}",
+    "description": "FL!P - The ultimate drinking game to spice up your parties with friends!"
+  }
 }

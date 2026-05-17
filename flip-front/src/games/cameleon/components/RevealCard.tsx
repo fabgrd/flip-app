@@ -154,7 +154,6 @@ const styles = StyleSheet.create({
   frontFace: { backgroundColor: T.ink },
   backFace: { backgroundColor: T.paper },
 
-
   handoffTitle: {
     color: '#fff',
     fontSize: 36,

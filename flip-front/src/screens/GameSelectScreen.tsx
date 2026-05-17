@@ -88,7 +88,7 @@ export function GameSelectScreen() {
 
   const games = [
     { id: 'casting', name: 'Le Casting', minPlayers: 3, maxPlayers: 11, description: '' },
-    { id: 'apero', name: 'L\'Apéro', minPlayers: 2, maxPlayers: 99, description: '' },
+    { id: 'apero', name: "L'Apéro", minPlayers: 2, maxPlayers: 99, description: '' },
     { id: 'medusa', name: 'Médusa', minPlayers: 5, maxPlayers: 20, description: '' },
     { id: 'paranoia', name: 'Paranoïa', minPlayers: 4, maxPlayers: 10, description: '' },
     { id: 'cameleon', name: 'Caméléon', minPlayers: 4, maxPlayers: 10, description: '' },

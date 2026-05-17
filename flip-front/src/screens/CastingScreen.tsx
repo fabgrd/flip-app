@@ -18,17 +18,13 @@ import {
   GameCard,
   GameChip,
   GameMenuActions,
-  InkButton,
   InitialAvatar,
+  InkButton,
   StickerBadge,
 } from '../components';
-import { getPlayerBgColor, getPlayerColorName, getPlayerTextColor } from '../constants';
+import { getPlayerBgColor, getPlayerTextColor } from '../constants';
 import { T } from '../constants/flipTokens';
-import {
-  CASTING_LABELS,
-  CASTING_ORANGE,
-  CASTING_SCENARIOS,
-} from '../games/casting';
+import { CASTING_LABELS, CASTING_ORANGE, CASTING_SCENARIOS } from '../games/casting';
 import { CastingResult } from '../games/casting/types';
 import { Player, RootStackParamList } from '../types';
 
@@ -45,10 +41,6 @@ type CastingStep =
   | 'results';
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
-
-function playerColor(idx: number): string {
-  return getPlayerColorName(idx);
-}
 
 function playerBg(idx: number): string {
   return getPlayerBgColor(idx);
@@ -83,7 +75,7 @@ function CARules({
     {
       n: '3',
       t: 'Le devin lit un scénario',
-      d: "Exemple : « Trébucher à la cantine avec son plateau ».",
+      d: 'Exemple : « Trébucher à la cantine avec son plateau ».',
     },
     {
       n: '4',
@@ -93,7 +85,7 @@ function CARules({
     {
       n: '5',
       t: 'Le devin devine les chiffres',
-      d: "Il attribue un chiffre à chaque acteur. Plus il se trompe, plus il boit.",
+      d: 'Il attribue un chiffre à chaque acteur. Plus il se trompe, plus il boit.',
     },
   ];
 
@@ -136,10 +128,7 @@ function CARules({
         <GameCard>
           <Text style={rls.cardLabel}>COMMENT ON JOUE</Text>
           {STEPS.map((s, i) => (
-            <View
-              key={s.n}
-              style={[rls.ruleRow, i < STEPS.length - 1 && rls.ruleRowDivider]}
-            >
+            <View key={s.n} style={[rls.ruleRow, i < STEPS.length - 1 && rls.ruleRowDivider]}>
               <View style={rls.ruleNum}>
                 <Text style={rls.ruleNumText}>{s.n}</Text>
               </View>
@@ -256,13 +245,7 @@ const rls = StyleSheet.create({
 
 // ─── Pick Devin ───────────────────────────────────────────────────────────────
 
-function CAPickDevin({
-  players,
-  onPick,
-}: {
-  players: Player[];
-  onPick: (idx: number) => void;
-}) {
+function CAPickDevin({ players, onPick }: { players: Player[]; onPick: (idx: number) => void }) {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: T.ink }}>
       <View style={pd.body}>
@@ -278,12 +261,7 @@ function CAPickDevin({
               onPress={() => onPick(i)}
               activeOpacity={0.8}
             >
-              <View
-                style={[
-                  pd.playerAvatar,
-                  { backgroundColor: playerBg(i) },
-                ]}
-              >
+              <View style={[pd.playerAvatar, { backgroundColor: playerBg(i) }]}>
                 <Text style={[pd.playerAvatarText, { color: avatarTextColor(i) }]}>
                   {p.name[0].toUpperCase()}
                 </Text>
@@ -453,7 +431,9 @@ function CAHandoff({
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: T.ink }}>
       <View style={hf.body}>
-        <Text style={hf.counter}>{pos + 1} / {total}</Text>
+        <Text style={hf.counter}>
+          {pos + 1} / {total}
+        </Text>
         <InitialAvatar
           index={playerIdx}
           size={120}
@@ -461,7 +441,9 @@ function CAHandoff({
           borderColor={T.paper}
           shadowColor={CASTING_ORANGE}
         />
-        <Text style={hf.name}>{player.name},{'\n'}passe au tel</Text>
+        <Text style={hf.name}>
+          {player.name},{'\n'}passe au tel
+        </Text>
         <Text style={hf.sub}>Regarde ton chiffre en secret avant d'appuyer.</Text>
       </View>
       <View style={hf.footer}>
@@ -509,7 +491,7 @@ const hf = StyleSheet.create({
 
 function CARevealNumber({
   player,
-  playerIdx,
+  playerIdx: _playerIdx,
   number,
   scenario,
   onNext,
@@ -552,11 +534,7 @@ function CARevealNumber({
           <View style={rn.holdWrap}>
             <Text style={rn.spotlight}>🎬</Text>
             <Text style={rn.holdTitle}>Maintiens pour{'\n'}voir ton chiffre</Text>
-            <TouchableOpacity
-              style={rn.holdBtn}
-              onPressIn={handleReveal}
-              activeOpacity={0.85}
-            >
+            <TouchableOpacity style={rn.holdBtn} onPressIn={handleReveal} activeOpacity={0.85}>
               <Text style={rn.holdBtnText}>HOLD</Text>
             </TouchableOpacity>
           </View>
@@ -810,17 +788,18 @@ function CAGuessPlayer({
         <GameChip color={CASTING_ORANGE} textColor="#fff">
           Devin · {devin.name}
         </GameChip>
-        <GameChip color={T.paper}>{pos + 1}/{total}</GameChip>
+        <GameChip color={T.paper}>
+          {pos + 1}/{total}
+        </GameChip>
       </View>
 
       <View style={gp.body}>
         <InitialAvatar index={actorIdx} size={88} radius={24} shadowColor={CASTING_ORANGE} />
         <Text style={gp.question}>
-          Quel chiffre avait{'\n'}{actor.name} ?
+          Quel chiffre avait{'\n'}
+          {actor.name} ?
         </Text>
-        {guess !== null && (
-          <Text style={gp.guessLabel}>{CASTING_LABELS[guess].toUpperCase()}</Text>
-        )}
+        {guess !== null && <Text style={gp.guessLabel}>{CASTING_LABELS[guess].toUpperCase()}</Text>}
 
         <View style={gp.grid}>
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => {
@@ -829,15 +808,19 @@ function CAGuessPlayer({
             return (
               <TouchableOpacity
                 key={n}
-                style={[
-                  gp.numBtn,
-                  isSelected && gp.numBtnSelected,
-                  isUsed && gp.numBtnUsed,
-                ]}
+                style={[gp.numBtn, isSelected && gp.numBtnSelected, isUsed && gp.numBtnUsed]}
                 onPress={() => !isUsed && setGuess(n)}
                 activeOpacity={isUsed ? 1 : 0.8}
               >
-                <Text style={[gp.numText, isSelected && { color: '#fff' }, isUsed && { color: T.muted }]}>{n}</Text>
+                <Text
+                  style={[
+                    gp.numText,
+                    isSelected && { color: '#fff' },
+                    isUsed && { color: T.muted },
+                  ]}
+                >
+                  {n}
+                </Text>
               </TouchableOpacity>
             );
           })}
@@ -845,7 +828,10 @@ function CAGuessPlayer({
       </View>
 
       <View style={gp.footer}>
-        <InkButton onPress={guess !== null ? () => onGuess(guess!) : undefined} disabled={guess === null}>
+        <InkButton
+          onPress={guess !== null ? () => onGuess(guess!) : undefined}
+          disabled={guess === null}
+        >
           {pos + 1 < total ? 'Joueur suivant →' : 'Voir le verdict →'}
         </InkButton>
       </View>
@@ -943,31 +929,29 @@ function CAResults({
 }) {
   const devin = players[devinIdx];
 
-  const results: (CastingResult & { player: Player; playerIdx: number })[] = actors.map(
-    (a, i) => {
-      const pIdx = actorIndices[i];
-      const real = numbers[pIdx];
-      const guess = guesses[pIdx];
-      const ecart = Math.abs(real - guess);
-      let playerSips = 0;
-      let devinSips = 0;
-      let tag: CastingResult['tag'];
-      if (ecart === 0) {
-        // Trop évident — le devin l'a trouvé du premier coup
-        playerSips = 3;
-        tag = 'PILE POIL';
-      } else if (ecart === 1) {
-        // Presque — légèrement lisible
-        playerSips = 1;
-        tag = 'PRESQUE';
-      } else {
-        // Raté — l'acteur a mal joué et tout le monde est perdu
-        playerSips = ecart;
-        tag = 'RATÉ';
-      }
-      return { player: a, playerIdx: pIdx, real, guess, ecart, playerSips, devinSips, tag };
-    },
-  );
+  const results: (CastingResult & { player: Player; playerIdx: number })[] = actors.map((a, i) => {
+    const pIdx = actorIndices[i];
+    const real = numbers[pIdx];
+    const guess = guesses[pIdx];
+    const ecart = Math.abs(real - guess);
+    let playerSips = 0;
+    const devinSips = 0;
+    let tag: CastingResult['tag'];
+    if (ecart === 0) {
+      // Trop évident — le devin l'a trouvé du premier coup
+      playerSips = 3;
+      tag = 'PILE POIL';
+    } else if (ecart === 1) {
+      // Presque — légèrement lisible
+      playerSips = 1;
+      tag = 'PRESQUE';
+    } else {
+      // Raté — l'acteur a mal joué et tout le monde est perdu
+      playerSips = ecart;
+      tag = 'RATÉ';
+    }
+    return { player: a, playerIdx: pIdx, real, guess, ecart, playerSips, devinSips, tag };
+  });
 
   const pilePoilCount = results.filter((r) => r.ecart === 0).length;
   const hasCastingParfait = pilePoilCount >= 3;
@@ -1032,9 +1016,7 @@ function CAResults({
 
         {/* Bonus */}
         {(hasCastingParfait || hasFlop) && (
-          <View
-            style={[res.bonusCard, { backgroundColor: hasCastingParfait ? T.mint : T.tomato }]}
-          >
+          <View style={[res.bonusCard, { backgroundColor: hasCastingParfait ? T.mint : T.tomato }]}>
             <Text style={res.bonusIcon}>{hasCastingParfait ? '🎬' : '💀'}</Text>
             <View style={{ flex: 1 }}>
               <Text style={res.bonusTitle}>
@@ -1043,7 +1025,7 @@ function CAResults({
               <Text style={res.bonusSub}>
                 {hasCastingParfait
                   ? `${devin.name} a tout deviné — les acteurs boivent 2 de plus (trop prévisibles !)`
-                  : `Personne trouvé — les acteurs boivent 3 de plus (jeu trop chaotique !)`}
+                  : 'Personne trouvé — les acteurs boivent 3 de plus (jeu trop chaotique !)'}
               </Text>
             </View>
           </View>
@@ -1099,9 +1081,7 @@ function CAResults({
               <View style={{ flex: 1 }}>
                 <Text style={[res.rankName, isTop && { color: '#fff' }]}>
                   {item.player.name}
-                  {isDevinPlayer ? (
-                    <Text style={res.devinBadge}> DEVIN</Text>
-                  ) : null}
+                  {isDevinPlayer ? <Text style={res.devinBadge}> DEVIN</Text> : null}
                 </Text>
                 <Text style={[res.rankSub, isTop && { color: 'rgba(255,255,255,0.7)' }]}>
                   {item.s === 0 ? 'SOBRE' : `${item.s} GORGÉE${item.s > 1 ? 'S' : ''}`}
@@ -1111,11 +1091,7 @@ function CAResults({
                 style={[
                   res.rankSips,
                   {
-                    color: isTop
-                      ? T.lemon
-                      : item.s === 0
-                        ? T.mint
-                        : T.tomato,
+                    color: isTop ? T.lemon : item.s === 0 ? T.mint : T.tomato,
                   },
                 ]}
               >
@@ -1268,7 +1244,15 @@ const res = StyleSheet.create({
 
 // ─── Orchestrator ─────────────────────────────────────────────────────────────
 
-function CastingGame({ players, onExit, onSettings }: { players: Player[]; onExit: () => void; onSettings: () => void }) {
+function CastingGame({
+  players,
+  onExit,
+  onSettings,
+}: {
+  players: Player[];
+  onExit: () => void;
+  onSettings: () => void;
+}) {
   const [step, setStep] = useState<CastingStep>('rules');
   const [devinIdx, setDevinIdx] = useState<number | null>(null);
   const [scenario, setScenario] = useState('');
@@ -1302,7 +1286,9 @@ function CastingGame({ players, onExit, onSettings }: { players: Player[]; onExi
   };
 
   if (step === 'rules') {
-    return <CARules onStart={() => setStep('pick-devin')} onExit={onExit} onSettings={onSettings} />;
+    return (
+      <CARules onStart={() => setStep('pick-devin')} onExit={onExit} onSettings={onSettings} />
+    );
   }
 
   if (step === 'pick-devin') {
@@ -1314,7 +1300,10 @@ function CastingGame({ players, onExit, onSettings }: { players: Player[]; onExi
       <CAScenario
         scenario={scenario}
         devin={players[devinIdx]}
-        onNext={() => { setCurPos(0); setStep('handoff'); }}
+        onNext={() => {
+          setCurPos(0);
+          setStep('handoff');
+        }}
       />
     );
   }
@@ -1361,7 +1350,10 @@ function CastingGame({ players, onExit, onSettings }: { players: Player[]; onExi
         devin={players[devinIdx]}
         actors={actors}
         actorIndices={actorIndices}
-        onNext={() => { setGuessPos(0); setStep('guess'); }}
+        onNext={() => {
+          setGuessPos(0);
+          setStep('guess');
+        }}
       />
     );
   }

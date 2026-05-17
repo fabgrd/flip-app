@@ -4,7 +4,7 @@
     "description": "Discover your friends' political orientations!",
     "questionPrefix": "In your opinion, this is rather...",
     "leftChoice": "It's left-wing",
-    "rightChoice": "It's right-wing", 
+    "rightChoice": "It's right-wing",
     "swipeLeft": "Swipe left",
     "swipeRight": "Swipe right"
   },
@@ -25,7 +25,7 @@
     "left": "Left-wing",
     "centerLeft": "Center-left",
     "center": "Center",
-    "centerRight": "Center-right", 
+    "centerRight": "Center-right",
     "right": "Right-wing",
     "veryRight": "Very right-wing"
   },

@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
-import { getPlayerBgColor, getPlayerTextColor } from '../../constants/playerColors';
 import { T } from '../../constants/flipTokens';
+import { getPlayerBgColor, getPlayerTextColor } from '../../constants/playerColors';
 
 export function InitialAvatar({
   index,

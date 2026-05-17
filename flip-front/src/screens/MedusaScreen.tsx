@@ -18,12 +18,12 @@ import {
   GameCard,
   GameChip,
   GameMenuActions,
-  InkButton,
   InitialAvatar,
+  InkButton,
   MedusaIcon,
   StickerBadge,
 } from '../components';
-import { getPlayerBgColor, getPlayerColorName, getPlayerTextColor } from '../constants';
+import { getPlayerBgColor, getPlayerTextColor } from '../constants';
 import { T } from '../constants/flipTokens';
 import { MedusaPair, MedusaRoundHistory, MedusaStep } from '../games/medusa';
 import { Player, RootStackParamList } from '../types';
@@ -32,9 +32,12 @@ type MedusaScreenRouteProp = RouteProp<RootStackParamList, 'Medusa'>;
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
-function pColor(idx: number) { return getPlayerColorName(idx); }
-function pBg(idx: number): string { return getPlayerBgColor(idx); }
-function pText(idx: number): string { return getPlayerTextColor(idx); }
+function pBg(idx: number): string {
+  return getPlayerBgColor(idx);
+}
+function pText(idx: number): string {
+  return getPlayerTextColor(idx);
+}
 
 // ─── Rules ────────────────────────────────────────────────────────────────────
 
@@ -48,10 +51,26 @@ function MDRules({
   onSettings: () => void;
 }) {
   const RULES = [
-    { n: '1', t: 'Tout le monde regarde en bas', d: 'Le joueur actif dit « Regardez en bas ! » et le groupe obéit les yeux fermés.' },
-    { n: '2', t: '3… 2… 1… MÉDUSA !', d: 'Au signal, tout le monde lève la tête et fixe un autre joueur.' },
-    { n: '3', t: 'Eye contact = pénalité', d: 'Si deux joueurs se regardent dans les yeux : 1 gorgée chacun.' },
-    { n: '4', t: 'Pas de contact = safe', d: 'Si personne ne te fixe en retour, tu survis. Joueur suivant, à toi.' },
+    {
+      n: '1',
+      t: 'Tout le monde regarde en bas',
+      d: 'Le joueur actif dit « Regardez en bas ! » et le groupe obéit les yeux fermés.',
+    },
+    {
+      n: '2',
+      t: '3… 2… 1… MÉDUSA !',
+      d: 'Au signal, tout le monde lève la tête et fixe un autre joueur.',
+    },
+    {
+      n: '3',
+      t: 'Eye contact = pénalité',
+      d: 'Si deux joueurs se regardent dans les yeux : 1 gorgée chacun.',
+    },
+    {
+      n: '4',
+      t: 'Pas de contact = safe',
+      d: 'Si personne ne te fixe en retour, tu survis. Joueur suivant, à toi.',
+    },
   ];
   const rulesModal = RULES.map((rule) => ({ n: rule.n, title: rule.t, desc: rule.d }));
 
@@ -114,26 +133,52 @@ const rls = StyleSheet.create({
     justifyContent: 'space-between',
   },
   backBtn: {
-    width: 44, height: 44, borderRadius: 14,
-    backgroundColor: T.paper, borderWidth: 2, borderColor: T.ink,
-    alignItems: 'center', justifyContent: 'center',
-    shadowColor: T.ink, shadowOffset: { width: 3, height: 3 }, shadowOpacity: 1, shadowRadius: 0, elevation: 3,
+    width: 44,
+    height: 44,
+    borderRadius: 14,
+    backgroundColor: T.paper,
+    borderWidth: 2,
+    borderColor: T.ink,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: T.ink,
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 3,
   },
   backBtnText: { fontSize: 20, color: T.ink, fontWeight: '900' },
   titleArea: { paddingHorizontal: 20, paddingTop: 16 },
   iconWrap: { position: 'absolute', right: 16, top: 18 },
   title: {
-    color: '#fff', fontSize: 68, fontWeight: '900',
-    letterSpacing: -2.5, lineHeight: 64, marginTop: 12,
+    color: '#fff',
+    fontSize: 68,
+    fontWeight: '900',
+    letterSpacing: -2.5,
+    lineHeight: 64,
+    marginTop: 12,
   },
   cardWrap: { paddingHorizontal: 20, paddingTop: 24, flex: 1 },
-  cardLabel: { color: T.muted, fontSize: 11, fontWeight: '700', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 12 },
+  cardLabel: {
+    color: T.muted,
+    fontSize: 11,
+    fontWeight: '700',
+    letterSpacing: 1.5,
+    textTransform: 'uppercase',
+    marginBottom: 12,
+  },
   ruleRow: { flexDirection: 'row', gap: 14, paddingVertical: 10 },
   divider: { borderBottomWidth: 1, borderBottomColor: `${T.muted}55` },
   ruleNum: {
-    width: 32, height: 32, borderRadius: 10, flexShrink: 0,
-    backgroundColor: T.cobalt, borderWidth: 2, borderColor: T.ink,
-    alignItems: 'center', justifyContent: 'center',
+    width: 32,
+    height: 32,
+    borderRadius: 10,
+    flexShrink: 0,
+    backgroundColor: T.cobalt,
+    borderWidth: 2,
+    borderColor: T.ink,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   ruleNumText: { color: '#fff', fontSize: 15, fontWeight: '900' },
   ruleTitle: { color: T.ink, fontSize: 16, fontWeight: '800', letterSpacing: -0.3 },
@@ -143,15 +188,27 @@ const rls = StyleSheet.create({
 
 // ─── Caller ───────────────────────────────────────────────────────────────────
 
-function MDCaller({ playerIdx, playerName, roundNum, totalRounds, onStart }: {
-  playerIdx: number; playerName: string; roundNum: number; totalRounds: number; onStart: () => void;
+function MDCaller({
+  playerIdx,
+  playerName,
+  roundNum,
+  totalRounds,
+  onStart,
+}: {
+  playerIdx: number;
+  playerName: string;
+  roundNum: number;
+  totalRounds: number;
+  onStart: () => void;
 }) {
   return (
     <View style={{ flex: 1, backgroundColor: T.ink }}>
       <SafeAreaView style={cal.screen}>
         <View style={cal.center}>
           <View style={[cal.roundBadge]}>
-            <Text style={cal.roundBadgeText}>TOUR {roundNum} / {totalRounds}</Text>
+            <Text style={cal.roundBadgeText}>
+              TOUR {roundNum} / {totalRounds}
+            </Text>
           </View>
 
           <InitialAvatar
@@ -164,7 +221,9 @@ function MDCaller({ playerIdx, playerName, roundNum, totalRounds, onStart }: {
             style={{ borderWidth: 3, shadowOffset: { width: 8, height: 8 }, elevation: 8 }}
           />
 
-          <Text style={cal.name}>{playerName},{'\n'}c'est toi</Text>
+          <Text style={cal.name}>
+            {playerName},{'\n'}c'est toi
+          </Text>
           <Text style={cal.sub}>
             Dis à tout le monde :{'\n'}
             <Text style={cal.subAccent}>« Regardez en bas ! »</Text>
@@ -183,23 +242,44 @@ function MDCaller({ playerIdx, playerName, roundNum, totalRounds, onStart }: {
 
 const cal = StyleSheet.create({
   screen: { flex: 1 },
-  center: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 30, gap: 22 },
+  center: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 30,
+    gap: 22,
+  },
   roundBadge: {
-    backgroundColor: T.cobalt, borderWidth: 2, borderColor: T.cobalt,
-    borderRadius: 999, paddingHorizontal: 18, paddingVertical: 8,
+    backgroundColor: T.cobalt,
+    borderWidth: 2,
+    borderColor: T.cobalt,
+    borderRadius: 999,
+    paddingHorizontal: 18,
+    paddingVertical: 8,
     transform: [{ rotate: '-4deg' }],
   },
   roundBadgeText: { color: '#fff', fontSize: 12, fontWeight: '900', letterSpacing: 1.5 },
   avatar: {
-    width: 120, height: 120, borderRadius: 32,
-    borderWidth: 3, borderColor: T.paper,
-    alignItems: 'center', justifyContent: 'center',
-    shadowOffset: { width: 8, height: 8 }, shadowOpacity: 1, shadowRadius: 0, elevation: 8,
+    width: 120,
+    height: 120,
+    borderRadius: 32,
+    borderWidth: 3,
+    borderColor: T.paper,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowOffset: { width: 8, height: 8 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 8,
   },
   avatarText: { fontSize: 56, fontWeight: '900' },
   name: {
-    color: '#fff', fontSize: 42, fontWeight: '900',
-    letterSpacing: -1.5, lineHeight: 44, textAlign: 'center',
+    color: '#fff',
+    fontSize: 42,
+    fontWeight: '900',
+    letterSpacing: -1.5,
+    lineHeight: 44,
+    textAlign: 'center',
   },
   sub: { color: 'rgba(255,255,255,0.7)', fontSize: 16, textAlign: 'center', lineHeight: 26 },
   subAccent: { color: T.lemon, fontSize: 18, fontWeight: '900' },
@@ -221,16 +301,31 @@ function MDCountdown({ onDone }: { onDone: () => void }) {
   useEffect(() => {
     if (phase >= 0 && phase < 3) {
       scaleAnim.setValue(0.3);
-      Animated.spring(scaleAnim, { toValue: 1, friction: 5, tension: 120, useNativeDriver: true }).start();
+      Animated.spring(scaleAnim, {
+        toValue: 1,
+        friction: 5,
+        tension: 120,
+        useNativeDriver: true,
+      }).start();
       const t = setTimeout(() => setPhase((p) => (p + 1) as 0 | 1 | 2 | 3), 1100);
       return () => clearTimeout(t);
     }
     if (phase === 3) {
       scaleAnim.setValue(0.3);
-      Animated.spring(scaleAnim, { toValue: 1, friction: 5, tension: 100, useNativeDriver: true }).start();
+      Animated.spring(scaleAnim, {
+        toValue: 1,
+        friction: 5,
+        tension: 100,
+        useNativeDriver: true,
+      }).start();
       // Flash
       flashOpacity.setValue(0.65);
-      Animated.timing(flashOpacity, { toValue: 0, duration: 600, easing: Easing.out(Easing.quad), useNativeDriver: true }).start();
+      Animated.timing(flashOpacity, {
+        toValue: 0,
+        duration: 600,
+        easing: Easing.out(Easing.quad),
+        useNativeDriver: true,
+      }).start();
       const t = setTimeout(onDone, 2800);
       return () => clearTimeout(t);
     }
@@ -243,12 +338,12 @@ function MDCountdown({ onDone }: { onDone: () => void }) {
     <View style={[cd.screen, { backgroundColor: bgColor }]}>
       <DotBackground color="#fff" opacity={phase === 3 ? 0.08 : 0.03} />
 
-      {phase === -1 && (
-        <Text style={cd.intro}>Préparez-vous…</Text>
-      )}
+      {phase === -1 && <Text style={cd.intro}>Préparez-vous…</Text>}
 
       {phase >= 0 && phase < 3 && (
-        <Animated.Text style={[cd.number, { color: NUM_COLORS[phase], transform: [{ scale: scaleAnim }] }]}>
+        <Animated.Text
+          style={[cd.number, { color: NUM_COLORS[phase], transform: [{ scale: scaleAnim }] }]}
+        >
           {['3', '2', '1'][phase]}
         </Animated.Text>
       )}
@@ -278,9 +373,17 @@ const cd = StyleSheet.create({
 
 // ─── Report ───────────────────────────────────────────────────────────────────
 
-function MDReport({ players, callerName, pairs, setPairs, onConfirm }: {
-  players: Player[]; callerName: string;
-  pairs: MedusaPair[]; setPairs: (p: MedusaPair[]) => void;
+function MDReport({
+  players,
+  callerName: _callerName,
+  pairs,
+  setPairs,
+  onConfirm,
+}: {
+  players: Player[];
+  callerName: string;
+  pairs: MedusaPair[];
+  setPairs: (p: MedusaPair[]) => void;
   onConfirm: () => void;
 }) {
   const [selecting, setSelecting] = useState<number | null>(null);
@@ -306,7 +409,9 @@ function MDReport({ players, callerName, pairs, setPairs, onConfirm }: {
       <DotBackground opacity={0.06} />
 
       <View style={rep.header}>
-        <GameChip color={T.cobalt} textColor="#fff">Médusa · résolution</GameChip>
+        <GameChip color={T.cobalt} textColor="#fff">
+          Médusa · résolution
+        </GameChip>
         <Text style={rep.title}>Qui s'est{'\n'}regardé ?</Text>
         <Text style={rep.sub}>Tapez deux joueurs qui ont croisé le regard.</Text>
       </View>
@@ -322,7 +427,12 @@ function MDReport({ players, callerName, pairs, setPairs, onConfirm }: {
               onPress={() => toggle(i)}
               activeOpacity={0.85}
             >
-              <View style={[rep.playerAvatar, { backgroundColor: isSel ? 'rgba(255,255,255,0.2)' : pBg(i) }]}>
+              <View
+                style={[
+                  rep.playerAvatar,
+                  { backgroundColor: isSel ? 'rgba(255,255,255,0.2)' : pBg(i) },
+                ]}
+              >
                 <Text style={[rep.playerAvatarText, { color: isSel ? '#fff' : pText(i) }]}>
                   {p.name[0].toUpperCase()}
                 </Text>
@@ -337,7 +447,8 @@ function MDReport({ players, callerName, pairs, setPairs, onConfirm }: {
       {selecting !== null && (
         <View style={rep.hint}>
           <Text style={rep.hintText}>
-            Tape le joueur qui a croisé le regard de <Text style={{ fontWeight: '900' }}>{players[selecting].name}</Text>
+            Tape le joueur qui a croisé le regard de{' '}
+            <Text style={{ fontWeight: '900' }}>{players[selecting].name}</Text>
           </Text>
         </View>
       )}
@@ -353,7 +464,10 @@ function MDReport({ players, callerName, pairs, setPairs, onConfirm }: {
               <Text style={rep.pairArrow}>↔</Text>
               <Text style={rep.pairName}>{players[pair.b].name}</Text>
               <View style={[rep.pairDot, { backgroundColor: pBg(pair.b) }]} />
-              <TouchableOpacity onPress={() => removePair(i)} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
+              <TouchableOpacity
+                onPress={() => removePair(i)}
+                hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+              >
                 <Text style={rep.pairRemove}>✕</Text>
               </TouchableOpacity>
             </View>
@@ -378,17 +492,30 @@ const rep = StyleSheet.create({
   screen: { flex: 1, backgroundColor: T.bg },
   header: { paddingHorizontal: 20, paddingTop: 14 },
   title: {
-    color: T.ink, fontSize: 34, fontWeight: '900',
-    letterSpacing: -1, lineHeight: 36, marginTop: 14,
+    color: T.ink,
+    fontSize: 34,
+    fontWeight: '900',
+    letterSpacing: -1,
+    lineHeight: 36,
+    marginTop: 14,
   },
   sub: { color: T.inkSoft, fontSize: 14, marginTop: 6, lineHeight: 20 },
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, paddingHorizontal: 20, paddingTop: 18 },
   playerBtn: {
     width: '47%',
-    backgroundColor: T.paper, borderWidth: 2, borderColor: T.ink,
-    borderRadius: 18, padding: 14,
-    flexDirection: 'row', alignItems: 'center', gap: 10,
-    shadowColor: T.ink, shadowOffset: { width: 4, height: 4 }, shadowOpacity: 1, shadowRadius: 0, elevation: 4,
+    backgroundColor: T.paper,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: 18,
+    padding: 14,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    shadowColor: T.ink,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 4,
   },
   playerBtnSel: {
     backgroundColor: T.cobalt,
@@ -396,29 +523,56 @@ const rep = StyleSheet.create({
     transform: [{ translateX: 2 }, { translateY: 2 }],
   },
   playerAvatar: {
-    width: 36, height: 36, borderRadius: 10,
-    borderWidth: 2, borderColor: T.ink,
-    alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+    width: 36,
+    height: 36,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: T.ink,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexShrink: 0,
   },
   playerAvatarText: { fontSize: 14, fontWeight: '900' },
   playerName: { fontSize: 15, fontWeight: '800', letterSpacing: -0.3, flex: 1 },
   hint: {
-    marginHorizontal: 20, marginTop: 12,
-    backgroundColor: `${T.cobalt}18`, borderRadius: 12,
-    borderWidth: 1.5, borderColor: `${T.cobalt}40`,
-    paddingHorizontal: 14, paddingVertical: 10,
+    marginHorizontal: 20,
+    marginTop: 12,
+    backgroundColor: `${T.cobalt}18`,
+    borderRadius: 12,
+    borderWidth: 1.5,
+    borderColor: `${T.cobalt}40`,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
   },
   hintText: { color: T.cobalt, fontSize: 14, fontWeight: '600', textAlign: 'center' },
   pairsSection: { paddingHorizontal: 20, paddingTop: 16 },
-  pairsLabel: { color: T.muted, fontSize: 11, fontWeight: '700', letterSpacing: 1.5, marginBottom: 8 },
-  pairRow: {
-    flexDirection: 'row', alignItems: 'center', gap: 8,
-    paddingVertical: 8, paddingHorizontal: 12,
-    backgroundColor: `${T.tomato}12`,
-    borderWidth: 1.5, borderColor: `${T.tomato}30`,
-    borderRadius: 12, marginBottom: 6,
+  pairsLabel: {
+    color: T.muted,
+    fontSize: 11,
+    fontWeight: '700',
+    letterSpacing: 1.5,
+    marginBottom: 8,
   },
-  pairDot: { width: 10, height: 10, borderRadius: 5, borderWidth: 1.5, borderColor: T.ink, flexShrink: 0 },
+  pairRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    backgroundColor: `${T.tomato}12`,
+    borderWidth: 1.5,
+    borderColor: `${T.tomato}30`,
+    borderRadius: 12,
+    marginBottom: 6,
+  },
+  pairDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    borderWidth: 1.5,
+    borderColor: T.ink,
+    flexShrink: 0,
+  },
   pairName: { color: T.ink, fontSize: 14, fontWeight: '800' },
   pairArrow: { color: T.tomato, fontSize: 13, fontWeight: '900' },
   pairRemove: { color: T.muted, fontSize: 14, marginLeft: 'auto' },
@@ -427,9 +581,18 @@ const rep = StyleSheet.create({
 
 // ─── Round Results ────────────────────────────────────────────────────────────
 
-function MDResults({ players, pairs, roundNum, totalRounds, onNext }: {
-  players: Player[]; pairs: MedusaPair[];
-  roundNum: number; totalRounds: number; onNext: () => void;
+function MDResults({
+  players,
+  pairs,
+  roundNum,
+  totalRounds,
+  onNext,
+}: {
+  players: Player[];
+  pairs: MedusaPair[];
+  roundNum: number;
+  totalRounds: number;
+  onNext: () => void;
 }) {
   const hasCatches = pairs.length > 0;
   const caughtSet = new Set(pairs.flatMap(({ a, b }) => [a, b]));
@@ -447,7 +610,9 @@ function MDResults({ players, pairs, roundNum, totalRounds, onNext }: {
         <Text style={[res.verdict, { color: hasCatches ? '#fff' : T.ink }]}>
           {hasCatches ? 'Attrapés !' : 'Bien joué !'}
         </Text>
-        <Text style={[res.verdictSub, { color: hasCatches ? 'rgba(255,255,255,0.85)' : T.inkSoft }]}>
+        <Text
+          style={[res.verdictSub, { color: hasCatches ? 'rgba(255,255,255,0.85)' : T.inkSoft }]}
+        >
           {hasCatches
             ? `${pairs.length} eye contact${pairs.length > 1 ? 's' : ''} ce tour`
             : 'Aucun eye contact. Impressionnant.'}
@@ -462,7 +627,8 @@ function MDResults({ players, pairs, roundNum, totalRounds, onNext }: {
               <InitialAvatar index={pair.a} size={40} radius={12} />
               <View style={{ flex: 1, alignItems: 'center' }}>
                 <Text style={res.pairNames}>
-                  {players[pair.a].name} <Text style={{ color: T.tomato }}>↔</Text> {players[pair.b].name}
+                  {players[pair.a].name} <Text style={{ color: T.tomato }}>↔</Text>{' '}
+                  {players[pair.b].name}
                 </Text>
                 <Text style={res.pairPenalty}>1 GORGÉE CHACUN</Text>
               </View>
@@ -474,20 +640,22 @@ function MDResults({ players, pairs, roundNum, totalRounds, onNext }: {
         {/* Safe players */}
         {safePlayers.length > 0 && (
           <View>
-            <Text style={[res.safeLabel, { color: hasCatches ? 'rgba(255,255,255,0.7)' : T.muted }]}>
+            <Text
+              style={[res.safeLabel, { color: hasCatches ? 'rgba(255,255,255,0.7)' : T.muted }]}
+            >
               SAFE CE TOUR
             </Text>
             <View style={res.safeRow}>
               {safePlayers.map((p, i) => (
-                <GameChip key={i} color={T.paper}>✓ {p.name}</GameChip>
+                <GameChip key={i} color={T.paper}>
+                  ✓ {p.name}
+                </GameChip>
               ))}
             </View>
           </View>
         )}
 
-        <InkButton onPress={onNext}>
-          {isLast ? 'Voir le bilan final' : 'Tour suivant →'}
-        </InkButton>
+        <InkButton onPress={onNext}>{isLast ? 'Voir le bilan final' : 'Tour suivant →'}</InkButton>
       </ScrollView>
     </SafeAreaView>
   );
@@ -501,16 +669,37 @@ const res = StyleSheet.create({
   content: { padding: 20, paddingTop: 12, paddingBottom: 40, gap: 12 },
   pairRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
   pairNames: { color: T.ink, fontSize: 16, fontWeight: '800', letterSpacing: -0.3 },
-  pairPenalty: { color: T.tomato, fontSize: 11, fontWeight: '900', letterSpacing: 0.5, marginTop: 3 },
-  safeLabel: { fontSize: 11, fontWeight: '700', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 },
+  pairPenalty: {
+    color: T.tomato,
+    fontSize: 11,
+    fontWeight: '900',
+    letterSpacing: 0.5,
+    marginTop: 3,
+  },
+  safeLabel: {
+    fontSize: 11,
+    fontWeight: '700',
+    letterSpacing: 1.5,
+    textTransform: 'uppercase',
+    marginBottom: 8,
+  },
   safeRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginBottom: 4 },
 });
 
 // ─── End ──────────────────────────────────────────────────────────────────────
 
-function MDEnd({ players, penalties, history, onExit, onRestart }: {
-  players: Player[]; penalties: number[];
-  history: MedusaRoundHistory[]; onExit: () => void; onRestart: () => void;
+function MDEnd({
+  players,
+  penalties,
+  history,
+  onExit,
+  onRestart,
+}: {
+  players: Player[];
+  penalties: number[];
+  history: MedusaRoundHistory[];
+  onExit: () => void;
+  onRestart: () => void;
 }) {
   const totalContacts = history.reduce((s, r) => s + r.pairs.length, 0);
   const ranked = players
@@ -548,14 +737,20 @@ function MDEnd({ players, penalties, history, onExit, onRestart }: {
           const isSafe = pen === 0;
           return (
             <View key={idx} style={[en.rankCard, { backgroundColor: isTop ? T.cobalt : T.paper }]}>
-              <View style={[en.rankNum, { backgroundColor: isTop ? 'rgba(255,255,255,0.2)' : T.bgAlt }]}>
+              <View
+                style={[en.rankNum, { backgroundColor: isTop ? 'rgba(255,255,255,0.2)' : T.bgAlt }]}
+              >
                 <Text style={[en.rankNumText, { color: isTop ? '#fff' : T.ink }]}>#{i + 1}</Text>
               </View>
               <InitialAvatar index={idx} size={36} radius={10} />
               <View style={{ flex: 1 }}>
                 <Text style={[en.rankName, { color: isTop ? '#fff' : T.ink }]}>{p.name}</Text>
                 <Text style={[en.rankSub, { color: isTop ? 'rgba(255,255,255,0.7)' : T.muted }]}>
-                  {isSafe ? 'INTOUCHABLE' : isTop ? 'LA MÉDUSE' : `${pen} GORGÉE${pen > 1 ? 'S' : ''}`}
+                  {isSafe
+                    ? 'INTOUCHABLE'
+                    : isTop
+                      ? 'LA MÉDUSE'
+                      : `${pen} GORGÉE${pen > 1 ? 'S' : ''}`}
                 </Text>
               </View>
               <Text style={[en.rankScore, { color: isTop ? T.lemon : isSafe ? T.mint : T.tomato }]}>
@@ -569,12 +764,17 @@ function MDEnd({ players, penalties, history, onExit, onRestart }: {
         <Text style={en.sectionLabel}>RÉCAP PAR TOUR</Text>
         {history.map((r, i) => (
           <View key={i} style={en.historyRow}>
-            <View style={[en.historyBadge, { backgroundColor: r.pairs.length > 0 ? T.tomato : T.mint }]}>
+            <View
+              style={[en.historyBadge, { backgroundColor: r.pairs.length > 0 ? T.tomato : T.mint }]}
+            >
               <Text style={en.historyBadgeText}>T{i + 1}</Text>
             </View>
             <Text style={en.historyText}>
-              <Text style={{ fontWeight: '900', color: T.ink }}>{players[r.callerIdx].name}</Text> mène
-              {r.pairs.length === 0 ? ' · aucun contact' : ` · ${r.pairs.length} paire${r.pairs.length > 1 ? 's' : ''}`}
+              <Text style={{ fontWeight: '900', color: T.ink }}>{players[r.callerIdx].name}</Text>{' '}
+              mène
+              {r.pairs.length === 0
+                ? ' · aucun contact'
+                : ` · ${r.pairs.length} paire${r.pairs.length > 1 ? 's' : ''}`}
             </Text>
           </View>
         ))}
@@ -598,36 +798,78 @@ const en = StyleSheet.create({
   statsRow: { flexDirection: 'row', gap: 10 },
   statLabel: { color: '#fff', fontSize: 10, fontWeight: '700', letterSpacing: 1.5, opacity: 0.85 },
   statValue: { color: '#fff', fontSize: 36, fontWeight: '900', letterSpacing: -1 },
-  sectionLabel: { color: T.muted, fontSize: 11, fontWeight: '700', letterSpacing: 1.5, textTransform: 'uppercase', marginTop: 4 },
+  sectionLabel: {
+    color: T.muted,
+    fontSize: 11,
+    fontWeight: '700',
+    letterSpacing: 1.5,
+    textTransform: 'uppercase',
+    marginTop: 4,
+  },
   rankCard: {
-    flexDirection: 'row', alignItems: 'center', gap: 12,
-    borderWidth: 2, borderColor: T.ink, borderRadius: 18, padding: 12,
-    shadowColor: T.ink, shadowOffset: { width: 4, height: 4 }, shadowOpacity: 1, shadowRadius: 0, elevation: 4,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: 18,
+    padding: 12,
+    shadowColor: T.ink,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 4,
   },
   rankNum: {
-    width: 28, height: 28, borderRadius: 8, borderWidth: 1.5, borderColor: T.ink,
-    alignItems: 'center', justifyContent: 'center',
+    width: 28,
+    height: 28,
+    borderRadius: 8,
+    borderWidth: 1.5,
+    borderColor: T.ink,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   rankNumText: { fontSize: 12, fontWeight: '700' },
   rankName: { fontSize: 17, fontWeight: '800', letterSpacing: -0.3 },
   rankSub: { fontSize: 11, letterSpacing: 0.5, marginTop: 1 },
   rankScore: { fontSize: 28, fontWeight: '900', letterSpacing: -1 },
   historyRow: {
-    flexDirection: 'row', alignItems: 'center', gap: 8,
-    backgroundColor: T.paper, borderWidth: 2, borderColor: T.ink,
-    borderRadius: 14, padding: 10,
-    shadowColor: T.ink, shadowOffset: { width: 3, height: 3 }, shadowOpacity: 1, shadowRadius: 0, elevation: 3,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    backgroundColor: T.paper,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: 14,
+    padding: 10,
+    shadowColor: T.ink,
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 3,
   },
   historyBadge: {
-    borderWidth: 1.5, borderColor: T.ink, borderRadius: 6,
-    paddingHorizontal: 8, paddingVertical: 3, flexShrink: 0,
+    borderWidth: 1.5,
+    borderColor: T.ink,
+    borderRadius: 6,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    flexShrink: 0,
   },
   historyBadgeText: { color: '#fff', fontSize: 10, fontWeight: '900', letterSpacing: 1 },
   historyText: { color: T.inkSoft, fontSize: 13, flex: 1 },
   secondaryBtn: {
-    backgroundColor: T.paper, borderWidth: 2, borderColor: T.ink,
-    borderRadius: T.rMd, paddingVertical: 15, alignItems: 'center',
-    shadowColor: T.ink, shadowOffset: { width: 4, height: 4 }, shadowOpacity: 1, shadowRadius: 0, elevation: 4,
+    backgroundColor: T.paper,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: T.rMd,
+    paddingVertical: 15,
+    alignItems: 'center',
+    shadowColor: T.ink,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 4,
   },
   secondaryBtnText: { color: T.ink, fontSize: 16, fontWeight: '800', letterSpacing: -0.3 },
 });
@@ -647,7 +889,10 @@ export function MedusaScreen() {
 
   const confirmRound = () => {
     const np = [...penalties];
-    roundPairs.forEach(({ a, b }) => { np[a]++; np[b]++; });
+    roundPairs.forEach(({ a, b }) => {
+      np[a]++;
+      np[b]++;
+    });
     setPenalties(np);
     setHistory((h) => [...h, { callerIdx, pairs: [...roundPairs] }]);
     setRoundPairs([]);
@@ -672,8 +917,10 @@ export function MedusaScreen() {
   if (step === 'caller') {
     return (
       <MDCaller
-        playerIdx={callerIdx} playerName={players[callerIdx].name}
-        roundNum={callerIdx + 1} totalRounds={players.length}
+        playerIdx={callerIdx}
+        playerName={players[callerIdx].name}
+        roundNum={callerIdx + 1}
+        totalRounds={players.length}
         onStart={() => setStep('countdown')}
       />
     );
@@ -684,8 +931,10 @@ export function MedusaScreen() {
   if (step === 'report') {
     return (
       <MDReport
-        players={players} callerName={players[callerIdx].name}
-        pairs={roundPairs} setPairs={setRoundPairs}
+        players={players}
+        callerName={players[callerIdx].name}
+        pairs={roundPairs}
+        setPairs={setRoundPairs}
         onConfirm={() => setStep('results')}
       />
     );
@@ -693,8 +942,10 @@ export function MedusaScreen() {
   if (step === 'results') {
     return (
       <MDResults
-        players={players} pairs={roundPairs}
-        roundNum={callerIdx + 1} totalRounds={players.length}
+        players={players}
+        pairs={roundPairs}
+        roundNum={callerIdx + 1}
+        totalRounds={players.length}
         onNext={confirmRound}
       />
     );
@@ -702,7 +953,9 @@ export function MedusaScreen() {
   if (step === 'end') {
     return (
       <MDEnd
-        players={players} penalties={penalties} history={history}
+        players={players}
+        penalties={penalties}
+        history={history}
         onExit={() => (navigation as any).navigate('Home')}
         onRestart={() => {
           setStep('rules');

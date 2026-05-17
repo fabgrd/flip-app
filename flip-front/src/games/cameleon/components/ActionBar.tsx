@@ -60,5 +60,4 @@ const styles = StyleSheet.create({
     borderTopWidth: 2,
     borderTopColor: `${T.ink}20`,
   },
-
 });

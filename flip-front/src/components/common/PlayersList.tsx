@@ -7,8 +7,6 @@ import { useImagePicker } from '../../hooks/useImagePicker';
 import { Player } from '../../types';
 import { Avatar } from './Avatar';
 
-const ACCENT_COLORS = [T.tomato, T.cobalt, T.lemon, T.mint, T.violet, T.pink];
-
 interface PlayersListProps {
   players: Player[];
   onRemovePlayer: (id: string) => void;

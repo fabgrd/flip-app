@@ -6,20 +6,20 @@ export const CASTING_SCENARIOS = [
   'Se faire larguer en plein resto',
   'Voir une araignée géante dans sa douche',
   'Être pris en flag en train de mentir à ses potes',
-  'Se rendre compte qu\'on est en slip à une réunion Zoom',
+  "Se rendre compte qu'on est en slip à une réunion Zoom",
   'Croiser son crush au supermarché en pyjama',
   'Rater son créneau devant une terrasse bondée',
   'Se faire contrôler dans le métro sans ticket',
-  'Annoncer à ses parents qu\'on a raté ses exams',
+  "Annoncer à ses parents qu'on a raté ses exams",
   'Faire un discours de mariage complètement bourré',
   'Se faire piquer par une guêpe en plein date',
-  'Découvrir que son vol est annulé à l\'aéroport',
+  "Découvrir que son vol est annulé à l'aéroport",
   'Marcher dans une crotte avec des chaussures neuves',
-  'Essayer de draguer dans une langue qu\'on ne parle pas',
-  'Réaliser qu\'on a envoyé un vocal gênant au mauvais groupe',
+  "Essayer de draguer dans une langue qu'on ne parle pas",
+  "Réaliser qu'on a envoyé un vocal gênant au mauvais groupe",
   'Renverser son café sur le PC de son boss',
   'Se coincer la main dans un distributeur automatique',
-  'Apprendre qu\'on est viré par un mail envoyé à tout le monde',
+  "Apprendre qu'on est viré par un mail envoyé à tout le monde",
   'Se retrouver seul sur scène sans connaître son texte',
 ];
 
@@ -36,4 +36,4 @@ export const CASTING_LABELS: Record<number, string> = {
   10: 'Oscar',
 };
 
-export { PLAYER_COLORS, LIGHT_COLORS } from '../../constants/playerColors';
+export { LIGHT_COLORS, PLAYER_COLORS } from '../../constants/playerColors';

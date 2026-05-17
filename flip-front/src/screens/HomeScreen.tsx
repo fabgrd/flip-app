@@ -107,7 +107,7 @@ export function HomeScreen() {
           onPress={handleStart}
           disabled={!canStart}
         >
-          {`C'est parti →`}
+          {"C'est parti →"}
         </ChunkyButton>
         {!canStart && (
           <Text style={styles.ctaHint}>

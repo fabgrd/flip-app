@@ -22,7 +22,7 @@ const LANGUAGE_DETECTOR = {
       callback('fr');
     }
   },
-  init: () => { },
+  init: () => {},
   cacheUserLanguage: async (language: string) => {
     try {
       await AsyncStorage.setItem('user-language', language);

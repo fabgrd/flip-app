@@ -16,9 +16,7 @@ export function CardStack({ players, onSwipe, onComplete }: CardStackProps) {
       heightRatio={0.6}
       onSwipe={(player, direction) => onSwipe(player.id, direction)}
       onComplete={onComplete}
-      CardComponent={({ item, ...props }) => (
-        <SwipeableCard player={item} {...props} />
-      )}
+      CardComponent={({ item, ...props }) => <SwipeableCard player={item} {...props} />}
     />
   );
 }

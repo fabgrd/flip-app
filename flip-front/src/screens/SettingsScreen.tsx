@@ -40,7 +40,13 @@ export function SettingsScreen() {
       <DotBackground opacity={0.06} />
       {/* Header */}
       <View style={styles.header}>
-        <FlatChunkyButton size="sm" square color={T.paper} textColor={T.ink} onPress={handleBackPress}>
+        <FlatChunkyButton
+          size="sm"
+          square
+          color={T.paper}
+          textColor={T.ink}
+          onPress={handleBackPress}
+        >
           <Feather name="arrow-left" size={18} color={T.ink} />
         </FlatChunkyButton>
         <View style={styles.headerTitleWrap}>
@@ -104,7 +110,9 @@ export function SettingsScreen() {
           <View style={[styles.card, styles.aboutCard]}>
             <Text style={styles.aboutDescription}>{t('settings:about.description')}</Text>
             <View style={styles.versionPill}>
-              <Text style={styles.versionText}>{t('settings:about.version', { version: '1.0.0' })}</Text>
+              <Text style={styles.versionText}>
+                {t('settings:about.version', { version: '1.0.0' })}
+              </Text>
             </View>
           </View>
         </View>

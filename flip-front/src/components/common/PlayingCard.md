@@ -19,15 +19,15 @@ Carte face visible. Rouge automatique pour ♥ et ♦.
 <PlayingCardFace value="A" suit="♦" shadowColor={T.mint} />
 ```
 
-| Prop | Type | Défaut | Description |
-|---|---|---|---|
-| `value` | `string` | — | Valeur affichée (`2`…`10`, `V`, `D`, `R`, `A`) |
-| `suit` | `string` | — | Couleur (`♠` `♥` `♦` `♣`) |
-| `width` | `number` | `100` | |
-| `height` | `number` | `140` | Pilote le scale général (fontes, radius, ombre) |
-| `borderWidth` | `number` | auto | `3` à h=140, scale sinon |
-| `shadowColor` | `string` | `T.ink` | |
-| `shadow` | `boolean` | `true` | |
+| Prop          | Type      | Défaut  | Description                                     |
+| ------------- | --------- | ------- | ----------------------------------------------- |
+| `value`       | `string`  | —       | Valeur affichée (`2`…`10`, `V`, `D`, `R`, `A`)  |
+| `suit`        | `string`  | —       | Couleur (`♠` `♥` `♦` `♣`)                   |
+| `width`       | `number`  | `100`   |                                                 |
+| `height`      | `number`  | `140`   | Pilote le scale général (fontes, radius, ombre) |
+| `borderWidth` | `number`  | auto    | `3` à h=140, scale sinon                        |
+| `shadowColor` | `string`  | `T.ink` |                                                 |
+| `shadow`      | `boolean` | `true`  |                                                 |
 
 ---
 
@@ -59,6 +59,6 @@ Pattern SVG seul, utile pour superposer sur un fond custom (ex: carte retournée
 ### `isRedSuit`
 
 ```tsx
-isRedSuit('♥') // true
-isRedSuit('♠') // false
+isRedSuit('♥'); // true
+isRedSuit('♠'); // false
 ```

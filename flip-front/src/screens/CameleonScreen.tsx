@@ -216,7 +216,7 @@ export function CameleonScreen() {
                   Math.min(players.length - 1 - currentUC, Math.min(val, maxImpostors - currentUC)),
                 )
               }
-              onChangeTheme={() => { }}
+              onChangeTheme={() => {}}
               onStart={handleStart}
               t={t}
             />
