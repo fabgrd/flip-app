@@ -1,6 +1,7 @@
 // Le Casting — jeu d'acting avec chiffres secrets
 // Flow: rules → pick-devin → scenario → handoff+reveal (each actor) → perform → guess → results
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import * as Haptics from 'expo-haptics';
 import React, { useMemo, useRef, useState } from 'react';
 import {
   Animated,
@@ -19,7 +20,9 @@ import {
   GameCard,
   GameChip,
   GameMenuActions,
+  PlayersModal,
   InitialAvatar,
+  
   StickerBadge,
 } from '../components';
 import { getPlayerBgColor, getPlayerTextColor } from '../constants';
@@ -57,14 +60,19 @@ function pickRandom<T>(arr: T[]): T {
 // ─── Rules ────────────────────────────────────────────────────────────────────
 
 function CARules({
+  players,
+  onPlayersChange,
   onStart,
   onExit,
   onSettings,
 }: {
+  players: Player[];
+  onPlayersChange: (players: Player[]) => void;
   onStart: () => void;
   onExit: () => void;
   onSettings: () => void;
 }) {
+  const [showPlayersModal, setShowPlayersModal] = useState(false);
   const STEPS = [
     { n: '1', t: 'Un devin est désigné', d: 'Il observe. Les autres sont les acteurs.' },
     {
@@ -109,6 +117,8 @@ function CARules({
           showDice={false}
           onPressSettings={onSettings}
           rules={{ rules: rulesModal, title: 'Le Casting', accentColor: CASTING_ORANGE }}
+          players={players}
+          onPlayersChange={onPlayersChange}
         />
       </View>
 
@@ -151,8 +161,21 @@ function CARules({
           ))}
         </View>
 
-        <ChunkyButton full color={T.paper} onPress={onStart}>Lancer le casting</ChunkyButton>
       </ScrollView>
+      <View style={rls.footer}>
+        <ChunkyButton
+          full
+          color={T.paper}
+          onPress={() => {
+            if (players.length < 3) { setShowPlayersModal(true); return; }
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+            onStart();
+          }}
+        >
+          Lancer le casting
+        </ChunkyButton>
+      </View>
+      <PlayersModal visible={showPlayersModal} onClose={() => setShowPlayersModal(false)} onPlayersChange={onPlayersChange} />
     </SafeAreaView>
   );
 }
@@ -226,6 +249,7 @@ const rls = StyleSheet.create({
   drinkIcon: { fontSize: 15, width: 24, textAlign: 'center' },
   drinkName: { color: T.ink, fontSize: 13, fontWeight: '700', flex: 1 },
   drinkResult: { color: T.inkSoft, fontSize: 12 },
+  footer: { padding: 20, paddingBottom: 32 },
 });
 
 // ─── Pick Devin ───────────────────────────────────────────────────────────────
@@ -1223,7 +1247,7 @@ const res = StyleSheet.create({
 // ─── Orchestrator ─────────────────────────────────────────────────────────────
 
 function CastingGame({
-  players,
+  players: initialPlayers,
   onExit,
   onSettings,
 }: {
@@ -1231,6 +1255,7 @@ function CastingGame({
   onExit: () => void;
   onSettings: () => void;
 }) {
+  const [players, setPlayers] = useState<Player[]>(initialPlayers);
   const [step, setStep] = useState<CastingStep>('rules');
   const [devinIdx, setDevinIdx] = useState<number | null>(null);
   const [scenario, setScenario] = useState('');
@@ -1265,7 +1290,7 @@ function CastingGame({
 
   if (step === 'rules') {
     return (
-      <CARules onStart={() => setStep('pick-devin')} onExit={onExit} onSettings={onSettings} />
+      <CARules players={players} onPlayersChange={setPlayers} onStart={() => setStep('pick-devin')} onExit={onExit} onSettings={onSettings} />
     );
   }
 

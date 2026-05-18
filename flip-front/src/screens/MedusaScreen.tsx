@@ -20,8 +20,10 @@ import {
   GameCard,
   GameChip,
   GameMenuActions,
+  PlayersModal,
   InitialAvatar,
   MedusaIcon,
+  
   StickerBadge,
 } from '../components';
 import { getPlayerBgColor, getPlayerTextColor } from '../constants';
@@ -43,14 +45,19 @@ function pText(idx: number): string {
 // ─── Rules ────────────────────────────────────────────────────────────────────
 
 function MDRules({
+  players,
+  onPlayersChange,
   onStart,
   onExit,
   onSettings,
 }: {
+  players: Player[];
+  onPlayersChange: (players: Player[]) => void;
   onStart: () => void;
   onExit: () => void;
   onSettings: () => void;
 }) {
+  const [showPlayersModal, setShowPlayersModal] = useState(false);
   const RULES = [
     {
       n: '1',
@@ -98,6 +105,8 @@ function MDRules({
             onSettings();
           }}
           rules={{ rules: rulesModal, title: 'Médusa', accentColor: T.cobalt }}
+          players={players}
+          onPlayersChange={onPlayersChange}
         />
       </View>
 
@@ -133,6 +142,7 @@ function MDRules({
           full
           color={T.paper}
           onPress={() => {
+            if (players.length < 5) { setShowPlayersModal(true); return; }
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
             onStart();
           }}
@@ -140,6 +150,7 @@ function MDRules({
           Que la chasse commence
         </ChunkyButton>
       </View>
+      <PlayersModal visible={showPlayersModal} onClose={() => setShowPlayersModal(false)} onPlayersChange={onPlayersChange} />
     </SafeAreaView>
   );
 }
@@ -931,7 +942,7 @@ const en = StyleSheet.create({
 export function MedusaScreen() {
   const route = useRoute<MedusaScreenRouteProp>();
   const navigation = useNavigation();
-  const { players } = route.params as { players: Player[] };
+  const [players, setPlayers] = useState<Player[]>(route.params.players as Player[]);
 
   const [step, setStep] = useState<MedusaStep>('rules');
   const [callerIdx, setCallerIdx] = useState(0);
@@ -960,6 +971,8 @@ export function MedusaScreen() {
   if (step === 'rules') {
     return (
       <MDRules
+        players={players}
+        onPlayersChange={setPlayers}
         onStart={() => setStep('caller')}
         onExit={() => (navigation as any).goBack()}
         onSettings={() => (navigation as any).navigate('Settings')}

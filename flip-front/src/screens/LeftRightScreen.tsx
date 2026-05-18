@@ -1,9 +1,10 @@
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import * as Haptics from 'expo-haptics';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 
-import { ChunkyButton, DotBackground, GameMenuActions, GaucheDroiteIcon, RulesButton } from '../components';
+import { ChunkyButton, DotBackground, GameMenuActions, GaucheDroiteIcon, PlayersModal, RulesButton } from '../components';
 import { T } from '../constants/flipTokens';
 import { POLITICAL_COLORS } from '../games/left-right';
 import { CardStack } from '../games/left-right/components';
@@ -31,14 +32,19 @@ const LEFT_RIGHT_RULES = [
 ];
 
 function LRRules({
+  players,
+  onPlayersChange,
   onStart,
   onExit,
   onSettings,
 }: {
+  players: Player[];
+  onPlayersChange: (players: Player[]) => void;
   onStart: () => void;
   onExit: () => void;
   onSettings: () => void;
 }) {
+  const [showPlayersModal, setShowPlayersModal] = useState(false);
   return (
     <SafeAreaView style={lrRules.screen}>
       <DotBackground color={T.ink} opacity={0.08} />
@@ -51,6 +57,8 @@ function LRRules({
           showDice={false}
           onPressSettings={onSettings}
           rules={{ rules: LEFT_RIGHT_RULES, title: 'Gauche ou Droite', accentColor: T.lemon }}
+          players={players}
+          onPlayersChange={onPlayersChange}
         />
       </View>
 
@@ -86,10 +94,19 @@ function LRRules({
       </View>
 
       <View style={lrRules.footer}>
-        <ChunkyButton full color={T.ink} textColor="#fff" onPress={onStart}>
+        <ChunkyButton
+          full
+          color={T.paper}
+          onPress={() => {
+            if (players.length < 2) { setShowPlayersModal(true); return; }
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+            onStart();
+          }}
+        >
           Lancer le duel
         </ChunkyButton>
       </View>
+      <PlayersModal visible={showPlayersModal} onClose={() => setShowPlayersModal(false)} onPlayersChange={onPlayersChange} />
     </SafeAreaView>
   );
 }
@@ -168,7 +185,7 @@ export function LeftRightScreen() {
   const route = useRoute<LeftRightScreenRouteProp>();
   const navigation = useNavigation();
   const { t } = useTranslation();
-  const { players } = route.params as { players: Player[] };
+  const [players, setPlayers] = useState<Player[]>(route.params.players as Player[]);
   const [showRules, setShowRules] = useState(true);
   const {
     gameState,
@@ -206,6 +223,8 @@ export function LeftRightScreen() {
   if (showRules) {
     return (
       <LRRules
+        players={players}
+        onPlayersChange={setPlayers}
         onStart={() => setShowRules(false)}
         onExit={() => navigation.goBack()}
         onSettings={() => navigation.navigate('Settings')}

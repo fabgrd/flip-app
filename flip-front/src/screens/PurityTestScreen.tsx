@@ -1,9 +1,10 @@
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import * as Haptics from 'expo-haptics';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Slider from '@react-native-community/slider';
 import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { ChunkyButton, DotBackground, GameMenuActions, PureteIcon, RulesButton } from '../components';
+import { ChunkyButton, DotBackground, GameMenuActions, PlayersModal, PureteIcon, RulesButton } from '../components';
 import { T } from '../constants/flipTokens';
 import { THEME_COLORS, THEME_LABELS } from '../games/purity-test/constants';
 import { usePurityTest } from '../games/purity-test/hooks/usePurityTest';
@@ -57,6 +58,8 @@ function maxLevelToLevelCounts(maxLevel: LevelKey): Record<LevelKey, number> {
 }
 
 function PurityRules({
+  players,
+  onPlayersChange,
   onStart,
   onExit,
   onSettings,
@@ -65,6 +68,8 @@ function PurityRules({
   onChangeThemeCount,
   onChangeMaxLevel,
 }: {
+  players: Player[];
+  onPlayersChange: (players: Player[]) => void;
   onStart: () => void;
   onExit: () => void;
   onSettings: () => void;
@@ -73,6 +78,7 @@ function PurityRules({
   onChangeThemeCount: (theme: Theme, value: number) => void;
   onChangeMaxLevel: (level: LevelKey) => void;
 }) {
+  const [showPlayersModal, setShowPlayersModal] = useState(false);
   const themeTotal = Object.values(themeCounts).reduce((sum, val) => sum + val, 0);
   const maxIdx = LEVEL_KEYS.indexOf(maxLevel);
 
@@ -88,6 +94,8 @@ function PurityRules({
           showDice={false}
           onPressSettings={onSettings}
           rules={{ rules: PURITY_RULES, title: 'Test de Pureté', accentColor: T.violet }}
+          players={players}
+          onPlayersChange={onPlayersChange}
         />
       </View>
 
@@ -175,10 +183,19 @@ function PurityRules({
       </View>
 
       <View style={pr.footer}>
-        <ChunkyButton full color={T.ink} textColor="#fff" onPress={onStart}>
+        <ChunkyButton
+          full
+          color={T.paper}
+          onPress={() => {
+            if (players.length < 1) { setShowPlayersModal(true); return; }
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+            onStart();
+          }}
+        >
           Commencer le test
         </ChunkyButton>
       </View>
+      <PlayersModal visible={showPlayersModal} onClose={() => setShowPlayersModal(false)} onPlayersChange={onPlayersChange} />
     </SafeAreaView>
   );
 }
@@ -290,7 +307,7 @@ export function PurityTestScreen() {
   const route = useRoute<PurityTestScreenRouteProp>();
   const navigation = useNavigation();
   const { t } = useTranslation();
-  const { players } = route.params as { players: Player[] };
+  const [players, setPlayers] = useState<Player[]>(route.params.players as Player[]);
   const [showRules, setShowRules] = useState(true);
   const [themeCounts, setThemeCounts] = useState<Record<Theme, number>>({
     sex: 5,
@@ -337,6 +354,8 @@ export function PurityTestScreen() {
   if (showRules) {
     return (
       <PurityRules
+        players={players}
+        onPlayersChange={setPlayers}
         onStart={() => {
           resetGame({ themeCounts, levelCounts });
           setShowRules(false);

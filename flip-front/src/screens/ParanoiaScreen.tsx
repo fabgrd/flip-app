@@ -1,6 +1,7 @@
 // Paranoïa — secret question, target picks, coin flip reveals or hides
 // Flow: rules → handoff Q → q-show → handoff Target → t-pick → coin → reveal → next/end
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import * as Haptics from 'expo-haptics';
 import React, { useRef, useState } from 'react';
 import {
   Animated,
@@ -19,7 +20,9 @@ import {
   GameCard,
   GameChip,
   GameMenuActions,
+  PlayersModal,
   InitialAvatar,
+  
   ParanoiaIcon,
   StickerBadge,
 } from '../components';
@@ -38,11 +41,13 @@ type ParanoiaScreenRouteProp = RouteProp<RootStackParamList, 'Paranoia'>;
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function buildOrder(players: Player[]): ParanoiaOrder[] {
+  if (players.length < 2) return [];
   const idxs = players.map((_, i) => i).sort(() => Math.random() - 0.5);
   const qs = shuffleArray([...PARANOIA_QUESTIONS]).slice(0, players.length);
   return idxs.map((qIdx, i) => {
-    let tIdx = Math.floor(Math.random() * players.length);
-    while (tIdx === qIdx) tIdx = Math.floor(Math.random() * players.length);
+    // Build pool of valid targets (everyone except questioner) to avoid any loop
+    const others = players.map((_, j) => j).filter((j) => j !== qIdx);
+    const tIdx = others[Math.floor(Math.random() * others.length)];
     return { q: qIdx, t: tIdx, question: qs[i] };
   });
 }
@@ -50,14 +55,19 @@ function buildOrder(players: Player[]): ParanoiaOrder[] {
 // ─── Screen: Rules ────────────────────────────────────────────────────────────
 
 function PNRules({
+  players,
+  onPlayersChange,
   onStart,
   onExit,
   onSettings,
 }: {
+  players: Player[];
+  onPlayersChange: (players: Player[]) => void;
   onStart: () => void;
   onExit: () => void;
   onSettings: () => void;
 }) {
+  const [showPlayersModal, setShowPlayersModal] = useState(false);
   const RULES = [
     {
       n: '1',
@@ -94,6 +104,8 @@ function PNRules({
           showDice={false}
           onPressSettings={onSettings}
           rules={{ rules: rulesModal, title: 'Paranoïa', accentColor: T.tomato }}
+          players={players}
+          onPlayersChange={onPlayersChange}
         />
       </View>
 
@@ -125,10 +137,19 @@ function PNRules({
       </View>
 
       <View style={rules.footer}>
-        <ChunkyButton full color={T.paper} onPress={onStart}>
+        <ChunkyButton
+          full
+          color={T.paper}
+          onPress={() => {
+            if (players.length < 4) { setShowPlayersModal(true); return; }
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+            onStart();
+          }}
+        >
           Lancer la paranoïa
         </ChunkyButton>
       </View>
+      <PlayersModal visible={showPlayersModal} onClose={() => setShowPlayersModal(false)} onPlayersChange={onPlayersChange} />
     </SafeAreaView>
   );
 }
@@ -863,7 +884,7 @@ const end = StyleSheet.create({
 export function ParanoiaScreen() {
   const route = useRoute<ParanoiaScreenRouteProp>();
   const navigation = useNavigation();
-  const { players } = route.params as { players: Player[] };
+  const [players, setPlayers] = useState<Player[]>(route.params.players as Player[]);
 
   const [order] = useState<ParanoiaOrder[]>(() => buildOrder(players));
   const [step, setStep] = useState<ParanoiaStep>('rules');
@@ -903,6 +924,8 @@ export function ParanoiaScreen() {
   if (step === 'rules') {
     return (
       <PNRules
+        players={players}
+        onPlayersChange={setPlayers}
         onStart={() => setStep('q-handoff')}
         onExit={() => (navigation as any).goBack()}
         onSettings={() => (navigation as any).navigate('Settings')}

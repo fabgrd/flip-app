@@ -1,6 +1,7 @@
 // L'Apéro — card guessing drinking game
 // Flow: rules → pick dealer → rounds (guess1 → hint → guess2 → reveal) → dealer-pass / quad-flip → end
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import * as Haptics from 'expo-haptics';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   Animated,
@@ -20,6 +21,7 @@ import {
   GameChip,
   GameMenuActions,
   isRedSuit,
+  PlayersModal,
   PlayingCardBack,
   PlayingCardFace,
   StickerBadge,
@@ -264,14 +266,19 @@ const vp = StyleSheet.create({
 // ─── Rules ────────────────────────────────────────────────────────────────────
 
 function APRules({
+  players,
+  onPlayersChange,
   onStart,
   onExit,
   onSettings,
 }: {
+  players: Player[];
+  onPlayersChange: (players: Player[]) => void;
   onStart: () => void;
   onExit: () => void;
   onSettings: () => void;
 }) {
+  const [showPlayersModal, setShowPlayersModal] = useState(false);
   const RULES = [
     {
       n: '1',
@@ -317,6 +324,8 @@ function APRules({
           showDice={false}
           onPressSettings={onSettings}
           rules={{ rules: rulesModal, title: "L'Apéro", accentColor: T.pink }}
+          players={players}
+          onPlayersChange={onPlayersChange}
         />
       </View>
 
@@ -351,9 +360,20 @@ function APRules({
         </View>
 
         <View style={rls.footer}>
-          <ChunkyButton full color={T.paper} onPress={onStart}>Distribuer les cartes</ChunkyButton>
+          <ChunkyButton
+            full
+            color={T.paper}
+            onPress={() => {
+              if (players.length < 2) { setShowPlayersModal(true); return; }
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+              onStart();
+            }}
+          >
+            Distribuer les cartes
+          </ChunkyButton>
         </View>
       </ScrollView>
+      <PlayersModal visible={showPlayersModal} onClose={() => setShowPlayersModal(false)} onPlayersChange={onPlayersChange} />
     </SafeAreaView>
   );
 }
@@ -1194,7 +1214,8 @@ const playTopBar = {
 
 // ─── Main state machine ───────────────────────────────────────────────────────
 
-function AperoGame({ players, onExit }: { players: Player[]; onExit: () => void }) {
+function AperoGame({ players: initialPlayers, onExit }: { players: Player[]; onExit: () => void }) {
+  const [players, setPlayers] = useState<Player[]>(initialPlayers);
   const [step, setStep] = useState<ApStep>('rules');
   const [deck] = useState<ApCard[]>(() => apDeck());
   const [dealerIdx, setDealerIdx] = useState(0);
@@ -1203,8 +1224,13 @@ function AperoGame({ players, onExit }: { players: Player[]; onExit: () => void 
   const [foundTotal, setFoundTotal] = useState(0);
   const [streak, setStreak] = useState(0);
   const [rot, setRot] = useState(0);
-  const [sips, setSips] = useState<number[]>(() => players.map(() => 0));
+  const [sips, setSips] = useState<number[]>(() => initialPlayers.map(() => 0));
   const [lastQuad, setLastQuad] = useState<ApVal | null>(null);
+
+  const handlePlayersChange = (newPlayers: Player[]) => {
+    setPlayers(newPlayers);
+    setSips((prev) => newPlayers.map((_, i) => prev[i] ?? 0));
+  };
 
   const guessers = React.useMemo(
     () => players.map((_, i) => i).filter((i) => i !== dealerIdx),
@@ -1258,7 +1284,7 @@ function AperoGame({ players, onExit }: { players: Player[]; onExit: () => void 
   };
 
   if (step === 'rules') {
-    return <APRules onStart={() => setStep('pick')} onExit={onExit} onSettings={() => { }} />;
+    return <APRules players={players} onPlayersChange={handlePlayersChange} onStart={() => setStep('pick')} onExit={onExit} onSettings={() => { }} />;
   }
 
   if (step === 'pick') {

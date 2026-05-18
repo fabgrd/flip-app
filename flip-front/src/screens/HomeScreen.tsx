@@ -2,7 +2,7 @@ import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import * as Haptics from 'expo-haptics';
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 
@@ -10,6 +10,7 @@ import {
   ChunkyButton,
   DotBackground,
   FlatChunkyButton,
+  PaywallModal,
   PlayerInput,
   PlayersList,
 } from '../components';
@@ -44,6 +45,7 @@ export function HomeScreen() {
   };
 
   const canStart = players.length >= MIN_PLAYERS_GLOBAL;
+  const [paywallVisible, setPaywallVisible] = useState(false);
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -55,15 +57,25 @@ export function HomeScreen() {
             Fl<Text style={styles.logoAccent}>!</Text>p
           </Text>
         </View>
-        <FlatChunkyButton
-          size="sm"
-          square
-          color={T.paper}
-          textColor={T.ink}
-          onPress={() => navigation.navigate('Settings')}
-        >
-          <Feather name="settings" size={18} color={T.ink} />
-        </FlatChunkyButton>
+        <View style={styles.headerActions}>
+          <FlatChunkyButton
+            size="sm"
+            square
+            color={T.lemon}
+            onPress={() => setPaywallVisible(true)}
+          >
+            <Text style={styles.crownBtn}>👑</Text>
+          </FlatChunkyButton>
+          <FlatChunkyButton
+            size="sm"
+            square
+            color={T.paper}
+            textColor={T.ink}
+            onPress={() => navigation.navigate('Settings')}
+          >
+            <Feather name="settings" size={18} color={T.ink} />
+          </FlatChunkyButton>
+        </View>
       </View>
 
       {/* Hero text */}
@@ -115,6 +127,7 @@ export function HomeScreen() {
           </Text>
         )}
       </View>
+      <PaywallModal visible={paywallVisible} onClose={() => setPaywallVisible(false)} />
     </SafeAreaView>
   );
 }
@@ -132,6 +145,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 8,
     paddingBottom: 4,
+  },
+
+  headerActions: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  crownBtn: {
+    fontSize: 18,
   },
 
   logo: {
