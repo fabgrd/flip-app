@@ -51,7 +51,7 @@ export function PlayerInput({ onAddPlayer, maxPlayers, currentPlayerCount }: Pla
         />
         <FlatChunkyButton
           size="sm"
-          color={T.ink}
+          color={T.tomato}
           textColor="#fff"
           onPress={handleAdd}
           disabled={!canAdd}

@@ -9,7 +9,7 @@ export function getPlayerColorName(index: number) {
 
 export function getPlayerBgColor(index: number): string {
   const key = getPlayerColorName(index);
-  return (T as Record<string, string>)[key] ?? T.tomato;
+  return (T as unknown as Record<string, string>)[key] ?? T.tomato;
 }
 
 export function getPlayerTextColor(index: number): string {

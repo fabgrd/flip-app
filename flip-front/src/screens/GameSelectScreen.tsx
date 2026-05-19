@@ -14,6 +14,7 @@ import {
   MedusaIcon,
   ParanoiaIcon,
   PureteIcon,
+  RedFlagIcon,
 } from '../components';
 import { T } from '../constants/flipTokens';
 import { navigateToGame } from '../constants/games';
@@ -30,6 +31,13 @@ type GameMeta = {
 };
 
 const GAME_META: Record<string, GameMeta> = {
+  'red-flag': {
+    color: 'tomato',
+    tagline: 'Tes exs auraient aimé te faire passer ce test',
+    Icon: RedFlagIcon,
+    players: '1+',
+    time: '5 min',
+  },
   cameleon: {
     color: 'mint',
     tagline: "Démasque l'imposteur",
@@ -52,7 +60,7 @@ const GAME_META: Record<string, GameMeta> = {
     time: '5 min',
   },
   paranoia: {
-    color: 'tomato',
+    color: 'teal',
     tagline: 'Qui a dit ton prénom… et pourquoi ?',
     Icon: ParanoiaIcon,
     players: '4+',
@@ -87,6 +95,7 @@ export function GameSelectScreen() {
   const { players } = route.params;
 
   const games = [
+    { id: 'red-flag', name: 'Es-tu un Red Flag ?', minPlayers: 1, maxPlayers: 99, description: '' },
     { id: 'casting', name: 'Le Casting', minPlayers: 3, maxPlayers: 11, description: '' },
     { id: 'apero', name: "L'Apéro", minPlayers: 2, maxPlayers: 99, description: '' },
     { id: 'medusa', name: 'Médusa', minPlayers: 5, maxPlayers: 20, description: '' },
@@ -106,6 +115,7 @@ export function GameSelectScreen() {
       else if (gameId === 'medusa') navigation.navigate('Medusa', { players });
       else if (gameId === 'apero') navigation.navigate('Apero', { players });
       else if (gameId === 'casting') navigation.navigate('Casting', { players });
+      else if (gameId === 'red-flag') navigation.navigate('RedFlag', { players });
     }
   };
 
@@ -183,7 +193,7 @@ export function GameSelectScreen() {
 
         {/* Surprise CTA */}
         <ChunkyButton
-          color={T.ink}
+          color={T.tomato}
           textColor="#fff"
           size="lg"
           full

@@ -10,4 +10,5 @@ export { MedusaScreen } from './MedusaScreen';
 export { ParanoiaScreen } from './ParanoiaScreen';
 export { AperoScreen } from './AperoScreen';
 export { CastingScreen } from './CastingScreen';
+export { RedFlagScreen } from './RedFlagScreen';
 export { SettingsScreen } from './SettingsScreen';

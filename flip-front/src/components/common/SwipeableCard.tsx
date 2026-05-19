@@ -119,60 +119,13 @@ export function SwipeableCard({
     };
   });
 
-  // Left sticker badge — fades + scales in when swiping left
-  const leftBadgeStyle = useAnimatedStyle(() => {
-    const progress = interpolate(
-      translateX.value,
-      [-SWIPE_THRESHOLD, -SWIPE_THRESHOLD * 0.2],
-      [1, 0],
-      'clamp',
-    );
-    return {
-      opacity: progress,
-      transform: [{ scale: 0.7 + progress * 0.3 }],
-    };
-  });
-
-  // Right sticker badge
-  const rightBadgeStyle = useAnimatedStyle(() => {
-    const progress = interpolate(
-      translateX.value,
-      [SWIPE_THRESHOLD * 0.2, SWIPE_THRESHOLD],
-      [0, 1],
-      'clamp',
-    );
-    return {
-      opacity: progress,
-      transform: [{ scale: 0.7 + progress * 0.3 }],
-    };
-  });
-
   return (
     <View style={styles.container}>
       <GestureDetector gesture={panGesture}>
         <Animated.View style={[styles.cardOuter, cardAnimStyle]}>
           <View style={styles.cardInner}>
-            {/* Avatar */}
             <Avatar name={player.name} avatar={player.avatar} size={88} />
-
-            {/* Player name */}
             <Text style={styles.playerName}>{player.name}</Text>
-
-            {/* Left direction badge */}
-            <Animated.View style={[styles.badgeLeft, leftBadgeStyle]}>
-              <View style={[styles.badge, { backgroundColor: leftDirection.color }]}>
-                <Text style={styles.badgeEmoji}>{leftDirection.emoji}</Text>
-                <Text style={styles.badgeText}>{leftDirection.label.toUpperCase()}</Text>
-              </View>
-            </Animated.View>
-
-            {/* Right direction badge */}
-            <Animated.View style={[styles.badgeRight, rightBadgeStyle]}>
-              <View style={[styles.badge, { backgroundColor: rightDirection.color }]}>
-                <Text style={styles.badgeEmoji}>{rightDirection.emoji}</Text>
-                <Text style={styles.badgeText}>{rightDirection.label.toUpperCase()}</Text>
-              </View>
-            </Animated.View>
           </View>
         </Animated.View>
       </GestureDetector>
@@ -224,39 +177,4 @@ const styles = StyleSheet.create({
     lineHeight: 36,
   },
 
-  // Directional sticker badges that appear on swipe
-  badgeLeft: {
-    position: 'absolute',
-    top: 20,
-    left: 16,
-    transform: [{ rotate: '-12deg' }],
-  },
-  badgeRight: {
-    position: 'absolute',
-    top: 20,
-    right: 16,
-    transform: [{ rotate: '12deg' }],
-  },
-  badge: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    borderWidth: 2.5,
-    borderColor: T.ink,
-    borderRadius: 999,
-    paddingHorizontal: 14,
-    paddingVertical: 8,
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 4,
-  },
-  badgeEmoji: { fontSize: 20 },
-  badgeText: {
-    color: T.ink,
-    fontSize: 13,
-    fontWeight: '900',
-    letterSpacing: 0.5,
-  },
 });

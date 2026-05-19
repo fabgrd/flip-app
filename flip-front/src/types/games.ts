@@ -94,6 +94,9 @@ export type RootStackParamList = {
   // Casting
   Casting: { players: Player[] };
 
+  // Red Flag
+  RedFlag: { players: Player[] };
+
   // Dynamic game routes (will be extended by each game)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;

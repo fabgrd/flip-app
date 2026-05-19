@@ -10,11 +10,12 @@ export { FlatChunkyButton } from './FlatChunkyButton';
 export { GameMenuActions, GameMenuHeader, PlayersModal } from './GameMenuHeader';
 export { GameCard, GameChip, StickerBadge } from './GamePrimitives';
 export { InitialAvatar } from './InitialAvatar';
+export { PaywallModal } from './PaywallModal';
 export { PlayerInput } from './PlayerInput';
 export { PlayersList } from './PlayersList';
 export { CardCrosshatch, isRedSuit, PlayingCardBack, PlayingCardFace } from './PlayingCard';
-export { PaywallModal } from './PaywallModal';
 export { PopModal } from './PopModal';
 export { RulesButton } from './RulesModal';
 export { SwipeableCard } from './SwipeableCard';
 export { SwipeableCardStack } from './SwipeableCardStack';
+

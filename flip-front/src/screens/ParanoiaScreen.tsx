@@ -103,7 +103,7 @@ function PNRules({
         <GameMenuActions
           showDice={false}
           onPressSettings={onSettings}
-          rules={{ rules: rulesModal, title: 'Paranoïa', accentColor: T.tomato }}
+          rules={{ rules: rulesModal, title: 'Paranoïa', accentColor: T.teal }}
           players={players}
           onPlayersChange={onPlayersChange}
         />
@@ -155,7 +155,7 @@ function PNRules({
 }
 
 const rules = StyleSheet.create({
-  screen: { flex: 1, backgroundColor: T.tomato },
+  screen: { flex: 1, backgroundColor: T.teal },
   header: {
     paddingHorizontal: 20,
     paddingTop: 8,
@@ -190,7 +190,7 @@ const rules = StyleSheet.create({
     height: 32,
     borderRadius: 10,
     flexShrink: 0,
-    backgroundColor: T.tomato,
+    backgroundColor: T.teal,
     borderWidth: 2,
     borderColor: T.ink,
     alignItems: 'center',
@@ -314,7 +314,7 @@ function PNQuestionShow({
     <SafeAreaView style={qs.screen}>
       <DotBackground opacity={0.05} />
       <View style={qs.header}>
-        <GameChip color={T.tomato} textColor="#fff">
+        <GameChip color={T.teal} textColor="#fff">
           Questionneur · {questionerName}
         </GameChip>
       </View>
@@ -340,7 +340,7 @@ function PNQuestionShow({
         <Text style={qs.hint}>Pose la question à voix haute… mais sans la dire 😶</Text>
       </View>
       <View style={qs.footer}>
-        <ChunkyButton full color={T.tomato} onPress={onNext}>
+        <ChunkyButton full color={T.teal} onPress={onNext}>
           Passer le tel à {targetName}
         </ChunkyButton>
       </View>
@@ -547,7 +547,7 @@ function PNCoinFlip({
         ? 'Lance la pièce !'
         : 'Choisis ton camp';
 
-  const coinBg = coin === 'face' ? T.tomato : T.lemon;
+  const coinBg = coin === 'face' ? T.teal : T.lemon;
   const coinTextColor = coin === 'face' ? '#fff' : T.ink;
   // Hide text during spin — a circle mid-air shows nothing readable
   const coinLabel = flipping ? '' : (coin ?? 'pile').toUpperCase();
@@ -572,7 +572,7 @@ function PNCoinFlip({
           <View style={cf.sideRow}>
             {(['pile', 'face'] as const).map((side) => {
               const isSelected = chosenSide === side;
-              const bg = isSelected ? (side === 'pile' ? T.lemon : T.tomato) : T.paper;
+              const bg = isSelected ? (side === 'pile' ? T.lemon : T.teal) : T.paper;
               const txtColor = isSelected && side === 'face' ? '#fff' : T.ink;
               return (
                 <TouchableOpacity
@@ -682,7 +682,7 @@ function PNReveal({
   onNext: () => void;
 }) {
   return (
-    <SafeAreaView style={[rev.screen, { backgroundColor: won ? T.mint : T.tomato }]}>
+    <SafeAreaView style={[rev.screen, { backgroundColor: won ? T.mint : T.teal }]}>
       <DotBackground color={T.ink} opacity={0.1} />
 
       <View style={rev.top}>
@@ -782,7 +782,7 @@ function PNEnd({
       <DotBackground opacity={0.06} />
 
       <View style={end.hero}>
-        <StickerBadge color={T.tomato} rotation={-4}>
+        <StickerBadge color={T.teal} rotation={-4}>
           FIN DE PARTIE
         </StickerBadge>
         <Text style={end.title}>Le récap{'\n'}des secrets 🕵️</Text>
@@ -793,7 +793,7 @@ function PNEnd({
           <Text style={end.statLabel}>GARDÉS</Text>
           <Text style={end.statValue}>{keptCount}</Text>
         </GameCard>
-        <GameCard color={T.tomato} style={{ flex: 1, padding: 14 }}>
+        <GameCard color={T.teal} style={{ flex: 1, padding: 14 }}>
           <Text style={end.statLabel}>RÉVÉLÉS</Text>
           <Text style={end.statValue}>{revealedCount}</Text>
         </GameCard>
@@ -803,7 +803,7 @@ function PNEnd({
         {history.map((h, i) => (
           <View key={i} style={end.historyCard}>
             <View style={end.historyRow}>
-              <View style={[end.badge, { backgroundColor: h.revealed ? T.tomato : T.mint }]}>
+              <View style={[end.badge, { backgroundColor: h.revealed ? T.teal : T.mint }]}>
                 <Text style={end.badgeText}>{h.revealed ? 'CRAMÉ' : 'SECRET'}</Text>
               </View>
               <Text style={end.historyText} numberOfLines={1}>
@@ -819,7 +819,7 @@ function PNEnd({
         ))}
 
         <View style={end.btnStack}>
-          <ChunkyButton full color={T.tomato} onPress={onRestart}>
+          <ChunkyButton full color={T.teal} onPress={onRestart}>
             Rejouer
           </ChunkyButton>
           <ChunkyButton full color={T.paper} textColor={T.ink} onPress={onExit}>
@@ -940,7 +940,7 @@ export function ParanoiaScreen() {
         playerName={questioner.name}
         role="questioneur"
         subtitle="Tu vas voir une question. Garde-la secrète."
-        accentColor={T.tomato}
+        accentColor={T.teal}
         onReady={() => setStep('q-show')}
       />
     );

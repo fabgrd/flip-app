@@ -27,13 +27,13 @@ const SIZES = {
 };
 
 // Colors where the button fill is light — use dark ink text by default.
-const LIGHT_BUTTON_COLORS: string[] = [T.lemon, T.pink, T.paper, T.bg, T.bgAlt, T.mint];
+const LIGHT_BUTTON_COLORS: string[] = [T.lemon, T.pink, T.paper, T.bg, T.bgAlt, T.mint, T.lime, T.sky];
 
 const SHADOW_OFFSET = 4;
 
 export function ChunkyButton({
   onPress,
-  color = T.tomato,
+  color = T.ink,
   textColor,
   children,
   disabled = false,
@@ -82,27 +82,23 @@ export function ChunkyButton({
 
   return (
     <View style={[styles.wrapper, containerStyle]}>
-      {/* Shadow layer — absolute, offset SHADOW_OFFSET px to the bottom-right of the button */}
-      <View
-        style={[
-          styles.shadow,
-          {
-            borderRadius: s.radius,
-            backgroundColor: shadowColor,
-          },
-          shadowStyle,
-        ]}
-      />
-      {/* Animated button layer */}
+      {/* Shadow layer — hidden when disabled */}
+      {!disabled && (
+        <View
+          style={[
+            styles.shadow,
+            { borderRadius: s.radius, backgroundColor: shadowColor },
+            shadowStyle,
+          ]}
+        />
+      )}
       <Animated.View
         style={[
           styles.btn,
-          {
-            backgroundColor: disabled ? `${color}88` : color,
-          },
+          { backgroundColor: color, opacity: disabled ? 0.4 : 1 },
           buttonSizing,
           buttonStyle,
-          translateStyle,
+          disabled ? undefined : translateStyle,
         ]}
       >
         <TouchableOpacity

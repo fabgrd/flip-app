@@ -23,9 +23,11 @@ const SIZES = {
   lg: { height: 62, fontSize: 18, paddingH: 26, radius: T.rMd },
 };
 
+const LIGHT_BUTTON_COLORS: string[] = [T.lemon, T.pink, T.paper, T.bg, T.bgAlt, T.mint, T.lime, T.sky];
+
 export function FlatChunkyButton({
   onPress,
-  color = T.tomato,
+  color = T.ink,
   textColor,
   children,
   disabled = false,
@@ -36,26 +38,18 @@ export function FlatChunkyButton({
   metrics,
   buttonStyle,
 }: FlatChunkyButtonProps) {
-  const fg = textColor ?? (color === T.lemon || color === T.pink ? T.ink : '#fff');
+  const fg = textColor ?? (LIGHT_BUTTON_COLORS.includes(color) ? T.ink : '#fff');
   const s = { ...SIZES[size], ...(metrics ?? {}) };
-  const anim = useRef(new Animated.Value(0)).current;
+  const scale = useRef(new Animated.Value(1)).current;
 
   const onPressIn = () => {
-    Animated.timing(anim, { toValue: 1, duration: 55, useNativeDriver: true }).start();
+    Animated.timing(scale, { toValue: 0.95, duration: 55, useNativeDriver: true }).start();
   };
   const onPressOut = () => {
-    Animated.timing(anim, { toValue: 0, duration: 80, useNativeDriver: true }).start();
-  };
-
-  const translateStyle = {
-    transform: [
-      { translateX: anim.interpolate({ inputRange: [0, 1], outputRange: [0, 4] }) },
-      { translateY: anim.interpolate({ inputRange: [0, 1], outputRange: [0, 4] }) },
-    ],
+    Animated.timing(scale, { toValue: 1, duration: 80, useNativeDriver: true }).start();
   };
 
   const containerStyle: ViewStyle = {
-    width: full ? '100%' : undefined,
     alignSelf: full ? 'stretch' : 'flex-start',
     ...(style as ViewStyle),
   };
@@ -72,12 +66,9 @@ export function FlatChunkyButton({
       <Animated.View
         style={[
           styles.btn,
-          {
-            backgroundColor: disabled ? `${color}88` : color,
-          },
+          { backgroundColor: color, transform: [{ scale }], opacity: disabled ? 0.4 : 1 },
           buttonSizing,
           buttonStyle,
-          translateStyle,
         ]}
       >
         <TouchableOpacity
@@ -105,7 +96,6 @@ const styles = StyleSheet.create({
     borderColor: T.ink,
     alignItems: 'center',
     justifyContent: 'center',
-    position: 'relative',
   },
   inner: {
     width: '100%',
