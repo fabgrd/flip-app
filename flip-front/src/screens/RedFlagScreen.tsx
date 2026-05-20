@@ -23,8 +23,8 @@ import {
   SwipeableCardStack,
 } from '../components';
 import { T } from '../constants/flipTokens';
-import { Player, RootStackParamList } from '../types';
 import redFlagData from '../i18n/locales/fr/red-flag.json';
+import { Player, RootStackParamList } from '../types';
 
 const REDFLAG_BG = '#E63946';
 
@@ -35,11 +35,11 @@ type RFQuestion = { id: string; t: string; c: string; p: number };
 const RF_CATS = redFlagData.categories;
 
 const RF_VERDICTS = [
-  { pctMax: 15,  title: 'Green Flag absolu-e', quote: "T'es si sain-e que c'est suspect. On te surveille.", color: T.mint },
-  { pctMax: 30,  title: 'Presque fréquentable', quote: "T'as des red flags mais rien que la thérapie peut pas fix.", color: '#8BC34A' },
-  { pctMax: 50,  title: 'Zone grise assumée', quote: "Tes exs ont probablement un groupe WhatsApp à ton sujet.", color: T.lemon },
-  { pctMax: 70,  title: 'Catastrophe sentimentale', quote: "Tu détruis des relations sans même t'en rendre compte. Respect.", color: '#FF8A50' },
-  { pctMax: 85,  title: 'Danger public', quote: "Tes exs devraient pouvoir déduire la thérapie de leurs impôts.", color: REDFLAG_BG },
+  { pctMax: 15, title: 'Green Flag absolu-e', quote: "T'es si sain-e que c'est suspect. On te surveille.", color: T.mint },
+  { pctMax: 30, title: 'Presque fréquentable', quote: "T'as des red flags mais rien que la thérapie peut pas fix.", color: '#8BC34A' },
+  { pctMax: 50, title: 'Zone grise assumée', quote: "Tes exs ont probablement un groupe WhatsApp à ton sujet.", color: T.lemon },
+  { pctMax: 70, title: 'Catastrophe sentimentale', quote: "Tu détruis des relations sans même t'en rendre compte. Respect.", color: '#FF8A50' },
+  { pctMax: 85, title: 'Danger public', quote: "Tes exs devraient pouvoir déduire la thérapie de leurs impôts.", color: REDFLAG_BG },
   { pctMax: 101, title: 'Red Flag nucléaire', quote: "L'armée devrait t'interdire de télécharger Tinder.", color: '#8B0000' },
 ];
 

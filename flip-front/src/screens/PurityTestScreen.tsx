@@ -1,10 +1,9 @@
 import { Feather } from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
+import Slider from '@react-native-community/slider';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import * as Haptics from 'expo-haptics';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Slider from '@react-native-community/slider';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
@@ -16,11 +15,11 @@ import {
   RulesButton,
 } from '../components';
 import { T } from '../constants/flipTokens';
+import { CardStack } from '../games/purity-test/components';
 import { THEME_COLORS, THEME_LABELS } from '../games/purity-test/constants';
 import { usePurityTest } from '../games/purity-test/hooks/usePurityTest';
 import type { LevelKey, Theme } from '../games/purity-test/types';
 import { usePurityLevelAccess } from '../games/purity-test/usePurityLevelAccess';
-import { CardStack } from '../games/purity-test/components';
 import { Player, RootStackParamList } from '../types';
 
 type PurityTestScreenRouteProp = RouteProp<RootStackParamList, 'PurityTest'>;
@@ -159,7 +158,7 @@ function PurityRules({
                     style={[
                       pr.levelBtn,
                       isActive &&
-                        allowed && { backgroundColor: LEVEL_COLORS[i], borderColor: T.ink },
+                      allowed && { backgroundColor: LEVEL_COLORS[i], borderColor: T.ink },
                       isSelected && allowed && pr.levelBtnSelected,
                       !allowed && pr.levelBtnLocked,
                     ]}

@@ -22,9 +22,9 @@ import {
   GameCard,
   GameChip,
   GameMenuActions,
-  PlayersModal,
   InitialAvatar,
   ParanoiaIcon,
+  PlayersModal,
   StickerBadge,
 } from '../components';
 import { T } from '../constants/flipTokens';

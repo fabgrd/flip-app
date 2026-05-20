@@ -30,8 +30,8 @@ import { getPlayerBgColor, getPlayerTextColor } from '../constants';
 import { T } from '../constants/flipTokens';
 import { MedusaPair, MedusaRoundHistory, MedusaStep } from '../games/medusa';
 import { useDrinksMode } from '../hooks';
-import { drinkUnit, drinkUnitLower } from '../utils/drinks';
 import { Player, RootStackParamList } from '../types';
+import { drinkUnit, drinkUnitLower } from '../utils/drinks';
 
 type MedusaScreenRouteProp = RouteProp<RootStackParamList, 'Medusa'>;
 

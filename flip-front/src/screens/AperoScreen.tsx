@@ -22,18 +22,18 @@ import {
   GameChip,
   GameMenuActions,
   isRedSuit,
-  PlayersModal,
   PlayerPickerGrid,
+  PlayersModal,
   PlayingCardBack,
   PlayingCardFace,
   StickerBadge,
 } from '../components';
 import { AperoIcon } from '../components/icons/AperoIcon';
-import { useDrinksMode } from '../hooks';
-import { drinkColumnLabel, drinkSoberLabel, drinkUnit, drinkUnitLower } from '../utils/drinks';
 import { getPlayerBgColor, getPlayerTextColor } from '../constants';
 import { T } from '../constants/flipTokens';
+import { useDrinksMode } from '../hooks';
 import { Player, RootStackParamList } from '../types';
+import { drinkColumnLabel, drinkSoberLabel, drinkUnit, drinkUnitLower } from '../utils/drinks';
 
 type AperoScreenRouteProp = RouteProp<RootStackParamList, 'Apero'>;
 
@@ -1285,7 +1285,7 @@ function AperoGame({ players: initialPlayers, onExit }: { players: Player[]; onE
         onPlayersChange={handlePlayersChange}
         onStart={() => setStep('pick')}
         onExit={onExit}
-        onSettings={() => {}}
+        onSettings={() => { }}
       />
     );
   }

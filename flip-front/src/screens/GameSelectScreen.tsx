@@ -4,8 +4,8 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { FadeInDown } from 'react-native-reanimated';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { ChunkyButton, DotBackground, PlayersModal } from '../components';
 import { GAMES } from '../config';
@@ -123,7 +123,7 @@ export function GameSelectScreen() {
       <PlayersModal
         visible={playersModalVisible}
         onClose={handlePlayersModalClose}
-        onPlayersChange={() => {}}
+        onPlayersChange={() => { }}
         hint={playersModalHint}
       />
     </SafeAreaView>

@@ -4,14 +4,7 @@ import { Feather } from '@expo/vector-icons';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import * as Haptics from 'expo-haptics';
 import React, { useMemo, useRef, useState } from 'react';
-import {
-  Animated,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Animated, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import {
@@ -21,17 +14,24 @@ import {
   GameCard,
   GameChip,
   GameMenuActions,
-  PlayersModal,
   InitialAvatar,
+  PlayersModal,
   StickerBadge,
 } from '../components';
 import { getPlayerBgColor, getPlayerTextColor } from '../constants';
 import { T } from '../constants/flipTokens';
-import { CASTING_LABELS, CASTING_ORANGE, CASTING_SCENARIOS } from '../games/casting';
-import { useDrinksMode } from '../hooks';
-import { drinkColumnLabel, drinkSoberLabel, drinkUnit, drinkUnitLower } from '../utils/drinks';
+import {
+  CASTING_LABELS,
+  CASTING_ORANGE,
+  CASTING_THEME_OPTIONS,
+  getScenariosForThemes,
+  useCastingThemeAccess,
+} from '../games/casting';
+import type { CastingTheme } from '../games/casting';
 import { CastingResult } from '../games/casting/types';
+import { useDrinksMode } from '../hooks';
 import { Player, RootStackParamList } from '../types';
+import { drinkColumnLabel, drinkSoberLabel, drinkUnit, drinkUnitLower } from '../utils/drinks';
 
 type CastingScreenRouteProp = RouteProp<RootStackParamList, 'Casting'>;
 
@@ -67,15 +67,20 @@ function CARules({
   onStart,
   onExit,
   onSettings,
+  selectedThemes,
+  onToggleTheme,
 }: {
   players: Player[];
   onPlayersChange: (players: Player[]) => void;
   onStart: () => void;
   onExit: () => void;
   onSettings: () => void;
+  selectedThemes: CastingTheme[];
+  onToggleTheme: (theme: CastingTheme) => void;
 }) {
   const [showPlayersModal, setShowPlayersModal] = useState(false);
   const { enabled: drinksEnabled } = useDrinksMode();
+  const { isThemeAllowed, requestUnlockFor } = useCastingThemeAccess();
   const STEPS = [
     { n: '1', t: 'Un devin est désigné', d: 'Il observe. Les autres sont les acteurs.' },
     {
@@ -163,6 +168,49 @@ function CARules({
             </View>
           ))}
         </View>
+
+        <Text style={rls.themesSectionLabel}>THÈMES</Text>
+        <View style={rls.themeGrid}>
+          {CASTING_THEME_OPTIONS.map((opt) => {
+            const active = selectedThemes.includes(opt.value);
+            const allowed = isThemeAllowed(opt.value);
+            return (
+              <TouchableOpacity
+                key={opt.value}
+                style={[
+                  rls.themeCard,
+                  active && allowed && rls.themeCardActive,
+                  !allowed && rls.themeCardLocked,
+                ]}
+                onPress={() => (allowed ? onToggleTheme(opt.value) : requestUnlockFor(opt.value))}
+                activeOpacity={0.85}
+              >
+                {!allowed && (
+                  <Feather name="lock" size={11} color={T.ink} style={rls.themeLockIcon} />
+                )}
+                <Text style={rls.themeEmoji}>{opt.emoji}</Text>
+                <Text
+                  style={[
+                    rls.themeName,
+                    active && allowed && rls.themeNameActive,
+                    !allowed && rls.themeNameLocked,
+                  ]}
+                >
+                  {opt.label}
+                </Text>
+                <Text
+                  style={[
+                    rls.themeDesc,
+                    active && allowed && rls.themeDescActive,
+                    !allowed && rls.themeDescLocked,
+                  ]}
+                >
+                  {opt.desc}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
       </ScrollView>
       <View style={rls.footer}>
         <ChunkyButton
@@ -241,6 +289,47 @@ const rls = StyleSheet.create({
   drinkIcon: { fontSize: 15, width: 24, textAlign: 'center' },
   drinkName: { color: T.ink, fontSize: 13, fontWeight: '700', flex: 1 },
   drinkResult: { color: T.inkSoft, fontSize: 12 },
+  themesSectionLabel: {
+    color: '#fff',
+    fontSize: 11,
+    fontWeight: '900',
+    letterSpacing: 2,
+    marginTop: 4,
+  },
+  themeGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
+  themeCard: {
+    width: '48%',
+    backgroundColor: T.paper,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: 14,
+    padding: 12,
+    shadowColor: T.ink,
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 2,
+    position: 'relative',
+  },
+  themeCardActive: {
+    backgroundColor: T.ink,
+    transform: [{ translateX: 2 }, { translateY: 2 }],
+  },
+  themeCardLocked: {
+    backgroundColor: '#EFEAE3',
+    borderColor: '#DCD3C5',
+    opacity: 0.78,
+    shadowOpacity: 0,
+    elevation: 0,
+  },
+  themeLockIcon: { position: 'absolute', top: 6, right: 6 },
+  themeEmoji: { fontSize: 22, marginBottom: 4 },
+  themeName: { color: T.ink, fontSize: 14, fontWeight: '900', letterSpacing: -0.3 },
+  themeNameActive: { color: '#fff' },
+  themeNameLocked: { color: T.muted },
+  themeDesc: { color: T.inkSoft, fontSize: 11, marginTop: 2 },
+  themeDescActive: { color: 'rgba(255,255,255,0.65)' },
+  themeDescLocked: { color: T.muted },
   footer: { padding: 20, paddingBottom: 32 },
 });
 
@@ -1273,6 +1362,16 @@ function CastingGame({
   const [curPos, setCurPos] = useState(0);
   const [guessPos, setGuessPos] = useState(0);
   const [guesses, setGuesses] = useState<Record<number, number>>({});
+  const [selectedThemes, setSelectedThemes] = useState<CastingTheme[]>(['daily']);
+  const { filterAllowed } = useCastingThemeAccess();
+
+  const toggleTheme = (theme: CastingTheme) => {
+    setSelectedThemes((prev) => {
+      const isOn = prev.includes(theme);
+      const next = isOn ? prev.filter((t) => t !== theme) : [...prev, theme];
+      return next.length === 0 ? ['daily'] : next;
+    });
+  };
 
   const { actors, actorIndices } = useMemo(() => {
     if (devinIdx === null) return { actors: [] as Player[], actorIndices: [] as number[] };
@@ -1289,7 +1388,9 @@ function CastingGame({
 
   const pickDevin = (idx: number) => {
     setDevinIdx(idx);
-    setScenario(pickRandom(CASTING_SCENARIOS));
+    const safeThemes = filterAllowed(selectedThemes);
+    const pool = getScenariosForThemes(safeThemes.length > 0 ? safeThemes : ['daily']);
+    setScenario(pickRandom(pool));
     const nums: Record<number, number> = {};
     players.forEach((_, i) => {
       if (i !== idx) nums[i] = Math.floor(Math.random() * 10) + 1;
@@ -1306,6 +1407,8 @@ function CastingGame({
         onStart={() => setStep('pick-devin')}
         onExit={onExit}
         onSettings={onSettings}
+        selectedThemes={selectedThemes}
+        onToggleTheme={toggleTheme}
       />
     );
   }
