@@ -11,7 +11,7 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { DotBackground, FlatChunkyButton } from '../components';
+import { ChunkyButton, DotBackground } from '../components';
 import { T } from '../constants/flipTokens';
 import { useDrinksMode } from '../hooks';
 import { usePaywall } from '../paywall';
@@ -51,7 +51,7 @@ export function SettingsScreen() {
     <SafeAreaView style={styles.container}>
       <DotBackground opacity={0.06} />
       <View style={styles.header}>
-        <FlatChunkyButton
+        <ChunkyButton
           size="sm"
           square
           color={T.paper}
@@ -59,10 +59,9 @@ export function SettingsScreen() {
           onPress={handleBackPress}
         >
           <Feather name="arrow-left" size={18} color={T.ink} />
-        </FlatChunkyButton>
+        </ChunkyButton>
         <View style={styles.headerTitleWrap}>
           <Text style={styles.headerTitle}>{t('settings:title')}</Text>
-          <Text style={styles.headerSub}>{t('settings:language.subtitle')}</Text>
         </View>
         <View style={styles.headerSpacer} />
       </View>

@@ -1,5 +1,6 @@
 // Paranoïa — secret question, target picks, coin flip reveals or hides
 // Flow: rules → handoff Q → q-show → handoff Target → t-pick → coin → reveal → next/end
+import { Feather } from '@expo/vector-icons';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import * as Haptics from 'expo-haptics';
 import React, { useRef, useState } from 'react';
@@ -93,7 +94,7 @@ function PNRules({
 
       <View style={rules.header}>
         <ChunkyButton square size="sm" color={T.paper} onPress={onExit}>
-          <Text style={rules.backBtnText}>←</Text>
+          <Feather name="arrow-left" size={18} color={T.ink} />
         </ChunkyButton>
         <GameMenuActions
           showDice={false}

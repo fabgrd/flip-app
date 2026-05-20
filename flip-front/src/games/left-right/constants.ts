@@ -1,6 +1,6 @@
 export const POLITICAL_COLORS = {
-  left: '#FF4444', // Rouge pour la gauche
-  right: '#4444FF', // Bleu pour la droite
+  left: '#FF4444',
+  right: '#4444FF',
 };
 
 export const POLITICAL_LABELS = {

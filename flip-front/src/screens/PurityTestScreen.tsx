@@ -1,4 +1,5 @@
 import { Feather } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import * as Haptics from 'expo-haptics';
 import React, { useEffect, useState } from 'react';
@@ -99,7 +100,7 @@ function PurityRules({
 
       <View style={pr.header}>
         <ChunkyButton square size="sm" color={T.paper} onPress={onExit}>
-          <Text style={pr.backBtnText}>←</Text>
+          <Feather name="arrow-left" size={18} color={T.ink} />
         </ChunkyButton>
         <GameMenuActions
           showDice={false}

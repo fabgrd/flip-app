@@ -1,5 +1,6 @@
 // Le Casting — jeu d'acting avec chiffres secrets
 // Flow: rules → pick-devin → scenario → handoff+reveal (each actor) → perform → guess → results
+import { Feather } from '@expo/vector-icons';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import * as Haptics from 'expo-haptics';
 import React, { useMemo, useRef, useState } from 'react';
@@ -128,7 +129,7 @@ function CARules({
 
       <View style={rls.header}>
         <ChunkyButton square size="sm" color={T.paper} onPress={onExit}>
-          <Text style={rls.backBtnText}>←</Text>
+          <Feather name="arrow-left" size={18} color={T.ink} />
         </ChunkyButton>
         <GameMenuActions
           showDice={false}

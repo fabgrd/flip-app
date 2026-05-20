@@ -1,3 +1,4 @@
+import { Feather } from '@expo/vector-icons';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import * as Haptics from 'expo-haptics';
 import React, { useEffect, useState } from 'react';
@@ -5,7 +6,14 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { ChunkyButton, DotBackground, GameMenuActions, GaucheDroiteIcon, PlayersModal, RulesButton } from '../components';
+import {
+  ChunkyButton,
+  DotBackground,
+  GameMenuActions,
+  GaucheDroiteIcon,
+  PlayersModal,
+  RulesButton,
+} from '../components';
 import { T } from '../constants/flipTokens';
 import { POLITICAL_COLORS } from '../games/left-right';
 import { CardStack } from '../games/left-right/components';
@@ -22,7 +30,7 @@ const LEFT_RIGHT_RULES = [
   },
   {
     n: '2',
-    title: 'Chacun choisit si c\'est un truc de gauche ou de droite',
+    title: "Chacun choisit si c'est un truc de gauche ou de droite",
     desc: 'Glisse vers la gauche ou la droite selon tes convictions.',
   },
   {
@@ -52,7 +60,7 @@ function LRRules({
 
       <View style={lrRules.header}>
         <ChunkyButton square size="sm" color={T.paper} onPress={onExit}>
-          <Text style={lrRules.backBtnText}>←</Text>
+          <Feather name="arrow-left" size={18} color={T.ink} />
         </ChunkyButton>
         <GameMenuActions
           showDice={false}
@@ -79,7 +87,10 @@ function LRRules({
           full
           color={T.paper}
           onPress={() => {
-            if (players.length < 2) { setShowPlayersModal(true); return; }
+            if (players.length < 2) {
+              setShowPlayersModal(true);
+              return;
+            }
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
             onStart();
           }}
@@ -87,7 +98,11 @@ function LRRules({
           Lancer le duel
         </ChunkyButton>
       </View>
-      <PlayersModal visible={showPlayersModal} onClose={() => setShowPlayersModal(false)} onPlayersChange={onPlayersChange} />
+      <PlayersModal
+        visible={showPlayersModal}
+        onClose={() => setShowPlayersModal(false)}
+        onPlayersChange={onPlayersChange}
+      />
     </SafeAreaView>
   );
 }

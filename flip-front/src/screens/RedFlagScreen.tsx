@@ -1,3 +1,4 @@
+import { Feather } from '@expo/vector-icons';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import * as Haptics from 'expo-haptics';
@@ -137,7 +138,7 @@ function RFRules({
 
       <View style={rls.header}>
         <ChunkyButton square size="sm" color={T.paper} onPress={onExit}>
-          <Text style={rls.backBtnText}>←</Text>
+          <Feather name="arrow-left" size={18} color={T.ink} />
         </ChunkyButton>
         <GameMenuActions
           showDice={false}

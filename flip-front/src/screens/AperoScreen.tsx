@@ -1,5 +1,6 @@
 // L'Apéro — card guessing drinking game
 // Flow: rules → pick dealer → rounds (guess1 → hint → guess2 → reveal) → dealer-pass / quad-flip → end
+import { Feather } from '@expo/vector-icons';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import * as Haptics from 'expo-haptics';
 import React, { useEffect, useRef, useState } from 'react';
@@ -328,7 +329,7 @@ function APRules({
       <DotBackground color={T.ink} opacity={0.1} />
       <View style={rls.header}>
         <ChunkyButton square size="sm" color={T.paper} onPress={onExit}>
-          <Text style={rls.backBtnText}>←</Text>
+          <Feather name="arrow-left" size={18} color={T.ink} />
         </ChunkyButton>
         <GameMenuActions
           showDice={false}

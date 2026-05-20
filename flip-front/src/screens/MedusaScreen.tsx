@@ -1,5 +1,6 @@
 // Médusa — eye contact game
 // Flow: rules → caller → countdown 3,2,1 MÉDUSA → report pairs → round results → next caller → end
+import { Feather } from '@expo/vector-icons';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import * as Haptics from 'expo-haptics';
 import React, { useEffect, useRef, useState } from 'react';
@@ -100,7 +101,7 @@ function MDRules({
             onExit();
           }}
         >
-          <Text style={rls.backBtnText}>←</Text>
+          <Feather name="arrow-left" size={18} color={T.ink} />
         </ChunkyButton>
         <GameMenuActions
           showDice={false}

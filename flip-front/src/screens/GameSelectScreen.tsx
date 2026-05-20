@@ -1,3 +1,4 @@
+import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useState } from 'react';
@@ -55,13 +56,9 @@ export function GameSelectScreen() {
     <SafeAreaView style={styles.screen}>
       <DotBackground opacity={0.06} />
       <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.backBtn}
-          onPress={() => navigation.goBack()}
-          activeOpacity={0.85}
-        >
-          <Text style={styles.backBtnText}>←</Text>
-        </TouchableOpacity>
+        <ChunkyButton square size="sm" color={T.paper} onPress={() => navigation.goBack()}>
+          <Feather name="arrow-left" size={18} color={T.ink} />
+        </ChunkyButton>
         <View style={{ flex: 1 }}>
           <Text style={styles.headerTitle}>{t('games:selection.title')}</Text>
           <Text style={styles.headerSub}>
@@ -143,21 +140,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 8,
     paddingBottom: 16,
-  },
-  backBtn: {
-    width: 44,
-    height: 44,
-    borderRadius: 14,
-    backgroundColor: T.paper,
-    borderWidth: 2,
-    borderColor: T.ink,
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
   },
   backBtnText: { fontSize: 20, color: T.ink, fontWeight: '900' },
   headerTitle: {

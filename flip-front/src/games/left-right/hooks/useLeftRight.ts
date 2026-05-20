@@ -111,11 +111,10 @@ export const useLeftRight = (initialPlayers: Player[]) => {
           leftPercentage,
           rightPercentage,
           dominantOrientation,
-          rank: 0, // Will be updated after sorting
+          rank: 0,
         };
       })
       .sort((a, b) => {
-        // Sort by most extreme political orientation
         const aExtremeness = Math.abs(a.leftPercentage - 50);
         const bExtremeness = Math.abs(b.leftPercentage - 50);
         return bExtremeness - aExtremeness;
@@ -147,7 +146,7 @@ export const useLeftRight = (initialPlayers: Player[]) => {
       questions,
       isGameFinished: false,
     }));
-  }, []);
+  }, [t]);
 
   const getPlayerAnswer = useCallback(
     (playerId: string, questionId?: string) => {

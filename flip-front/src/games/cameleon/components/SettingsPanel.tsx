@@ -1,20 +1,35 @@
+import { Feather } from '@expo/vector-icons';
 import { TFunction } from 'i18next';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ChunkyButton } from '../../../components/common/ChunkyButton';
 import { T } from '../../../constants/flipTokens';
+import { CAMELEON_THEME_OPTIONS } from '../constants';
 import type { CameleonTheme } from '../types';
+
+const THEME_META: Record<CameleonTheme, { emoji: string; desc: string }> = {
+  random: { emoji: '🎲', desc: 'Un mix de tout' },
+  daily: { emoji: '📅', desc: 'Mots du quotidien' },
+  football: { emoji: '⚽', desc: 'Foot & culture pop' },
+  hot: { emoji: '🔥', desc: 'Adulte & osé' },
+  wtf: { emoji: '🤪', desc: 'Complètement WTF' },
+  sousculture: { emoji: '🕶️', desc: 'Culture underground' },
+  rap: { emoji: '🎤', desc: 'Rap & punchlines' },
+  decadence: { emoji: '🍸', desc: 'Ambiance décadente' },
+};
 
 interface SettingsPanelProps {
   playersCount: number;
   currentUC: number;
   currentMW: number;
-  selectedTheme: CameleonTheme;
+  selectedThemes: CameleonTheme[];
   maxImpostors: number;
   canStart: boolean;
   onChangeUC: (value: number) => void;
   onChangeMW: (value: number) => void;
-  onChangeTheme: (theme: CameleonTheme) => void;
+  onToggleTheme: (theme: CameleonTheme) => void;
+  isThemeAllowed: (theme: CameleonTheme) => boolean;
+  onRequestUnlock: (theme: CameleonTheme) => void;
   onStart: () => void;
   t: TFunction;
 }
@@ -23,15 +38,23 @@ export function SettingsPanel({
   playersCount,
   currentUC,
   currentMW,
+  selectedThemes,
   canStart,
   onChangeUC,
   onChangeMW,
+  onToggleTheme,
+  isThemeAllowed,
+  onRequestUnlock,
   onStart,
   t,
 }: SettingsPanelProps) {
+  const stepperMetrics = { height: 38, radius: T.rSm, paddingH: 0, fontSize: 20 };
   return (
-    <View style={styles.container}>
-      {/* Stats */}
+    <ScrollView
+      style={styles.scroll}
+      contentContainerStyle={styles.container}
+      showsVerticalScrollIndicator={false}
+    >
       <View style={styles.statsRow}>
         <View style={[styles.statCard, { backgroundColor: T.paper }]}>
           <Text style={styles.statValue}>{playersCount}</Text>
@@ -43,63 +66,113 @@ export function SettingsPanel({
         </View>
       </View>
 
-      {/* Undercover stepper */}
-      <Text style={styles.sectionLabel}>{t('cameleon:settings.undercover', 'Undercover')}</Text>
-      <View style={styles.stepperCard}>
-        <ChunkyButton
-          size="sm"
-          square
-          color={T.bg}
-          textColor={T.ink}
-          shadowColor={T.ink}
-          metrics={{ height: 52, radius: T.rSm, paddingH: 0, fontSize: 26 }}
-          onPress={() => onChangeUC(Math.max(0, currentUC - 1))}
-        >
-          <Text style={styles.stepBtnText}>−</Text>
-        </ChunkyButton>
-        <Text style={styles.stepValue}>{currentUC}</Text>
-        <ChunkyButton
-          size="sm"
-          square
-          color={T.bg}
-          textColor={T.ink}
-          shadowColor={T.ink}
-          metrics={{ height: 52, radius: T.rSm, paddingH: 0, fontSize: 26 }}
-          onPress={() => onChangeUC(currentUC + 1)}
-        >
-          <Text style={styles.stepBtnText}>+</Text>
-        </ChunkyButton>
+      <View style={styles.stepperRow}>
+        <View style={styles.stepperCol}>
+          <Text style={styles.sectionLabel}>{t('cameleon:settings.undercover', 'Undercover')}</Text>
+          <View style={styles.stepperCard}>
+            <ChunkyButton
+              size="sm"
+              square
+              color={T.bg}
+              textColor={T.ink}
+              shadowColor={T.ink}
+              metrics={stepperMetrics}
+              onPress={() => onChangeUC(Math.max(0, currentUC - 1))}
+            >
+              <Text style={styles.stepBtnText}>−</Text>
+            </ChunkyButton>
+            <Text style={styles.stepValue}>{currentUC}</Text>
+            <ChunkyButton
+              size="sm"
+              square
+              color={T.bg}
+              textColor={T.ink}
+              shadowColor={T.ink}
+              metrics={stepperMetrics}
+              onPress={() => onChangeUC(currentUC + 1)}
+            >
+              <Text style={styles.stepBtnText}>+</Text>
+            </ChunkyButton>
+          </View>
+        </View>
+
+        <View style={styles.stepperCol}>
+          <Text style={styles.sectionLabel}>{t('cameleon:settings.mrWhite', 'Mr White')}</Text>
+          <View style={styles.stepperCard}>
+            <ChunkyButton
+              size="sm"
+              square
+              color={T.bg}
+              textColor={T.ink}
+              shadowColor={T.ink}
+              metrics={stepperMetrics}
+              onPress={() => onChangeMW(Math.max(0, currentMW - 1))}
+            >
+              <Text style={styles.stepBtnText}>−</Text>
+            </ChunkyButton>
+            <Text style={styles.stepValue}>{currentMW}</Text>
+            <ChunkyButton
+              size="sm"
+              square
+              color={T.bg}
+              textColor={T.ink}
+              shadowColor={T.ink}
+              metrics={stepperMetrics}
+              onPress={() => onChangeMW(currentMW + 1)}
+            >
+              <Text style={styles.stepBtnText}>+</Text>
+            </ChunkyButton>
+          </View>
+        </View>
       </View>
 
-      {/* Mr White stepper */}
-      <Text style={styles.sectionLabel}>{t('cameleon:settings.mrWhite', 'Mr White')}</Text>
-      <View style={styles.stepperCard}>
-        <ChunkyButton
-          size="sm"
-          square
-          color={T.bg}
-          textColor={T.ink}
-          shadowColor={T.ink}
-          metrics={{ height: 52, radius: T.rSm, paddingH: 0, fontSize: 26 }}
-          onPress={() => onChangeMW(Math.max(0, currentMW - 1))}
-        >
-          <Text style={styles.stepBtnText}>−</Text>
-        </ChunkyButton>
-        <Text style={styles.stepValue}>{currentMW}</Text>
-        <ChunkyButton
-          size="sm"
-          square
-          color={T.bg}
-          textColor={T.ink}
-          shadowColor={T.ink}
-          metrics={{ height: 52, radius: T.rSm, paddingH: 0, fontSize: 26 }}
-          onPress={() => onChangeMW(currentMW + 1)}
-        >
-          <Text style={styles.stepBtnText}>+</Text>
-        </ChunkyButton>
+      <Text style={styles.sectionLabel}>{t('cameleon:settings.themes', 'Thèmes')}</Text>
+      <View style={styles.themeGrid}>
+        {CAMELEON_THEME_OPTIONS.map((opt) => {
+          const meta = THEME_META[opt.value];
+          const isRandom = opt.value === 'random';
+          const active = isRandom
+            ? selectedThemes.includes('random')
+            : !selectedThemes.includes('random') && selectedThemes.includes(opt.value);
+          const allowed = isThemeAllowed(opt.value);
+          return (
+            <TouchableOpacity
+              key={opt.value}
+              style={[
+                styles.themeCard,
+                active && allowed && styles.themeCardActive,
+                !allowed && styles.themeCardLocked,
+              ]}
+              onPress={() => (allowed ? onToggleTheme(opt.value) : onRequestUnlock(opt.value))}
+              activeOpacity={0.85}
+            >
+              {!allowed && (
+                <Feather name="lock" size={11} color={T.ink} style={styles.themeLockIcon} />
+              )}
+              <Text style={styles.themeEmoji}>{meta.emoji}</Text>
+              <Text
+                style={[
+                  styles.themeName,
+                  active && allowed && styles.themeNameActive,
+                  !allowed && styles.themeNameLocked,
+                ]}
+              >
+                {t(opt.labelKey)}
+              </Text>
+              <Text
+                style={[
+                  styles.themeDesc,
+                  active && allowed && styles.themeDescActive,
+                  !allowed && styles.themeDescLocked,
+                ]}
+              >
+                {isRandom ? 'Tous mélangés' : meta.desc}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
       </View>
 
-      {/* Start button */}
       <ChunkyButton
         full
         size="md"
@@ -113,18 +186,19 @@ export function SettingsPanel({
       >
         {t('cameleon:actions.start', 'Distribuer les rôles')}
       </ChunkyButton>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  scroll: { flex: 1 },
   container: { padding: 20, paddingBottom: 40 },
 
-  statsRow: { flexDirection: 'row', gap: 10, marginBottom: 28 },
+  statsRow: { flexDirection: 'row', gap: 10, marginBottom: 18 },
   statCard: {
     flex: 1,
     alignItems: 'center',
-    paddingVertical: 20,
+    paddingVertical: 12,
     borderRadius: T.rMd,
     borderWidth: 2,
     borderColor: T.ink,
@@ -134,12 +208,12 @@ const styles = StyleSheet.create({
     shadowRadius: 0,
     elevation: 3,
   },
-  statValue: { color: T.ink, fontSize: 36, fontWeight: '900', letterSpacing: -1 },
+  statValue: { color: T.ink, fontSize: 26, fontWeight: '900', letterSpacing: -1 },
   statLabel: {
     color: T.inkSoft,
-    fontSize: 12,
+    fontSize: 10,
     fontWeight: '700',
-    marginTop: 4,
+    marginTop: 2,
     textTransform: 'uppercase',
     letterSpacing: 0.5,
   },
@@ -150,9 +224,11 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     letterSpacing: 1.5,
     textTransform: 'uppercase',
-    marginBottom: 8,
+    marginBottom: 6,
   },
 
+  stepperRow: { flexDirection: 'row', gap: 10, marginBottom: 18 },
+  stepperCol: { flex: 1 },
   stepperCard: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -161,17 +237,56 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: T.ink,
     borderRadius: T.rMd,
-    paddingHorizontal: 14,
-    paddingVertical: 10,
-    marginBottom: 22,
+    paddingHorizontal: 8,
+    paddingVertical: 6,
     shadowColor: T.ink,
     shadowOffset: { width: 4, height: 4 },
     shadowOpacity: 1,
     shadowRadius: 0,
     elevation: 3,
   },
-  stepBtnText: { color: T.ink, fontSize: 26, fontWeight: '900', lineHeight: 30 },
-  stepValue: { color: T.ink, fontSize: 28, fontWeight: '900', width: 52, textAlign: 'center' },
+  stepBtnText: { color: T.ink, fontSize: 20, fontWeight: '900', lineHeight: 22 },
+  stepValue: { color: T.ink, fontSize: 22, fontWeight: '900', width: 36, textAlign: 'center' },
+
+  themeGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginBottom: 20,
+  },
+  themeCard: {
+    width: '48%',
+    backgroundColor: T.paper,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: T.rMd,
+    padding: 12,
+    shadowColor: T.ink,
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 2,
+    position: 'relative',
+  },
+  themeCardActive: {
+    backgroundColor: T.ink,
+    transform: [{ translateX: 2 }, { translateY: 2 }],
+  },
+  themeCardLocked: {
+    backgroundColor: '#EFEAE3',
+    borderColor: '#DCD3C5',
+    opacity: 0.78,
+    shadowOpacity: 0,
+    elevation: 0,
+  },
+  themeLockIcon: { position: 'absolute', top: 6, right: 6 },
+  themeEmoji: { fontSize: 22, marginBottom: 4 },
+  themeName: { color: T.ink, fontSize: 14, fontWeight: '900', letterSpacing: -0.3 },
+  themeNameActive: { color: '#fff' },
+  themeNameLocked: { color: T.muted },
+  themeDesc: { color: T.inkSoft, fontSize: 11, marginTop: 2 },
+  themeDescActive: { color: 'rgba(255,255,255,0.65)' },
+  themeDescLocked: { color: T.muted },
 
   startBtn: { marginTop: 4 },
 });
