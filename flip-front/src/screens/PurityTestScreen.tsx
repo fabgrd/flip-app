@@ -104,32 +104,12 @@ function PurityRules({
           <PureteIcon size={86} />
         </View>
 
-        <View style={pr.chip}>
-          <Text style={pr.chipText}>Jeu n°3</Text>
-        </View>
         <Text style={pr.title}>Test{'\n'}de Pureté</Text>
+        <Text style={pr.tagline}>Combien de péchés à ton actif ?</Text>
       </View>
 
       <View style={pr.cardWrap}>
         <ScrollView contentContainerStyle={pr.cardScroll} showsVerticalScrollIndicator={false}>
-          <View style={pr.card}>
-            <Text style={pr.cardLabel}>COMMENT ON JOUE</Text>
-            {PURITY_RULES.map((rule, i) => (
-              <View
-                key={rule.n}
-                style={[pr.ruleRow, i < PURITY_RULES.length - 1 && pr.ruleRowDivider]}
-              >
-                <View style={pr.ruleNum}>
-                  <Text style={pr.ruleNumText}>{rule.n}</Text>
-                </View>
-                <View style={{ flex: 1 }}>
-                  <Text style={pr.ruleTitle}>{rule.title}</Text>
-                  <Text style={pr.ruleDesc}>{rule.desc}</Text>
-                </View>
-              </View>
-            ))}
-          </View>
-
           <View style={pr.card}>
             <Text style={pr.cardLabel}>REPARTITION DES THEMES</Text>
             <Text style={pr.helperText}>Total: {themeTotal} questions</Text>
@@ -212,16 +192,6 @@ const pr = StyleSheet.create({
   backBtnText: { fontSize: 20, color: T.ink, fontWeight: '900' },
   titleArea: { paddingHorizontal: 20, paddingTop: 16 },
   iconWrap: { position: 'absolute', right: 16, top: 18 },
-  chip: {
-    backgroundColor: T.paper,
-    borderWidth: 1.5,
-    borderColor: T.ink,
-    borderRadius: 999,
-    paddingHorizontal: 12,
-    paddingVertical: 5,
-    alignSelf: 'flex-start',
-  },
-  chipText: { color: T.ink, fontSize: 12, fontWeight: '800', letterSpacing: 0.5 },
   title: {
     color: '#fff',
     fontSize: 58,
@@ -229,6 +199,13 @@ const pr = StyleSheet.create({
     letterSpacing: -2,
     lineHeight: 62,
     marginTop: 12,
+  },
+  tagline: {
+    color: 'rgba(255,255,255,0.65)',
+    fontSize: 16,
+    fontWeight: '600',
+    letterSpacing: -0.2,
+    marginTop: 6,
   },
   cardWrap: { paddingHorizontal: 20, paddingTop: 24, flex: 1 },
   cardScroll: { paddingBottom: 12, gap: 16 },
@@ -252,22 +229,6 @@ const pr = StyleSheet.create({
     textTransform: 'uppercase',
     marginBottom: 12,
   },
-  ruleRow: { flexDirection: 'row', gap: 14, paddingVertical: 10 },
-  ruleRowDivider: { borderBottomWidth: 1, borderBottomColor: `${T.muted}66` },
-  ruleNum: {
-    width: 32,
-    height: 32,
-    borderRadius: 10,
-    flexShrink: 0,
-    backgroundColor: T.violet,
-    borderWidth: 2,
-    borderColor: T.ink,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  ruleNumText: { color: '#fff', fontSize: 15, fontWeight: '900' },
-  ruleTitle: { color: T.ink, fontSize: 16, fontWeight: '800', letterSpacing: -0.3 },
-  ruleDesc: { color: T.inkSoft, fontSize: 13, marginTop: 2, lineHeight: 18 },
   helperText: { color: T.inkSoft, fontSize: 12, marginBottom: 12 },
   sliderRow: { marginBottom: 14 },
   sliderHeader: {

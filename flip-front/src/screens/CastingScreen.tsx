@@ -126,8 +126,8 @@ function CARules({
         <View style={rls.iconWrap}>
           <CastingIcon size={88} />
         </View>
-        <GameChip color={T.paper}>Jeu n°7</GameChip>
         <Text style={rls.title}>Le{'\n'}Casting</Text>
+        <Text style={rls.tagline}>Joue la scène selon ton chiffre secret</Text>
       </View>
 
       <ScrollView
@@ -135,21 +135,6 @@ function CARules({
         contentContainerStyle={rls.scroll}
         showsVerticalScrollIndicator={false}
       >
-        <GameCard>
-          <Text style={rls.cardLabel}>COMMENT ON JOUE</Text>
-          {STEPS.map((s, i) => (
-            <View key={s.n} style={[rls.ruleRow, i < STEPS.length - 1 && rls.ruleRowDivider]}>
-              <View style={rls.ruleNum}>
-                <Text style={rls.ruleNumText}>{s.n}</Text>
-              </View>
-              <View style={{ flex: 1 }}>
-                <Text style={rls.ruleTitle}>{s.t}</Text>
-                <Text style={rls.ruleDesc}>{s.d}</Text>
-              </View>
-            </View>
-          ))}
-        </GameCard>
-
         <View style={rls.drinkCard}>
           <Text style={rls.drinkLabel}>GORGÉES</Text>
           {DRINKS.map((d) => (
@@ -200,31 +185,14 @@ const rls = StyleSheet.create({
     lineHeight: 68,
     marginTop: 10,
   },
+  tagline: {
+    color: 'rgba(255,255,255,0.65)',
+    fontSize: 16,
+    fontWeight: '600',
+    letterSpacing: -0.2,
+    marginTop: 6,
+  },
   scroll: { padding: 20, gap: 14, paddingBottom: 40 },
-  cardLabel: {
-    color: T.muted,
-    fontSize: 11,
-    fontWeight: '700',
-    letterSpacing: 1.5,
-    textTransform: 'uppercase',
-    marginBottom: 12,
-  },
-  ruleRow: { flexDirection: 'row', gap: 14, paddingVertical: 10 },
-  ruleRowDivider: { borderBottomWidth: 1, borderBottomColor: `${T.muted}55` },
-  ruleNum: {
-    width: 32,
-    height: 32,
-    borderRadius: 10,
-    flexShrink: 0,
-    backgroundColor: CASTING_ORANGE,
-    borderWidth: 2,
-    borderColor: T.ink,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  ruleNumText: { color: '#fff', fontSize: 15, fontWeight: '900' },
-  ruleTitle: { color: T.ink, fontSize: 16, fontWeight: '800', letterSpacing: -0.3 },
-  ruleDesc: { color: T.inkSoft, fontSize: 13, marginTop: 2, lineHeight: 18 },
   drinkCard: {
     backgroundColor: T.lemon,
     borderWidth: 2,

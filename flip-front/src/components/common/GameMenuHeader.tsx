@@ -380,7 +380,8 @@ export function GameMenuActions({
 }
 
 export interface GameMenuHeaderProps extends GameMenuActionsProps {
-  chipLabel: string;
+  chipLabel?: string;
+  tagline?: string;
   title: string;
   titleColor?: string;
   chipColor?: string;
@@ -389,6 +390,7 @@ export interface GameMenuHeaderProps extends GameMenuActionsProps {
 
 export function GameMenuHeader({
   chipLabel,
+  tagline,
   title,
   titleColor = T.ink,
   chipColor = T.paper,
@@ -397,11 +399,14 @@ export function GameMenuHeader({
 }: GameMenuHeaderProps) {
   return (
     <View style={styles.header}>
-      <View>
-        <View style={[styles.chip, { backgroundColor: chipColor, borderColor: T.ink }]}>
-          <Text style={[styles.chipText, { color: chipTextColor }]}>{chipLabel}</Text>
-        </View>
+      <View style={{ flex: 1 }}>
+        {chipLabel ? (
+          <View style={[styles.chip, { backgroundColor: chipColor, borderColor: T.ink }]}>
+            <Text style={[styles.chipText, { color: chipTextColor }]}>{chipLabel}</Text>
+          </View>
+        ) : null}
         <Text style={[styles.title, { color: titleColor }]}>{title}</Text>
+        {tagline ? <Text style={styles.tagline}>{tagline}</Text> : null}
       </View>
       <GameMenuActions {...actionsProps} />
     </View>
@@ -442,6 +447,13 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     letterSpacing: -2.5,
     lineHeight: 50,
+    marginBottom: 4,
+  },
+  tagline: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: T.inkSoft,
+    letterSpacing: -0.2,
     marginBottom: 8,
   },
 });

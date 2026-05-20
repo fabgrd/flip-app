@@ -20,10 +20,9 @@ import {
   GameCard,
   GameChip,
   GameMenuActions,
-  PlayersModal,
   InitialAvatar,
   MedusaIcon,
-  
+  PlayersModal,
   StickerBadge,
 } from '../components';
 import { getPlayerBgColor, getPlayerTextColor } from '../constants';
@@ -116,26 +115,11 @@ function MDRules({
           <MedusaIcon size={86} />
         </View>
 
-        <GameChip color={T.paper}>Jeu n°5</GameChip>
         <Text style={rls.title}>Médusa</Text>
+        <Text style={rls.tagline}>Lève les yeux… et évite le regard</Text>
       </View>
 
-      <View style={rls.cardWrap}>
-        <GameCard style={{ borderRadius: 22, padding: 18 }}>
-          <Text style={rls.cardLabel}>COMMENT ON JOUE</Text>
-          {RULES.map((s, i) => (
-            <View key={s.n} style={[rls.ruleRow, i < RULES.length - 1 && rls.divider]}>
-              <View style={rls.ruleNum}>
-                <Text style={rls.ruleNumText}>{s.n}</Text>
-              </View>
-              <View style={{ flex: 1 }}>
-                <Text style={rls.ruleTitle}>{s.t}</Text>
-                <Text style={rls.ruleDesc}>{s.d}</Text>
-              </View>
-            </View>
-          ))}
-        </GameCard>
-      </View>
+      <View style={{ flex: 1 }} />
 
       <View style={rls.footer}>
         <ChunkyButton
@@ -175,31 +159,13 @@ const rls = StyleSheet.create({
     lineHeight: 72,
     marginTop: 12,
   },
-  cardWrap: { paddingHorizontal: 20, paddingTop: 24, flex: 1 },
-  cardLabel: {
-    color: T.muted,
-    fontSize: 11,
-    fontWeight: '700',
-    letterSpacing: 1.5,
-    textTransform: 'uppercase',
-    marginBottom: 12,
+  tagline: {
+    color: 'rgba(255,255,255,0.65)',
+    fontSize: 16,
+    fontWeight: '600',
+    letterSpacing: -0.2,
+    marginTop: 6,
   },
-  ruleRow: { flexDirection: 'row', gap: 14, paddingVertical: 10 },
-  divider: { borderBottomWidth: 1, borderBottomColor: `${T.muted}55` },
-  ruleNum: {
-    width: 32,
-    height: 32,
-    borderRadius: 10,
-    flexShrink: 0,
-    backgroundColor: T.cobalt,
-    borderWidth: 2,
-    borderColor: T.ink,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  ruleNumText: { color: '#fff', fontSize: 15, fontWeight: '900' },
-  ruleTitle: { color: T.ink, fontSize: 16, fontWeight: '800', letterSpacing: -0.3 },
-  ruleDesc: { color: T.inkSoft, fontSize: 13, marginTop: 2, lineHeight: 18 },
   footer: { padding: 20, paddingBottom: 32 },
 });
 

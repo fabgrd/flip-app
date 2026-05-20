@@ -22,6 +22,7 @@ import {
   GameMenuActions,
   isRedSuit,
   PlayersModal,
+  PlayerPickerGrid,
   PlayingCardBack,
   PlayingCardFace,
   StickerBadge,
@@ -431,42 +432,29 @@ function APPickDealer({ players, onPick }: { players: Player[]; onPick: (i: numb
   return (
     <View style={{ flex: 1, backgroundColor: T.ink }}>
       <SafeAreaView style={{ flex: 1 }}>
-        <View style={pk.center}>
+        <View style={pk.header}>
           <StickerBadge color={T.pink} rotation={-4} textColor="#fff">
             QUI EST LE DONNEUR ?
           </StickerBadge>
           <Text style={pk.title}>Choisis qui{'\n'}tient le tel</Text>
           <Text style={pk.sub}>Le donneur pioche et subit les conséquences.</Text>
         </View>
-        <View style={pk.grid}>
-          {players.map((p, i) => (
-            <ChunkyButton
-              key={i}
-              style={{ width: '47%' }}
-              color={T.paper}
-              shadowColor={T.pink}
-              metrics={{ height: 68, radius: 18, paddingH: 0 }}
-              innerStyle={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', padding: 14, gap: 10 }}
-              onPress={() => onPick(i)}
-            >
-              <View style={[pk.avatar, { backgroundColor: pBg(i) }]}>
-                <Text style={[pk.avatarText, { color: pText(i) }]}>{p.name[0].toUpperCase()}</Text>
-              </View>
-              <Text style={pk.name} numberOfLines={1}>{p.name}</Text>
-            </ChunkyButton>
-          ))}
-        </View>
+        <PlayerPickerGrid
+          players={players}
+          onSelect={(_, i) => onPick(i)}
+          shadowColor={T.pink}
+        />
       </SafeAreaView>
     </View>
   );
 }
 
 const pk = StyleSheet.create({
-  center: {
-    flex: 1,
+  header: {
     alignItems: 'center',
-    justifyContent: 'center',
     paddingHorizontal: 24,
+    paddingTop: 16,
+    paddingBottom: 20,
     gap: 16,
   },
   title: {
@@ -478,35 +466,6 @@ const pk = StyleSheet.create({
     textAlign: 'center',
   },
   sub: { color: 'rgba(255,255,255,0.6)', fontSize: 14, textAlign: 'center' },
-  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, padding: 20, paddingBottom: 32 },
-  playerBtn: {
-    width: '47%',
-    backgroundColor: T.paper,
-    borderWidth: 2,
-    borderColor: T.ink,
-    borderRadius: 18,
-    padding: 14,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-    shadowColor: T.pink,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 4,
-  },
-  avatar: {
-    width: 40,
-    height: 40,
-    borderRadius: 12,
-    flexShrink: 0,
-    borderWidth: 2,
-    borderColor: T.ink,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  avatarText: { fontSize: 18, fontWeight: '900' },
-  name: { flex: 1, fontSize: 16, fontWeight: '800', color: T.ink, letterSpacing: -0.3 },
 });
 
 // ─── Main round ───────────────────────────────────────────────────────────────

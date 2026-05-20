@@ -5,14 +5,8 @@
     "subtitle": "Choose your preferred language",
     "options": {
       "fr": "Français",
-      "en": "English",
-      "zh": "中文"
+      "en": "English"
     }
-  },
-  "appearance": {
-    "title": "Appearance",
-    "subtitle": "Light/Dark theme",
-    "darkMode": "Dark Mode"
   },
   "about": {
     "title": "About",

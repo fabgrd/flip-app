@@ -8,5 +8,5 @@ export {
   PLAYER_COLORS,
 } from './playerColors';
 export { createGlobalStyles } from './styles';
-export { darkTheme, lightTheme } from './themes';
+export { lightTheme } from './themes';
 export type { Theme } from './themes';

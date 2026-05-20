@@ -67,31 +67,11 @@ function LRRules({
           <GaucheDroiteIcon size={86} />
         </View>
 
-        <View style={lrRules.chip}>
-          <Text style={lrRules.chipText}>Jeu n°2</Text>
-        </View>
         <Text style={lrRules.title}>Gauche ou Droite</Text>
+        <Text style={lrRules.tagline}>Place la phrase sur l'échiquier politique</Text>
       </View>
 
-      <View style={lrRules.cardWrap}>
-        <View style={lrRules.card}>
-          <Text style={lrRules.cardLabel}>COMMENT ON JOUE</Text>
-          {LEFT_RIGHT_RULES.map((rule, i) => (
-            <View
-              key={rule.n}
-              style={[lrRules.ruleRow, i < LEFT_RIGHT_RULES.length - 1 && lrRules.ruleRowDivider]}
-            >
-              <View style={lrRules.ruleNum}>
-                <Text style={lrRules.ruleNumText}>{rule.n}</Text>
-              </View>
-              <View style={{ flex: 1 }}>
-                <Text style={lrRules.ruleTitle}>{rule.title}</Text>
-                <Text style={lrRules.ruleDesc}>{rule.desc}</Text>
-              </View>
-            </View>
-          ))}
-        </View>
-      </View>
+      <View style={{ flex: 1 }} />
 
       <View style={lrRules.footer}>
         <ChunkyButton
@@ -123,16 +103,6 @@ const lrRules = StyleSheet.create({
   backBtnText: { fontSize: 20, color: T.ink, fontWeight: '900' },
   titleArea: { paddingHorizontal: 20, paddingTop: 16 },
   iconWrap: { position: 'absolute', right: 16, top: 18 },
-  chip: {
-    backgroundColor: T.paper,
-    borderWidth: 1.5,
-    borderColor: T.ink,
-    borderRadius: 999,
-    paddingHorizontal: 12,
-    paddingVertical: 5,
-    alignSelf: 'flex-start',
-  },
-  chipText: { color: T.ink, fontSize: 12, fontWeight: '800', letterSpacing: 0.5 },
   title: {
     color: T.ink,
     fontSize: 58,
@@ -141,43 +111,13 @@ const lrRules = StyleSheet.create({
     lineHeight: 62,
     marginTop: 12,
   },
-  cardWrap: { paddingHorizontal: 20, paddingTop: 24, flex: 1 },
-  card: {
-    backgroundColor: T.paper,
-    borderWidth: 2,
-    borderColor: T.ink,
-    borderRadius: 24,
-    padding: 20,
-    shadowColor: T.ink,
-    shadowOffset: { width: 5, height: 5 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 4,
+  tagline: {
+    color: `${T.ink}99`,
+    fontSize: 16,
+    fontWeight: '600',
+    letterSpacing: -0.2,
+    marginTop: 6,
   },
-  cardLabel: {
-    color: T.muted,
-    fontSize: 11,
-    fontWeight: '700',
-    letterSpacing: 1.5,
-    textTransform: 'uppercase',
-    marginBottom: 12,
-  },
-  ruleRow: { flexDirection: 'row', gap: 14, paddingVertical: 10 },
-  ruleRowDivider: { borderBottomWidth: 1, borderBottomColor: `${T.muted}66` },
-  ruleNum: {
-    width: 32,
-    height: 32,
-    borderRadius: 10,
-    flexShrink: 0,
-    backgroundColor: T.lemon,
-    borderWidth: 2,
-    borderColor: T.ink,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  ruleNumText: { color: T.ink, fontSize: 15, fontWeight: '900' },
-  ruleTitle: { color: T.ink, fontSize: 16, fontWeight: '800', letterSpacing: -0.3 },
-  ruleDesc: { color: T.inkSoft, fontSize: 13, marginTop: 2, lineHeight: 18 },
   footer: { padding: 20, paddingBottom: 32 },
 });
 

@@ -115,26 +115,11 @@ function PNRules({
           <ParanoiaIcon size={80} />
         </View>
 
-        <GameChip color={T.paper}>Jeu n°4</GameChip>
         <Text style={rules.title}>Paranoïa</Text>
+        <Text style={rules.tagline}>Qui a dit ton prénom… et pourquoi ?</Text>
       </View>
 
-      <View style={rules.cardWrap}>
-        <GameCard>
-          <Text style={rules.cardLabel}>COMMENT ON JOUE</Text>
-          {RULES.map((s, i) => (
-            <View key={s.n} style={[rules.ruleRow, i < RULES.length - 1 && rules.ruleRowDivider]}>
-              <View style={rules.ruleNum}>
-                <Text style={rules.ruleNumText}>{s.n}</Text>
-              </View>
-              <View style={{ flex: 1 }}>
-                <Text style={rules.ruleTitle}>{s.t}</Text>
-                <Text style={rules.ruleDesc}>{s.d}</Text>
-              </View>
-            </View>
-          ))}
-        </GameCard>
-      </View>
+      <View style={{ flex: 1 }} />
 
       <View style={rules.footer}>
         <ChunkyButton
@@ -174,31 +159,13 @@ const rules = StyleSheet.create({
     lineHeight: 72,
     marginTop: 12,
   },
-  cardWrap: { paddingHorizontal: 20, paddingTop: 24, flex: 1 },
-  cardLabel: {
-    color: T.muted,
-    fontSize: 11,
-    fontWeight: '700',
-    letterSpacing: 1.5,
-    textTransform: 'uppercase',
-    marginBottom: 12,
+  tagline: {
+    color: 'rgba(255,255,255,0.65)',
+    fontSize: 16,
+    fontWeight: '600',
+    letterSpacing: -0.2,
+    marginTop: 6,
   },
-  ruleRow: { flexDirection: 'row', gap: 14, paddingVertical: 10 },
-  ruleRowDivider: { borderBottomWidth: 1, borderBottomColor: `${T.muted}66` },
-  ruleNum: {
-    width: 32,
-    height: 32,
-    borderRadius: 10,
-    flexShrink: 0,
-    backgroundColor: T.teal,
-    borderWidth: 2,
-    borderColor: T.ink,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  ruleNumText: { color: '#fff', fontSize: 15, fontWeight: '900' },
-  ruleTitle: { color: T.ink, fontSize: 16, fontWeight: '800', letterSpacing: -0.3 },
-  ruleDesc: { color: T.inkSoft, fontSize: 13, marginTop: 2, lineHeight: 18 },
   footer: { padding: 20, paddingBottom: 32 },
 });
 

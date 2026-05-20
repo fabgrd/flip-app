@@ -1,9 +1,4 @@
-import {
-  DarkTheme,
-  DefaultTheme,
-  NavigationContainer,
-  Theme as NavTheme,
-} from '@react-navigation/native';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 
@@ -35,10 +30,9 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 function ThemedAppNavigator() {
   const { theme } = useTheme();
-  const navTheme: NavTheme = theme.mode === 'dark' ? DarkTheme : DefaultTheme;
   return (
     <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
-      <NavigationContainer theme={navTheme}>
+      <NavigationContainer theme={DefaultTheme}>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="GameSelect" component={GameSelectScreen} />

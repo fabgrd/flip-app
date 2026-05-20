@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import Svg, { Circle, Path, Rect } from 'react-native-svg';
 import Animated, { FadeIn, SlideInDown, SlideOutDown } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { T } from '../../constants/flipTokens';
@@ -38,19 +39,19 @@ const FEATURES: { icon: string; text: string; sub: string }[] = [
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
-function CrownSvg() {
-  // Minimal crown using Views since SVG libs vary per project
+function CrownIcon({ size = 48 }: { size?: number }) {
   return (
-    <View style={crown.wrapper}>
-      <Text style={crown.emoji}>👑</Text>
+    <View style={{ alignItems: 'center', marginBottom: 4 }}>
+      <Svg width={size} height={size} viewBox="0 0 48 48" fill="none">
+        <Path d="M6 36h36V20l-9 6-9-12-9 12-9-6v16z" fill={T.lemon} stroke={T.ink} strokeWidth="2.5" strokeLinejoin="round" />
+        <Rect x="6" y="34" width="36" height="6" rx="1" fill={T.lemon} stroke={T.ink} strokeWidth="2.5" />
+        <Circle cx="15" cy="14" r="3" fill={T.lemon} stroke={T.ink} strokeWidth="2" />
+        <Circle cx="33" cy="14" r="3" fill={T.lemon} stroke={T.ink} strokeWidth="2" />
+        <Circle cx="24" cy="8" r="3" fill={T.tomato} stroke={T.ink} strokeWidth="2" />
+      </Svg>
     </View>
   );
 }
-
-const crown = StyleSheet.create({
-  wrapper: { alignItems: 'center', marginBottom: 4 },
-  emoji: { fontSize: 44 },
-});
 
 function PlanButton({
   plan,
@@ -184,7 +185,7 @@ export function PaywallModal({ visible, onClose }: PaywallModalProps) {
         >
           {/* Hero */}
           <View style={styles.hero}>
-            <CrownSvg />
+            <CrownIcon size={48} />
             <Text style={styles.heroTitle}>
               Passe en{'\n'}
               <Text style={styles.heroTitleGold}>Fl!p VIP</Text>
@@ -228,7 +229,10 @@ export function PaywallModal({ visible, onClose }: PaywallModalProps) {
 
           {/* CTA */}
           <TouchableOpacity activeOpacity={0.9} style={styles.ctaBtn}>
-            <Text style={styles.ctaIcon}>👑</Text>
+            <Svg width={20} height={20} viewBox="0 0 16 16" fill="none">
+              <Rect x="3" y="7" width="10" height="8" rx="2" fill={T.ink} />
+              <Path d="M5 7V5a3 3 0 0 1 6 0v2" stroke={T.ink} strokeWidth="1.8" fill="none" strokeLinecap="round" />
+            </Svg>
             <Text style={styles.ctaText}>Essayer gratuitement</Text>
             <View style={styles.ctaBadge}>
               <Text style={styles.ctaBadgeText}>7 jours offerts</Text>
@@ -380,7 +384,6 @@ const styles = StyleSheet.create({
     elevation: 6,
     marginTop: 2,
   },
-  ctaIcon: { fontSize: 20 },
   ctaText: {
     fontSize: 18,
     fontWeight: '900',

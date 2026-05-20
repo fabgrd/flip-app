@@ -60,33 +60,3 @@ export const lightTheme: Theme = {
   },
 };
 
-export const darkTheme: Theme = {
-  mode: 'dark',
-  colors: {
-    primary: '#FF5B3A',
-    secondary: '#4FCB8A',
-    accent: '#2447FF',
-    success: '#4FCB8A',
-    warning: '#FFD23F',
-    danger: '#FF5B3A',
-
-    background: '#181613', // ink bg
-    surface: '#23201B',
-
-    text: {
-      primary: '#FBF7EC', // paper
-      secondary: '#C4B99A',
-      light: '#8B8273',
-      white: '#FFFFFF',
-    },
-
-    button: {
-      primary: '#FF5B3A',
-      secondary: '#4FCB8A',
-      disabled: '#3A342A',
-    },
-
-    border: '#FBF7EC',
-    overlay: 'rgba(0,0,0,0.65)',
-  },
-};

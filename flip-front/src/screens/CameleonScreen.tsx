@@ -193,7 +193,7 @@ export function CameleonScreen() {
       {phase === 'settings' && (
         <>
           <GameMenuHeader
-            chipLabel="Jeu n°1"
+            tagline="Démasque l'imposteur"
             title={'Le\nCaméléon'}
             onPressDice={() => setThemeModalVisible(true)}
             onPressSettings={() => navigation.navigate('Settings')}
@@ -216,7 +216,7 @@ export function CameleonScreen() {
                   Math.min(players.length - 1 - currentUC, Math.min(val, maxImpostors - currentUC)),
                 )
               }
-              onChangeTheme={() => {}}
+              onChangeTheme={() => { }}
               onStart={handleStart}
               t={t}
             />

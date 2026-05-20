@@ -12,6 +12,7 @@ export { GameCard, GameChip, StickerBadge } from './GamePrimitives';
 export { InitialAvatar } from './InitialAvatar';
 export { PaywallModal } from './PaywallModal';
 export { PlayerInput } from './PlayerInput';
+export { PlayerPickerGrid } from './PlayerPickerGrid';
 export { PlayersList } from './PlayersList';
 export { CardCrosshatch, isRedSuit, PlayingCardBack, PlayingCardFace } from './PlayingCard';
 export { PopModal } from './PopModal';

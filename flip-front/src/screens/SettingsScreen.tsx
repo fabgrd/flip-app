@@ -1,11 +1,10 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   SafeAreaView,
   ScrollView,
   StyleSheet,
-  Switch,
   Text,
   TouchableOpacity,
   View,
@@ -13,19 +12,15 @@ import {
 import { Feather } from '@expo/vector-icons';
 import { DotBackground, FlatChunkyButton } from '../components';
 import { T } from '../constants/flipTokens';
-import { useTheme } from '../contexts/ThemeContext';
 
 const LANGUAGES = [
   { code: 'fr', name: 'Français', flag: '🇫🇷' },
   { code: 'en', name: 'English', flag: '🇺🇸' },
-  { code: 'zh', name: '中文', flag: '🇨🇳' },
 ];
 
 export function SettingsScreen() {
   const navigation = useNavigation();
   const { t, i18n } = useTranslation();
-  const { theme, toggleDarkMode } = useTheme();
-  const [isDark] = useState(theme.mode === 'dark');
 
   const handleLanguageChange = async (languageCode: string) => {
     await i18n.changeLanguage(languageCode);
@@ -51,31 +46,12 @@ export function SettingsScreen() {
         </FlatChunkyButton>
         <View style={styles.headerTitleWrap}>
           <Text style={styles.headerTitle}>{t('settings:title')}</Text>
-          <Text style={styles.headerSub}>{t('settings:appearance.subtitle')}</Text>
+          <Text style={styles.headerSub}>{t('settings:language.subtitle')}</Text>
         </View>
         <View style={styles.headerSpacer} />
       </View>
 
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-        {/* Appearance */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{t('settings:appearance.title')}</Text>
-          <View style={styles.card}>
-            <View style={styles.rowBetween}>
-              <View style={styles.rowTextWrap}>
-                <Text style={styles.rowTitle}>{t('settings:appearance.darkMode')}</Text>
-                <Text style={styles.rowSub}>Mode nuit, ambiance plus douce.</Text>
-              </View>
-              <Switch
-                value={isDark}
-                onValueChange={toggleDarkMode}
-                trackColor={{ true: T.ink, false: `${T.ink}30` }}
-                thumbColor={isDark ? T.lemon : T.paper}
-              />
-            </View>
-          </View>
-        </View>
-
         {/* Language */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t('settings:language.title')}</Text>
@@ -161,16 +137,6 @@ const styles = StyleSheet.create({
     borderRadius: T.rLg,
     padding: 14,
   },
-
-  rowBetween: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: 12,
-  },
-  rowTextWrap: { flex: 1 },
-  rowTitle: { color: T.ink, fontSize: 16, fontWeight: '800' },
-  rowSub: { color: T.muted, fontSize: 12, marginTop: 4 },
 
   languageRow: {
     flexDirection: 'row',

@@ -5,6 +5,7 @@ import * as Haptics from 'expo-haptics';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import Svg, { Circle, Path, Rect } from 'react-native-svg';
 
 import {
   ChunkyButton,
@@ -64,7 +65,13 @@ export function HomeScreen() {
             color={T.lemon}
             onPress={() => setPaywallVisible(true)}
           >
-            <Text style={styles.crownBtn}>👑</Text>
+            <Svg width={18} height={18} viewBox="0 0 48 48" fill="none">
+              <Path d="M6 36h36V20l-9 6-9-12-9 12-9-6v16z" fill={T.lemon} stroke={T.ink} strokeWidth="2.5" strokeLinejoin="round" />
+              <Rect x="6" y="34" width="36" height="6" rx="1" fill={T.lemon} stroke={T.ink} strokeWidth="2.5" />
+              <Circle cx="15" cy="14" r="3" fill={T.lemon} stroke={T.ink} strokeWidth="2" />
+              <Circle cx="33" cy="14" r="3" fill={T.lemon} stroke={T.ink} strokeWidth="2" />
+              <Circle cx="24" cy="8" r="3" fill={T.tomato} stroke={T.ink} strokeWidth="2" />
+            </Svg>
           </FlatChunkyButton>
           <FlatChunkyButton
             size="sm"
@@ -151,10 +158,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 8,
   },
-  crownBtn: {
-    fontSize: 18,
-  },
-
   logo: {
     fontFamily: 'System',
     fontSize: 40,

@@ -14,7 +14,6 @@ import {
   ChunkyButton,
   DotBackground,
   GameCard,
-  GameChip,
   GameMenuActions,
   PlayersModal,
   RedFlagIcon,
@@ -153,30 +152,11 @@ function RFRules({
         <View style={rls.iconWrap}>
           <RedFlagIcon size={88} />
         </View>
-        <GameChip color={T.paper}>Jeu n°8</GameChip>
         <Text style={rls.title}>{'Es-tu un\nRed Flag ?'}</Text>
+        <Text style={rls.tagline}>Tes exs auraient aimé te faire passer ce test</Text>
       </View>
 
-      <ScrollView
-        style={{ flex: 1 }}
-        contentContainerStyle={rls.scroll}
-        showsVerticalScrollIndicator={false}
-      >
-        <GameCard>
-          <Text style={rls.cardLabel}>COMMENT ON JOUE</Text>
-          {RF_RULES.map((rule, i) => (
-            <View key={rule.n} style={[rls.ruleRow, i < RF_RULES.length - 1 && rls.ruleRowDivider]}>
-              <View style={rls.ruleNum}>
-                <Text style={rls.ruleNumText}>{rule.n}</Text>
-              </View>
-              <View style={{ flex: 1 }}>
-                <Text style={rls.ruleTitle}>{rule.title}</Text>
-                <Text style={rls.ruleDesc}>{rule.desc}</Text>
-              </View>
-            </View>
-          ))}
-        </GameCard>
-      </ScrollView>
+      <View style={{ flex: 1 }} />
 
       <View style={rls.footer}>
         <ChunkyButton
@@ -225,43 +205,13 @@ const rls = StyleSheet.create({
     marginTop: 8,
     marginBottom: 4,
   },
-  scroll: { paddingHorizontal: 20, paddingBottom: 32, gap: 14 },
-  cardLabel: {
-    fontSize: 11,
-    fontWeight: '900',
-    color: T.muted,
-    letterSpacing: 1.5,
-    marginBottom: 14,
-  },
-  ruleRow: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    gap: 14,
-    paddingVertical: 14,
-  },
-  ruleRowDivider: {
-    borderBottomWidth: 1.5,
-    borderBottomColor: `${T.ink}18`,
-  },
-  ruleNum: {
-    width: 30,
-    height: 30,
-    borderRadius: 999,
-    backgroundColor: REDFLAG_BG,
-    borderWidth: 1.5,
-    borderColor: T.ink,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  ruleNumText: { color: '#fff', fontSize: 14, fontWeight: '900' },
-  ruleTitle: {
-    color: T.ink,
+  tagline: {
+    color: 'rgba(255,255,255,0.65)',
     fontSize: 16,
-    fontWeight: '800',
-    letterSpacing: -0.3,
-    marginBottom: 2,
+    fontWeight: '600',
+    letterSpacing: -0.2,
+    marginTop: 4,
   },
-  ruleDesc: { color: T.inkSoft, fontSize: 13, lineHeight: 18 },
   footer: { paddingHorizontal: 20, paddingBottom: 24, paddingTop: 12 },
 });
 
