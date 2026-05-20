@@ -158,7 +158,7 @@ function PurityRules({
                     style={[
                       pr.levelBtn,
                       isActive &&
-                      allowed && { backgroundColor: LEVEL_COLORS[i], borderColor: T.ink },
+                        allowed && { backgroundColor: LEVEL_COLORS[i], borderColor: T.ink },
                       isSelected && allowed && pr.levelBtnSelected,
                       !allowed && pr.levelBtnLocked,
                     ]}
@@ -237,8 +237,10 @@ const pr = StyleSheet.create({
     letterSpacing: -0.2,
     marginTop: 6,
   },
-  cardWrap: { paddingHorizontal: 20, paddingTop: 24, flex: 1 },
-  cardScroll: { paddingBottom: 12, gap: 16 },
+  // Horizontal padding lives on the ScrollView contentContainer, not on the wrapper View,
+  // so that card shadows (offset +5,+5) stay inside the ScrollView's clip region on Android.
+  cardWrap: { paddingTop: 24, flex: 1 },
+  cardScroll: { paddingHorizontal: 20, paddingBottom: 12, gap: 16 },
   card: {
     backgroundColor: T.paper,
     borderWidth: 2,
