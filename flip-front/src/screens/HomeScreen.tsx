@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import Svg, { Circle, Path, Rect } from 'react-native-svg';
-
+import { setDevTier } from '../../src/entitlements';
 import {
   ChunkyButton,
   DotBackground,
@@ -23,6 +23,7 @@ import { RootStackParamList } from '../types';
 type HomeNav = StackNavigationProp<RootStackParamList, 'Home'>;
 
 export function HomeScreen() {
+  setDevTier('premium');
   const navigation = useNavigation<HomeNav>();
   const { t } = useTranslation();
   const { players, addPlayer, removePlayer, updatePlayerAvatar } = usePlayers();

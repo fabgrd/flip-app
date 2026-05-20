@@ -41,6 +41,7 @@ const NAMESPACES = [
   'settings',
   'cameleon',
   'leftRight',
+  'paranoia',
 ] as const;
 
 i18n

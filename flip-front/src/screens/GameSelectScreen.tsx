@@ -1,6 +1,7 @@
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 
@@ -15,6 +16,7 @@ type GameSelectRouteProp = RouteProp<RootStackParamList, 'GameSelect'>;
 export function GameSelectScreen() {
   const route = useRoute<GameSelectRouteProp>();
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const { t } = useTranslation();
   const { players } = route.params;
 
   const games = GAMES.filter((g) => g.enabled && (!g.developmentOnly || __DEV__));
@@ -35,9 +37,9 @@ export function GameSelectScreen() {
           <Text style={styles.backBtnText}>←</Text>
         </TouchableOpacity>
         <View style={{ flex: 1 }}>
-          <Text style={styles.headerTitle}>Choisis un jeu</Text>
+          <Text style={styles.headerTitle}>{t('games:selection.title')}</Text>
           <Text style={styles.headerSub}>
-            {players.length} joueur{players.length > 1 ? 's' : ''} · prêts à se ridiculiser
+            {t('games:selection.subtitle', { count: players.length })}
           </Text>
         </View>
       </View>
@@ -59,8 +61,8 @@ export function GameSelectScreen() {
                 </View>
 
                 <View style={styles.gameContent}>
-                  <Text style={styles.gameName}>{game.title}</Text>
-                  <Text style={styles.gameTagline}>{game.tagline}</Text>
+                  <Text style={styles.gameName}>{t(game.titleKey)}</Text>
+                  <Text style={styles.gameTagline}>{t(game.taglineKey)}</Text>
                   <View style={styles.chipRow}>
                     <View style={styles.chip}>
                       <Text style={styles.chipText}>👥 {game.playersLabel}</Text>
@@ -75,7 +77,7 @@ export function GameSelectScreen() {
 
                 {game.isNew && (
                   <View style={styles.favBadge}>
-                    <Text style={styles.favBadgeText}>Nouveau</Text>
+                    <Text style={styles.favBadgeText}>{t('common:new')}</Text>
                   </View>
                 )}
               </TouchableOpacity>
@@ -91,7 +93,7 @@ export function GameSelectScreen() {
           onPress={() => handleSelect(games[Math.floor(Math.random() * games.length)].id)}
           style={{ marginTop: 4 }}
         >
-          {'🎲  Surprends-moi'}
+          {`🎲  ${t('games:selection.surprise')}`}
         </ChunkyButton>
       </ScrollView>
     </SafeAreaView>

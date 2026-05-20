@@ -3,6 +3,7 @@
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import * as Haptics from 'expo-haptics';
 import React, { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Animated,
   Easing,
@@ -22,17 +23,12 @@ import {
   GameMenuActions,
   PlayersModal,
   InitialAvatar,
-  
   ParanoiaIcon,
   StickerBadge,
 } from '../components';
 import { T } from '../constants/flipTokens';
-import {
-  PARANOIA_QUESTIONS,
-  ParanoiaHistoryEntry,
-  ParanoiaOrder,
-  ParanoiaStep,
-} from '../games/paranoia';
+import { ContentItem, useGameContent } from '../content';
+import { ParanoiaHistoryEntry, ParanoiaOrder, ParanoiaStep } from '../games/paranoia';
 import { Player, RootStackParamList } from '../types';
 import { shuffleArray } from '../utils/array';
 
@@ -40,15 +36,14 @@ type ParanoiaScreenRouteProp = RouteProp<RootStackParamList, 'Paranoia'>;
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
-function buildOrder(players: Player[]): ParanoiaOrder[] {
-  if (players.length < 2) return [];
+function buildOrder(players: Player[], questions: readonly ContentItem[]): ParanoiaOrder[] {
+  if (players.length < 2 || questions.length === 0) return [];
   const idxs = players.map((_, i) => i).sort(() => Math.random() - 0.5);
-  const qs = shuffleArray([...PARANOIA_QUESTIONS]).slice(0, players.length);
+  const qs = shuffleArray([...questions]).slice(0, players.length);
   return idxs.map((qIdx, i) => {
-    // Build pool of valid targets (everyone except questioner) to avoid any loop
     const others = players.map((_, j) => j).filter((j) => j !== qIdx);
     const tIdx = others[Math.floor(Math.random() * others.length)];
-    return { q: qIdx, t: tIdx, question: qs[i] };
+    return { q: qIdx, t: tIdx, question: qs[i].text };
   });
 }
 
@@ -126,7 +121,10 @@ function PNRules({
           full
           color={T.paper}
           onPress={() => {
-            if (players.length < 4) { setShowPlayersModal(true); return; }
+            if (players.length < 4) {
+              setShowPlayersModal(true);
+              return;
+            }
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
             onStart();
           }}
@@ -134,7 +132,11 @@ function PNRules({
           Lancer la paranoïa
         </ChunkyButton>
       </View>
-      <PlayersModal visible={showPlayersModal} onClose={() => setShowPlayersModal(false)} onPlayersChange={onPlayersChange} />
+      <PlayersModal
+        visible={showPlayersModal}
+        onClose={() => setShowPlayersModal(false)}
+        onPlayersChange={onPlayersChange}
+      />
     </SafeAreaView>
   );
 }
@@ -205,9 +207,7 @@ function PNHandoff({
             shadowColor={accentColor}
           />
 
-          <Text style={ho.name}>
-            Donnes le tel à {playerName}
-          </Text>
+          <Text style={ho.name}>Donnes le tel à {playerName}</Text>
           <Text style={ho.subtitle}>{subtitle}</Text>
         </View>
 
@@ -851,9 +851,13 @@ const end = StyleSheet.create({
 export function ParanoiaScreen() {
   const route = useRoute<ParanoiaScreenRouteProp>();
   const navigation = useNavigation();
+  const { t } = useTranslation();
   const [players, setPlayers] = useState<Player[]>(route.params.players as Player[]);
 
-  const [order] = useState<ParanoiaOrder[]>(() => buildOrder(players));
+  const allQuestions = t('paranoia:questions', { returnObjects: true }) as ContentItem[];
+  const questions = useGameContent(allQuestions);
+
+  const [order] = useState<ParanoiaOrder[]>(() => buildOrder(players, questions));
   const [step, setStep] = useState<ParanoiaStep>('rules');
   const [round, setRound] = useState(0);
   const [answer, setAnswer] = useState<number | null>(null);

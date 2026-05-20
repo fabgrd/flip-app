@@ -1,0 +1,109 @@
+{
+  "title": "Paranoïa",
+  "tagline": "Qui a dit ton prénom… et pourquoi ?",
+  "tier": "spicy",
+  "questions": [
+    {
+      "id": "p_001",
+      "text": "Qui ferait le meilleur parent ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_002",
+      "text": "Qui a le pire goût en musique ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_003",
+      "text": "Avec qui partirais-tu en road trip ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_004",
+      "text": "Qui ment le mieux ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_005",
+      "text": "Qui a le crush le plus inavouable ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_006",
+      "text": "Qui craquerait en premier en prison ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_007",
+      "text": "Qui ferait le pire ex ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_008",
+      "text": "Qui a le glow-up le plus marquant ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_009",
+      "text": "Qui survivrait à une apocalypse zombie ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_010",
+      "text": "Qui a le plus de squelettes dans le placard ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_011",
+      "text": "Qui est secrètement le plus méchant ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_012",
+      "text": "Qui ferait la meilleure star de télé-réalité ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_013",
+      "text": "Qui serait le pire colocataire ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_014",
+      "text": "Qui est le plus jaloux ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_015",
+      "text": "Qui enverrait le plus de messages après une rupture ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_016",
+      "text": "Qui est le plus dramatique pour un rien ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_017",
+      "text": "Qui serait le plus corruptible ?",
+      "tier": "free",
+      "tags": []
+    }
+  ]
+}

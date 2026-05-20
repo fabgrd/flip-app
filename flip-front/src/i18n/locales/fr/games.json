@@ -1,13 +1,39 @@
 {
   "selection": {
-    "title": "Choisissez votre jeu",
-    "subtitle": "Avec {{count}} joueurs"
+    "title": "Choisis un jeu",
+    "subtitle": "{{count}} joueur(s) · prêts à se ridiculiser",
+    "surprise": "Surprends-moi"
+  },
+  "redFlag": {
+    "title": "Es-tu un Red Flag ?",
+    "tagline": "Tes exs auraient aimé te faire passer ce test"
+  },
+  "casting": {
+    "title": "Le Casting",
+    "tagline": "Joue la scène plus ou moins"
+  },
+  "apero": {
+    "title": "L'Apéro",
+    "tagline": "Devine la carte du donneur"
+  },
+  "medusa": {
+    "title": "Médusa",
+    "tagline": "Lève les yeux… et évite le regard"
+  },
+  "paranoia": {
+    "title": "Paranoïa",
+    "tagline": "Qui a dit ton prénom… et pourquoi ?"
+  },
+  "cameleon": {
+    "title": "Caméléon",
+    "tagline": "Démasque l'imposteur"
+  },
+  "leftRight": {
+    "title": "Gauche ou Droite",
+    "tagline": "Place la phrase sur l'échiquier politique"
   },
   "purityTest": {
-    "name": "Test d'Impureté",
-    "description": "Découvrez qui est le plus impur du groupe ! 😈"
-  },
-  "comingSoon": {
-    "message": "Jeu \"{{gameName}}\" sélectionné avec {{playerCount}} joueurs!\nFonctionnalité en cours de développement."
+    "title": "Test de Pureté",
+    "tagline": "Combien de péchés à ton actif ?"
   }
 }

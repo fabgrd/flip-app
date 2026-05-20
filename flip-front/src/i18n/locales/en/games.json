@@ -1,13 +1,39 @@
 {
   "selection": {
-    "title": "Choose your game",
-    "subtitle": "With {{count}} players"
+    "title": "Choose a game",
+    "subtitle": "{{count}} player(s) · ready to embarrass yourselves",
+    "surprise": "Surprise me"
+  },
+  "redFlag": {
+    "title": "Are you a Red Flag?",
+    "tagline": "Your exes would have loved making you take this test"
+  },
+  "casting": {
+    "title": "The Casting",
+    "tagline": "Act the scene more or less"
+  },
+  "apero": {
+    "title": "The Apéro",
+    "tagline": "Guess the dealer's card"
+  },
+  "medusa": {
+    "title": "Medusa",
+    "tagline": "Look up… and avoid the gaze"
+  },
+  "paranoia": {
+    "title": "Paranoia",
+    "tagline": "Who said your name… and why?"
+  },
+  "cameleon": {
+    "title": "Chameleon",
+    "tagline": "Unmask the impostor"
+  },
+  "leftRight": {
+    "title": "Left or Right",
+    "tagline": "Place the statement on the political compass"
   },
   "purityTest": {
-    "name": "Impurity Test",
-    "description": "Find out who's the most impure in the group! 😈"
-  },
-  "comingSoon": {
-    "message": "Game \"{{gameName}}\" selected with {{playerCount}} players!\nFeature under development."
+    "title": "Purity Test",
+    "tagline": "How many sins do you carry?"
   }
 }

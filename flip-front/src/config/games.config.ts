@@ -42,8 +42,8 @@ export interface GameVariantConfig {
 
 export interface GameConfig {
   id: GameId;
-  title: string;
-  tagline: string;
+  titleKey: string;
+  taglineKey: string;
   icon: ComponentType<{ size?: number }>;
   color: GameColorToken;
   minPlayers: number;
@@ -61,8 +61,8 @@ export interface GameConfig {
 export const GAMES: readonly GameConfig[] = [
   {
     id: 'red-flag',
-    title: 'Es-tu un Red Flag ?',
-    tagline: 'Tes exs auraient aimé te faire passer ce test',
+    titleKey: 'games:redFlag.title',
+    taglineKey: 'games:redFlag.tagline',
     icon: RedFlagIcon,
     color: 'tomato',
     minPlayers: 1,
@@ -76,8 +76,8 @@ export const GAMES: readonly GameConfig[] = [
   },
   {
     id: 'casting',
-    title: 'Le Casting',
-    tagline: 'Joue la scène plus ou moins',
+    titleKey: 'games:casting.title',
+    taglineKey: 'games:casting.tagline',
     icon: CastingIcon,
     color: 'castingOrange',
     minPlayers: 3,
@@ -91,8 +91,8 @@ export const GAMES: readonly GameConfig[] = [
   },
   {
     id: 'apero',
-    title: "L'Apéro",
-    tagline: 'Devine la carte du donneur',
+    titleKey: 'games:apero.title',
+    taglineKey: 'games:apero.tagline',
     icon: AperoIcon,
     color: 'pink',
     minPlayers: 2,
@@ -106,8 +106,8 @@ export const GAMES: readonly GameConfig[] = [
   },
   {
     id: 'medusa',
-    title: 'Médusa',
-    tagline: 'Lève les yeux… et évite le regard',
+    titleKey: 'games:medusa.title',
+    taglineKey: 'games:medusa.tagline',
     icon: MedusaIcon,
     color: 'cobalt',
     minPlayers: 5,
@@ -121,8 +121,8 @@ export const GAMES: readonly GameConfig[] = [
   },
   {
     id: 'paranoia',
-    title: 'Paranoïa',
-    tagline: 'Qui a dit ton prénom… et pourquoi ?',
+    titleKey: 'games:paranoia.title',
+    taglineKey: 'games:paranoia.tagline',
     icon: ParanoiaIcon,
     color: 'teal',
     minPlayers: 4,
@@ -135,8 +135,8 @@ export const GAMES: readonly GameConfig[] = [
   },
   {
     id: 'cameleon',
-    title: 'Caméléon',
-    tagline: "Démasque l'imposteur",
+    titleKey: 'games:cameleon.title',
+    taglineKey: 'games:cameleon.tagline',
     icon: ChameleonIcon,
     color: 'mint',
     minPlayers: 4,
@@ -149,8 +149,8 @@ export const GAMES: readonly GameConfig[] = [
   },
   {
     id: 'left-right',
-    title: 'Gauche ou Droite',
-    tagline: "Place la phrase sur l'échiquier politique",
+    titleKey: 'games:leftRight.title',
+    taglineKey: 'games:leftRight.tagline',
     icon: GaucheDroiteIcon,
     color: 'lemon',
     minPlayers: 2,
@@ -163,8 +163,8 @@ export const GAMES: readonly GameConfig[] = [
   },
   {
     id: 'purity-test',
-    title: 'Test de Pureté',
-    tagline: 'Combien de péchés à ton actif ?',
+    titleKey: 'games:purityTest.title',
+    taglineKey: 'games:purityTest.tagline',
     icon: PureteIcon,
     color: 'violet',
     minPlayers: 1,
