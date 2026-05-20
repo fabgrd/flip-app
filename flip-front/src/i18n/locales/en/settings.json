@@ -12,5 +12,11 @@
     "title": "About",
     "version": "Version {{version}}",
     "description": "FL!P - The ultimate drinking game to spice up your parties with friends!"
+  },
+  "drinks": {
+    "title": "Drinking game mode",
+    "label": "Hand out sips",
+    "description": "Enable sips distribution across games to turn Fl!p into a real drinking game 🍻",
+    "lockedHint": "Unlock Premium to enable drinking game mode"
   }
 }

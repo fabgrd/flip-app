@@ -12,5 +12,11 @@
     "title": "À propos",
     "version": "Version {{version}}",
     "description": "FL!P - Le jeu d'alcool ultime pour animer vos soirées entre amis !"
+  },
+  "drinks": {
+    "title": "Mode jeu à boire",
+    "label": "Distribuer les gorgées",
+    "description": "Active la distribution de gorgées dans les jeux pour transformer Fl!p en jeu à boire 🍻",
+    "lockedHint": "Débloque le Premium pour activer le mode jeu à boire"
   }
 }

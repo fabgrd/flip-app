@@ -7,6 +7,7 @@ import './src/i18n';
 import { PortalProvider } from '@gorhom/portal';
 import { View } from 'react-native';
 import { PlayersProvider } from './src/contexts/PlayersContext';
+import { PreferencesProvider } from './src/contexts/PreferencesContext';
 import { ThemeProvider, useTheme } from './src/contexts/ThemeContext';
 import { EntitlementsProvider } from './src/entitlements';
 import {
@@ -68,9 +69,11 @@ export default function App() {
     <PortalProvider>
       <ThemeProvider>
         <EntitlementsProvider>
-          <PlayersProvider>
-            <ThemedAppNavigator />
-          </PlayersProvider>
+          <PreferencesProvider>
+            <PlayersProvider>
+              <ThemedAppNavigator />
+            </PlayersProvider>
+          </PreferencesProvider>
         </EntitlementsProvider>
       </ThemeProvider>
     </PortalProvider>

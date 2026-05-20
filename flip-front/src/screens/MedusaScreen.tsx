@@ -28,6 +28,8 @@ import {
 import { getPlayerBgColor, getPlayerTextColor } from '../constants';
 import { T } from '../constants/flipTokens';
 import { MedusaPair, MedusaRoundHistory, MedusaStep } from '../games/medusa';
+import { useDrinksMode } from '../hooks';
+import { drinkUnit, drinkUnitLower } from '../utils/drinks';
 import { Player, RootStackParamList } from '../types';
 
 type MedusaScreenRouteProp = RouteProp<RootStackParamList, 'Medusa'>;
@@ -57,6 +59,7 @@ function MDRules({
   onSettings: () => void;
 }) {
   const [showPlayersModal, setShowPlayersModal] = useState(false);
+  const { enabled: drinksEnabled } = useDrinksMode();
   const RULES = [
     {
       n: '1',
@@ -71,7 +74,9 @@ function MDRules({
     {
       n: '3',
       t: 'Eye contact = pénalité',
-      d: 'Si deux joueurs se regardent dans les yeux : 1 gorgée chacun.',
+      d: drinksEnabled
+        ? 'Si deux joueurs se regardent dans les yeux : 1 gorgée chacun.'
+        : 'Si deux joueurs se regardent dans les yeux : 1 point chacun.',
     },
     {
       n: '4',
@@ -126,7 +131,10 @@ function MDRules({
           full
           color={T.paper}
           onPress={() => {
-            if (players.length < 5) { setShowPlayersModal(true); return; }
+            if (players.length < 5) {
+              setShowPlayersModal(true);
+              return;
+            }
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
             onStart();
           }}
@@ -134,7 +142,11 @@ function MDRules({
           Que la chasse commence
         </ChunkyButton>
       </View>
-      <PlayersModal visible={showPlayersModal} onClose={() => setShowPlayersModal(false)} onPlayersChange={onPlayersChange} />
+      <PlayersModal
+        visible={showPlayersModal}
+        onClose={() => setShowPlayersModal(false)}
+        onPlayersChange={onPlayersChange}
+      />
     </SafeAreaView>
   );
 }
@@ -613,6 +625,7 @@ function MDResults({
 }) {
   const hasCatches = pairs.length > 0;
   const caughtSet = new Set(pairs.flatMap(({ a, b }) => [a, b]));
+  const { enabled: drinksEnabled } = useDrinksMode();
   const safePlayers = players.filter((_, i) => !caughtSet.has(i));
   const isLast = roundNum >= totalRounds;
 
@@ -647,7 +660,9 @@ function MDResults({
                   {players[pair.a].name} <Text style={{ color: T.tomato }}>↔</Text>{' '}
                   {players[pair.b].name}
                 </Text>
-                <Text style={res.pairPenalty}>1 GORGÉE CHACUN</Text>
+                <Text style={res.pairPenalty}>
+                  {drinkUnitLower(1, drinksEnabled).toUpperCase()} CHACUN
+                </Text>
               </View>
               <InitialAvatar index={pair.b} size={40} radius={12} />
             </View>
@@ -728,6 +743,7 @@ function MDEnd({
   onRestart: () => void;
 }) {
   const totalContacts = history.reduce((s, r) => s + r.pairs.length, 0);
+  const { enabled: drinksEnabled } = useDrinksMode();
   const ranked = players
     .map((p, i) => ({ p, idx: i, pen: penalties[i] }))
     .sort((a, b) => b.pen - a.pen);
@@ -772,11 +788,7 @@ function MDEnd({
               <View style={{ flex: 1 }}>
                 <Text style={[en.rankName, { color: isTop ? '#fff' : T.ink }]}>{p.name}</Text>
                 <Text style={[en.rankSub, { color: isTop ? 'rgba(255,255,255,0.7)' : T.muted }]}>
-                  {isSafe
-                    ? 'INTOUCHABLE'
-                    : isTop
-                      ? 'LA MÉDUSE'
-                      : `${pen} GORGÉE${pen > 1 ? 'S' : ''}`}
+                  {isSafe ? 'INTOUCHABLE' : isTop ? 'LA MÉDUSE' : drinkUnit(pen, drinksEnabled)}
                 </Text>
               </View>
               <Text style={[en.rankScore, { color: isTop ? T.lemon : isSafe ? T.mint : T.tomato }]}>

@@ -22,12 +22,13 @@ import {
   GameMenuActions,
   PlayersModal,
   InitialAvatar,
-  
   StickerBadge,
 } from '../components';
 import { getPlayerBgColor, getPlayerTextColor } from '../constants';
 import { T } from '../constants/flipTokens';
 import { CASTING_LABELS, CASTING_ORANGE, CASTING_SCENARIOS } from '../games/casting';
+import { useDrinksMode } from '../hooks';
+import { drinkColumnLabel, drinkSoberLabel, drinkUnit, drinkUnitLower } from '../utils/drinks';
 import { CastingResult } from '../games/casting/types';
 import { Player, RootStackParamList } from '../types';
 
@@ -73,6 +74,7 @@ function CARules({
   onSettings: () => void;
 }) {
   const [showPlayersModal, setShowPlayersModal] = useState(false);
+  const { enabled: drinksEnabled } = useDrinksMode();
   const STEPS = [
     { n: '1', t: 'Un devin est désigné', d: 'Il observe. Les autres sont les acteurs.' },
     {
@@ -93,14 +95,29 @@ function CARules({
     {
       n: '5',
       t: 'Le devin devine les chiffres',
-      d: 'Il attribue un chiffre à chaque acteur. Plus il se trompe, plus il boit.',
+      d: drinksEnabled
+        ? 'Il attribue un chiffre à chaque acteur. Plus il se trompe, plus il boit.'
+        : 'Il attribue un chiffre à chaque acteur. Plus il se trompe, plus il accumule.',
     },
   ];
 
+  const drinkVerb = drinksEnabled ? 'boit' : 'prend';
   const DRINKS = [
-    { icon: '🎯', label: 'Pile poil (écart 0)', result: "l'acteur boit 3 (trop évident !)" },
-    { icon: '👀', label: 'Presque (écart 1)', result: "l'acteur boit 1" },
-    { icon: '💀', label: 'Raté (écart ≥2)', result: "l'acteur boit l'écart" },
+    {
+      icon: '🎯',
+      label: 'Pile poil (écart 0)',
+      result: `l'acteur ${drinkVerb} ${drinkUnitLower(3, drinksEnabled)} (trop évident !)`,
+    },
+    {
+      icon: '👀',
+      label: 'Presque (écart 1)',
+      result: `l'acteur ${drinkVerb} ${drinkUnitLower(1, drinksEnabled)}`,
+    },
+    {
+      icon: '💀',
+      label: 'Raté (écart ≥2)',
+      result: drinksEnabled ? "l'acteur boit l'écart" : "l'acteur prend l'écart en points",
+    },
   ];
 
   const rulesModal = STEPS.map((s) => ({ n: s.n, title: s.t, desc: s.d }));
@@ -136,7 +153,7 @@ function CARules({
         showsVerticalScrollIndicator={false}
       >
         <View style={rls.drinkCard}>
-          <Text style={rls.drinkLabel}>GORGÉES</Text>
+          <Text style={rls.drinkLabel}>{drinkColumnLabel(drinksEnabled)}</Text>
           {DRINKS.map((d) => (
             <View key={d.icon} style={rls.drinkRow}>
               <Text style={rls.drinkIcon}>{d.icon}</Text>
@@ -145,14 +162,16 @@ function CARules({
             </View>
           ))}
         </View>
-
       </ScrollView>
       <View style={rls.footer}>
         <ChunkyButton
           full
           color={T.paper}
           onPress={() => {
-            if (players.length < 3) { setShowPlayersModal(true); return; }
+            if (players.length < 3) {
+              setShowPlayersModal(true);
+              return;
+            }
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
             onStart();
           }}
@@ -160,7 +179,11 @@ function CARules({
           Lancer le casting
         </ChunkyButton>
       </View>
-      <PlayersModal visible={showPlayersModal} onClose={() => setShowPlayersModal(false)} onPlayersChange={onPlayersChange} />
+      <PlayersModal
+        visible={showPlayersModal}
+        onClose={() => setShowPlayersModal(false)}
+        onPlayersChange={onPlayersChange}
+      />
     </SafeAreaView>
   );
 }
@@ -238,11 +261,19 @@ function CAPickDevin({ players, onPick }: { players: Player[]; onPick: (idx: num
               color={T.paper}
               shadowColor={CASTING_ORANGE}
               metrics={{ height: 68, radius: 18, paddingH: 0 }}
-              innerStyle={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', padding: 14, gap: 10 }}
+              innerStyle={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'flex-start',
+                padding: 14,
+                gap: 10,
+              }}
               onPress={() => onPick(i)}
             >
               <View style={[pd.playerAvatar, { backgroundColor: playerBg(i) }]}>
-                <Text style={[pd.playerAvatarText, { color: avatarTextColor(i) }]}>{p.name[0].toUpperCase()}</Text>
+                <Text style={[pd.playerAvatarText, { color: avatarTextColor(i) }]}>
+                  {p.name[0].toUpperCase()}
+                </Text>
               </View>
               <Text style={pd.playerName}>{p.name}</Text>
             </ChunkyButton>
@@ -349,7 +380,9 @@ function CAScenario({
         </Text>
       </View>
       <View style={sc.footer}>
-        <ChunkyButton full color={T.paper} onPress={onNext}>Distribuer les chiffres →</ChunkyButton>
+        <ChunkyButton full color={T.paper} onPress={onNext}>
+          Distribuer les chiffres →
+        </ChunkyButton>
       </View>
     </SafeAreaView>
   );
@@ -419,9 +452,7 @@ function CAHandoff({
           borderColor={T.paper}
           shadowColor={CASTING_ORANGE}
         />
-        <Text style={hf.name}>
-          Donnes le tel à {player.name}
-        </Text>
+        <Text style={hf.name}>Donnes le tel à {player.name}</Text>
         <Text style={hf.sub}>Regarde ton chiffre en secret avant d'appuyer.</Text>
       </View>
       <View style={hf.footer}>
@@ -540,7 +571,12 @@ function CARevealNumber({
       </View>
 
       <View style={rn.footer}>
-        <ChunkyButton full color={CASTING_ORANGE} onPress={revealed ? onNext : undefined} disabled={!revealed}>
+        <ChunkyButton
+          full
+          color={CASTING_ORANGE}
+          onPress={revealed ? onNext : undefined}
+          disabled={!revealed}
+        >
           J'ai vu — passer au suivant
         </ChunkyButton>
       </View>
@@ -908,6 +944,7 @@ function CAResults({
   onExit: () => void;
 }) {
   const devin = players[devinIdx];
+  const { enabled: drinksEnabled } = useDrinksMode();
 
   const results: (CastingResult & { player: Player; playerIdx: number })[] = actors.map((a, i) => {
     const pIdx = actorIndices[i];
@@ -1004,8 +1041,8 @@ function CAResults({
               </Text>
               <Text style={res.bonusSub}>
                 {hasCastingParfait
-                  ? `${devin.name} a tout deviné — les acteurs boivent 2 de plus (trop prévisibles !)`
-                  : 'Personne trouvé — les acteurs boivent 3 de plus (jeu trop chaotique !)'}
+                  ? `${devin.name} a tout deviné — les acteurs ${drinksEnabled ? 'boivent' : 'prennent'} ${drinkUnitLower(2, drinksEnabled)} de plus (trop prévisibles !)`
+                  : `Personne trouvé — les acteurs ${drinksEnabled ? 'boivent' : 'prennent'} ${drinkUnitLower(3, drinksEnabled)} de plus (jeu trop chaotique !)`}
               </Text>
             </View>
           </View>
@@ -1037,7 +1074,7 @@ function CAResults({
                   <Text style={[res.tagText, { color: tagFg }]}>{r.tag}</Text>
                 </View>
                 <Text style={res.drinkInfo}>
-                  {r.player.name} boit {r.playerSips}
+                  {r.player.name} {drinksEnabled ? 'boit' : 'prend'} {r.playerSips}
                 </Text>
               </View>
             </View>
@@ -1045,7 +1082,9 @@ function CAResults({
         })}
 
         {/* Scoreboard */}
-        <Text style={res.sectionLabel}>CLASSEMENT · {totalSips} GORGÉES AU TOTAL</Text>
+        <Text style={res.sectionLabel}>
+          CLASSEMENT · {totalSips} {drinkColumnLabel(drinksEnabled)} AU TOTAL
+        </Text>
         {ranked.map((item, i) => {
           const isTop = i === 0 && item.s > 0;
           const isDevinPlayer = item.idx === devinIdx;
@@ -1064,7 +1103,7 @@ function CAResults({
                   {isDevinPlayer ? <Text style={res.devinBadge}> DEVIN</Text> : null}
                 </Text>
                 <Text style={[res.rankSub, isTop && { color: 'rgba(255,255,255,0.7)' }]}>
-                  {item.s === 0 ? 'SOBRE' : `${item.s} GORGÉE${item.s > 1 ? 'S' : ''}`}
+                  {item.s === 0 ? drinkSoberLabel(drinksEnabled) : drinkUnit(item.s, drinksEnabled)}
                 </Text>
               </View>
               <Text
@@ -1082,7 +1121,9 @@ function CAResults({
         })}
 
         {/* CTAs */}
-        <ChunkyButton full color={CASTING_ORANGE} onPress={onExit}>Rejouer</ChunkyButton>
+        <ChunkyButton full color={CASTING_ORANGE} onPress={onExit}>
+          Rejouer
+        </ChunkyButton>
         <ChunkyButton full color={T.paper} textColor={T.ink} onPress={onExit}>
           Retour au hub
         </ChunkyButton>
@@ -1258,7 +1299,13 @@ function CastingGame({
 
   if (step === 'rules') {
     return (
-      <CARules players={players} onPlayersChange={setPlayers} onStart={() => setStep('pick-devin')} onExit={onExit} onSettings={onSettings} />
+      <CARules
+        players={players}
+        onPlayersChange={setPlayers}
+        onStart={() => setStep('pick-devin')}
+        onExit={onExit}
+        onSettings={onSettings}
+      />
     );
   }
 

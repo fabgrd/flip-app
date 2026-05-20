@@ -28,6 +28,8 @@ import {
   StickerBadge,
 } from '../components';
 import { AperoIcon } from '../components/icons/AperoIcon';
+import { useDrinksMode } from '../hooks';
+import { drinkColumnLabel, drinkSoberLabel, drinkUnit, drinkUnitLower } from '../utils/drinks';
 import { getPlayerBgColor, getPlayerTextColor } from '../constants';
 import { T } from '../constants/flipTokens';
 import { Player, RootStackParamList } from '../types';
@@ -280,6 +282,7 @@ function APRules({
   onSettings: () => void;
 }) {
   const [showPlayersModal, setShowPlayersModal] = useState(false);
+  const { enabled: drinksEnabled } = useDrinksMode();
   const RULES = [
     {
       n: '1',
@@ -294,12 +297,16 @@ function APRules({
     {
       n: '3',
       t: 'Deuxième essai — dernière chance',
-      d: 'Si raté, le joueur boit la différence entre sa réponse et la carte.',
+      d: drinksEnabled
+        ? 'Si raté, le joueur boit la différence entre sa réponse et la carte.'
+        : 'Si raté, le joueur encaisse la différence en points entre sa réponse et la carte.',
     },
     {
       n: '4',
-      t: 'Trouvé ? Le donneur trinque',
-      d: 'Si un joueur trouve, le donneur boit 2 gorgées et sa série repart à zéro.',
+      t: drinksEnabled ? 'Trouvé ? Le donneur trinque' : 'Trouvé ? Le donneur encaisse',
+      d: drinksEnabled
+        ? 'Si un joueur trouve, le donneur boit 2 gorgées et sa série repart à zéro.'
+        : 'Si un joueur trouve, le donneur prend 2 points et sa série repart à zéro.',
     },
     {
       n: '5',
@@ -309,7 +316,9 @@ function APRules({
     {
       n: '★',
       t: 'Règle spéciale : le quadruplé',
-      d: "Quand les 4 cartes d'une même valeur sont sorties, elles se retournent et le donneur boit 2 de plus.",
+      d: drinksEnabled
+        ? "Quand les 4 cartes d'une même valeur sont sorties, elles se retournent et le donneur boit 2 de plus."
+        : "Quand les 4 cartes d'une même valeur sont sorties, elles se retournent et le donneur prend 2 points de plus.",
     },
   ];
   const rulesModal = RULES.map((r) => ({ n: r.n, title: r.t, desc: r.d }));
@@ -365,7 +374,10 @@ function APRules({
             full
             color={T.paper}
             onPress={() => {
-              if (players.length < 2) { setShowPlayersModal(true); return; }
+              if (players.length < 2) {
+                setShowPlayersModal(true);
+                return;
+              }
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
               onStart();
             }}
@@ -374,7 +386,11 @@ function APRules({
           </ChunkyButton>
         </View>
       </ScrollView>
-      <PlayersModal visible={showPlayersModal} onClose={() => setShowPlayersModal(false)} onPlayersChange={onPlayersChange} />
+      <PlayersModal
+        visible={showPlayersModal}
+        onClose={() => setShowPlayersModal(false)}
+        onPlayersChange={onPlayersChange}
+      />
     </SafeAreaView>
   );
 }
@@ -439,11 +455,7 @@ function APPickDealer({ players, onPick }: { players: Player[]; onPick: (i: numb
           <Text style={pk.title}>Choisis qui{'\n'}tient le tel</Text>
           <Text style={pk.sub}>Le donneur pioche et subit les conséquences.</Text>
         </View>
-        <PlayerPickerGrid
-          players={players}
-          onSelect={(_, i) => onPick(i)}
-          shadowColor={T.pink}
-        />
+        <PlayerPickerGrid players={players} onSelect={(_, i) => onPick(i)} shadowColor={T.pink} />
       </SafeAreaView>
     </View>
   );
@@ -494,6 +506,7 @@ function APRound({
   const [phase, setPhase] = useState<RoundPhase>('g1');
   const [g1, setG1] = useState<ApVal | null>(null);
   const [g2, setG2] = useState<ApVal | null>(null);
+  const { enabled: drinksEnabled } = useDrinksMode();
 
   // ── Animations ──
   // Card scale (apPop on reveal) + shake (apShake on hint)
@@ -705,7 +718,10 @@ function APRound({
                   <StickerBadge color={T.mint} rotation={-4}>
                     TROUVÉ !
                   </StickerBadge>
-                  <Text style={rd.resultTitle}>{dealer.name} boit 2 gorgées</Text>
+                  <Text style={rd.resultTitle}>
+                    {dealer.name} {drinksEnabled ? 'boit' : 'prend'}{' '}
+                    {drinkUnitLower(2, drinksEnabled)}
+                  </Text>
                   <Text style={rd.phaseSub}>Série du donneur remise à zéro</Text>
                 </>
               ) : (
@@ -714,7 +730,8 @@ function APRound({
                     RATÉ !
                   </StickerBadge>
                   <Text style={rd.resultTitle}>
-                    {guesser.name} boit {penalty} gorgée{penalty > 1 ? 's' : ''}
+                    {guesser.name} {drinksEnabled ? 'boit' : 'prend'}{' '}
+                    {drinkUnitLower(penalty, drinksEnabled)}
                   </Text>
                   {finalGuess && (
                     <Text style={rd.phaseMono}>
@@ -804,6 +821,7 @@ function APSpecialFlip({
 }) {
   const popAnim = useRef(new Animated.Value(0.4)).current;
   const popOpacity = useRef(new Animated.Value(0)).current;
+  const { enabled: drinksEnabled } = useDrinksMode();
 
   useEffect(() => {
     Animated.parallel([
@@ -828,7 +846,9 @@ function APSpecialFlip({
           </Text>
           <Text style={sf.sub}>Les 4 cartes se retournent sur la traversée.</Text>
           <GameCard style={{ alignSelf: 'stretch', marginTop: 8, borderRadius: 22, padding: 18 }}>
-            <Text style={sf.bonusText}>{dealer.name} boit 2 gorgées</Text>
+            <Text style={sf.bonusText}>
+              {dealer.name} {drinksEnabled ? 'boit' : 'prend'} {drinkUnitLower(2, drinksEnabled)}
+            </Text>
             <Text style={sf.bonusSub}>Pénalité du quadruplé</Text>
           </GameCard>
           <View style={{ alignSelf: 'stretch', marginTop: 16 }}>
@@ -836,7 +856,9 @@ function APSpecialFlip({
           </View>
         </ScrollView>
         <View style={sf.footer}>
-          <ChunkyButton full color={T.ink} onPress={onNext}>Continuer →</ChunkyButton>
+          <ChunkyButton full color={T.ink} onPress={onNext}>
+            Continuer →
+          </ChunkyButton>
         </View>
       </SafeAreaView>
     </View>
@@ -902,13 +924,23 @@ function APDealerPass({
                   style={{ width: '47%' }}
                   color={T.paper}
                   metrics={{ height: 68, radius: 18, paddingH: 0 }}
-                  innerStyle={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', padding: 14, gap: 10 }}
+                  innerStyle={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'flex-start',
+                    padding: 14,
+                    gap: 10,
+                  }}
                   onPress={() => onPass(i)}
                 >
                   <View style={[dp.avatar, { backgroundColor: pBg(i) }]}>
-                    <Text style={[dp.avatarText, { color: pText(i) }]}>{p.name[0].toUpperCase()}</Text>
+                    <Text style={[dp.avatarText, { color: pText(i) }]}>
+                      {p.name[0].toUpperCase()}
+                    </Text>
                   </View>
-                  <Text style={dp.name} numberOfLines={1}>{p.name}</Text>
+                  <Text style={dp.name} numberOfLines={1}>
+                    {p.name}
+                  </Text>
                 </ChunkyButton>
               ),
           )}
@@ -989,6 +1021,7 @@ function APEnd({
 }) {
   const ranked = players.map((p, i) => ({ ...p, idx: i, s: sips[i] })).sort((a, b) => b.s - a.s);
   const totalSips = sips.reduce((a, b) => a + b, 0);
+  const { enabled: drinksEnabled } = useDrinksMode();
 
   return (
     <SafeAreaView style={en.screen}>
@@ -1005,7 +1038,7 @@ function APEnd({
           {[
             { label: 'CARTES', val: played.length, bg: T.pink },
             { label: 'TROUVÉES', val: foundTotal, bg: T.mint },
-            { label: 'GORGÉES', val: totalSips, bg: T.tomato },
+            { label: drinkColumnLabel(drinksEnabled), val: totalSips, bg: T.tomato },
           ].map((s) => (
             <View key={s.label} style={[en.statCard, { backgroundColor: s.bg }]}>
               <Text style={en.statLabel}>{s.label}</Text>
@@ -1059,7 +1092,7 @@ function APEnd({
                     <Text
                       style={[en.rankSips, { color: isTop ? 'rgba(255,255,255,0.7)' : T.muted }]}
                     >
-                      {p.s === 0 ? 'SOBRE' : `${p.s} GORGÉE${p.s > 1 ? 'S' : ''}`}
+                      {p.s === 0 ? drinkSoberLabel(drinksEnabled) : drinkUnit(p.s, drinksEnabled)}
                     </Text>
                   </View>
                   <Text
@@ -1079,7 +1112,9 @@ function APEnd({
         </View>
 
         <View style={{ paddingHorizontal: 20, gap: 10 }}>
-          <ChunkyButton full color={T.pink} onPress={onExit}>Rejouer</ChunkyButton>
+          <ChunkyButton full color={T.pink} onPress={onExit}>
+            Rejouer
+          </ChunkyButton>
           <ChunkyButton full color={T.paper} textColor={T.ink} onPress={onExit}>
             Retour au hub
           </ChunkyButton>
@@ -1243,7 +1278,15 @@ function AperoGame({ players: initialPlayers, onExit }: { players: Player[]; onE
   };
 
   if (step === 'rules') {
-    return <APRules players={players} onPlayersChange={handlePlayersChange} onStart={() => setStep('pick')} onExit={onExit} onSettings={() => { }} />;
+    return (
+      <APRules
+        players={players}
+        onPlayersChange={handlePlayersChange}
+        onStart={() => setStep('pick')}
+        onExit={onExit}
+        onSettings={() => {}}
+      />
+    );
   }
 
   if (step === 'pick') {

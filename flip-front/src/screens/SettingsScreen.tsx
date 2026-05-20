@@ -1,3 +1,4 @@
+import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -5,13 +6,14 @@ import {
   SafeAreaView,
   ScrollView,
   StyleSheet,
+  Switch,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Feather } from '@expo/vector-icons';
 import { DotBackground, FlatChunkyButton } from '../components';
 import { T } from '../constants/flipTokens';
+import { useDrinksMode } from '../hooks';
 
 const LANGUAGES = [
   { code: 'fr', name: 'Français', flag: '🇫🇷' },
@@ -21,6 +23,7 @@ const LANGUAGES = [
 export function SettingsScreen() {
   const navigation = useNavigation();
   const { t, i18n } = useTranslation();
+  const drinks = useDrinksMode();
 
   const handleLanguageChange = async (languageCode: string) => {
     await i18n.changeLanguage(languageCode);
@@ -30,10 +33,14 @@ export function SettingsScreen() {
     navigation.goBack();
   };
 
+  const handleDrinksToggle = (value: boolean) => {
+    if (!drinks.available) return;
+    drinks.setEnabled(value);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <DotBackground opacity={0.06} />
-      {/* Header */}
       <View style={styles.header}>
         <FlatChunkyButton
           size="sm"
@@ -52,6 +59,39 @@ export function SettingsScreen() {
       </View>
 
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+        {/* Drinks mode */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>{t('settings:drinks.title')}</Text>
+          <View style={styles.card}>
+            <View style={styles.toggleRow}>
+              <View style={styles.toggleTextWrap}>
+                <View style={styles.toggleLabelLine}>
+                  <Text style={styles.toggleLabel}>{t('settings:drinks.label')}</Text>
+                  {!drinks.available && (
+                    <View style={styles.proBadge}>
+                      <Feather name="lock" size={10} color="#fff" />
+                      <Text style={styles.proBadgeText}>PRO</Text>
+                    </View>
+                  )}
+                </View>
+                <Text style={styles.toggleDescription}>
+                  {drinks.available
+                    ? t('settings:drinks.description')
+                    : t('settings:drinks.lockedHint')}
+                </Text>
+              </View>
+              <Switch
+                value={drinks.enabled}
+                onValueChange={handleDrinksToggle}
+                disabled={!drinks.available}
+                trackColor={{ false: T.paper, true: T.mint }}
+                thumbColor={T.ink}
+                ios_backgroundColor={T.paper}
+              />
+            </View>
+          </View>
+        </View>
+
         {/* Language */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t('settings:language.title')}</Text>
@@ -137,6 +177,26 @@ const styles = StyleSheet.create({
     borderRadius: T.rLg,
     padding: 14,
   },
+
+  toggleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  toggleTextWrap: { flex: 1, gap: 4 },
+  toggleLabelLine: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  toggleLabel: { color: T.ink, fontSize: 16, fontWeight: '900' },
+  toggleDescription: { color: T.inkSoft, fontSize: 12, lineHeight: 16 },
+  proBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    backgroundColor: T.ink,
+    borderRadius: 999,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+  },
+  proBadgeText: { color: '#fff', fontSize: 10, fontWeight: '900', letterSpacing: 0.5 },
 
   languageRow: {
     flexDirection: 'row',
