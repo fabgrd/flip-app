@@ -2,7 +2,8 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import * as Haptics from 'expo-haptics';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { ChunkyButton, DotBackground, GameMenuActions, GaucheDroiteIcon, PlayersModal, RulesButton } from '../components';
 import { T } from '../constants/flipTokens';

@@ -69,19 +69,19 @@ function ThemedAppNavigator() {
 export default function App() {
   return (
     <SafeAreaProvider>
-    <PortalProvider>
-      <ThemeProvider>
-        <EntitlementsProvider>
-          <PreferencesProvider>
-            <PaywallProvider>
-              <PlayersProvider>
-                <ThemedAppNavigator />
-              </PlayersProvider>
-            </PaywallProvider>
-          </PreferencesProvider>
-        </EntitlementsProvider>
-      </ThemeProvider>
-    </PortalProvider>
+      <PortalProvider>
+        <ThemeProvider>
+          <EntitlementsProvider>
+            <PreferencesProvider>
+              <PaywallProvider>
+                <PlayersProvider>
+                  <ThemedAppNavigator />
+                </PlayersProvider>
+              </PaywallProvider>
+            </PreferencesProvider>
+          </EntitlementsProvider>
+        </ThemeProvider>
+      </PortalProvider>
     </SafeAreaProvider>
   );
 }

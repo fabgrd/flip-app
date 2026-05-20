@@ -3,7 +3,6 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Switch,
@@ -11,6 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { DotBackground, FlatChunkyButton } from '../components';
 import { T } from '../constants/flipTokens';
 import { useDrinksMode } from '../hooks';
