@@ -1,3 +1,4 @@
+import { Feather } from '@expo/vector-icons';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import * as Haptics from 'expo-haptics';
 import React, { useEffect, useState } from 'react';
@@ -5,11 +6,19 @@ import { useTranslation } from 'react-i18next';
 import Slider from '@react-native-community/slider';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ChunkyButton, DotBackground, GameMenuActions, PlayersModal, PureteIcon, RulesButton } from '../components';
+import {
+  ChunkyButton,
+  DotBackground,
+  GameMenuActions,
+  PlayersModal,
+  PureteIcon,
+  RulesButton,
+} from '../components';
 import { T } from '../constants/flipTokens';
 import { THEME_COLORS, THEME_LABELS } from '../games/purity-test/constants';
 import { usePurityTest } from '../games/purity-test/hooks/usePurityTest';
 import type { LevelKey, Theme } from '../games/purity-test/types';
+import { usePurityLevelAccess } from '../games/purity-test/usePurityLevelAccess';
 import { CardStack } from '../games/purity-test/components';
 import { Player, RootStackParamList } from '../types';
 
@@ -80,6 +89,7 @@ function PurityRules({
   onChangeMaxLevel: (level: LevelKey) => void;
 }) {
   const [showPlayersModal, setShowPlayersModal] = useState(false);
+  const { isLevelAllowed, requestUnlockFor } = usePurityLevelAccess();
   const themeTotal = Object.values(themeCounts).reduce((sum, val) => sum + val, 0);
   const maxIdx = LEVEL_KEYS.indexOf(maxLevel);
 
@@ -141,18 +151,30 @@ function PurityRules({
               {LEVEL_KEYS.map((level, i) => {
                 const isActive = i <= maxIdx;
                 const isSelected = level === maxLevel;
+                const allowed = isLevelAllowed(level);
                 return (
                   <TouchableOpacity
                     key={level}
                     style={[
                       pr.levelBtn,
-                      isActive && { backgroundColor: LEVEL_COLORS[i], borderColor: T.ink },
-                      isSelected && pr.levelBtnSelected,
+                      isActive &&
+                        allowed && { backgroundColor: LEVEL_COLORS[i], borderColor: T.ink },
+                      isSelected && allowed && pr.levelBtnSelected,
+                      !allowed && pr.levelBtnLocked,
                     ]}
-                    onPress={() => onChangeMaxLevel(level)}
+                    onPress={() => (allowed ? onChangeMaxLevel(level) : requestUnlockFor(level))}
                     activeOpacity={0.75}
                   >
-                    <Text style={[pr.levelBtnText, isActive && pr.levelBtnTextActive]}>
+                    {!allowed && (
+                      <Feather name="lock" size={10} color={T.ink} style={pr.levelLockIcon} />
+                    )}
+                    <Text
+                      style={[
+                        pr.levelBtnText,
+                        isActive && allowed && pr.levelBtnTextActive,
+                        !allowed && pr.levelBtnTextLocked,
+                      ]}
+                    >
                       {LEVEL_LABELS[level]}
                     </Text>
                   </TouchableOpacity>
@@ -168,7 +190,10 @@ function PurityRules({
           full
           color={T.paper}
           onPress={() => {
-            if (players.length < 1) { setShowPlayersModal(true); return; }
+            if (players.length < 1) {
+              setShowPlayersModal(true);
+              return;
+            }
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
             onStart();
           }}
@@ -176,7 +201,11 @@ function PurityRules({
           Commencer le test
         </ChunkyButton>
       </View>
-      <PlayersModal visible={showPlayersModal} onClose={() => setShowPlayersModal(false)} onPlayersChange={onPlayersChange} />
+      <PlayersModal
+        visible={showPlayersModal}
+        onClose={() => setShowPlayersModal(false)}
+        onPlayersChange={onPlayersChange}
+      />
     </SafeAreaView>
   );
 }
@@ -262,6 +291,13 @@ const pr = StyleSheet.create({
   },
   levelBtnText: { color: T.muted, fontSize: 11, fontWeight: '800', textAlign: 'center' },
   levelBtnTextActive: { color: T.ink },
+  levelBtnLocked: {
+    backgroundColor: '#EFEAE3',
+    borderColor: '#DCD3C5',
+    opacity: 0.78,
+  },
+  levelBtnTextLocked: { color: T.muted },
+  levelLockIcon: { position: 'absolute', top: 4, right: 4 },
   footer: { padding: 20, paddingBottom: 32 },
 });
 
@@ -269,6 +305,7 @@ export function PurityTestScreen() {
   const route = useRoute<PurityTestScreenRouteProp>();
   const navigation = useNavigation();
   const { t } = useTranslation();
+  const { highestAllowedLevel } = usePurityLevelAccess();
   const [players, setPlayers] = useState<Player[]>(route.params.players as Player[]);
   const [showRules, setShowRules] = useState(true);
   const [themeCounts, setThemeCounts] = useState<Record<Theme, number>>({
@@ -277,7 +314,7 @@ export function PurityTestScreen() {
     morality: 5,
     hygiene: 5,
   });
-  const [maxLevel, setMaxLevel] = useState<LevelKey>('level5');
+  const [maxLevel, setMaxLevel] = useState<LevelKey>(highestAllowedLevel);
   const levelCounts = maxLevelToLevelCounts(maxLevel);
   const {
     gameState,

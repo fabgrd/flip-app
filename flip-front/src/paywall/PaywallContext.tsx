@@ -3,9 +3,8 @@ import { PaywallModal } from '../components';
 import { Entitlement } from '../entitlements';
 
 interface PaywallAPI {
-  open: (feature?: Entitlement) => void;
+  open: (source?: Entitlement) => void;
   close: () => void;
-  current: Entitlement | null;
   visible: boolean;
 }
 
@@ -13,29 +12,25 @@ const PaywallContext = createContext<PaywallAPI | undefined>(undefined);
 
 export function PaywallProvider({ children }: { children: ReactNode }) {
   const [visible, setVisible] = useState(false);
-  const [current, setCurrent] = useState<Entitlement | null>(null);
 
-  const open = useCallback((feature?: Entitlement) => {
-    const next = feature ?? null;
-    setCurrent(next);
+  const open = useCallback((source?: Entitlement) => {
     setVisible(true);
-    // eslint-disable-next-line no-console
-    if (__DEV__) console.log('[paywall] open', { feature: next });
+    if (__DEV__) {
+      // eslint-disable-next-line no-console
+      console.log('[paywall] open', { source: source ?? 'generic' });
+    }
   }, []);
 
   const close = useCallback(() => {
     setVisible(false);
   }, []);
 
-  const api = useMemo<PaywallAPI>(
-    () => ({ open, close, current, visible }),
-    [open, close, current, visible],
-  );
+  const api = useMemo<PaywallAPI>(() => ({ open, close, visible }), [open, close, visible]);
 
   return (
     <PaywallContext.Provider value={api}>
       {children}
-      <PaywallModal visible={visible} feature={current} onClose={close} />
+      <PaywallModal visible={visible} onClose={close} />
     </PaywallContext.Provider>
   );
 }

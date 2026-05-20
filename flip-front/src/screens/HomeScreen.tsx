@@ -2,7 +2,7 @@ import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import * as Haptics from 'expo-haptics';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -24,7 +24,7 @@ import { RootStackParamList } from '../types';
 type HomeNav = StackNavigationProp<RootStackParamList, 'Home'>;
 
 export function HomeScreen() {
-  setDevTier('premium');
+  useEffect(() => { setDevTier('free'); }, []);
   const navigation = useNavigation<HomeNav>();
   const { t } = useTranslation();
   const { players, addPlayer, removePlayer, updatePlayerAvatar } = usePlayers();

@@ -1,8 +1,10 @@
 import { TFunction } from 'i18next';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Entitlement, useEntitlements } from '../../../entitlements';
 import { Player } from '../../../types';
 import { shuffleArray } from '../../../utils/array';
+import { levelRequiredEntitlement } from '../levelTiers';
 import {
   LevelKey,
   PlayerAnswer,
@@ -12,6 +14,19 @@ import {
   Question,
   Theme,
 } from '../types';
+
+function sanitizeConfigForEntitlements(
+  config: PurityQuestionConfig | undefined,
+  has: (e: Entitlement) => boolean,
+): PurityQuestionConfig | undefined {
+  if (!config?.levelCounts) return config;
+  const next = { ...config.levelCounts };
+  (Object.keys(next) as LevelKey[]).forEach((level) => {
+    const req = levelRequiredEntitlement(level);
+    if (req && !has(req)) next[level] = 0;
+  });
+  return { ...config, levelCounts: next };
+}
 
 const DEFAULT_TOTAL_QUESTIONS = 20;
 const DEFAULT_THEME_COUNTS: Record<Theme, number> = {
@@ -296,9 +311,10 @@ function buildInitialState(t: TFunction, initialPlayers: Player[], config?: Puri
 
 export const usePurityTest = (initialPlayers: Player[], config?: PurityQuestionConfig) => {
   const { t } = useTranslation();
+  const { has } = useEntitlements();
 
   const [gameState, setGameState] = useState<PurityGameState>(() =>
-    buildInitialState(t, initialPlayers, config),
+    buildInitialState(t, initialPlayers, sanitizeConfigForEntitlements(config, has)),
   );
 
   const currentQuestion = useMemo(
@@ -423,9 +439,11 @@ export const usePurityTest = (initialPlayers: Player[], config?: PurityQuestionC
 
   const resetGame = useCallback(
     (nextConfig?: PurityQuestionConfig) => {
-      setGameState(buildInitialState(t, initialPlayers, nextConfig));
+      setGameState(
+        buildInitialState(t, initialPlayers, sanitizeConfigForEntitlements(nextConfig, has)),
+      );
     },
-    [t, initialPlayers],
+    [t, initialPlayers, has],
   );
 
   const getPlayerAnswer = useCallback(

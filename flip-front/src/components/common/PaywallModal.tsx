@@ -1,18 +1,16 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Modal, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Animated, { FadeIn, SlideInDown, SlideOutDown } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Circle, Path, Rect } from 'react-native-svg';
 import { T } from '../../constants/flipTokens';
-import { Entitlement } from '../../entitlements';
 import { getPaywallContent } from '../../paywall/paywallContent';
 import { PaywallPlanId } from '../../paywall/types';
 import { DotBackground } from './DotBackground';
 
 export interface PaywallModalProps {
   visible: boolean;
-  feature?: Entitlement | null;
   onClose: () => void;
 }
 
@@ -108,17 +106,13 @@ function PlanButton({
   );
 }
 
-export function PaywallModal({ visible, feature, onClose }: PaywallModalProps) {
+export function PaywallModal({ visible, onClose }: PaywallModalProps) {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
 
-  const content = useMemo(() => getPaywallContent(feature ?? null, t), [feature, t]);
+  const content = useMemo(() => getPaywallContent(t), [t]);
 
   const [selectedPlan, setSelectedPlan] = useState<PaywallPlanId>(content.recommendedPlan);
-
-  useEffect(() => {
-    setSelectedPlan(content.recommendedPlan);
-  }, [content.recommendedPlan]);
 
   const planLabel = (id: PaywallPlanId) => t(`paywall:plans.${id}`);
 

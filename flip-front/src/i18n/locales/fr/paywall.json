@@ -11,7 +11,7 @@
       {
         "icon": "🔥",
         "title": "Tous les modes de chaque jeu",
-        "sub": "Hot, Hardcore, Politique… tous inclus"
+        "sub": "Spicy, Hardcore, jeu à boire… tous inclus"
       },
       {
         "icon": "📚",
@@ -24,134 +24,6 @@
         "sub": "18+, Halloween, Saint-Valentin, EVG/EVJF…"
       }
     ]
-  },
-  "contexts": {
-    "drinks_mode": {
-      "title": "Mode jeu à boire",
-      "pitch": "Transforme Fl!p en vraie soirée alcoolisée",
-      "benefits": [
-        {
-          "icon": "🍻",
-          "title": "Distribution de gorgées",
-          "sub": "Apéro, Médusa, Casting deviennent des jeux à boire"
-        },
-        {
-          "icon": "🎯",
-          "title": "Toutes les pénalités en gorgées",
-          "sub": "Verbes adaptés, scores en gorgées, classement bourré"
-        },
-        {
-          "icon": "🔓",
-          "title": "+ tout le contenu premium",
-          "sub": "Modes spicy, hardcore, thèmes exclusifs"
-        }
-      ]
-    },
-    "spicy_content": {
-      "title": "Mode Spicy",
-      "pitch": "Le contenu qui pimente vraiment la soirée",
-      "benefits": [
-        {
-          "icon": "🌶️",
-          "title": "Questions Spicy",
-          "sub": "Des questions qui sortent du cadre amical"
-        },
-        {
-          "icon": "💋",
-          "title": "Modes intimes débloqués",
-          "sub": "Sex, drugs, vie privée"
-        },
-        {
-          "icon": "🔓",
-          "title": "+ tout le contenu premium",
-          "sub": "Mode jeu à boire, hardcore, thèmes exclusifs"
-        }
-      ]
-    },
-    "hardcore_content": {
-      "title": "Mode Hardcore",
-      "pitch": "Quand spicy ne suffit plus",
-      "benefits": [
-        {
-          "icon": "🔥",
-          "title": "Questions Hardcore",
-          "sub": "Niveau 5 — pour les soirées qui dérapent vraiment"
-        },
-        {
-          "icon": "😈",
-          "title": "Tabous débloqués",
-          "sub": "Aucune limite, à utiliser avec ses amis très proches"
-        },
-        {
-          "icon": "🔓",
-          "title": "+ tout le contenu premium",
-          "sub": "Mode jeu à boire, spicy, thèmes exclusifs"
-        }
-      ]
-    },
-    "extra_questions": {
-      "title": "+ de questions",
-      "pitch": "5 000+ questions exclusives, ajoutées chaque semaine",
-      "benefits": [
-        {
-          "icon": "📚",
-          "title": "5 000+ questions exclusives",
-          "sub": "Toutes catégories, tous niveaux"
-        },
-        {
-          "icon": "✨",
-          "title": "Nouveau contenu chaque semaine",
-          "sub": "Pousser par-dessus l'air du temps"
-        },
-        {
-          "icon": "🔓",
-          "title": "+ tout le contenu premium",
-          "sub": "Mode jeu à boire, spicy, hardcore"
-        }
-      ]
-    },
-    "premium_themes": {
-      "title": "Thèmes exclusifs",
-      "pitch": "Halloween, Saint-Valentin, EVG/EVJF… des packs sur mesure",
-      "benefits": [
-        {
-          "icon": "🎃",
-          "title": "Packs saisonniers",
-          "sub": "Halloween, Noël, été, Saint-Valentin"
-        },
-        {
-          "icon": "💍",
-          "title": "Modes EVG / EVJF",
-          "sub": "Packs spéciaux pour enterrer la vie de garçon / fille"
-        },
-        {
-          "icon": "🔓",
-          "title": "+ tout le contenu premium",
-          "sub": "Mode jeu à boire, spicy, hardcore"
-        }
-      ]
-    },
-    "unlimited_players": {
-      "title": "Joueurs illimités",
-      "pitch": "Ramène tout le crew, sans limite",
-      "benefits": [
-        {
-          "icon": "👥",
-          "title": "Pas de plafond joueurs",
-          "sub": "10, 20, 50… autant que tu veux"
-        },
-        {
-          "icon": "🎮",
-          "title": "Tous les jeux scalent",
-          "sub": "Configs adaptées aux grosses soirées"
-        },
-        {
-          "icon": "🔓",
-          "title": "+ tout le contenu premium",
-          "sub": "Mode jeu à boire, spicy, hardcore"
-        }
-      ]
-    }
   },
   "plans": {
     "annual": "Annuel",
