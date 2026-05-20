@@ -8,6 +8,7 @@ import { PortalProvider } from '@gorhom/portal';
 import { View } from 'react-native';
 import { PlayersProvider } from './src/contexts/PlayersContext';
 import { ThemeProvider, useTheme } from './src/contexts/ThemeContext';
+import { EntitlementsProvider } from './src/entitlements';
 import {
   AperoScreen,
   CameleonResultsScreen,
@@ -66,9 +67,11 @@ export default function App() {
   return (
     <PortalProvider>
       <ThemeProvider>
-        <PlayersProvider>
-          <ThemedAppNavigator />
-        </PlayersProvider>
+        <EntitlementsProvider>
+          <PlayersProvider>
+            <ThemedAppNavigator />
+          </PlayersProvider>
+        </EntitlementsProvider>
       </ThemeProvider>
     </PortalProvider>
   );
