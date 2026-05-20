@@ -4,125 +4,28 @@ import React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 
-import {
-  AperoIcon,
-  CastingIcon,
-  ChameleonIcon,
-  ChunkyButton,
-  DotBackground,
-  GaucheDroiteIcon,
-  MedusaIcon,
-  ParanoiaIcon,
-  PureteIcon,
-  RedFlagIcon,
-} from '../components';
+import { ChunkyButton, DotBackground } from '../components';
+import { GAMES } from '../config';
 import { T } from '../constants/flipTokens';
 import { navigateToGame } from '../constants/games';
 import { RootStackParamList } from '../types';
 
 type GameSelectRouteProp = RouteProp<RootStackParamList, 'GameSelect'>;
 
-type GameMeta = {
-  color: keyof typeof T;
-  tagline: string;
-  Icon: React.ComponentType<{ size?: number }>;
-  players: string;
-  time: string;
-};
-
-const GAME_META: Record<string, GameMeta> = {
-  'red-flag': {
-    color: 'tomato',
-    tagline: 'Tes exs auraient aimé te faire passer ce test',
-    Icon: RedFlagIcon,
-    players: '1+',
-    time: '5 min',
-  },
-  cameleon: {
-    color: 'mint',
-    tagline: "Démasque l'imposteur",
-    Icon: ChameleonIcon,
-    players: '4–10',
-    time: '15 min',
-  },
-  'left-right': {
-    color: 'lemon',
-    tagline: "Place la phrase sur l'échiquier politique",
-    Icon: GaucheDroiteIcon,
-    players: '2+',
-    time: '10 min',
-  },
-  'purity-test': {
-    color: 'violet',
-    tagline: 'Combien de péchés à ton actif ?',
-    Icon: PureteIcon,
-    players: '1+',
-    time: '5 min',
-  },
-  paranoia: {
-    color: 'teal',
-    tagline: 'Qui a dit ton prénom… et pourquoi ?',
-    Icon: ParanoiaIcon,
-    players: '4+',
-    time: '15 min',
-  },
-  medusa: {
-    color: 'cobalt',
-    tagline: 'Lève les yeux… et évite le regard',
-    Icon: MedusaIcon,
-    players: '5+',
-    time: '10 min',
-  },
-  apero: {
-    color: 'pink',
-    tagline: 'Devine la carte du donneur',
-    Icon: AperoIcon,
-    players: '2+',
-    time: '20 min',
-  },
-  casting: {
-    color: 'castingOrange',
-    tagline: 'Joue la scène plus ou moins',
-    Icon: CastingIcon,
-    players: '3–11',
-    time: '20 min',
-  },
-};
-
 export function GameSelectScreen() {
   const route = useRoute<GameSelectRouteProp>();
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const { players } = route.params;
 
-  const games = [
-    { id: 'red-flag', name: 'Es-tu un Red Flag ?', minPlayers: 1, maxPlayers: 99, description: '' },
-    { id: 'casting', name: 'Le Casting', minPlayers: 3, maxPlayers: 11, description: '' },
-    { id: 'apero', name: "L'Apéro", minPlayers: 2, maxPlayers: 99, description: '' },
-    { id: 'medusa', name: 'Médusa', minPlayers: 5, maxPlayers: 20, description: '' },
-    { id: 'paranoia', name: 'Paranoïa', minPlayers: 4, maxPlayers: 10, description: '' },
-    { id: 'cameleon', name: 'Caméléon', minPlayers: 4, maxPlayers: 10, description: '' },
-    { id: 'left-right', name: 'Gauche ou Droite', minPlayers: 2, maxPlayers: 99, description: '' },
-    { id: 'purity-test', name: 'Test de Pureté', minPlayers: 1, maxPlayers: 99, description: '' },
-  ];
+  const games = GAMES.filter((g) => g.enabled && (!g.developmentOnly || __DEV__));
 
   const handleSelect = (gameId: string) => {
-    try {
-      navigateToGame(navigation, gameId, players);
-    } catch {
-      if (gameId === 'purity-test') navigation.navigate('PurityTest', { players });
-      else if (gameId === 'cameleon') navigation.navigate('Cameleon', { players });
-      else if (gameId === 'paranoia') navigation.navigate('Paranoia', { players });
-      else if (gameId === 'medusa') navigation.navigate('Medusa', { players });
-      else if (gameId === 'apero') navigation.navigate('Apero', { players });
-      else if (gameId === 'casting') navigation.navigate('Casting', { players });
-      else if (gameId === 'red-flag') navigation.navigate('RedFlag', { players });
-    }
+    navigateToGame(navigation, gameId, players);
   };
 
   return (
     <SafeAreaView style={styles.screen}>
       <DotBackground opacity={0.06} />
-      {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.backBtn}
@@ -141,16 +44,8 @@ export function GameSelectScreen() {
 
       <ScrollView contentContainerStyle={styles.list} showsVerticalScrollIndicator={false}>
         {games.map((game, i) => {
-          const meta = GAME_META[game.id] ?? {
-            color: 'tomato',
-            tagline: '',
-            Icon: ChameleonIcon,
-            players: '2+',
-            time: '–',
-          };
-          const bgColor = T[meta.color as keyof typeof T] as string;
-          const isFavorite = i === 0;
-          const Icon = meta.Icon;
+          const bgColor = T[game.color] as string;
+          const Icon = game.icon;
 
           return (
             <Animated.View key={game.id} entering={FadeInDown.delay(i * 120)}>
@@ -159,29 +54,26 @@ export function GameSelectScreen() {
                 onPress={() => handleSelect(game.id)}
                 activeOpacity={0.85}
               >
-                {/* Icon panel */}
                 <View style={styles.gameIconPanel}>
                   <Icon size={64} />
                 </View>
 
-                {/* Content */}
                 <View style={styles.gameContent}>
-                  <Text style={styles.gameName}>{game.name}</Text>
-                  <Text style={styles.gameTagline}>{meta.tagline}</Text>
+                  <Text style={styles.gameName}>{game.title}</Text>
+                  <Text style={styles.gameTagline}>{game.tagline}</Text>
                   <View style={styles.chipRow}>
                     <View style={styles.chip}>
-                      <Text style={styles.chipText}>👥 {meta.players}</Text>
+                      <Text style={styles.chipText}>👥 {game.playersLabel}</Text>
                     </View>
                     <View style={styles.chip}>
-                      <Text style={styles.chipText}>⏱ {meta.time}</Text>
+                      <Text style={styles.chipText}>⏱ {game.durationLabel}</Text>
                     </View>
                   </View>
                 </View>
 
-                {/* Arrow */}
                 <Text style={styles.arrow}>→</Text>
 
-                {isFavorite && (
+                {game.isNew && (
                   <View style={styles.favBadge}>
                     <Text style={styles.favBadgeText}>Nouveau</Text>
                   </View>
@@ -191,7 +83,6 @@ export function GameSelectScreen() {
           );
         })}
 
-        {/* Surprise CTA */}
         <ChunkyButton
           color={T.tomato}
           textColor="#fff"
@@ -327,20 +218,4 @@ const styles = StyleSheet.create({
     transform: [{ rotate: '6deg' }],
   },
   favBadgeText: { color: '#fff', fontSize: 11, fontWeight: '900' },
-
-  surpriseBtn: {
-    backgroundColor: T.ink,
-    borderWidth: 2,
-    borderColor: T.ink,
-    borderRadius: T.rMd,
-    paddingVertical: 18,
-    alignItems: 'center',
-    marginTop: 4,
-    shadowColor: T.tomato,
-    shadowOffset: { width: 5, height: 5 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 5,
-  },
-  surpriseBtnText: { color: '#fff', fontSize: 18, fontWeight: '900', letterSpacing: -0.3 },
 });

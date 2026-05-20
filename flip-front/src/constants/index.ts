@@ -1,5 +1,5 @@
 export { buttonBase, cardStyle, offsetShadow, T } from './flipTokens';
-export { AVAILABLE_GAMES, MAX_PLAYERS_GLOBAL, MIN_PLAYERS_GLOBAL } from './games';
+export { MAX_PLAYERS_GLOBAL, MIN_PLAYERS_GLOBAL, navigateToGame } from './games';
 export {
   getPlayerBgColor,
   getPlayerColorName,
