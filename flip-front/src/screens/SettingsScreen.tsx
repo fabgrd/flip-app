@@ -14,6 +14,7 @@ import {
 import { DotBackground, FlatChunkyButton } from '../components';
 import { T } from '../constants/flipTokens';
 import { useDrinksMode } from '../hooks';
+import { usePaywall } from '../paywall';
 
 const LANGUAGES = [
   { code: 'fr', name: 'Français', flag: '🇫🇷' },
@@ -24,6 +25,7 @@ export function SettingsScreen() {
   const navigation = useNavigation();
   const { t, i18n } = useTranslation();
   const drinks = useDrinksMode();
+  const { open: openPaywall } = usePaywall();
 
   const handleLanguageChange = async (languageCode: string) => {
     await i18n.changeLanguage(languageCode);
@@ -34,8 +36,15 @@ export function SettingsScreen() {
   };
 
   const handleDrinksToggle = (value: boolean) => {
-    if (!drinks.available) return;
+    if (!drinks.available) {
+      openPaywall('drinks_mode');
+      return;
+    }
     drinks.setEnabled(value);
+  };
+
+  const handleDrinksRowPress = () => {
+    if (!drinks.available) openPaywall('drinks_mode');
   };
 
   return (
@@ -62,7 +71,12 @@ export function SettingsScreen() {
         {/* Drinks mode */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t('settings:drinks.title')}</Text>
-          <View style={styles.card}>
+          <TouchableOpacity
+            activeOpacity={drinks.available ? 1 : 0.85}
+            onPress={handleDrinksRowPress}
+            disabled={drinks.available}
+            style={styles.card}
+          >
             <View style={styles.toggleRow}>
               <View style={styles.toggleTextWrap}>
                 <View style={styles.toggleLabelLine}>
@@ -83,13 +97,12 @@ export function SettingsScreen() {
               <Switch
                 value={drinks.enabled}
                 onValueChange={handleDrinksToggle}
-                disabled={!drinks.available}
                 trackColor={{ false: T.paper, true: T.mint }}
                 thumbColor={T.ink}
                 ios_backgroundColor={T.paper}
               />
             </View>
-          </View>
+          </TouchableOpacity>
         </View>
 
         {/* Language */}

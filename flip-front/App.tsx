@@ -6,10 +6,12 @@ import './src/i18n';
 
 import { PortalProvider } from '@gorhom/portal';
 import { View } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { PlayersProvider } from './src/contexts/PlayersContext';
 import { PreferencesProvider } from './src/contexts/PreferencesContext';
 import { ThemeProvider, useTheme } from './src/contexts/ThemeContext';
 import { EntitlementsProvider } from './src/entitlements';
+import { PaywallProvider } from './src/paywall';
 import {
   AperoScreen,
   CameleonResultsScreen,
@@ -66,16 +68,20 @@ function ThemedAppNavigator() {
 
 export default function App() {
   return (
+    <SafeAreaProvider>
     <PortalProvider>
       <ThemeProvider>
         <EntitlementsProvider>
           <PreferencesProvider>
-            <PlayersProvider>
-              <ThemedAppNavigator />
-            </PlayersProvider>
+            <PaywallProvider>
+              <PlayersProvider>
+                <ThemedAppNavigator />
+              </PlayersProvider>
+            </PaywallProvider>
           </PreferencesProvider>
         </EntitlementsProvider>
       </ThemeProvider>
     </PortalProvider>
+    </SafeAreaProvider>
   );
 }

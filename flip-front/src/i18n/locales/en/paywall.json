@@ -1,0 +1,174 @@
+{
+  "default": {
+    "title": "Go Fl!p VIP",
+    "pitch": "Unlock everything · Cancel anytime",
+    "benefits": [
+      {
+        "icon": "🎮",
+        "title": "All games unlocked",
+        "sub": "Chameleon, Purity, Paranoia + future games"
+      },
+      {
+        "icon": "🔥",
+        "title": "Every mode in every game",
+        "sub": "Hot, Hardcore, Politics… all included"
+      },
+      {
+        "icon": "📚",
+        "title": "5,000+ questions",
+        "sub": "Fresh exclusive content every week"
+      },
+      {
+        "icon": "🎃",
+        "title": "Exclusive themes",
+        "sub": "18+, Halloween, Valentine's, stag/hen…"
+      }
+    ]
+  },
+  "contexts": {
+    "drinks_mode": {
+      "title": "Drinking game mode",
+      "pitch": "Turn Fl!p into a real party drinking game",
+      "benefits": [
+        {
+          "icon": "🍻",
+          "title": "Sips distribution",
+          "sub": "Apéro, Medusa, Casting become drinking games"
+        },
+        {
+          "icon": "🎯",
+          "title": "All penalties in sips",
+          "sub": "Themed verbs, sip scores, drunk leaderboard"
+        },
+        {
+          "icon": "🔓",
+          "title": "+ all premium content",
+          "sub": "Spicy mode, hardcore, exclusive themes"
+        }
+      ]
+    },
+    "spicy_content": {
+      "title": "Spicy mode",
+      "pitch": "Content that really raises the heat",
+      "benefits": [
+        {
+          "icon": "🌶️",
+          "title": "Spicy questions",
+          "sub": "Questions that push past the friendly zone"
+        },
+        {
+          "icon": "💋",
+          "title": "Intimate modes unlocked",
+          "sub": "Sex, drugs, private life"
+        },
+        {
+          "icon": "🔓",
+          "title": "+ all premium content",
+          "sub": "Drinking mode, hardcore, exclusive themes"
+        }
+      ]
+    },
+    "hardcore_content": {
+      "title": "Hardcore mode",
+      "pitch": "When spicy isn't enough",
+      "benefits": [
+        {
+          "icon": "🔥",
+          "title": "Hardcore questions",
+          "sub": "Level 5 — for nights that really go off the rails"
+        },
+        {
+          "icon": "😈",
+          "title": "Taboos unlocked",
+          "sub": "No limits — use with close friends only"
+        },
+        {
+          "icon": "🔓",
+          "title": "+ all premium content",
+          "sub": "Drinking mode, spicy, exclusive themes"
+        }
+      ]
+    },
+    "extra_questions": {
+      "title": "More questions",
+      "pitch": "5,000+ exclusive questions, refreshed weekly",
+      "benefits": [
+        {
+          "icon": "📚",
+          "title": "5,000+ exclusive questions",
+          "sub": "All categories, all levels"
+        },
+        {
+          "icon": "✨",
+          "title": "Fresh content every week",
+          "sub": "Always on top of what's trending"
+        },
+        {
+          "icon": "🔓",
+          "title": "+ all premium content",
+          "sub": "Drinking mode, spicy, hardcore"
+        }
+      ]
+    },
+    "premium_themes": {
+      "title": "Exclusive themes",
+      "pitch": "Halloween, Valentine's, stag/hen… curated packs",
+      "benefits": [
+        {
+          "icon": "🎃",
+          "title": "Seasonal packs",
+          "sub": "Halloween, Christmas, summer, Valentine's"
+        },
+        {
+          "icon": "💍",
+          "title": "Stag / Hen modes",
+          "sub": "Special packs for bachelor and bachelorette parties"
+        },
+        {
+          "icon": "🔓",
+          "title": "+ all premium content",
+          "sub": "Drinking mode, spicy, hardcore"
+        }
+      ]
+    },
+    "unlimited_players": {
+      "title": "Unlimited players",
+      "pitch": "Bring the whole crew, no limits",
+      "benefits": [
+        {
+          "icon": "👥",
+          "title": "No player cap",
+          "sub": "10, 20, 50… as many as you want"
+        },
+        {
+          "icon": "🎮",
+          "title": "All games scale up",
+          "sub": "Setups tuned for big parties"
+        },
+        {
+          "icon": "🔓",
+          "title": "+ all premium content",
+          "sub": "Drinking mode, spicy, hardcore"
+        }
+      ]
+    }
+  },
+  "plans": {
+    "annual": "Annual",
+    "monthly": "Monthly",
+    "weekly": "Weekly",
+    "perWeek": "{{price}}/wk",
+    "label": "CHOOSE YOUR PLAN",
+    "discount": "−70%"
+  },
+  "cta": {
+    "trial": "Try for free",
+    "trialBadge": "7 days free"
+  },
+  "footer": {
+    "secure": "Secure payment via App Store",
+    "restore": "Restore",
+    "terms": "Terms",
+    "privacy": "Privacy"
+  }
+}

@@ -6,6 +6,7 @@ import home from './home.json';
 import leftRight from './left-right.json';
 import navigation from './navigation.json';
 import paranoia from './paranoia.json';
+import paywall from './paywall.json';
 import purityTest from './purity-test.json';
 import settings from './settings.json';
 
@@ -20,4 +21,5 @@ export default {
   cameleon,
   leftRight,
   paranoia,
+  paywall,
 };

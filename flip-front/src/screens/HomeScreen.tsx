@@ -2,7 +2,7 @@ import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import * as Haptics from 'expo-haptics';
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import Svg, { Circle, Path, Rect } from 'react-native-svg';
@@ -11,13 +11,13 @@ import {
   ChunkyButton,
   DotBackground,
   FlatChunkyButton,
-  PaywallModal,
   PlayerInput,
   PlayersList,
 } from '../components';
 import { MAX_PLAYERS_GLOBAL, MIN_PLAYERS_GLOBAL } from '../constants';
 import { T } from '../constants/flipTokens';
 import { usePlayers } from '../contexts/PlayersContext';
+import { usePaywall } from '../paywall';
 import { RootStackParamList } from '../types';
 
 type HomeNav = StackNavigationProp<RootStackParamList, 'Home'>;
@@ -27,6 +27,7 @@ export function HomeScreen() {
   const navigation = useNavigation<HomeNav>();
   const { t } = useTranslation();
   const { players, addPlayer, removePlayer, updatePlayerAvatar } = usePlayers();
+  const { open: openPaywall } = usePaywall();
 
   const handleAddPlayer = (name: string): boolean => {
     const success = addPlayer(name);
@@ -47,7 +48,6 @@ export function HomeScreen() {
   };
 
   const canStart = players.length >= MIN_PLAYERS_GLOBAL;
-  const [paywallVisible, setPaywallVisible] = useState(false);
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -60,15 +60,25 @@ export function HomeScreen() {
           </Text>
         </View>
         <View style={styles.headerActions}>
-          <FlatChunkyButton
-            size="sm"
-            square
-            color={T.lemon}
-            onPress={() => setPaywallVisible(true)}
-          >
+          <FlatChunkyButton size="sm" square color={T.lemon} onPress={() => openPaywall()}>
             <Svg width={18} height={18} viewBox="0 0 48 48" fill="none">
-              <Path d="M6 36h36V20l-9 6-9-12-9 12-9-6v16z" fill={T.lemon} stroke={T.ink} strokeWidth="2.5" strokeLinejoin="round" />
-              <Rect x="6" y="34" width="36" height="6" rx="1" fill={T.lemon} stroke={T.ink} strokeWidth="2.5" />
+              <Path
+                d="M6 36h36V20l-9 6-9-12-9 12-9-6v16z"
+                fill={T.lemon}
+                stroke={T.ink}
+                strokeWidth="2.5"
+                strokeLinejoin="round"
+              />
+              <Rect
+                x="6"
+                y="34"
+                width="36"
+                height="6"
+                rx="1"
+                fill={T.lemon}
+                stroke={T.ink}
+                strokeWidth="2.5"
+              />
               <Circle cx="15" cy="14" r="3" fill={T.lemon} stroke={T.ink} strokeWidth="2" />
               <Circle cx="33" cy="14" r="3" fill={T.lemon} stroke={T.ink} strokeWidth="2" />
               <Circle cx="24" cy="8" r="3" fill={T.tomato} stroke={T.ink} strokeWidth="2" />
@@ -135,7 +145,6 @@ export function HomeScreen() {
           </Text>
         )}
       </View>
-      <PaywallModal visible={paywallVisible} onClose={() => setPaywallVisible(false)} />
     </SafeAreaView>
   );
 }

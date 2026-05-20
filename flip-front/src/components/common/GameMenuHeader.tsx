@@ -35,10 +35,12 @@ export function PlayersModal({
   visible,
   onClose,
   onPlayersChange,
+  hint,
 }: {
   visible: boolean;
   onClose: () => void;
   onPlayersChange: (players: Player[]) => void;
+  hint?: string;
 }) {
   const { players, addPlayer, removePlayer } = usePlayers();
   const [name, setName] = useState('');
@@ -91,6 +93,8 @@ export function PlayersModal({
               <Text style={pm.countText}>{players.length}</Text>
             </View>
           </View>
+
+          {hint ? <Text style={pm.hint}>{hint}</Text> : null}
 
           {/* Input */}
           <View style={pm.inputRow}>
@@ -210,6 +214,19 @@ const pm = StyleSheet.create({
   },
   countText: { color: '#fff', fontSize: 13, fontWeight: '900' },
 
+  hint: {
+    color: T.ink,
+    fontSize: 13,
+    fontWeight: '600',
+    backgroundColor: T.lemon,
+    borderWidth: 1.5,
+    borderColor: T.ink,
+    borderRadius: 12,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    marginBottom: 14,
+    lineHeight: 18,
+  },
   inputRow: {
     flexDirection: 'row',
     alignItems: 'center',

@@ -1,29 +1,54 @@
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 
-import { ChunkyButton, DotBackground } from '../components';
+import { ChunkyButton, DotBackground, PlayersModal } from '../components';
 import { GAMES } from '../config';
 import { T } from '../constants/flipTokens';
 import { navigateToGame } from '../constants/games';
+import { usePlayers } from '../contexts/PlayersContext';
+import { gameRegistry } from '../games/gameRegistry';
 import { RootStackParamList } from '../types';
 
-type GameSelectRouteProp = RouteProp<RootStackParamList, 'GameSelect'>;
-
 export function GameSelectScreen() {
-  const route = useRoute<GameSelectRouteProp>();
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const { t } = useTranslation();
-  const { players } = route.params;
+  const { players } = usePlayers();
+
+  const [pendingGameId, setPendingGameId] = useState<string | null>(null);
+  const [playersModalVisible, setPlayersModalVisible] = useState(false);
 
   const games = GAMES.filter((g) => g.enabled && (!g.developmentOnly || __DEV__));
 
   const handleSelect = (gameId: string) => {
+    const game = gameRegistry.getGame(gameId);
+    if (game && (players.length < game.minPlayers || players.length > game.maxPlayers)) {
+      setPendingGameId(gameId);
+      setPlayersModalVisible(true);
+      return;
+    }
     navigateToGame(navigation, gameId, players);
   };
+
+  const handlePlayersModalClose = () => {
+    setPlayersModalVisible(false);
+    if (!pendingGameId) return;
+    const game = gameRegistry.getGame(pendingGameId);
+    if (game && players.length >= game.minPlayers && players.length <= game.maxPlayers) {
+      navigateToGame(navigation, pendingGameId, players);
+      setPendingGameId(null);
+    }
+  };
+
+  const pendingGame = pendingGameId ? gameRegistry.getGame(pendingGameId) : null;
+  const playersModalHint = pendingGame
+    ? players.length < pendingGame.minPlayers
+      ? `Il faut au moins ${pendingGame.minPlayers} joueurs pour ce jeu (${pendingGame.playersLabel}).`
+      : `Ce jeu supporte au maximum ${pendingGame.maxPlayers} joueurs (${pendingGame.playersLabel}).`
+    : undefined;
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -96,6 +121,13 @@ export function GameSelectScreen() {
           {`🎲  ${t('games:selection.surprise')}`}
         </ChunkyButton>
       </ScrollView>
+
+      <PlayersModal
+        visible={playersModalVisible}
+        onClose={handlePlayersModalClose}
+        onPlayersChange={() => {}}
+        hint={playersModalHint}
+      />
     </SafeAreaView>
   );
 }

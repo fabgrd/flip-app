@@ -1,50 +1,56 @@
-import React, { useState } from 'react';
-import {
-  Modal,
-  Pressable,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import Svg, { Circle, Path, Rect } from 'react-native-svg';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Modal, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Animated, { FadeIn, SlideInDown, SlideOutDown } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Svg, { Circle, Path, Rect } from 'react-native-svg';
 import { T } from '../../constants/flipTokens';
+import { Entitlement } from '../../entitlements';
+import { getPaywallContent } from '../../paywall/paywallContent';
+import { PaywallPlanId } from '../../paywall/types';
 import { DotBackground } from './DotBackground';
-
-// ─── Types ────────────────────────────────────────────────────────────────────
 
 export interface PaywallModalProps {
   visible: boolean;
+  feature?: Entitlement | null;
   onClose: () => void;
 }
 
-type PlanId = 'annual' | 'monthly' | 'weekly';
+interface PlanDef {
+  id: PaywallPlanId;
+  price: string;
+  period: string;
+  perWeek?: string;
+  withDiscount?: boolean;
+}
 
-// ─── Data ─────────────────────────────────────────────────────────────────────
-
-const PLANS: { id: PlanId; label: string; price: string; period: string; perWeek?: string; badge?: string }[] = [
-  { id: 'annual', label: 'Annuel', price: '19,99 €', period: '/an', perWeek: '0,38 €/sem', badge: '−70%' },
-  { id: 'monthly', label: 'Mensuel', price: '4,99 €', period: '/mois', perWeek: '1,15 €/sem' },
-  { id: 'weekly', label: 'Hebdo', price: '2,99 €', period: '/sem' },
+const PLANS: readonly PlanDef[] = [
+  { id: 'annual', price: '19,99 €', period: '/an', perWeek: '0,38 €', withDiscount: true },
+  { id: 'monthly', price: '4,99 €', period: '/mois', perWeek: '1,15 €' },
+  { id: 'weekly', price: '2,99 €', period: '/sem' },
 ];
-
-const FEATURES: { icon: string; text: string; sub: string }[] = [
-  { icon: '🎮', text: 'Tous les jeux débloqués', sub: 'Caméléon, Pureté, Paranoïa + futurs jeux' },
-  { icon: '🔥', text: 'Tous les modes de chaque jeu', sub: 'Hot, Hardcore, Politique… tous inclus' },
-  { icon: '📚', text: '5 000+ questions', sub: 'Nouveau contenu exclusif chaque semaine' },
-  { icon: '🎃', text: 'Thèmes exclusifs', sub: '18+, Halloween, Saint-Valentin, EVG/EVJF…' },
-];
-
-// ─── Sub-components ───────────────────────────────────────────────────────────
 
 function CrownIcon({ size = 48 }: { size?: number }) {
   return (
     <View style={{ alignItems: 'center', marginBottom: 4 }}>
       <Svg width={size} height={size} viewBox="0 0 48 48" fill="none">
-        <Path d="M6 36h36V20l-9 6-9-12-9 12-9-6v16z" fill={T.lemon} stroke={T.ink} strokeWidth="2.5" strokeLinejoin="round" />
-        <Rect x="6" y="34" width="36" height="6" rx="1" fill={T.lemon} stroke={T.ink} strokeWidth="2.5" />
+        <Path
+          d="M6 36h36V20l-9 6-9-12-9 12-9-6v16z"
+          fill={T.lemon}
+          stroke={T.ink}
+          strokeWidth="2.5"
+          strokeLinejoin="round"
+        />
+        <Rect
+          x="6"
+          y="34"
+          width="36"
+          height="6"
+          rx="1"
+          fill={T.lemon}
+          stroke={T.ink}
+          strokeWidth="2.5"
+        />
         <Circle cx="15" cy="14" r="3" fill={T.lemon} stroke={T.ink} strokeWidth="2" />
         <Circle cx="33" cy="14" r="3" fill={T.lemon} stroke={T.ink} strokeWidth="2" />
         <Circle cx="24" cy="8" r="3" fill={T.tomato} stroke={T.ink} strokeWidth="2" />
@@ -55,10 +61,16 @@ function CrownIcon({ size = 48 }: { size?: number }) {
 
 function PlanButton({
   plan,
+  label,
+  perWeekTemplate,
+  discountLabel,
   selected,
   onPress,
 }: {
-  plan: (typeof PLANS)[number];
+  plan: PlanDef;
+  label: string;
+  perWeekTemplate: string;
+  discountLabel: string;
   selected: boolean;
   onPress: () => void;
 }) {
@@ -68,34 +80,146 @@ function PlanButton({
       activeOpacity={0.85}
       style={[planStyles.row, selected && planStyles.rowSelected]}
     >
-      {/* Radio */}
       <View style={[planStyles.radio, selected && planStyles.radioSelected]}>
-        {selected && (
-          <View style={planStyles.radioInner} />
-        )}
+        {selected && <View style={planStyles.radioInner} />}
       </View>
 
-      {/* Label + perWeek */}
       <View style={planStyles.labelBlock}>
         <View style={planStyles.labelRow}>
-          <Text style={[planStyles.label, selected && planStyles.labelSelected]}>{plan.label}</Text>
-          {plan.badge && (
+          <Text style={[planStyles.label, selected && planStyles.labelSelected]}>{label}</Text>
+          {plan.withDiscount && (
             <View style={planStyles.badge}>
-              <Text style={planStyles.badgeText}>{plan.badge}</Text>
+              <Text style={planStyles.badgeText}>{discountLabel}</Text>
             </View>
           )}
         </View>
         {plan.perWeek && (
-          <Text style={planStyles.perWeek}>soit {plan.perWeek}</Text>
+          <Text style={planStyles.perWeek}>
+            {perWeekTemplate.replace('{{price}}', plan.perWeek)}
+          </Text>
         )}
       </View>
 
-      {/* Price */}
       <View style={planStyles.priceBlock}>
         <Text style={[planStyles.price, selected && planStyles.priceSelected]}>{plan.price}</Text>
         <Text style={planStyles.period}>{plan.period}</Text>
       </View>
     </TouchableOpacity>
+  );
+}
+
+export function PaywallModal({ visible, feature, onClose }: PaywallModalProps) {
+  const { t } = useTranslation();
+  const insets = useSafeAreaInsets();
+
+  const content = useMemo(() => getPaywallContent(feature ?? null, t), [feature, t]);
+
+  const [selectedPlan, setSelectedPlan] = useState<PaywallPlanId>(content.recommendedPlan);
+
+  useEffect(() => {
+    setSelectedPlan(content.recommendedPlan);
+  }, [content.recommendedPlan]);
+
+  const planLabel = (id: PaywallPlanId) => t(`paywall:plans.${id}`);
+
+  return (
+    <Modal
+      visible={visible}
+      animationType="slide"
+      presentationStyle="fullScreen"
+      onRequestClose={onClose}
+    >
+      <Animated.View entering={FadeIn.duration(200)} style={styles.screen}>
+        <DotBackground color="#fff" opacity={0.03} gap={18} />
+
+        <View style={[styles.topBar, { paddingTop: insets.top + 10 }]}>
+          <Pressable onPress={onClose} style={styles.closeBtn} hitSlop={12}>
+            <Text style={styles.closeX}>✕</Text>
+          </Pressable>
+        </View>
+
+        <Animated.View
+          entering={SlideInDown.springify().damping(18).stiffness(120)}
+          exiting={SlideOutDown.duration(220)}
+          style={[styles.sheet, { paddingBottom: insets.bottom + 16 }]}
+        >
+          <View style={styles.hero}>
+            <CrownIcon size={48} />
+            <Text style={styles.heroTitle}>
+              <Text style={styles.heroTitleGold}>{content.title}</Text>
+            </Text>
+            <Text style={styles.heroSub}>{content.pitch}</Text>
+          </View>
+
+          <View style={styles.featuresCard}>
+            {content.benefits.map((b, i) => (
+              <View
+                key={`${b.icon}-${i}`}
+                style={[
+                  styles.featureRow,
+                  i < content.benefits.length - 1 && styles.featureRowBorder,
+                ]}
+              >
+                <Text style={styles.featureIcon}>{b.icon}</Text>
+                <View style={styles.featureText}>
+                  <Text style={styles.featureTitle}>{b.title}</Text>
+                  <Text style={styles.featureSub}>{b.sub}</Text>
+                </View>
+              </View>
+            ))}
+          </View>
+
+          <View style={styles.plansSection}>
+            <Text style={styles.plansLabel}>{t('paywall:plans.label')}</Text>
+            {PLANS.map((plan) => (
+              <PlanButton
+                key={plan.id}
+                plan={plan}
+                label={planLabel(plan.id)}
+                perWeekTemplate={t('paywall:plans.perWeek', { price: '{{price}}' })}
+                discountLabel={t('paywall:plans.discount')}
+                selected={selectedPlan === plan.id}
+                onPress={() => setSelectedPlan(plan.id)}
+              />
+            ))}
+          </View>
+
+          <TouchableOpacity activeOpacity={0.9} style={styles.ctaBtn}>
+            <Svg width={20} height={20} viewBox="0 0 16 16" fill="none">
+              <Rect x="3" y="7" width="10" height="8" rx="2" fill={T.ink} />
+              <Path
+                d="M5 7V5a3 3 0 0 1 6 0v2"
+                stroke={T.ink}
+                strokeWidth="1.8"
+                fill="none"
+                strokeLinecap="round"
+              />
+            </Svg>
+            <Text style={styles.ctaText}>{t('paywall:cta.trial')}</Text>
+            <View style={styles.ctaBadge}>
+              <Text style={styles.ctaBadgeText}>{t('paywall:cta.trialBadge')}</Text>
+            </View>
+          </TouchableOpacity>
+
+          <View style={styles.footer}>
+            <Text style={styles.footerNote}>{t('paywall:footer.secure')}</Text>
+            <View style={styles.footerLinks}>
+              <TouchableOpacity>
+                <Text style={styles.footerLink}>{t('paywall:footer.restore')}</Text>
+              </TouchableOpacity>
+              <Text style={styles.footerDot}>·</Text>
+              <TouchableOpacity>
+                <Text style={styles.footerLink}>{t('paywall:footer.terms')}</Text>
+              </TouchableOpacity>
+              <Text style={styles.footerDot}>·</Text>
+              <TouchableOpacity>
+                <Text style={styles.footerLink}>{t('paywall:footer.privacy')}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Animated.View>
+      </Animated.View>
+    </Modal>
   );
 }
 
@@ -127,26 +251,13 @@ const planStyles = StyleSheet.create({
     justifyContent: 'center',
     flexShrink: 0,
   },
-  radioSelected: {
-    borderColor: T.lemon,
-    backgroundColor: T.lemon,
-  },
-  radioInner: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: T.ink,
-  },
+  radioSelected: { borderColor: T.lemon, backgroundColor: T.lemon },
+  radioInner: { width: 8, height: 8, borderRadius: 4, backgroundColor: T.ink },
   labelBlock: { flex: 1 },
   labelRow: { flexDirection: 'row', alignItems: 'center', gap: 7 },
   label: { fontSize: 15, fontWeight: '700', color: '#fff', letterSpacing: -0.2 },
   labelSelected: { color: '#fff' },
-  badge: {
-    paddingHorizontal: 7,
-    paddingVertical: 2,
-    borderRadius: 6,
-    backgroundColor: T.tomato,
-  },
+  badge: { paddingHorizontal: 7, paddingVertical: 2, borderRadius: 6, backgroundColor: T.tomato },
   badgeText: { fontSize: 11, fontWeight: '700', color: '#fff', letterSpacing: 0.3 },
   perWeek: { fontSize: 12, color: 'rgba(255,255,255,0.38)', marginTop: 1 },
   priceBlock: { flexDirection: 'row', alignItems: 'baseline', gap: 2 },
@@ -155,125 +266,10 @@ const planStyles = StyleSheet.create({
   period: { fontSize: 12, color: 'rgba(255,255,255,0.4)' },
 });
 
-// ─── Main component ───────────────────────────────────────────────────────────
-
-export function PaywallModal({ visible, onClose }: PaywallModalProps) {
-  const [selectedPlan, setSelectedPlan] = useState<PlanId>('annual');
-  const insets = useSafeAreaInsets();
-
-  return (
-    <Modal
-      visible={visible}
-      animationType="slide"
-      presentationStyle="fullScreen"
-      onRequestClose={onClose}
-    >
-      <Animated.View entering={FadeIn.duration(200)} style={styles.screen}>
-        <DotBackground color="#fff" opacity={0.03} gap={18} />
-
-        {/* Close button */}
-        <View style={[styles.topBar, { paddingTop: insets.top + 10 }]}>
-          <Pressable onPress={onClose} style={styles.closeBtn} hitSlop={12}>
-            <Text style={styles.closeX}>✕</Text>
-          </Pressable>
-        </View>
-
-        <Animated.View
-          entering={SlideInDown.springify().damping(18).stiffness(120)}
-          exiting={SlideOutDown.duration(220)}
-          style={[styles.sheet, { paddingBottom: insets.bottom + 16 }]}
-        >
-          {/* Hero */}
-          <View style={styles.hero}>
-            <CrownIcon size={48} />
-            <Text style={styles.heroTitle}>
-              Passe en{'\n'}
-              <Text style={styles.heroTitleGold}>Fl!p VIP</Text>
-            </Text>
-            <Text style={styles.heroSub}>
-              Débloque tout · Annule quand tu veux
-            </Text>
-          </View>
-
-          {/* Features */}
-          <View style={styles.featuresCard}>
-            {FEATURES.map((f, i) => (
-              <View
-                key={i}
-                style={[
-                  styles.featureRow,
-                  i < FEATURES.length - 1 && styles.featureRowBorder,
-                ]}
-              >
-                <Text style={styles.featureIcon}>{f.icon}</Text>
-                <View style={styles.featureText}>
-                  <Text style={styles.featureTitle}>{f.text}</Text>
-                  <Text style={styles.featureSub}>{f.sub}</Text>
-                </View>
-              </View>
-            ))}
-          </View>
-
-          {/* Plans */}
-          <View style={styles.plansSection}>
-            <Text style={styles.plansLabel}>CHOISIS TON PLAN</Text>
-            {PLANS.map((plan) => (
-              <PlanButton
-                key={plan.id}
-                plan={plan}
-                selected={selectedPlan === plan.id}
-                onPress={() => setSelectedPlan(plan.id)}
-              />
-            ))}
-          </View>
-
-          {/* CTA */}
-          <TouchableOpacity activeOpacity={0.9} style={styles.ctaBtn}>
-            <Svg width={20} height={20} viewBox="0 0 16 16" fill="none">
-              <Rect x="3" y="7" width="10" height="8" rx="2" fill={T.ink} />
-              <Path d="M5 7V5a3 3 0 0 1 6 0v2" stroke={T.ink} strokeWidth="1.8" fill="none" strokeLinecap="round" />
-            </Svg>
-            <Text style={styles.ctaText}>Essayer gratuitement</Text>
-            <View style={styles.ctaBadge}>
-              <Text style={styles.ctaBadgeText}>7 jours offerts</Text>
-            </View>
-          </TouchableOpacity>
-
-          {/* Footer links */}
-          <View style={styles.footer}>
-            <Text style={styles.footerNote}>Paiement sécurisé via App Store</Text>
-            <View style={styles.footerLinks}>
-              <TouchableOpacity>
-                <Text style={styles.footerLink}>Restaurer</Text>
-              </TouchableOpacity>
-              <Text style={styles.footerDot}>·</Text>
-              <TouchableOpacity>
-                <Text style={styles.footerLink}>CGV</Text>
-              </TouchableOpacity>
-              <Text style={styles.footerDot}>·</Text>
-              <TouchableOpacity>
-                <Text style={styles.footerLink}>Confidentialité</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Animated.View>
-      </Animated.View>
-    </Modal>
-  );
-}
-
-// ─── Styles ───────────────────────────────────────────────────────────────────
-
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: '#1A1613',
-  },
+  screen: { flex: 1, backgroundColor: '#1A1613' },
 
-  topBar: {
-    paddingHorizontal: 20,
-    alignItems: 'flex-end',
-  },
+  topBar: { paddingHorizontal: 20, alignItems: 'flex-end' },
   closeBtn: {
     width: 40,
     height: 40,
@@ -284,24 +280,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  closeX: {
-    color: 'rgba(255,255,255,0.6)',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  closeX: { color: 'rgba(255,255,255,0.6)', fontSize: 16, fontWeight: '600' },
 
-  sheet: {
-    flex: 1,
-    paddingHorizontal: 20,
-    paddingTop: 4,
-    justifyContent: 'space-between',
-  },
+  sheet: { flex: 1, paddingHorizontal: 20, paddingTop: 4, justifyContent: 'space-between' },
 
-  // Hero
-  hero: {
-    alignItems: 'center',
-    paddingVertical: 4,
-  },
+  hero: { alignItems: 'center', paddingVertical: 4 },
   heroTitle: {
     fontSize: 38,
     fontWeight: '900',
@@ -311,9 +294,7 @@ const styles = StyleSheet.create({
     lineHeight: 42,
     marginBottom: 6,
   },
-  heroTitleGold: {
-    color: T.lemon,
-  },
+  heroTitleGold: { color: T.lemon },
   heroSub: {
     fontSize: 14,
     color: 'rgba(255,255,255,0.45)',
@@ -321,7 +302,6 @@ const styles = StyleSheet.create({
     letterSpacing: 0.1,
   },
 
-  // Features card
   featuresCard: {
     backgroundColor: 'rgba(255,255,255,0.06)',
     borderRadius: T.rMd,
@@ -336,18 +316,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     gap: 12,
   },
-  featureRowBorder: {
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(255,255,255,0.05)',
-  },
+  featureRowBorder: { borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.05)' },
   featureIcon: { fontSize: 20, width: 26, textAlign: 'center' },
   featureText: { flex: 1 },
-  featureTitle: {
-    fontSize: 14,
-    fontWeight: '700',
-    color: '#fff',
-    letterSpacing: -0.2,
-  },
+  featureTitle: { fontSize: 14, fontWeight: '700', color: '#fff', letterSpacing: -0.2 },
   featureSub: {
     fontSize: 11,
     color: 'rgba(255,255,255,0.38)',
@@ -355,7 +327,6 @@ const styles = StyleSheet.create({
     lineHeight: 14,
   },
 
-  // Plans
   plansSection: { marginTop: 2 },
   plansLabel: {
     fontSize: 10,
@@ -366,7 +337,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 
-  // CTA
   ctaBtn: {
     height: 62,
     borderRadius: T.rMd,
@@ -384,44 +354,22 @@ const styles = StyleSheet.create({
     elevation: 6,
     marginTop: 2,
   },
-  ctaText: {
-    fontSize: 18,
-    fontWeight: '900',
-    color: T.ink,
-    letterSpacing: -0.3,
-  },
+  ctaText: { fontSize: 18, fontWeight: '900', color: T.ink, letterSpacing: -0.3 },
   ctaBadge: {
     backgroundColor: T.ink,
     paddingHorizontal: 8,
     paddingVertical: 3,
     borderRadius: 8,
   },
-  ctaBadgeText: {
-    fontSize: 11,
-    fontWeight: '800',
-    color: T.lemon,
-    letterSpacing: 0.2,
-  },
+  ctaBadgeText: { fontSize: 11, fontWeight: '800', color: T.lemon, letterSpacing: 0.2 },
 
-  // Footer
   footer: { alignItems: 'center', gap: 4 },
-  footerNote: {
-    fontSize: 11,
-    color: 'rgba(255,255,255,0.25)',
-    textAlign: 'center',
-  },
-  footerLinks: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-  },
+  footerNote: { fontSize: 11, color: 'rgba(255,255,255,0.25)', textAlign: 'center' },
+  footerLinks: { flexDirection: 'row', alignItems: 'center', gap: 6 },
   footerLink: {
     fontSize: 11,
     color: 'rgba(255,255,255,0.28)',
     textDecorationLine: 'underline',
   },
-  footerDot: {
-    fontSize: 11,
-    color: 'rgba(255,255,255,0.18)',
-  },
+  footerDot: { fontSize: 11, color: 'rgba(255,255,255,0.18)' },
 });
