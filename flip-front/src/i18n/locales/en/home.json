@@ -5,16 +5,16 @@
   "description": "The ultimate drinking game to spice up your parties with friends!",
   "addPlayers": {
     "title": "Add players",
-    "subtitle": "Minimum 2 players, maximum 10",
+    "subtitle": "Minimum 1 player, maximum 20",
     "placeholder": "Player name",
     "add": "Add",
     "remove": "Remove",
-    "minPlayers": "Add at least 2 players to start",
-    "maxPlayers": "You've reached the maximum number of players (10)"
+    "minPlayers": "Add at least 1 player to start",
+    "maxPlayers": "You've reached the maximum number of players (20)"
   },
   "playersList": {
     "title": "Players ({{count}})",
-    "empty": "No players added"
+    "empty": "Add players to get started"
   },
   "hero": {
     "titlePrefix": "Who's",

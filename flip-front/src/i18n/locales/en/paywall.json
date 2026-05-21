@@ -4,27 +4,27 @@
     "pitch": "Unlock everything · Cancel anytime",
     "benefits": [
       {
-        "icon": "layers",
+        "icon": "games",
         "title": "All games unlocked",
         "sub": "Chameleon, Purity, Paranoia + future games"
       },
       {
-        "icon": "droplet",
+        "icon": "drink",
         "title": "Drink mode unlocked",
         "sub": "Turn any game into a drinking session"
       },
       {
-        "icon": "sliders",
+        "icon": "difficulty",
         "title": "Question difficulty level",
         "sub": "Mild, Spicy, Hardcore… control the intensity"
       },
       {
-        "icon": "tag",
+        "icon": "themes",
         "title": "Exclusive themes unlocked",
         "sub": "Decadence, Hot, Taboo, Parties, Spicy…"
       },
       {
-        "icon": "book-open",
+        "icon": "questions",
         "title": "5,000+ questions",
         "sub": "Fresh exclusive content every week"
       }

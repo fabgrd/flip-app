@@ -5,16 +5,16 @@
   "description": "Le jeu d'alcool ultime pour animer vos soirées entre amis !",
   "addPlayers": {
     "title": "Ajouter des joueurs",
-    "subtitle": "Minimum 2 joueurs, maximum 10",
+    "subtitle": "Minimum 1 joueur, maximum 20",
     "placeholder": "Nom du joueur",
     "add": "Ajouter",
     "remove": "Supprimer",
-    "minPlayers": "Ajoutez au moins 2 joueurs pour commencer",
-    "maxPlayers": "Vous avez atteint le nombre maximum de joueurs (10)"
+    "minPlayers": "Ajoutez au moins 1 joueur pour commencer",
+    "maxPlayers": "Vous avez atteint le nombre maximum de joueurs (20)"
   },
   "playersList": {
     "title": "Joueurs ({{count}})",
-    "empty": "Aucun joueur ajouté"
+    "empty": "Ajoute des joueurs pour commencer"
   },
   "hero": {
     "titlePrefix": "Qui est",

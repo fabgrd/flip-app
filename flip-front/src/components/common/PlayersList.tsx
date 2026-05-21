@@ -25,8 +25,8 @@ export function PlayersList({ players, onRemovePlayer, onUpdateAvatar }: Players
   if (players.length === 0) {
     return (
       <View style={styles.empty}>
-        <Text style={styles.emptyText}>Personne encore… solitude triste 😔</Text>
-        <Text style={styles.emptyHint}>{t('messages.addAtLeastOnePlayerToStart')}</Text>
+        <Text style={styles.emptyArrow}>↑</Text>
+        <Text style={styles.emptyText}>{t('home:playersList.empty')}</Text>
       </View>
     );
   }
@@ -145,14 +145,19 @@ const styles = StyleSheet.create({
   empty: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 40,
-    borderWidth: 2,
-    borderColor: `${T.muted}60`,
-    borderStyle: 'dashed',
-    borderRadius: T.rMd,
-    marginTop: 4,
+    paddingTop: 24,
+    gap: 4,
   },
-  emptyText: { color: T.muted, fontSize: 15, textAlign: 'center' },
-  emptyHint: { color: `${T.muted}99`, fontSize: 13, marginTop: 4, textAlign: 'center' },
+  emptyArrow: {
+    color: T.tomato,
+    fontSize: 28,
+    fontWeight: '900',
+    lineHeight: 32,
+  },
+  emptyText: {
+    color: T.muted,
+    fontSize: 15,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
 });

@@ -1,4 +1,5 @@
 import { Feather } from '@expo/vector-icons';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -47,7 +48,7 @@ export function SuggestButton() {
     <>
       <TouchableOpacity style={styles.triggerRow} onPress={() => setVisible(true)} activeOpacity={0.85}>
         <View style={styles.triggerIcon}>
-          <Text style={styles.triggerEmoji}>💡</Text>
+          <MaterialCommunityIcons name="chat-question" size={24} color="black" />
         </View>
         <View style={styles.triggerTextWrap}>
           <Text style={styles.triggerLabel}>{t('settings:suggest.label')}</Text>

@@ -1,14 +1,39 @@
-import { Feather } from '@expo/vector-icons';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Modal, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Animated, { FadeIn, SlideInDown, SlideOutDown } from 'react-native-reanimated';
+import Animated, {
+  cancelAnimation,
+  Easing,
+  FadeIn,
+  SlideInDown,
+  SlideOutDown,
+  useAnimatedStyle,
+  useSharedValue,
+  withDelay,
+  withRepeat,
+  withTiming,
+} from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Circle, Path, Rect } from 'react-native-svg';
 import { T } from '../../constants/flipTokens';
 import { getPaywallContent } from '../../paywall/paywallContent';
 import { PaywallPlanId } from '../../paywall/types';
+import {
+  BeerMugIcon,
+  PaywallDifficultyIcon,
+  PaywallGamesIcon,
+  PaywallQuestionsIcon,
+  PaywallThemesIcon,
+} from '../icons';
 import { DotBackground } from './DotBackground';
+
+const BENEFIT_ICONS: Record<string, React.ReactNode> = {
+  games: <PaywallGamesIcon size={28} />,
+  drink: <BeerMugIcon size={28} />,
+  difficulty: <PaywallDifficultyIcon size={28} />,
+  themes: <PaywallThemesIcon size={28} />,
+  questions: <PaywallQuestionsIcon size={28} />,
+};
 
 export interface PaywallModalProps {
   visible: boolean;
@@ -26,12 +51,28 @@ interface PlanDef {
 const PLANS: readonly PlanDef[] = [
   { id: 'weekly', price: '2,99 €', period: '/sem' },
   { id: 'monthly', price: '4,99 €', period: '/mois', perWeek: '1,15 €' },
-  { id: 'annual', price: '19,99 €', period: '/an', perWeek: '0,38 €', withDiscount: true },
+  { id: 'annual', price: '29,99 €', period: '/an', perWeek: '0,38 €', withDiscount: true },
 ];
 
 function CrownIcon({ size = 48 }: { size?: number }) {
+  const translateY = useSharedValue(0);
+
+  useEffect(() => {
+    translateY.value = withDelay(
+      300,
+      withRepeat(
+        withTiming(-8, { duration: 1500, easing: Easing.inOut(Easing.quad) }),
+        -1,
+        true,
+      ),
+    );
+    return () => cancelAnimation(translateY);
+  }, []);
+
+  const animStyle = useAnimatedStyle(() => ({ transform: [{ translateY: translateY.value }] }));
+
   return (
-    <View style={{ alignItems: 'center', marginBottom: 4 }}>
+    <Animated.View style={[{ alignItems: 'center', marginBottom: 4 }, animStyle]}>
       <Svg width={size} height={size} viewBox="0 0 48 48" fill="none">
         <Path
           d="M6 36h36V20l-9 6-9-12-9 12-9-6v16z"
@@ -54,7 +95,7 @@ function CrownIcon({ size = 48 }: { size?: number }) {
         <Circle cx="33" cy="14" r="3" fill={T.lemon} stroke={T.ink} strokeWidth="2" />
         <Circle cx="24" cy="8" r="3" fill={T.tomato} stroke={T.ink} strokeWidth="2" />
       </Svg>
-    </View>
+    </Animated.View>
   );
 }
 
@@ -156,7 +197,7 @@ export function PaywallModal({ visible, onClose }: PaywallModalProps) {
                 ]}
               >
                 <View style={styles.featureIconWrap}>
-                  <Feather name={b.icon as any} size={18} color="#fff" />
+                  {BENEFIT_ICONS[b.icon] ?? null}
                 </View>
                 <View style={styles.featureText}>
                   <Text style={styles.featureTitle}>{b.title}</Text>
@@ -314,7 +355,7 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   featureRowBorder: { borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.05)' },
-  featureIconWrap: { width: 26, alignItems: 'center' },
+  featureIconWrap: { width: 32, alignItems: 'center', justifyContent: 'center' },
   featureText: { flex: 1 },
   featureTitle: { fontSize: 14, fontWeight: '700', color: '#fff', letterSpacing: -0.2 },
   featureSub: {

@@ -7,3 +7,7 @@ export { AperoIcon } from './AperoIcon';
 export { CastingIcon } from './CastingIcon';
 export { RedFlagIcon } from './RedFlagIcon';
 export { BeerMugIcon } from './BeerMugIcon';
+export { PaywallGamesIcon } from './PaywallGamesIcon';
+export { PaywallDifficultyIcon } from './PaywallDifficultyIcon';
+export { PaywallThemesIcon } from './PaywallThemesIcon';
+export { PaywallQuestionsIcon } from './PaywallQuestionsIcon';

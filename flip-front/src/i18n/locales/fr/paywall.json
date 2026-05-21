@@ -4,27 +4,27 @@
     "pitch": "Débloque tout · Annule quand tu veux",
     "benefits": [
       {
-        "icon": "layers",
+        "icon": "games",
         "title": "Tous les jeux débloqués",
         "sub": "Caméléon, Pureté, Paranoïa + futurs jeux"
       },
       {
-        "icon": "droplet",
+        "icon": "drink",
         "title": "Mode à boire activé",
         "sub": "Transforme chaque jeu en soirée arrosée"
       },
       {
-        "icon": "sliders",
+        "icon": "difficulty",
         "title": "Niveau des questions",
         "sub": "Doux, Spicy, Hardcore… contrôle l'intensité"
       },
       {
-        "icon": "tag",
+        "icon": "themes",
         "title": "Thèmes exclusifs débloqués",
         "sub": "Décadence, Hot, Tabou, Soirées, Spicy…"
       },
       {
-        "icon": "book-open",
+        "icon": "questions",
         "title": "5 000+ questions",
         "sub": "Nouveau contenu exclusif chaque semaine"
       }
