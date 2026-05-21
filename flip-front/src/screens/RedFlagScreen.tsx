@@ -13,6 +13,7 @@ import {
   DrinkModeToggle,
   GameCard,
   GameMenuActions,
+  GameRulesScreen,
   PlayersModal,
   RedFlagIcon,
   RulesButton,
@@ -224,36 +225,27 @@ function RFRules({
   onChangeCatCount: (cat: RFCategoryId, value: number) => void;
   onChangeMaxLevel: (level: RFLevelKey) => void;
 }) {
-  const [showPlayersModal, setShowPlayersModal] = useState(false);
   const { isLevelAllowed, requestUnlockFor } = useRedFlagLevelAccess();
   const catTotal = RF_CATEGORIES.reduce((sum, cat) => sum + (catCounts[cat] ?? 0), 0);
   const maxIdx = RF_LEVEL_INDEX[maxLevel];
 
   return (
-    <SafeAreaView style={rls.screen}>
-      <DotBackground color={T.ink} opacity={0.08} />
-
-      <View style={rls.header}>
-        <ChunkyButton square size="sm" color={T.paper} onPress={onExit}>
-          <Feather name="arrow-left" size={18} color={T.ink} />
-        </ChunkyButton>
-        <GameMenuActions
-          showDice={false}
-          onPressSettings={onSettings}
-          rules={{ rules: RF_RULES, title: 'Red Flag', accentColor: REDFLAG_BG }}
-          players={players}
-          onPlayersChange={onPlayersChange}
-        />
-      </View>
-
-      <View style={rls.titleArea}>
-        <View style={rls.iconWrap}>
-          <RedFlagIcon size={88} />
-        </View>
-        <Text style={rls.title}>{'Es-tu un\nRed Flag ?'}</Text>
-        <Text style={rls.tagline}>Tes exs auraient aimé te faire passer ce test</Text>
-      </View>
-
+    <GameRulesScreen
+      accentColor={REDFLAG_BG}
+      title={'Es-tu un\nRed Flag ?'}
+      tagline="Tes exs auraient aimé te faire passer ce test"
+      icon={<RedFlagIcon size={88} />}
+      iconRotation={8}
+      rulesModal={{ rules: RF_RULES, title: 'Red Flag' }}
+      players={players}
+      onPlayersChange={onPlayersChange}
+      onExit={onExit}
+      onSettings={onSettings}
+      minPlayers={1}
+      onStart={onStart}
+      startLabel="Découvrir la vérité 🚩"
+      startDisabled={catTotal === 0}
+    >
       <View style={rls.cardWrap}>
         <ScrollView contentContainerStyle={rls.cardScroll} showsVerticalScrollIndicator={false}>
           <DrinkModeToggle accentColor={REDFLAG_BG} />
@@ -272,7 +264,7 @@ function RFRules({
                     style={[
                       rls.levelBtn,
                       isActive &&
-                      allowed && { backgroundColor: RF_LEVEL_COLORS[level], borderColor: T.ink },
+                        allowed && { backgroundColor: RF_LEVEL_COLORS[level], borderColor: T.ink },
                       isSelected && allowed && rls.levelBtnSelected,
                       !allowed && rls.levelBtnLocked,
                     ]}
@@ -321,31 +313,7 @@ function RFRules({
           </View>
         </ScrollView>
       </View>
-
-      <View style={rls.footer}>
-        <ChunkyButton
-          full
-          color={T.paper}
-          onPress={() => {
-            if (players.length < 1) {
-              setShowPlayersModal(true);
-              return;
-            }
-            if (catTotal === 0) return;
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-            onStart();
-          }}
-        >
-          {'Découvrir la vérité 🚩'}
-        </ChunkyButton>
-      </View>
-
-      <PlayersModal
-        visible={showPlayersModal}
-        onClose={() => setShowPlayersModal(false)}
-        onPlayersChange={onPlayersChange}
-      />
-    </SafeAreaView>
+    </GameRulesScreen>
   );
 }
 

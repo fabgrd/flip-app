@@ -6,14 +6,20 @@ import { StyleSheet, Text, View } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { ChunkyButton, DotBackground, GameMenuActions, PopModal } from '../components/common';
+import {
+  ChunkyButton,
+  DotBackground,
+  GameMenuActions,
+  GameTopBar,
+  PlayerPickerGrid,
+  PopModal,
+} from '../components/common';
 import { T } from '../constants/flipTokens';
 import { useCameleon, useCameleonThemeAccess } from '../games/cameleon';
 import { useDrinksMode } from '../hooks';
 import {
   ActionBar,
   MrWhiteGuessModal,
-  PlayerGrid,
   RevealCard,
   SettingsPanel,
 } from '../games/cameleon/components';
@@ -199,18 +205,13 @@ export function CameleonScreen() {
       {/* ── SETTINGS ── */}
       {phase === 'settings' && (
         <>
-          <View style={styles.headerRow}>
-            <ChunkyButton square size="sm" color={T.paper} onPress={() => navigation.goBack()}>
-              <Feather name="arrow-left" size={18} color={T.ink} />
-            </ChunkyButton>
-            <GameMenuActions
-              showDice={false}
-              onPressSettings={() => navigation.navigate('Settings')}
-              rules={{ rules: CAMELEON_RULES, title: 'Le Caméléon', accentColor: T.mint }}
-              players={localPlayers}
-              onPlayersChange={setLocalPlayers}
-            />
-          </View>
+          <GameTopBar
+            onExit={() => navigation.goBack()}
+            onSettings={() => navigation.navigate('Settings')}
+            rules={{ rules: CAMELEON_RULES, title: 'Le Caméléon', accentColor: T.mint }}
+            players={localPlayers}
+            onPlayersChange={setLocalPlayers}
+          />
           <View style={styles.titleArea}>
             <Text style={styles.title}>Caméléon</Text>
             <Text style={styles.tagline}>Démasque l'imposteur</Text>
@@ -295,13 +296,41 @@ export function CameleonScreen() {
               </Text>
             )}
           </View>
-          <PlayerGrid
+          <PlayerPickerGrid
             players={orderedPlayers}
-            isVote={phase === 'vote' || phase === 'results'}
-            clueOrder={clueOrder}
-            selectedForElimination={selectedForElimination}
-            onSelect={selectElimination}
-            t={t}
+            selectedId={
+              phase === 'vote' || phase === 'results' ? selectedForElimination : null
+            }
+            onSelect={
+              phase === 'vote' || phase === 'results'
+                ? (p) => selectElimination(p.id)
+                : undefined
+            }
+            isDisabled={(p) => p.isEliminated}
+            selectedColor={T.tomato}
+            selectedNameColor="#fff"
+            avatarSize={60}
+            minCardHeight={120}
+            renderBadge={(item, index, selected) =>
+              item.isEliminated ? (
+                <View style={cmStyles.eliminatedBadge}>
+                  <Text style={cmStyles.eliminatedBadgeText}>
+                    {t('cameleon:badges.eliminated', 'Éliminé')}
+                  </Text>
+                </View>
+              ) : (
+                <View style={[cmStyles.orderBadge, selected && cmStyles.orderBadgeSelected]}>
+                  <Text
+                    style={[
+                      cmStyles.orderBadgeText,
+                      selected && cmStyles.orderBadgeTextSelected,
+                    ]}
+                  >
+                    {index + 1}
+                  </Text>
+                </View>
+              )
+            }
           />
           <ActionBar
             isVote={phase === 'vote' || phase === 'results'}
@@ -412,5 +441,40 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     paddingHorizontal: 14,
     paddingVertical: 8,
+  },
+});
+
+const cmStyles = StyleSheet.create({
+  orderBadge: {
+    position: 'absolute',
+    top: 8,
+    left: 10,
+    width: 22,
+    height: 22,
+    borderRadius: 8,
+    backgroundColor: T.bg,
+    borderWidth: 1.5,
+    borderColor: T.ink,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  orderBadgeSelected: { backgroundColor: T.ink },
+  orderBadgeText: { color: T.ink, fontSize: 11, fontWeight: '900' },
+  orderBadgeTextSelected: { color: '#fff' },
+  eliminatedBadge: {
+    position: 'absolute',
+    top: 8,
+    left: 10,
+    backgroundColor: T.inkSoft,
+    borderRadius: 999,
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+  },
+  eliminatedBadgeText: {
+    color: '#fff',
+    fontSize: 9,
+    fontWeight: '900',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
 });

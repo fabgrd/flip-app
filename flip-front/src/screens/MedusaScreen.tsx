@@ -22,6 +22,7 @@ import {
   GameCard,
   GameChip,
   GameMenuActions,
+  GameRulesScreen,
   InitialAvatar,
   MedusaIcon,
   PlayersModal,
@@ -60,133 +61,53 @@ function MDRules({
   onExit: () => void;
   onSettings: () => void;
 }) {
-  const [showPlayersModal, setShowPlayersModal] = useState(false);
   const { enabled: drinksEnabled } = useDrinksMode();
-  const RULES = [
+  const rulesSteps = [
     {
       n: '1',
-      t: 'Tout le monde regarde en bas',
-      d: 'Le joueur actif dit « Regardez en bas ! » et le groupe obéit les yeux fermés.',
+      title: 'Tout le monde regarde en bas',
+      desc: 'Le joueur actif dit « Regardez en bas ! » et le groupe obéit les yeux fermés.',
     },
     {
       n: '2',
-      t: '3… 2… 1… MÉDUSA !',
-      d: 'Au signal, tout le monde lève la tête et fixe un autre joueur.',
+      title: '3… 2… 1… MÉDUSA !',
+      desc: 'Au signal, tout le monde lève la tête et fixe un autre joueur.',
     },
     {
       n: '3',
-      t: 'Eye contact = pénalité',
-      d: drinksEnabled
+      title: 'Eye contact = pénalité',
+      desc: drinksEnabled
         ? 'Si deux joueurs se regardent dans les yeux : 1 gorgée chacun.'
         : 'Si deux joueurs se regardent dans les yeux : 1 point chacun.',
     },
     {
       n: '4',
-      t: 'Pas de contact = safe',
-      d: 'Si personne ne te fixe en retour, tu survis. Joueur suivant, à toi.',
+      title: 'Pas de contact = safe',
+      desc: 'Si personne ne te fixe en retour, tu survis. Joueur suivant, à toi.',
     },
   ];
-  const rulesModal = RULES.map((rule) => ({ n: rule.n, title: rule.t, desc: rule.d }));
 
   return (
-    <SafeAreaView style={rls.screen}>
-      <DotBackground color={T.ink} opacity={0.1} />
-
-      <View style={rls.header}>
-        <ChunkyButton
-          square
-          size="sm"
-          color={T.paper}
-          onPress={() => {
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-            onExit();
-          }}
-        >
-          <Feather name="arrow-left" size={18} color={T.ink} />
-        </ChunkyButton>
-        <GameMenuActions
-          showDice={false}
-          onPressSettings={() => {
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-            onSettings();
-          }}
-          rules={{ rules: rulesModal, title: 'Médusa', accentColor: T.cobalt }}
-          players={players}
-          onPlayersChange={onPlayersChange}
-        />
-      </View>
-
-      <View style={rls.titleArea}>
-        {/* Medusa icon top-right */}
-        <View style={rls.iconWrap}>
-          <MedusaIcon size={86} />
-        </View>
-
-        <Text style={rls.title}>Médusa</Text>
-        <Text style={rls.tagline}>Lève les yeux… et évite le regard</Text>
-      </View>
-
-      <View style={{ flex: 1 }} />
-
-      <View style={rls.toggleWrap}>
+    <GameRulesScreen
+      accentColor={T.cobalt}
+      title="Médusa"
+      tagline="Lève les yeux… et évite le regard"
+      icon={<MedusaIcon size={86} />}
+      rulesModal={{ rules: rulesSteps, title: 'Médusa' }}
+      players={players}
+      onPlayersChange={onPlayersChange}
+      onExit={onExit}
+      onSettings={onSettings}
+      minPlayers={5}
+      onStart={onStart}
+      startLabel="Que la chasse commence"
+    >
+      <View style={{ paddingHorizontal: 20, paddingBottom: 12, marginTop: 'auto' }}>
         <DrinkModeToggle accentColor={T.cobalt} />
       </View>
-
-      <View style={rls.footer}>
-        <ChunkyButton
-          full
-          color={T.paper}
-          onPress={() => {
-            if (players.length < 5) {
-              setShowPlayersModal(true);
-              return;
-            }
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-            onStart();
-          }}
-        >
-          Que la chasse commence
-        </ChunkyButton>
-      </View>
-      <PlayersModal
-        visible={showPlayersModal}
-        onClose={() => setShowPlayersModal(false)}
-        onPlayersChange={onPlayersChange}
-      />
-    </SafeAreaView>
+    </GameRulesScreen>
   );
 }
-
-const rls = StyleSheet.create({
-  screen: { flex: 1, backgroundColor: T.cobalt },
-  header: {
-    paddingHorizontal: 20,
-    paddingTop: 8,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  backBtnText: { fontSize: 20, color: T.ink, fontWeight: '900' },
-  titleArea: { paddingHorizontal: 20, paddingTop: 16 },
-  iconWrap: { position: 'absolute', right: 16, top: 18 },
-  title: {
-    color: '#fff',
-    fontSize: 68,
-    fontWeight: '900',
-    letterSpacing: -2.5,
-    lineHeight: 72,
-    marginTop: 12,
-  },
-  tagline: {
-    color: 'rgba(255,255,255,0.65)',
-    fontSize: 16,
-    fontWeight: '600',
-    letterSpacing: -0.2,
-    marginTop: 6,
-  },
-  toggleWrap: { paddingHorizontal: 20, paddingBottom: 12 },
-  footer: { padding: 20, paddingBottom: 32 },
-});
 
 // ─── Caller ───────────────────────────────────────────────────────────────────
 

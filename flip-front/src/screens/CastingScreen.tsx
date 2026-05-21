@@ -15,12 +15,15 @@ import {
   GameCard,
   GameChip,
   GameMenuActions,
+  GameRulesScreen,
   InitialAvatar,
+  PlayerPickerGrid,
   PlayersModal,
   StickerBadge,
 } from '../components';
 import { getPlayerBgColor, getPlayerTextColor } from '../constants';
 import { T } from '../constants/flipTokens';
+import type { CastingTheme } from '../games/casting';
 import {
   CASTING_LABELS,
   CASTING_ORANGE,
@@ -28,7 +31,6 @@ import {
   getScenariosForThemes,
   useCastingThemeAccess,
 } from '../games/casting';
-import type { CastingTheme } from '../games/casting';
 import { CastingResult } from '../games/casting/types';
 import { useDrinksMode } from '../hooks';
 import { Player, RootStackParamList } from '../types';
@@ -79,99 +81,53 @@ function CARules({
   selectedThemes: CastingTheme[];
   onToggleTheme: (theme: CastingTheme) => void;
 }) {
-  const [showPlayersModal, setShowPlayersModal] = useState(false);
   const { enabled: drinksEnabled } = useDrinksMode();
   const { isThemeAllowed, requestUnlockFor } = useCastingThemeAccess();
   const STEPS = [
-    { n: '1', t: 'Un devin est désigné', d: 'Il observe. Les autres sont les acteurs.' },
+    { n: '1', title: 'Un devin est désigné', desc: 'Il observe. Les autres sont les acteurs.' },
     {
       n: '2',
-      t: 'Chaque acteur reçoit un chiffre secret',
-      d: 'De 1 (catastrophique) à 10 (oscar). Le devin ne sait pas.',
+      title: 'Chaque acteur reçoit un chiffre secret',
+      desc: 'De 1 (catastrophique) à 10 (oscar). Le devin ne sait pas.',
     },
     {
       n: '3',
-      t: 'Le devin lit un scénario',
-      d: 'Exemple : « Trébucher à la cantine avec son plateau ».',
+      title: 'Le devin lit un scénario',
+      desc: 'Exemple : « Trébucher à la cantine avec son plateau ».',
     },
     {
       n: '4',
-      t: 'Chacun joue la scène',
-      d: 'Selon son chiffre : 1 = nul à mourir, 10 = performance de dingue.',
+      title: 'Chacun joue la scène',
+      desc: 'Selon son chiffre : 1 = nul à mourir, 10 = performance de dingue.',
     },
     {
       n: '5',
-      t: 'Le devin devine les chiffres',
-      d: drinksEnabled
+      title: 'Le devin devine les chiffres',
+      desc: drinksEnabled
         ? 'Il attribue un chiffre à chaque acteur. Plus il se trompe, plus il boit.'
         : 'Il attribue un chiffre à chaque acteur. Plus il se trompe, plus il accumule.',
     },
   ];
 
-  const drinkVerb = drinksEnabled ? 'boit' : 'prend';
-  const DRINKS = [
-    {
-      icon: '🎯',
-      label: 'Pile poil (écart 0)',
-      result: `l'acteur ${drinkVerb} ${drinkUnitLower(3, drinksEnabled)} (trop évident !)`,
-    },
-    {
-      icon: '👀',
-      label: 'Presque (écart 1)',
-      result: `l'acteur ${drinkVerb} ${drinkUnitLower(1, drinksEnabled)}`,
-    },
-    {
-      icon: '💀',
-      label: 'Raté (écart ≥2)',
-      result: drinksEnabled ? "l'acteur boit l'écart" : "l'acteur prend l'écart en points",
-    },
-  ];
-
-  const rulesModal = STEPS.map((s) => ({ n: s.n, title: s.t, desc: s.d }));
-
   return (
-    <SafeAreaView style={rls.screen}>
-      <DotBackground color={T.ink} opacity={0.08} />
-
-      <View style={rls.header}>
-        <ChunkyButton square size="sm" color={T.paper} onPress={onExit}>
-          <Feather name="arrow-left" size={18} color={T.ink} />
-        </ChunkyButton>
-        <GameMenuActions
-          showDice={false}
-          onPressSettings={onSettings}
-          rules={{ rules: rulesModal, title: 'Le Casting', accentColor: CASTING_ORANGE }}
-          players={players}
-          onPlayersChange={onPlayersChange}
-        />
-      </View>
-
-      <View style={rls.titleArea}>
-        <View style={rls.iconWrap}>
-          <CastingIcon size={88} />
-        </View>
-        <Text style={rls.title}>Le{'\n'}Casting</Text>
-        <Text style={rls.tagline}>Joue la scène selon ton chiffre secret</Text>
-      </View>
-
-      <ScrollView
-        style={{ flex: 1 }}
-        contentContainerStyle={rls.scroll}
-        showsVerticalScrollIndicator={false}
-      >
+    <GameRulesScreen
+      accentColor={CASTING_ORANGE}
+      title={'Le\nCasting'}
+      tagline="Joue la scène selon ton chiffre secret"
+      icon={<CastingIcon size={88} />}
+      iconRotation={8}
+      rulesModal={{ rules: STEPS, title: 'Le Casting' }}
+      players={players}
+      onPlayersChange={onPlayersChange}
+      onExit={onExit}
+      onSettings={onSettings}
+      minPlayers={3}
+      onStart={onStart}
+      startLabel="Lancer le casting"
+      scrollable
+    >
+      <View style={rls.scroll}>
         <DrinkModeToggle accentColor={CASTING_ORANGE} style={{ marginBottom: 14 }} />
-
-        <View style={rls.drinkCard}>
-          <Text style={rls.drinkLabel}>{drinkColumnLabel(drinksEnabled)}</Text>
-          {DRINKS.map((d) => (
-            <View key={d.icon} style={rls.drinkRow}>
-              <Text style={rls.drinkIcon}>{d.icon}</Text>
-              <Text style={rls.drinkName}>{d.label}</Text>
-              <Text style={rls.drinkResult}>→ {d.result}</Text>
-            </View>
-          ))}
-        </View>
-
         <Text style={rls.themesSectionLabel}>THÈMES</Text>
         <View style={rls.themeGrid}>
           {CASTING_THEME_OPTIONS.map((opt) => {
@@ -214,84 +170,13 @@ function CARules({
             );
           })}
         </View>
-      </ScrollView>
-      <View style={rls.footer}>
-        <ChunkyButton
-          full
-          color={T.paper}
-          onPress={() => {
-            if (players.length < 3) {
-              setShowPlayersModal(true);
-              return;
-            }
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-            onStart();
-          }}
-        >
-          Lancer le casting
-        </ChunkyButton>
       </View>
-      <PlayersModal
-        visible={showPlayersModal}
-        onClose={() => setShowPlayersModal(false)}
-        onPlayersChange={onPlayersChange}
-      />
-    </SafeAreaView>
+    </GameRulesScreen>
   );
 }
 
 const rls = StyleSheet.create({
-  screen: { flex: 1, backgroundColor: CASTING_ORANGE },
-  header: {
-    paddingHorizontal: 20,
-    paddingTop: 8,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  backBtnText: { fontSize: 20, color: T.ink, fontWeight: '900' },
-  titleArea: { paddingHorizontal: 20, paddingTop: 16, paddingBottom: 4 },
-  iconWrap: { position: 'absolute', right: 16, top: 20, transform: [{ rotate: '8deg' }] },
-  title: {
-    color: '#fff',
-    fontSize: 64,
-    fontWeight: '900',
-    letterSpacing: -2.5,
-    lineHeight: 68,
-    marginTop: 10,
-  },
-  tagline: {
-    color: 'rgba(255,255,255,0.65)',
-    fontSize: 16,
-    fontWeight: '600',
-    letterSpacing: -0.2,
-    marginTop: 6,
-  },
-  scroll: { padding: 20, gap: 14, paddingBottom: 40 },
-  drinkCard: {
-    backgroundColor: T.lemon,
-    borderWidth: 2,
-    borderColor: T.ink,
-    borderRadius: 20,
-    padding: 16,
-    gap: 6,
-    shadowColor: T.ink,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 4,
-  },
-  drinkLabel: {
-    color: T.ink,
-    fontSize: 10,
-    fontWeight: '900',
-    letterSpacing: 2,
-    marginBottom: 4,
-  },
-  drinkRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
-  drinkIcon: { fontSize: 15, width: 24, textAlign: 'center' },
-  drinkName: { color: T.ink, fontSize: 13, fontWeight: '700', flex: 1 },
-  drinkResult: { color: T.inkSoft, fontSize: 12 },
+  scroll: { paddingHorizontal: 20, paddingTop: 8, gap: 14 },
   themesSectionLabel: {
     color: '#fff',
     fontSize: 11,
@@ -333,7 +218,6 @@ const rls = StyleSheet.create({
   themeDesc: { color: T.inkSoft, fontSize: 11, marginTop: 2 },
   themeDescActive: { color: 'rgba(255,255,255,0.65)' },
   themeDescLocked: { color: T.muted },
-  footer: { padding: 20, paddingBottom: 32 },
 });
 
 // ─── Pick Devin ───────────────────────────────────────────────────────────────
@@ -341,47 +225,25 @@ const rls = StyleSheet.create({
 function CAPickDevin({ players, onPick }: { players: Player[]; onPick: (idx: number) => void }) {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: T.ink }}>
-      <View style={pd.body}>
+      <View style={pd.header}>
         <Text style={pd.mono}>QUI EST LE DEVIN ?</Text>
         <Text style={pd.title}>Choisis le{'\n'}jury du casting</Text>
         <Text style={pd.sub}>Le devin observe, juge, et devine les chiffres.</Text>
-
-        <View style={pd.grid}>
-          {players.map((p, i) => (
-            <ChunkyButton
-              key={p.id}
-              style={{ width: '47%' }}
-              color={T.paper}
-              shadowColor={CASTING_ORANGE}
-              metrics={{ height: 68, radius: 18, paddingH: 0 }}
-              innerStyle={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'flex-start',
-                padding: 14,
-                gap: 10,
-              }}
-              onPress={() => onPick(i)}
-            >
-              <View style={[pd.playerAvatar, { backgroundColor: playerBg(i) }]}>
-                <Text style={[pd.playerAvatarText, { color: avatarTextColor(i) }]}>
-                  {p.name[0].toUpperCase()}
-                </Text>
-              </View>
-              <Text style={pd.playerName}>{p.name}</Text>
-            </ChunkyButton>
-          ))}
-        </View>
       </View>
+      <PlayerPickerGrid
+        players={players}
+        onSelect={(_, i) => onPick(i)}
+        shadowColor={CASTING_ORANGE}
+      />
     </SafeAreaView>
   );
 }
 
 const pd = StyleSheet.create({
-  body: {
-    flex: 1,
-    padding: 24,
-    justifyContent: 'center',
+  header: {
+    paddingHorizontal: 24,
+    paddingTop: 24,
+    paddingBottom: 16,
   },
   mono: {
     color: '#fff',
@@ -402,46 +264,7 @@ const pd = StyleSheet.create({
   sub: {
     color: 'rgba(255,255,255,0.6)',
     fontSize: 14,
-    marginBottom: 32,
     lineHeight: 20,
-  },
-  grid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 10,
-  },
-  playerBtn: {
-    width: '47%',
-    backgroundColor: T.paper,
-    borderWidth: 2,
-    borderColor: T.ink,
-    borderRadius: 18,
-    padding: 14,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-    shadowColor: CASTING_ORANGE,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 4,
-  },
-  playerAvatar: {
-    width: 40,
-    height: 40,
-    borderRadius: 12,
-    borderWidth: 2,
-    borderColor: T.ink,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  playerAvatarText: { fontSize: 18, fontWeight: '900' },
-  playerName: {
-    color: T.ink,
-    fontSize: 16,
-    fontWeight: '800',
-    letterSpacing: -0.3,
-    flex: 1,
   },
 });
 

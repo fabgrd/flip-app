@@ -23,11 +23,13 @@ import {
   GameCard,
   GameChip,
   GameMenuActions,
+  GameRulesScreen,
   isRedSuit,
   PlayerPickerGrid,
   PlayersModal,
   PlayingCardBack,
   PlayingCardFace,
+  RulesStepsCard,
   StickerBadge,
 } from '../components';
 import { AperoIcon } from '../components/icons/AperoIcon';
@@ -292,7 +294,6 @@ function APRules({
   onExit: () => void;
   onSettings: () => void;
 }) {
-  const [showPlayersModal, setShowPlayersModal] = useState(false);
   const { enabled: drinksEnabled } = useDrinksMode();
   const { t } = useTranslation();
   const RULES = [
@@ -336,124 +337,28 @@ function APRules({
   const rulesModal = RULES.map((r) => ({ n: r.n, title: r.t, desc: r.d }));
 
   return (
-    <SafeAreaView style={rls.screen}>
-      <DotBackground color={T.ink} opacity={0.1} />
-      <View style={rls.header}>
-        <ChunkyButton square size="sm" color={T.paper} onPress={onExit}>
-          <Feather name="arrow-left" size={18} color={T.ink} />
-        </ChunkyButton>
-        <GameMenuActions
-          showDice={false}
-          onPressSettings={onSettings}
-          rules={{ rules: rulesModal, title: t('apero:rules.modalTitle'), accentColor: T.pink }}
-          players={players}
-          onPlayersChange={onPlayersChange}
-        />
+    <GameRulesScreen
+      accentColor={T.pink}
+      title={t('apero:rules.title')}
+      icon={<AperoIcon size={92} />}
+      iconRotation={-8}
+      rulesModal={{ rules: rulesModal, title: t('apero:rules.modalTitle') }}
+      players={players}
+      onPlayersChange={onPlayersChange}
+      onExit={onExit}
+      onSettings={onSettings}
+      minPlayers={2}
+      onStart={onStart}
+      startLabel={t('apero:rules.start')}
+      scrollable
+    >
+      <View style={{ paddingHorizontal: 20 }}>
+        <DrinkModeToggle accentColor={T.pink} style={{ marginBottom: 14 }} />
+        <RulesStepsCard steps={RULES} accentColor={T.pink} label={t('apero:rules.cardLabel')} />
       </View>
-
-      <ScrollView style={{ flex: 1 }} contentContainerStyle={{ paddingBottom: 32 }}>
-        <View style={rls.titleArea}>
-          <View style={rls.iconWrap}>
-            <AperoIcon size={92} />
-          </View>
-          <GameChip color={T.paper} textStyle={{ fontSize: 11 }}>
-            {t('apero:rules.chip')}
-          </GameChip>
-          <Text style={rls.title}>{t('apero:rules.title')}</Text>
-        </View>
-
-        <View style={rls.cardWrap}>
-          <DrinkModeToggle accentColor={T.pink} style={{ marginBottom: 14 }} />
-          <GameCard style={{ borderRadius: 22, padding: 18 }}>
-            <Text style={rls.cardLabel}>{t('apero:rules.cardLabel')}</Text>
-            {RULES.map((s, i) => (
-              <View key={s.n} style={[rls.ruleRow, i < RULES.length - 1 && rls.divider]}>
-                <View style={[rls.ruleNum, { backgroundColor: s.n === '★' ? T.lemon : T.pink }]}>
-                  <Text style={[rls.ruleNumText, { color: s.n === '★' ? T.ink : '#fff' }]}>
-                    {s.n}
-                  </Text>
-                </View>
-                <View style={{ flex: 1 }}>
-                  <Text style={rls.ruleTitle}>{s.t}</Text>
-                  <Text style={rls.ruleDesc}>{s.d}</Text>
-                </View>
-              </View>
-            ))}
-          </GameCard>
-        </View>
-
-        <View style={rls.footer}>
-          <ChunkyButton
-            full
-            color={T.paper}
-            onPress={() => {
-              if (players.length < 2) {
-                setShowPlayersModal(true);
-                return;
-              }
-              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-              onStart();
-            }}
-          >
-            {t('apero:rules.start')}
-          </ChunkyButton>
-        </View>
-      </ScrollView>
-      <PlayersModal
-        visible={showPlayersModal}
-        onClose={() => setShowPlayersModal(false)}
-        onPlayersChange={onPlayersChange}
-      />
-    </SafeAreaView>
+    </GameRulesScreen>
   );
 }
-
-const rls = StyleSheet.create({
-  screen: { flex: 1, backgroundColor: T.pink },
-  header: {
-    paddingHorizontal: 20,
-    paddingTop: 8,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  backBtnText: { fontSize: 20, color: T.ink, fontWeight: '900' },
-  titleArea: { paddingHorizontal: 20, paddingTop: 16, paddingBottom: 16 },
-  iconWrap: { position: 'absolute', right: 16, top: 16, transform: [{ rotate: '-8deg' }] },
-  title: {
-    color: '#fff',
-    fontSize: 64,
-    fontWeight: '900',
-    letterSpacing: -2.5,
-    lineHeight: 68,
-    marginTop: 12,
-  },
-  cardWrap: { paddingHorizontal: 20 },
-  cardLabel: {
-    color: T.muted,
-    fontSize: 11,
-    fontWeight: '700',
-    letterSpacing: 1.5,
-    textTransform: 'uppercase',
-    marginBottom: 12,
-  },
-  ruleRow: { flexDirection: 'row', gap: 12, paddingVertical: 9 },
-  divider: { borderBottomWidth: 1, borderBottomColor: `${T.muted}40` },
-  ruleNum: {
-    width: 30,
-    height: 30,
-    borderRadius: 9,
-    flexShrink: 0,
-    borderWidth: 2,
-    borderColor: T.ink,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  ruleNumText: { fontSize: 14, fontWeight: '900' },
-  ruleTitle: { color: T.ink, fontSize: 16, fontWeight: '800', letterSpacing: -0.3 },
-  ruleDesc: { color: T.inkSoft, fontSize: 13, marginTop: 2, lineHeight: 18 },
-  footer: { padding: 20, paddingTop: 24 },
-});
 
 // ─── Pick dealer ──────────────────────────────────────────────────────────────
 
@@ -1255,6 +1160,7 @@ const playTopBar = {
 // ─── Main state machine ───────────────────────────────────────────────────────
 
 function AperoGame({ players: initialPlayers, onExit }: { players: Player[]; onExit: () => void }) {
+  const navigation = useNavigation<any>();
   const [players, setPlayers] = useState<Player[]>(initialPlayers);
   const [step, setStep] = useState<ApStep>('rules');
   const [deck] = useState<ApCard[]>(() => apDeck());
@@ -1330,7 +1236,7 @@ function AperoGame({ players: initialPlayers, onExit }: { players: Player[]; onE
         onPlayersChange={handlePlayersChange}
         onStart={() => setStep('pick')}
         onExit={onExit}
-        onSettings={() => { }}
+        onSettings={() => navigation.navigate('Settings')}
       />
     );
   }

@@ -11,6 +11,7 @@ import {
   DotBackground,
   DrinkModeToggle,
   GameMenuActions,
+  GameRulesScreen,
   PlayersModal,
   PureteIcon,
   RulesButton,
@@ -90,44 +91,33 @@ function PurityRules({
   onChangeThemeCount: (theme: Theme, value: number) => void;
   onChangeMaxLevel: (level: LevelKey) => void;
 }) {
-  const [showPlayersModal, setShowPlayersModal] = useState(false);
   const { isLevelAllowed, requestUnlockFor } = usePurityLevelAccess();
   const themeTotal = Object.values(themeCounts).reduce((sum, val) => sum + val, 0);
   const maxIdx = LEVEL_KEYS.indexOf(maxLevel);
 
   return (
-    <SafeAreaView style={pr.screen}>
-      <DotBackground color={T.paper} opacity={0.08} />
-
-      <View style={pr.header}>
-        <ChunkyButton square size="sm" color={T.paper} onPress={onExit}>
-          <Feather name="arrow-left" size={18} color={T.ink} />
-        </ChunkyButton>
-        <GameMenuActions
-          showDice={false}
-          onPressSettings={onSettings}
-          rules={{ rules: PURITY_RULES, title: 'Test de Pureté', accentColor: T.violet }}
-          players={players}
-          onPlayersChange={onPlayersChange}
-        />
-      </View>
-
-      <View style={pr.titleArea}>
-        <View style={pr.iconWrap}>
-          <PureteIcon size={86} />
-        </View>
-
-        <Text style={pr.title}>Test{'\n'}de Pureté</Text>
-        <Text style={pr.tagline}>Combien de péchés à ton actif ?</Text>
-      </View>
-
+    <GameRulesScreen
+      accentColor={T.violet}
+      title={'Test\nde Pureté'}
+      tagline="Combien de péchés à ton actif ?"
+      icon={<PureteIcon size={86} />}
+      rulesModal={{ rules: PURITY_RULES, title: 'Test de Pureté' }}
+      players={players}
+      onPlayersChange={onPlayersChange}
+      onExit={onExit}
+      onSettings={onSettings}
+      minPlayers={1}
+      onStart={onStart}
+      startLabel="Commencer le test"
+      startDisabled={themeTotal === 0}
+    >
       <View style={pr.cardWrap}>
         <ScrollView contentContainerStyle={pr.cardScroll} showsVerticalScrollIndicator={false}>
           <DrinkModeToggle accentColor={T.violet} />
 
           <View style={pr.card}>
             <Text style={pr.cardLabel}>NIVEAU DE QUESTIONS</Text>
-            <Text style={pr.helperText}>Questions jusqu'au niveau sélectionné</Text>
+            <Text style={pr.helperText}>Questions jusqu&apos;au niveau sélectionné</Text>
             <View style={pr.levelRow}>
               {LEVEL_KEYS.map((level, i) => {
                 const isActive = i <= maxIdx;
@@ -139,7 +129,7 @@ function PurityRules({
                     style={[
                       pr.levelBtn,
                       isActive &&
-                      allowed && { backgroundColor: LEVEL_COLORS[i], borderColor: T.ink },
+                        allowed && { backgroundColor: LEVEL_COLORS[i], borderColor: T.ink },
                       isSelected && allowed && pr.levelBtnSelected,
                       !allowed && pr.levelBtnLocked,
                     ]}
@@ -188,29 +178,7 @@ function PurityRules({
           </View>
         </ScrollView>
       </View>
-
-      <View style={pr.footer}>
-        <ChunkyButton
-          full
-          color={T.paper}
-          onPress={() => {
-            if (players.length < 1) {
-              setShowPlayersModal(true);
-              return;
-            }
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-            onStart();
-          }}
-        >
-          Commencer le test
-        </ChunkyButton>
-      </View>
-      <PlayersModal
-        visible={showPlayersModal}
-        onClose={() => setShowPlayersModal(false)}
-        onPlayersChange={onPlayersChange}
-      />
-    </SafeAreaView>
+    </GameRulesScreen>
   );
 }
 

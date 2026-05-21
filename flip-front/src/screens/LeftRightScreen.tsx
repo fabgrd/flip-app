@@ -11,6 +11,7 @@ import {
   DotBackground,
   DrinkModeToggle,
   GameMenuActions,
+  GameRulesScreen,
   GaucheDroiteIcon,
   PlayersModal,
   RulesButton,
@@ -55,94 +56,29 @@ function LRRules({
   onExit: () => void;
   onSettings: () => void;
 }) {
-  const [showPlayersModal, setShowPlayersModal] = useState(false);
   return (
-    <SafeAreaView style={lrRules.screen}>
-      <DotBackground color={T.ink} opacity={0.08} />
-
-      <View style={lrRules.header}>
-        <ChunkyButton square size="sm" color={T.paper} onPress={onExit}>
-          <Feather name="arrow-left" size={18} color={T.ink} />
-        </ChunkyButton>
-        <GameMenuActions
-          showDice={false}
-          onPressSettings={onSettings}
-          rules={{ rules: LEFT_RIGHT_RULES, title: 'Gauche ou Droite', accentColor: T.lemon }}
-          players={players}
-          onPlayersChange={onPlayersChange}
-        />
-      </View>
-
-      <View style={lrRules.titleArea}>
-        <View style={lrRules.iconWrap}>
-          <GaucheDroiteIcon size={86} />
-        </View>
-
-        <Text style={lrRules.title}>Gauche ou Droite</Text>
-        <Text style={lrRules.tagline}>Place la phrase sur l'échiquier politique</Text>
-      </View>
-
-      <View style={{ flex: 1 }} />
-
-      <View style={lrRules.toggleWrap}>
+    <GameRulesScreen
+      accentColor={T.gaucheDroiteAccent ?? T.lemon}
+      title="Gauche ou Droite"
+      tagline="Place la phrase sur l'échiquier politique"
+      titleColor={T.ink}
+      taglineColor={`${T.ink}99`}
+      icon={<GaucheDroiteIcon size={86} />}
+      rulesModal={{ rules: LEFT_RIGHT_RULES, title: 'Gauche ou Droite' }}
+      players={players}
+      onPlayersChange={onPlayersChange}
+      onExit={onExit}
+      onSettings={onSettings}
+      minPlayers={2}
+      onStart={onStart}
+      startLabel="Lancer la partie"
+    >
+      <View style={{ paddingHorizontal: 20, paddingBottom: 12, marginTop: 'auto' }}>
         <DrinkModeToggle accentColor={T.lemon} />
       </View>
-
-      <View style={lrRules.footer}>
-        <ChunkyButton
-          full
-          color={T.paper}
-          onPress={() => {
-            if (players.length < 2) {
-              setShowPlayersModal(true);
-              return;
-            }
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-            onStart();
-          }}
-        >
-          Lancer le duel
-        </ChunkyButton>
-      </View>
-      <PlayersModal
-        visible={showPlayersModal}
-        onClose={() => setShowPlayersModal(false)}
-        onPlayersChange={onPlayersChange}
-      />
-    </SafeAreaView>
+    </GameRulesScreen>
   );
 }
-
-const lrRules = StyleSheet.create({
-  screen: { flex: 1, backgroundColor: T.gaucheDroiteAccent ?? T.lemon },
-  header: {
-    paddingHorizontal: 20,
-    paddingTop: 8,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  backBtnText: { fontSize: 20, color: T.ink, fontWeight: '900' },
-  titleArea: { paddingHorizontal: 20, paddingTop: 16 },
-  iconWrap: { position: 'absolute', right: 16, top: 18 },
-  title: {
-    color: T.ink,
-    fontSize: 58,
-    fontWeight: '900',
-    letterSpacing: -2,
-    lineHeight: 62,
-    marginTop: 12,
-  },
-  tagline: {
-    color: `${T.ink}99`,
-    fontSize: 16,
-    fontWeight: '600',
-    letterSpacing: -0.2,
-    marginTop: 6,
-  },
-  toggleWrap: { paddingHorizontal: 20, paddingBottom: 12 },
-  footer: { padding: 20, paddingBottom: 32 },
-});
 
 export function LeftRightScreen() {
   const route = useRoute<LeftRightScreenRouteProp>();
@@ -168,7 +104,7 @@ export function LeftRightScreen() {
     submitAnswer(playerId, direction);
   };
 
-  const handleAllCardsComplete = () => {};
+  const handleAllCardsComplete = () => { };
 
   useEffect(() => {
     if (isGameFinished) {

@@ -377,6 +377,7 @@ export function GameMenuActions({
           <AntDesign name="usergroup-add" size={18} color={T.ink} />
         </FlatChunkyButton>
       )}
+      <RulesButton rules={rules.rules} title={rules.title} accentColor={rules.accentColor} />
       <FlatChunkyButton
         size="xs"
         square
@@ -386,7 +387,6 @@ export function GameMenuActions({
       >
         <MaterialCommunityIcons name="cog-outline" size={18} color={T.ink} />
       </FlatChunkyButton>
-      <RulesButton rules={rules.rules} title={rules.title} accentColor={rules.accentColor} />
       {players !== undefined && onPlayersChange !== undefined && (
         <PlayersModal
           visible={playersModalVisible}

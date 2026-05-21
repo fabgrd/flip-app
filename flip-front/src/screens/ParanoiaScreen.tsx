@@ -23,6 +23,7 @@ import {
   GameCard,
   GameChip,
   GameMenuActions,
+  GameRulesScreen,
   InitialAvatar,
   ParanoiaIcon,
   PlayersModal,
@@ -65,100 +66,32 @@ function PNRules({
   onExit: () => void;
   onSettings: () => void;
 }) {
-  const [showPlayersModal, setShowPlayersModal] = useState(false);
   const { t } = useTranslation();
-  const rulesModal = t('paranoia:ui.rules.steps', {
+  const rulesSteps = t('paranoia:ui.rules.steps', {
     returnObjects: true,
   }) as { n: string; title: string; desc: string }[];
 
   return (
-    <SafeAreaView style={rules.screen}>
-      <DotBackground color={T.ink} opacity={0.1} />
-
-      <View style={rules.header}>
-        <ChunkyButton square size="sm" color={T.paper} onPress={onExit}>
-          <Feather name="arrow-left" size={18} color={T.ink} />
-        </ChunkyButton>
-        <GameMenuActions
-          showDice={false}
-          onPressSettings={onSettings}
-          rules={{ rules: rulesModal, title: t('paranoia:ui.rules.title'), accentColor: T.teal }}
-          players={players}
-          onPlayersChange={onPlayersChange}
-        />
-      </View>
-
-      <View style={rules.titleArea}>
-        {/* Paranoia icon top-right */}
-        <View style={rules.iconWrap}>
-          <ParanoiaIcon size={80} />
-        </View>
-
-        <Text style={rules.title}>{t('paranoia:ui.rules.title')}</Text>
-        <Text style={rules.tagline}>{t('paranoia:ui.rules.tagline')}</Text>
-      </View>
-
-      <View style={{ flex: 1 }} />
-
-      <View style={rules.toggleWrap}>
+    <GameRulesScreen
+      accentColor={T.teal}
+      title={t('paranoia:ui.rules.title')}
+      tagline={t('paranoia:ui.rules.tagline')}
+      icon={<ParanoiaIcon size={80} />}
+      rulesModal={{ rules: rulesSteps, title: t('paranoia:ui.rules.title') }}
+      players={players}
+      onPlayersChange={onPlayersChange}
+      onExit={onExit}
+      onSettings={onSettings}
+      minPlayers={4}
+      onStart={onStart}
+      startLabel={t('paranoia:ui.rules.start')}
+    >
+      <View style={{ paddingHorizontal: 20, paddingBottom: 12, marginTop: 'auto' }}>
         <DrinkModeToggle accentColor={T.teal} />
       </View>
-
-      <View style={rules.footer}>
-        <ChunkyButton
-          full
-          color={T.paper}
-          onPress={() => {
-            if (players.length < 4) {
-              setShowPlayersModal(true);
-              return;
-            }
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-            onStart();
-          }}
-        >
-          {t('paranoia:ui.rules.start')}
-        </ChunkyButton>
-      </View>
-      <PlayersModal
-        visible={showPlayersModal}
-        onClose={() => setShowPlayersModal(false)}
-        onPlayersChange={onPlayersChange}
-      />
-    </SafeAreaView>
+    </GameRulesScreen>
   );
 }
-
-const rules = StyleSheet.create({
-  screen: { flex: 1, backgroundColor: T.teal },
-  header: {
-    paddingHorizontal: 20,
-    paddingTop: 8,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  backBtnText: { fontSize: 20, color: T.ink, fontWeight: '900' },
-  titleArea: { paddingHorizontal: 20, paddingTop: 16, paddingBottom: 0 },
-  iconWrap: { position: 'absolute', right: 16, top: 18 },
-  title: {
-    color: '#fff',
-    fontSize: 68,
-    fontWeight: '900',
-    letterSpacing: -2.5,
-    lineHeight: 72,
-    marginTop: 12,
-  },
-  tagline: {
-    color: 'rgba(255,255,255,0.65)',
-    fontSize: 16,
-    fontWeight: '600',
-    letterSpacing: -0.2,
-    marginTop: 6,
-  },
-  toggleWrap: { paddingHorizontal: 20, paddingBottom: 12 },
-  footer: { padding: 20, paddingBottom: 32 },
-});
 
 // ─── Screen: Handoff ──────────────────────────────────────────────────────────
 
