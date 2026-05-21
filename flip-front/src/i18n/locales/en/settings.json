@@ -31,7 +31,7 @@
   "drinks": {
     "title": "Drinking game mode",
     "label": "Hand out sips",
-    "description": "Enable sips distribution across games to turn Fl!p into a real drinking game 🍻",
+    "description": "Enable sips distribution across games to turn Fl!p into a real drinking game.",
     "lockedHint": "Unlock Premium to enable drinking game mode"
   }
 }

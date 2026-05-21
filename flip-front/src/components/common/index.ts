@@ -26,4 +26,7 @@ export { RulesButton } from './RulesModal';
 export { SuggestButton } from './SuggestModal';
 export { SwipeableCard } from './SwipeableCard';
 export { SwipeableCardStack } from './SwipeableCardStack';
+export { ThemeGrid } from './ThemeGrid';
+export type { ThemeGridOption } from './ThemeGrid';
+export { ToggleSwitch } from './ToggleSwitch';
 

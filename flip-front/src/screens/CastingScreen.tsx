@@ -20,6 +20,7 @@ import {
   PlayerPickerGrid,
   PlayersModal,
   StickerBadge,
+  ThemeGrid,
 } from '../components';
 import { getPlayerBgColor, getPlayerTextColor } from '../constants';
 import { T } from '../constants/flipTokens';
@@ -128,48 +129,18 @@ function CARules({
     >
       <View style={rls.scroll}>
         <DrinkModeToggle accentColor={CASTING_ORANGE} style={{ marginBottom: 14 }} />
-        <Text style={rls.themesSectionLabel}>THÈMES</Text>
-        <View style={rls.themeGrid}>
-          {CASTING_THEME_OPTIONS.map((opt) => {
-            const active = selectedThemes.includes(opt.value);
-            const allowed = isThemeAllowed(opt.value);
-            return (
-              <TouchableOpacity
-                key={opt.value}
-                style={[
-                  rls.themeCard,
-                  active && allowed && rls.themeCardActive,
-                  !allowed && rls.themeCardLocked,
-                ]}
-                onPress={() => (allowed ? onToggleTheme(opt.value) : requestUnlockFor(opt.value))}
-                activeOpacity={0.85}
-              >
-                {!allowed && (
-                  <Feather name="lock" size={11} color={T.ink} style={rls.themeLockIcon} />
-                )}
-                <Text style={rls.themeEmoji}>{opt.emoji}</Text>
-                <Text
-                  style={[
-                    rls.themeName,
-                    active && allowed && rls.themeNameActive,
-                    !allowed && rls.themeNameLocked,
-                  ]}
-                >
-                  {opt.label}
-                </Text>
-                <Text
-                  style={[
-                    rls.themeDesc,
-                    active && allowed && rls.themeDescActive,
-                    !allowed && rls.themeDescLocked,
-                  ]}
-                >
-                  {opt.desc}
-                </Text>
-              </TouchableOpacity>
-            );
-          })}
-        </View>
+        <Text style={rls.themesSectionLabel}>THÈME</Text>
+        <ThemeGrid
+          options={CASTING_THEME_OPTIONS.map((opt) => ({
+            value: opt.value,
+            label: opt.label,
+            emoji: opt.emoji,
+          }))}
+          isActive={(v) => selectedThemes.includes(v as CastingTheme)}
+          isAllowed={(v) => isThemeAllowed(v as CastingTheme)}
+          onSelect={(v) => onToggleTheme(v as CastingTheme)}
+          onLockedPress={(v) => requestUnlockFor(v as CastingTheme)}
+        />
       </View>
     </GameRulesScreen>
   );
@@ -181,43 +152,9 @@ const rls = StyleSheet.create({
     color: '#fff',
     fontSize: 11,
     fontWeight: '900',
-    letterSpacing: 2,
-    marginTop: 4,
+    letterSpacing: 1.5,
+    marginBottom: 4,
   },
-  themeGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  themeCard: {
-    width: '48%',
-    backgroundColor: T.paper,
-    borderWidth: 2,
-    borderColor: T.ink,
-    borderRadius: 14,
-    padding: 12,
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 2,
-    position: 'relative',
-  },
-  themeCardActive: {
-    backgroundColor: T.ink,
-    transform: [{ translateX: 2 }, { translateY: 2 }],
-  },
-  themeCardLocked: {
-    backgroundColor: '#EFEAE3',
-    borderColor: '#DCD3C5',
-    opacity: 0.78,
-    shadowOpacity: 0,
-    elevation: 0,
-  },
-  themeLockIcon: { position: 'absolute', top: 6, right: 6 },
-  themeEmoji: { fontSize: 22, marginBottom: 4 },
-  themeName: { color: T.ink, fontSize: 14, fontWeight: '900', letterSpacing: -0.3 },
-  themeNameActive: { color: '#fff' },
-  themeNameLocked: { color: T.muted },
-  themeDesc: { color: T.inkSoft, fontSize: 11, marginTop: 2 },
-  themeDescActive: { color: 'rgba(255,255,255,0.65)' },
-  themeDescLocked: { color: T.muted },
 });
 
 // ─── Pick Devin ───────────────────────────────────────────────────────────────

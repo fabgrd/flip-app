@@ -2,16 +2,9 @@ import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  ScrollView,
-  StyleSheet,
-  Switch,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ChunkyButton, DotBackground, SuggestButton } from '../components';
+import { BeerMugIcon, ChunkyButton, DotBackground, SuggestButton, ToggleSwitch } from '../components';
 import { T } from '../constants/flipTokens';
 import { useDrinksMode } from '../hooks';
 import { usePaywall } from '../paywall';
@@ -35,12 +28,12 @@ export function SettingsScreen() {
     navigation.goBack();
   };
 
-  const handleDrinksToggle = (value: boolean) => {
+  const handleDrinksToggle = () => {
     if (!drinks.available) {
       openPaywall('drinks_mode');
       return;
     }
-    drinks.setEnabled(value);
+    drinks.setEnabled(!drinks.enabled);
   };
 
   const handleDrinksRowPress = () => {
@@ -74,33 +67,30 @@ export function SettingsScreen() {
             activeOpacity={drinks.available ? 1 : 0.85}
             onPress={handleDrinksRowPress}
             disabled={drinks.available}
-            style={styles.card}
+            style={styles.drinksCard}
           >
-            <View style={styles.toggleRow}>
-              <View style={styles.toggleTextWrap}>
-                <View style={styles.toggleLabelLine}>
-                  <Text style={styles.toggleLabel}>{t('settings:drinks.label')}</Text>
-                  {!drinks.available && (
-                    <View style={styles.proBadge}>
-                      <Feather name="lock" size={10} color="#fff" />
-                      <Text style={styles.proBadgeText}>PRO</Text>
-                    </View>
-                  )}
-                </View>
-                <Text style={styles.toggleDescription}>
-                  {drinks.available
-                    ? t('settings:drinks.description')
-                    : t('settings:drinks.lockedHint')}
-                </Text>
+            <BeerMugIcon size={32} />
+            <View style={styles.toggleTextWrap}>
+              <View style={styles.toggleLabelLine}>
+                <Text style={styles.toggleLabel}>{t('settings:drinks.label')}</Text>
+                {!drinks.available && (
+                  <View style={styles.proBadge}>
+                    <Feather name="lock" size={10} color="#fff" />
+                    <Text style={styles.proBadgeText}>PRO</Text>
+                  </View>
+                )}
               </View>
-              <Switch
-                value={drinks.enabled}
-                onValueChange={handleDrinksToggle}
-                trackColor={{ false: T.paper, true: T.mint }}
-                thumbColor={T.ink}
-                ios_backgroundColor={T.paper}
-              />
+              <Text style={styles.toggleDescription}>
+                {drinks.available
+                  ? t('settings:drinks.description')
+                  : t('settings:drinks.lockedHint')}
+              </Text>
             </View>
+            <ToggleSwitch
+              on={drinks.enabled}
+              onToggle={handleDrinksToggle}
+              disabled={!drinks.available}
+            />
           </TouchableOpacity>
         </View>
 
@@ -196,6 +186,22 @@ const styles = StyleSheet.create({
     borderColor: T.ink,
     borderRadius: T.rLg,
     padding: 14,
+  },
+  drinksCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 14,
+    backgroundColor: T.paper,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: 18,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    shadowColor: T.ink,
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 3,
   },
 
   toggleRow: {

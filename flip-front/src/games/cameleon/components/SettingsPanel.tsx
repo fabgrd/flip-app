@@ -1,9 +1,9 @@
-import { Feather } from '@expo/vector-icons';
 import { TFunction } from 'i18next';
 import React from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ChunkyButton } from '../../../components/common/ChunkyButton';
 import { DrinkModeToggle } from '../../../components/common/DrinkModeToggle';
+import { ThemeGrid } from '../../../components/common/ThemeGrid';
 import { T } from '../../../constants/flipTokens';
 import { CAMELEON_THEME_OPTIONS } from '../constants';
 import type { CameleonTheme } from '../types';
@@ -130,51 +130,21 @@ export function SettingsPanel({
       </View>
 
       <Text style={styles.sectionLabel}>{t('cameleon:settings.themes', 'Thèmes')}</Text>
-      <View style={styles.themeGrid}>
-        {CAMELEON_THEME_OPTIONS.map((opt) => {
-          const meta = THEME_META[opt.value];
-          const isRandom = opt.value === 'random';
-          const active = isRandom
+      <ThemeGrid<CameleonTheme>
+        options={CAMELEON_THEME_OPTIONS.map((opt) => ({
+          value: opt.value,
+          label: t(opt.labelKey),
+          emoji: THEME_META[opt.value].emoji,
+        }))}
+        isActive={(v) =>
+          v === 'random'
             ? selectedThemes.includes('random')
-            : !selectedThemes.includes('random') && selectedThemes.includes(opt.value);
-          const allowed = isThemeAllowed(opt.value);
-          return (
-            <TouchableOpacity
-              key={opt.value}
-              style={[
-                styles.themeCard,
-                active && allowed && styles.themeCardActive,
-                !allowed && styles.themeCardLocked,
-              ]}
-              onPress={() => (allowed ? onToggleTheme(opt.value) : onRequestUnlock(opt.value))}
-              activeOpacity={0.85}
-            >
-              {!allowed && (
-                <Feather name="lock" size={11} color={T.ink} style={styles.themeLockIcon} />
-              )}
-              <Text style={styles.themeEmoji}>{meta.emoji}</Text>
-              <Text
-                style={[
-                  styles.themeName,
-                  active && allowed && styles.themeNameActive,
-                  !allowed && styles.themeNameLocked,
-                ]}
-              >
-                {t(opt.labelKey)}
-              </Text>
-              <Text
-                style={[
-                  styles.themeDesc,
-                  active && allowed && styles.themeDescActive,
-                  !allowed && styles.themeDescLocked,
-                ]}
-              >
-                {isRandom ? 'Tous mélangés' : meta.desc}
-              </Text>
-            </TouchableOpacity>
-          );
-        })}
-      </View>
+            : !selectedThemes.includes('random') && selectedThemes.includes(v)
+        }
+        isAllowed={isThemeAllowed}
+        onSelect={onToggleTheme}
+        onLockedPress={onRequestUnlock}
+      />
 
       <ChunkyButton
         full
@@ -251,45 +221,5 @@ const styles = StyleSheet.create({
   stepBtnText: { color: T.ink, fontSize: 20, fontWeight: '900', lineHeight: 22 },
   stepValue: { color: T.ink, fontSize: 22, fontWeight: '900', width: 36, textAlign: 'center' },
 
-  themeGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-    marginBottom: 20,
-  },
-  themeCard: {
-    width: '48%',
-    backgroundColor: T.paper,
-    borderWidth: 2,
-    borderColor: T.ink,
-    borderRadius: T.rMd,
-    padding: 12,
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 2,
-    position: 'relative',
-  },
-  themeCardActive: {
-    backgroundColor: T.ink,
-    transform: [{ translateX: 2 }, { translateY: 2 }],
-  },
-  themeCardLocked: {
-    backgroundColor: '#EFEAE3',
-    borderColor: '#DCD3C5',
-    opacity: 0.78,
-    shadowOpacity: 0,
-    elevation: 0,
-  },
-  themeLockIcon: { position: 'absolute', top: 6, right: 6 },
-  themeEmoji: { fontSize: 22, marginBottom: 4 },
-  themeName: { color: T.ink, fontSize: 14, fontWeight: '900', letterSpacing: -0.3 },
-  themeNameActive: { color: '#fff' },
-  themeNameLocked: { color: T.muted },
-  themeDesc: { color: T.inkSoft, fontSize: 11, marginTop: 2 },
-  themeDescActive: { color: 'rgba(255,255,255,0.65)' },
-  themeDescLocked: { color: T.muted },
-
-  startBtn: { marginTop: 4 },
+  startBtn: { marginTop: 20 },
 });

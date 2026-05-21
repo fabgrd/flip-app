@@ -6,3 +6,4 @@ export { MedusaIcon } from './MedusaIcon';
 export { AperoIcon } from './AperoIcon';
 export { CastingIcon } from './CastingIcon';
 export { RedFlagIcon } from './RedFlagIcon';
+export { BeerMugIcon } from './BeerMugIcon';
