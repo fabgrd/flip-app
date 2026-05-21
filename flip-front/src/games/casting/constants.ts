@@ -191,6 +191,24 @@ export function getScenariosForThemes(themes: readonly CastingTheme[]): string[]
 
 export const CASTING_SCENARIOS: string[] = Object.values(CASTING_SCENARIOS_BY_THEME).flat();
 
+export function getScenariosForThemesI18n(
+  themes: readonly CastingTheme[],
+  scenariosData: Record<CastingTheme, readonly string[]>,
+): string[] {
+  if (themes.length === 0) return [...(scenariosData.daily ?? [])];
+  const seen = new Set<string>();
+  const pool: string[] = [];
+  for (const theme of themes) {
+    for (const s of scenariosData[theme] ?? []) {
+      if (!seen.has(s)) {
+        seen.add(s);
+        pool.push(s);
+      }
+    }
+  }
+  return pool;
+}
+
 export const CASTING_LABELS: Record<number, string> = {
   1: 'Catastrophique',
   2: 'Horrible',

@@ -73,9 +73,11 @@ export function CameleonScreen() {
     const safeThemes = selectedThemes.includes('random')
       ? selectedThemes
       : filterAllowed(selectedThemes);
+    const pairsData = t('cameleon:wordPairsByTheme', { returnObjects: true }) as Record<string, Array<{ w: string; c: string }>>;
     startGame({
       overrideDistribution: { undercovers: currentUC, mrWhites: currentMW },
       themes: safeThemes.length > 0 ? safeThemes : ['random'],
+      pairsData,
     });
   };
 

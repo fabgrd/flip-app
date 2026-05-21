@@ -43,4 +43,5 @@ export interface CameleonRoleDistribution {
 export interface StartCameleonOptions {
   overrideDistribution?: Partial<CameleonRoleDistribution>;
   themes?: CameleonTheme[];
+  pairsData?: Record<string, Array<{ w: string; c: string }>>;
 }

@@ -38,7 +38,8 @@ import {
   rfLevelRequiredEntitlement,
   useRedFlagLevelAccess,
 } from '../games/red-flag';
-import redFlagData from '../i18n/locales/fr/red-flag.json';
+import redFlagDataFr from '../i18n/locales/fr/red-flag.json';
+import redFlagDataEn from '../i18n/locales/en/red-flag.json';
 import { Player, RootStackParamList } from '../types';
 
 const REDFLAG_BG = '#E63946';
@@ -46,8 +47,6 @@ const REDFLAG_BG = '#E63946';
 type RedFlagRouteProp = RouteProp<RootStackParamList, 'RedFlag'>;
 
 type RFQuestion = { id: string; t: string; c: string; p: number };
-
-const RF_CATS = redFlagData.categories;
 
 type EntitlementCheck = ReturnType<typeof useEntitlements>['has'];
 
@@ -76,8 +75,8 @@ function shuffle<T>(arr: T[]): T[] {
   return copy;
 }
 
-function getCatById(id: string) {
-  return RF_CATS.find((c) => c.id === id) ?? { id, name: id, color: T.muted };
+function getCatById(id: string, cats: typeof redFlagDataFr.categories) {
+  return cats.find((c) => c.id === id) ?? { id, name: id, color: T.muted };
 }
 
 function getVerdict(pct: number, verdicts: { pctMax: number; title: string; quote: string; color: string }[]) {
@@ -94,6 +93,7 @@ function getVerdict(pct: number, verdicts: { pctMax: number; title: string; quot
 function buildQuestions(
   config: RFQuestionConfig,
   has: EntitlementCheck,
+  data: typeof redFlagDataFr,
 ): { questions: RFQuestion[]; rfMax: number; catMax: Record<RFCategoryId, number> } {
   const safeLevel = clampMaxLevelByEntitlement(config.maxLevel, has);
   const maxPoints = RF_LEVEL_POINTS[safeLevel];
@@ -108,7 +108,7 @@ function buildQuestions(
     const wanted = Math.max(0, Math.round(config.catCounts[catId] ?? 0));
     if (wanted === 0) return;
     const pool = shuffle(
-      redFlagData.questions.filter((q) => q.category === catId && q.points <= maxPoints),
+      data.questions.filter((q) => q.category === catId && q.points <= maxPoints),
     );
     const take = pool.slice(0, wanted);
     take.forEach((q, pi) => {
@@ -373,10 +373,12 @@ const rls = StyleSheet.create({
 function RFPlay({
   questions,
   players,
+  cats,
   onFinish,
 }: {
   questions: RFQuestion[];
   players: Player[];
+  cats: typeof redFlagDataFr.categories;
   onFinish: (playerScores: Record<string, Record<string, number>>) => void;
 }) {
   const { enabled: drinksEnabled } = useDrinksMode();
@@ -387,7 +389,7 @@ function RFPlay({
   const { t } = useTranslation();
   const total = questions.length;
   const currentQ = questions[questionIdx];
-  const cat = getCatById(currentQ.c);
+  const cat = getCatById(currentQ.c, cats);
   const remainingPlayers = players.filter((p) => !answeredIds.has(p.id));
   const progress = total > 0 ? (questionIdx / total) * 100 : 0;
 
@@ -577,6 +579,7 @@ function RFResult({
   playerScores,
   rfMax,
   catMax,
+  cats,
   onReplay,
   onExit,
 }: {
@@ -584,6 +587,7 @@ function RFResult({
   playerScores: Record<string, Record<string, number>>;
   rfMax: number;
   catMax: Record<RFCategoryId, number>;
+  cats: typeof redFlagDataFr.categories;
   onReplay: () => void;
   onExit: () => void;
 }) {
@@ -621,7 +625,7 @@ function RFResult({
             <Text style={res.verdictQuote}>"{verdict.quote}"</Text>
             <View style={res.bars}>
               {RF_CATEGORIES.map((catId) => {
-                const cat = getCatById(catId);
+                const cat = getCatById(catId, cats);
                 const max = catMax[catId] ?? 0;
                 const catPct = max > 0 ? Math.round(((scores[catId] ?? 0) / max) * 100) : 0;
                 if (max === 0) return null;
@@ -703,6 +707,8 @@ export function RedFlagScreen() {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const { has } = useEntitlements();
   const { highestAllowedLevel } = useRedFlagLevelAccess();
+  const { i18n } = useTranslation();
+  const redFlagData = i18n.language.startsWith('en') ? redFlagDataEn : redFlagDataFr;
   const [players, setPlayers] = useState<Player[]>(route.params.players);
   const [step, setStep] = useState<'rules' | 'play' | 'result'>('rules');
   const [playerScores, setPlayerScores] = useState<Record<string, Record<string, number>>>({});
@@ -717,7 +723,7 @@ export function RedFlagScreen() {
   } | null>(null);
 
   const startGame = () => {
-    const built = buildQuestions({ catCounts, maxLevel }, has);
+    const built = buildQuestions({ catCounts, maxLevel }, has, redFlagData);
     if (built.questions.length === 0) return;
     setSession(built);
     setPlayerScores({});
@@ -747,6 +753,7 @@ export function RedFlagScreen() {
       <RFPlay
         questions={session.questions}
         players={players}
+        cats={redFlagData.categories}
         onFinish={(scores) => {
           setPlayerScores(scores);
           setStep('result');
@@ -762,6 +769,7 @@ export function RedFlagScreen() {
         playerScores={playerScores}
         rfMax={session.rfMax}
         catMax={session.catMax}
+        cats={redFlagData.categories}
         onReplay={() => setStep('rules')}
         onExit={() => navigation.goBack()}
       />

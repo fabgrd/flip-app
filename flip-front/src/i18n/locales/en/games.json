@@ -28,6 +28,10 @@
       "purityTest": "5 min"
     }
   },
+  "purityTest": {
+    "title": "Purity Test",
+    "tagline": "How many sins do you carry?"
+  },
   "redFlag": {
     "title": "Are you a Red Flag?",
     "tagline": "Your exes would have loved making you take this test"
@@ -55,9 +59,5 @@
   "leftRight": {
     "title": "Left or Right",
     "tagline": "Place the statement on the political compass"
-  },
-  "purityTest": {
-    "title": "Purity Test",
-    "tagline": "How many sins do you carry?"
   }
 }

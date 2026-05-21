@@ -60,6 +60,25 @@ export interface GameConfig {
 
 export const GAMES: readonly GameConfig[] = [
   {
+    id: 'purity-test',
+    titleKey: 'games:purityTest.title',
+    taglineKey: 'games:purityTest.tagline',
+    icon: PureteIcon,
+    color: 'violet',
+    minPlayers: 1,
+    maxPlayers: 99,
+    playersLabelKey: 'games:labels.players.purityTest',
+    durationLabelKey: 'games:labels.duration.purityTest',
+    route: 'PurityTest',
+    requires: [],
+    variants: [
+      { id: 'spicy', requires: 'spicy_content' },
+      { id: 'hardcore', requires: 'hardcore_content' },
+    ],
+    enabled: true,
+    isNew: true,
+  },
+  {
     id: 'red-flag',
     titleKey: 'games:redFlag.title',
     taglineKey: 'games:redFlag.tagline',
@@ -72,7 +91,7 @@ export const GAMES: readonly GameConfig[] = [
     route: 'RedFlag',
     requires: [],
     enabled: true,
-    isNew: true,
+    isNew: false,
   },
   {
     id: 'casting',
@@ -159,24 +178,6 @@ export const GAMES: readonly GameConfig[] = [
     durationLabelKey: 'games:labels.duration.leftRight',
     route: 'LeftRight',
     requires: [],
-    enabled: true,
-  },
-  {
-    id: 'purity-test',
-    titleKey: 'games:purityTest.title',
-    taglineKey: 'games:purityTest.tagline',
-    icon: PureteIcon,
-    color: 'violet',
-    minPlayers: 1,
-    maxPlayers: 99,
-    playersLabelKey: 'games:labels.players.purityTest',
-    durationLabelKey: 'games:labels.duration.purityTest',
-    route: 'PurityTest',
-    requires: [],
-    variants: [
-      { id: 'spicy', requires: 'spicy_content' },
-      { id: 'hardcore', requires: 'hardcore_content' },
-    ],
     enabled: true,
   },
 ];

@@ -31,6 +31,7 @@ import {
   CASTING_ORANGE,
   CASTING_THEME_OPTIONS,
   getScenariosForThemes,
+  getScenariosForThemesI18n,
   useCastingThemeAccess,
 } from '../games/casting';
 import { CastingResult } from '../games/casting/types';
@@ -116,7 +117,7 @@ function CARules({
         <ThemeGrid
           options={CASTING_THEME_OPTIONS.map((opt) => ({
             value: opt.value,
-            label: opt.label,
+            label: t(`casting:themes.${opt.value}`),
             emoji: opt.emoji,
           }))}
           isActive={(v) => selectedThemes.includes(v as CastingTheme)}
@@ -143,12 +144,13 @@ const rls = StyleSheet.create({
 // ─── Pick Devin ───────────────────────────────────────────────────────────────
 
 function CAPickDevin({ players, onPick }: { players: Player[]; onPick: (idx: number) => void }) {
+  const { t } = useTranslation();
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: T.ink }}>
       <View style={pd.header}>
-        <Text style={pd.mono}>QUI EST LE DEVIN ?</Text>
-        <Text style={pd.title}>Choisis le{'\n'}jury du casting</Text>
-        <Text style={pd.sub}>Le devin observe, juge, et devine les chiffres.</Text>
+        <Text style={pd.mono}>{t('casting:pickDevin.mono')}</Text>
+        <Text style={pd.title}>{t('casting:pickDevin.title')}</Text>
+        <Text style={pd.sub}>{t('casting:pickDevin.sub')}</Text>
       </View>
       <PlayerPickerGrid
         players={players}
@@ -207,18 +209,15 @@ function CAScenario({
         <GameChip color={T.paper}>{t('casting:scenario.devinChip', { name: devin.name })}</GameChip>
       </View>
       <View style={sc.body}>
-        <Text style={sc.mono}>LE SCÉNARIO</Text>
+        <Text style={sc.mono}>{t('casting:scenario.mono')}</Text>
         <GameCard style={{ padding: 28 }}>
           <Text style={sc.scenarioText}>« {scenario} »</Text>
         </GameCard>
-        <Text style={sc.hint}>
-          Lis ce scénario à voix haute.{'\n'}Ensuite, passe le tel à chaque acteur pour qu'il voie
-          son chiffre.
-        </Text>
+        <Text style={sc.hint}>{t('casting:scenario.hint')}</Text>
       </View>
       <View style={sc.footer}>
         <ChunkyButton full color={T.paper} onPress={onNext}>
-          Distribuer les chiffres →
+          {t('casting:scenario.distributeBtn')}
         </ChunkyButton>
       </View>
     </SafeAreaView>
@@ -366,7 +365,7 @@ function CARevealNumber({
   const numBg =
     number <= 3 ? T.cobalt : number <= 6 ? CASTING_ORANGE : number <= 8 ? T.tomato : T.lemon;
   const numFg = number >= 9 ? T.ink : '#fff';
-  const label = CASTING_LABELS[number] ?? '';
+  const label = t(`casting:labels.${number}`);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: T.paper }}>
@@ -381,9 +380,9 @@ function CARevealNumber({
         {!revealed ? (
           <View style={rn.holdWrap}>
             <Text style={rn.spotlight}>🎬</Text>
-            <Text style={rn.holdTitle}>Maintiens pour{'\n'}voir ton chiffre</Text>
+            <Text style={rn.holdTitle}>{t('casting:revealNumber.holdTitle')}</Text>
             <TouchableOpacity style={rn.holdBtn} onPressIn={handleReveal} activeOpacity={0.85}>
-              <Text style={rn.holdBtnText}>HOLD</Text>
+              <Text style={rn.holdBtnText}>{t('casting:revealNumber.holdBtn')}</Text>
             </TouchableOpacity>
           </View>
         ) : (
@@ -533,7 +532,7 @@ function CAPerform({
       <DotBackground color="#fff" opacity={0.04} />
       <View style={pf.body}>
         <Animated.Text style={[pf.action, { transform: [{ scale: scaleAnim }] }]}>
-          ACTION !
+          {t('casting:perform.action')}
         </Animated.Text>
 
         <GameCard style={{ width: '100%', maxWidth: 320 }}>
@@ -553,15 +552,11 @@ function CAPerform({
           ))}
         </View>
 
-        <Text style={pf.hint}>
-          Chaque acteur joue la scène selon son chiffre.{'\n'}
-          <Text style={{ color: CASTING_ORANGE, fontWeight: '800' }}>{devin.name}</Text> observe
-          attentivement.
-        </Text>
+        <Text style={pf.hint}>{t('casting:perform.hint', { devin: devin.name })}</Text>
       </View>
       <View style={pf.footer}>
         <ChunkyButton full color={CASTING_ORANGE} shadowColor={CASTING_ORANGE} onPress={onNext}>
-          Tout le monde a joué → Jugement
+          {t('casting:perform.judgeBtn')}
         </ChunkyButton>
       </View>
     </SafeAreaView>
@@ -650,11 +645,8 @@ function CAGuessPlayer({
 
       <View style={gp.body}>
         <InitialAvatar index={actorIdx} size={88} radius={24} shadowColor={CASTING_ORANGE} />
-        <Text style={gp.question}>
-          Quel chiffre avait{'\n'}
-          {actor.name} ?
-        </Text>
-        {guess !== null && <Text style={gp.guessLabel}>{CASTING_LABELS[guess].toUpperCase()}</Text>}
+        <Text style={gp.question}>{t('casting:guess.question', { name: actor.name })}</Text>
+        {guess !== null && <Text style={gp.guessLabel}>{t(`casting:labels.${guess}`).toUpperCase()}</Text>}
 
         <View style={gp.grid}>
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => {
@@ -837,6 +829,12 @@ function CAResults({
     .map((p, i) => ({ player: p, idx: i, s: sips[i] }))
     .sort((a, b) => b.s - a.s);
 
+  const tagLabel = (tag: string) => {
+    if (tag === 'PILE POIL') return t('casting:results.pilePoil');
+    if (tag === 'PRESQUE') return t('casting:results.presque');
+    return t('casting:results.rates');
+  };
+
   const tagColor = (tag: CastingResult['tag']) => {
     if (tag === 'PILE POIL') return T.mint;
     if (tag === 'PRESQUE') return T.lemon;
@@ -849,9 +847,9 @@ function CAResults({
       <ScrollView contentContainerStyle={res.scroll} showsVerticalScrollIndicator={false}>
         {/* Header */}
         <StickerBadge color={CASTING_ORANGE} rotation={-3} textColor="#fff">
-          LE VERDICT
+          {t('casting:results.badge')}
         </StickerBadge>
-        <Text style={res.title}>Les résultats{'\n'}du casting</Text>
+        <Text style={res.title}>{t('casting:results.title')}</Text>
 
         {/* Stats */}
         <View style={res.statsRow}>
@@ -913,10 +911,10 @@ function CAResults({
               </View>
               <View style={res.tagWrap}>
                 <View style={[res.tagBadge, { backgroundColor: tc }]}>
-                  <Text style={[res.tagText, { color: tagFg }]}>{r.tag}</Text>
+                  <Text style={[res.tagText, { color: tagFg }]}>{tagLabel(r.tag)}</Text>
                 </View>
                 <Text style={res.drinkInfo}>
-                  {r.player.name} {drinksEnabled ? 'boit' : 'prend'} {r.playerSips}
+                  {t(drinksEnabled ? 'casting:results.actorDrinks' : 'casting:results.actorSober', { name: r.player.name, count: r.playerSips })}
                 </Text>
               </View>
             </View>
@@ -1106,6 +1104,7 @@ function CastingGame({
   onExit: () => void;
   onSettings: () => void;
 }) {
+  const { t } = useTranslation();
   const [players, setPlayers] = useState<Player[]>(initialPlayers);
   const [step, setStep] = useState<CastingStep>('rules');
   const [devinIdx, setDevinIdx] = useState<number | null>(null);
@@ -1141,8 +1140,10 @@ function CastingGame({
   const pickDevin = (idx: number) => {
     setDevinIdx(idx);
     const safeThemes = filterAllowed(selectedThemes);
-    const pool = getScenariosForThemes(safeThemes.length > 0 ? safeThemes : ['daily']);
-    setScenario(pickRandom(pool));
+    const activeThemes = safeThemes.length > 0 ? safeThemes : ['daily' as CastingTheme];
+    const scenariosData = t('casting:scenarios', { returnObjects: true }) as Record<CastingTheme, string[]>;
+    const pool = getScenariosForThemesI18n(activeThemes, scenariosData);
+    setScenario(pickRandom(pool.length > 0 ? pool : getScenariosForThemes(activeThemes)));
     const nums: Record<number, number> = {};
     players.forEach((_, i) => {
       if (i !== idx) nums[i] = Math.floor(Math.random() * 10) + 1;

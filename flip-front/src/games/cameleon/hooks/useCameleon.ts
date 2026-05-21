@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import type { Player } from '../../../types';
 import { shuffleArray } from '../../../utils/array';
-import { DEFAULT_DISTRIBUTION_BY_PLAYER_COUNT, getWordPairsForThemes } from '../constants';
+import { DEFAULT_DISTRIBUTION_BY_PLAYER_COUNT, getWordPairsForThemes, getWordPairsForThemesLocalized } from '../constants';
 import type {
   CameleonAssignedPlayer,
   CameleonGameState,
@@ -62,6 +62,7 @@ export function useCameleon(initialPlayers: Player[]) {
     (options?: StartCameleonOptions) => {
       const override = options?.overrideDistribution ?? {};
       const themes = options?.themes ?? ['random'];
+      const pairsData = options?.pairsData;
       const maxImpostors = Math.floor(playerCount / 2);
       let undercovers = Math.max(
         0,
@@ -85,7 +86,9 @@ export function useCameleon(initialPlayers: Player[]) {
       const civilians = Math.max(0, playerCount - undercovers - mrWhites);
 
       const shuffledPlayers = shuffleArray(initialPlayers);
-      const availableWordPairs = getWordPairsForThemes(themes);
+      const availableWordPairs = pairsData
+        ? getWordPairsForThemesLocalized(themes, pairsData)
+        : getWordPairsForThemes(themes);
       const wordPair = availableWordPairs[Math.floor(Math.random() * availableWordPairs.length)];
 
       const assigned: CameleonAssignedPlayer[] = [];

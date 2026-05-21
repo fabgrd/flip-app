@@ -28,6 +28,10 @@
       "purityTest": "5 min"
     }
   },
+  "purityTest": {
+    "title": "Test de Pureté",
+    "tagline": "Combien de péchés à ton actif ?"
+  },
   "redFlag": {
     "title": "Es-tu un Red Flag ?",
     "tagline": "Tes exs auraient aimé te faire passer ce test"
@@ -55,9 +59,5 @@
   "leftRight": {
     "title": "Gauche ou Droite",
     "tagline": "Place la phrase sur l'échiquier politique"
-  },
-  "purityTest": {
-    "title": "Test de Pureté",
-    "tagline": "Combien de péchés à ton actif ?"
   }
 }

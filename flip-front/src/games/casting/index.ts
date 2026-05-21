@@ -5,6 +5,7 @@ export {
   CASTING_SCENARIOS_BY_THEME,
   CASTING_THEME_OPTIONS,
   getScenariosForThemes,
+  getScenariosForThemesI18n,
   LIGHT_COLORS,
   PLAYER_COLORS,
 } from './constants';

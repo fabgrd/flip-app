@@ -45,13 +45,13 @@ interface PlanDef {
   price: string;
   period: string;
   perWeek?: string;
-  withDiscount?: boolean;
+  discountLabel?: string;
 }
 
 const PLANS: readonly PlanDef[] = [
   { id: 'weekly', price: '2,99 €', period: '/sem' },
-  { id: 'monthly', price: '4,99 €', period: '/mois', perWeek: '1,15 €' },
-  { id: 'annual', price: '29,99 €', period: '/an', perWeek: '0,38 €', withDiscount: true },
+  { id: 'monthly', price: '4,99 €', period: '/mois', perWeek: '1,15 €', discountLabel: '−62%' },
+  { id: 'annual', price: '29,99 €', period: '/an', perWeek: '0,58 €', discountLabel: '−80%' },
 ];
 
 function CrownIcon({ size = 48 }: { size?: number }) {
@@ -103,14 +103,12 @@ function PlanButton({
   plan,
   label,
   perWeekTemplate,
-  discountLabel,
   selected,
   onPress,
 }: {
   plan: PlanDef;
   label: string;
   perWeekTemplate: string;
-  discountLabel: string;
   selected: boolean;
   onPress: () => void;
 }) {
@@ -127,9 +125,9 @@ function PlanButton({
       <View style={planStyles.labelBlock}>
         <View style={planStyles.labelRow}>
           <Text style={[planStyles.label, selected && planStyles.labelSelected]}>{label}</Text>
-          {plan.withDiscount && (
+          {plan.discountLabel && (
             <View style={planStyles.badge}>
-              <Text style={planStyles.badgeText}>{discountLabel}</Text>
+              <Text style={planStyles.badgeText}>{plan.discountLabel}</Text>
             </View>
           )}
         </View>
@@ -215,7 +213,6 @@ export function PaywallModal({ visible, onClose }: PaywallModalProps) {
                 plan={plan}
                 label={planLabel(plan.id)}
                 perWeekTemplate={t('paywall:plans.perWeek', { price: '{{price}}' })}
-                discountLabel={t('paywall:plans.discount')}
                 selected={selectedPlan === plan.id}
                 onPress={() => setSelectedPlan(plan.id)}
               />

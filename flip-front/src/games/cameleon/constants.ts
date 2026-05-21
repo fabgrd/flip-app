@@ -219,3 +219,31 @@ export function getWordPairsForThemes(themes: CameleonTheme[]): CameleonWordPair
 export function getWordPairsForTheme(theme: CameleonTheme): CameleonWordPair[] {
   return getWordPairsForThemes([theme]);
 }
+
+export function getWordPairsForThemesLocalized(
+  themes: CameleonTheme[],
+  pairsData: Record<string, Array<{ w: string; c: string }>>,
+): CameleonWordPair[] {
+  const toWordPair = (p: { w: string; c: string }): CameleonWordPair => ({
+    civilianWord: p.w,
+    cameleonWord: p.c,
+  });
+
+  if (themes.length === 0 || themes.includes('random')) {
+    return Object.values(pairsData).flat().map(toWordPair);
+  }
+
+  const seen = new Set<string>();
+  const result: CameleonWordPair[] = [];
+  for (const theme of themes) {
+    if (theme === 'random') continue;
+    for (const pair of (pairsData[theme] ?? []).map(toWordPair)) {
+      const key = `${pair.civilianWord}|${pair.cameleonWord}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        result.push(pair);
+      }
+    }
+  }
+  return result.length > 0 ? result : Object.values(pairsData).flat().map(toWordPair);
+}
