@@ -18,6 +18,7 @@ import {
   CardCrosshatch,
   ChunkyButton,
   DotBackground,
+  DrinkModeToggle,
   GameCard,
   GameChip,
   GameMenuActions,
@@ -352,6 +353,7 @@ function APRules({
         </View>
 
         <View style={rls.cardWrap}>
+          <DrinkModeToggle accentColor={T.pink} style={{ marginBottom: 14 }} />
           <GameCard style={{ borderRadius: 22, padding: 18 }}>
             <Text style={rls.cardLabel}>COMMENT ON JOUE</Text>
             {RULES.map((s, i) => (
@@ -1285,7 +1287,7 @@ function AperoGame({ players: initialPlayers, onExit }: { players: Player[]; onE
         onPlayersChange={handlePlayersChange}
         onStart={() => setStep('pick')}
         onExit={onExit}
-        onSettings={() => { }}
+        onSettings={() => {}}
       />
     );
   }

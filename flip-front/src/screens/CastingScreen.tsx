@@ -11,6 +11,7 @@ import {
   CastingIcon,
   ChunkyButton,
   DotBackground,
+  DrinkModeToggle,
   GameCard,
   GameChip,
   GameMenuActions,
@@ -158,6 +159,8 @@ function CARules({
         contentContainerStyle={rls.scroll}
         showsVerticalScrollIndicator={false}
       >
+        <DrinkModeToggle accentColor={CASTING_ORANGE} style={{ marginBottom: 14 }} />
+
         <View style={rls.drinkCard}>
           <Text style={rls.drinkLabel}>{drinkColumnLabel(drinksEnabled)}</Text>
           {DRINKS.map((d) => (

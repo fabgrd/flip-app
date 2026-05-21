@@ -9,6 +9,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   ChunkyButton,
   DotBackground,
+  DrinkModeToggle,
   GameMenuActions,
   PlayersModal,
   PureteIcon,
@@ -20,6 +21,7 @@ import { THEME_COLORS, THEME_LABELS } from '../games/purity-test/constants';
 import { usePurityTest } from '../games/purity-test/hooks/usePurityTest';
 import type { LevelKey, Theme } from '../games/purity-test/types';
 import { usePurityLevelAccess } from '../games/purity-test/usePurityLevelAccess';
+import { useDrinksMode } from '../hooks';
 import { Player, RootStackParamList } from '../types';
 
 type PurityTestScreenRouteProp = RouteProp<RootStackParamList, 'PurityTest'>;
@@ -121,28 +123,7 @@ function PurityRules({
 
       <View style={pr.cardWrap}>
         <ScrollView contentContainerStyle={pr.cardScroll} showsVerticalScrollIndicator={false}>
-          <View style={pr.card}>
-            <Text style={pr.cardLabel}>REPARTITION DES THEMES</Text>
-            <Text style={pr.helperText}>Total: {themeTotal} questions</Text>
-            {(Object.keys(themeCounts) as Theme[]).map((theme) => (
-              <View key={theme} style={pr.sliderRow}>
-                <View style={pr.sliderHeader}>
-                  <Text style={pr.sliderLabel}>{THEME_LABELS[theme]}</Text>
-                  <Text style={pr.sliderValue}>{themeCounts[theme]}</Text>
-                </View>
-                <Slider
-                  minimumValue={0}
-                  maximumValue={10}
-                  step={1}
-                  value={themeCounts[theme]}
-                  onValueChange={(value: number) => onChangeThemeCount(theme, value)}
-                  minimumTrackTintColor={THEME_COLORS[theme]}
-                  maximumTrackTintColor="#E6E2DD"
-                  thumbTintColor={T.ink}
-                />
-              </View>
-            ))}
-          </View>
+          <DrinkModeToggle accentColor={T.violet} />
 
           <View style={pr.card}>
             <Text style={pr.cardLabel}>NIVEAU DE QUESTIONS</Text>
@@ -158,7 +139,7 @@ function PurityRules({
                     style={[
                       pr.levelBtn,
                       isActive &&
-                        allowed && { backgroundColor: LEVEL_COLORS[i], borderColor: T.ink },
+                      allowed && { backgroundColor: LEVEL_COLORS[i], borderColor: T.ink },
                       isSelected && allowed && pr.levelBtnSelected,
                       !allowed && pr.levelBtnLocked,
                     ]}
@@ -181,6 +162,29 @@ function PurityRules({
                 );
               })}
             </View>
+          </View>
+
+          <View style={pr.card}>
+            <Text style={pr.cardLabel}>REPARTITION DES THEMES</Text>
+            <Text style={pr.helperText}>Total: {themeTotal} questions</Text>
+            {(Object.keys(themeCounts) as Theme[]).map((theme) => (
+              <View key={theme} style={pr.sliderRow}>
+                <View style={pr.sliderHeader}>
+                  <Text style={pr.sliderLabel}>{THEME_LABELS[theme]}</Text>
+                  <Text style={pr.sliderValue}>{themeCounts[theme]}</Text>
+                </View>
+                <Slider
+                  minimumValue={0}
+                  maximumValue={10}
+                  step={1}
+                  value={themeCounts[theme]}
+                  onValueChange={(value: number) => onChangeThemeCount(theme, value)}
+                  minimumTrackTintColor={THEME_COLORS[theme]}
+                  maximumTrackTintColor="#E6E2DD"
+                  thumbTintColor={T.ink}
+                />
+              </View>
+            ))}
           </View>
         </ScrollView>
       </View>
@@ -307,6 +311,7 @@ export function PurityTestScreen() {
   const route = useRoute<PurityTestScreenRouteProp>();
   const navigation = useNavigation();
   const { t } = useTranslation();
+  const { enabled: drinksEnabled } = useDrinksMode();
   const { highestAllowedLevel } = usePurityLevelAccess();
   const [players, setPlayers] = useState<Player[]>(route.params.players as Player[]);
   const [showRules, setShowRules] = useState(true);
@@ -419,9 +424,11 @@ export function PurityTestScreen() {
         </View>
         <Text style={styles.questionPrefix}>{t('purityTest:game.questionPrefix')}</Text>
         <Text style={styles.questionText}>{currentQuestion.text}</Text>
-        <View style={styles.pointsBadge}>
-          <Text style={styles.pointsText}>
-            +{currentQuestion.points.yes} pt{currentQuestion.points.yes > 1 ? 's' : ''}
+        <View style={[styles.pointsBadge, drinksEnabled && styles.drinkBadge]}>
+          <Text style={[styles.pointsText, drinksEnabled && styles.drinkText]}>
+            {drinksEnabled
+              ? `🍻 ${currentQuestion.points.yes} gorgée${currentQuestion.points.yes > 1 ? 's' : ''} si oui`
+              : `+${currentQuestion.points.yes} pt${currentQuestion.points.yes > 1 ? 's' : ''}`}
           </Text>
         </View>
       </View>
@@ -546,6 +553,8 @@ const styles = StyleSheet.create({
     paddingVertical: 3,
   },
   pointsText: { color: T.ink, fontSize: 12, fontWeight: '900' },
+  drinkBadge: { backgroundColor: T.tomato, borderColor: T.ink },
+  drinkText: { color: '#fff' },
 
   cardsArea: { flex: 1, alignItems: 'center', justifyContent: 'center' },
 

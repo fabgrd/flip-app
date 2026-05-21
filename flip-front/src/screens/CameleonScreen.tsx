@@ -9,6 +9,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ChunkyButton, DotBackground, GameMenuActions, PopModal } from '../components/common';
 import { T } from '../constants/flipTokens';
 import { useCameleon, useCameleonThemeAccess } from '../games/cameleon';
+import { useDrinksMode } from '../hooks';
 import {
   ActionBar,
   MrWhiteGuessModal,
@@ -42,6 +43,8 @@ export function CameleonScreen() {
   const { t } = useTranslation();
   const { players } = route.params as { players: Player[] };
   const [localPlayers, setLocalPlayers] = useState(players);
+  const { enabled: drinksEnabled } = useDrinksMode();
+  const [eliminationDrink, setEliminationDrink] = useState<string | null>(null);
 
   const {
     gameState,
@@ -112,15 +115,35 @@ export function CameleonScreen() {
               : t('cameleon:roles.civilian');
         setEliminatedForModal({ name: eliminated.name, avatar: eliminated.avatar });
         setEliminationNotice(t('cameleon:notices.eliminatedRole', { role: roleLabel }));
-        const timer = setTimeout(() => {
-          setEliminationNotice(null);
-          setEliminatedForModal(null);
-          if (!gameOver) proceedAfterResults();
-        }, 1500);
+        if (drinksEnabled) {
+          const isImpostor = eliminated.role === 'cameleon' || eliminated.role === 'mrWhite';
+          setEliminationDrink(
+            isImpostor
+              ? `🍻 ${eliminated.name} bois 3 gorgées (démasqué·e !)`
+              : `🍻 ${eliminated.name} bois 2 gorgées (mauvais vote du groupe)`,
+          );
+        }
+        const timer = setTimeout(
+          () => {
+            setEliminationNotice(null);
+            setEliminatedForModal(null);
+            setEliminationDrink(null);
+            if (!gameOver) proceedAfterResults();
+          },
+          drinksEnabled ? 2400 : 1500,
+        );
         return () => clearTimeout(timer);
       }
     }
-  }, [phase, selectedForElimination, gameState.players, t, gameOver, proceedAfterResults]);
+  }, [
+    phase,
+    selectedForElimination,
+    gameState.players,
+    t,
+    gameOver,
+    proceedAfterResults,
+    drinksEnabled,
+  ]);
 
   useEffect(() => {
     if (phase === 'results' && gameOver) {
@@ -307,7 +330,9 @@ export function CameleonScreen() {
         avatar={eliminatedForModal?.avatar}
         badgeEmoji="❌"
         badgeColor="#C62828"
-      />
+      >
+        {eliminationDrink && <Text style={styles.drinkInstruction}>{eliminationDrink}</Text>}
+      </PopModal>
       <MrWhiteGuessModal
         visible={!!mrWhiteToGuessId}
         name={mrWhitePlayer?.name}
@@ -375,4 +400,17 @@ const styles = StyleSheet.create({
     lineHeight: 38,
   },
   phaseSubtitle: { color: T.inkSoft, fontSize: 14, marginTop: 6, lineHeight: 20 },
+  drinkInstruction: {
+    marginTop: 12,
+    color: T.ink,
+    fontSize: 15,
+    fontWeight: '800',
+    textAlign: 'center',
+    backgroundColor: T.lemon,
+    borderWidth: 1.5,
+    borderColor: T.ink,
+    borderRadius: 12,
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+  },
 });

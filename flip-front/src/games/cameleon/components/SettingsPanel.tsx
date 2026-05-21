@@ -3,6 +3,7 @@ import { TFunction } from 'i18next';
 import React from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ChunkyButton } from '../../../components/common/ChunkyButton';
+import { DrinkModeToggle } from '../../../components/common/DrinkModeToggle';
 import { T } from '../../../constants/flipTokens';
 import { CAMELEON_THEME_OPTIONS } from '../constants';
 import type { CameleonTheme } from '../types';
@@ -55,6 +56,8 @@ export function SettingsPanel({
       contentContainerStyle={styles.container}
       showsVerticalScrollIndicator={false}
     >
+      <DrinkModeToggle accentColor={T.mint} style={{ marginBottom: 12 }} />
+
       <View style={styles.statsRow}>
         <View style={[styles.statCard, { backgroundColor: T.paper }]}>
           <Text style={styles.statValue}>{playersCount}</Text>

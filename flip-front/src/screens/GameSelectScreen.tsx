@@ -1,4 +1,4 @@
-import { Feather } from '@expo/vector-icons';
+import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useState } from 'react';
@@ -116,7 +116,10 @@ export function GameSelectScreen() {
           onPress={() => handleSelect(games[Math.floor(Math.random() * games.length)].id)}
           style={{ marginTop: 4 }}
         >
-          {`🎲  ${t('games:selection.surprise')}`}
+          <View style={styles.surpriseRow}>
+            <Text style={styles.surpriseText}>{t('games:selection.surprise')}</Text>
+            <MaterialCommunityIcons name="dice-multiple" size={20} color="#fff" />
+          </View>
         </ChunkyButton>
       </ScrollView>
 
@@ -235,4 +238,6 @@ const styles = StyleSheet.create({
     transform: [{ rotate: '6deg' }],
   },
   favBadgeText: { color: '#fff', fontSize: 11, fontWeight: '900' },
+  surpriseRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  surpriseText: { color: '#fff', fontSize: 16, fontWeight: '900', letterSpacing: -0.3 },
 });

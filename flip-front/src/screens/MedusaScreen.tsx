@@ -18,6 +18,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   ChunkyButton,
   DotBackground,
+  DrinkModeToggle,
   GameCard,
   GameChip,
   GameMenuActions,
@@ -127,6 +128,10 @@ function MDRules({
 
       <View style={{ flex: 1 }} />
 
+      <View style={rls.toggleWrap}>
+        <DrinkModeToggle accentColor={T.cobalt} />
+      </View>
+
       <View style={rls.footer}>
         <ChunkyButton
           full
@@ -179,6 +184,7 @@ const rls = StyleSheet.create({
     letterSpacing: -0.2,
     marginTop: 6,
   },
+  toggleWrap: { paddingHorizontal: 20, paddingBottom: 12 },
   footer: { padding: 20, paddingBottom: 32 },
 });
 

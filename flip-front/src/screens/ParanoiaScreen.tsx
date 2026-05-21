@@ -19,6 +19,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   ChunkyButton,
   DotBackground,
+  DrinkModeToggle,
   GameCard,
   GameChip,
   GameMenuActions,
@@ -30,6 +31,7 @@ import {
 import { T } from '../constants/flipTokens';
 import { ContentItem, useGameContent } from '../content';
 import { ParanoiaHistoryEntry, ParanoiaOrder, ParanoiaStep } from '../games/paranoia';
+import { useDrinksMode } from '../hooks';
 import { Player, RootStackParamList } from '../types';
 import { shuffleArray } from '../utils/array';
 
@@ -117,6 +119,10 @@ function PNRules({
 
       <View style={{ flex: 1 }} />
 
+      <View style={rules.toggleWrap}>
+        <DrinkModeToggle accentColor={T.teal} />
+      </View>
+
       <View style={rules.footer}>
         <ChunkyButton
           full
@@ -169,6 +175,7 @@ const rules = StyleSheet.create({
     letterSpacing: -0.2,
     marginTop: 6,
   },
+  toggleWrap: { paddingHorizontal: 20, paddingBottom: 12 },
   footer: { padding: 20, paddingBottom: 32 },
 });
 
@@ -649,6 +656,10 @@ function PNReveal({
   pickedPlayerName: string;
   onNext: () => void;
 }) {
+  const { enabled: drinksEnabled } = useDrinksMode();
+  // Drink rule: revealed → the picked player drinks 2 sips. Kept secret → the target drinks 1.
+  const drinker = won ? targetName : pickedPlayerName;
+  const sips = won ? 1 : 2;
   return (
     <SafeAreaView style={[rev.screen, { backgroundColor: won ? T.mint : T.teal }]}>
       <DotBackground color={T.ink} opacity={0.1} />
@@ -684,6 +695,18 @@ function PNReveal({
           </GameCard>
         )}
       </View>
+
+      {drinksEnabled && (
+        <View style={rev.drinkBanner}>
+          <Text style={rev.drinkBannerEmoji}>🍻</Text>
+          <Text style={rev.drinkBannerText}>
+            <Text style={{ fontWeight: '900' }}>{drinker}</Text> bois{' '}
+            <Text style={{ fontWeight: '900' }}>
+              {sips} gorgée{sips > 1 ? 's' : ''}
+            </Text>
+          </Text>
+        </View>
+      )}
 
       <View style={rev.footer}>
         <ChunkyButton full color={T.paper} onPress={onNext}>
@@ -726,6 +749,26 @@ const rev = StyleSheet.create({
   answerLabel: { color: T.muted, fontSize: 11, fontWeight: '700', letterSpacing: 1.5 },
   answerName: { color: T.ink, fontSize: 20, fontWeight: '900', letterSpacing: -0.4 },
   wonText: { color: T.ink, fontSize: 16, lineHeight: 24 },
+  drinkBanner: {
+    marginHorizontal: 20,
+    marginBottom: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    backgroundColor: T.paper,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    shadowColor: T.ink,
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 3,
+  },
+  drinkBannerEmoji: { fontSize: 22 },
+  drinkBannerText: { flex: 1, color: T.ink, fontSize: 15, letterSpacing: -0.2 },
   footer: { padding: 20, paddingBottom: 32 },
 });
 

@@ -11,7 +11,7 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ChunkyButton, DotBackground } from '../components';
+import { ChunkyButton, DotBackground, SuggestButton } from '../components';
 import { T } from '../constants/flipTokens';
 import { useDrinksMode } from '../hooks';
 import { usePaywall } from '../paywall';
@@ -129,6 +129,14 @@ export function SettingsScreen() {
                 </TouchableOpacity>
               );
             })}
+          </View>
+        </View>
+
+        {/* Suggest */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>{t('settings:suggest.label')}</Text>
+          <View style={styles.card}>
+            <SuggestButton />
           </View>
         </View>
 

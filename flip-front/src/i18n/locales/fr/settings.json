@@ -13,6 +13,19 @@
     "version": "Version {{version}}",
     "description": "FL!P - Le jeu d'alcool ultime pour animer vos soirées entre amis !"
   },
+  "suggest": {
+    "label": "Proposer une question",
+    "hint": "Tu as une idée de question ou de phrase pour un jeu ?",
+    "title": "Proposer une question",
+    "gameLabel": "Pour quel jeu ?",
+    "allGames": "Tous les jeux",
+    "questionLabel": "Ta question / phrase",
+    "placeholder": "Ex : « N'as-tu jamais mangé debout au-dessus de l'évier ? »",
+    "submit": "Envoyer ma suggestion",
+    "successTitle": "Merci !",
+    "successDesc": "On lira ta suggestion avec attention. Les meilleures questions finissent dans le jeu 🤞",
+    "close": "Fermer"
+  },
   "drinks": {
     "title": "Mode jeu à boire",
     "label": "Distribuer les gorgées",

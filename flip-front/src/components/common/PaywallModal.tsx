@@ -23,9 +23,9 @@ interface PlanDef {
 }
 
 const PLANS: readonly PlanDef[] = [
-  { id: 'annual', price: '19,99 €', period: '/an', perWeek: '0,38 €', withDiscount: true },
-  { id: 'monthly', price: '4,99 €', period: '/mois', perWeek: '1,15 €' },
   { id: 'weekly', price: '2,99 €', period: '/sem' },
+  { id: 'monthly', price: '4,99 €', period: '/mois', perWeek: '1,15 €' },
+  { id: 'annual', price: '19,99 €', period: '/an', perWeek: '0,38 €', withDiscount: true },
 ];
 
 function CrownIcon({ size = 48 }: { size?: number }) {

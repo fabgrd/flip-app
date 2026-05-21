@@ -24,7 +24,7 @@ import { RootStackParamList } from '../types';
 type HomeNav = StackNavigationProp<RootStackParamList, 'Home'>;
 
 export function HomeScreen() {
-  useEffect(() => { setDevTier('free'); }, []);
+  useEffect(() => { setDevTier('premium'); }, []);
   const navigation = useNavigation<HomeNav>();
   const { t } = useTranslation();
   const { players, addPlayer, removePlayer, updatePlayerAvatar } = usePlayers();

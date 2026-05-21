@@ -10,6 +10,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   ChunkyButton,
   DotBackground,
+  DrinkModeToggle,
   GameCard,
   GameMenuActions,
   PlayersModal,
@@ -20,6 +21,8 @@ import {
 } from '../components';
 import { T } from '../constants/flipTokens';
 import { useEntitlements } from '../entitlements';
+import { useDrinksMode } from '../hooks';
+import type { RFCategoryId, RFLevelKey, RFQuestionConfig } from '../games/red-flag';
 import {
   RF_CATEGORIES,
   RF_CATEGORY_COLORS,
@@ -33,7 +36,6 @@ import {
   rfLevelRequiredEntitlement,
   useRedFlagLevelAccess,
 } from '../games/red-flag';
-import type { RFCategoryId, RFLevelKey, RFQuestionConfig } from '../games/red-flag';
 import redFlagData from '../i18n/locales/fr/red-flag.json';
 import { Player, RootStackParamList } from '../types';
 
@@ -254,28 +256,7 @@ function RFRules({
 
       <View style={rls.cardWrap}>
         <ScrollView contentContainerStyle={rls.cardScroll} showsVerticalScrollIndicator={false}>
-          <View style={rls.card}>
-            <Text style={rls.cardLabel}>REPARTITION DES THEMES</Text>
-            <Text style={rls.helperText}>Total: {catTotal} questions</Text>
-            {RF_CATEGORIES.map((cat) => (
-              <View key={cat} style={rls.sliderRow}>
-                <View style={rls.sliderHeader}>
-                  <Text style={rls.sliderLabel}>{RF_CATEGORY_LABELS[cat]}</Text>
-                  <Text style={rls.sliderValue}>{catCounts[cat] ?? 0}</Text>
-                </View>
-                <Slider
-                  minimumValue={0}
-                  maximumValue={10}
-                  step={1}
-                  value={catCounts[cat] ?? 0}
-                  onValueChange={(value: number) => onChangeCatCount(cat, Math.round(value))}
-                  minimumTrackTintColor={RF_CATEGORY_COLORS[cat]}
-                  maximumTrackTintColor="#E6E2DD"
-                  thumbTintColor={T.ink}
-                />
-              </View>
-            ))}
-          </View>
+          <DrinkModeToggle accentColor={REDFLAG_BG} />
 
           <View style={rls.card}>
             <Text style={rls.cardLabel}>NIVEAU DE QUESTIONS</Text>
@@ -291,7 +272,7 @@ function RFRules({
                     style={[
                       rls.levelBtn,
                       isActive &&
-                        allowed && { backgroundColor: RF_LEVEL_COLORS[level], borderColor: T.ink },
+                      allowed && { backgroundColor: RF_LEVEL_COLORS[level], borderColor: T.ink },
                       isSelected && allowed && rls.levelBtnSelected,
                       !allowed && rls.levelBtnLocked,
                     ]}
@@ -314,6 +295,29 @@ function RFRules({
                 );
               })}
             </View>
+          </View>
+
+          <View style={rls.card}>
+            <Text style={rls.cardLabel}>REPARTITION DES THEMES</Text>
+            <Text style={rls.helperText}>Total: {catTotal} questions</Text>
+            {RF_CATEGORIES.map((cat) => (
+              <View key={cat} style={rls.sliderRow}>
+                <View style={rls.sliderHeader}>
+                  <Text style={rls.sliderLabel}>{RF_CATEGORY_LABELS[cat]}</Text>
+                  <Text style={rls.sliderValue}>{catCounts[cat] ?? 0}</Text>
+                </View>
+                <Slider
+                  minimumValue={0}
+                  maximumValue={10}
+                  step={1}
+                  value={catCounts[cat] ?? 0}
+                  onValueChange={(value: number) => onChangeCatCount(cat, Math.round(value))}
+                  minimumTrackTintColor={RF_CATEGORY_COLORS[cat]}
+                  maximumTrackTintColor="#E6E2DD"
+                  thumbTintColor={T.ink}
+                />
+              </View>
+            ))}
           </View>
         </ScrollView>
       </View>
@@ -451,6 +455,7 @@ function RFPlay({
   players: Player[];
   onFinish: (playerScores: Record<string, Record<string, number>>) => void;
 }) {
+  const { enabled: drinksEnabled } = useDrinksMode();
   const [questionIdx, setQuestionIdx] = useState(0);
   const [answeredIds, setAnsweredIds] = useState<Set<string>>(new Set());
   const playerScores = useRef<Record<string, Record<string, number>>>({});
@@ -512,8 +517,12 @@ function RFPlay({
         </View>
         <Text style={play.questionPrefix}>AS-TU DÉJÀ...</Text>
         <Text style={play.questionText}>{currentQ.t} ?</Text>
-        <View style={play.ptsBadge}>
-          <Text style={play.ptsBadgeText}>🚩 +{currentQ.p} pts</Text>
+        <View style={[play.ptsBadge, drinksEnabled && play.drinkBadge]}>
+          <Text style={[play.ptsBadgeText, drinksEnabled && play.drinkBadgeText]}>
+            {drinksEnabled
+              ? `🍻 ${currentQ.p} gorgée${currentQ.p > 1 ? 's' : ''} si oui`
+              : `🚩 +${currentQ.p} pts`}
+          </Text>
         </View>
       </View>
 
@@ -628,6 +637,8 @@ const play = StyleSheet.create({
     paddingVertical: 3,
   },
   ptsBadgeText: { color: T.ink, fontSize: 12, fontWeight: '900' },
+  drinkBadge: { backgroundColor: REDFLAG_BG, borderColor: T.ink },
+  drinkBadgeText: { color: '#fff' },
 
   cardsArea: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   hint: { alignItems: 'center', paddingBottom: 20 },
