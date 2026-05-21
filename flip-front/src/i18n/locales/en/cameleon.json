@@ -123,5 +123,36 @@
     "redDeadRedemption": "Red Dead Redemption",
     "onePiece": "One Piece",
     "dragonBall": "Dragon Ball"
+  },
+  "ui": {
+    "title": "Chameleon",
+    "tagline": "Unmask the impostor",
+    "modalTitle": "The Chameleon",
+    "start": "Start the game 🦎",
+    "steps": [
+      {
+        "n": "1",
+        "title": "Pass the phone around",
+        "desc": "Everyone sees their secret word… except the chameleon."
+      },
+      {
+        "n": "2",
+        "title": "One clue each",
+        "desc": "One word, no more. Not too obvious, not too vague."
+      },
+      {
+        "n": "3",
+        "title": "Discuss",
+        "desc": "Debate — who seems to not know what they're talking about?"
+      },
+      {
+        "n": "4",
+        "title": "Everyone votes",
+        "desc": "Point out the impostor. If unmasked, the civilians win."
+      }
+    ],
+    "whoIsTitle": "Who is\nthe chameleon?",
+    "drinkCaught": "🍻 {{name}} drink 3 sips (unmasked!)",
+    "drinkBadVote": "🍻 {{name}} drink 2 sips (bad group vote)"
   }
 }

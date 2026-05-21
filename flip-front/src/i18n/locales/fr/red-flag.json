@@ -1,109 +1,670 @@
 {
   "categories": [
-    { "id": "stalker",       "name": "Stalker",       "color": "#FF5B3A" },
-    { "id": "manipulateur",  "name": "Manipulateur",  "color": "#9B5BFF" },
-    { "id": "narcisse",      "name": "Narcisse",      "color": "#FFD23F" },
-    { "id": "drama",         "name": "Drama",         "color": "#E63946" },
-    { "id": "collant",       "name": "Collant",       "color": "#FF8FB1" }
+    {
+      "id": "stalker",
+      "name": "Stalker",
+      "color": "#FF5B3A"
+    },
+    {
+      "id": "manipulateur",
+      "name": "Manipulateur",
+      "color": "#9B5BFF"
+    },
+    {
+      "id": "narcisse",
+      "name": "Narcisse",
+      "color": "#FFD23F"
+    },
+    {
+      "id": "drama",
+      "name": "Drama",
+      "color": "#E63946"
+    },
+    {
+      "id": "collant",
+      "name": "Collant",
+      "color": "#FF8FB1"
+    }
   ],
   "questions": [
-    { "id": "stk_2_1",  "text": "regardé les stories de ton ex via un compte secondaire parce qu'il/elle t'avait bloqué·e",                       "category": "stalker",      "points": 2 },
-    { "id": "stk_2_2",  "text": "cherché le/la nouveau·elle partenaire de ton ex sur les réseaux le jour de la rupture",                          "category": "stalker",      "points": 2 },
-    { "id": "stk_2_3",  "text": "googler quelqu'un avant un premier rendez-vous pour en savoir plus sur lui/elle",                                "category": "stalker",      "points": 2 },
-    { "id": "stk_2_4",  "text": "lu les messages d'un·e pote posés en évidence sur son téléphone",                                               "category": "stalker",      "points": 2 },
-    { "id": "stk_2_5",  "text": "regardé qui avait vu la story de quelqu'un pour savoir s'il/elle était connecté·e",                             "category": "stalker",      "points": 2 },
-    { "id": "stk_3_1",  "text": "stalké l'ex de ton crush sur Insta à 3h du mat'",                                                               "category": "stalker",      "points": 3 },
-    { "id": "stk_3_2",  "text": "vérifié les abos de ton/ta partenaire en douce pour voir s'il/elle avait suivi de nouveaux comptes",             "category": "stalker",      "points": 3 },
-    { "id": "stk_3_3",  "text": "analysé l'heure de connexion WhatsApp de quelqu'un pour savoir ce qu'il/elle faisait vraiment",                 "category": "stalker",      "points": 3 },
-    { "id": "stk_3_4",  "text": "utilisé le profil d'un·e pote pour stalker quelqu'un qui t'avait bloqué·e",                                    "category": "stalker",      "points": 3 },
-    { "id": "stk_3_5",  "text": "cherché quelqu'un sur LinkedIn, Facebook ET Insta le même soir",                                                "category": "stalker",      "points": 3 },
-    { "id": "stk_3_6",  "text": "scrollé jusqu'en 2018 sur le compte Insta de quelqu'un que tu venais de rencontrer",                            "category": "stalker",      "points": 3 },
-    { "id": "stk_4_1",  "text": "fait une crise à ton/ta partenaire pour un like sur une photo d'un·e inconnu·e",                                "category": "stalker",      "points": 4 },
-    { "id": "stk_4_2",  "text": "exigé de savoir où était ton/ta partenaire à chaque instant de la journée",                                     "category": "stalker",      "points": 4 },
-    { "id": "stk_4_3",  "text": "choisi ou imposé la tenue de quelqu'un pour une soirée",                                                        "category": "stalker",      "points": 4 },
-    { "id": "stk_4_4",  "text": "demandé le mot de passe du téléphone de ton/ta partenaire en justifiant ça par la confiance",                   "category": "stalker",      "points": 4 },
-    { "id": "stk_4_5",  "text": "créé un faux profil sur les réseaux pour surveiller quelqu'un",                                                 "category": "stalker",      "points": 4 },
-    { "id": "stk_4_6",  "text": "fait semblant de passer dans le quartier pour vérifier que ton/ta partenaire était bien où il/elle disait",     "category": "stalker",      "points": 4 },
-    { "id": "stk_5_1",  "text": "installé une app de géolocalisation sur le téléphone de ton/ta partenaire sans lui en parler",                  "category": "stalker",      "points": 5 },
-    { "id": "stk_5_2",  "text": "lu le journal intime ou les messages privés de quelqu'un sans sa permission",                                   "category": "stalker",      "points": 5 },
-    { "id": "stk_5_3",  "text": "partagé des informations privées sur quelqu'un pour lui nuire après une rupture",                               "category": "stalker",      "points": 5 },
-
-    { "id": "man_2_1",  "text": "dit 'comme tu veux' en pensant très clairement l'exact opposé",                                                 "category": "manipulateur", "points": 2 },
-    { "id": "man_2_2",  "text": "fait semblant d'être malade ou occupé·e pour annuler des plans que t'avais pas envie de faire",                 "category": "manipulateur", "points": 2 },
-    { "id": "man_2_3",  "text": "menti sur le nombre exact de tes ex",                                                                           "category": "manipulateur", "points": 2 },
-    { "id": "man_2_4",  "text": "prétendu avoir oublié une promesse pour éviter de la tenir",                                                     "category": "manipulateur", "points": 2 },
-    { "id": "man_3_1",  "text": "ignoré des messages exprès pendant des heures pour créer du manque",                                            "category": "manipulateur", "points": 3 },
-    { "id": "man_3_2",  "text": "utilisé un secret que quelqu'un t'avait confié pour le/la blesser lors d'une dispute",                          "category": "manipulateur", "points": 3 },
-    { "id": "man_3_3",  "text": "inventé un·e ami·e ou un intérêt romantique pour rendre ton/ta partenaire jaloux/se",                           "category": "manipulateur", "points": 3 },
-    { "id": "man_3_4",  "text": "promis de changer pour garder quelqu'un, puis absolument rien changé",                                          "category": "manipulateur", "points": 3 },
-    { "id": "man_3_5",  "text": "dit 'non ça va' d'un ton qui voulait très clairement dire le contraire",                                        "category": "manipulateur", "points": 3 },
-    { "id": "man_3_6",  "text": "exagéré une histoire ou un malaise pour attirer la sympathie",                                                   "category": "manipulateur", "points": 3 },
-    { "id": "man_4_1",  "text": "pleuré stratégiquement pour gagner un argument ou obtenir ce que tu voulais",                                   "category": "manipulateur", "points": 4 },
-    { "id": "man_4_2",  "text": "fait culpabiliser quelqu'un pour avoir passé du temps avec ses ami·es plutôt qu'avec toi",                      "category": "manipulateur", "points": 4 },
-    { "id": "man_4_3",  "text": "sorti des faits du passé lors d'une dispute uniquement pour blesser",                                           "category": "manipulateur", "points": 4 },
-    { "id": "man_4_4",  "text": "réécrit les faits d'une dispute à ton avantage quand tu les racontais à tes potes",                             "category": "manipulateur", "points": 4 },
-    { "id": "man_4_5",  "text": "fait croire à quelqu'un qu'il/elle était 'trop sensible' pour ne pas assumer tes actions",                      "category": "manipulateur", "points": 4 },
-    { "id": "man_4_6",  "text": "menti sur où tu étais pour éviter une dispute plutôt que d'assumer",                                            "category": "manipulateur", "points": 4 },
-    { "id": "man_5_1",  "text": "utilisé la menace de rupture comme outil de contrôle dans une dispute",                                         "category": "manipulateur", "points": 5 },
-    { "id": "man_5_2",  "text": "convaincu quelqu'un que ses ami·es lui voulaient du mal pour l'isoler progressivement",                         "category": "manipulateur", "points": 5 },
-    { "id": "man_5_3",  "text": "fait croire à quelqu'un qu'il/elle se souvenait mal d'un événement qui s'était vraiment passé",                 "category": "manipulateur", "points": 5 },
-
-    { "id": "nar_2_1",  "text": "ramené la conversation sur toi moins de 30 secondes après que quelqu'un te parlait de ses problèmes",           "category": "narcisse",     "points": 2 },
-    { "id": "nar_2_2",  "text": "retouché une photo de profil pendant plus de 20 minutes avant de la poster",                                    "category": "narcisse",     "points": 2 },
-    { "id": "nar_2_3",  "text": "checké ton nombre de likes toutes les 5 minutes après une publication",                                         "category": "narcisse",     "points": 2 },
-    { "id": "nar_2_4",  "text": "cru sincèrement être la personne la plus stylée d'une soirée",                                                  "category": "narcisse",     "points": 2 },
-    { "id": "nar_3_1",  "text": "pensé sincèrement que ton ex ne trouverait jamais quelqu'un de mieux que toi",                                  "category": "narcisse",     "points": 3 },
-    { "id": "nar_3_2",  "text": "changé ta photo de profil juste après une rupture pour flex ce que ton ex allait rater",                        "category": "narcisse",     "points": 3 },
-    { "id": "nar_3_3",  "text": "posté une story en sachant pertinemment qu'une personne précise allait la regarder",                            "category": "narcisse",     "points": 3 },
-    { "id": "nar_3_4",  "text": "répondu exprès en retard pour ne pas paraître trop disponible",                                                 "category": "narcisse",     "points": 3 },
-    { "id": "nar_3_5",  "text": "fait attendre quelqu'un exprès pour montrer que tu étais occupé·e et donc plus désirable",                      "category": "narcisse",     "points": 3 },
-    { "id": "nar_3_6",  "text": "raconté une anecdote en changeant des détails pour passer pour quelqu'un de plus cool",                         "category": "narcisse",     "points": 3 },
-    { "id": "nar_4_1",  "text": "quitté un date en te disant que cette personne ne te méritait clairement pas",                                  "category": "narcisse",     "points": 4 },
-    { "id": "nar_4_2",  "text": "posté une story cryptique du genre 'certains feraient mieux de se taire…'",                                    "category": "narcisse",     "points": 4 },
-    { "id": "nar_4_3",  "text": "passé plus de temps à organiser une sortie pour les photos que pour en profiter",                               "category": "narcisse",     "points": 4 },
-    { "id": "nar_4_4",  "text": "annulé des plans parce que tu te trouvais pas assez bien physiquement ce jour-là",                              "category": "narcisse",     "points": 4 },
-    { "id": "nar_4_5",  "text": "supprimé une publication qui avait trop peu de likes pour ne pas abîmer ton image",                             "category": "narcisse",     "points": 4 },
-    { "id": "nar_5_1",  "text": "pensé que ton ex t'avait quitté·e par jalousie de ta réussite ou de ton potentiel",                            "category": "narcisse",     "points": 5 },
-    { "id": "nar_5_2",  "text": "cru mériter un traitement de faveur dans une relation uniquement parce que tu étais trop bien",                 "category": "narcisse",     "points": 5 },
-    { "id": "nar_5_3",  "text": "demandé à tes potes de noter tes ex pour confirmer que t'avais mieux à offrir",                                "category": "narcisse",     "points": 5 },
-
-    { "id": "dra_2_1",  "text": "envoyé un message énervé à quelqu'un en sachant que ta réaction était exagérée",                               "category": "drama",        "points": 2 },
-    { "id": "dra_2_2",  "text": "dit 'j'ai rien' d'un ton qui voulait clairement dire le contraire et attendu que l'autre insiste",             "category": "drama",        "points": 2 },
-    { "id": "dra_2_3",  "text": "fait la tête pendant plus d'une journée pour quelque chose d'objectivement mineur",                            "category": "drama",        "points": 2 },
-    { "id": "dra_3_1",  "text": "flirté ouvertement avec quelqu'un lors d'une soirée uniquement pour rendre ton/ta partenaire jaloux/se",       "category": "drama",        "points": 3 },
-    { "id": "dra_3_2",  "text": "gardé des plans B 'au cas où' tout en étant dans une relation",                                                "category": "drama",        "points": 3 },
-    { "id": "dra_3_3",  "text": "passé de 'je t'aime' à 'c'est terminé entre nous' dans la même soirée",                                      "category": "drama",        "points": 3 },
-    { "id": "dra_3_4",  "text": "posté puis supprimé un message agressif après avoir envoyé",                                                    "category": "drama",        "points": 3 },
-    { "id": "dra_3_5",  "text": "envoyé un vocal de plus de 3 minutes de reproches à quelqu'un",                                                "category": "drama",        "points": 3 },
-    { "id": "dra_3_6",  "text": "fait une scène dans un lieu public parce que t'étais pas content·e",                                           "category": "drama",        "points": 3 },
-    { "id": "dra_4_1",  "text": "utilisé le silence radio de plusieurs jours comme punition après une dispute",                                  "category": "drama",        "points": 4 },
-    { "id": "dra_4_2",  "text": "appelé ou texté quelqu'un en boucle après une dispute jusqu'à obtenir une réponse",                            "category": "drama",        "points": 4 },
-    { "id": "dra_4_3",  "text": "menacé de faire quelque chose de grave uniquement pour attirer l'attention sur toi",                           "category": "drama",        "points": 4 },
-    { "id": "dra_4_4",  "text": "raconté la version intentionnellement déformée d'une dispute à tous tes potes",                                "category": "drama",        "points": 4 },
-    { "id": "dra_4_5",  "text": "mis fin à une amitié de manière très dramatique puis essayé de reprendre contact comme si rien ne s'était passé","category": "drama",        "points": 4 },
-    { "id": "dra_4_6",  "text": "déclenché une dispute pour tester si l'autre t'aimait vraiment",                                               "category": "drama",        "points": 4 },
-    { "id": "dra_5_1",  "text": "cassé ou jeté un objet lors d'une dispute pour montrer à quel point t'étais énervé·e",                         "category": "drama",        "points": 5 },
-    { "id": "dra_5_2",  "text": "contacté la famille ou l'employeur de quelqu'un lors d'une dispute",                                           "category": "drama",        "points": 5 },
-    { "id": "dra_5_3",  "text": "organisé une humiliation publique de ton/ta partenaire pour te venger d'une infidélité",                       "category": "drama",        "points": 5 },
-
-    { "id": "col_2_1",  "text": "texté quelqu'un 5 fois dans la même heure sans recevoir de réponse",                                           "category": "collant",      "points": 2 },
-    { "id": "col_2_2",  "text": "relu des anciennes conversations pour t'auto-rassurer sur une relation",                                        "category": "collant",      "points": 2 },
-    { "id": "col_2_3",  "text": "anticipé une rupture qui n'avait objectivement aucune raison d'arriver",                                        "category": "collant",      "points": 2 },
-    { "id": "col_2_4",  "text": "vérifié si quelqu'un était connecté en ligne alors qu'il/elle ne répondait pas à tes messages",                 "category": "collant",      "points": 2 },
-    { "id": "col_3_1",  "text": "envoyé un roman de 10 messages consécutifs sans aucune réponse",                                               "category": "collant",      "points": 3 },
-    { "id": "col_3_2",  "text": "demandé à nouveau confirmation que la personne t'aimait encore juste après une dispute",                        "category": "collant",      "points": 3 },
-    { "id": "col_3_3",  "text": "analysé chaque mot d'un message reçu pour y trouver un sous-entendu négatif",                                  "category": "collant",      "points": 3 },
-    { "id": "col_3_4",  "text": "été jaloux·se des ami·es de ton/ta partenaire au point de lui en faire la remarque",                           "category": "collant",      "points": 3 },
-    { "id": "col_3_5",  "text": "planifié 'par hasard' de croiser quelqu'un parce qu'il/elle ne répondait pas",                                 "category": "collant",      "points": 3 },
-    { "id": "col_3_6",  "text": "cherché des signes avant-coureurs de rupture dans chaque phrase que tu recevais",                               "category": "collant",      "points": 3 },
-    { "id": "col_4_1",  "text": "dit 'je t'aime' à quelqu'un avant la fin du premier mois",                                                    "category": "collant",      "points": 4 },
-    { "id": "col_4_2",  "text": "appelé l'entourage de quelqu'un parce qu'il/elle ne répondait pas à tes messages",                             "category": "collant",      "points": 4 },
-    { "id": "col_4_3",  "text": "suivi quelqu'un sur tous ses réseaux sociaux le jour même de votre rencontre",                                 "category": "collant",      "points": 4 },
-    { "id": "col_4_4",  "text": "annulé des plans avec tes potes dès que ton/ta partenaire s'était libéré·e",                                   "category": "collant",      "points": 4 },
-    { "id": "col_4_5",  "text": "demandé à être la seule priorité de quelqu'un en dehors du travail et de la famille",                          "category": "collant",      "points": 4 },
-    { "id": "col_4_6",  "text": "débarqué chez quelqu'un sans prévenir parce qu'il/elle ne répondait plus",                                     "category": "collant",      "points": 4 },
-    { "id": "col_5_1",  "text": "planifié le prénom de vos futurs enfants communs avant la fin du premier mois",                                "category": "collant",      "points": 5 },
-    { "id": "col_5_2",  "text": "rendu quelqu'un responsable de ta santé mentale et de ton bonheur au quotidien",                               "category": "collant",      "points": 5 },
-    { "id": "col_5_3",  "text": "refusé d'accepter une rupture et continué à contacter la personne pendant plusieurs semaines",                  "category": "collant",      "points": 5 }
-  ]
+    {
+      "id": "stk_2_1",
+      "text": "regardé les stories de ton ex via un compte secondaire parce qu'il/elle t'avait bloqué·e",
+      "category": "stalker",
+      "points": 2
+    },
+    {
+      "id": "stk_2_2",
+      "text": "cherché le/la nouveau·elle partenaire de ton ex sur les réseaux le jour de la rupture",
+      "category": "stalker",
+      "points": 2
+    },
+    {
+      "id": "stk_2_3",
+      "text": "googler quelqu'un avant un premier rendez-vous pour en savoir plus sur lui/elle",
+      "category": "stalker",
+      "points": 2
+    },
+    {
+      "id": "stk_2_4",
+      "text": "lu les messages d'un·e pote posés en évidence sur son téléphone",
+      "category": "stalker",
+      "points": 2
+    },
+    {
+      "id": "stk_2_5",
+      "text": "regardé qui avait vu la story de quelqu'un pour savoir s'il/elle était connecté·e",
+      "category": "stalker",
+      "points": 2
+    },
+    {
+      "id": "stk_3_1",
+      "text": "stalké l'ex de ton crush sur Insta à 3h du mat'",
+      "category": "stalker",
+      "points": 3
+    },
+    {
+      "id": "stk_3_2",
+      "text": "vérifié les abos de ton/ta partenaire en douce pour voir s'il/elle avait suivi de nouveaux comptes",
+      "category": "stalker",
+      "points": 3
+    },
+    {
+      "id": "stk_3_3",
+      "text": "analysé l'heure de connexion WhatsApp de quelqu'un pour savoir ce qu'il/elle faisait vraiment",
+      "category": "stalker",
+      "points": 3
+    },
+    {
+      "id": "stk_3_4",
+      "text": "utilisé le profil d'un·e pote pour stalker quelqu'un qui t'avait bloqué·e",
+      "category": "stalker",
+      "points": 3
+    },
+    {
+      "id": "stk_3_5",
+      "text": "cherché quelqu'un sur LinkedIn, Facebook ET Insta le même soir",
+      "category": "stalker",
+      "points": 3
+    },
+    {
+      "id": "stk_3_6",
+      "text": "scrollé jusqu'en 2018 sur le compte Insta de quelqu'un que tu venais de rencontrer",
+      "category": "stalker",
+      "points": 3
+    },
+    {
+      "id": "stk_4_1",
+      "text": "fait une crise à ton/ta partenaire pour un like sur une photo d'un·e inconnu·e",
+      "category": "stalker",
+      "points": 4
+    },
+    {
+      "id": "stk_4_2",
+      "text": "exigé de savoir où était ton/ta partenaire à chaque instant de la journée",
+      "category": "stalker",
+      "points": 4
+    },
+    {
+      "id": "stk_4_3",
+      "text": "choisi ou imposé la tenue de quelqu'un pour une soirée",
+      "category": "stalker",
+      "points": 4
+    },
+    {
+      "id": "stk_4_4",
+      "text": "demandé le mot de passe du téléphone de ton/ta partenaire en justifiant ça par la confiance",
+      "category": "stalker",
+      "points": 4
+    },
+    {
+      "id": "stk_4_5",
+      "text": "créé un faux profil sur les réseaux pour surveiller quelqu'un",
+      "category": "stalker",
+      "points": 4
+    },
+    {
+      "id": "stk_4_6",
+      "text": "fait semblant de passer dans le quartier pour vérifier que ton/ta partenaire était bien où il/elle disait",
+      "category": "stalker",
+      "points": 4
+    },
+    {
+      "id": "stk_5_1",
+      "text": "installé une app de géolocalisation sur le téléphone de ton/ta partenaire sans lui en parler",
+      "category": "stalker",
+      "points": 5
+    },
+    {
+      "id": "stk_5_2",
+      "text": "lu le journal intime ou les messages privés de quelqu'un sans sa permission",
+      "category": "stalker",
+      "points": 5
+    },
+    {
+      "id": "stk_5_3",
+      "text": "partagé des informations privées sur quelqu'un pour lui nuire après une rupture",
+      "category": "stalker",
+      "points": 5
+    },
+    {
+      "id": "man_2_1",
+      "text": "dit 'comme tu veux' en pensant très clairement l'exact opposé",
+      "category": "manipulateur",
+      "points": 2
+    },
+    {
+      "id": "man_2_2",
+      "text": "fait semblant d'être malade ou occupé·e pour annuler des plans que t'avais pas envie de faire",
+      "category": "manipulateur",
+      "points": 2
+    },
+    {
+      "id": "man_2_3",
+      "text": "menti sur le nombre exact de tes ex",
+      "category": "manipulateur",
+      "points": 2
+    },
+    {
+      "id": "man_2_4",
+      "text": "prétendu avoir oublié une promesse pour éviter de la tenir",
+      "category": "manipulateur",
+      "points": 2
+    },
+    {
+      "id": "man_3_1",
+      "text": "ignoré des messages exprès pendant des heures pour créer du manque",
+      "category": "manipulateur",
+      "points": 3
+    },
+    {
+      "id": "man_3_2",
+      "text": "utilisé un secret que quelqu'un t'avait confié pour le/la blesser lors d'une dispute",
+      "category": "manipulateur",
+      "points": 3
+    },
+    {
+      "id": "man_3_3",
+      "text": "inventé un·e ami·e ou un intérêt romantique pour rendre ton/ta partenaire jaloux/se",
+      "category": "manipulateur",
+      "points": 3
+    },
+    {
+      "id": "man_3_4",
+      "text": "promis de changer pour garder quelqu'un, puis absolument rien changé",
+      "category": "manipulateur",
+      "points": 3
+    },
+    {
+      "id": "man_3_5",
+      "text": "dit 'non ça va' d'un ton qui voulait très clairement dire le contraire",
+      "category": "manipulateur",
+      "points": 3
+    },
+    {
+      "id": "man_3_6",
+      "text": "exagéré une histoire ou un malaise pour attirer la sympathie",
+      "category": "manipulateur",
+      "points": 3
+    },
+    {
+      "id": "man_4_1",
+      "text": "pleuré stratégiquement pour gagner un argument ou obtenir ce que tu voulais",
+      "category": "manipulateur",
+      "points": 4
+    },
+    {
+      "id": "man_4_2",
+      "text": "fait culpabiliser quelqu'un pour avoir passé du temps avec ses ami·es plutôt qu'avec toi",
+      "category": "manipulateur",
+      "points": 4
+    },
+    {
+      "id": "man_4_3",
+      "text": "sorti des faits du passé lors d'une dispute uniquement pour blesser",
+      "category": "manipulateur",
+      "points": 4
+    },
+    {
+      "id": "man_4_4",
+      "text": "réécrit les faits d'une dispute à ton avantage quand tu les racontais à tes potes",
+      "category": "manipulateur",
+      "points": 4
+    },
+    {
+      "id": "man_4_5",
+      "text": "fait croire à quelqu'un qu'il/elle était 'trop sensible' pour ne pas assumer tes actions",
+      "category": "manipulateur",
+      "points": 4
+    },
+    {
+      "id": "man_4_6",
+      "text": "menti sur où tu étais pour éviter une dispute plutôt que d'assumer",
+      "category": "manipulateur",
+      "points": 4
+    },
+    {
+      "id": "man_5_1",
+      "text": "utilisé la menace de rupture comme outil de contrôle dans une dispute",
+      "category": "manipulateur",
+      "points": 5
+    },
+    {
+      "id": "man_5_2",
+      "text": "convaincu quelqu'un que ses ami·es lui voulaient du mal pour l'isoler progressivement",
+      "category": "manipulateur",
+      "points": 5
+    },
+    {
+      "id": "man_5_3",
+      "text": "fait croire à quelqu'un qu'il/elle se souvenait mal d'un événement qui s'était vraiment passé",
+      "category": "manipulateur",
+      "points": 5
+    },
+    {
+      "id": "nar_2_1",
+      "text": "ramené la conversation sur toi moins de 30 secondes après que quelqu'un te parlait de ses problèmes",
+      "category": "narcisse",
+      "points": 2
+    },
+    {
+      "id": "nar_2_2",
+      "text": "retouché une photo de profil pendant plus de 20 minutes avant de la poster",
+      "category": "narcisse",
+      "points": 2
+    },
+    {
+      "id": "nar_2_3",
+      "text": "checké ton nombre de likes toutes les 5 minutes après une publication",
+      "category": "narcisse",
+      "points": 2
+    },
+    {
+      "id": "nar_2_4",
+      "text": "cru sincèrement être la personne la plus stylée d'une soirée",
+      "category": "narcisse",
+      "points": 2
+    },
+    {
+      "id": "nar_3_1",
+      "text": "pensé sincèrement que ton ex ne trouverait jamais quelqu'un de mieux que toi",
+      "category": "narcisse",
+      "points": 3
+    },
+    {
+      "id": "nar_3_2",
+      "text": "changé ta photo de profil juste après une rupture pour flex ce que ton ex allait rater",
+      "category": "narcisse",
+      "points": 3
+    },
+    {
+      "id": "nar_3_3",
+      "text": "posté une story en sachant pertinemment qu'une personne précise allait la regarder",
+      "category": "narcisse",
+      "points": 3
+    },
+    {
+      "id": "nar_3_4",
+      "text": "répondu exprès en retard pour ne pas paraître trop disponible",
+      "category": "narcisse",
+      "points": 3
+    },
+    {
+      "id": "nar_3_5",
+      "text": "fait attendre quelqu'un exprès pour montrer que tu étais occupé·e et donc plus désirable",
+      "category": "narcisse",
+      "points": 3
+    },
+    {
+      "id": "nar_3_6",
+      "text": "raconté une anecdote en changeant des détails pour passer pour quelqu'un de plus cool",
+      "category": "narcisse",
+      "points": 3
+    },
+    {
+      "id": "nar_4_1",
+      "text": "quitté un date en te disant que cette personne ne te méritait clairement pas",
+      "category": "narcisse",
+      "points": 4
+    },
+    {
+      "id": "nar_4_2",
+      "text": "posté une story cryptique du genre 'certains feraient mieux de se taire…'",
+      "category": "narcisse",
+      "points": 4
+    },
+    {
+      "id": "nar_4_3",
+      "text": "passé plus de temps à organiser une sortie pour les photos que pour en profiter",
+      "category": "narcisse",
+      "points": 4
+    },
+    {
+      "id": "nar_4_4",
+      "text": "annulé des plans parce que tu te trouvais pas assez bien physiquement ce jour-là",
+      "category": "narcisse",
+      "points": 4
+    },
+    {
+      "id": "nar_4_5",
+      "text": "supprimé une publication qui avait trop peu de likes pour ne pas abîmer ton image",
+      "category": "narcisse",
+      "points": 4
+    },
+    {
+      "id": "nar_5_1",
+      "text": "pensé que ton ex t'avait quitté·e par jalousie de ta réussite ou de ton potentiel",
+      "category": "narcisse",
+      "points": 5
+    },
+    {
+      "id": "nar_5_2",
+      "text": "cru mériter un traitement de faveur dans une relation uniquement parce que tu étais trop bien",
+      "category": "narcisse",
+      "points": 5
+    },
+    {
+      "id": "nar_5_3",
+      "text": "demandé à tes potes de noter tes ex pour confirmer que t'avais mieux à offrir",
+      "category": "narcisse",
+      "points": 5
+    },
+    {
+      "id": "dra_2_1",
+      "text": "envoyé un message énervé à quelqu'un en sachant que ta réaction était exagérée",
+      "category": "drama",
+      "points": 2
+    },
+    {
+      "id": "dra_2_2",
+      "text": "dit 'j'ai rien' d'un ton qui voulait clairement dire le contraire et attendu que l'autre insiste",
+      "category": "drama",
+      "points": 2
+    },
+    {
+      "id": "dra_2_3",
+      "text": "fait la tête pendant plus d'une journée pour quelque chose d'objectivement mineur",
+      "category": "drama",
+      "points": 2
+    },
+    {
+      "id": "dra_3_1",
+      "text": "flirté ouvertement avec quelqu'un lors d'une soirée uniquement pour rendre ton/ta partenaire jaloux/se",
+      "category": "drama",
+      "points": 3
+    },
+    {
+      "id": "dra_3_2",
+      "text": "gardé des plans B 'au cas où' tout en étant dans une relation",
+      "category": "drama",
+      "points": 3
+    },
+    {
+      "id": "dra_3_3",
+      "text": "passé de 'je t'aime' à 'c'est terminé entre nous' dans la même soirée",
+      "category": "drama",
+      "points": 3
+    },
+    {
+      "id": "dra_3_4",
+      "text": "posté puis supprimé un message agressif après avoir envoyé",
+      "category": "drama",
+      "points": 3
+    },
+    {
+      "id": "dra_3_5",
+      "text": "envoyé un vocal de plus de 3 minutes de reproches à quelqu'un",
+      "category": "drama",
+      "points": 3
+    },
+    {
+      "id": "dra_3_6",
+      "text": "fait une scène dans un lieu public parce que t'étais pas content·e",
+      "category": "drama",
+      "points": 3
+    },
+    {
+      "id": "dra_4_1",
+      "text": "utilisé le silence radio de plusieurs jours comme punition après une dispute",
+      "category": "drama",
+      "points": 4
+    },
+    {
+      "id": "dra_4_2",
+      "text": "appelé ou texté quelqu'un en boucle après une dispute jusqu'à obtenir une réponse",
+      "category": "drama",
+      "points": 4
+    },
+    {
+      "id": "dra_4_3",
+      "text": "menacé de faire quelque chose de grave uniquement pour attirer l'attention sur toi",
+      "category": "drama",
+      "points": 4
+    },
+    {
+      "id": "dra_4_4",
+      "text": "raconté la version intentionnellement déformée d'une dispute à tous tes potes",
+      "category": "drama",
+      "points": 4
+    },
+    {
+      "id": "dra_4_5",
+      "text": "mis fin à une amitié de manière très dramatique puis essayé de reprendre contact comme si rien ne s'était passé",
+      "category": "drama",
+      "points": 4
+    },
+    {
+      "id": "dra_4_6",
+      "text": "déclenché une dispute pour tester si l'autre t'aimait vraiment",
+      "category": "drama",
+      "points": 4
+    },
+    {
+      "id": "dra_5_1",
+      "text": "cassé ou jeté un objet lors d'une dispute pour montrer à quel point t'étais énervé·e",
+      "category": "drama",
+      "points": 5
+    },
+    {
+      "id": "dra_5_2",
+      "text": "contacté la famille ou l'employeur de quelqu'un lors d'une dispute",
+      "category": "drama",
+      "points": 5
+    },
+    {
+      "id": "dra_5_3",
+      "text": "organisé une humiliation publique de ton/ta partenaire pour te venger d'une infidélité",
+      "category": "drama",
+      "points": 5
+    },
+    {
+      "id": "col_2_1",
+      "text": "texté quelqu'un 5 fois dans la même heure sans recevoir de réponse",
+      "category": "collant",
+      "points": 2
+    },
+    {
+      "id": "col_2_2",
+      "text": "relu des anciennes conversations pour t'auto-rassurer sur une relation",
+      "category": "collant",
+      "points": 2
+    },
+    {
+      "id": "col_2_3",
+      "text": "anticipé une rupture qui n'avait objectivement aucune raison d'arriver",
+      "category": "collant",
+      "points": 2
+    },
+    {
+      "id": "col_2_4",
+      "text": "vérifié si quelqu'un était connecté en ligne alors qu'il/elle ne répondait pas à tes messages",
+      "category": "collant",
+      "points": 2
+    },
+    {
+      "id": "col_3_1",
+      "text": "envoyé un roman de 10 messages consécutifs sans aucune réponse",
+      "category": "collant",
+      "points": 3
+    },
+    {
+      "id": "col_3_2",
+      "text": "demandé à nouveau confirmation que la personne t'aimait encore juste après une dispute",
+      "category": "collant",
+      "points": 3
+    },
+    {
+      "id": "col_3_3",
+      "text": "analysé chaque mot d'un message reçu pour y trouver un sous-entendu négatif",
+      "category": "collant",
+      "points": 3
+    },
+    {
+      "id": "col_3_4",
+      "text": "été jaloux·se des ami·es de ton/ta partenaire au point de lui en faire la remarque",
+      "category": "collant",
+      "points": 3
+    },
+    {
+      "id": "col_3_5",
+      "text": "planifié 'par hasard' de croiser quelqu'un parce qu'il/elle ne répondait pas",
+      "category": "collant",
+      "points": 3
+    },
+    {
+      "id": "col_3_6",
+      "text": "cherché des signes avant-coureurs de rupture dans chaque phrase que tu recevais",
+      "category": "collant",
+      "points": 3
+    },
+    {
+      "id": "col_4_1",
+      "text": "dit 'je t'aime' à quelqu'un avant la fin du premier mois",
+      "category": "collant",
+      "points": 4
+    },
+    {
+      "id": "col_4_2",
+      "text": "appelé l'entourage de quelqu'un parce qu'il/elle ne répondait pas à tes messages",
+      "category": "collant",
+      "points": 4
+    },
+    {
+      "id": "col_4_3",
+      "text": "suivi quelqu'un sur tous ses réseaux sociaux le jour même de votre rencontre",
+      "category": "collant",
+      "points": 4
+    },
+    {
+      "id": "col_4_4",
+      "text": "annulé des plans avec tes potes dès que ton/ta partenaire s'était libéré·e",
+      "category": "collant",
+      "points": 4
+    },
+    {
+      "id": "col_4_5",
+      "text": "demandé à être la seule priorité de quelqu'un en dehors du travail et de la famille",
+      "category": "collant",
+      "points": 4
+    },
+    {
+      "id": "col_4_6",
+      "text": "débarqué chez quelqu'un sans prévenir parce qu'il/elle ne répondait plus",
+      "category": "collant",
+      "points": 4
+    },
+    {
+      "id": "col_5_1",
+      "text": "planifié le prénom de vos futurs enfants communs avant la fin du premier mois",
+      "category": "collant",
+      "points": 5
+    },
+    {
+      "id": "col_5_2",
+      "text": "rendu quelqu'un responsable de ta santé mentale et de ton bonheur au quotidien",
+      "category": "collant",
+      "points": 5
+    },
+    {
+      "id": "col_5_3",
+      "text": "refusé d'accepter une rupture et continué à contacter la personne pendant plusieurs semaines",
+      "category": "collant",
+      "points": 5
+    }
+  ],
+  "ui": {
+    "rules": {
+      "title": "Es-tu un\nRed Flag ?",
+      "tagline": "Tes exs auraient aimé te faire passer ce test",
+      "modalTitle": "Red Flag",
+      "start": "Lancer la partie 🚩",
+      "levelLabel": "NIVEAU DE QUESTIONS",
+      "levelHelper": "Questions jusqu'au niveau sélectionné",
+      "themeLabel": "REPARTITION DES THEMES",
+      "themeHelper": "Total: {{count}} questions",
+      "steps": [
+        {
+          "n": "1",
+          "title": "Lis la question",
+          "desc": "As-tu déjà fait ça ? Sois honnête."
+        },
+        {
+          "n": "2",
+          "title": "Swipe → si coupable",
+          "desc": "Droite = oui = +points. Gauche = non = 0 point."
+        },
+        {
+          "n": "3",
+          "title": "Résultats",
+          "desc": "Ton score révèle ton niveau de toxicité sentimentale."
+        }
+      ]
+    },
+    "play": {
+      "remaining_one": "{{count}} restant",
+      "remaining_other": "{{count}} restants",
+      "questionPrefix": "AS-TU DÉJÀ...",
+      "sipsIfYes_one": "🍻 {{count}} gorgée si oui",
+      "sipsIfYes_other": "🍻 {{count}} gorgées si oui",
+      "ptsIfYes": "🚩 +{{count}} pts",
+      "hint": "← Non | Oui →"
+    },
+    "verdicts": [
+      {
+        "pctMax": 15,
+        "title": "Green Flag absolu-e",
+        "quote": "T'es si sain-e que c'est suspect. On te surveille."
+      },
+      {
+        "pctMax": 30,
+        "title": "Presque fréquentable",
+        "quote": "T'as des red flags mais rien que la thérapie peut pas fix."
+      },
+      {
+        "pctMax": 50,
+        "title": "Zone grise assumée",
+        "quote": "Tes exs ont probablement un groupe WhatsApp à ton sujet."
+      },
+      {
+        "pctMax": 70,
+        "title": "Catastrophe sentimentale",
+        "quote": "Tu détruis des relations sans même t'en rendre compte. Respect."
+      },
+      {
+        "pctMax": 85,
+        "title": "Danger public",
+        "quote": "Tes exs devraient pouvoir déduire la thérapie de leurs impôts."
+      },
+      {
+        "pctMax": 101,
+        "title": "Red Flag nucléaire",
+        "quote": "L'armée devrait t'interdire de télécharger Tinder."
+      }
+    ],
+    "results": {
+      "title": "🚩 Résultats",
+      "replay": "Rejouer",
+      "back": "Retour"
+    }
+  }
 }

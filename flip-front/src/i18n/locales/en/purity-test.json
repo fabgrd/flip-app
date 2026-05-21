@@ -779,5 +779,34 @@
         }
       ]
     }
+  },
+  "ui": {
+    "title": "Purity\nTest",
+    "tagline": "How many sins do you have to your name?",
+    "modalTitle": "Purity Test",
+    "start": "Start the game ✨",
+    "steps": [
+      {
+        "n": "1",
+        "title": "Read the question",
+        "desc": "Have you ever done that? Be honest (or not)."
+      },
+      {
+        "n": "2",
+        "title": "Swipe yes or no",
+        "desc": "Right = yes, left = no. Every yes = impurity points."
+      },
+      {
+        "n": "3",
+        "title": "Results",
+        "desc": "The final score reveals your level of purity… or impurity 😈"
+      }
+    ],
+    "levelLabel": "QUESTION LEVEL",
+    "levelHelper": "Questions up to the selected level",
+    "themeLabel": "THEME DISTRIBUTION",
+    "themeTotal": "Total: {{count}} questions",
+    "hint": "← No | Yes →",
+    "rulesBtn": "Purity Test"
   }
 }

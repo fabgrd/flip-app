@@ -27,20 +27,6 @@ import { Player, RootStackParamList } from '../types';
 
 type PurityTestScreenRouteProp = RouteProp<RootStackParamList, 'PurityTest'>;
 
-const PURITY_RULES = [
-  { n: '1', title: 'Lis la question', desc: 'As-tu déjà fait ça ? Sois honnête (ou pas).' },
-  {
-    n: '2',
-    title: 'Glisse oui ou non',
-    desc: "Droite = oui, gauche = non. Chaque oui = points d'impureté.",
-  },
-  {
-    n: '3',
-    title: 'Résultats',
-    desc: "Le score final révèle ton niveau de pureté… ou d'impureté 😈",
-  },
-];
-
 const LEVEL_KEYS: LevelKey[] = ['level1', 'level2', 'level3', 'level4', 'level5'];
 
 const LEVEL_LABELS: Record<LevelKey, string> = {
@@ -91,24 +77,26 @@ function PurityRules({
   onChangeThemeCount: (theme: Theme, value: number) => void;
   onChangeMaxLevel: (level: LevelKey) => void;
 }) {
+  const { t } = useTranslation();
   const { isLevelAllowed, requestUnlockFor } = usePurityLevelAccess();
   const themeTotal = Object.values(themeCounts).reduce((sum, val) => sum + val, 0);
   const maxIdx = LEVEL_KEYS.indexOf(maxLevel);
+  const purityRules = t('purityTest:ui.steps', { returnObjects: true }) as any[];
 
   return (
     <GameRulesScreen
       accentColor={T.violet}
-      title={'Test\nde Pureté'}
-      tagline="Combien de péchés à ton actif ?"
+      title={t('purityTest:ui.title')}
+      tagline={t('purityTest:ui.tagline')}
       icon={<PureteIcon size={86} />}
-      rulesModal={{ rules: PURITY_RULES, title: 'Test de Pureté' }}
+      rulesModal={{ rules: purityRules, title: t('purityTest:ui.modalTitle') }}
       players={players}
       onPlayersChange={onPlayersChange}
       onExit={onExit}
       onSettings={onSettings}
       minPlayers={1}
       onStart={onStart}
-      startLabel="Lancer la partie ✨"
+      startLabel={t('purityTest:ui.start')}
       startDisabled={themeTotal === 0}
     >
       <View style={pr.cardWrap}>
@@ -116,8 +104,8 @@ function PurityRules({
           <DrinkModeToggle accentColor={T.violet} />
 
           <View style={pr.card}>
-            <Text style={pr.cardLabel}>NIVEAU DE QUESTIONS</Text>
-            <Text style={pr.helperText}>Questions jusqu&apos;au niveau sélectionné</Text>
+            <Text style={pr.cardLabel}>{t('purityTest:ui.levelLabel')}</Text>
+            <Text style={pr.helperText}>{t('purityTest:ui.levelHelper')}</Text>
             <View style={pr.levelRow}>
               {LEVEL_KEYS.map((level, i) => {
                 const isActive = i <= maxIdx;
@@ -155,8 +143,8 @@ function PurityRules({
           </View>
 
           <View style={pr.card}>
-            <Text style={pr.cardLabel}>REPARTITION DES THEMES</Text>
-            <Text style={pr.helperText}>Total: {themeTotal} questions</Text>
+            <Text style={pr.cardLabel}>{t('purityTest:ui.themeLabel')}</Text>
+            <Text style={pr.helperText}>{t('purityTest:ui.themeTotal', { count: themeTotal })}</Text>
             {(Object.keys(themeCounts) as Theme[]).map((theme) => (
               <View key={theme} style={pr.sliderRow}>
                 <View style={pr.sliderHeader}>
@@ -375,9 +363,9 @@ export function PurityTestScreen() {
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
             <Text style={styles.remainingText}>
-              {remaining} restant{remaining > 1 ? 's' : ''}
+              {t('purityTest:game.remainingPlayers', { count: remaining })}
             </Text>
-            <RulesButton rules={PURITY_RULES} title="Test de Pureté" accentColor={T.violet} />
+            <RulesButton rules={t('purityTest:ui.steps', { returnObjects: true }) as any} title={t('purityTest:ui.rulesBtn')} accentColor={T.violet} />
           </View>
         </View>
         <View style={styles.progressBar}>

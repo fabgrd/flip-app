@@ -21,24 +21,6 @@ import { Player, RootStackParamList } from '../types';
 
 type LeftRightScreenRouteProp = RouteProp<RootStackParamList, 'LeftRight'>;
 
-const LEFT_RIGHT_RULES = [
-  {
-    n: '1',
-    title: 'Une phrase apparaît',
-    desc: 'Elle raconte une situation courante.',
-  },
-  {
-    n: '2',
-    title: "Chacun choisit si c'est un truc de gauche ou de droite",
-    desc: 'Glisse vers la gauche ou la droite selon tes convictions.',
-  },
-  {
-    n: '3',
-    title: 'Résultats collectifs',
-    desc: 'On révèle le spectre politique de chaque joueur à la fin.',
-  },
-];
-
 function LRRules({
   players,
   onPlayersChange,
@@ -52,20 +34,22 @@ function LRRules({
   onExit: () => void;
   onSettings: () => void;
 }) {
+  const { t } = useTranslation();
+  const rules = (t('leftRight:ui.steps', { returnObjects: true }) as { n: string; title: string; desc: string }[]);
   return (
     <GameRulesScreen
       accentColor={T.gaucheDroiteAccent ?? T.lemon}
-      title={'Gauche\nou droite ?'}
-      tagline="Place la phrase sur l'échiquier politique"
+      title={t('leftRight:ui.title')}
+      tagline={t('leftRight:ui.tagline')}
       icon={<GaucheDroiteIcon size={86} />}
-      rulesModal={{ rules: LEFT_RIGHT_RULES, title: 'Gauche ou Droite' }}
+      rulesModal={{ rules, title: t('leftRight:ui.modalTitle') }}
       players={players}
       onPlayersChange={onPlayersChange}
       onExit={onExit}
       onSettings={onSettings}
       minPlayers={2}
       onStart={onStart}
-      startLabel="Lancer la partie ⚖️"
+      startLabel={t('leftRight:ui.start')}
     >
       <View style={{ paddingHorizontal: 20, paddingBottom: 12, marginTop: 'auto' }}>
         <DrinkModeToggle accentColor={T.lemon} />
@@ -189,9 +173,9 @@ export function LeftRightScreen() {
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
             <Text style={styles.remainingText}>
-              {remaining} restant{remaining > 1 ? 's' : ''}
+              {t('leftRight:ui.remaining', { count: remaining })}
             </Text>
-            <RulesButton rules={LEFT_RIGHT_RULES} title="Gauche ou Droite" accentColor={T.lemon} />
+            <RulesButton rules={t('leftRight:ui.steps', { returnObjects: true }) as any} title={t('leftRight:ui.modalTitle')} accentColor={T.lemon} />
           </View>
         </View>
         <View style={styles.progressBar}>
@@ -245,7 +229,7 @@ export function LeftRightScreen() {
       {revealData && (
         <View style={styles.revealOverlay} pointerEvents="auto">
           <View style={styles.revealCard}>
-            <Text style={styles.revealTitle}>Camp minoritaire</Text>
+            <Text style={styles.revealTitle}>{t('leftRight:ui.reveal.title')}</Text>
             <View style={styles.revealRow}>
               <View
                 style={[
@@ -254,7 +238,7 @@ export function LeftRightScreen() {
                   revealData.minoritySide === 'left' && styles.revealSideMinority,
                 ]}
               >
-                <Text style={styles.revealSideLabel}>Gauche</Text>
+                <Text style={styles.revealSideLabel}>{t('leftRight:ui.reveal.left')}</Text>
                 <Text style={styles.revealSideCount}>{revealData.leftPlayers.length}</Text>
                 <Text style={styles.revealSideNames} numberOfLines={3}>
                   {revealData.leftPlayers.map((p) => p.name).join(', ') || '—'}
@@ -267,7 +251,7 @@ export function LeftRightScreen() {
                   revealData.minoritySide === 'right' && styles.revealSideMinority,
                 ]}
               >
-                <Text style={styles.revealSideLabel}>Droite</Text>
+                <Text style={styles.revealSideLabel}>{t('leftRight:ui.reveal.right')}</Text>
                 <Text style={styles.revealSideCount}>{revealData.rightPlayers.length}</Text>
                 <Text style={styles.revealSideNames} numberOfLines={3}>
                   {revealData.rightPlayers.map((p) => p.name).join(', ') || '—'}
@@ -277,14 +261,14 @@ export function LeftRightScreen() {
             <View style={styles.revealDrinkBanner}>
               <Text style={styles.revealDrinkText}>
                 {revealData.isTie
-                  ? '🤝 Égalité — personne ne bois ce tour'
+                  ? t('leftRight:ui.reveal.tie')
                   : revealData.drinkers.length === 0
-                    ? '🎉 Unanimité — personne ne bois'
-                    : `🍻 ${revealData.drinkers.map((p) => p.name).join(', ')} bois 1 gorgée`}
+                    ? t('leftRight:ui.reveal.unanimous')
+                    : t('leftRight:ui.reveal.drink', { names: revealData.drinkers.map((p) => p.name).join(', ') })}
               </Text>
             </View>
             <ChunkyButton full color={T.paper} onPress={closeReveal}>
-              Question suivante →
+              {t('leftRight:ui.reveal.nextBtn')}
             </ChunkyButton>
           </View>
         </View>

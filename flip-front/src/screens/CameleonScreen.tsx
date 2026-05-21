@@ -27,20 +27,6 @@ import { Player, RootStackParamList } from '../types';
 
 type CameleonRouteProp = RouteProp<RootStackParamList, 'Cameleon'>;
 
-const CAMELEON_RULES = [
-  { n: '1', title: 'Faites tourner le tel', desc: 'Chacun voit son mot secret… sauf le caméléon.' },
-  {
-    n: '2',
-    title: 'À tour de rôle, un indice',
-    desc: 'Un mot, pas plus. Ni trop évident, ni trop vague.',
-  },
-  { n: '3', title: 'Discutez', desc: 'Débattez — qui semble ne pas savoir de quoi il parle ?' },
-  {
-    n: '4',
-    title: 'Tout le monde vote',
-    desc: "Désignez l'imposteur. S'il est démasqué, les civils gagnent.",
-  },
-];
 
 export function CameleonScreen() {
   const route = useRoute<CameleonRouteProp>();
@@ -124,8 +110,8 @@ export function CameleonScreen() {
           const isImpostor = eliminated.role === 'cameleon' || eliminated.role === 'mrWhite';
           setEliminationDrink(
             isImpostor
-              ? `🍻 ${eliminated.name} bois 3 gorgées (démasqué·e !)`
-              : `🍻 ${eliminated.name} bois 2 gorgées (mauvais vote du groupe)`,
+              ? t('cameleon:ui.drinkCaught', { name: eliminated.name })
+              : t('cameleon:ui.drinkBadVote', { name: eliminated.name }),
           );
         }
         const timer = setTimeout(
@@ -199,17 +185,17 @@ export function CameleonScreen() {
     return (
       <GameRulesScreen
         accentColor={T.mint}
-        title="Caméléon"
-        tagline="Démasque l'imposteur"
+        title={t('cameleon:ui.title')}
+        tagline={t('cameleon:ui.tagline')}
         icon={<ChameleonIcon size={86} />}
-        rulesModal={{ rules: CAMELEON_RULES, title: 'Le Caméléon' }}
+        rulesModal={{ rules: t('cameleon:ui.steps', { returnObjects: true }) as any, title: t('cameleon:ui.modalTitle') }}
         players={localPlayers}
         onPlayersChange={setLocalPlayers}
         onExit={() => navigation.goBack()}
         onSettings={() => navigation.navigate('Settings')}
         minPlayers={3}
         onStart={handleStart}
-        startLabel="Lancer la partie 🦎"
+        startLabel={t('cameleon:ui.start')}
         startDisabled={!canStart}
       >
         <Animated.View entering={FadeIn} exiting={FadeOut} style={styles.flex}>
@@ -287,7 +273,7 @@ export function CameleonScreen() {
             </View>
             <Text style={styles.phaseTitle}>
               {phase === 'vote' || phase === 'results'
-                ? 'Qui est\nle caméléon ?'
+                ? t('cameleon:ui.whoIsTitle')
                 : t('cameleon:game.title', 'Le Caméléon')}
             </Text>
             {(phase === 'vote' || phase === 'results') && (

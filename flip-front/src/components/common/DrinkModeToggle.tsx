@@ -45,8 +45,8 @@ export function DrinkModeToggle({ accentColor = T.mint, style }: DrinkModeToggle
         <Text style={s.label}>{t('settings:drinks.label', 'Gorgées')}</Text>
         {!drinks.available && (
           <View style={s.proBadge}>
-            <Feather name="lock" size={9} color="#fff" />
-            <Text style={s.proBadgeText}>PRO</Text>
+            <Feather name="lock" size={9} color={T.lemon} />
+            <Text style={s.proBadgeText}>VIP</Text>
           </View>
         )}
       </View>

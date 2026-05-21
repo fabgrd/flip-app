@@ -1,3 +1,4 @@
+import { Feather } from '@expo/vector-icons';
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Modal, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -154,7 +155,9 @@ export function PaywallModal({ visible, onClose }: PaywallModalProps) {
                   i < content.benefits.length - 1 && styles.featureRowBorder,
                 ]}
               >
-                <Text style={styles.featureIcon}>{b.icon}</Text>
+                <View style={styles.featureIconWrap}>
+                  <Feather name={b.icon as any} size={18} color="#fff" />
+                </View>
                 <View style={styles.featureText}>
                   <Text style={styles.featureTitle}>{b.title}</Text>
                   <Text style={styles.featureSub}>{b.sub}</Text>
@@ -311,7 +314,7 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   featureRowBorder: { borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.05)' },
-  featureIcon: { fontSize: 20, width: 26, textAlign: 'center' },
+  featureIconWrap: { width: 26, alignItems: 'center' },
   featureText: { flex: 1 },
   featureTitle: { fontSize: 14, fontWeight: '700', color: '#fff', letterSpacing: -0.2 },
   featureSub: {

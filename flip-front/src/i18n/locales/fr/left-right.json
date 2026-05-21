@@ -40,5 +40,39 @@
     "pol_8": "Faire pousser des herbes aromatiques chez soi",
     "pol_9": "Dire bonjour dans l'ascenseur",
     "pol_10": "Avoir un tote bag"
+  },
+  "ui": {
+    "title": "Gauche\nou droite ?",
+    "tagline": "Place la phrase sur l'échiquier politique",
+    "modalTitle": "Gauche ou Droite",
+    "start": "Lancer la partie ⚖️",
+    "steps": [
+      {
+        "n": "1",
+        "title": "Une phrase apparaît",
+        "desc": "Elle raconte une situation courante."
+      },
+      {
+        "n": "2",
+        "title": "Chacun choisit si c'est un truc de gauche ou de droite",
+        "desc": "Glisse vers la gauche ou la droite selon tes convictions."
+      },
+      {
+        "n": "3",
+        "title": "Résultats collectifs",
+        "desc": "On révèle le spectre politique de chaque joueur à la fin."
+      }
+    ],
+    "remaining_one": "{{count}} restant",
+    "remaining_other": "{{count}} restants",
+    "reveal": {
+      "title": "Camp minoritaire",
+      "left": "Gauche",
+      "right": "Droite",
+      "tie": "🤝 Égalité — personne ne bois ce tour",
+      "unanimous": "🎉 Unanimité — personne ne bois",
+      "drink": "🍻 {{names}} bois 1 gorgée",
+      "nextBtn": "Question suivante →"
+    }
   }
 }

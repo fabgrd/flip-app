@@ -40,5 +40,39 @@
     "pol_8": "Participate in a demonstration",
     "pol_9": "Install solar panels",
     "pol_10": "Eat red meat every day"
+  },
+  "ui": {
+    "title": "Left or\nRight?",
+    "tagline": "Place the phrase on the political chessboard",
+    "modalTitle": "Left or Right",
+    "start": "Start the game ⚖️",
+    "steps": [
+      {
+        "n": "1",
+        "title": "A phrase appears",
+        "desc": "It describes a common situation."
+      },
+      {
+        "n": "2",
+        "title": "Each person chooses left or right",
+        "desc": "Swipe left or right based on your convictions."
+      },
+      {
+        "n": "3",
+        "title": "Collective results",
+        "desc": "The political spectrum of each player is revealed at the end."
+      }
+    ],
+    "remaining_one": "{{count}} remaining",
+    "remaining_other": "{{count}} remaining",
+    "reveal": {
+      "title": "Minority camp",
+      "left": "Left",
+      "right": "Right",
+      "tie": "🤝 Tie — nobody drinks this round",
+      "unanimous": "🎉 Unanimous — nobody drinks",
+      "drink": "🍻 {{names}} drink 1 sip",
+      "nextBtn": "Next question →"
+    }
   }
 }

@@ -1,0 +1,90 @@
+{
+  "rules": {
+    "title": "Le\nCasting",
+    "tagline": "Joue la scène selon ton chiffre secret",
+    "modalTitle": "Le Casting",
+    "start": "Lancer la partie 🎬",
+    "themeLabel": "THÈME",
+    "steps": [
+      {
+        "n": "1",
+        "title": "Un devin est désigné",
+        "desc": "Il observe. Les autres sont les acteurs."
+      },
+      {
+        "n": "2",
+        "title": "Chaque acteur reçoit un chiffre secret",
+        "desc": "De 1 (catastrophique) à 10 (oscar). Le devin ne sait pas."
+      },
+      {
+        "n": "3",
+        "title": "Le devin lit un scénario",
+        "desc": "Exemple : « Trébucher à la cantine avec son plateau »."
+      },
+      {
+        "n": "4",
+        "title": "Chacun joue la scène",
+        "desc": "Selon son chiffre : 1 = nul à mourir, 10 = performance de dingue."
+      },
+      {
+        "n": "5",
+        "title": "Le devin devine les chiffres",
+        "descDrink": "Il attribue un chiffre à chaque acteur. Plus il se trompe, plus il boit.",
+        "descSober": "Il attribue un chiffre à chaque acteur. Plus il se trompe, plus il accumule."
+      }
+    ]
+  },
+  "pickDevin": {
+    "mono": "QUI EST LE DEVIN ?",
+    "title": "Choisis le\njury du casting",
+    "sub": "Le devin observe, juge, et devine les chiffres."
+  },
+  "scenario": {
+    "mono": "LE SCÉNARIO",
+    "devinChip": "Le Devin · {{name}}",
+    "hint": "Lis ce scénario à voix haute.\nEnsuite, passe le tel à chaque acteur pour qu'il voie son chiffre.",
+    "distributeBtn": "Distribuer les chiffres →"
+  },
+  "handoff": {
+    "instruction": "Donnes le tel à {{name}}",
+    "sub": "Regarde ton chiffre en secret avant d'appuyer.",
+    "revealBtn": "Je suis seul·e — révéler"
+  },
+  "revealNumber": {
+    "holdTitle": "Maintiens pour\nvoir ton chiffre",
+    "holdBtn": "HOLD",
+    "scenarioMono": "SCÉNARIO",
+    "scaleTip": "1 = catastrophique · 10 = oscar",
+    "nextBtn": "J'ai vu — passer au suivant"
+  },
+  "perform": {
+    "action": "ACTION !",
+    "scenarioMono": "SCÉNARIO",
+    "hint": "Chaque acteur joue la scène selon son chiffre.\n{{devin}} observe attentivement.",
+    "judgeBtn": "Tout le monde a joué → Jugement"
+  },
+  "guess": {
+    "devinChip": "Devin · {{name}}",
+    "question": "Quel chiffre avait\n{{name}} ?",
+    "nextBtn": "Joueur suivant →",
+    "verdictBtn": "Voir le verdict →"
+  },
+  "results": {
+    "badge": "LE VERDICT",
+    "title": "Les résultats\ndu casting",
+    "pilePoil": "PILE POIL",
+    "presque": "PRESQUE",
+    "rates": "RATÉS",
+    "castingParfait": "Casting Parfait !",
+    "castingParfaitSub": "{{devin}} a tout deviné — les acteurs {{verb}} {{unit}} de plus (trop prévisibles !)",
+    "flopTotal": "Flop Total !",
+    "flopTotalSub": "Personne trouvé — les acteurs {{verb}} {{unit}} de plus (jeu trop chaotique !)",
+    "actorDetail": "DÉTAIL PAR ACTEUR",
+    "realArrow": "RÉEL →",
+    "devinedLabel": "DEVINÉ",
+    "rankingLabel": "CLASSEMENT · {{total}} {{unit}} AU TOTAL",
+    "devinBadge": " DEVIN",
+    "playAgain": "Rejouer",
+    "backToHub": "Retour au hub"
+  }
+}

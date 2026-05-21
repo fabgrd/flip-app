@@ -369,10 +369,10 @@ function APPickDealer({ players, onPick }: { players: Player[]; onPick: (i: numb
       <SafeAreaView style={{ flex: 1 }}>
         <View style={pk.header}>
           <StickerBadge color={T.pink} rotation={-4} textColor="#fff">
-            QUI EST LE DONNEUR ?
+            {t('apero:pickDealer.badge')}
           </StickerBadge>
-          <Text style={pk.title}>Choisis qui{'\n'}tient le tel</Text>
-          <Text style={pk.sub}>Le donneur pioche et subit les conséquences.</Text>
+          <Text style={pk.title}>{t('apero:pickDealer.title')}</Text>
+          <Text style={pk.sub}>{t('apero:pickDealer.sub')}</Text>
         </View>
         <PlayerPickerGrid players={players} onSelect={(_, i) => onPick(i)} shadowColor={T.pink} />
       </SafeAreaView>
@@ -808,7 +808,7 @@ function APSpecialFlip({
         </ScrollView>
         <View style={sf.footer}>
           <ChunkyButton full color={T.ink} onPress={onNext}>
-            Continuer →
+            {t('apero:special.continue')}
           </ChunkyButton>
         </View>
       </SafeAreaView>
@@ -970,6 +970,7 @@ function APEnd({
   foundTotal: number;
   onExit: () => void;
 }) {
+  const { t } = useTranslation();
   const ranked = players.map((p, i) => ({ ...p, idx: i, s: sips[i] })).sort((a, b) => b.s - a.s);
   const totalSips = sips.reduce((a, b) => a + b, 0);
   const { enabled: drinksEnabled } = useDrinksMode();
@@ -980,15 +981,15 @@ function APEnd({
       <ScrollView contentContainerStyle={{ paddingBottom: 40 }}>
         <View style={en.header}>
           <StickerBadge color={T.pink} rotation={-4} textColor="#fff">
-            FIN DE PARTIE
+            {t('apero:end.badge')}
           </StickerBadge>
-          <Text style={en.title}>Le bilan{'\n'}de l'apéro</Text>
+          <Text style={en.title}>{t('apero:end.title')}</Text>
         </View>
 
         <View style={en.statsRow}>
           {[
-            { label: 'CARTES', val: played.length, bg: T.pink },
-            { label: 'TROUVÉES', val: foundTotal, bg: T.mint },
+            { label: t('apero:end.cards'), val: played.length, bg: T.pink },
+            { label: t('apero:end.found'), val: foundTotal, bg: T.mint },
             { label: drinkColumnLabel(drinksEnabled), val: totalSips, bg: T.tomato },
           ].map((s) => (
             <View key={s.label} style={[en.statCard, { backgroundColor: s.bg }]}>
@@ -1003,7 +1004,7 @@ function APEnd({
         </View>
 
         <View style={en.rankWrap}>
-          <Text style={en.rankLabel}>CLASSEMENT</Text>
+          <Text style={en.rankLabel}>{t('apero:end.ranking')}</Text>
           <View style={{ gap: 8 }}>
             {ranked.map((p, i) => {
               const isTop = i === 0 && p.s > 0;

@@ -4,6 +4,7 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import * as Haptics from 'expo-haptics';
 import React, { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -64,44 +65,7 @@ function clampMaxLevelByEntitlement(level: RFLevelKey, has: EntitlementCheck): R
   return RF_LEVEL_INDEX[safe] < RF_LEVEL_INDEX[level] ? safe : level;
 }
 
-const RF_VERDICTS = [
-  {
-    pctMax: 15,
-    title: 'Green Flag absolu-e',
-    quote: "T'es si sain-e que c'est suspect. On te surveille.",
-    color: T.mint,
-  },
-  {
-    pctMax: 30,
-    title: 'Presque fréquentable',
-    quote: "T'as des red flags mais rien que la thérapie peut pas fix.",
-    color: '#8BC34A',
-  },
-  {
-    pctMax: 50,
-    title: 'Zone grise assumée',
-    quote: 'Tes exs ont probablement un groupe WhatsApp à ton sujet.',
-    color: T.lemon,
-  },
-  {
-    pctMax: 70,
-    title: 'Catastrophe sentimentale',
-    quote: "Tu détruis des relations sans même t'en rendre compte. Respect.",
-    color: '#FF8A50',
-  },
-  {
-    pctMax: 85,
-    title: 'Danger public',
-    quote: 'Tes exs devraient pouvoir déduire la thérapie de leurs impôts.',
-    color: REDFLAG_BG,
-  },
-  {
-    pctMax: 101,
-    title: 'Red Flag nucléaire',
-    quote: "L'armée devrait t'interdire de télécharger Tinder.",
-    color: '#8B0000',
-  },
-];
+const RF_VERDICT_COLORS = [T.mint, '#8BC34A', T.lemon, '#FF8A50', REDFLAG_BG, '#8B0000'];
 
 function shuffle<T>(arr: T[]): T[] {
   const copy = [...arr];
@@ -116,8 +80,8 @@ function getCatById(id: string) {
   return RF_CATS.find((c) => c.id === id) ?? { id, name: id, color: T.muted };
 }
 
-function getVerdict(pct: number) {
-  return RF_VERDICTS.find((v) => pct <= v.pctMax) ?? RF_VERDICTS[RF_VERDICTS.length - 1];
+function getVerdict(pct: number, verdicts: { pctMax: number; title: string; quote: string; color: string }[]) {
+  return verdicts.find((v) => pct <= v.pctMax) ?? verdicts[verdicts.length - 1];
 }
 
 /**
@@ -194,16 +158,6 @@ function RFPlayerCard({
 
 // ─── RFRules ─────────────────────────────────────────────────────────────────
 
-const RF_RULES = [
-  { n: '1', title: 'Lis la question', desc: 'As-tu déjà fait ça ? Sois honnête.' },
-  { n: '2', title: 'Swipe → si coupable', desc: 'Droite = oui = +points. Gauche = non = 0 point.' },
-  {
-    n: '3',
-    title: 'Résultats',
-    desc: 'Ton score révèle ton niveau de toxicité sentimentale.',
-  },
-];
-
 function RFRules({
   players,
   onPlayersChange,
@@ -225,25 +179,27 @@ function RFRules({
   onChangeCatCount: (cat: RFCategoryId, value: number) => void;
   onChangeMaxLevel: (level: RFLevelKey) => void;
 }) {
+  const { t } = useTranslation();
   const { isLevelAllowed, requestUnlockFor } = useRedFlagLevelAccess();
   const catTotal = RF_CATEGORIES.reduce((sum, cat) => sum + (catCounts[cat] ?? 0), 0);
   const maxIdx = RF_LEVEL_INDEX[maxLevel];
+  const rfRules = t('redFlag:ui.rules.steps', { returnObjects: true }) as any[];
 
   return (
     <GameRulesScreen
       accentColor={REDFLAG_BG}
-      title={'Es-tu un\nRed Flag ?'}
-      tagline="Tes exs auraient aimé te faire passer ce test"
+      title={t('redFlag:ui.rules.title')}
+      tagline={t('redFlag:ui.rules.tagline')}
       icon={<RedFlagIcon size={88} />}
       iconRotation={8}
-      rulesModal={{ rules: RF_RULES, title: 'Red Flag' }}
+      rulesModal={{ rules: rfRules, title: t('redFlag:ui.rules.modalTitle') }}
       players={players}
       onPlayersChange={onPlayersChange}
       onExit={onExit}
       onSettings={onSettings}
       minPlayers={1}
       onStart={onStart}
-      startLabel="Lancer la partie 🚩"
+      startLabel={t('redFlag:ui.rules.start')}
       startDisabled={catTotal === 0}
     >
       <View style={rls.cardWrap}>
@@ -251,8 +207,8 @@ function RFRules({
           <DrinkModeToggle accentColor={REDFLAG_BG} />
 
           <View style={rls.card}>
-            <Text style={rls.cardLabel}>NIVEAU DE QUESTIONS</Text>
-            <Text style={rls.helperText}>Questions jusqu&apos;au niveau sélectionné</Text>
+            <Text style={rls.cardLabel}>{t('redFlag:ui.rules.levelLabel')}</Text>
+            <Text style={rls.helperText}>{t('redFlag:ui.rules.levelHelper')}</Text>
             <View style={rls.levelRow}>
               {RF_LEVEL_KEYS.map((level, i) => {
                 const isActive = i <= maxIdx;
@@ -290,8 +246,8 @@ function RFRules({
           </View>
 
           <View style={rls.card}>
-            <Text style={rls.cardLabel}>REPARTITION DES THEMES</Text>
-            <Text style={rls.helperText}>Total: {catTotal} questions</Text>
+            <Text style={rls.cardLabel}>{t('redFlag:ui.rules.themeLabel')}</Text>
+            <Text style={rls.helperText}>{t('redFlag:ui.rules.themeHelper', { count: catTotal })}</Text>
             {RF_CATEGORIES.map((cat) => (
               <View key={cat} style={rls.sliderRow}>
                 <View style={rls.sliderHeader}>
@@ -428,6 +384,7 @@ function RFPlay({
   const [answeredIds, setAnsweredIds] = useState<Set<string>>(new Set());
   const playerScores = useRef<Record<string, Record<string, number>>>({});
 
+  const { t } = useTranslation();
   const total = questions.length;
   const currentQ = questions[questionIdx];
   const cat = getCatById(currentQ.c);
@@ -468,9 +425,9 @@ function RFPlay({
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
             <Text style={play.remainingText}>
-              {remainingPlayers.length} restant{remainingPlayers.length > 1 ? 's' : ''}
+              {t('redFlag:ui.play.remaining', { count: remainingPlayers.length })}
             </Text>
-            <RulesButton rules={RF_RULES} title="Red Flag" accentColor={REDFLAG_BG} />
+            <RulesButton rules={t('redFlag:ui.rules.steps', { returnObjects: true }) as any} title={t('redFlag:ui.rules.modalTitle')} accentColor={REDFLAG_BG} />
           </View>
         </View>
         <View style={play.progressBar}>
@@ -483,13 +440,13 @@ function RFPlay({
         <View style={[play.catBadge, { backgroundColor: cat.color }]}>
           <Text style={play.catBadgeText}>{cat.name.toUpperCase()}</Text>
         </View>
-        <Text style={play.questionPrefix}>AS-TU DÉJÀ...</Text>
+        <Text style={play.questionPrefix}>{t('redFlag:ui.play.questionPrefix')}</Text>
         <Text style={play.questionText}>{currentQ.t} ?</Text>
         <View style={[play.ptsBadge, drinksEnabled && play.drinkBadge]}>
           <Text style={[play.ptsBadgeText, drinksEnabled && play.drinkBadgeText]}>
             {drinksEnabled
-              ? `🍻 ${currentQ.p} gorgée${currentQ.p > 1 ? 's' : ''} si oui`
-              : `🚩 +${currentQ.p} pts`}
+              ? t('redFlag:ui.play.sipsIfYes', { count: currentQ.p })
+              : t('redFlag:ui.play.ptsIfYes', { count: currentQ.p })}
           </Text>
         </View>
       </View>
@@ -509,7 +466,7 @@ function RFPlay({
 
       {/* Hint */}
       <View style={play.hint}>
-        <Text style={play.hintText}>← Non | Oui →</Text>
+        <Text style={play.hintText}>{t('redFlag:ui.play.hint')}</Text>
       </View>
     </SafeAreaView>
   );
@@ -630,12 +587,15 @@ function RFResult({
   onReplay: () => void;
   onExit: () => void;
 }) {
+  const { t } = useTranslation();
+  const verdicts = (t('redFlag:ui.verdicts', { returnObjects: true }) as { pctMax: number; title: string; quote: string }[])
+    .map((v, i) => ({ ...v, color: RF_VERDICT_COLORS[i] as string }));
   const results = players
     .map((p) => {
       const scores = playerScores[p.id] ?? {};
       const total = Object.values(scores).reduce((s, v) => s + v, 0);
       const pct = rfMax > 0 ? Math.round((total / rfMax) * 100) : 0;
-      const verdict = getVerdict(pct);
+      const verdict = getVerdict(pct, verdicts);
       return { player: p, scores, pct, verdict };
     })
     .sort((a, b) => b.pct - a.pct);
@@ -644,7 +604,7 @@ function RFResult({
     <SafeAreaView style={res.screen}>
       <DotBackground color={T.paper} opacity={0.07} />
       <ScrollView contentContainerStyle={res.scroll} showsVerticalScrollIndicator={false}>
-        <Text style={res.title}>🚩 Résultats</Text>
+        <Text style={res.title}>{t('redFlag:ui.results.title')}</Text>
 
         {results.map(({ player, scores, pct, verdict }) => (
           <GameCard
@@ -686,10 +646,10 @@ function RFResult({
 
         <View style={res.btnRow}>
           <ChunkyButton color={T.paper} onPress={onReplay} style={{ flex: 1 }}>
-            Rejouer
+            {t('redFlag:ui.results.replay')}
           </ChunkyButton>
           <ChunkyButton color={T.ink} textColor="#fff" onPress={onExit} style={{ flex: 1 }}>
-            Retour
+            {t('redFlag:ui.results.back')}
           </ChunkyButton>
         </View>
       </ScrollView>

@@ -44,6 +44,9 @@ const NAMESPACES = [
   'paranoia',
   'paywall',
   'apero',
+  'medusa',
+  'casting',
+  'redFlag',
 ] as const;
 
 i18n

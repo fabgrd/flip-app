@@ -20,12 +20,12 @@ export interface CastingThemeOption {
 export const CASTING_THEME_OPTIONS: readonly CastingThemeOption[] = [
   { value: 'daily', label: 'Quotidien', emoji: '🎬', desc: 'Cringe de tous les jours' },
   { value: 'relations', label: 'Relations', emoji: '💞', desc: 'Amour, crush, ex & drama' },
-  { value: 'spicy', label: 'Spicy', emoji: '🔥', desc: 'Sexe, alcool, corps & gênes adultes' },
-  { value: 'taboo', label: 'Tabou', emoji: '😈', desc: 'Famille, secrets & vrais malaises' },
+  { value: 'party', label: 'Soirées', emoji: '🥳', desc: 'Fêtes, cuite & délires' },
   { value: 'gaming', label: 'Gaming', emoji: '🎮', desc: 'Fail vidéo, rage & internet' },
   { value: 'family', label: 'Famille', emoji: '👨‍👩‍👧', desc: 'Réunions familiales & parents' },
   { value: 'studies', label: 'Études & Boulot', emoji: '📚', desc: 'École, fac, stages & taf' },
-  { value: 'party', label: 'Soirées', emoji: '🥳', desc: 'Fêtes, cuite & délires' },
+  { value: 'spicy', label: 'Spicy', emoji: '🔥', desc: 'Sexe, alcool, corps & gênes adultes' },
+  { value: 'taboo', label: 'Tabou', emoji: '😈', desc: 'Famille, secrets & vrais malaises' },
 ];
 
 const SCENARIOS_DAILY: string[] = [

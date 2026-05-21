@@ -4,6 +4,7 @@ import { Feather } from '@expo/vector-icons';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import * as Haptics from 'expo-haptics';
 import React, { useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Animated, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -82,54 +83,36 @@ function CARules({
   selectedThemes: CastingTheme[];
   onToggleTheme: (theme: CastingTheme) => void;
 }) {
+  const { t } = useTranslation();
   const { enabled: drinksEnabled } = useDrinksMode();
   const { isThemeAllowed, requestUnlockFor } = useCastingThemeAccess();
-  const STEPS = [
-    { n: '1', title: 'Un devin est désigné', desc: 'Il observe. Les autres sont les acteurs.' },
-    {
-      n: '2',
-      title: 'Chaque acteur reçoit un chiffre secret',
-      desc: 'De 1 (catastrophique) à 10 (oscar). Le devin ne sait pas.',
-    },
-    {
-      n: '3',
-      title: 'Le devin lit un scénario',
-      desc: 'Exemple : « Trébucher à la cantine avec son plateau ».',
-    },
-    {
-      n: '4',
-      title: 'Chacun joue la scène',
-      desc: 'Selon son chiffre : 1 = nul à mourir, 10 = performance de dingue.',
-    },
-    {
-      n: '5',
-      title: 'Le devin devine les chiffres',
-      desc: drinksEnabled
-        ? 'Il attribue un chiffre à chaque acteur. Plus il se trompe, plus il boit.'
-        : 'Il attribue un chiffre à chaque acteur. Plus il se trompe, plus il accumule.',
-    },
-  ];
+  const rawSteps = t('casting:rules.steps', { returnObjects: true }) as { n: string; title: string; desc?: string; descDrink?: string; descSober?: string }[];
+  const STEPS = rawSteps.map((s) => ({
+    n: s.n,
+    title: s.title,
+    desc: drinksEnabled ? (s.descDrink ?? s.desc ?? '') : (s.descSober ?? s.desc ?? ''),
+  }));
 
   return (
     <GameRulesScreen
       accentColor={CASTING_ORANGE}
-      title={'Le\nCasting'}
-      tagline="Joue la scène selon ton chiffre secret"
+      title={t('casting:rules.title')}
+      tagline={t('casting:rules.tagline')}
       icon={<CastingIcon size={88} />}
       iconRotation={8}
-      rulesModal={{ rules: STEPS, title: 'Le Casting' }}
+      rulesModal={{ rules: STEPS, title: t('casting:rules.modalTitle') }}
       players={players}
       onPlayersChange={onPlayersChange}
       onExit={onExit}
       onSettings={onSettings}
       minPlayers={3}
       onStart={onStart}
-      startLabel="Lancer la partie 🎬"
+      startLabel={t('casting:rules.start')}
       scrollable
     >
       <View style={rls.scroll}>
         <DrinkModeToggle accentColor={CASTING_ORANGE} style={{ marginBottom: 14 }} />
-        <Text style={rls.themesSectionLabel}>THÈME</Text>
+        <Text style={rls.themesSectionLabel}>{t('casting:rules.themeLabel')}</Text>
         <ThemeGrid
           options={CASTING_THEME_OPTIONS.map((opt) => ({
             value: opt.value,
@@ -216,11 +199,12 @@ function CAScenario({
   devin: Player;
   onNext: () => void;
 }) {
+  const { t } = useTranslation();
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: CASTING_ORANGE }}>
       <DotBackground color={T.ink} opacity={0.07} />
       <View style={sc.header}>
-        <GameChip color={T.paper}>Le Devin · {devin.name}</GameChip>
+        <GameChip color={T.paper}>{t('casting:scenario.devinChip', { name: devin.name })}</GameChip>
       </View>
       <View style={sc.body}>
         <Text style={sc.mono}>LE SCÉNARIO</Text>
@@ -292,6 +276,7 @@ function CAHandoff({
   total: number;
   onReady: () => void;
 }) {
+  const { t } = useTranslation();
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: T.ink }}>
       <View style={hf.body}>
@@ -305,12 +290,12 @@ function CAHandoff({
           borderColor={T.paper}
           shadowColor={CASTING_ORANGE}
         />
-        <Text style={hf.name}>Donnes le tel à {player.name}</Text>
-        <Text style={hf.sub}>Regarde ton chiffre en secret avant d'appuyer.</Text>
+        <Text style={hf.name}>{t('casting:handoff.instruction', { name: player.name })}</Text>
+        <Text style={hf.sub}>{t('casting:handoff.sub')}</Text>
       </View>
       <View style={hf.footer}>
         <ChunkyButton full color={CASTING_ORANGE} shadowColor={CASTING_ORANGE} onPress={onReady}>
-          Je suis seul·e — révéler
+          {t('casting:handoff.revealBtn')}
         </ChunkyButton>
       </View>
     </SafeAreaView>
@@ -364,6 +349,7 @@ function CARevealNumber({
   scenario: string;
   onNext: () => void;
 }) {
+  const { t } = useTranslation();
   const [revealed, setRevealed] = useState(false);
   const scaleAnim = useRef(new Animated.Value(0.3)).current;
 
@@ -412,12 +398,12 @@ function CARevealNumber({
             </StickerBadge>
 
             <View style={rn.scenarioHint}>
-              <Text style={rn.scenarioMono}>SCÉNARIO</Text>
+              <Text style={rn.scenarioMono}>{t('casting:revealNumber.scenarioMono')}</Text>
               <Text style={rn.scenarioText}>« {scenario} »</Text>
             </View>
 
             <View style={rn.scaleTip}>
-              <Text style={rn.scaleTipText}>1 = catastrophique · 10 = oscar</Text>
+              <Text style={rn.scaleTipText}>{t('casting:revealNumber.scaleTip')}</Text>
             </View>
           </Animated.View>
         )}
@@ -430,7 +416,7 @@ function CARevealNumber({
           onPress={revealed ? onNext : undefined}
           disabled={!revealed}
         >
-          J'ai vu — passer au suivant
+          {t('casting:revealNumber.nextBtn')}
         </ChunkyButton>
       </View>
     </SafeAreaView>
@@ -530,6 +516,7 @@ function CAPerform({
   actorIndices: number[];
   onNext: () => void;
 }) {
+  const { t } = useTranslation();
   const scaleAnim = useRef(new Animated.Value(0.5)).current;
 
   React.useEffect(() => {
@@ -550,7 +537,7 @@ function CAPerform({
         </Animated.Text>
 
         <GameCard style={{ width: '100%', maxWidth: 320 }}>
-          <Text style={pf.scenarioMono}>SCÉNARIO</Text>
+          <Text style={pf.scenarioMono}>{t('casting:perform.scenarioMono')}</Text>
           <Text style={pf.scenarioText}>« {scenario} »</Text>
         </GameCard>
 
@@ -646,6 +633,7 @@ function CAGuessPlayer({
   usedNums: number[];
   onGuess: (num: number) => void;
 }) {
+  const { t } = useTranslation();
   const [guess, setGuess] = useState<number | null>(null);
 
   return (
@@ -653,7 +641,7 @@ function CAGuessPlayer({
       <DotBackground opacity={0.06} />
       <View style={gp.header}>
         <GameChip color={CASTING_ORANGE} textColor="#fff">
-          Devin · {devin.name}
+          {t('casting:guess.devinChip', { name: devin.name })}
         </GameChip>
         <GameChip color={T.paper}>
           {pos + 1}/{total}
@@ -701,7 +689,7 @@ function CAGuessPlayer({
           onPress={guess !== null ? () => onGuess(guess!) : undefined}
           disabled={guess === null}
         >
-          {pos + 1 < total ? 'Joueur suivant →' : 'Voir le verdict →'}
+          {pos + 1 < total ? t('casting:guess.nextBtn') : t('casting:guess.verdictBtn')}
         </ChunkyButton>
       </View>
     </SafeAreaView>
@@ -796,6 +784,7 @@ function CAResults({
   guesses: Record<number, number>;
   onExit: () => void;
 }) {
+  const { t } = useTranslation();
   const devin = players[devinIdx];
   const { enabled: drinksEnabled } = useDrinksMode();
 
@@ -867,17 +856,17 @@ function CAResults({
         {/* Stats */}
         <View style={res.statsRow}>
           <View style={[res.statCard, { backgroundColor: T.mint }]}>
-            <Text style={[res.statLabel, { color: '#fff' }]}>PILE POIL</Text>
+            <Text style={[res.statLabel, { color: '#fff' }]}>{t('casting:results.pilePoil')}</Text>
             <Text style={[res.statVal, { color: '#fff' }]}>{pilePoilCount}</Text>
           </View>
           <View style={[res.statCard, { backgroundColor: T.lemon }]}>
-            <Text style={[res.statLabel, { color: T.ink }]}>PRESQUE</Text>
+            <Text style={[res.statLabel, { color: T.ink }]}>{t('casting:results.presque')}</Text>
             <Text style={[res.statVal, { color: T.ink }]}>
               {results.filter((r) => r.ecart === 1).length}
             </Text>
           </View>
           <View style={[res.statCard, { backgroundColor: T.tomato }]}>
-            <Text style={[res.statLabel, { color: '#fff' }]}>RATÉS</Text>
+            <Text style={[res.statLabel, { color: '#fff' }]}>{t('casting:results.rates')}</Text>
             <Text style={[res.statVal, { color: '#fff' }]}>
               {results.filter((r) => r.ecart >= 2).length}
             </Text>
@@ -890,19 +879,19 @@ function CAResults({
             <Text style={res.bonusIcon}>{hasCastingParfait ? '🎬' : '💀'}</Text>
             <View style={{ flex: 1 }}>
               <Text style={res.bonusTitle}>
-                {hasCastingParfait ? 'Casting Parfait !' : 'Flop Total !'}
+                {hasCastingParfait ? t('casting:results.castingParfait') : t('casting:results.flopTotal')}
               </Text>
               <Text style={res.bonusSub}>
                 {hasCastingParfait
-                  ? `${devin.name} a tout deviné — les acteurs ${drinksEnabled ? 'boivent' : 'prennent'} ${drinkUnitLower(2, drinksEnabled)} de plus (trop prévisibles !)`
-                  : `Personne trouvé — les acteurs ${drinksEnabled ? 'boivent' : 'prennent'} ${drinkUnitLower(3, drinksEnabled)} de plus (jeu trop chaotique !)`}
+                  ? t('casting:results.castingParfaitSub', { devin: devin.name, verb: drinksEnabled ? 'boivent' : 'prennent', unit: drinkUnitLower(2, drinksEnabled) })
+                  : t('casting:results.flopTotalSub', { verb: drinksEnabled ? 'boivent' : 'prennent', unit: drinkUnitLower(3, drinksEnabled) })}
               </Text>
             </View>
           </View>
         )}
 
         {/* Per-actor breakdown */}
-        <Text style={res.sectionLabel}>DÉTAIL PAR ACTEUR</Text>
+        <Text style={res.sectionLabel}>{t('casting:results.actorDetail')}</Text>
         {results.map((r) => {
           const tc = tagColor(r.tag);
           const tagFg = r.tag === 'PRESQUE' ? T.ink : '#fff';
@@ -915,11 +904,11 @@ function CAResults({
                   <View style={res.numBadge}>
                     <Text style={res.numBadgeText}>{r.real}</Text>
                   </View>
-                  <Text style={res.numMono}>RÉEL →</Text>
+                  <Text style={res.numMono}>{t('casting:results.realArrow')}</Text>
                   <View style={[res.numBadge, { backgroundColor: tc, borderColor: T.ink }]}>
                     <Text style={[res.numBadgeText, { color: tagFg }]}>{r.guess}</Text>
                   </View>
-                  <Text style={res.numMono}>DEVINÉ</Text>
+                  <Text style={res.numMono}>{t('casting:results.devinedLabel')}</Text>
                 </View>
               </View>
               <View style={res.tagWrap}>
@@ -936,7 +925,7 @@ function CAResults({
 
         {/* Scoreboard */}
         <Text style={res.sectionLabel}>
-          CLASSEMENT · {totalSips} {drinkColumnLabel(drinksEnabled)} AU TOTAL
+          {t('casting:results.rankingLabel', { total: totalSips, unit: drinkColumnLabel(drinksEnabled) })}
         </Text>
         {ranked.map((item, i) => {
           const isTop = i === 0 && item.s > 0;
@@ -953,7 +942,7 @@ function CAResults({
               <View style={{ flex: 1 }}>
                 <Text style={[res.rankName, isTop && { color: '#fff' }]}>
                   {item.player.name}
-                  {isDevinPlayer ? <Text style={res.devinBadge}> DEVIN</Text> : null}
+                  {isDevinPlayer ? <Text style={res.devinBadge}>{t('casting:results.devinBadge')}</Text> : null}
                 </Text>
                 <Text style={[res.rankSub, isTop && { color: 'rgba(255,255,255,0.7)' }]}>
                   {item.s === 0 ? drinkSoberLabel(drinksEnabled) : drinkUnit(item.s, drinksEnabled)}
@@ -975,10 +964,10 @@ function CAResults({
 
         {/* CTAs */}
         <ChunkyButton full color={CASTING_ORANGE} onPress={onExit}>
-          Rejouer
+          {t('casting:results.playAgain')}
         </ChunkyButton>
         <ChunkyButton full color={T.paper} textColor={T.ink} onPress={onExit}>
-          Retour au hub
+          {t('casting:results.backToHub')}
         </ChunkyButton>
       </ScrollView>
     </SafeAreaView>

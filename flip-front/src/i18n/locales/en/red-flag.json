@@ -1,0 +1,41 @@
+{
+  "ui": {
+    "rules": {
+      "title": "Are you a\nRed Flag?",
+      "tagline": "Your exes would have loved to give you this test",
+      "modalTitle": "Red Flag",
+      "start": "Start the game 🚩",
+      "levelLabel": "QUESTION LEVEL",
+      "levelHelper": "Questions up to the selected level",
+      "themeLabel": "THEME DISTRIBUTION",
+      "themeHelper": "Total: {{count}} questions",
+      "steps": [
+        { "n": "1", "title": "Read the question", "desc": "Have you ever done that? Be honest." },
+        { "n": "2", "title": "Swipe → if guilty", "desc": "Right = yes = +points. Left = no = 0 points." },
+        { "n": "3", "title": "Results", "desc": "Your score reveals your level of romantic toxicity." }
+      ]
+    },
+    "play": {
+      "remaining_one": "{{count}} remaining",
+      "remaining_other": "{{count}} remaining",
+      "questionPrefix": "HAVE YOU EVER...",
+      "sipsIfYes_one": "🍻 {{count}} sip if yes",
+      "sipsIfYes_other": "🍻 {{count}} sips if yes",
+      "ptsIfYes": "🚩 +{{count}} pts",
+      "hint": "← No | Yes →"
+    },
+    "verdicts": [
+      { "pctMax": 15, "title": "Absolute Green Flag", "quote": "You're so healthy it's suspicious. We're watching you." },
+      { "pctMax": 30, "title": "Almost dateable", "quote": "You've got red flags but nothing therapy can't fix." },
+      { "pctMax": 50, "title": "Assumed grey zone", "quote": "Your exes probably have a WhatsApp group about you." },
+      { "pctMax": 70, "title": "Sentimental disaster", "quote": "You destroy relationships without even realizing it. Respect." },
+      { "pctMax": 85, "title": "Public menace", "quote": "Your exes should be able to deduct therapy from their taxes." },
+      { "pctMax": 101, "title": "Nuclear Red Flag", "quote": "The army should ban you from downloading Tinder." }
+    ],
+    "results": {
+      "title": "🚩 Results",
+      "replay": "Play again",
+      "back": "Back"
+    }
+  }
+}

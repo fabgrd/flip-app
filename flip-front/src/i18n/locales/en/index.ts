@@ -1,14 +1,17 @@
 import alert from './alert.json';
 import apero from './apero.json';
 import cameleon from './cameleon.json';
+import casting from './casting.json';
 import common from './common.json';
 import games from './games.json';
 import home from './home.json';
 import leftRight from './left-right.json';
+import medusa from './medusa.json';
 import navigation from './navigation.json';
 import paranoia from './paranoia.json';
 import paywall from './paywall.json';
 import purityTest from './purity-test.json';
+import redFlag from './red-flag.json';
 import settings from './settings.json';
 
 export default {
@@ -24,4 +27,7 @@ export default {
   paranoia,
   paywall,
   apero,
+  medusa,
+  casting,
+  redFlag,
 };

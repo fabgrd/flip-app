@@ -11,7 +11,7 @@ import { usePaywall } from '../paywall';
 
 const LANGUAGES = [
   { code: 'fr', name: 'Français', flag: '🇫🇷' },
-  { code: 'en', name: 'English', flag: '🇺🇸' },
+  { code: 'en', name: 'English', flag: '🇬🇧' },
 ];
 
 export function SettingsScreen() {
@@ -75,8 +75,8 @@ export function SettingsScreen() {
                 <Text style={styles.toggleLabel}>{t('settings:drinks.label')}</Text>
                 {!drinks.available && (
                   <View style={styles.proBadge}>
-                    <Feather name="lock" size={10} color="#fff" />
-                    <Text style={styles.proBadgeText}>PRO</Text>
+                    <Feather name="lock" size={10} color={T.lemon} />
+                    <Text style={styles.proBadgeText}>VIP</Text>
                   </View>
                 )}
               </View>

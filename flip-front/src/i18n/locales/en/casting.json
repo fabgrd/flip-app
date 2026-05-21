@@ -1,0 +1,90 @@
+{
+  "rules": {
+    "title": "The\nCasting",
+    "tagline": "Play the scene according to your secret number",
+    "modalTitle": "The Casting",
+    "start": "Start the game 🎬",
+    "themeLabel": "THEME",
+    "steps": [
+      {
+        "n": "1",
+        "title": "A guesser is chosen",
+        "desc": "They observe. The others are actors."
+      },
+      {
+        "n": "2",
+        "title": "Each actor gets a secret number",
+        "desc": "From 1 (catastrophic) to 10 (oscar). The guesser doesn't know."
+      },
+      {
+        "n": "3",
+        "title": "The guesser reads a scenario",
+        "desc": "Example: \"Tripping at the cafeteria with your tray\"."
+      },
+      {
+        "n": "4",
+        "title": "Everyone plays the scene",
+        "desc": "Based on their number: 1 = terrible, 10 = mind-blowing performance."
+      },
+      {
+        "n": "5",
+        "title": "The guesser guesses the numbers",
+        "descDrink": "They assign a number to each actor. The more they're wrong, the more they drink.",
+        "descSober": "They assign a number to each actor. The more they're wrong, the more they accumulate."
+      }
+    ]
+  },
+  "pickDevin": {
+    "mono": "WHO IS THE GUESSER?",
+    "title": "Choose the\ncasting jury",
+    "sub": "The guesser watches, judges, and guesses the numbers."
+  },
+  "scenario": {
+    "mono": "THE SCENARIO",
+    "devinChip": "The Guesser · {{name}}",
+    "hint": "Read this scenario out loud.\nThen pass the phone to each actor to see their number.",
+    "distributeBtn": "Distribute numbers →"
+  },
+  "handoff": {
+    "instruction": "Pass the phone to {{name}}",
+    "sub": "Look at your number in secret before pressing.",
+    "revealBtn": "I'm alone — reveal"
+  },
+  "revealNumber": {
+    "holdTitle": "Hold to\nsee your number",
+    "holdBtn": "HOLD",
+    "scenarioMono": "SCENARIO",
+    "scaleTip": "1 = catastrophic · 10 = oscar",
+    "nextBtn": "Seen — pass to next"
+  },
+  "perform": {
+    "action": "ACTION!",
+    "scenarioMono": "SCENARIO",
+    "hint": "Each actor plays the scene based on their number.\n{{devin}} watches carefully.",
+    "judgeBtn": "Everyone played → Judgment"
+  },
+  "guess": {
+    "devinChip": "Guesser · {{name}}",
+    "question": "What number did\n{{name}} have?",
+    "nextBtn": "Next player →",
+    "verdictBtn": "See the verdict →"
+  },
+  "results": {
+    "badge": "THE VERDICT",
+    "title": "Casting\nresults",
+    "pilePoil": "SPOT ON",
+    "presque": "CLOSE",
+    "rates": "MISSED",
+    "castingParfait": "Perfect Casting!",
+    "castingParfaitSub": "{{devin}} guessed everything — actors {{verb}} {{unit}} more (too obvious!)",
+    "flopTotal": "Total Flop!",
+    "flopTotalSub": "Nobody found — actors {{verb}} {{unit}} more (too chaotic!)",
+    "actorDetail": "ACTOR BREAKDOWN",
+    "realArrow": "REAL →",
+    "devinedLabel": "GUESSED",
+    "rankingLabel": "RANKING · {{total}} {{unit}} TOTAL",
+    "devinBadge": " GUESSER",
+    "playAgain": "Play again",
+    "backToHub": "Back to hub"
+  }
+}

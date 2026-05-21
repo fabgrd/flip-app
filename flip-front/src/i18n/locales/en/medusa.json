@@ -1,0 +1,82 @@
+{
+  "rules": {
+    "title": "Medusa",
+    "tagline": "Look up… and avoid eye contact",
+    "modalTitle": "Medusa",
+    "start": "Start the game 🐍",
+    "steps": [
+      {
+        "n": "1",
+        "title": "Everyone looks down",
+        "desc": "The active player says \"Look down!\" and the group obeys with eyes closed."
+      },
+      {
+        "n": "2",
+        "title": "3… 2… 1… MEDUSA!",
+        "desc": "On the signal, everyone lifts their head and stares at another player."
+      },
+      {
+        "n": "3",
+        "title": "Eye contact = penalty",
+        "descDrink": "If two players look each other in the eyes: 1 sip each.",
+        "descSober": "If two players look each other in the eyes: 1 point each."
+      },
+      {
+        "n": "4",
+        "title": "No contact = safe",
+        "desc": "If no one stares back at you, you survive. Next player, your turn."
+      }
+    ]
+  },
+  "caller": {
+    "round": "ROUND {{num}} / {{total}}",
+    "yourTurn": "it's you",
+    "instruction": "Tell everyone:",
+    "say": "\"Look down!\"",
+    "readyBtn": "Everyone is ready → Go"
+  },
+  "countdown": {
+    "prepare": "Get ready…",
+    "medusa": "MEDUSA!",
+    "liftEyes": "Look up!"
+  },
+  "report": {
+    "chip": "Medusa · resolution",
+    "title": "Who made\neye contact?",
+    "sub": "Tap two players who locked eyes.",
+    "selectHint": "Tap the player who locked eyes with {{name}}",
+    "pairsLabel": "EYE CONTACTS · {{count}}",
+    "confirmBtn_one": "Confirm · {{count}} pair",
+    "confirmBtn_other": "Confirm · {{count}} pairs",
+    "noOneBtn": "Nobody made eye contact"
+  },
+  "roundResult": {
+    "contact": "CONTACT!",
+    "allSafe": "EVERYONE IS SAFE",
+    "caught": "Caught!",
+    "niceTry": "Well played!",
+    "contacts_one": "{{count}} eye contact this round",
+    "contacts_other": "{{count}} eye contacts this round",
+    "noContact": "No eye contact. Impressive.",
+    "safeLabel": "SAFE THIS ROUND",
+    "penaltyEach": "{{unit}} EACH",
+    "seeEnd": "See final recap",
+    "nextRound": "Next round →"
+  },
+  "end": {
+    "badge": "GAME OVER",
+    "title": "Eye contact\nrecap",
+    "toursLabel": "ROUNDS PLAYED",
+    "eyeContactsLabel": "EYE CONTACTS",
+    "ranking": "RANKING",
+    "recap": "ROUND RECAP",
+    "intouchable": "UNTOUCHABLE",
+    "laMeduse": "THE MEDUSA",
+    "leads": "leads",
+    "noContact": "· no contact",
+    "pairs_one": "· {{count}} pair",
+    "pairs_other": "· {{count}} pairs",
+    "playAgain": "Play again",
+    "backToHub": "Back to hub"
+  }
+}

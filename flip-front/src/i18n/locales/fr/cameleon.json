@@ -123,5 +123,36 @@
     "caca": "Caca",
     "OM": "OM",
     "OL": "OL"
+  },
+  "ui": {
+    "title": "Caméléon",
+    "tagline": "Démasque l'imposteur",
+    "modalTitle": "Le Caméléon",
+    "start": "Lancer la partie 🦎",
+    "steps": [
+      {
+        "n": "1",
+        "title": "Faites tourner le tel",
+        "desc": "Chacun voit son mot secret… sauf le caméléon."
+      },
+      {
+        "n": "2",
+        "title": "À tour de rôle, un indice",
+        "desc": "Un mot, pas plus. Ni trop évident, ni trop vague."
+      },
+      {
+        "n": "3",
+        "title": "Discutez",
+        "desc": "Débattez — qui semble ne pas savoir de quoi il parle ?"
+      },
+      {
+        "n": "4",
+        "title": "Tout le monde vote",
+        "desc": "Désignez l'imposteur. S'il est démasqué, les civils gagnent."
+      }
+    ],
+    "whoIsTitle": "Qui est\nle caméléon ?",
+    "drinkCaught": "🍻 {{name}} bois 3 gorgées (démasqué·e !)",
+    "drinkBadVote": "🍻 {{name}} bois 2 gorgées (mauvais vote du groupe)"
   }
 }

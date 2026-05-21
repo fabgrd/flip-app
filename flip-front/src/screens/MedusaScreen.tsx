@@ -4,6 +4,7 @@ import { Feather } from '@expo/vector-icons';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import * as Haptics from 'expo-haptics';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Animated,
   Easing,
@@ -62,45 +63,28 @@ function MDRules({
   onSettings: () => void;
 }) {
   const { enabled: drinksEnabled } = useDrinksMode();
-  const rulesSteps = [
-    {
-      n: '1',
-      title: 'Tout le monde regarde en bas',
-      desc: 'Le joueur actif dit « Regardez en bas ! » et le groupe obéit les yeux fermés.',
-    },
-    {
-      n: '2',
-      title: '3… 2… 1… MÉDUSA !',
-      desc: 'Au signal, tout le monde lève la tête et fixe un autre joueur.',
-    },
-    {
-      n: '3',
-      title: 'Eye contact = pénalité',
-      desc: drinksEnabled
-        ? 'Si deux joueurs se regardent dans les yeux : 1 gorgée chacun.'
-        : 'Si deux joueurs se regardent dans les yeux : 1 point chacun.',
-    },
-    {
-      n: '4',
-      title: 'Pas de contact = safe',
-      desc: 'Si personne ne te fixe en retour, tu survis. Joueur suivant, à toi.',
-    },
-  ];
+  const { t } = useTranslation();
+  const rulesSteps = t('medusa:rules.steps', { returnObjects: true }) as { n: string; title: string; desc?: string; descDrink?: string; descSober?: string }[];
+  const resolvedSteps = rulesSteps.map((s) => ({
+    n: s.n,
+    title: s.title,
+    desc: drinksEnabled ? (s.descDrink ?? s.desc ?? '') : (s.descSober ?? s.desc ?? ''),
+  }));
 
   return (
     <GameRulesScreen
       accentColor={T.cobalt}
-      title="Médusa"
-      tagline="Lève les yeux… et évite le regard"
+      title={t('medusa:rules.title')}
+      tagline={t('medusa:rules.tagline')}
       icon={<MedusaIcon size={86} />}
-      rulesModal={{ rules: rulesSteps, title: 'Médusa' }}
+      rulesModal={{ rules: resolvedSteps, title: t('medusa:rules.modalTitle') }}
       players={players}
       onPlayersChange={onPlayersChange}
       onExit={onExit}
       onSettings={onSettings}
       minPlayers={5}
       onStart={onStart}
-      startLabel="Lancer la partie 🐍"
+      startLabel={t('medusa:rules.start')}
     >
       <View style={{ paddingHorizontal: 20, paddingBottom: 12, marginTop: 'auto' }}>
         <DrinkModeToggle accentColor={T.cobalt} />
@@ -124,13 +108,14 @@ function MDCaller({
   totalRounds: number;
   onStart: () => void;
 }) {
+  const { t } = useTranslation();
   return (
     <View style={{ flex: 1, backgroundColor: T.ink }}>
       <SafeAreaView style={cal.screen}>
         <View style={cal.center}>
           <View style={[cal.roundBadge]}>
             <Text style={cal.roundBadgeText}>
-              TOUR {roundNum} / {totalRounds}
+              {t('medusa:caller.round', { num: roundNum, total: totalRounds })}
             </Text>
           </View>
 
@@ -145,11 +130,11 @@ function MDCaller({
           />
 
           <Text style={cal.name}>
-            {playerName},{'\n'}c'est toi
+            {playerName},{'\n'}{t('medusa:caller.yourTurn')}
           </Text>
           <Text style={cal.sub}>
-            Dis à tout le monde :{'\n'}
-            <Text style={cal.subAccent}>« Regardez en bas ! »</Text>
+            {t('medusa:caller.instruction')}{'\n'}
+            <Text style={cal.subAccent}>{t('medusa:caller.say')}</Text>
           </Text>
         </View>
 
@@ -163,7 +148,7 @@ function MDCaller({
               onStart();
             }}
           >
-            Tout le monde est prêt → Lancer
+            {t('medusa:caller.readyBtn')}
           </ChunkyButton>
         </View>
       </SafeAreaView>
@@ -220,13 +205,14 @@ const cal = StyleSheet.create({
 // ─── Countdown ────────────────────────────────────────────────────────────────
 
 function MDCountdown({ onDone }: { onDone: () => void }) {
+  const { t } = useTranslation();
   const [phase, setPhase] = useState<-1 | 0 | 1 | 2 | 3>(-1);
   const scaleAnim = useRef(new Animated.Value(0.3)).current;
   const flashOpacity = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    const t = setTimeout(() => setPhase(0), 800);
-    return () => clearTimeout(t);
+    const timer = setTimeout(() => setPhase(0), 800);
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
@@ -239,8 +225,8 @@ function MDCountdown({ onDone }: { onDone: () => void }) {
         tension: 120,
         useNativeDriver: true,
       }).start();
-      const t = setTimeout(() => setPhase((p) => (p + 1) as 0 | 1 | 2 | 3), 1100);
-      return () => clearTimeout(t);
+      const timer = setTimeout(() => setPhase((p) => (p + 1) as 0 | 1 | 2 | 3), 1100);
+      return () => clearTimeout(timer);
     }
     if (phase === 3) {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
@@ -259,8 +245,8 @@ function MDCountdown({ onDone }: { onDone: () => void }) {
         easing: Easing.out(Easing.quad),
         useNativeDriver: true,
       }).start();
-      const t = setTimeout(onDone, 2800);
-      return () => clearTimeout(t);
+      const timer = setTimeout(onDone, 2800);
+      return () => clearTimeout(timer);
     }
   }, [phase]);
 
@@ -271,7 +257,7 @@ function MDCountdown({ onDone }: { onDone: () => void }) {
     <View style={[cd.screen, { backgroundColor: bgColor }]}>
       <DotBackground color="#fff" opacity={phase === 3 ? 0.08 : 0.03} />
 
-      {phase === -1 && <Text style={cd.intro}>Préparez-vous…</Text>}
+      {phase === -1 && <Text style={cd.intro}>{t('medusa:countdown.prepare')}</Text>}
 
       {phase >= 0 && phase < 3 && (
         <Animated.Text
@@ -283,8 +269,8 @@ function MDCountdown({ onDone }: { onDone: () => void }) {
 
       {phase === 3 && (
         <Animated.View style={[cd.medusaWrap, { transform: [{ scale: scaleAnim }] }]}>
-          <Text style={cd.medusaText}>MÉDUSA !</Text>
-          <Text style={cd.medusaSub}>Levez les yeux !</Text>
+          <Text style={cd.medusaText}>{t('medusa:countdown.medusa')}</Text>
+          <Text style={cd.medusaSub}>{t('medusa:countdown.liftEyes')}</Text>
         </Animated.View>
       )}
 
@@ -319,6 +305,7 @@ function MDReport({
   setPairs: (p: MedusaPair[]) => void;
   onConfirm: () => void;
 }) {
+  const { t } = useTranslation();
   const [selecting, setSelecting] = useState<number | null>(null);
 
   const toggle = (idx: number) => {
@@ -388,8 +375,7 @@ function MDReport({
       {selecting !== null && (
         <View style={rep.hint}>
           <Text style={rep.hintText}>
-            Tape le joueur qui a croisé le regard de{' '}
-            <Text style={{ fontWeight: '900' }}>{players[selecting].name}</Text>
+            {t('medusa:report.selectHint', { name: players[selecting].name })}
           </Text>
         </View>
       )}
@@ -397,7 +383,7 @@ function MDReport({
       {/* Pairs list */}
       {pairs.length > 0 && (
         <View style={rep.pairsSection}>
-          <Text style={rep.pairsLabel}>EYE CONTACTS · {pairs.length}</Text>
+          <Text style={rep.pairsLabel}>{t('medusa:report.pairsLabel', { count: pairs.length })}</Text>
           {pairs.map((pair, i) => (
             <View key={i} style={rep.pairRow}>
               <View style={[rep.pairDot, { backgroundColor: pBg(pair.a) }]} />
@@ -426,7 +412,7 @@ function MDReport({
               onConfirm();
             }}
           >
-            {`Confirmer · ${pairs.length} paire${pairs.length > 1 ? 's' : ''}`}
+            {t('medusa:report.confirmBtn', { count: pairs.length })}
           </ChunkyButton>
         ) : (
           <ChunkyButton
@@ -437,7 +423,7 @@ function MDReport({
               onConfirm();
             }}
           >
-            Personne ne s'est regardé
+            {t('medusa:report.noOneBtn')}
           </ChunkyButton>
         )}
       </View>
@@ -551,6 +537,7 @@ function MDResults({
   totalRounds: number;
   onNext: () => void;
 }) {
+  const { t } = useTranslation();
   const hasCatches = pairs.length > 0;
   const caughtSet = new Set(pairs.flatMap(({ a, b }) => [a, b]));
   const { enabled: drinksEnabled } = useDrinksMode();
@@ -563,17 +550,17 @@ function MDResults({
 
       <View style={res.top}>
         <StickerBadge color={T.paper} rotation={-6} textColor={T.ink}>
-          {hasCatches ? 'CONTACT !' : 'TOUT LE MONDE EST SAFE'}
+          {hasCatches ? t('medusa:roundResult.contact') : t('medusa:roundResult.allSafe')}
         </StickerBadge>
         <Text style={[res.verdict, { color: hasCatches ? '#fff' : T.ink }]}>
-          {hasCatches ? 'Attrapés !' : 'Bien joué !'}
+          {hasCatches ? t('medusa:roundResult.caught') : t('medusa:roundResult.niceTry')}
         </Text>
         <Text
           style={[res.verdictSub, { color: hasCatches ? 'rgba(255,255,255,0.85)' : T.inkSoft }]}
         >
           {hasCatches
-            ? `${pairs.length} eye contact${pairs.length > 1 ? 's' : ''} ce tour`
-            : 'Aucun eye contact. Impressionnant.'}
+            ? t('medusa:roundResult.contacts', { count: pairs.length })
+            : t('medusa:roundResult.noContact')}
         </Text>
       </View>
 
@@ -589,7 +576,7 @@ function MDResults({
                   {players[pair.b].name}
                 </Text>
                 <Text style={res.pairPenalty}>
-                  {drinkUnitLower(1, drinksEnabled).toUpperCase()} CHACUN
+                  {t('medusa:roundResult.penaltyEach', { unit: drinkUnitLower(1, drinksEnabled).toUpperCase() })}
                 </Text>
               </View>
               <InitialAvatar index={pair.b} size={40} radius={12} />
@@ -603,7 +590,7 @@ function MDResults({
             <Text
               style={[res.safeLabel, { color: hasCatches ? 'rgba(255,255,255,0.7)' : T.muted }]}
             >
-              SAFE CE TOUR
+              {t('medusa:roundResult.safeLabel')}
             </Text>
             <View style={res.safeRow}>
               {safePlayers.map((p, i) => (
@@ -623,7 +610,7 @@ function MDResults({
             onNext();
           }}
         >
-          {isLast ? 'Voir le bilan final' : 'Tour suivant →'}
+          {isLast ? t('medusa:roundResult.seeEnd') : t('medusa:roundResult.nextRound')}
         </ChunkyButton>
       </ScrollView>
     </SafeAreaView>
@@ -670,6 +657,7 @@ function MDEnd({
   onExit: () => void;
   onRestart: () => void;
 }) {
+  const { t } = useTranslation();
   const totalContacts = history.reduce((s, r) => s + r.pairs.length, 0);
   const { enabled: drinksEnabled } = useDrinksMode();
   const ranked = players
@@ -682,26 +670,26 @@ function MDEnd({
 
       <View style={en.hero}>
         <StickerBadge color={T.cobalt} rotation={-4} textColor="#fff">
-          FIN DE PARTIE
+          {t('medusa:end.badge')}
         </StickerBadge>
-        <Text style={en.title}>Le bilan{'\n'}des regards</Text>
+        <Text style={en.title}>{t('medusa:end.title')}</Text>
       </View>
 
       <ScrollView contentContainerStyle={en.content} showsVerticalScrollIndicator={false}>
         {/* Stats */}
         <View style={en.statsRow}>
           <GameCard color={T.cobalt} style={{ flex: 1, padding: 14, borderRadius: 22 }}>
-            <Text style={en.statLabel}>TOURS JOUÉS</Text>
+            <Text style={en.statLabel}>{t('medusa:end.toursLabel')}</Text>
             <Text style={en.statValue}>{history.length}</Text>
           </GameCard>
           <GameCard color={T.tomato} style={{ flex: 1, padding: 14, borderRadius: 22 }}>
-            <Text style={en.statLabel}>EYE CONTACTS</Text>
+            <Text style={en.statLabel}>{t('medusa:end.eyeContactsLabel')}</Text>
             <Text style={en.statValue}>{totalContacts}</Text>
           </GameCard>
         </View>
 
         {/* Ranking */}
-        <Text style={en.sectionLabel}>CLASSEMENT</Text>
+        <Text style={en.sectionLabel}>{t('medusa:end.ranking')}</Text>
         {ranked.map(({ p, idx, pen }, i) => {
           const isTop = i === 0 && pen > 0;
           const isSafe = pen === 0;
@@ -716,7 +704,7 @@ function MDEnd({
               <View style={{ flex: 1 }}>
                 <Text style={[en.rankName, { color: isTop ? '#fff' : T.ink }]}>{p.name}</Text>
                 <Text style={[en.rankSub, { color: isTop ? 'rgba(255,255,255,0.7)' : T.muted }]}>
-                  {isSafe ? 'INTOUCHABLE' : isTop ? 'LA MÉDUSE' : drinkUnit(pen, drinksEnabled)}
+                  {isSafe ? t('medusa:end.intouchable') : isTop ? t('medusa:end.laMeduse') : drinkUnit(pen, drinksEnabled)}
                 </Text>
               </View>
               <Text style={[en.rankScore, { color: isTop ? T.lemon : isSafe ? T.mint : T.tomato }]}>
@@ -727,7 +715,7 @@ function MDEnd({
         })}
 
         {/* History */}
-        <Text style={en.sectionLabel}>RÉCAP PAR TOUR</Text>
+        <Text style={en.sectionLabel}>{t('medusa:end.recap')}</Text>
         {history.map((r, i) => (
           <View key={i} style={en.historyRow}>
             <View
@@ -737,10 +725,10 @@ function MDEnd({
             </View>
             <Text style={en.historyText}>
               <Text style={{ fontWeight: '900', color: T.ink }}>{players[r.callerIdx].name}</Text>{' '}
-              mène
+              {t('medusa:end.leads')}
               {r.pairs.length === 0
-                ? ' · aucun contact'
-                : ` · ${r.pairs.length} paire${r.pairs.length > 1 ? 's' : ''}`}
+                ? t('medusa:end.noContact')
+                : t('medusa:end.pairs', { count: r.pairs.length })}
             </Text>
           </View>
         ))}
@@ -754,7 +742,7 @@ function MDEnd({
               onRestart();
             }}
           >
-            Rejouer
+            {t('medusa:end.playAgain')}
           </ChunkyButton>
           <ChunkyButton
             full
@@ -765,7 +753,7 @@ function MDEnd({
               onExit();
             }}
           >
-            Retour au hub
+            {t('medusa:end.backToHub')}
           </ChunkyButton>
         </View>
       </ScrollView>

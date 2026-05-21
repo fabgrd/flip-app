@@ -24,7 +24,7 @@ import { RootStackParamList } from '../types';
 type HomeNav = StackNavigationProp<RootStackParamList, 'Home'>;
 
 export function HomeScreen() {
-  useEffect(() => { setDevTier('premium'); }, []);
+  useEffect(() => { setDevTier('free'); }, []);
   const navigation = useNavigation<HomeNav>();
   const { t } = useTranslation();
   const { players, addPlayer, removePlayer, updatePlayerAvatar } = usePlayers();
@@ -100,13 +100,13 @@ export function HomeScreen() {
       {/* Hero text */}
       <View style={styles.hero}>
         <Text style={styles.heroTitle}>
-          Qui est{'\n'}
-          <Text style={styles.heroHighlight}>de la partie</Text> ?
+          {t('home:hero.titlePrefix')}{'\n'}
+          <Text style={styles.heroHighlight}>{t('home:hero.titleHighlight')}</Text> ?
         </Text>
         <Text style={styles.heroSub}>
           {players.length > 0
-            ? `${players.length} joueur${players.length > 1 ? 's' : ''} prêt${players.length > 1 ? 's' : ''} à se ridiculiser.`
-            : `Ajoute au moins ${MIN_PLAYERS_GLOBAL} joueur pour démarrer.`}
+            ? t('home:hero.ready', { count: players.length })
+            : t('home:hero.addAtLeast', { count: MIN_PLAYERS_GLOBAL, min: MIN_PLAYERS_GLOBAL })}
         </Text>
       </View>
 
@@ -138,11 +138,11 @@ export function HomeScreen() {
           onPress={handleStart}
           disabled={!canStart}
         >
-          {"C'est parti →"}
+          {t('home:actions.startCta')}
         </ChunkyButton>
         {!canStart && (
           <Text style={styles.ctaHint}>
-            {t('home:addPlayers.minPlayers', `Minimum ${MIN_PLAYERS_GLOBAL} joueur`)}
+            {t('home:addPlayers.minPlayers')}
           </Text>
         )}
       </View>

@@ -780,5 +780,34 @@
         }
       ]
     }
+  },
+  "ui": {
+    "title": "Test\nde Pureté",
+    "tagline": "Combien de péchés à ton actif ?",
+    "modalTitle": "Test de Pureté",
+    "start": "Lancer la partie ✨",
+    "steps": [
+      {
+        "n": "1",
+        "title": "Lis la question",
+        "desc": "As-tu déjà fait ça ? Sois honnête (ou pas)."
+      },
+      {
+        "n": "2",
+        "title": "Glisse oui ou non",
+        "desc": "Droite = oui, gauche = non. Chaque oui = points d'impureté."
+      },
+      {
+        "n": "3",
+        "title": "Résultats",
+        "desc": "Le score final révèle ton niveau de pureté… ou d'impureté 😈"
+      }
+    ],
+    "levelLabel": "NIVEAU DE QUESTIONS",
+    "levelHelper": "Questions jusqu'au niveau sélectionné",
+    "themeLabel": "REPARTITION DES THEMES",
+    "themeTotal": "Total: {{count}} questions",
+    "hint": "← Non | Oui →",
+    "rulesBtn": "Test de Pureté"
   }
 }
