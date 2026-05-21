@@ -108,7 +108,7 @@ function PurityRules({
       onSettings={onSettings}
       minPlayers={1}
       onStart={onStart}
-      startLabel="Commencer le test"
+      startLabel="Lancer la partie ✨"
       startDisabled={themeTotal === 0}
     >
       <View style={pr.cardWrap}>

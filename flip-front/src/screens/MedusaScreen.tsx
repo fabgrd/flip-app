@@ -100,7 +100,7 @@ function MDRules({
       onSettings={onSettings}
       minPlayers={5}
       onStart={onStart}
-      startLabel="Que la chasse commence"
+      startLabel="Lancer la partie 🐍"
     >
       <View style={{ paddingHorizontal: 20, paddingBottom: 12, marginTop: 'auto' }}>
         <DrinkModeToggle accentColor={T.cobalt} />

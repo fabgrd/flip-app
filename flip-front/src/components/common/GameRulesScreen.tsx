@@ -116,18 +116,17 @@ export function GameRulesScreen({
       />
 
       {scrollable ? (
-        <ScrollView style={{ flex: 1 }} contentContainerStyle={{ paddingBottom: 32 }}>
+        <ScrollView style={{ flex: 1 }} contentContainerStyle={{ paddingBottom: 24 }}>
           {titleBlock}
           {children}
-          {footer}
         </ScrollView>
       ) : (
         <>
           {titleBlock}
           <View style={{ flex: 1 }}>{children}</View>
-          {footer}
         </>
       )}
+      {footer}
 
       <PlayersModal
         visible={showPlayersModal}
@@ -140,13 +139,13 @@ export function GameRulesScreen({
 
 const s = StyleSheet.create({
   screen: { flex: 1 },
-  titleArea: { paddingHorizontal: 20, paddingTop: 16, paddingBottom: 16 },
-  iconWrap: { position: 'absolute', right: 16, top: 16 },
+  titleArea: { paddingHorizontal: 20, paddingTop: 16, paddingBottom: 16, minHeight: 110 },
+  iconWrap: { position: 'absolute', right: 16, top: 16, zIndex: 2 },
   title: {
-    fontSize: 64,
+    fontSize: 48,
     fontWeight: '900',
-    letterSpacing: -2.5,
-    lineHeight: 68,
+    letterSpacing: -2,
+    lineHeight: 52,
     marginTop: 12,
   },
   tagline: {
@@ -155,5 +154,5 @@ const s = StyleSheet.create({
     letterSpacing: -0.2,
     marginTop: 6,
   },
-  footer: { padding: 20, paddingBottom: 32 },
+  footer: { paddingHorizontal: 20, paddingTop: 12, paddingBottom: 8 },
 });

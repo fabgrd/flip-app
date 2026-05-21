@@ -1,6 +1,4 @@
-import { Feather } from '@expo/vector-icons';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import * as Haptics from 'expo-haptics';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, View } from 'react-native';
@@ -10,11 +8,9 @@ import {
   ChunkyButton,
   DotBackground,
   DrinkModeToggle,
-  GameMenuActions,
   GameRulesScreen,
   GaucheDroiteIcon,
-  PlayersModal,
-  RulesButton,
+  RulesButton
 } from '../components';
 import { T } from '../constants/flipTokens';
 import { POLITICAL_COLORS } from '../games/left-right';
@@ -59,10 +55,8 @@ function LRRules({
   return (
     <GameRulesScreen
       accentColor={T.gaucheDroiteAccent ?? T.lemon}
-      title="Gauche ou Droite"
+      title={'Gauche\nou droite ?'}
       tagline="Place la phrase sur l'échiquier politique"
-      titleColor={T.ink}
-      taglineColor={`${T.ink}99`}
       icon={<GaucheDroiteIcon size={86} />}
       rulesModal={{ rules: LEFT_RIGHT_RULES, title: 'Gauche ou Droite' }}
       players={players}
@@ -71,7 +65,7 @@ function LRRules({
       onSettings={onSettings}
       minPlayers={2}
       onStart={onStart}
-      startLabel="Lancer la partie"
+      startLabel="Lancer la partie ⚖️"
     >
       <View style={{ paddingHorizontal: 20, paddingBottom: 12, marginTop: 'auto' }}>
         <DrinkModeToggle accentColor={T.lemon} />

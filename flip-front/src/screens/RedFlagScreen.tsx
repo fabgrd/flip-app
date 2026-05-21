@@ -243,7 +243,7 @@ function RFRules({
       onSettings={onSettings}
       minPlayers={1}
       onStart={onStart}
-      startLabel="Découvrir la vérité 🚩"
+      startLabel="Lancer la partie 🚩"
       startDisabled={catTotal === 0}
     >
       <View style={rls.cardWrap}>

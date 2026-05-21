@@ -124,7 +124,7 @@ function CARules({
       onSettings={onSettings}
       minPlayers={3}
       onStart={onStart}
-      startLabel="Lancer le casting"
+      startLabel="Lancer la partie 🎬"
       scrollable
     >
       <View style={rls.scroll}>

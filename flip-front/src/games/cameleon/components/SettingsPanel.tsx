@@ -1,6 +1,6 @@
 import { TFunction } from 'i18next';
 import React from 'react';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { ChunkyButton } from '../../../components/common/ChunkyButton';
 import { DrinkModeToggle } from '../../../components/common/DrinkModeToggle';
 import { ThemeGrid } from '../../../components/common/ThemeGrid';
@@ -25,13 +25,11 @@ interface SettingsPanelProps {
   currentMW: number;
   selectedThemes: CameleonTheme[];
   maxImpostors: number;
-  canStart: boolean;
   onChangeUC: (value: number) => void;
   onChangeMW: (value: number) => void;
   onToggleTheme: (theme: CameleonTheme) => void;
   isThemeAllowed: (theme: CameleonTheme) => boolean;
   onRequestUnlock: (theme: CameleonTheme) => void;
-  onStart: () => void;
   t: TFunction;
 }
 
@@ -40,13 +38,11 @@ export function SettingsPanel({
   currentUC,
   currentMW,
   selectedThemes,
-  canStart,
   onChangeUC,
   onChangeMW,
   onToggleTheme,
   isThemeAllowed,
   onRequestUnlock,
-  onStart,
   t,
 }: SettingsPanelProps) {
   const stepperMetrics = { height: 38, radius: T.rSm, paddingH: 0, fontSize: 20 };
@@ -55,6 +51,7 @@ export function SettingsPanel({
       style={styles.scroll}
       contentContainerStyle={styles.container}
       showsVerticalScrollIndicator={false}
+      keyboardShouldPersistTaps="handled"
     >
       <DrinkModeToggle accentColor={T.mint} style={{ marginBottom: 12 }} />
 
@@ -146,26 +143,13 @@ export function SettingsPanel({
         onLockedPress={onRequestUnlock}
       />
 
-      <ChunkyButton
-        full
-        size="md"
-        color={T.ink}
-        textColor="#fff"
-        shadowColor={T.tomato}
-        metrics={{ fontSize: 18 }}
-        onPress={onStart}
-        disabled={!canStart}
-        style={styles.startBtn}
-      >
-        {t('cameleon:actions.start', 'Distribuer les rôles')}
-      </ChunkyButton>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   scroll: { flex: 1 },
-  container: { padding: 20, paddingBottom: 40 },
+  container: { paddingHorizontal: 20, paddingTop: 4, paddingBottom: 20 },
 
   statsRow: { flexDirection: 'row', gap: 10, marginBottom: 18 },
   statCard: {
@@ -221,5 +205,4 @@ const styles = StyleSheet.create({
   stepBtnText: { color: T.ink, fontSize: 20, fontWeight: '900', lineHeight: 22 },
   stepValue: { color: T.ink, fontSize: 22, fontWeight: '900', width: 36, textAlign: 'center' },
 
-  startBtn: { marginTop: 20 },
 });

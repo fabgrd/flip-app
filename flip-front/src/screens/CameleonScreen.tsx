@@ -7,13 +7,12 @@ import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import {
-  ChunkyButton,
   DotBackground,
-  GameMenuActions,
-  GameTopBar,
+  GameRulesScreen,
   PlayerPickerGrid,
   PopModal,
 } from '../components/common';
+import { ChameleonIcon } from '../components/icons';
 import { T } from '../constants/flipTokens';
 import { useCameleon, useCameleonThemeAccess } from '../games/cameleon';
 import { useDrinksMode } from '../hooks';
@@ -196,59 +195,60 @@ export function CameleonScreen() {
     });
   };
 
+  if (phase === 'settings') {
+    return (
+      <GameRulesScreen
+        accentColor={T.mint}
+        title="Caméléon"
+        tagline="Démasque l'imposteur"
+        icon={<ChameleonIcon size={86} />}
+        rulesModal={{ rules: CAMELEON_RULES, title: 'Le Caméléon' }}
+        players={localPlayers}
+        onPlayersChange={setLocalPlayers}
+        onExit={() => navigation.goBack()}
+        onSettings={() => navigation.navigate('Settings')}
+        minPlayers={3}
+        onStart={handleStart}
+        startLabel="Lancer la partie 🦎"
+        startDisabled={!canStart}
+      >
+        <Animated.View entering={FadeIn} exiting={FadeOut} style={styles.flex}>
+          <SettingsPanel
+            playersCount={localPlayers.length}
+            currentUC={currentUC}
+            currentMW={currentMW}
+            selectedThemes={selectedThemes}
+            maxImpostors={maxImpostors}
+            onChangeUC={(val) =>
+              setOverrideUC(
+                Math.max(
+                  1,
+                  Math.min(localPlayers.length - 1, Math.min(val, maxImpostors - currentMW)),
+                ),
+              )
+            }
+            onChangeMW={(val) =>
+              setOverrideMW(
+                Math.min(
+                  localPlayers.length - 1 - currentUC,
+                  Math.min(val, maxImpostors - currentUC),
+                ),
+              )
+            }
+            onToggleTheme={toggleTheme}
+            isThemeAllowed={isThemeAllowed}
+            onRequestUnlock={requestUnlockFor}
+            t={t}
+          />
+        </Animated.View>
+      </GameRulesScreen>
+    );
+  }
+
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: bgColor }]}>
-      {(phase === 'clues' || phase === 'vote' || phase === 'results' || phase === 'settings') && (
+      {(phase === 'clues' || phase === 'vote' || phase === 'results') && (
         <DotBackground opacity={0.06} color={T.ink} />
-      )}
-
-      {/* ── SETTINGS ── */}
-      {phase === 'settings' && (
-        <>
-          <GameTopBar
-            onExit={() => navigation.goBack()}
-            onSettings={() => navigation.navigate('Settings')}
-            rules={{ rules: CAMELEON_RULES, title: 'Le Caméléon', accentColor: T.mint }}
-            players={localPlayers}
-            onPlayersChange={setLocalPlayers}
-          />
-          <View style={styles.titleArea}>
-            <Text style={styles.title}>Caméléon</Text>
-            <Text style={styles.tagline}>Démasque l'imposteur</Text>
-          </View>
-
-          <Animated.View entering={FadeIn} exiting={FadeOut} style={styles.flex}>
-            <SettingsPanel
-              playersCount={localPlayers.length}
-              currentUC={currentUC}
-              currentMW={currentMW}
-              selectedThemes={selectedThemes}
-              maxImpostors={maxImpostors}
-              canStart={canStart}
-              onChangeUC={(val) =>
-                setOverrideUC(
-                  Math.max(
-                    1,
-                    Math.min(localPlayers.length - 1, Math.min(val, maxImpostors - currentMW)),
-                  ),
-                )
-              }
-              onChangeMW={(val) =>
-                setOverrideMW(
-                  Math.min(
-                    localPlayers.length - 1 - currentUC,
-                    Math.min(val, maxImpostors - currentUC),
-                  ),
-                )
-              }
-              onToggleTheme={toggleTheme}
-              isThemeAllowed={isThemeAllowed}
-              onRequestUnlock={requestUnlockFor}
-              onStart={handleStart}
-              t={t}
-            />
-          </Animated.View>
-        </>
       )}
 
       {/* ── REVEAL ── */}
@@ -378,31 +378,6 @@ export function CameleonScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1 },
   flex: { flex: 1 },
-
-  headerRow: {
-    paddingHorizontal: 20,
-    paddingTop: 8,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  backBtnText: { fontSize: 20, color: T.ink, fontWeight: '900' },
-  titleArea: { paddingHorizontal: 20, paddingTop: 16, paddingBottom: 4 },
-  title: {
-    color: T.ink,
-    fontSize: 64,
-    fontWeight: '900',
-    letterSpacing: -2.5,
-    lineHeight: 68,
-    marginTop: 10,
-  },
-  tagline: {
-    color: T.inkSoft,
-    fontSize: 16,
-    fontWeight: '600',
-    letterSpacing: -0.2,
-    marginTop: 6,
-  },
 
   header: { paddingHorizontal: 20, paddingTop: 12, paddingBottom: 8 },
   chipRow: { flexDirection: 'row', marginBottom: 10 },
