@@ -1,8 +1,9 @@
 import { TFunction } from 'i18next';
 import React from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TextInput } from 'react-native';
+import { ChunkyButton } from '../../../components/common/ChunkyButton';
 import { PopModal } from '../../../components/common/PopModal';
-import { useTheme } from '../../../contexts/ThemeContext';
+import { T } from '../../../constants/flipTokens';
 
 interface MrWhiteGuessModalProps {
   visible: boolean;
@@ -23,7 +24,6 @@ export function MrWhiteGuessModal({
   onSubmit,
   t,
 }: MrWhiteGuessModalProps) {
-  const { theme } = useTheme();
   return (
     <PopModal
       visible={visible}
@@ -31,52 +31,49 @@ export function MrWhiteGuessModal({
       name={name}
       avatar={avatar}
     >
-      <Text style={[styles.prompt, { color: theme.colors.text.secondary }]}>
-        {t('cameleon:mrWhite.guessPrompt')}
-      </Text>
+      <Text style={styles.prompt}>{t('cameleon:mrWhite.guessPrompt')}</Text>
       <TextInput
-        style={[
-          styles.input,
-          { borderColor: theme.colors.border, color: theme.colors.text.primary },
-        ]}
+        style={styles.input}
         value={guess}
         onChangeText={onChangeGuess}
         placeholder={t('cameleon:mrWhite.placeholder')}
-        placeholderTextColor={theme.colors.text.light}
+        placeholderTextColor={T.muted}
         autoFocus
         autoCapitalize="none"
         autoCorrect={false}
         returnKeyType="done"
         onSubmitEditing={onSubmit}
       />
-      <TouchableOpacity
-        style={[
-          styles.primaryBtn,
-          { backgroundColor: theme.colors.primary },
-          guess.trim().length === 0 && styles.btnDisabled,
-        ]}
+      <ChunkyButton
+        size="sm"
+        color={T.ink}
+        textColor="#fff"
+        shadowColor={T.mint}
+        metrics={{ fontSize: 16 }}
         onPress={onSubmit}
         disabled={guess.trim().length === 0}
+        style={styles.primaryBtn}
       >
-        <Text style={[styles.primaryBtnText, { color: theme.colors.text.white }]}>
-          {t('cameleon:actions.submit')}
-        </Text>
-      </TouchableOpacity>
+        {t('cameleon:actions.submit', 'Soumettre')}
+      </ChunkyButton>
     </PopModal>
   );
 }
 
 const styles = StyleSheet.create({
-  btnDisabled: { opacity: 0.5 },
+  prompt: { color: T.inkSoft, fontSize: 15, marginTop: 8, textAlign: 'center' },
   input: {
-    borderRadius: 10,
-    borderWidth: 1,
-    marginTop: 12,
+    backgroundColor: T.bg,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: T.rSm,
+    marginTop: 14,
     minWidth: 220,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    color: T.ink,
+    fontSize: 16,
+    fontWeight: '700',
   },
-  primaryBtn: { alignItems: 'center', borderRadius: 12, marginTop: 8, paddingVertical: 14 },
-  primaryBtnText: { fontSize: 16, fontWeight: 'bold' },
-  prompt: { fontSize: 15, marginTop: 8, textAlign: 'center' },
+  primaryBtn: { marginTop: 12 },
 });

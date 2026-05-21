@@ -1,22 +1,37 @@
 {
-    "title": "Paramètres",
-    "language": {
-        "title": "Langue",
-        "subtitle": "Choisissez votre langue préférée",
-        "options": {
-            "fr": "Français",
-            "en": "English",
-            "zh": "中文"
-        }
-    },
-    "appearance": {
-        "title": "Apparence",
-        "subtitle": "Thème clair/sombre",
-        "darkMode": "Mode sombre"
-    },
-    "about": {
-        "title": "À propos",
-        "version": "Version {{version}}",
-        "description": "FL!P - Le jeu d'alcool ultime pour animer vos soirées entre amis !"
+  "title": "Paramètres",
+  "language": {
+    "title": "Langue",
+    "subtitle": "Choisissez votre langue préférée",
+    "options": {
+      "fr": "Français",
+      "en": "English"
     }
+  },
+  "about": {
+    "title": "À propos",
+    "version": "Version {{version}}",
+    "description": "FL!P - Le jeu d'alcool ultime pour animer vos soirées entre amis !"
+  },
+  "suggest": {
+    "label": "Proposer une question",
+    "hint": "Tu as une idée de question ou de phrase pour un jeu ?",
+    "title": "Proposer une question",
+    "gameLabel": "Pour quel jeu ?",
+    "allGames": "Tous les jeux",
+    "questionLabel": "Ta question / phrase",
+    "placeholder": "Ex : « N'as-tu jamais mangé debout au-dessus de l'évier ? »",
+    "submit": "Envoyer ma suggestion",
+    "successTitle": "Merci !",
+    "successDesc": "On lira ta suggestion avec attention. Les meilleures questions finissent dans le jeu 🤞",
+    "close": "Fermer",
+    "emailSubject": "[FL!P] Suggestion – {{game}}",
+    "emailBody": "Jeu : {{game}}\n\nQuestion / phrase suggérée :\n{{suggestion}}"
+  },
+  "drinks": {
+    "title": "Mode jeu à boire",
+    "label": "Distribuer les gorgées",
+    "description": "Active la distribution de gorgées dans les jeux pour transformer Fl!p en jeu à boire.",
+    "lockedHint": "Débloque le Premium pour activer le mode jeu à boire"
+  }
 }

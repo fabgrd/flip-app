@@ -1,0 +1,225 @@
+export const CASTING_ORANGE = '#FF8C42';
+
+export type CastingTheme =
+  | 'daily'
+  | 'relations'
+  | 'spicy'
+  | 'taboo'
+  | 'gaming'
+  | 'family'
+  | 'studies'
+  | 'party';
+
+export interface CastingThemeOption {
+  value: CastingTheme;
+  label: string;
+  emoji: string;
+  desc: string;
+}
+
+export const CASTING_THEME_OPTIONS: readonly CastingThemeOption[] = [
+  { value: 'daily', label: 'Quotidien', emoji: '🎬', desc: 'Cringe de tous les jours' },
+  { value: 'relations', label: 'Relations', emoji: '💞', desc: 'Amour, crush, ex & drama' },
+  { value: 'party', label: 'Soirées', emoji: '🥳', desc: 'Fêtes, cuite & délires' },
+  { value: 'gaming', label: 'Gaming', emoji: '🎮', desc: 'Fail vidéo, rage & internet' },
+  { value: 'family', label: 'Famille', emoji: '👨‍👩‍👧', desc: 'Réunions familiales & parents' },
+  { value: 'studies', label: 'Études & Boulot', emoji: '📚', desc: 'École, fac, stages & taf' },
+  { value: 'spicy', label: 'Spicy', emoji: '🔥', desc: 'Sexe, alcool, corps & gênes adultes' },
+  { value: 'taboo', label: 'Tabou', emoji: '😈', desc: 'Famille, secrets & vrais malaises' },
+];
+
+const SCENARIOS_DAILY: string[] = [
+  'Trébucher à la cantine avec son plateau plein',
+  'Voir une araignée géante dans sa douche et crier',
+  'Être pris en flag en train de mentir à ses potes',
+  "Se rendre compte qu'on est en slip pendant une visio importante",
+  'Rater son créneau devant une terrasse pleine de monde',
+  'Se faire contrôler dans le métro sans ticket ni Pass Navigo',
+  "Annoncer à ses parents qu'on a raté ses exams",
+  "Découvrir que son vol est annulé à l'aéroport 30 minutes avant",
+  'Marcher dans une crotte avec des chaussures toutes neuves',
+  "Réaliser qu'on a envoyé un vocal ultra gênant au mauvais groupe",
+  'Renverser son café sur le PC de son boss en réunion',
+  'Se coincer la main dans un distributeur automatique',
+  "Apprendre qu'on est viré par un mail groupé",
+  'Se retrouver seul sur scène sans connaître son texte',
+  'Oublier son sac de sport le jour du cours de piscine',
+  'Appeler le prof "maman" devant toute la classe',
+  'Se faire surprendre en train de chanter fort dans sa voiture aux feux rouges',
+  'Poster une story en pensant que c’est en close friends',
+  'Oublier son chargeur de téléphone en partant en weekend',
+  'Se tromper de jour pour un rendez-vous important',
+];
+
+const SCENARIOS_RELATIONS: string[] = [
+  'Recevoir un message de son ex à 3h du matin',
+  'Se faire larguer en plein resto devant tout le monde',
+  'Croiser son crush au supermarché en pyjama et pantoufles',
+  'Se faire piquer par une guêpe en plein date',
+  "Essayer de draguer dans une langue qu'on ne parle pas du tout",
+  "Présenter son nouveau date à ses potes qui l'avaient déjà ghosté",
+  "Réaliser qu'on a appelé son date par le prénom de son ex",
+  "Voir son date liker la photo d'une autre devant soi",
+  'Se faire ghoster juste après avoir couché le premier soir',
+  'Découvrir que son crush sort avec son meilleur pote',
+  'Envoyer un "je t\'aime" au bout de 3 jours',
+  'Se faire friendzoner en pleine conversation',
+  'Avoir un rencard Tinder catastrophique',
+  'Se faire bloquer après avoir avoué un kink bizarre',
+  'Réaliser que ton date est en couple depuis le début',
+  'Se faire larguer par message vocal de 2 minutes',
+  'Croiser son ex avec sa nouvelle meuf juste après le breakup',
+];
+
+const SCENARIOS_SPICY: string[] = [
+  "Se réveiller dans le lit d'un inconnu sans aucun souvenir",
+  'Vomir sur sa date pendant le dîner',
+  'Découvrir un énorme suçon avant le repas de famille',
+  'Faire pipi au lit après une grosse cuite',
+  'Envoyer une nude au mauvais contact (père/mère/boss)',
+  'Tomber complètement nu dans la piscine devant ses beaux-parents',
+  'Être surpris en plein acte par sa colocataire',
+  "Réaliser qu'on s'est trompé de toilettes dans un bar bondé",
+  'Faire un discours de mariage complètement bourré',
+  'Avoir un pet bruyant pendant un rapport sexuel',
+  'Se coincer la main dans un sextoy',
+  'La capote qui craque au pire moment possible',
+  'Se faire surprendre en train de mater du porno par sa mère',
+  'Avoir la diarrhée pendant un rapport',
+  'Perdre son string dans un Uber après une soirée',
+  'Se réveiller avec du rouge à lèvres partout sur le visage',
+];
+
+const SCENARIOS_TABOO: string[] = [
+  'Annoncer à sa famille un truc très gênant sur sa vie sexuelle',
+  'Apprendre une infidélité via les stories Instagram',
+  'Se faire larguer le jour de son mariage',
+  "Découvrir qu'un de ses parents a une double vie",
+  "Avouer à ses parents qu'on a perdu son boulot depuis 3 mois",
+  'Être balancé par son meilleur pote devant tout le monde',
+  "Apprendre qu'on est le sujet d'un groupe WhatsApp moqueur",
+  'Découvrir que ses parents ont vu ses nudes',
+  "Se faire griller en train de voler de l'argent dans le portefeuille de ses parents",
+  "Avouer à sa famille qu'on est en dépression",
+  "Réaliser que toute la famille sait qu'on a couché avec son ex",
+];
+
+const SCENARIOS_GAMING: string[] = [
+  "Faire un 0-13 en ranked et se faire insulter par toute l'équipe",
+  "Oublier d'éteindre son micro en train de rager sur ses mates",
+  'Se faire stream snipé pendant un tournoi',
+  "Mourir stupidement juste après avoir trash talk l'adversaire",
+  'Avoir un lag énorme pendant un moment clutch',
+  'Se faire ban du Discord de ses potes après une blague',
+  "Accuser quelqu'un de cheat alors que c'était ton fail",
+  'Perdre tous ses items rares à cause d’une arnaque',
+  'Se faire kick du serveur juste avant le boss final',
+  'Ouvrir son micro par erreur en plein vocal avec des inconnus',
+  'Faire un rage quit légendaire filmé par un pote',
+];
+
+const SCENARIOS_FAMILY: string[] = [
+  "Se faire demander 'alors toujours célibataire ?' par toute la famille à Noël",
+  'Rater le repas de Noël complètement bourré',
+  'Se faire griller en train de fumer par ses grands-parents',
+  'Avoir une érection pendant un câlin familial',
+  'Se faire fouiller sa chambre par sa mère à 20 ans',
+  'Se faire surprendre en train de regarder du porno',
+  "Avouer qu'on ne va plus à la fac depuis 2 mois",
+  'Se faire comparer à son cousin qui réussit tout',
+  'Faire un scandale en famille après avoir trop bu',
+];
+
+const SCENARIOS_STUDIES: string[] = [
+  "Se tromper de salle d'examen le jour du bac",
+  'Rendre une copie complètement blanche',
+  'Se faire interroger sur le seul chapitre non révisé',
+  'Avoir ses règles pendant un oral important',
+  'Faire un exposé avec une énorme faute sur la première slide',
+  'Appeler son boss par son prénom dans un mail ultra formel',
+  'Envoyer une plainte sur le boss… au boss',
+  'Se faire surprendre en train de dormir pendant une visio',
+  "Rater une présentation importante à cause d'un mème ouvert",
+  "Avoir un trou de mémoire total pendant un entretien d'embauche",
+  'Se faire virer de son stage pour avoir posté une story en soirée',
+  'Copier sur son voisin et se faire prendre en flag',
+  'Oublier de rendre son mémoire la veille de la deadline',
+  "Se présenter à l'oral complètement défoncé",
+  "Recevoir un mail 'on ne te garde pas' après 6 mois de stage",
+];
+
+const SCENARIOS_PARTY: string[] = [
+  'Vomir sur la piste de danse devant tout le monde',
+  'Perdre son téléphone + portefeuille + clés en soirée',
+  'Embrasser la mauvaise personne pendant un jeu',
+  'Se réveiller avec un tatouage temporaire ultra honteux',
+  'Faire un striptease involontaire en dansant',
+  'Se faire jeter de la soirée par les hôtes',
+  'Perdre ses chaussures et rentrer pieds nus',
+  'Se réveiller dans une baignoire chez des inconnus',
+  "Faire une déclaration d'amour bourrée à la mauvaise personne",
+  'Se battre pour une raison complètement débile',
+  'Poster des stories ultra compromettantes en étant déchiré',
+  'Avoir un black-out total de 4 heures',
+];
+
+export const CASTING_SCENARIOS_BY_THEME: Readonly<Record<CastingTheme, readonly string[]>> = {
+  daily: SCENARIOS_DAILY,
+  relations: SCENARIOS_RELATIONS,
+  spicy: SCENARIOS_SPICY,
+  taboo: SCENARIOS_TABOO,
+  gaming: SCENARIOS_GAMING,
+  family: SCENARIOS_FAMILY,
+  studies: SCENARIOS_STUDIES,
+  party: SCENARIOS_PARTY,
+};
+
+export function getScenariosForThemes(themes: readonly CastingTheme[]): string[] {
+  if (themes.length === 0) return [...SCENARIOS_DAILY];
+  const seen = new Set<string>();
+  const pool: string[] = [];
+  for (const theme of themes) {
+    for (const s of CASTING_SCENARIOS_BY_THEME[theme]) {
+      if (!seen.has(s)) {
+        seen.add(s);
+        pool.push(s);
+      }
+    }
+  }
+  return pool;
+}
+
+export const CASTING_SCENARIOS: string[] = Object.values(CASTING_SCENARIOS_BY_THEME).flat();
+
+export function getScenariosForThemesI18n(
+  themes: readonly CastingTheme[],
+  scenariosData: Record<CastingTheme, readonly string[]>,
+): string[] {
+  if (themes.length === 0) return [...(scenariosData.daily ?? [])];
+  const seen = new Set<string>();
+  const pool: string[] = [];
+  for (const theme of themes) {
+    for (const s of scenariosData[theme] ?? []) {
+      if (!seen.has(s)) {
+        seen.add(s);
+        pool.push(s);
+      }
+    }
+  }
+  return pool;
+}
+
+export const CASTING_LABELS: Record<number, string> = {
+  1: 'Catastrophique',
+  2: 'Horrible',
+  3: 'Mauvais',
+  4: 'Bof bof',
+  5: 'Moyen',
+  6: 'Pas mal',
+  7: 'Bien',
+  8: 'Très bien',
+  9: 'Excellent',
+  10: 'Oscar',
+};
+
+export { LIGHT_COLORS, PLAYER_COLORS } from '../../constants/playerColors';

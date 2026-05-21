@@ -1,29 +1,24 @@
-import { Ionicons } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Switch,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import { useTheme } from '../contexts/ThemeContext';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { BeerMugIcon, ChunkyButton, DotBackground, SuggestButton, ToggleSwitch } from '../components';
+import { T } from '../constants/flipTokens';
+import { useDrinksMode } from '../hooks';
+import { usePaywall } from '../paywall';
 
 const LANGUAGES = [
   { code: 'fr', name: 'Français', flag: '🇫🇷' },
-  { code: 'en', name: 'English', flag: '🇺🇸' },
-  { code: 'zh', name: '中文', flag: '🇨🇳' },
+  { code: 'en', name: 'English', flag: '🇬🇧' },
 ];
 
 export function SettingsScreen() {
   const navigation = useNavigation();
   const { t, i18n } = useTranslation();
-  const { theme, toggleDarkMode } = useTheme();
-  const [isDark] = useState(theme.mode === 'dark');
+  const drinks = useDrinksMode();
+  const { open: openPaywall } = usePaywall();
 
   const handleLanguageChange = async (languageCode: string) => {
     await i18n.changeLanguage(languageCode);
@@ -33,108 +28,119 @@ export function SettingsScreen() {
     navigation.goBack();
   };
 
+  const handleDrinksToggle = () => {
+    if (!drinks.available) {
+      openPaywall('drinks_mode');
+      return;
+    }
+    drinks.setEnabled(!drinks.enabled);
+  };
+
+  const handleDrinksRowPress = () => {
+    if (!drinks.available) openPaywall('drinks_mode');
+  };
+
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.surface }]}>
-      {/* Header */}
-      <View
-        style={[
-          styles.header,
-          { backgroundColor: theme.colors.background, borderBottomColor: theme.colors.border },
-        ]}
-      >
-        <TouchableOpacity style={styles.backButton} onPress={handleBackPress}>
-          <Ionicons name="arrow-back" size={24} color={theme.colors.primary} />
-        </TouchableOpacity>
-        <Text style={[styles.headerTitle, { color: theme.colors.text.primary }]}>
-          {t('settings:title')}
-        </Text>
-        <View style={styles.placeholder} />
+    <SafeAreaView style={styles.container}>
+      <DotBackground opacity={0.06} />
+      <View style={styles.header}>
+        <ChunkyButton
+          size="sm"
+          square
+          color={T.paper}
+          textColor={T.ink}
+          onPress={handleBackPress}
+        >
+          <Feather name="arrow-left" size={18} color={T.ink} />
+        </ChunkyButton>
+        <View style={styles.headerTitleWrap}>
+          <Text style={styles.headerTitle}>{t('settings:title')}</Text>
+        </View>
+        <View style={styles.headerSpacer} />
       </View>
 
-      <ScrollView style={styles.content}>
-        {/* Theme Section */}
+      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+        {/* Drinks mode */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: theme.colors.text.primary }]}>
-            {t('settings:appearance.title')}
-          </Text>
-          <Text style={[styles.sectionSubtitle, { color: theme.colors.text.secondary }]}>
-            {t('settings:appearance.subtitle')}
-          </Text>
-
-          <View
-            style={[
-              styles.rowBetween,
-              { backgroundColor: theme.colors.background, borderColor: theme.colors.border },
-            ]}
+          <Text style={styles.sectionTitle}>{t('settings:drinks.title')}</Text>
+          <TouchableOpacity
+            activeOpacity={drinks.available ? 1 : 0.85}
+            onPress={handleDrinksRowPress}
+            disabled={drinks.available}
+            style={styles.drinksCard}
           >
-            <Text style={[styles.rowText, { color: theme.colors.text.primary }]}>
-              {t('settings:appearance.darkMode')}
-            </Text>
-            <Switch
-              value={isDark}
-              onValueChange={toggleDarkMode}
-              trackColor={{ true: theme.colors.primary }}
-              thumbColor={isDark ? theme.colors.primary : '#fff'}
-            />
-          </View>
-        </View>
-
-        {/* Language Section */}
-        <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: theme.colors.text.primary }]}>
-            {t('settings:language.title')}
-          </Text>
-          <Text style={[styles.sectionSubtitle, { color: theme.colors.text.secondary }]}>
-            {t('settings:language.subtitle')}
-          </Text>
-
-          <View
-            style={[
-              styles.languageOptions,
-              { backgroundColor: theme.colors.background, borderRadius: 12 },
-            ]}
-          >
-            {LANGUAGES.map((language) => (
-              <TouchableOpacity
-                key={language.code}
-                style={[
-                  styles.languageOption,
-                  { borderBottomColor: theme.colors.border },
-                  i18n.language === language.code && {
-                    backgroundColor: `${theme.colors.primary}10`,
-                  },
-                ]}
-                onPress={() => handleLanguageChange(language.code)}
-              >
-                <Text style={styles.languageFlag}>{language.flag}</Text>
-                <Text
-                  style={[
-                    styles.languageName,
-                    { color: theme.colors.text.primary },
-                    i18n.language === language.code && { color: theme.colors.primary },
-                  ]}
-                >
-                  {language.name}
-                </Text>
-                {i18n.language === language.code && (
-                  <Ionicons name="checkmark" size={20} color={theme.colors.primary} />
+            <BeerMugIcon size={32} />
+            <View style={styles.toggleTextWrap}>
+              <View style={styles.toggleLabelLine}>
+                <Text style={styles.toggleLabel}>{t('settings:drinks.label')}</Text>
+                {!drinks.available && (
+                  <View style={styles.proBadge}>
+                    <Feather name="lock" size={10} color={T.lemon} />
+                    <Text style={styles.proBadgeText}>VIP</Text>
+                  </View>
                 )}
-              </TouchableOpacity>
-            ))}
+              </View>
+              <Text style={styles.toggleDescription}>
+                {drinks.available
+                  ? t('settings:drinks.description')
+                  : t('settings:drinks.lockedHint')}
+              </Text>
+            </View>
+            <ToggleSwitch
+              on={drinks.enabled}
+              onToggle={handleDrinksToggle}
+              disabled={!drinks.available}
+            />
+          </TouchableOpacity>
+        </View>
+
+        {/* Language */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>{t('settings:language.title')}</Text>
+          <View style={styles.card}>
+            {LANGUAGES.map((language, idx) => {
+              const isActive = i18n.language === language.code;
+              return (
+                <TouchableOpacity
+                  key={language.code}
+                  style={[
+                    styles.languageRow,
+                    isActive && styles.languageRowActive,
+                    idx === LANGUAGES.length - 1 && styles.languageRowLast,
+                  ]}
+                  onPress={() => handleLanguageChange(language.code)}
+                  activeOpacity={0.85}
+                >
+                  <Text style={styles.languageFlag}>{language.flag}</Text>
+                  <Text style={[styles.languageName, isActive && styles.languageNameActive]}>
+                    {language.name}
+                  </Text>
+                  {isActive && <Feather name="check" size={18} color={T.mint} />}
+                </TouchableOpacity>
+              );
+            })}
           </View>
         </View>
 
-        {/* About Section */}
+        {/* Suggest */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: theme.colors.text.primary }]}>
-            {t('settings:about.title')}
-          </Text>
-          <Text style={[styles.aboutDescription, { color: theme.colors.text.secondary }]}>
-            {t('settings:about.description')}
-          </Text>
-          <Text style={[styles.version, { color: theme.colors.text.secondary }]}>
-            {t('settings:about.version', { version: '1.0.0' })}
-          </Text>
+          <Text style={styles.sectionTitle}>{t('settings:suggest.label')}</Text>
+          <View style={styles.card}>
+            <SuggestButton />
+          </View>
+        </View>
+
+        {/* About */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>{t('settings:about.title')}</Text>
+          <View style={[styles.card, styles.aboutCard]}>
+            <Text style={styles.aboutDescription}>{t('settings:about.description')}</Text>
+            <View style={styles.versionPill}>
+              <Text style={styles.versionText}>
+                {t('settings:about.version', { version: '1.0.0' })}
+              </Text>
+            </View>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -142,78 +148,114 @@ export function SettingsScreen() {
 }
 
 const styles = StyleSheet.create({
-  aboutDescription: {
-    fontSize: 14,
-    lineHeight: 20,
-    marginBottom: 12,
-  },
-  backButton: {
-    padding: 8,
-  },
-  container: {
-    flex: 1,
-  },
-  content: {
-    flex: 1,
-    padding: 20,
-  },
+  container: { flex: 1, backgroundColor: T.bg },
+
   header: {
-    alignItems: 'center',
-    borderBottomWidth: 1,
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'space-between',
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingTop: 8,
+    paddingBottom: 10,
   },
+  headerTitleWrap: { flex: 1, paddingHorizontal: 12 },
   headerTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    color: T.ink,
+    fontSize: 28,
+    fontWeight: '900',
+    letterSpacing: -1,
+    lineHeight: 30,
   },
-  languageFlag: {
-    fontSize: 24,
-    marginRight: 12,
-  },
-  languageName: {
-    flex: 1,
-    fontSize: 16,
-  },
-  languageOption: {
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    flexDirection: 'row',
-    padding: 16,
-  },
-  languageOptions: {
-    overflow: 'hidden',
-  },
-  placeholder: {
-    width: 40,
-  },
-  rowBetween: {
-    alignItems: 'center',
-    borderRadius: 12,
-    borderWidth: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 16,
-  },
-  rowText: {
-    fontSize: 16,
-    fontWeight: '500',
-  },
-  section: {
-    marginBottom: 32,
-  },
-  sectionSubtitle: {
-    fontSize: 14,
-    marginBottom: 16,
-  },
+  headerSub: { color: T.inkSoft, fontSize: 12, marginTop: 2 },
+  headerSpacer: { width: 44 },
+
+  content: { paddingHorizontal: 20, paddingBottom: 40, gap: 18 },
+
+  section: { gap: 10 },
   sectionTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 8,
+    color: T.ink,
+    fontSize: 14,
+    fontWeight: '900',
+    letterSpacing: 1.2,
+    textTransform: 'uppercase',
   },
-  version: {
-    fontSize: 12,
-    fontStyle: 'italic',
+
+  card: {
+    backgroundColor: T.paper,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: T.rLg,
+    padding: 14,
   },
+  drinksCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 14,
+    backgroundColor: T.paper,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: 18,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    shadowColor: T.ink,
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 3,
+  },
+
+  toggleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  toggleTextWrap: { flex: 1, gap: 4 },
+  toggleLabelLine: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  toggleLabel: { color: T.ink, fontSize: 16, fontWeight: '900' },
+  toggleDescription: { color: T.inkSoft, fontSize: 12, lineHeight: 16 },
+  proBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    backgroundColor: T.ink,
+    borderRadius: 999,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+  },
+  proBadgeText: { color: '#fff', fontSize: 10, fontWeight: '900', letterSpacing: 0.5 },
+
+  languageRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    paddingVertical: 12,
+    paddingHorizontal: 12,
+    borderRadius: T.rMd,
+    borderWidth: 2,
+    borderColor: T.ink,
+    backgroundColor: T.bg,
+    marginBottom: 10,
+  },
+  languageRowActive: {
+    backgroundColor: T.ink,
+    transform: [{ translateX: 3 }, { translateY: 3 }],
+  },
+  languageRowLast: { marginBottom: 0 },
+  languageFlag: { fontSize: 20 },
+  languageName: { flex: 1, color: T.ink, fontSize: 16, fontWeight: '800' },
+  languageNameActive: { color: '#fff' },
+
+  aboutCard: { paddingVertical: 18 },
+  aboutDescription: { color: T.inkSoft, fontSize: 14, lineHeight: 20 },
+  versionPill: {
+    alignSelf: 'flex-start',
+    backgroundColor: T.lemon,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: 999,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    marginTop: 12,
+  },
+  versionText: { color: T.ink, fontSize: 12, fontWeight: '900' },
 });

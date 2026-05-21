@@ -1,0 +1,670 @@
+{
+  "categories": [
+    {
+      "id": "stalker",
+      "name": "Stalker",
+      "color": "#FF5B3A"
+    },
+    {
+      "id": "manipulateur",
+      "name": "Manipulator",
+      "color": "#9B5BFF"
+    },
+    {
+      "id": "narcisse",
+      "name": "Narcissist",
+      "color": "#FFD23F"
+    },
+    {
+      "id": "drama",
+      "name": "Drama",
+      "color": "#E63946"
+    },
+    {
+      "id": "collant",
+      "name": "Clingy",
+      "color": "#FF8FB1"
+    }
+  ],
+  "questions": [
+    {
+      "id": "stk_2_1",
+      "text": "looked at your ex's stories through a secondary account because they had blocked you",
+      "category": "stalker",
+      "points": 2
+    },
+    {
+      "id": "stk_2_2",
+      "text": "searched for your ex's new partner on social media the day of the breakup",
+      "category": "stalker",
+      "points": 2
+    },
+    {
+      "id": "stk_2_3",
+      "text": "googled someone before a first date to find out more about them",
+      "category": "stalker",
+      "points": 2
+    },
+    {
+      "id": "stk_2_4",
+      "text": "read a friend's messages left visible on their phone",
+      "category": "stalker",
+      "points": 2
+    },
+    {
+      "id": "stk_2_5",
+      "text": "checked who had seen someone's story to know if they were online",
+      "category": "stalker",
+      "points": 2
+    },
+    {
+      "id": "stk_3_1",
+      "text": "stalked your crush's ex on Insta at 3am",
+      "category": "stalker",
+      "points": 3
+    },
+    {
+      "id": "stk_3_2",
+      "text": "secretly checked your partner's followers to see if they had followed new accounts",
+      "category": "stalker",
+      "points": 3
+    },
+    {
+      "id": "stk_3_3",
+      "text": "analyzed someone's WhatsApp last seen to know what they were really doing",
+      "category": "stalker",
+      "points": 3
+    },
+    {
+      "id": "stk_3_4",
+      "text": "used a friend's profile to stalk someone who had blocked you",
+      "category": "stalker",
+      "points": 3
+    },
+    {
+      "id": "stk_3_5",
+      "text": "searched for someone on LinkedIn, Facebook AND Insta in the same evening",
+      "category": "stalker",
+      "points": 3
+    },
+    {
+      "id": "stk_3_6",
+      "text": "scrolled back to 2018 on someone's Insta the same day you met them",
+      "category": "stalker",
+      "points": 3
+    },
+    {
+      "id": "stk_4_1",
+      "text": "made a scene with your partner over a like on a stranger's photo",
+      "category": "stalker",
+      "points": 4
+    },
+    {
+      "id": "stk_4_2",
+      "text": "demanded to know where your partner was at every moment of the day",
+      "category": "stalker",
+      "points": 4
+    },
+    {
+      "id": "stk_4_3",
+      "text": "chosen or imposed someone's outfit for a party",
+      "category": "stalker",
+      "points": 4
+    },
+    {
+      "id": "stk_4_4",
+      "text": "asked for your partner's phone password by calling it a matter of trust",
+      "category": "stalker",
+      "points": 4
+    },
+    {
+      "id": "stk_4_5",
+      "text": "created a fake profile on social media to spy on someone",
+      "category": "stalker",
+      "points": 4
+    },
+    {
+      "id": "stk_4_6",
+      "text": "pretended to be passing by someone's neighborhood to check they were where they said",
+      "category": "stalker",
+      "points": 4
+    },
+    {
+      "id": "stk_5_1",
+      "text": "installed a geolocation app on your partner's phone without telling them",
+      "category": "stalker",
+      "points": 5
+    },
+    {
+      "id": "stk_5_2",
+      "text": "read someone's diary or private messages without their permission",
+      "category": "stalker",
+      "points": 5
+    },
+    {
+      "id": "stk_5_3",
+      "text": "shared private information about someone to hurt them after a breakup",
+      "category": "stalker",
+      "points": 5
+    },
+    {
+      "id": "man_2_1",
+      "text": "said 'whatever you want' while clearly thinking the exact opposite",
+      "category": "manipulateur",
+      "points": 2
+    },
+    {
+      "id": "man_2_2",
+      "text": "pretended to be sick or busy to cancel plans you didn't want to do",
+      "category": "manipulateur",
+      "points": 2
+    },
+    {
+      "id": "man_2_3",
+      "text": "lied about the exact number of your exes",
+      "category": "manipulateur",
+      "points": 2
+    },
+    {
+      "id": "man_2_4",
+      "text": "pretended to forget a promise to avoid keeping it",
+      "category": "manipulateur",
+      "points": 2
+    },
+    {
+      "id": "man_3_1",
+      "text": "intentionally ignored messages for hours to create a sense of longing",
+      "category": "manipulateur",
+      "points": 3
+    },
+    {
+      "id": "man_3_2",
+      "text": "used a secret someone confided in you to hurt them during an argument",
+      "category": "manipulateur",
+      "points": 3
+    },
+    {
+      "id": "man_3_3",
+      "text": "invented a friend or romantic interest to make your partner jealous",
+      "category": "manipulateur",
+      "points": 3
+    },
+    {
+      "id": "man_3_4",
+      "text": "promised to change to keep someone, then changed absolutely nothing",
+      "category": "manipulateur",
+      "points": 3
+    },
+    {
+      "id": "man_3_5",
+      "text": "said 'I'm fine' in a tone that clearly meant the opposite",
+      "category": "manipulateur",
+      "points": 3
+    },
+    {
+      "id": "man_3_6",
+      "text": "exaggerated a story or discomfort to attract sympathy",
+      "category": "manipulateur",
+      "points": 3
+    },
+    {
+      "id": "man_4_1",
+      "text": "cried strategically to win an argument or get what you wanted",
+      "category": "manipulateur",
+      "points": 4
+    },
+    {
+      "id": "man_4_2",
+      "text": "made someone feel guilty for spending time with their friends instead of you",
+      "category": "manipulateur",
+      "points": 4
+    },
+    {
+      "id": "man_4_3",
+      "text": "brought up past events during an argument solely to hurt",
+      "category": "manipulateur",
+      "points": 4
+    },
+    {
+      "id": "man_4_4",
+      "text": "rewrote the facts of an argument in your favor when telling your friends",
+      "category": "manipulateur",
+      "points": 4
+    },
+    {
+      "id": "man_4_5",
+      "text": "made someone believe they were 'too sensitive' to avoid taking responsibility for your actions",
+      "category": "manipulateur",
+      "points": 4
+    },
+    {
+      "id": "man_4_6",
+      "text": "lied about where you were to avoid a conflict rather than face it",
+      "category": "manipulateur",
+      "points": 4
+    },
+    {
+      "id": "man_5_1",
+      "text": "used the threat of a breakup as a control tool during an argument",
+      "category": "manipulateur",
+      "points": 5
+    },
+    {
+      "id": "man_5_2",
+      "text": "convinced someone that their friends meant them harm to gradually isolate them",
+      "category": "manipulateur",
+      "points": 5
+    },
+    {
+      "id": "man_5_3",
+      "text": "made someone believe they misremembered an event that had actually happened",
+      "category": "manipulateur",
+      "points": 5
+    },
+    {
+      "id": "nar_2_1",
+      "text": "steered the conversation back to yourself within 30 seconds of someone telling you their problems",
+      "category": "narcisse",
+      "points": 2
+    },
+    {
+      "id": "nar_2_2",
+      "text": "retouched a profile photo for more than 20 minutes before posting it",
+      "category": "narcisse",
+      "points": 2
+    },
+    {
+      "id": "nar_2_3",
+      "text": "checked your number of likes every 5 minutes after posting",
+      "category": "narcisse",
+      "points": 2
+    },
+    {
+      "id": "nar_2_4",
+      "text": "genuinely believed you were the best-dressed person at a party",
+      "category": "narcisse",
+      "points": 2
+    },
+    {
+      "id": "nar_3_1",
+      "text": "genuinely thought your ex would never find anyone better than you",
+      "category": "narcisse",
+      "points": 3
+    },
+    {
+      "id": "nar_3_2",
+      "text": "changed your profile photo right after a breakup to show your ex what they'd be missing",
+      "category": "narcisse",
+      "points": 3
+    },
+    {
+      "id": "nar_3_3",
+      "text": "posted a story knowing exactly that a specific person would see it",
+      "category": "narcisse",
+      "points": 3
+    },
+    {
+      "id": "nar_3_4",
+      "text": "intentionally replied late so as not to seem too available",
+      "category": "narcisse",
+      "points": 3
+    },
+    {
+      "id": "nar_3_5",
+      "text": "made someone wait on purpose to seem busier and more desirable",
+      "category": "narcisse",
+      "points": 3
+    },
+    {
+      "id": "nar_3_6",
+      "text": "changed details in a story to come across as cooler",
+      "category": "narcisse",
+      "points": 3
+    },
+    {
+      "id": "nar_4_1",
+      "text": "left a date thinking that person clearly didn't deserve you",
+      "category": "narcisse",
+      "points": 4
+    },
+    {
+      "id": "nar_4_2",
+      "text": "posted a cryptic story like 'some people should really keep quiet…'",
+      "category": "narcisse",
+      "points": 4
+    },
+    {
+      "id": "nar_4_3",
+      "text": "spent more time planning an outing for the photos than to actually enjoy it",
+      "category": "narcisse",
+      "points": 4
+    },
+    {
+      "id": "nar_4_4",
+      "text": "cancelled plans because you didn't feel physically good enough that day",
+      "category": "narcisse",
+      "points": 4
+    },
+    {
+      "id": "nar_4_5",
+      "text": "deleted a post that got too few likes to protect your image",
+      "category": "narcisse",
+      "points": 4
+    },
+    {
+      "id": "nar_5_1",
+      "text": "thought your ex had left you out of jealousy of your success or potential",
+      "category": "narcisse",
+      "points": 5
+    },
+    {
+      "id": "nar_5_2",
+      "text": "believed you deserved special treatment in a relationship just because you were too good",
+      "category": "narcisse",
+      "points": 5
+    },
+    {
+      "id": "nar_5_3",
+      "text": "asked your friends to rate your exes to confirm you had more to offer",
+      "category": "narcisse",
+      "points": 5
+    },
+    {
+      "id": "dra_2_1",
+      "text": "sent an angry message knowing your reaction was exaggerated",
+      "category": "drama",
+      "points": 2
+    },
+    {
+      "id": "dra_2_2",
+      "text": "said 'nothing' in a tone that clearly meant the opposite and waited for the other person to insist",
+      "category": "drama",
+      "points": 2
+    },
+    {
+      "id": "dra_2_3",
+      "text": "sulked for more than a day over something objectively minor",
+      "category": "drama",
+      "points": 2
+    },
+    {
+      "id": "dra_3_1",
+      "text": "openly flirted with someone at a party solely to make your partner jealous",
+      "category": "drama",
+      "points": 3
+    },
+    {
+      "id": "dra_3_2",
+      "text": "kept backup plans 'just in case' while being in a relationship",
+      "category": "drama",
+      "points": 3
+    },
+    {
+      "id": "dra_3_3",
+      "text": "gone from 'I love you' to 'it's over between us' in the same evening",
+      "category": "drama",
+      "points": 3
+    },
+    {
+      "id": "dra_3_4",
+      "text": "posted then deleted an aggressive message right after sending it",
+      "category": "drama",
+      "points": 3
+    },
+    {
+      "id": "dra_3_5",
+      "text": "sent a voice message over 3 minutes long full of grievances",
+      "category": "drama",
+      "points": 3
+    },
+    {
+      "id": "dra_3_6",
+      "text": "made a scene in a public place because you weren't happy",
+      "category": "drama",
+      "points": 3
+    },
+    {
+      "id": "dra_4_1",
+      "text": "used days of silence as punishment after an argument",
+      "category": "drama",
+      "points": 4
+    },
+    {
+      "id": "dra_4_2",
+      "text": "called or texted someone repeatedly after an argument until you got a response",
+      "category": "drama",
+      "points": 4
+    },
+    {
+      "id": "dra_4_3",
+      "text": "threatened to do something serious solely to attract attention to yourself",
+      "category": "drama",
+      "points": 4
+    },
+    {
+      "id": "dra_4_4",
+      "text": "told an intentionally distorted version of an argument to all your friends",
+      "category": "drama",
+      "points": 4
+    },
+    {
+      "id": "dra_4_5",
+      "text": "ended a friendship very dramatically then tried to reconnect as if nothing had happened",
+      "category": "drama",
+      "points": 4
+    },
+    {
+      "id": "dra_4_6",
+      "text": "started an argument to test whether the other person really loved you",
+      "category": "drama",
+      "points": 4
+    },
+    {
+      "id": "dra_5_1",
+      "text": "broke or threw an object during an argument to show how angry you were",
+      "category": "drama",
+      "points": 5
+    },
+    {
+      "id": "dra_5_2",
+      "text": "contacted someone's family or employer during an argument",
+      "category": "drama",
+      "points": 5
+    },
+    {
+      "id": "dra_5_3",
+      "text": "organized a public humiliation of your partner to get revenge for infidelity",
+      "category": "drama",
+      "points": 5
+    },
+    {
+      "id": "col_2_1",
+      "text": "texted someone 5 times in the same hour without receiving a reply",
+      "category": "collant",
+      "points": 2
+    },
+    {
+      "id": "col_2_2",
+      "text": "reread old conversations to reassure yourself about a relationship",
+      "category": "collant",
+      "points": 2
+    },
+    {
+      "id": "col_2_3",
+      "text": "anticipated a breakup that had no objective reason to happen",
+      "category": "collant",
+      "points": 2
+    },
+    {
+      "id": "col_2_4",
+      "text": "checked if someone was online while they weren't replying to your messages",
+      "category": "collant",
+      "points": 2
+    },
+    {
+      "id": "col_3_1",
+      "text": "sent 10 consecutive messages without any reply",
+      "category": "collant",
+      "points": 3
+    },
+    {
+      "id": "col_3_2",
+      "text": "immediately asked for confirmation that someone still loved you right after an argument",
+      "category": "collant",
+      "points": 3
+    },
+    {
+      "id": "col_3_3",
+      "text": "analyzed every word of a received message looking for a negative meaning",
+      "category": "collant",
+      "points": 3
+    },
+    {
+      "id": "col_3_4",
+      "text": "been jealous of your partner's friends to the point of mentioning it",
+      "category": "collant",
+      "points": 3
+    },
+    {
+      "id": "col_3_5",
+      "text": "'coincidentally' planned to run into someone because they weren't responding",
+      "category": "collant",
+      "points": 3
+    },
+    {
+      "id": "col_3_6",
+      "text": "looked for warning signs of a breakup in every message you received",
+      "category": "collant",
+      "points": 3
+    },
+    {
+      "id": "col_4_1",
+      "text": "said 'I love you' to someone before the end of the first month",
+      "category": "collant",
+      "points": 4
+    },
+    {
+      "id": "col_4_2",
+      "text": "called someone's friends or family because they weren't responding to your messages",
+      "category": "collant",
+      "points": 4
+    },
+    {
+      "id": "col_4_3",
+      "text": "followed someone on all their social media the same day you met them",
+      "category": "collant",
+      "points": 4
+    },
+    {
+      "id": "col_4_4",
+      "text": "cancelled plans with your friends as soon as your partner was free",
+      "category": "collant",
+      "points": 4
+    },
+    {
+      "id": "col_4_5",
+      "text": "asked to be someone's only priority outside of work and family",
+      "category": "collant",
+      "points": 4
+    },
+    {
+      "id": "col_4_6",
+      "text": "showed up at someone's place unannounced because they had stopped responding",
+      "category": "collant",
+      "points": 4
+    },
+    {
+      "id": "col_5_1",
+      "text": "planned the names of your future children together before the end of the first month",
+      "category": "collant",
+      "points": 5
+    },
+    {
+      "id": "col_5_2",
+      "text": "made someone responsible for your mental health and daily happiness",
+      "category": "collant",
+      "points": 5
+    },
+    {
+      "id": "col_5_3",
+      "text": "refused to accept a breakup and kept contacting the person for several weeks",
+      "category": "collant",
+      "points": 5
+    }
+  ],
+  "ui": {
+    "rules": {
+      "title": "Are you a\nRed Flag?",
+      "tagline": "Your exes would have loved to give you this test",
+      "modalTitle": "Red Flag",
+      "start": "Start the game 🚩",
+      "levelLabel": "QUESTION LEVEL",
+      "levelHelper": "Questions up to the selected level",
+      "themeLabel": "THEME DISTRIBUTION",
+      "themeHelper": "Total: {{count}} questions",
+      "steps": [
+        {
+          "n": "1",
+          "title": "Read the question",
+          "desc": "Have you ever done that? Be honest."
+        },
+        {
+          "n": "2",
+          "title": "Swipe → if guilty",
+          "desc": "Right = yes = +points. Left = no = 0 points."
+        },
+        {
+          "n": "3",
+          "title": "Results",
+          "desc": "Your score reveals your level of romantic toxicity."
+        }
+      ]
+    },
+    "play": {
+      "remaining_one": "{{count}} remaining",
+      "remaining_other": "{{count}} remaining",
+      "questionPrefix": "HAVE YOU EVER...",
+      "sipsIfYes_one": "🍻 {{count}} sip if yes",
+      "sipsIfYes_other": "🍻 {{count}} sips if yes",
+      "ptsIfYes": "🚩 +{{count}} pts",
+      "hint": "← No | Yes →"
+    },
+    "verdicts": [
+      {
+        "pctMax": 15,
+        "title": "Absolute Green Flag",
+        "quote": "You're so healthy it's suspicious. We're watching you."
+      },
+      {
+        "pctMax": 30,
+        "title": "Almost dateable",
+        "quote": "You've got red flags but nothing therapy can't fix."
+      },
+      {
+        "pctMax": 50,
+        "title": "Assumed grey zone",
+        "quote": "Your exes probably have a WhatsApp group about you."
+      },
+      {
+        "pctMax": 70,
+        "title": "Sentimental disaster",
+        "quote": "You destroy relationships without even realizing it. Respect."
+      },
+      {
+        "pctMax": 85,
+        "title": "Public menace",
+        "quote": "Your exes should be able to deduct therapy from their taxes."
+      },
+      {
+        "pctMax": 101,
+        "title": "Nuclear Red Flag",
+        "quote": "The army should ban you from downloading Tinder."
+      }
+    ],
+    "results": {
+      "title": "🚩 Results",
+      "replay": "Play again",
+      "back": "Back"
+    }
+  }
+}

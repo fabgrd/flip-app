@@ -1,13 +1,63 @@
 {
-    "selection": {
-        "title": "Choose your game",
-        "subtitle": "With {{count}} players"
+  "selection": {
+    "title": "Choose a game",
+    "subtitle": "{{count}} player(s) · ready to embarrass yourselves",
+    "surprise": "Surprise me",
+    "minPlayersHint": "This game needs at least {{min}} players ({{label}}).",
+    "maxPlayersHint": "This game supports up to {{max}} players ({{label}})."
+  },
+  "labels": {
+    "players": {
+      "redFlag": "1+ player",
+      "casting": "3–11 players",
+      "apero": "2+ players",
+      "medusa": "5+ players",
+      "paranoia": "4+ players",
+      "cameleon": "4–10 players",
+      "leftRight": "2+ players",
+      "purityTest": "1+ player"
     },
-    "purityTest": {
-        "name": "Impurity Test",
-        "description": "Find out who's the most impure in the group! 😈"
-    },
-    "comingSoon": {
-        "message": "Game \"{{gameName}}\" selected with {{playerCount}} players!\nFeature under development."
+    "duration": {
+      "redFlag": "5 min",
+      "casting": "20 min",
+      "apero": "20 min",
+      "medusa": "10 min",
+      "paranoia": "15 min",
+      "cameleon": "15 min",
+      "leftRight": "10 min",
+      "purityTest": "5 min"
     }
+  },
+  "purityTest": {
+    "title": "Purity Test",
+    "tagline": "How many sins do you carry?"
+  },
+  "redFlag": {
+    "title": "Are you a Red Flag?",
+    "tagline": "Your exes would have loved making you take this test"
+  },
+  "casting": {
+    "title": "The Casting",
+    "tagline": "Act the scene more or less"
+  },
+  "apero": {
+    "title": "The Apéro",
+    "tagline": "Guess the dealer's card"
+  },
+  "medusa": {
+    "title": "Medusa",
+    "tagline": "Look up… and avoid the gaze"
+  },
+  "paranoia": {
+    "title": "Paranoia",
+    "tagline": "Who said your name… and why?"
+  },
+  "cameleon": {
+    "title": "Chameleon",
+    "tagline": "Unmask the impostor"
+  },
+  "leftRight": {
+    "title": "Left or Right",
+    "tagline": "Place the statement on the political compass"
+  }
 }

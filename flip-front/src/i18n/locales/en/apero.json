@@ -1,0 +1,105 @@
+{
+    "bridge": {
+        "label": "BRIDGE · {{count}} CARD{{plural}}"
+    },
+    "rules": {
+        "modalTitle": "The Aperitif",
+        "title": "The Aperitif",
+        "chip": "Game #6",
+        "cardLabel": "HOW TO PLAY",
+        "start": "Start the game 🍻",
+        "steps": [
+            {
+                "n": "1",
+                "title": "The dealer draws a card",
+                "desc": "The card stays hidden. The active player tries to guess it."
+            },
+            {
+                "n": "2",
+                "title": "First try — higher or lower?",
+                "desc": "The player says a number. The app replies \"higher\" or \"lower\"."
+            },
+            {
+                "n": "3",
+                "title": "Second try — last chance",
+                "descDrink": "If missed, the player drinks the difference between their guess and the card.",
+                "descSober": "If missed, the player takes the difference as points between their guess and the card."
+            },
+            {
+                "n": "4",
+                "titleDrink": "Found it? Dealer drinks",
+                "titleSober": "Found it? Dealer takes points",
+                "descDrink": "If someone finds it, the dealer drinks 2 sips and their streak resets.",
+                "descSober": "If someone finds it, the dealer takes 2 points and their streak resets."
+            },
+            {
+                "n": "5",
+                "title": "3 safe rounds = dealer passes",
+                "desc": "If no one finds it in 3 rounds, the dealer passes the phone."
+            },
+            {
+                "n": "★",
+                "title": "Special rule: the quadruple",
+                "descDrink": "When all 4 cards of the same value are out, they flip and the dealer drinks 2 more.",
+                "descSober": "When all 4 cards of the same value are out, they flip and the dealer takes 2 more points."
+            }
+        ]
+    },
+    "pickDealer": {
+        "badge": "WHO IS THE DEALER?",
+        "title": "Choose who\n holds the phone",
+        "sub": "The dealer draws and takes the consequences."
+    },
+    "round": {
+        "guessTitle": "{{name}}, guess the card",
+        "firstTry": "First try",
+        "hintBadge": "It's {{hint}} {{arrow}}",
+        "youSaid": "You said {{card}} ({{points}} pts)",
+        "secondTryChip": "It's {{hint}} than {{card}}",
+        "secondChance": "Second chance!",
+        "lastTry": "Last try, {{name}}",
+        "found": "FOUND!",
+        "missed": "MISSED!",
+        "dealerResult": "{{name}} {{verb}} {{unit}}",
+        "resetStreak": "Dealer streak reset",
+        "nextCard": "Next card →",
+        "seeSummary": "See summary →",
+        "passPile": "Pass the pile →"
+    },
+    "special": {
+        "badge": "★ QUADRUPLE!",
+        "title": "All 4 {{card}}\n are out!",
+        "sub": "The 4 cards flip on the bridge.",
+        "penaltyTitle": "{{name}} {{verb}} {{unit}}",
+        "penaltySub": "Quadruple penalty",
+        "continue": "Continue →"
+    },
+    "dealerPass": {
+        "badge": "PASS THE PILE",
+        "title": "{{name}}\n passes the turn",
+        "sub": "Choose who gets the pile."
+    },
+    "end": {
+        "badge": "GAME OVER",
+        "title": "Aperitif\n summary",
+        "cards": "CARDS",
+        "found": "FOUND",
+        "ranking": "RANKING",
+        "playAgain": "Play again",
+        "backToHub": "Back to hub"
+    },
+    "hints": {
+        "higher": "higher",
+        "lower": "lower"
+    },
+    "cards": {
+        "A": "Ace",
+        "V": "Jack",
+        "D": "Queen",
+        "R": "King"
+    },
+    "verbs": {
+        "drink": "drinks",
+        "take": "takes"
+    }
+}

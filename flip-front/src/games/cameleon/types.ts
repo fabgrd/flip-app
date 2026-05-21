@@ -1,6 +1,15 @@
 import type { Player } from '../../types';
 
 export type CameleonRole = 'civilian' | 'cameleon' | 'mrWhite';
+export type CameleonTheme =
+  | 'random'
+  | 'daily'
+  | 'sousculture'
+  | 'rap'
+  | 'football'
+  | 'hot'
+  | 'decadence'
+  | 'wtf';
 
 export interface CameleonAssignedPlayer extends Player {
   role: CameleonRole;
@@ -23,6 +32,7 @@ export interface CameleonGameState {
   wordPair: CameleonWordPair | null;
   round: number;
   started: boolean;
+  themes: CameleonTheme[];
 }
 
 export interface CameleonRoleDistribution {
@@ -32,4 +42,6 @@ export interface CameleonRoleDistribution {
 
 export interface StartCameleonOptions {
   overrideDistribution?: Partial<CameleonRoleDistribution>;
+  themes?: CameleonTheme[];
+  pairsData?: Record<string, Array<{ w: string; c: string }>>;
 }

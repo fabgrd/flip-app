@@ -1,25 +1,94 @@
 import { TFunction } from 'i18next';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Entitlement, useEntitlements } from '../../../entitlements';
 import { Player } from '../../../types';
-import { PlayerAnswer, PurityGameState, PurityResults, Question, Theme } from '../types';
+import { shuffleArray } from '../../../utils/array';
+import { levelRequiredEntitlement } from '../levelTiers';
+import {
+  LevelKey,
+  PlayerAnswer,
+  PurityGameState,
+  PurityQuestionConfig,
+  PurityResults,
+  Question,
+  Theme,
+} from '../types';
 
-function shuffleArray<T>(array: T[]): T[] {
-  const shuffled = [...array];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  return shuffled;
+function sanitizeConfigForEntitlements(
+  config: PurityQuestionConfig | undefined,
+  has: (e: Entitlement) => boolean,
+): PurityQuestionConfig | undefined {
+  if (!config?.levelCounts) return config;
+  const next = { ...config.levelCounts };
+  (Object.keys(next) as LevelKey[]).forEach((level) => {
+    const req = levelRequiredEntitlement(level);
+    if (req && !has(req)) next[level] = 0;
+  });
+  return { ...config, levelCounts: next };
 }
 
-function generateGameQuestions(t: TFunction): Question[] {
-  const themeQuestionCounts: Record<Theme, number> = {
-    sex: 7,
-    drugs: 8,
-    morality: 3,
-    hygiene: 2,
-  };
+const DEFAULT_TOTAL_QUESTIONS = 20;
+const DEFAULT_THEME_COUNTS: Record<Theme, number> = {
+  sex: 5,
+  drugs: 5,
+  morality: 5,
+  hygiene: 5,
+};
+const DEFAULT_LEVEL_COUNTS: Record<LevelKey, number> = {
+  level1: 5,
+  level2: 5,
+  level3: 5,
+  level4: 5,
+  level5: 5,
+  levelBonus: 0,
+};
+
+function normalizeWeights<T extends string>(
+  weights: Record<T, number>,
+  keys: T[],
+): Record<T, number> {
+  const total = keys.reduce((sum, key) => sum + Math.max(0, weights[key] ?? 0), 0);
+  if (total <= 0) {
+    const equal = Math.round(100 / keys.length);
+    return keys.reduce((acc, key) => ({ ...acc, [key]: equal }), {} as Record<T, number>);
+  }
+  return keys.reduce(
+    (acc, key) => ({ ...acc, [key]: Math.max(0, weights[key] ?? 0) }),
+    {} as Record<T, number>,
+  );
+}
+
+function allocateCounts<T extends string>(weights: Record<T, number>, keys: T[], total: number) {
+  if (total <= 0 || keys.length === 0)
+    return keys.reduce((acc, key) => ({ ...acc, [key]: 0 }), {} as Record<T, number>);
+  const normalized = normalizeWeights(weights, keys);
+  const weightSum = keys.reduce((sum, key) => sum + normalized[key], 0);
+  const raw = keys.map((key) => ({
+    key,
+    value: (normalized[key] / weightSum) * total,
+  }));
+  const base = raw.map((entry) => ({ ...entry, count: Math.floor(entry.value) }));
+  let remaining = total - base.reduce((sum, entry) => sum + entry.count, 0);
+  base.sort((a, b) => b.value - a.value);
+  let idx = 0;
+  while (remaining > 0 && base.length > 0) {
+    base[idx % base.length].count += 1;
+    remaining -= 1;
+    idx += 1;
+  }
+  return base.reduce(
+    (acc, entry) => ({ ...acc, [entry.key]: entry.count }),
+    {} as Record<T, number>,
+  );
+}
+
+function generateGameQuestions(t: TFunction, config?: PurityQuestionConfig): Question[] {
+  const themeCounts = config?.themeCounts ?? DEFAULT_THEME_COUNTS;
+  const levelCounts = config?.levelCounts ?? DEFAULT_LEVEL_COUNTS;
+  const computedTotal = Object.values(themeCounts).reduce((sum, val) => sum + Math.max(0, val), 0);
+  const totalQuestions =
+    config?.totalQuestions ?? (computedTotal > 0 ? computedTotal : DEFAULT_TOTAL_QUESTIONS);
 
   const fallbackQuestions: Record<Theme, Question[]> = {
     sex: [
@@ -142,69 +211,111 @@ function generateGameQuestions(t: TFunction): Question[] {
     ],
   };
 
+  const normalizedThemeCounts = allocateCounts(
+    themeCounts,
+    Object.keys(DEFAULT_THEME_COUNTS) as Theme[],
+    totalQuestions,
+  );
+
   const allQuestions: Question[] = [];
 
-  (Object.keys(themeQuestionCounts) as Theme[]).forEach((theme) => {
-    const requiredCount = themeQuestionCounts[theme];
-    const themeQuestions: Question[] = [];
+  (Object.keys(normalizedThemeCounts) as Theme[]).forEach((theme) => {
+    const requiredCount = normalizedThemeCounts[theme];
+    if (requiredCount <= 0) return;
 
-    const levels = ['level1', 'level2', 'level3', 'level4', 'level5'];
+    const levelBuckets: Record<LevelKey, Question[]> = {
+      level1: [],
+      level2: [],
+      level3: [],
+      level4: [],
+      level5: [],
+      levelBonus: [],
+    };
+
+    const levels: LevelKey[] = ['level1', 'level2', 'level3', 'level4', 'level5'];
     if (theme === 'morality') levels.push('levelBonus');
 
     levels.forEach((level) => {
       try {
         const questionsData = t(`purityTest:questions.${theme}.${level}`, { returnObjects: true });
         if (Array.isArray(questionsData)) {
-          questionsData.forEach((questionData: Question) => {
-            themeQuestions.push({
-              id: questionData.id,
-              text: questionData.text,
-              theme,
-              points: { yes: questionData.points.yes, no: questionData.points.no },
-            });
-          });
+          questionsData.forEach(
+            (questionData: {
+              id: string;
+              text: string;
+              points: number | { yes: number; no: number };
+            }) => {
+              const rawPoints = questionData.points;
+              const points: { yes: number; no: number } =
+                typeof rawPoints === 'number' ? { yes: rawPoints, no: 0 } : rawPoints;
+              levelBuckets[level].push({
+                id: questionData.id,
+                text: questionData.text,
+                theme,
+                points,
+              });
+            },
+          );
         }
       } catch (error) {
         console.warn(`Could not load questions for ${theme}.${level}`);
       }
     });
 
-    // Utiliser les fallback si pas assez de questions
-    if (themeQuestions.length < requiredCount) {
-      const needed = requiredCount - themeQuestions.length;
-      themeQuestions.push(...fallbackQuestions[theme].slice(0, needed));
+    const availableLevels = levels.filter((level) => levelBuckets[level].length > 0);
+    const perThemeLevelCounts = allocateCounts(levelCounts, availableLevels, requiredCount);
+    const picked: Question[] = [];
+    const remainingPool: Question[] = [];
+
+    availableLevels.forEach((level) => {
+      const pool = shuffleArray(levelBuckets[level]);
+      const take = Math.min(perThemeLevelCounts[level] ?? 0, pool.length);
+      picked.push(...pool.slice(0, take));
+      remainingPool.push(...pool.slice(take));
+    });
+
+    remainingPool.push(...fallbackQuestions[theme].map((q) => ({ ...q })));
+
+    if (picked.length < requiredCount) {
+      const deficit = requiredCount - picked.length;
+      const fillers = shuffleArray(remainingPool).slice(0, deficit);
+      picked.push(...fillers);
     }
 
-    const shuffled = shuffleArray(themeQuestions);
-    allQuestions.push(...shuffled.slice(0, requiredCount));
+    allQuestions.push(...picked.slice(0, requiredCount));
   });
 
   return shuffleArray(allQuestions);
 }
 
-export const usePurityTest = (initialPlayers: Player[]) => {
+function buildInitialState(t: TFunction, initialPlayers: Player[], config?: PurityQuestionConfig) {
+  const questions = generateGameQuestions(t, config);
+
+  return {
+    players: initialPlayers.map((player) => ({
+      ...player,
+      answers: [],
+      score: 0,
+      themeScores: {
+        sex: { score: 0, maxScore: 0 },
+        drugs: { score: 0, maxScore: 0 },
+        morality: { score: 0, maxScore: 0 },
+        hygiene: { score: 0, maxScore: 0 },
+      },
+    })),
+    currentQuestionIndex: 0,
+    questions,
+    isGameFinished: false,
+  } as PurityGameState;
+}
+
+export const usePurityTest = (initialPlayers: Player[], config?: PurityQuestionConfig) => {
   const { t } = useTranslation();
+  const { has } = useEntitlements();
 
-  const [gameState, setGameState] = useState<PurityGameState>(() => {
-    const questions = generateGameQuestions(t);
-
-    return {
-      players: initialPlayers.map((player) => ({
-        ...player,
-        answers: [],
-        score: 0,
-        themeScores: {
-          sex: { score: 0, maxScore: 0 },
-          drugs: { score: 0, maxScore: 0 },
-          morality: { score: 0, maxScore: 0 },
-          hygiene: { score: 0, maxScore: 0 },
-        },
-      })),
-      currentQuestionIndex: 0,
-      questions,
-      isGameFinished: false,
-    };
-  });
+  const [gameState, setGameState] = useState<PurityGameState>(() =>
+    buildInitialState(t, initialPlayers, sanitizeConfigForEntitlements(config, has)),
+  );
 
   const currentQuestion = useMemo(
     () => gameState.questions[gameState.currentQuestionIndex],
@@ -232,7 +343,6 @@ export const usePurityTest = (initialPlayers: Player[]) => {
             const points = currentQuestion.points[answer];
             const newScore = player.score + points;
 
-            // Mettre à jour les scores par thème avec les vrais points de la question
             const newThemeScores = { ...player.themeScores };
             const { theme } = currentQuestion;
             const maxPointsForQuestion = Math.max(
@@ -279,7 +389,6 @@ export const usePurityTest = (initialPlayers: Player[]) => {
   }, [gameState.players, currentQuestion]);
 
   const calculateResults = useCallback((): PurityResults => {
-    // Calculer le score maximum possible basé sur les questions jouées
     const maxPossibleScore = gameState.questions.reduce((total, question) => {
       return total + Math.max(question.points.yes, question.points.no);
     }, 0);
@@ -301,7 +410,6 @@ export const usePurityTest = (initialPlayers: Player[]) => {
         else if (impurityPercentage <= 85) impurityLevel = 'diabolical';
         else impurityLevel = 'beyondEvil';
 
-        // Calculer les pourcentages par thème
         const themePercentages: Record<Theme, number> = {} as Record<Theme, number>;
         Object.keys(player.themeScores).forEach((theme) => {
           const themeKey = theme as Theme;
@@ -316,7 +424,7 @@ export const usePurityTest = (initialPlayers: Player[]) => {
             impurityLevel,
           },
           impurityPercentage,
-          rank: 0, // Sera mis à jour après le tri
+          rank: 0,
           themePercentages,
         };
       })
@@ -329,27 +437,14 @@ export const usePurityTest = (initialPlayers: Player[]) => {
     return { players: playersWithResults as unknown as PurityResults['players'] };
   }, [gameState.players, gameState.questions]);
 
-  const resetGame = useCallback(() => {
-    const questions = generateGameQuestions(t);
-
-    setGameState((prev) => ({
-      ...prev,
-      players: prev.players.map((player) => ({
-        ...player,
-        answers: [],
-        score: 0,
-        themeScores: {
-          sex: { score: 0, maxScore: 0 },
-          drugs: { score: 0, maxScore: 0 },
-          morality: { score: 0, maxScore: 0 },
-          hygiene: { score: 0, maxScore: 0 },
-        },
-      })),
-      currentQuestionIndex: 0,
-      questions,
-      isGameFinished: false,
-    }));
-  }, [t]);
+  const resetGame = useCallback(
+    (nextConfig?: PurityQuestionConfig) => {
+      setGameState(
+        buildInitialState(t, initialPlayers, sanitizeConfigForEntitlements(nextConfig, has)),
+      );
+    },
+    [t, initialPlayers, has],
+  );
 
   const getPlayerAnswer = useCallback(
     (playerId: string, questionId?: string) => {

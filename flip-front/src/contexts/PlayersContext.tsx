@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { Player } from '../types';
 
 interface PlayersContextType {
@@ -35,7 +35,7 @@ export function PlayersProvider({ children }: { children: ReactNode }) {
       name: trimmedName,
     };
 
-    setPlayers((prev) => [...prev, newPlayer]);
+    setPlayers((prev) => [newPlayer, ...prev]);
     return true;
   };
 

@@ -78,6 +78,7 @@ module.exports = {
     '.expo/',
     'android/',
     'ios/',
+    'babel.config.js',
     '**/*.d.ts',
   ],
 }; 

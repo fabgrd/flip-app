@@ -1,21 +1,14 @@
 import { useCallback, useMemo, useState } from 'react';
 import type { Player } from '../../../types';
-import { DEFAULT_DISTRIBUTION_BY_PLAYER_COUNT, WORD_PAIRS } from '../constants';
+import { shuffleArray } from '../../../utils/array';
+import { DEFAULT_DISTRIBUTION_BY_PLAYER_COUNT, getWordPairsForThemes, getWordPairsForThemesLocalized } from '../constants';
 import type {
   CameleonAssignedPlayer,
   CameleonGameState,
   CameleonRoleDistribution,
+  CameleonTheme,
   StartCameleonOptions,
 } from '../types';
-
-function shuffleArray<T>(array: T[]): T[] {
-  const copy = [...array];
-  for (let i = copy.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [copy[i], copy[j]] = [copy[j], copy[i]];
-  }
-  return copy;
-}
 
 export type CameleonPhase = 'settings' | 'reveal' | 'clues' | 'vote' | 'results';
 
@@ -42,6 +35,7 @@ export function useCameleon(initialPlayers: Player[]) {
     wordPair: null,
     round: 0,
     started: false,
+    themes: ['random'] as CameleonTheme[],
   });
 
   const [phase, setPhase] = useState<CameleonPhase>('settings');
@@ -67,6 +61,8 @@ export function useCameleon(initialPlayers: Player[]) {
   const startGame = useCallback(
     (options?: StartCameleonOptions) => {
       const override = options?.overrideDistribution ?? {};
+      const themes = options?.themes ?? ['random'];
+      const pairsData = options?.pairsData;
       const maxImpostors = Math.floor(playerCount / 2);
       let undercovers = Math.max(
         0,
@@ -90,7 +86,10 @@ export function useCameleon(initialPlayers: Player[]) {
       const civilians = Math.max(0, playerCount - undercovers - mrWhites);
 
       const shuffledPlayers = shuffleArray(initialPlayers);
-      const wordPair = WORD_PAIRS[Math.floor(Math.random() * WORD_PAIRS.length)];
+      const availableWordPairs = pairsData
+        ? getWordPairsForThemesLocalized(themes, pairsData)
+        : getWordPairsForThemes(themes);
+      const wordPair = availableWordPairs[Math.floor(Math.random() * availableWordPairs.length)];
 
       const assigned: CameleonAssignedPlayer[] = [];
 
@@ -129,6 +128,7 @@ export function useCameleon(initialPlayers: Player[]) {
         wordPair,
         round: 1,
         started: true,
+        themes,
       });
       setRevealIndex(0);
       setSelectedForElimination(null);
@@ -193,12 +193,12 @@ export function useCameleon(initialPlayers: Player[]) {
       ).length;
 
       // Game over conditions
-      if (impostorsAlive === 0) {
-        setGameOver(true);
-        setWinner('civilians');
-      } else if (impostorsAlive >= civiliansAlive) {
+      if (civiliansAlive === 0) {
         setGameOver(true);
         setWinner('undercover');
+      } else if (impostorsAlive === 0) {
+        setGameOver(true);
+        setWinner('civilians');
       } else {
         setGameOver(false);
         setWinner(null);
@@ -251,12 +251,12 @@ export function useCameleon(initialPlayers: Player[]) {
           (p) => p.role === 'cameleon' || p.role === 'mrWhite',
         ).length;
 
-        if (impostorsAlive === 0) {
-          setGameOver(true);
-          setWinner('civilians');
-        } else if (impostorsAlive >= civiliansAlive) {
+        if (civiliansAlive === 0) {
           setGameOver(true);
           setWinner('undercover');
+        } else if (impostorsAlive === 0) {
+          setGameOver(true);
+          setWinner('civilians');
         } else {
           setGameOver(false);
           setWinner(null);
@@ -293,6 +293,7 @@ export function useCameleon(initialPlayers: Player[]) {
       wordPair: null,
       round: 0,
       started: false,
+      themes: ['random'] as CameleonTheme[],
     });
     setRevealIndex(0);
     setClueOrder([]);

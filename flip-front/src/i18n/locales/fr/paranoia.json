@@ -1,0 +1,199 @@
+{
+  "title": "Paranoïa",
+  "tagline": "Qui a dit ton prénom… et pourquoi ?",
+  "tier": "spicy",
+  "questions": [
+    {
+      "id": "p_001",
+      "text": "Qui ferait le meilleur parent ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_002",
+      "text": "Qui a le pire goût en musique ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_003",
+      "text": "Avec qui partirais-tu en road trip ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_004",
+      "text": "Qui ment le mieux ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_005",
+      "text": "Qui a le crush le plus inavouable ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_006",
+      "text": "Qui craquerait en premier en prison ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_007",
+      "text": "Qui ferait le pire ex ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_008",
+      "text": "Qui a le glow-up le plus marquant ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_009",
+      "text": "Qui survivrait à une apocalypse zombie ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_010",
+      "text": "Qui a le plus de squelettes dans le placard ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_011",
+      "text": "Qui est secrètement le plus méchant ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_012",
+      "text": "Qui ferait la meilleure star de télé-réalité ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_013",
+      "text": "Qui serait le pire colocataire ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_014",
+      "text": "Qui est le plus jaloux ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_015",
+      "text": "Qui enverrait le plus de messages après une rupture ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_016",
+      "text": "Qui est le plus dramatique pour un rien ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_017",
+      "text": "Qui serait le plus corruptible ?",
+      "tier": "free",
+      "tags": []
+    }
+  ],
+  "ui": {
+    "rules": {
+    "title": "Paranoïa",
+    "tagline": "Qui a dit ton prénom… et pourquoi ?",
+    "start": "Lancer la partie 👁️",
+    "steps": [
+      {
+        "n": "1",
+        "title": "Le questionneur voit une question",
+        "desc": "Genre « qui craquerait en prison ? ». Il la garde secrète."
+      },
+      {
+        "n": "2",
+        "title": "La cible voit la question et choisit",
+        "desc": "Elle désigne quelqu'un dans le groupe. À voix haute."
+      },
+      {
+        "n": "3",
+        "title": "Le groupe entend la réponse, pas la question",
+        "desc": "Tout le monde panique : pourquoi MOI ?"
+      },
+      {
+        "n": "4",
+        "title": "Pile ou face — ça révèle ou pas",
+        "desc": "Si la cible perd au flip, la question s'affiche pour tout le monde."
+      }
+    ]
+  },
+  "handoff": {
+    "roleLabel": "RÔLE · {{role}}",
+    "givePhone": "Donnes le tel à {{name}}",
+    "ready": "C'est moi — afficher",
+    "subtitleQuestioner": "Tu vas voir une question. Garde-la secrète.",
+    "subtitleTarget": "Une question te concerne. Tu vas voir laquelle."
+  },
+  "questionShow": {
+    "chipQuestioner": "Questionneur · {{name}}",
+    "secretLabel": "TA QUESTION SECRÈTE",
+    "askTo": "TU LA POSES À",
+    "targetLabel": "LA CIBLE",
+    "hint": "Pose la question à voix haute… mais sans la dire 😶",
+    "passToTarget": "Passer le tel à {{name}}"
+  },
+  "targetPick": {
+    "chipTarget": "Cible · {{name}}",
+    "questionLabel": "LA QUESTION",
+    "pickTitle": "Réponds à voix haute.",
+    "pickSub": "Et désigne ici la personne dans l'app.",
+    "coinFlip": "Pile ou face →"
+  },
+  "coinFlip": {
+    "chipTarget": "Cible · {{name}}",
+    "titleSecretKept": "Tu gardes le secret 🤫",
+    "titleRevealed": "C'est révélé… 😬",
+    "titleFlip": "Lance la pièce !",
+    "titleChoose": "Choisis ton camp",
+    "sidePile": "Pile",
+    "sideFace": "Face",
+    "flipCta": "Lancer 🪙",
+    "flipping": "Ça tourne…",
+    "seeVerdict": "Voir le verdict →"
+  },
+  "reveal": {
+    "badgeKept": "🤫 SECRET GARDÉ",
+    "badgeRevealed": "😈 RÉVÉLATION",
+    "verdictKept": "Sauvé.",
+    "verdictRevealed": "Cramé !",
+    "questionWas": "LA QUESTION ÉTAIT",
+    "answerLabel": "RÉPONSE →",
+    "keptTextBefore": "garde la question pour lui-même. Le groupe reste dans le flou. ",
+    "keptTextAfter": " peut sourire dans son coin.",
+    "drink": "{{name}} bois {{count}} gorgée{{plural}}",
+    "next": "Tour suivant →"
+  },
+  "end": {
+    "badge": "FIN DE PARTIE",
+    "title": "Le récap\n des secrets 🕵️",
+    "kept": "GARDÉS",
+    "revealed": "RÉVÉLÉS",
+    "statusRevealed": "CRAMÉ",
+    "statusKept": "SECRET",
+    "answerShort": " · rép. ",
+    "playAgain": "Rejouer",
+    "backToHub": "Retour au hub"
+  },
+  "roles": {
+    "questioner": "questionneur",
+    "target": "cible"
+  }
+  }
+}

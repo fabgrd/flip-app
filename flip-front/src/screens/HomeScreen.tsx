@@ -1,33 +1,38 @@
-import { Ionicons } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import * as Haptics from 'expo-haptics';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-
-import { PlayerInput, PlayersList } from '../components';
-import { MAX_PLAYERS_GLOBAL, MIN_PLAYERS_GLOBAL, createGlobalStyles } from '../constants';
+import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import Svg, { Circle, Path, Rect } from 'react-native-svg';
+import { setDevTier } from '../../src/entitlements';
+import {
+  ChunkyButton,
+  DotBackground,
+  FlatChunkyButton,
+  PlayerInput,
+  PlayersList,
+} from '../components';
+import { MAX_PLAYERS_GLOBAL, MIN_PLAYERS_GLOBAL } from '../constants';
+import { T } from '../constants/flipTokens';
 import { usePlayers } from '../contexts/PlayersContext';
-import { useTheme } from '../contexts/ThemeContext';
+import { usePaywall } from '../paywall';
 import { RootStackParamList } from '../types';
 
-type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
-
-const MAX_PLAYERS = MAX_PLAYERS_GLOBAL;
-const MIN_PLAYERS = MIN_PLAYERS_GLOBAL;
+type HomeNav = StackNavigationProp<RootStackParamList, 'Home'>;
 
 export function HomeScreen() {
-  const navigation = useNavigation<HomeScreenNavigationProp>();
+  useEffect(() => { setDevTier('free'); }, []);
+  const navigation = useNavigation<HomeNav>();
   const { t } = useTranslation();
   const { players, addPlayer, removePlayer, updatePlayerAvatar } = usePlayers();
-  const { theme } = useTheme();
-  const GlobalStyles = createGlobalStyles(theme);
+  const { open: openPaywall } = usePaywall();
+
   const handleAddPlayer = (name: string): boolean => {
     const success = addPlayer(name);
-    if (success) {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    }
+    if (success) Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     return success;
   };
 
@@ -36,77 +41,107 @@ export function HomeScreen() {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   };
 
-  const handleStartGame = () => {
-    if (players.length >= MIN_PLAYERS) {
+  const handleStart = () => {
+    if (players.length >= MIN_PLAYERS_GLOBAL) {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
       navigation.navigate('GameSelect', { players });
     }
   };
 
-  const handleSettingsPress = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    navigation.navigate('Settings');
-  };
-
-  const canStartGame = players.length >= MIN_PLAYERS;
+  const canStart = players.length >= MIN_PLAYERS_GLOBAL;
 
   return (
-    <SafeAreaView style={[GlobalStyles.container, { backgroundColor: theme.colors.background }]}>
-      <View style={GlobalStyles.screen}>
-        {/* Settings Button Top Right */}
-        <View style={styles.settingsTopRightWrapper}>
-          <TouchableOpacity
-            style={[styles.settingsButton, { backgroundColor: `${theme.colors.primary}10` }]}
-            onPress={handleSettingsPress}
-          >
-            <Ionicons name="settings" size={24} color={theme.colors.primary} />
-          </TouchableOpacity>
-        </View>
-
-        {/* Header */}
-        <View style={styles.headerContent}>
-          <Text style={[styles.appTitle, { color: theme.colors.primary }]}>{t('home:title')}</Text>
-          <Text style={[styles.appSubtitle, { color: theme.colors.text.secondary }]}>
-            {t('home:subtitle')}
+    <SafeAreaView style={styles.screen}>
+      <DotBackground opacity={0.06} />
+      {/* Header row */}
+      <View style={styles.header}>
+        <View>
+          <Text style={styles.logo}>
+            Fl<Text style={styles.logoAccent}>!</Text>p
           </Text>
         </View>
-
-        {/* Add Player Section */}
-        <View style={styles.inputSection}>
-          <PlayerInput
-            onAddPlayer={handleAddPlayer}
-            maxPlayers={MAX_PLAYERS}
-            currentPlayerCount={players.length}
-          />
-        </View>
-
-        {/* Players List */}
-        <View style={styles.playersSection}>
-          <PlayersList
-            players={players}
-            onRemovePlayer={handleRemovePlayer}
-            onUpdateAvatar={updatePlayerAvatar}
-          />
+        <View style={styles.headerActions}>
+          <FlatChunkyButton size="sm" square color={T.lemon} onPress={() => openPaywall()}>
+            <Svg width={18} height={18} viewBox="0 0 48 48" fill="none">
+              <Path
+                d="M6 36h36V20l-9 6-9-12-9 12-9-6v16z"
+                fill={T.lemon}
+                stroke={T.ink}
+                strokeWidth="2.5"
+                strokeLinejoin="round"
+              />
+              <Rect
+                x="6"
+                y="34"
+                width="36"
+                height="6"
+                rx="1"
+                fill={T.lemon}
+                stroke={T.ink}
+                strokeWidth="2.5"
+              />
+              <Circle cx="15" cy="14" r="3" fill={T.lemon} stroke={T.ink} strokeWidth="2" />
+              <Circle cx="33" cy="14" r="3" fill={T.lemon} stroke={T.ink} strokeWidth="2" />
+              <Circle cx="24" cy="8" r="3" fill={T.tomato} stroke={T.ink} strokeWidth="2" />
+            </Svg>
+          </FlatChunkyButton>
+          <FlatChunkyButton
+            size="sm"
+            square
+            color={T.paper}
+            textColor={T.ink}
+            onPress={() => navigation.navigate('Settings')}
+          >
+            <Feather name="settings" size={18} color={T.ink} />
+          </FlatChunkyButton>
         </View>
       </View>
 
-      {/* Start Game Button */}
-      <View style={styles.footer}>
-        <TouchableOpacity
-          style={[
-            styles.startButton,
-            { backgroundColor: canStartGame ? theme.colors.primary : theme.colors.button.disabled },
-          ]}
-          onPress={handleStartGame}
-          disabled={!canStartGame}
-        >
-          <Text style={[styles.startButtonText, { color: theme.colors.text.white }]}>
-            {t('home:actions.start')}
-          </Text>
-        </TouchableOpacity>
+      {/* Hero text */}
+      <View style={styles.hero}>
+        <Text style={styles.heroTitle}>
+          {t('home:hero.titlePrefix')}{'\n'}
+          <Text style={styles.heroHighlight}>{t('home:hero.titleHighlight')}</Text> ?
+        </Text>
+        <Text style={styles.heroSub}>
+          {players.length > 0
+            ? t('home:hero.ready', { count: players.length })
+            : t('home:hero.addAtLeast', { count: MIN_PLAYERS_GLOBAL, min: MIN_PLAYERS_GLOBAL })}
+        </Text>
+      </View>
 
-        {!canStartGame && (
-          <Text style={[styles.minPlayersText, { color: theme.colors.text.secondary }]}>
+      {/* Input */}
+      <View style={styles.inputWrapper}>
+        <PlayerInput
+          onAddPlayer={handleAddPlayer}
+          maxPlayers={MAX_PLAYERS_GLOBAL}
+          currentPlayerCount={players.length}
+        />
+      </View>
+
+      {/* Players list */}
+      <View style={styles.listWrapper}>
+        <PlayersList
+          players={players}
+          onRemovePlayer={handleRemovePlayer}
+          onUpdateAvatar={updatePlayerAvatar}
+        />
+      </View>
+
+      {/* CTA */}
+      <View style={styles.footer}>
+        <ChunkyButton
+          color={T.tomato}
+          textColor="#fff"
+          size="lg"
+          full
+          onPress={handleStart}
+          disabled={!canStart}
+        >
+          {t('home:actions.startCta')}
+        </ChunkyButton>
+        {!canStart && (
+          <Text style={styles.ctaHint}>
             {t('home:addPlayers.minPlayers')}
           </Text>
         )}
@@ -116,56 +151,91 @@ export function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  appSubtitle: {
-    fontSize: 16,
-    marginTop: 4,
-    textAlign: 'center',
-  },
-  appTitle: {
-    fontSize: 48,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  footer: {
-    padding: 20,
-    paddingTop: 0,
-  },
-  headerContent: {
-    alignItems: 'center',
-    marginBottom: 24,
-    paddingHorizontal: 20,
-    paddingTop: 64,
-  },
-  inputSection: {
-    marginBottom: 24,
-    paddingHorizontal: 20,
-  },
-  minPlayersText: {
-    fontSize: 14,
-    fontStyle: 'italic',
-    textAlign: 'center',
-  },
-  playersSection: {
+  screen: {
     flex: 1,
+    backgroundColor: T.bg,
   },
-  settingsButton: {
-    borderRadius: 20,
-    padding: 8,
-  },
-  settingsTopRightWrapper: {
-    position: 'absolute',
-    right: 20,
-    top: 10,
-    zIndex: 1,
-  },
-  startButton: {
+
+  header: {
+    flexDirection: 'row',
     alignItems: 'center',
-    borderRadius: 12,
-    marginBottom: 12,
-    paddingVertical: 16,
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    paddingTop: 8,
+    paddingBottom: 4,
   },
-  startButtonText: {
-    fontSize: 18,
-    fontWeight: 'bold',
+
+  headerActions: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  logo: {
+    fontFamily: 'System',
+    fontSize: 40,
+    fontWeight: '900',
+    color: T.ink,
+    letterSpacing: -1.5,
+    lineHeight: 44,
+  },
+  logoAccent: { color: T.tomato },
+
+  hero: {
+    paddingHorizontal: 20,
+    paddingTop: 12,
+    paddingBottom: 20,
+  },
+  heroTitle: {
+    color: T.ink,
+    fontSize: 40,
+    fontWeight: '900',
+    letterSpacing: -1.5,
+    lineHeight: 42,
+    marginBottom: 8,
+  },
+  heroHighlight: {
+    color: T.tomato,
+  },
+  heroSub: {
+    color: T.inkSoft,
+    fontSize: 15,
+    lineHeight: 20,
+  },
+
+  inputWrapper: {
+    paddingHorizontal: 20,
+    marginBottom: 16,
+  },
+
+  listWrapper: {
+    flex: 1,
+    paddingHorizontal: 20,
+  },
+
+  footer: {
+    paddingHorizontal: 20,
+    paddingBottom: 24,
+    paddingTop: 12,
+  },
+  ctaBtn: {
+    backgroundColor: T.tomato,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: T.rMd,
+    paddingVertical: 18,
+    alignItems: 'center',
+    shadowColor: T.ink,
+    shadowOffset: { width: 5, height: 5 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 5,
+  },
+  ctaBtnDisabled: { opacity: 0.4 },
+  ctaBtnText: { color: '#fff', fontSize: 18, fontWeight: '900', letterSpacing: -0.3 },
+  ctaHint: {
+    color: T.muted,
+    fontSize: 13,
+    textAlign: 'center',
+    marginTop: 8,
+    fontStyle: 'italic',
   },
 });

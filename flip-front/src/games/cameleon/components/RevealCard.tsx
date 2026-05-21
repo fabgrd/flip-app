@@ -1,189 +1,283 @@
 import { TFunction } from 'i18next';
 import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import Animated, {
-  interpolate,
   runOnJS,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { useTheme } from '../../../contexts/ThemeContext';
+import { Avatar } from '../../../components/common/Avatar';
+import { T } from '../../../constants/flipTokens';
 
 interface RevealCardProps {
   name: string;
+  avatar?: string;
   roleLabel: string;
   secretWord: string | null;
   onNext: () => void;
   t: TFunction;
 }
 
-export function RevealCard({ name, roleLabel, secretWord, onNext, t }: RevealCardProps) {
-  const { theme } = useTheme();
-  const rotation = useSharedValue(0);
-  const [flipped, setFlipped] = useState(false);
-  const [isAnimating, setIsAnimating] = useState(false);
+export function RevealCard({ name, avatar, roleLabel, secretWord, onNext, t }: RevealCardProps) {
+  const [revealed, setRevealed] = useState(false);
+  const frontOpacity = useSharedValue(1);
+  const backOpacity = useSharedValue(0);
 
-  const frontStyle = useAnimatedStyle(() => ({
-    transform: [{ rotateY: `${interpolate(rotation.value, [0, 1], [0, 180])}deg` }],
-    backfaceVisibility: 'hidden',
-  }));
+  const frontStyle = useAnimatedStyle(() => ({ opacity: frontOpacity.value }));
+  const backStyle = useAnimatedStyle(() => ({ opacity: backOpacity.value }));
 
-  const backStyle = useAnimatedStyle(() => ({
-    transform: [{ rotateY: `${interpolate(rotation.value, [0, 1], [180, 360])}deg` }],
-    backfaceVisibility: 'hidden',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-  }));
-
-  const handleFlip = () => {
-    if (isAnimating) return;
-
-    if (!flipped) {
-      setIsAnimating(true);
-      rotation.value = withTiming(1, { duration: 500 }, (finished) => {
-        if (finished) {
-          runOnJS(setIsAnimating)(false);
-          runOnJS(setFlipped)(true);
-        }
-      });
-    } else {
-      setIsAnimating(true);
-      onNext();
-      rotation.value = 0;
-      setFlipped(false);
-      setTimeout(() => setIsAnimating(false), 250);
-    }
+  const handleReveal = () => {
+    frontOpacity.value = withTiming(0, { duration: 220 }, (finished) => {
+      if (finished) {
+        runOnJS(setRevealed)(true);
+        backOpacity.value = withTiming(1, { duration: 220 });
+      }
+    });
   };
 
   return (
     <View style={styles.wrapper}>
-      <View
-        style={[
-          styles.card,
-          { backgroundColor: theme.colors.background, borderColor: theme.colors.border },
-        ]}
-      >
-        <Animated.View style={[styles.faceContainer, frontStyle]}>
-          <Text style={[styles.title, { color: theme.colors.text.primary }]}>
-            {t('cameleon:reveal.title')}
-          </Text>
-          <Text style={[styles.subtitle, { color: theme.colors.text.secondary }]}>
-            {t('cameleon:reveal.subtitle')}
-          </Text>
-          <Text style={[styles.name, { color: theme.colors.primary }]}>{name}</Text>
-          <TouchableOpacity
-            style={[
-              styles.primaryBtn,
-              { backgroundColor: theme.colors.primary },
-              isAnimating && styles.btnDisabled,
-            ]}
-            onPress={handleFlip}
-            disabled={isAnimating}
-          >
-            <Text style={[styles.primaryBtnText, { color: theme.colors.text.white }]}>
-              {t('cameleon:actions.reveal')}
-            </Text>
-          </TouchableOpacity>
+      <View style={styles.card}>
+        {/* ── FRONT — handoff ── */}
+        <Animated.View
+          style={[StyleSheet.absoluteFill, styles.face, styles.frontFace, frontStyle]}
+          // @ts-ignore pointerEvents is valid on Animated.View
+          pointerEvents={revealed ? 'none' : 'auto'}
+        >
+          <Avatar name={name} avatar={avatar} size={72} />
+
+          <Text style={styles.handoffTitle}>{name},</Text>
+          <Text style={styles.handoffSubtitle}>passe le tel</Text>
+          <Text style={styles.handoffHint}>Trouve un coin discret avant d'appuyer.</Text>
+
+          <FlipButton color={T.lemon} textColor={T.ink} onPress={handleReveal}>
+            {t('cameleon:actions.reveal', 'Révéler mon rôle')}
+          </FlipButton>
         </Animated.View>
 
-        <Animated.View style={[styles.faceContainer, backStyle]}>
+        {/* ── BACK — role reveal ── */}
+        <Animated.View
+          style={[StyleSheet.absoluteFill, styles.face, styles.backFace, backStyle]}
+          // @ts-ignore
+          pointerEvents={revealed ? 'auto' : 'none'}
+        >
           {secretWord === null ? (
-            <>
-              <Text style={[styles.mrWhiteLabel, { color: theme.colors.primary }]}>
-                {roleLabel}
-              </Text>
-              <Text style={[styles.mrWhiteWarning, { color: theme.colors.text.secondary }]}>
-                {t('cameleon:reveal.mrWhiteWarning')}
-              </Text>
-            </>
+            <View style={styles.backContent}>
+              <View style={styles.cameleonBadge}>
+                <Text style={styles.cameleonBadgeText}>TU ES LE CAMÉLÉON</Text>
+              </View>
+              <View style={styles.cameleonCard}>
+                <Text style={styles.cameleonCardLabel}>CATÉGORIE</Text>
+                <Text style={styles.cameleonCardRole}>{roleLabel}</Text>
+                <Text style={styles.cameleonCardHint}>
+                  Tu ne connais pas le mot. Bluff comme tu peux : un indice plausible, pas trop
+                  précis.
+                </Text>
+              </View>
+            </View>
           ) : (
-            <View
-              style={[
-                styles.wordBadge,
-                { backgroundColor: theme.colors.secondary, borderColor: theme.colors.accent },
-              ]}
-            >
-              <Text style={[styles.wordText, { color: theme.colors.text.white }]}>
-                {secretWord}
-              </Text>
+            <View style={styles.backContent}>
+              <Text style={styles.wordCategory}>{roleLabel.toUpperCase()}</Text>
+              <View style={styles.wordCard}>
+                <Text style={styles.wordText}>{secretWord}</Text>
+              </View>
+              <Text style={styles.wordHint}>Donne un indice ni trop évident, ni trop vague.</Text>
             </View>
           )}
 
-          <TouchableOpacity
-            style={[
-              styles.primaryBtn,
-              { backgroundColor: theme.colors.primary },
-              isAnimating && styles.btnDisabled,
-            ]}
-            onPress={handleFlip}
-            disabled={isAnimating}
-          >
-            <Text style={[styles.primaryBtnText, { color: theme.colors.text.white }]}>
-              {t('common:buttons.continue')}
-            </Text>
-          </TouchableOpacity>
+          <FlipButton color={T.ink} textColor="#fff" shadowColor={T.mint} onPress={onNext}>
+            {t('common:buttons.continue', "J'ai vu — suivant")}
+          </FlipButton>
         </Animated.View>
       </View>
     </View>
   );
 }
 
+// ── Bouton avec effet cartoon press (Pressable inline) ──
+function FlipButton({
+  onPress,
+  color,
+  textColor,
+  shadowColor = T.ink,
+  children,
+}: {
+  onPress: () => void;
+  color: string;
+  textColor: string;
+  shadowColor?: string;
+  children: string;
+}) {
+  return (
+    <Pressable
+      onPress={onPress}
+      style={({ pressed }) => [
+        styles.btn,
+        {
+          backgroundColor: color,
+          shadowColor,
+          shadowOffset: pressed ? { width: 0, height: 0 } : { width: 4, height: 4 },
+          shadowOpacity: pressed ? 0 : 1,
+          transform: pressed ? [{ translateX: 4 as number }, { translateY: 4 as number }] : [],
+        },
+      ]}
+    >
+      <Text style={[styles.btnText, { color: textColor }]}>{children}</Text>
+    </Pressable>
+  );
+}
+
 const styles = StyleSheet.create({
-  btnDisabled: { opacity: 0.6 },
+  wrapper: { alignItems: 'center', flex: 1, justifyContent: 'center', paddingHorizontal: 16 },
+
   card: {
+    width: '100%',
+    height: 420,
+    maxWidth: 400,
+    position: 'relative',
+  },
+
+  face: {
+    borderRadius: T.rLg,
+    borderWidth: 2,
+    borderColor: T.ink,
+    padding: 24,
     alignItems: 'center',
-    borderRadius: 16,
-    borderWidth: 1,
+    justifyContent: 'center',
+    shadowColor: T.ink,
+    shadowOffset: { width: 6, height: 6 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
     elevation: 5,
-    height: 320,
-    justifyContent: 'center',
-    maxWidth: 460,
-    padding: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.06,
-    shadowRadius: 12,
-    width: '92%',
   },
-  faceContainer: {
-    alignItems: 'center',
-    bottom: 0,
-    justifyContent: 'center',
-    left: 0,
-    padding: 16,
-    position: 'absolute',
-    right: 0,
-    top: 0,
-  },
-  mrWhiteLabel: { fontSize: 24, fontWeight: '900', marginBottom: 6 },
-  mrWhiteWarning: { fontSize: 16, marginBottom: 16, paddingHorizontal: 16, textAlign: 'center' },
-  name: { fontSize: 22, fontWeight: 'bold', marginBottom: 12 },
-  primaryBtn: { borderRadius: 12, marginTop: 8, paddingHorizontal: 20, paddingVertical: 12 },
-  primaryBtnText: { fontWeight: 'bold' },
-  subtitle: { fontSize: 14, marginBottom: 16, textAlign: 'center' },
-  title: { fontSize: 18, fontWeight: 'bold', marginBottom: 6, textAlign: 'center' },
-  wordBadge: {
-    borderRadius: 16,
-    borderWidth: 3,
-    elevation: 6,
-    marginBottom: 16,
-    paddingHorizontal: 24,
-    paddingVertical: 18,
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.25,
-    shadowRadius: 10,
-    transform: [{ rotate: '-1.5deg' }],
-  },
-  wordText: {
-    fontSize: 42,
+  frontFace: { backgroundColor: T.ink },
+  backFace: { backgroundColor: T.paper },
+
+  handoffTitle: {
+    color: '#fff',
+    fontSize: 36,
     fontWeight: '900',
-    letterSpacing: 1,
+    letterSpacing: -1.2,
     textAlign: 'center',
+  },
+  handoffSubtitle: {
+    color: '#fff',
+    fontSize: 36,
+    fontWeight: '900',
+    letterSpacing: -1.2,
+    textAlign: 'center',
+    marginBottom: 14,
+  },
+  handoffHint: {
+    color: 'rgba(255,255,255,0.6)',
+    fontSize: 14,
+    textAlign: 'center',
+    maxWidth: 260,
+    lineHeight: 20,
+    marginBottom: 28,
+  },
+
+  backContent: { flex: 1, alignItems: 'center', justifyContent: 'center', width: '100%' },
+
+  cameleonBadge: {
+    backgroundColor: T.tomato,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: 999,
+    paddingHorizontal: 14,
+    paddingVertical: 6,
+    marginBottom: 20,
+    transform: [{ rotate: '-3deg' }],
+    shadowColor: T.ink,
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+  },
+  cameleonBadgeText: {
+    color: '#fff',
+    fontSize: 13,
+    fontWeight: '900',
+    letterSpacing: 0.5,
     textTransform: 'uppercase',
   },
-  wrapper: { alignItems: 'center', flex: 1, justifyContent: 'center', paddingHorizontal: 16 },
+  cameleonCard: {
+    backgroundColor: T.ink,
+    borderRadius: T.rMd,
+    borderWidth: 2,
+    borderColor: T.ink,
+    padding: 20,
+    alignItems: 'center',
+    alignSelf: 'stretch',
+    marginBottom: 16,
+  },
+  cameleonCardLabel: {
+    color: 'rgba(255,255,255,0.5)',
+    fontSize: 11,
+    fontWeight: '700',
+    letterSpacing: 2,
+    marginBottom: 6,
+    textTransform: 'uppercase',
+  },
+  cameleonCardRole: { color: '#fff', fontSize: 28, fontWeight: '900', letterSpacing: -1 },
+  cameleonCardHint: {
+    color: 'rgba(255,255,255,0.7)',
+    fontSize: 13,
+    textAlign: 'center',
+    marginTop: 12,
+    lineHeight: 18,
+  },
+
+  wordCategory: {
+    color: T.muted,
+    fontSize: 11,
+    fontWeight: '700',
+    letterSpacing: 2,
+    marginBottom: 10,
+  },
+  wordCard: {
+    backgroundColor: T.lemon,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: T.rMd,
+    paddingVertical: 24,
+    paddingHorizontal: 28,
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    marginBottom: 14,
+    shadowColor: T.ink,
+    shadowOffset: { width: 5, height: 5 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 4,
+  },
+  wordText: {
+    color: T.ink,
+    fontSize: 52,
+    fontWeight: '900',
+    letterSpacing: -2,
+    textAlign: 'center',
+    lineHeight: 56,
+  },
+  wordHint: {
+    color: T.inkSoft,
+    fontSize: 14,
+    textAlign: 'center',
+    maxWidth: 260,
+    lineHeight: 20,
+    marginBottom: 8,
+  },
+
+  btn: {
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: T.rMd,
+    paddingVertical: 16,
+    paddingHorizontal: 28,
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    shadowRadius: 0,
+    elevation: 4,
+  },
+  btnText: { fontSize: 17, fontWeight: '900', letterSpacing: -0.3 },
 });

@@ -1,42 +1,49 @@
 {
-    "buttons": {
-        "back": "Retour",
-        "continue": "Continuer",
-        "start": "Commencer",
-        "finish": "Terminer",
-        "cancel": "Annuler",
-        "save": "Enregistrer",
-        "delete": "Supprimer",
-        "edit": "Modifier",
-        "add": "Ajouter",
-        "close": "Fermer",
-        "confirm": "Confirmer"
-    },
-    "labels": {
-        "players": "Joueurs",
-        "player": "Joueur",
-        "addPlayer": "Ajouter un joueur",
-        "playerName": "Nom du joueur",
-        "question": "Question",
-        "result": "Résultat",
-        "results": "Résultats",
-        "score": "Score",
-        "loading": "Chargement...",
-        "error": "Erreur"
-    },
-    "messages": {
-        "success": "Succès !",
-        "error": "Une erreur s'est produite",
-        "noData": "Aucune donnée disponible",
-        "remainingPlayers": " joueur(s) restant(s)",
-        "readyToPlay": "Prêt à jouer",
-        "selectGame": "Choisir un jeu",
-        "noPlayersAdded": "Aucun joueur ajouté",
-        "addAtLeastOnePlayerToStart": "Ajoutez au moins 1 joueur pour commencer"
-    },
-    "errors": {
-        "playerNameRequired": "Veuillez entrer un nom de joueur.",
-        "playerLimitReached": "Vous ne pouvez pas ajouter plus de {{maxPlayers}} joueurs.",
-        "playerNameAlreadyExists": "Ce nom de joueur existe déjà ou la limite est atteinte."
-    }
+  "new": "Nouveau",
+  "buttons": {
+    "back": "Retour",
+    "continue": "Continuer",
+    "start": "Commencer",
+    "finish": "Terminer",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "add": "Ajouter",
+    "addPlus": "Ajouter +",
+    "close": "Fermer",
+    "confirm": "Confirmer"
+  },
+  "labels": {
+    "players": "Joueurs",
+    "player": "Joueur",
+    "addPlayer": "Ajouter un joueur",
+    "playerName": "Nom du joueur",
+    "question": "Question",
+    "result": "Résultat",
+    "results": "Résultats",
+    "score": "Score",
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "readyToPlay": "Prêt à jouer"
+  },
+  "actions": {
+    "playAgain": "Rejouer",
+    "backToHome": "Retour à l'accueil"
+  },
+  "messages": {
+    "success": "Succès !",
+    "error": "Une erreur s'est produite",
+    "noData": "Aucune donnée disponible",
+    "remainingPlayers": " joueur(s) restant(s)",
+    "readyToPlay": "Prêt à jouer",
+    "selectGame": "Choisir un jeu",
+    "noPlayersAdded": "Aucun joueur ajouté",
+    "addAtLeastOnePlayerToStart": "Ajoutez au moins 1 joueur pour commencer"
+  },
+  "errors": {
+    "playerNameRequired": "Veuillez entrer un nom de joueur.",
+    "playerLimitReached": "Vous ne pouvez pas ajouter plus de {{maxPlayers}} joueurs.",
+    "playerNameAlreadyExists": "Ce nom de joueur existe déjà ou la limite est atteinte."
+  }
 }

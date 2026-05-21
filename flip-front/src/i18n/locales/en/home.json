@@ -1,22 +1,32 @@
 {
-    "title": "FL!P",
-    "subtitle": "Drinking game with friends",
-    "welcome": "Welcome to FL!P! 🍻",
-    "description": "The ultimate drinking game to spice up your parties with friends!",
-    "addPlayers": {
-        "title": "Add players",
-        "subtitle": "Minimum 2 players, maximum 10",
-        "placeholder": "Player name",
-        "add": "Add",
-        "remove": "Remove",
-        "minPlayers": "Add at least 2 players to start",
-        "maxPlayers": "You've reached the maximum number of players (10)"
-    },
-    "playersList": {
-        "title": "Players ({{count}})",
-        "empty": "No players added"
-    },
-    "actions": {
-        "start": "Start playing!"
-    }
+  "title": "FL!P",
+  "subtitle": "Drinking game with friends",
+  "welcome": "Welcome to FL!P! 🍻",
+  "description": "The ultimate drinking game to spice up your parties with friends!",
+  "addPlayers": {
+    "title": "Add players",
+    "subtitle": "Minimum 1 player, maximum 20",
+    "placeholder": "Player name",
+    "add": "Add",
+    "remove": "Remove",
+    "minPlayers": "Add at least 1 player to start",
+    "maxPlayers": "You've reached the maximum number of players (20)"
+  },
+  "playersList": {
+    "title": "Players ({{count}})",
+    "empty": "Add players to get started"
+  },
+  "hero": {
+    "titlePrefix": "Who's",
+    "titleHighlight": "in",
+    "titleSuffix": "?",
+    "ready_one": "{{count}} player ready to embarrass themselves.",
+    "ready_other": "{{count}} players ready to embarrass themselves.",
+    "addAtLeast_one": "Add at least {{min}} player to start.",
+    "addAtLeast_other": "Add at least {{min}} players to start."
+  },
+  "actions": {
+    "start": "Start playing!",
+    "startCta": "Let's go →"
+  }
 }

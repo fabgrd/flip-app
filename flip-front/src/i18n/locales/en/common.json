@@ -1,43 +1,49 @@
 {
-    "buttons": {
-        "back": "Back",
-        "continue": "Continue",
-        "start": "Start",
-        "finish": "Finish",
-        "cancel": "Cancel",
-        "save": "Save",
-        "delete": "Delete",
-        "edit": "Edit",
-        "add": "Add",
-        "close": "Close",
-        "confirm": "Confirm",
-        "playAgain": "Play again"
-    },
-    "labels": {
-        "players": "Players",
-        "player": "Player",
-        "addPlayer": "Add player",
-        "playerName": "Player name",
-        "question": "Question",
-        "result": "Result",
-        "results": "Results",
-        "score": "Score",
-        "loading": "Loading...",
-        "error": "Error",
-        "readyToPlay": "Ready to play"
-    },
-    "messages": {
-        "success": "Success!",
-        "error": "An error occurred",
-        "noData": "No data available",
-        "remainingPlayers": " player(s) remaining",
-        "selectGame": "Select a game",
-        "noPlayersAdded": "No players added",
-        "addAtLeastOnePlayerToStart": "Add at least 1 player to start"
-    },
-    "errors": {
-        "playerNameRequired": "Please enter a player name.",
-        "playerLimitReached": "You cannot add more than {{maxPlayers}} players.",
-        "playerNameAlreadyExists": "This player name already exists or the limit is reached."
-    }
+  "new": "New",
+  "buttons": {
+    "back": "Back",
+    "continue": "Continue",
+    "start": "Start",
+    "finish": "Finish",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "addPlus": "Add +",
+    "close": "Close",
+    "confirm": "Confirm",
+    "playAgain": "Play again"
+  },
+  "labels": {
+    "players": "Players",
+    "player": "Player",
+    "addPlayer": "Add player",
+    "playerName": "Player name",
+    "question": "Question",
+    "result": "Result",
+    "results": "Results",
+    "score": "Score",
+    "loading": "Loading...",
+    "error": "Error",
+    "readyToPlay": "Ready to play"
+  },
+  "messages": {
+    "success": "Success!",
+    "error": "An error occurred",
+    "noData": "No data available",
+    "remainingPlayers": " player(s) remaining",
+    "selectGame": "Select a game",
+    "noPlayersAdded": "No players added",
+    "addAtLeastOnePlayerToStart": "Add at least 1 player to start"
+  },
+  "actions": {
+    "playAgain": "Play again",
+    "backToHome": "Back to home"
+  },
+  "errors": {
+    "playerNameRequired": "Please enter a player name.",
+    "playerLimitReached": "You cannot add more than {{maxPlayers}} players.",
+    "playerNameAlreadyExists": "This player name already exists or the limit is reached."
+  }
 }

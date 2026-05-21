@@ -1,11 +1,10 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Import translations
 import en from './locales/en';
 import fr from './locales/fr';
-import zh from './locales/zh';
 
 const LANGUAGE_DETECTOR = {
   type: 'languageDetector' as const,
@@ -22,7 +21,7 @@ const LANGUAGE_DETECTOR = {
       callback('fr');
     }
   },
-  init: () => {},
+  init: () => { },
   cacheUserLanguage: async (language: string) => {
     try {
       await AsyncStorage.setItem('user-language', language);
@@ -33,6 +32,7 @@ const LANGUAGE_DETECTOR = {
 };
 
 const NAMESPACES = [
+  'alert',
   'common',
   'navigation',
   'home',
@@ -40,6 +40,13 @@ const NAMESPACES = [
   'purityTest',
   'settings',
   'cameleon',
+  'leftRight',
+  'paranoia',
+  'paywall',
+  'apero',
+  'medusa',
+  'casting',
+  'redFlag',
 ] as const;
 
 i18n
@@ -58,7 +65,6 @@ i18n
     resources: {
       en,
       fr,
-      zh,
     },
     returnNull: false,
   });

@@ -1,37 +1,42 @@
-import React from 'react';
-import {
-  NavigationContainer,
-  DefaultTheme,
-  DarkTheme,
-  Theme as NavTheme,
-} from '@react-navigation/native';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import React from 'react';
 
 import './src/i18n';
 
 import { PortalProvider } from '@gorhom/portal';
 import { View } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { PlayersProvider } from './src/contexts/PlayersContext';
+import { PreferencesProvider } from './src/contexts/PreferencesContext';
+import { ThemeProvider, useTheme } from './src/contexts/ThemeContext';
+import { EntitlementsProvider } from './src/entitlements';
+import { PaywallProvider } from './src/paywall';
 import {
-  HomeScreen,
-  GameSelectScreen,
-  PurityTestScreen,
-  PurityResultsScreen,
-  SettingsScreen,
-  CameleonScreen,
+  AperoScreen,
   CameleonResultsScreen,
+  CameleonScreen,
+  CastingScreen,
+  GameSelectScreen,
+  HomeScreen,
+  LeftRightResultsScreen,
+  LeftRightScreen,
+  MedusaScreen,
+  ParanoiaScreen,
+  PurityResultsScreen,
+  PurityTestScreen,
+  RedFlagScreen,
+  SettingsScreen,
 } from './src/screens';
 import { RootStackParamList } from './src/types';
-import { ThemeProvider, useTheme } from './src/contexts/ThemeContext';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 function ThemedAppNavigator() {
   const { theme } = useTheme();
-  const navTheme: NavTheme = theme.mode === 'dark' ? DarkTheme : DefaultTheme;
   return (
     <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
-      <NavigationContainer theme={navTheme}>
+      <NavigationContainer theme={DefaultTheme}>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="GameSelect" component={GameSelectScreen} />
@@ -44,6 +49,17 @@ function ThemedAppNavigator() {
             component={CameleonResultsScreen}
             options={{ gestureEnabled: false }}
           />
+          <Stack.Screen name="LeftRight" component={LeftRightScreen} />
+          <Stack.Screen
+            name="LeftRightResults"
+            component={LeftRightResultsScreen}
+            options={{ gestureEnabled: false }}
+          />
+          <Stack.Screen name="Paranoia" component={ParanoiaScreen} />
+          <Stack.Screen name="Medusa" component={MedusaScreen} />
+          <Stack.Screen name="Apero" component={AperoScreen} />
+          <Stack.Screen name="Casting" component={CastingScreen} />
+          <Stack.Screen name="RedFlag" component={RedFlagScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </View>
@@ -52,12 +68,20 @@ function ThemedAppNavigator() {
 
 export default function App() {
   return (
-    <PortalProvider>
-      <ThemeProvider>
-        <PlayersProvider>
-          <ThemedAppNavigator />
-        </PlayersProvider>
-      </ThemeProvider>
-    </PortalProvider>
+    <SafeAreaProvider>
+      <PortalProvider>
+        <ThemeProvider>
+          <EntitlementsProvider>
+            <PreferencesProvider>
+              <PaywallProvider>
+                <PlayersProvider>
+                  <ThemedAppNavigator />
+                </PlayersProvider>
+              </PaywallProvider>
+            </PreferencesProvider>
+          </EntitlementsProvider>
+        </ThemeProvider>
+      </PortalProvider>
+    </SafeAreaProvider>
   );
 }

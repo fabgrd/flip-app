@@ -1,46 +1,47 @@
 import { StyleSheet } from 'react-native';
+import { T } from './flipTokens';
 import { Theme } from './themes';
 
 export const createGlobalStyles = (theme: Theme) =>
   StyleSheet.create({
+    // Chunky primary button — 2px border + hard offset shadow
     buttonPrimary: {
       alignItems: 'center',
-      backgroundColor: theme.colors.button.primary,
-      borderRadius: 25,
-      elevation: 6,
+      backgroundColor: theme.colors.primary,
+      borderRadius: T.rMd,
+      borderWidth: 2,
+      borderColor: T.ink,
       justifyContent: 'center',
-      paddingHorizontal: 30,
-      paddingVertical: 15,
-      shadowColor: theme.colors.button.primary,
-      shadowOffset: {
-        width: 0,
-        height: 4,
-      },
-      shadowOpacity: 0.3,
-      shadowRadius: 8,
+      paddingHorizontal: 24,
+      paddingVertical: 16,
+      shadowColor: T.ink,
+      shadowOffset: { width: 4, height: 4 },
+      shadowOpacity: 1,
+      shadowRadius: 0,
+      elevation: 4,
     },
 
     buttonSecondary: {
       alignItems: 'center',
-      backgroundColor: theme.colors.button.secondary,
-      borderRadius: 25,
-      elevation: 6,
+      backgroundColor: theme.colors.secondary,
+      borderRadius: T.rMd,
+      borderWidth: 2,
+      borderColor: T.ink,
       justifyContent: 'center',
-      paddingHorizontal: 30,
-      paddingVertical: 15,
-      shadowColor: theme.colors.button.secondary,
-      shadowOffset: {
-        width: 0,
-        height: 4,
-      },
-      shadowOpacity: 0.3,
-      shadowRadius: 8,
+      paddingHorizontal: 24,
+      paddingVertical: 16,
+      shadowColor: T.ink,
+      shadowOffset: { width: 4, height: 4 },
+      shadowOpacity: 1,
+      shadowRadius: 0,
+      elevation: 4,
     },
 
     buttonText: {
-      color: theme.colors.text.white,
-      fontSize: 18,
-      fontWeight: 'bold',
+      color: T.ink,
+      fontSize: 17,
+      fontWeight: '800',
+      letterSpacing: -0.3,
     },
 
     container: {
@@ -50,12 +51,12 @@ export const createGlobalStyles = (theme: Theme) =>
 
     input: {
       backgroundColor: theme.colors.surface,
-      borderColor: 'transparent',
-      borderRadius: 15,
+      borderColor: T.ink,
+      borderRadius: T.rSm,
       borderWidth: 2,
       fontSize: 16,
-      paddingHorizontal: 20,
-      paddingVertical: 15,
+      paddingHorizontal: 16,
+      paddingVertical: 14,
     },
 
     inputFocused: {
@@ -70,16 +71,17 @@ export const createGlobalStyles = (theme: Theme) =>
 
     subtitle: {
       color: theme.colors.text.secondary,
-      fontSize: 18,
+      fontSize: 15,
       fontWeight: '600',
-      marginBottom: 15,
+      marginBottom: 12,
     },
 
     title: {
       color: theme.colors.text.primary,
-      fontSize: 32,
-      fontWeight: 'bold',
-      marginBottom: 30,
-      textAlign: 'center',
+      fontSize: 40,
+      fontWeight: '900',
+      letterSpacing: -1.5,
+      lineHeight: 40,
+      marginBottom: 16,
     },
   });

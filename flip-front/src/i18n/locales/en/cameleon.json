@@ -1,59 +1,239 @@
 {
-    "name": "Chameleon",
-    "description": "Guess the impostors from clues... without revealing your word!",
-    "game": {
-        "title": "Chameleon",
-        "subtitle": "Settings and role distribution"
-    },
-    "settings": {
-        "title": "Settings",
-        "subtitle": "{{count}} players",
-        "undercover": "Undercover",
-        "mrWhite": "Mr White"
-    },
-    "actions": {
-        "start": "Start",
-        "reveal": "Reveal",
-        "seeResults": "See results",
-        "reset": "Reset",
-        "goToVote": "Go to vote",
-        "eliminate": "Eliminate",
-        "submit": "Submit"
-    },
-    "reveal": {
-        "title": "Word reveal",
-        "subtitle": "Pass the phone to each player",
-        "secretWord": "Secret word: {{word}}",
-        "mrWhiteWarning": "You are Mr White! No word for you — bluff smart."
-    },
-    "roles": {
-        "civilian": "Civilian",
-        "cameleon": "Undercover",
-        "mrWhite": "Mr White"
-    },
-    "results": {
-        "title": "Results",
-        "subtitle": "Roles and words"
-    },
-    "outcome": {
-        "civiliansWin": "Civilians win!",
-        "undercoverWin": "Undercover win!"
-    },
-    "badges": {
-        "eliminated": "OUT"
-    },
-    "modals": {
-        "firstPlayer": "{{name}} starts!"
-    },
-    "notices": {
-        "eliminatedRole": "1 {{role}} eliminated"
-    },
-    "counters": {
-        "remainingImpostors": "Impostors remaining: {{count}}"
-    },
-    "mrWhite": {
-        "guessTitle": "Mr White",
-        "guessPrompt": "Oops, you were discovered. You can still try to guess the word. If you find it you’ll know at the end of the game.",
-        "placeholder": "Type your guess here"
-    }
+  "name": "Chameleon",
+  "description": "Guess the impostors from clues... without revealing your word!",
+  "game": {
+    "title": "Chameleon",
+    "subtitle": "Settings and role distribution"
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "{{count}} players",
+    "players": "Players",
+    "impostors": "Impostors",
+    "undercover": "Undercover",
+    "mrWhite": "Mr White",
+    "theme": "Theme",
+    "themeHint": "Pick the vibe before starting the round."
+  },
+  "actions": {
+    "start": "Start",
+    "reveal": "Reveal",
+    "seeResults": "See results",
+    "reset": "Reset",
+    "goToVote": "Go to vote",
+    "eliminate": "Eliminate",
+    "submit": "Submit"
+  },
+  "reveal": {
+    "title": "Word reveal",
+    "subtitle": "Pass the phone to each player",
+    "secretWord": "Secret word: {{word}}",
+    "mrWhiteWarning": "You are Mr White! No word for you — bluff smart."
+  },
+  "roles": {
+    "civilian": "Civilian",
+    "cameleon": "Undercover",
+    "mrWhite": "Mr White"
+  },
+  "results": {
+    "title": "Results",
+    "subtitle": "Roles and words"
+  },
+  "outcome": {
+    "civiliansWin": "Civilians win!",
+    "undercoverWin": "Undercover win!"
+  },
+  "badges": {
+    "eliminated": "OUT"
+  },
+  "modals": {
+    "firstPlayer": "{{name}} starts!"
+  },
+  "notices": {
+    "eliminatedRole": "1 {{role}} eliminated"
+  },
+  "counters": {
+    "remainingImpostors": "Impostors remaining: {{count}}"
+  },
+  "mrWhite": {
+    "guessTitle": "Mr White",
+    "guessPrompt": "Oops, you were discovered. You can still try to guess the word. If you find it you’ll know at the end of the game.",
+    "placeholder": "Type your guess here"
+  },
+  "themes": {
+    "random": "Random",
+    "randomDesc": "Mix all universes",
+    "daily": "Daily life",
+    "dailyDesc": "Simple, readable words",
+    "football": "Football",
+    "footballDesc": "Sport culture and rivalries",
+    "hot": "Hot",
+    "hotDesc": "A spicier atmosphere",
+    "wtf": "WTF",
+    "wtfDesc": "Absurd, dirty, weird pairs",
+    "sousculture": "Subculture",
+    "souscultureDesc": "Mix of cult and niche references",
+    "rap": "Rap",
+    "rapDesc": "Words related to hip-hop culture",
+    "decadence": "Decadence",
+    "decadenceDesc": "Ultra decadent word pairs for vice lovers"
+  },
+  "wordPairsByTheme": {
+    "daily": [
+      { "w": "Cat", "c": "Tiger" },
+      { "w": "Dog", "c": "Wolf" },
+      { "w": "Beach", "c": "Swimming pool" },
+      { "w": "Pizza", "c": "Flatbread" },
+      { "w": "Plane", "c": "Helicopter" },
+      { "w": "Winter", "c": "Autumn" },
+      { "w": "Nurse", "c": "Doctor" },
+      { "w": "Baker", "c": "Pastry chef" },
+      { "w": "Cinema", "c": "Theater" },
+      { "w": "Concert", "c": "Festival" },
+      { "w": "Forest", "c": "Jungle" },
+      { "w": "Snow", "c": "Hail" },
+      { "w": "Car", "c": "Motorcycle" },
+      { "w": "Bed", "c": "Couch" },
+      { "w": "Coffee", "c": "Tea" },
+      { "w": "Bike", "c": "Scooter" },
+      { "w": "Supermarket", "c": "Corner store" },
+      { "w": "Town hall", "c": "City hall" },
+      { "w": "Camembert", "c": "Brie" },
+      { "w": "Bakery", "c": "Sandwich shop" },
+      { "w": "Museum", "c": "Art gallery" },
+      { "w": "Doctor", "c": "Pharmacist" },
+      { "w": "Train", "c": "Bus" },
+      { "w": "Library", "c": "Bookstore" },
+      { "w": "Vacation", "c": "Weekend" },
+      { "w": "House", "c": "Apartment" },
+      { "w": "Rain", "c": "Drizzle" },
+      { "w": "Mountain", "c": "Hill" },
+      { "w": "Shoes", "c": "Sneakers" },
+      { "w": "Alarm clock", "c": "Phone alarm" }
+    ],
+    "sousculture": [
+      { "w": "Football", "c": "Rugby" },
+      { "w": "Handball", "c": "Basketball" },
+      { "w": "Le Mans", "c": "Monaco (F1)" },
+      { "w": "GTA", "c": "Red Dead Redemption" },
+      { "w": "Fortnite", "c": "PUBG" },
+      { "w": "PS5", "c": "Xbox" },
+      { "w": "Minecraft", "c": "Roblox" },
+      { "w": "League of Legends", "c": "Dota 2" },
+      { "w": "One Piece", "c": "Dragon Ball" },
+      { "w": "Naruto", "c": "Bleach" },
+      { "w": "Marvel", "c": "DC Comics" },
+      { "w": "Netflix", "c": "Disney+" },
+      { "w": "Breaking Bad", "c": "Peaky Blinders" },
+      { "w": "TikTok", "c": "Instagram" },
+      { "w": "Snapchat", "c": "Telegram" },
+      { "w": "Rap", "c": "R&B" },
+      { "w": "Beyoncé", "c": "Rihanna" },
+      { "w": "PNL", "c": "Nekfeu" },
+      { "w": "Nike", "c": "Adidas" },
+      { "w": "Supreme", "c": "Palace" },
+      { "w": "iPhone", "c": "Samsung Galaxy" },
+      { "w": "YouTube", "c": "Twitch" },
+      { "w": "Spotify", "c": "Apple Music" },
+      { "w": "Music festival", "c": "Rave" }
+    ],
+    "football": [
+      { "w": "Football", "c": "Rugby" },
+      { "w": "OM", "c": "OL" },
+      { "w": "Arsenal", "c": "Tottenham" },
+      { "w": "Messi", "c": "Ronaldo" },
+      { "w": "Ligue 1", "c": "Premier League" },
+      { "w": "World Cup", "c": "Euro" },
+      { "w": "Mbappé", "c": "Dembélé" },
+      { "w": "Zidane", "c": "Platini" },
+      { "w": "Neymar", "c": "Suarez" },
+      { "w": "Benzema", "c": "Giroud" },
+      { "w": "Lloris", "c": "Lucas Chevalier" },
+      { "w": "Maradona", "c": "Pelé" },
+      { "w": "Real Madrid", "c": "Atlético Madrid" },
+      { "w": "Manchester United", "c": "Manchester City" },
+      { "w": "Bayern Munich", "c": "Borussia Dortmund" },
+      { "w": "Champions League", "c": "Europa League" }
+    ],
+    "rap": [
+      { "w": "PNL", "c": "Nekfeu" },
+      { "w": "Booba", "c": "Kaaris" },
+      { "w": "Freeze Corleone", "c": "Kalash Criminel" },
+      { "w": "Jul", "c": "Maes" },
+      { "w": "Vald", "c": "Gringe" },
+      { "w": "Orelsan", "c": "Roméo Elvis" },
+      { "w": "Sadek", "c": "Rohff" },
+      { "w": "Jcvd", "c": "Heuss l'enfoiré" },
+      { "w": "Moha La Squale", "c": "13 Block" },
+      { "w": "Lacrim", "c": "Kof Kof" }
+    ],
+    "hot": [
+      { "w": "OnlyFans", "c": "Fansly" },
+      { "w": "Pornhub", "c": "Xvideos" },
+      { "w": "Glans", "c": "Frenulum" },
+      { "w": "Fucking", "c": "Sucking" },
+      { "w": "Penis", "c": "Clitoris" }
+    ],
+    "decadence": [
+      { "w": "Marijuana", "c": "Hash" },
+      { "w": "Coke", "c": "MDMA" },
+      { "w": "Hookah", "c": "Joint" },
+      { "w": "Hangover", "c": "Bad trip" },
+      { "w": "Binge drinking", "c": "Pre-game" },
+      { "w": "Vodka", "c": "Rum" },
+      { "w": "Beer", "c": "Cider" },
+      { "w": "Wasted", "c": "Stoned" }
+    ],
+    "wtf": [
+      { "w": "Bouzelouf", "c": "Tasty Crousty" },
+      { "w": "Horse cock", "c": "Bull balls" },
+      { "w": "Balloon (nitrous)", "c": "Nitrous tank" },
+      { "w": "Fart", "c": "Burp" },
+      { "w": "Puke", "c": "Poop" },
+      { "w": "Red wine stain", "c": "Port wine" },
+      { "w": "Trojan horse", "c": "Ransomware" },
+      { "w": "Kevin", "c": "Karen" },
+      { "w": "Skibidi toilet", "c": "Sigma grindset" },
+      { "w": "Stone soup", "c": "Dirt smoothie" },
+      { "w": "Caillou (cartoon)", "c": "Noddy" }
+    ]
+  },
+  "phases": {
+    "vote": "Final vote",
+    "clues": "Clues"
+  },
+  "vote": {
+    "hint": "Discuss then vote together."
+  },
+  "ui": {
+    "title": "Chameleon",
+    "tagline": "Unmask the impostor",
+    "modalTitle": "The Chameleon",
+    "start": "Start the game 🦎",
+    "steps": [
+      {
+        "n": "1",
+        "title": "Pass the phone around",
+        "desc": "Everyone sees their secret word… except the chameleon."
+      },
+      {
+        "n": "2",
+        "title": "One clue each",
+        "desc": "One word, no more. Not too obvious, not too vague."
+      },
+      {
+        "n": "3",
+        "title": "Discuss",
+        "desc": "Debate — who seems to not know what they're talking about?"
+      },
+      {
+        "n": "4",
+        "title": "Everyone votes",
+        "desc": "Point out the impostor. If unmasked, the civilians win."
+      }
+    ],
+    "whoIsTitle": "Who is\nthe chameleon?",
+    "drinkCaught": "🍻 {{name}} drink 3 sips (unmasked!)",
+    "drinkBadVote": "🍻 {{name}} drink 2 sips (bad group vote)"
+  }
 }

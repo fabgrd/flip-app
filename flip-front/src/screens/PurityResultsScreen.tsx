@@ -1,10 +1,11 @@
 import React from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 
-import { useTheme } from '../contexts/ThemeContext';
+import { ConfettiBurst } from '../components';
+import { T } from '../constants/flipTokens';
 import { THEME_COLORS, THEME_LABELS } from '../games/purity-test';
 import { RootStackParamList, Theme } from '../types';
 
@@ -15,274 +16,230 @@ export function PurityResultsScreen() {
   const navigation = useNavigation();
   const results = route.params?.results;
   const { t } = useTranslation();
-  const { theme } = useTheme();
 
-  const handleBackToHome = () => {
-    navigation.navigate('Home');
-  };
-
-  const getRankEmoji = (rank: number) => {
-    switch (rank) {
-      case 1:
-        return '👑';
-      case 2:
-        return '🥈';
-      case 3:
-        return '🥉';
-      default:
-        return '🏅';
-    }
-  };
+  const getRankEmoji = (rank: number) => ['👑', '🥈', '🥉'][rank - 1] ?? '🏅';
 
   const getImpurityLevel = (percentage: number) => {
     if (percentage <= 10)
-      return { label: t('purityTest:results.impurityLevels.saint'), color: '#6BCF7F', emoji: '😇' };
+      return { label: t('purityTest:results.impurityLevels.saint'), color: T.mint, emoji: '😇' };
     if (percentage <= 25)
-      return { label: t('purityTest:results.impurityLevels.pure'), color: '#96CEB4', emoji: '😊' };
+      return { label: t('purityTest:results.impurityLevels.pure'), color: T.mint, emoji: '😊' };
     if (percentage <= 35)
       return {
         label: t('purityTest:results.impurityLevels.mostlyPure'),
-        color: '#4ECDC4',
+        color: T.cobalt,
         emoji: '🙂',
       };
     if (percentage <= 45)
-      return { label: t('purityTest:results.impurityLevels.mixed'), color: '#FFD93D', emoji: '😐' };
+      return { label: t('purityTest:results.impurityLevels.mixed'), color: T.lemon, emoji: '😐' };
     if (percentage <= 55)
-      return {
-        label: t('purityTest:results.impurityLevels.naughty'),
-        color: '#FFEAA7',
-        emoji: '😏',
-      };
+      return { label: t('purityTest:results.impurityLevels.naughty'), color: T.lemon, emoji: '😏' };
     if (percentage <= 65)
       return {
         label: t('purityTest:results.impurityLevels.veryImpure'),
-        color: '#FF6B6B',
+        color: T.tomato,
         emoji: '😈',
       };
     if (percentage <= 75)
       return {
         label: t('purityTest:results.impurityLevels.diabolical'),
-        color: '#FD79A8',
+        color: T.tomato,
         emoji: '👹',
       };
-    return {
-      label: t('purityTest:results.impurityLevels.beyondEvil'),
-      color: '#000000',
-      emoji: '💀',
-    };
+    return { label: t('purityTest:results.impurityLevels.beyondEvil'), color: T.ink, emoji: '💀' };
   };
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.surface }]}>
-      <View
-        style={[
-          styles.header,
-          { backgroundColor: theme.colors.background, borderBottomColor: theme.colors.border },
-        ]}
-      >
-        <Text style={[styles.title, { color: theme.colors.primary }]}>
-          {t('purityTest:results.title')}
-        </Text>
-        <Text style={[styles.subtitle, { color: theme.colors.text.secondary }]}>
-          {t('purityTest:results.subtitle')}
+    <SafeAreaView style={styles.screen}>
+      <ConfettiBurst visible />
+
+      {/* Hero */}
+      <View style={styles.hero}>
+        <View style={styles.stickerBadge}>
+          <Text style={styles.stickerText}>😈 RÉSULTATS</Text>
+        </View>
+        <Text style={styles.heroTitle}>{t('purityTest:results.title', 'Test de Pureté')}</Text>
+        <Text style={styles.heroSub}>
+          {t('purityTest:results.subtitle', 'Qui est le plus corrompu ?')}
         </Text>
       </View>
 
-      <ScrollView style={styles.resultsContainer}>
-        {results.players.map((result) => {
-          const impurityLevel = getImpurityLevel(result.impurityPercentage);
+      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+        {results?.players?.map((result) => {
+          const lvl = getImpurityLevel(result.impurityPercentage);
           return (
-            <View
-              key={result.player.id}
-              style={[styles.playerResult, { backgroundColor: theme.colors.background }]}
-            >
+            <View key={result.player.id} style={styles.playerCard}>
+              {/* Player header */}
               <View style={styles.playerHeader}>
-                <View style={styles.rankContainer}>
+                <View style={styles.rankCol}>
                   <Text style={styles.rankEmoji}>{getRankEmoji(result.rank)}</Text>
-                  <Text style={[styles.rankNumber, { color: theme.colors.text.secondary }]}>
-                    #{result.rank}
-                  </Text>
                 </View>
                 <View style={styles.playerInfo}>
-                  <Text style={[styles.playerName, { color: theme.colors.text.primary }]}>
+                  <Text style={styles.playerName} numberOfLines={1}>
                     {result.player.name}
                   </Text>
-                  <Text style={[styles.purityLevel, { color: impurityLevel.color }]}>
-                    {impurityLevel.emoji} {impurityLevel.label}
+                  <Text style={[styles.purityLabel, { color: lvl.color }]}>
+                    {lvl.emoji} {lvl.label}
                   </Text>
                 </View>
-                <View style={styles.scoreContainer}>
-                  <Text style={[styles.percentage, { color: impurityLevel.color }]}>
-                    {result.impurityPercentage}%
-                  </Text>
+                <View style={[styles.scoreBadge, { backgroundColor: lvl.color }]}>
+                  <Text style={styles.scoreText}>{result.impurityPercentage}%</Text>
                 </View>
               </View>
 
-              {/* Détails par thème */}
-              <View style={[styles.themesContainer, { borderTopColor: theme.colors.border }]}>
-                <Text style={[styles.themesTitle, { color: theme.colors.text.primary }]}>
-                  {t('purityTest:results.themeDetails')}
-                </Text>
-                <View style={styles.themesGrid}>
-                  {Object.entries(result.themePercentages).map(([themeKey, percentage]) => (
-                    <View key={themeKey} style={styles.themeItem}>
-                      <View
-                        style={[
-                          styles.themeIndicator,
-                          { backgroundColor: THEME_COLORS[themeKey as Theme] },
-                        ]}
-                      />
-                      <Text style={[styles.themeName, { color: theme.colors.text.secondary }]}>
-                        {THEME_LABELS[themeKey as Theme]}
-                      </Text>
-                      <Text style={[styles.themePercentage, { color: theme.colors.text.primary }]}>
-                        {percentage}%
-                      </Text>
-                    </View>
-                  ))}
-                </View>
+              {/* Theme breakdown */}
+              <View style={styles.themesDivider} />
+              <Text style={styles.themesLabel}>
+                {t('purityTest:results.themeDetails', 'Par thème')}
+              </Text>
+              <View style={styles.themesGrid}>
+                {Object.entries(result.themePercentages).map(([key, pct]) => (
+                  <View key={key} style={styles.themeItem}>
+                    <View
+                      style={[
+                        styles.themeDot,
+                        { backgroundColor: THEME_COLORS[key as Theme] ?? T.violet },
+                      ]}
+                    />
+                    <Text style={styles.themeName} numberOfLines={1}>
+                      {THEME_LABELS[key as Theme]}
+                    </Text>
+                    <Text style={styles.themePct}>{pct}%</Text>
+                  </View>
+                ))}
               </View>
             </View>
           );
         })}
-      </ScrollView>
 
-      <View
-        style={[
-          styles.footer,
-          { backgroundColor: theme.colors.background, borderTopColor: theme.colors.border },
-        ]}
-      >
         <TouchableOpacity
-          style={[styles.backButton, { backgroundColor: theme.colors.primary }]}
-          onPress={handleBackToHome}
+          style={styles.primaryBtn}
+          onPress={() => navigation.navigate('Home' as never)}
+          activeOpacity={0.85}
         >
-          <Text style={[styles.backButtonText, { color: theme.colors.text.white }]}>
-            {t('purityTest:results.backToHome')}
+          <Text style={styles.primaryBtnText}>
+            {t('purityTest:results.backToHome', 'Retour au hub')}
           </Text>
         </TouchableOpacity>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  backButton: {
-    alignItems: 'center',
-    borderRadius: 12,
-    paddingVertical: 16,
+  screen: { flex: 1, backgroundColor: T.violet },
+
+  hero: {
+    paddingHorizontal: 20,
+    paddingTop: 12,
+    paddingBottom: 8,
   },
-  backButtonText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  container: {
-    flex: 1,
-  },
-  footer: {
-    borderTopWidth: 1,
-    padding: 20,
-  },
-  header: {
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    padding: 20,
-  },
-  percentage: {
-    fontSize: 28,
-    fontWeight: 'bold',
-  },
-  playerHeader: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginBottom: 16,
-  },
-  playerInfo: {
-    flex: 1,
-  },
-  playerName: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 4,
-  },
-  playerResult: {
-    borderRadius: 12,
+  stickerBadge: {
+    backgroundColor: T.paper,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: 999,
+    paddingHorizontal: 14,
+    paddingVertical: 6,
+    alignSelf: 'flex-start',
+    marginBottom: 10,
+    shadowColor: T.ink,
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
     elevation: 3,
-    marginBottom: 16,
-    padding: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
+    transform: [{ rotate: '-3deg' }],
   },
-  purityLevel: {
-    fontSize: 14,
-    fontWeight: '600',
+  stickerText: {
+    color: T.ink,
+    fontSize: 12,
+    fontWeight: '900',
+    letterSpacing: 1,
+    textTransform: 'uppercase',
   },
-  rankContainer: {
-    alignItems: 'center',
-    marginRight: 16,
-    minWidth: 50,
+  heroTitle: {
+    color: '#fff',
+    fontSize: 42,
+    fontWeight: '900',
+    letterSpacing: -1.5,
+    lineHeight: 42,
   },
-  rankEmoji: {
-    fontSize: 24,
-    marginBottom: 4,
+  heroSub: { color: 'rgba(255,255,255,0.75)', fontSize: 15, marginTop: 6 },
+
+  content: { padding: 20, paddingBottom: 40, gap: 14 },
+
+  playerCard: {
+    backgroundColor: T.paper,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: T.rLg,
+    padding: 18,
+    shadowColor: T.ink,
+    shadowOffset: { width: 5, height: 5 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 4,
   },
-  rankNumber: {
-    fontSize: 14,
-    fontWeight: 'bold',
+  playerHeader: { flexDirection: 'row', alignItems: 'center', gap: 12, marginBottom: 14 },
+  rankCol: { alignItems: 'center', width: 36 },
+  rankEmoji: { fontSize: 26 },
+  playerInfo: { flex: 1 },
+  playerName: { color: T.ink, fontSize: 20, fontWeight: '900', letterSpacing: -0.5 },
+  purityLabel: { fontSize: 13, fontWeight: '700', marginTop: 2 },
+  scoreBadge: {
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: T.rSm,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    shadowColor: T.ink,
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 3,
   },
-  resultsContainer: {
-    flex: 1,
-    padding: 16,
+  scoreText: { color: T.ink, fontSize: 18, fontWeight: '900' },
+
+  themesDivider: { height: 1, backgroundColor: `${T.muted}30`, marginBottom: 12 },
+  themesLabel: {
+    color: T.muted,
+    fontSize: 11,
+    fontWeight: '700',
+    letterSpacing: 1.5,
+    textTransform: 'uppercase',
+    marginBottom: 10,
   },
-  scoreContainer: {
-    alignItems: 'center',
-  },
-  subtitle: {
-    fontSize: 16,
-    textAlign: 'center',
-  },
-  themeIndicator: {
-    borderRadius: 6,
-    height: 12,
-    marginRight: 8,
-    width: 12,
-  },
+  themesGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   themeItem: {
+    flexDirection: 'row',
     alignItems: 'center',
-    flexDirection: 'row',
-    marginBottom: 8,
-    width: '48%',
+    width: '47%',
+    gap: 6,
   },
-  themeName: {
-    flex: 1,
-    fontSize: 12,
+  themeDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 999,
+    borderWidth: 1.5,
+    borderColor: T.ink,
+    flexShrink: 0,
   },
-  themePercentage: {
-    fontSize: 12,
-    fontWeight: 'bold',
-    minWidth: 30,
-    textAlign: 'right',
+  themeName: { flex: 1, color: T.inkSoft, fontSize: 12 },
+  themePct: { color: T.ink, fontSize: 12, fontWeight: '800', minWidth: 32, textAlign: 'right' },
+
+  primaryBtn: {
+    backgroundColor: T.ink,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: T.rMd,
+    paddingVertical: 18,
+    alignItems: 'center',
+    shadowColor: T.paper,
+    shadowOffset: { width: 5, height: 5 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 5,
+    marginTop: 8,
   },
-  themesContainer: {
-    borderTopWidth: 1,
-    paddingTop: 16,
-  },
-  themesGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-  },
-  themesTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 12,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 8,
-    textAlign: 'center',
-  },
+  primaryBtnText: { color: '#fff', fontSize: 17, fontWeight: '900', letterSpacing: -0.3 },
 });

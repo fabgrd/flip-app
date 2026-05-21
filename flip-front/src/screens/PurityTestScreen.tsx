@@ -1,19 +1,284 @@
+import { Feather } from '@expo/vector-icons';
+import Slider from '@react-native-community/slider';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import React, { useEffect } from 'react';
+import * as Haptics from 'expo-haptics';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import { useTheme } from '../contexts/ThemeContext';
-import { THEME_COLORS, THEME_LABELS, usePurityTest } from '../games/purity-test';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import {
+  ChunkyButton,
+  DotBackground,
+  DrinkModeToggle,
+  GameMenuActions,
+  GameRulesScreen,
+  PlayersModal,
+  PureteIcon,
+  RulesButton,
+} from '../components';
+import { T } from '../constants/flipTokens';
 import { CardStack } from '../games/purity-test/components';
+import { THEME_COLORS, THEME_LABELS } from '../games/purity-test/constants';
+import { usePurityTest } from '../games/purity-test/hooks/usePurityTest';
+import type { LevelKey, Theme } from '../games/purity-test/types';
+import { usePurityLevelAccess } from '../games/purity-test/usePurityLevelAccess';
+import { useDrinksMode } from '../hooks';
 import { Player, RootStackParamList } from '../types';
 
 type PurityTestScreenRouteProp = RouteProp<RootStackParamList, 'PurityTest'>;
+
+const LEVEL_KEYS: LevelKey[] = ['level1', 'level2', 'level3', 'level4', 'level5'];
+
+const LEVEL_LABELS: Record<LevelKey, string> = {
+  level1: 'Soft',
+  level2: 'Chill',
+  level3: 'Medium',
+  level4: 'Hot',
+  level5: 'Hard',
+  levelBonus: 'Bonus',
+};
+
+const LEVEL_COLORS = ['#8BC4A0', '#6BB5DE', '#F4C542', '#F4834F', '#E05252'];
+
+function maxLevelToLevelCounts(maxLevel: LevelKey): Record<LevelKey, number> {
+  const maxIdx = LEVEL_KEYS.indexOf(maxLevel);
+  const counts: Record<LevelKey, number> = {
+    level1: 0,
+    level2: 0,
+    level3: 0,
+    level4: 0,
+    level5: 0,
+    levelBonus: 0,
+  };
+  LEVEL_KEYS.forEach((key, i) => {
+    counts[key] = i <= maxIdx ? 5 : 0;
+  });
+  return counts;
+}
+
+function PurityRules({
+  players,
+  onPlayersChange,
+  onStart,
+  onExit,
+  onSettings,
+  themeCounts,
+  maxLevel,
+  onChangeThemeCount,
+  onChangeMaxLevel,
+}: {
+  players: Player[];
+  onPlayersChange: (players: Player[]) => void;
+  onStart: () => void;
+  onExit: () => void;
+  onSettings: () => void;
+  themeCounts: Record<Theme, number>;
+  maxLevel: LevelKey;
+  onChangeThemeCount: (theme: Theme, value: number) => void;
+  onChangeMaxLevel: (level: LevelKey) => void;
+}) {
+  const { t } = useTranslation();
+  const { isLevelAllowed, requestUnlockFor } = usePurityLevelAccess();
+  const themeTotal = Object.values(themeCounts).reduce((sum, val) => sum + val, 0);
+  const maxIdx = LEVEL_KEYS.indexOf(maxLevel);
+  const purityRules = t('purityTest:ui.steps', { returnObjects: true }) as any[];
+
+  return (
+    <GameRulesScreen
+      accentColor={T.violet}
+      title={t('purityTest:ui.title')}
+      tagline={t('purityTest:ui.tagline')}
+      icon={<PureteIcon size={86} />}
+      rulesModal={{ rules: purityRules, title: t('purityTest:ui.modalTitle') }}
+      players={players}
+      onPlayersChange={onPlayersChange}
+      onExit={onExit}
+      onSettings={onSettings}
+      minPlayers={1}
+      onStart={onStart}
+      startLabel={t('purityTest:ui.start')}
+      startDisabled={themeTotal === 0}
+    >
+      <View style={pr.cardWrap}>
+        <ScrollView contentContainerStyle={pr.cardScroll} showsVerticalScrollIndicator={false}>
+          <DrinkModeToggle accentColor={T.violet} />
+
+          <View style={pr.card}>
+            <Text style={pr.cardLabel}>{t('purityTest:ui.levelLabel')}</Text>
+            <Text style={pr.helperText}>{t('purityTest:ui.levelHelper')}</Text>
+            <View style={pr.levelRow}>
+              {LEVEL_KEYS.map((level, i) => {
+                const isActive = i <= maxIdx;
+                const isSelected = level === maxLevel;
+                const allowed = isLevelAllowed(level);
+                return (
+                  <TouchableOpacity
+                    key={level}
+                    style={[
+                      pr.levelBtn,
+                      isActive &&
+                        allowed && { backgroundColor: LEVEL_COLORS[i], borderColor: T.ink },
+                      isSelected && allowed && pr.levelBtnSelected,
+                      !allowed && pr.levelBtnLocked,
+                    ]}
+                    onPress={() => (allowed ? onChangeMaxLevel(level) : requestUnlockFor(level))}
+                    activeOpacity={0.75}
+                  >
+                    {!allowed && (
+                      <Feather name="lock" size={10} color={T.ink} style={pr.levelLockIcon} />
+                    )}
+                    <Text
+                      style={[
+                        pr.levelBtnText,
+                        isActive && allowed && pr.levelBtnTextActive,
+                        !allowed && pr.levelBtnTextLocked,
+                      ]}
+                    >
+                      {LEVEL_LABELS[level]}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          </View>
+
+          <View style={pr.card}>
+            <Text style={pr.cardLabel}>{t('purityTest:ui.themeLabel')}</Text>
+            <Text style={pr.helperText}>{t('purityTest:ui.themeTotal', { count: themeTotal })}</Text>
+            {(Object.keys(themeCounts) as Theme[]).map((theme) => (
+              <View key={theme} style={pr.sliderRow}>
+                <View style={pr.sliderHeader}>
+                  <Text style={pr.sliderLabel}>{THEME_LABELS[theme]}</Text>
+                  <Text style={pr.sliderValue}>{themeCounts[theme]}</Text>
+                </View>
+                <Slider
+                  minimumValue={0}
+                  maximumValue={10}
+                  step={1}
+                  value={themeCounts[theme]}
+                  onValueChange={(value: number) => onChangeThemeCount(theme, value)}
+                  minimumTrackTintColor={THEME_COLORS[theme]}
+                  maximumTrackTintColor="#E6E2DD"
+                  thumbTintColor={T.ink}
+                />
+              </View>
+            ))}
+          </View>
+        </ScrollView>
+      </View>
+    </GameRulesScreen>
+  );
+}
+
+const pr = StyleSheet.create({
+  screen: { flex: 1, backgroundColor: T.violet },
+  header: {
+    paddingHorizontal: 20,
+    paddingTop: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  backBtnText: { fontSize: 20, color: T.ink, fontWeight: '900' },
+  titleArea: { paddingHorizontal: 20, paddingTop: 16 },
+  iconWrap: { position: 'absolute', right: 16, top: 18 },
+  title: {
+    color: '#fff',
+    fontSize: 58,
+    fontWeight: '900',
+    letterSpacing: -2,
+    lineHeight: 62,
+    marginTop: 12,
+  },
+  tagline: {
+    color: 'rgba(255,255,255,0.65)',
+    fontSize: 16,
+    fontWeight: '600',
+    letterSpacing: -0.2,
+    marginTop: 6,
+  },
+  // Horizontal padding lives on the ScrollView contentContainer, not on the wrapper View,
+  // so that card shadows (offset +5,+5) stay inside the ScrollView's clip region on Android.
+  cardWrap: { paddingTop: 24, flex: 1 },
+  cardScroll: { paddingHorizontal: 20, paddingBottom: 12, gap: 16 },
+  card: {
+    backgroundColor: T.paper,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: 24,
+    padding: 20,
+    shadowColor: T.ink,
+    shadowOffset: { width: 5, height: 5 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 4,
+  },
+  cardLabel: {
+    color: T.muted,
+    fontSize: 11,
+    fontWeight: '700',
+    letterSpacing: 1.5,
+    textTransform: 'uppercase',
+    marginBottom: 12,
+  },
+  helperText: { color: T.inkSoft, fontSize: 12, marginBottom: 12 },
+  sliderRow: { marginBottom: 14 },
+  sliderHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 6,
+  },
+  sliderLabel: { color: T.ink, fontSize: 14, fontWeight: '800' },
+  sliderValue: { color: T.ink, fontSize: 13, fontWeight: '900' },
+  levelRow: { flexDirection: 'row', gap: 8, flexWrap: 'wrap' },
+  levelBtn: {
+    flex: 1,
+    minWidth: 56,
+    paddingVertical: 10,
+    paddingHorizontal: 4,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: '#E6E2DD',
+    backgroundColor: '#F5F2ED',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  levelBtnSelected: {
+    shadowColor: T.ink,
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 3,
+  },
+  levelBtnText: { color: T.muted, fontSize: 11, fontWeight: '800', textAlign: 'center' },
+  levelBtnTextActive: { color: T.ink },
+  levelBtnLocked: {
+    backgroundColor: '#EFEAE3',
+    borderColor: '#DCD3C5',
+    opacity: 0.78,
+  },
+  levelBtnTextLocked: { color: T.muted },
+  levelLockIcon: { position: 'absolute', top: 4, right: 4 },
+  footer: { padding: 20, paddingBottom: 32 },
+});
 
 export function PurityTestScreen() {
   const route = useRoute<PurityTestScreenRouteProp>();
   const navigation = useNavigation();
   const { t } = useTranslation();
-  const { players } = route.params as { players: Player[] };
+  const { enabled: drinksEnabled } = useDrinksMode();
+  const { highestAllowedLevel } = usePurityLevelAccess();
+  const [players, setPlayers] = useState<Player[]>(route.params.players as Player[]);
+  const [showRules, setShowRules] = useState(true);
+  const [themeCounts, setThemeCounts] = useState<Record<Theme, number>>({
+    sex: 5,
+    drugs: 5,
+    morality: 5,
+    hygiene: 5,
+  });
+  const [maxLevel, setMaxLevel] = useState<LevelKey>(highestAllowedLevel);
+  const levelCounts = maxLevelToLevelCounts(maxLevel);
   const {
     gameState,
     currentQuestion,
@@ -24,17 +289,12 @@ export function PurityTestScreen() {
     calculateResults,
     isGameFinished,
     totalQuestions,
+    resetGame,
   } = usePurityTest(players);
-  const { theme } = useTheme();
 
   const handleSwipe = (playerId: string, direction: 'yes' | 'no') => {
     submitAnswer(playerId, direction);
   };
-
-  // const handleFinishGame = () => {
-  //   const results = calculateResults();
-  //   navigation.navigate('PurityResults', { results });
-  // };
 
   const handleAllCardsComplete = () => {
     setTimeout(() => {
@@ -50,196 +310,210 @@ export function PurityTestScreen() {
   }, [isGameFinished]);
 
   useEffect(() => {
-    if (canProceedToNextQuestion) {
-      nextQuestion();
-    }
+    if (canProceedToNextQuestion) nextQuestion();
   }, [canProceedToNextQuestion]);
+
+  if (showRules) {
+    return (
+      <PurityRules
+        players={players}
+        onPlayersChange={setPlayers}
+        onStart={() => {
+          resetGame({ themeCounts, levelCounts });
+          setShowRules(false);
+        }}
+        onExit={() => navigation.goBack()}
+        onSettings={() => navigation.navigate('Settings')}
+        themeCounts={themeCounts}
+        maxLevel={maxLevel}
+        onChangeThemeCount={(theme, value) =>
+          setThemeCounts((prev) => ({ ...prev, [theme]: Math.round(value) }))
+        }
+        onChangeMaxLevel={setMaxLevel}
+      />
+    );
+  }
 
   if (!currentQuestion) {
     return (
-      <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.surface }]}>
-        <View style={styles.loadingContainer}>
-          <Text style={{ color: theme.colors.text.primary }}>Chargement...</Text>
+      <SafeAreaView style={styles.screen}>
+        <View style={styles.loading}>
+          <Text style={styles.loadingText}>{t('common:labels.loading')}</Text>
         </View>
       </SafeAreaView>
     );
   }
 
+  const remaining = gameState.players.filter(
+    (p) => !p.answers.some((a) => a.questionId === currentQuestion.id),
+  ).length;
+
+  const themeColor = THEME_COLORS[currentQuestion.theme] ?? T.violet;
+
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.surface }]}>
-      {/* Header avec progression */}
-      <View
-        style={[
-          styles.header,
-          { backgroundColor: theme.colors.background, borderBottomColor: theme.colors.border },
-        ]}
-      >
-        <Text style={[styles.questionCounter, { color: theme.colors.primary }]}>
-          {t('common:labels.question', {
-            current: gameState.currentQuestionIndex + 1,
-            total: totalQuestions,
-          })}
-        </Text>
-        <View style={[styles.progressBar, { backgroundColor: theme.colors.border }]}>
-          <View
-            style={[
-              styles.progressFill,
-              { width: `${progress}%`, backgroundColor: theme.colors.primary },
-            ]}
-          />
+    <SafeAreaView style={styles.screen}>
+      <DotBackground color={T.paper} opacity={0.08} />
+      {/* Header */}
+      <View style={styles.header}>
+        <View style={styles.headerRow}>
+          <View style={styles.chip}>
+            <Text style={styles.chipText}>
+              {gameState.currentQuestionIndex + 1} / {totalQuestions}
+            </Text>
+          </View>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+            <Text style={styles.remainingText}>
+              {t('purityTest:game.remainingPlayers', { count: remaining })}
+            </Text>
+            <RulesButton rules={t('purityTest:ui.steps', { returnObjects: true }) as any} title={t('purityTest:ui.rulesBtn')} accentColor={T.violet} />
+          </View>
+        </View>
+        <View style={styles.progressBar}>
+          <View style={[styles.progressFill, { width: `${progress}%` as `${number}%` }]} />
         </View>
       </View>
 
-      {/* Question */}
-      <View style={[styles.questionContainer, { backgroundColor: theme.colors.background }]}>
-        <View
-          style={[styles.questionTheme, { backgroundColor: THEME_COLORS[currentQuestion.theme] }]}
-        >
-          <Text style={[styles.questionThemeText, { color: theme.colors.text.white }]}>
-            {THEME_LABELS[currentQuestion.theme]}
-          </Text>
+      {/* Question card */}
+      <View style={styles.questionCard}>
+        <View style={[styles.themeBadge, { backgroundColor: themeColor }]}>
+          <Text style={styles.themeBadgeText}>{THEME_LABELS[currentQuestion.theme]}</Text>
         </View>
-        <View style={styles.questionTextContainer}>
-          <Text style={[styles.questionPrefix, { color: theme.colors.text.secondary }]}>
-            {t('purityTest:game.questionPrefix')}
-          </Text>
-          <Text style={[styles.questionText, { color: theme.colors.text.primary }]}>
-            {currentQuestion.text}
-          </Text>
-        </View>
-        <View style={[styles.pointsContainer, { backgroundColor: `${theme.colors.primary}15` }]}>
-          <Text style={[styles.pointsText, { color: theme.colors.primary }]}>
-            {currentQuestion.points.yes} point{currentQuestion.points.yes > 1 ? 's' : ''}
+        <Text style={styles.questionPrefix}>{t('purityTest:game.questionPrefix')}</Text>
+        <Text style={styles.questionText}>{currentQuestion.text}</Text>
+        <View style={[styles.pointsBadge, drinksEnabled && styles.drinkBadge]}>
+          <Text style={[styles.pointsText, drinksEnabled && styles.drinkText]}>
+            {drinksEnabled
+              ? `🍻 ${currentQuestion.points.yes} gorgée${currentQuestion.points.yes > 1 ? 's' : ''} si oui`
+              : `+${currentQuestion.points.yes} pt${currentQuestion.points.yes > 1 ? 's' : ''}`}
           </Text>
         </View>
       </View>
 
-      {/* Pile de cartes */}
-      <View style={styles.cardsContainer}>
+      {/* Card stack */}
+      <View style={styles.cardsArea}>
         <CardStack
-          players={(() => {
-            const filteredPlayers = gameState.players.filter((player) => {
-              const hasAnswered = player.answers.some(
-                (answer) => answer.questionId === currentQuestion.id,
-              );
-              return !hasAnswered;
-            });
-            return filteredPlayers;
-          })()}
+          players={gameState.players.filter(
+            (p) => !p.answers.some((a) => a.questionId === currentQuestion.id),
+          )}
           onSwipe={handleSwipe}
           onComplete={handleAllCardsComplete}
         />
       </View>
 
-      {/* Indicateur des joueurs restants */}
-      <View style={styles.remainingContainer}>
-        <Text style={[styles.remainingText, { color: theme.colors.text.secondary }]}>
-          {
-            gameState.players.filter(
-              (player) =>
-                !player.answers.some((answer) => answer.questionId === currentQuestion.id),
-            ).length
-          }{' '}
-          {t('common:messages.remainingPlayers')}
-        </Text>
+      <View style={styles.hint}>
+        <Text style={styles.hintText}>← Non | Oui →</Text>
       </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  cardsContainer: {
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'center',
-  },
-  container: {
-    flex: 1,
-  },
+  screen: { flex: 1, backgroundColor: T.violet },
+  loading: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+  loadingText: { color: '#fff', fontSize: 16 },
+
   header: {
-    borderBottomWidth: 1,
-    padding: 20,
-  },
-  instructionsContainer: {
     paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingTop: 8,
+    paddingBottom: 12,
   },
-  instructionsText: {
-    fontSize: 14,
-    fontStyle: 'italic',
-    textAlign: 'center',
-  },
-  loadingContainer: {
+  headerRow: {
+    flexDirection: 'row',
     alignItems: 'center',
-    flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 10,
   },
-  pointsContainer: {
-    alignSelf: 'center',
-    borderRadius: 6,
-    marginTop: 12,
-    paddingHorizontal: 8,
+  chip: {
+    backgroundColor: T.paper,
+    borderWidth: 1.5,
+    borderColor: T.ink,
+    borderRadius: 999,
+    paddingHorizontal: 12,
     paddingVertical: 4,
   },
-  pointsText: {
-    fontSize: 12,
-    fontWeight: '600',
-  },
+  chipText: { color: T.ink, fontSize: 12, fontWeight: '800', letterSpacing: 0.5 },
+  remainingText: { color: 'rgba(255,255,255,0.8)', fontSize: 13, fontWeight: '700' },
+
   progressBar: {
-    borderRadius: 3,
-    height: 6,
+    height: 8,
+    backgroundColor: 'rgba(255,255,255,0.25)',
+    borderRadius: 999,
+    borderWidth: 1.5,
+    borderColor: T.ink,
+    overflow: 'hidden',
   },
   progressFill: {
-    borderRadius: 3,
     height: '100%',
+    backgroundColor: T.paper,
+    borderRadius: 999,
   },
-  questionContainer: {
-    borderRadius: 12,
-    elevation: 3,
-    margin: 16,
+
+  questionCard: {
+    backgroundColor: T.paper,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: T.rLg,
+    marginHorizontal: 20,
+    marginBottom: 12,
     padding: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
+    alignItems: 'center',
+    shadowColor: T.ink,
+    shadowOffset: { width: 5, height: 5 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 4,
   },
-  questionCounter: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    textAlign: 'center',
+  themeBadge: {
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: 999,
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    marginBottom: 12,
+    shadowColor: T.ink,
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 2,
+  },
+  themeBadgeText: {
+    color: '#fff',
+    fontSize: 11,
+    fontWeight: '900',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
   questionPrefix: {
-    fontSize: 16,
-    fontStyle: 'italic',
+    color: T.muted,
+    fontSize: 12,
+    fontWeight: '700',
+    letterSpacing: 1,
+    textTransform: 'uppercase',
     marginBottom: 8,
-    textAlign: 'center',
   },
   questionText: {
-    fontSize: 18,
-    lineHeight: 24,
+    color: T.ink,
+    fontSize: 19,
+    fontWeight: '900',
+    letterSpacing: -0.4,
+    lineHeight: 26,
     textAlign: 'center',
+    marginBottom: 12,
   },
-  questionTextContainer: {
-    alignItems: 'center',
+  pointsBadge: {
+    backgroundColor: T.lemon,
+    borderWidth: 1.5,
+    borderColor: T.ink,
+    borderRadius: 999,
+    paddingHorizontal: 10,
+    paddingVertical: 3,
   },
-  questionTheme: {
-    alignSelf: 'center',
-    borderRadius: 16,
-    marginBottom: 16,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-  },
-  questionThemeText: {
-    fontSize: 12,
-    fontWeight: 'bold',
-  },
-  remainingContainer: {
-    alignItems: 'center',
-    padding: 20,
-  },
-  remainingText: {
-    fontSize: 14,
-    fontWeight: '500',
-  },
+  pointsText: { color: T.ink, fontSize: 12, fontWeight: '900' },
+  drinkBadge: { backgroundColor: T.tomato, borderColor: T.ink },
+  drinkText: { color: '#fff' },
+
+  cardsArea: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+
+  hint: { alignItems: 'center', paddingBottom: 20 },
+  hintText: { color: 'rgba(255,255,255,0.7)', fontSize: 13, fontStyle: 'italic' },
 });

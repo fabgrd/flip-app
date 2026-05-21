@@ -1,0 +1,105 @@
+{
+    "bridge": {
+        "label": "TRAVERSEE · {{count}} CARTE{{plural}}"
+    },
+    "rules": {
+        "modalTitle": "L'Apéro",
+        "title": "L'Apéro",
+        "chip": "Jeu n°6",
+        "cardLabel": "COMMENT ON JOUE",
+        "start": "Lancer la partie 🍻",
+        "steps": [
+            {
+                "n": "1",
+                "title": "Le donneur pioche une carte",
+                "desc": "La carte reste cachée. Le joueur actif tente de la deviner."
+            },
+            {
+                "n": "2",
+                "title": "Premier essai — plus ou moins ?",
+                "desc": "Le joueur dit un chiffre. L'app repond « c'est plus » ou « c'est moins »."
+            },
+            {
+                "n": "3",
+                "title": "Deuxieme essai — derniere chance",
+                "descDrink": "Si rate, le joueur boit la difference entre sa reponse et la carte.",
+                "descSober": "Si rate, le joueur encaisse la difference en points entre sa reponse et la carte."
+            },
+            {
+                "n": "4",
+                "titleDrink": "Trouve ? Le donneur trinque",
+                "titleSober": "Trouve ? Le donneur encaisse",
+                "descDrink": "Si un joueur trouve, le donneur boit 2 gorgees et sa serie repart a zero.",
+                "descSober": "Si un joueur trouve, le donneur prend 2 points et sa serie repart a zero."
+            },
+            {
+                "n": "5",
+                "title": "3 tours safe = le donneur passe",
+                "desc": "Si personne ne trouve en 3 tours, le donneur file le tel a un autre."
+            },
+            {
+                "n": "★",
+                "title": "Regle speciale : le quadruple",
+                "descDrink": "Quand les 4 cartes d'une meme valeur sont sorties, elles se retournent et le donneur boit 2 de plus.",
+                "descSober": "Quand les 4 cartes d'une meme valeur sont sorties, elles se retournent et le donneur prend 2 points de plus."
+            }
+        ]
+    },
+    "pickDealer": {
+        "badge": "QUI EST LE DONNEUR ?",
+        "title": "Choisis qui\n tient le tel",
+        "sub": "Le donneur pioche et subit les consequences."
+    },
+    "round": {
+        "guessTitle": "{{name}}, devine la carte",
+        "firstTry": "Premier essai",
+        "hintBadge": "C'est {{hint}} {{arrow}}",
+        "youSaid": "Tu as dit {{card}} ({{points}} pts)",
+        "secondTryChip": "C'est {{hint}} que {{card}}",
+        "secondChance": "Deuxieme chance !",
+        "lastTry": "Dernier essai, {{name}}",
+        "found": "TROUVE !",
+        "missed": "RATE !",
+        "dealerResult": "{{name}} {{verb}} {{unit}}",
+        "resetStreak": "Serie du donneur remise a zero",
+        "nextCard": "Carte suivante →",
+        "seeSummary": "Voir le bilan →",
+        "passPile": "Donner le tas →"
+    },
+    "special": {
+        "badge": "★ QUADRUPLE !",
+        "title": "Les 4 {{card}}\n sont sortis !",
+        "sub": "Les 4 cartes se retournent sur la traversee.",
+        "penaltyTitle": "{{name}} {{verb}} {{unit}}",
+        "penaltySub": "Penalite du quadruple",
+        "continue": "Continuer →"
+    },
+    "dealerPass": {
+        "badge": "DONNER LE TAS",
+        "title": "{{name}}\n passe la main",
+        "sub": "Choisis a qui passer le tas."
+    },
+    "end": {
+        "badge": "FIN DE PARTIE",
+        "title": "Le bilan\n de l'apero",
+        "cards": "CARTES",
+        "found": "TROUVEES",
+        "ranking": "CLASSEMENT",
+        "playAgain": "Rejouer",
+        "backToHub": "Retour au hub"
+    },
+    "hints": {
+        "higher": "plus",
+        "lower": "moins"
+    },
+    "cards": {
+        "A": "As",
+        "V": "Valet",
+        "D": "Dame",
+        "R": "Roi"
+    },
+    "verbs": {
+        "drink": "boit",
+        "take": "prend"
+    }
+}

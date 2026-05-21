@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
-import { useTheme } from '../../contexts/ThemeContext';
+import { Alert, StyleSheet, Text, TextInput, View } from 'react-native';
+import { T } from '../../constants/flipTokens';
+import { FlatChunkyButton } from './FlatChunkyButton';
 
 interface PlayerInputProps {
   onAddPlayer: (name: string) => boolean;
@@ -13,22 +13,18 @@ interface PlayerInputProps {
 export function PlayerInput({ onAddPlayer, maxPlayers, currentPlayerCount }: PlayerInputProps) {
   const [playerName, setPlayerName] = useState('');
   const { t } = useTranslation();
-  const { theme } = useTheme();
-  const handleAddPlayer = () => {
-    const trimmedName = playerName.trim();
 
-    if (!trimmedName) {
+  const handleAdd = () => {
+    const trimmed = playerName.trim();
+    if (!trimmed) {
       Alert.alert(t('errors.playerNameRequired'));
       return;
     }
-
     if (currentPlayerCount >= maxPlayers) {
       Alert.alert(t('errors.playerLimitReached', { maxPlayers }));
       return;
     }
-
-    const success = onAddPlayer(trimmedName);
-
+    const success = onAddPlayer(trimmed);
     if (success) {
       setPlayerName('');
     } else {
@@ -37,106 +33,76 @@ export function PlayerInput({ onAddPlayer, maxPlayers, currentPlayerCount }: Pla
   };
 
   const isMaxReached = currentPlayerCount >= maxPlayers;
+  const canAdd = !isMaxReached && playerName.trim().length > 0;
 
   return (
-    <View style={styles.container}>
-      <Text style={[styles.title, { color: theme.colors.text.primary }]}>
-        {t('labels.addPlayer')}
-      </Text>
-
-      <View
-        style={[
-          styles.inputContainer,
-          { backgroundColor: theme.colors.surface },
-          isMaxReached && styles.inputDisabled,
-        ]}
-      >
+    <View style={styles.wrapper}>
+      <View style={[styles.inputRow, isMaxReached && styles.inputRowDisabled]}>
         <TextInput
-          style={[styles.input, { color: theme.colors.text.primary }]}
-          placeholder={t('labels.playerName')}
-          placeholderTextColor={theme.colors.text.light}
+          style={styles.input}
+          placeholder={t('common:labels.playerName')}
+          placeholderTextColor={T.muted}
           value={playerName}
           onChangeText={setPlayerName}
-          onSubmitEditing={handleAddPlayer}
+          onSubmitEditing={handleAdd}
           returnKeyType="done"
           maxLength={20}
           editable={!isMaxReached}
         />
-
-        <TouchableOpacity
-          style={[
-            styles.addButton,
-            {
-              backgroundColor:
-                isMaxReached || !playerName.trim()
-                  ? theme.colors.button.disabled
-                  : theme.colors.primary,
-            },
-          ]}
-          onPress={handleAddPlayer}
-          disabled={isMaxReached || !playerName.trim()}
+        <FlatChunkyButton
+          size="sm"
+          color={T.tomato}
+          textColor="#fff"
+          onPress={handleAdd}
+          disabled={!canAdd}
+          style={styles.addBtn}
         >
-          <Ionicons
-            name="add"
-            size={24}
-            color={
-              isMaxReached || !playerName.trim() ? theme.colors.text.light : theme.colors.text.white
-            }
-          />
-        </TouchableOpacity>
+          {t('common:buttons.addPlus')}
+        </FlatChunkyButton>
       </View>
-
       {isMaxReached && (
-        <Text style={[styles.limitText, { color: theme.colors.text.secondary }]}>
-          {t('errors.playerLimitReached', { maxPlayers })}
-        </Text>
+        <Text style={styles.limitText}>{t('errors.playerLimitReached', { maxPlayers })}</Text>
       )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  addButton: {
-    alignItems: 'center',
-    borderRadius: 8,
-    height: 48,
-    justifyContent: 'center',
-    width: 48,
-  },
+  wrapper: { marginBottom: 8 },
 
-  container: {
-    marginBottom: 20,
+  inputRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    backgroundColor: T.paper,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: T.rMd,
+    padding: 6,
+    shadowColor: T.ink,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 4,
   },
+  inputRowDisabled: { opacity: 0.5 },
 
   input: {
     flex: 1,
-    fontSize: 16,
-    paddingVertical: 16,
+    color: T.ink,
+    fontSize: 17,
+    fontWeight: '600',
+    paddingHorizontal: 12,
+    paddingVertical: 10,
   },
 
-  inputContainer: {
-    alignItems: 'center',
-    borderRadius: 12,
-    flexDirection: 'row',
-    minHeight: 56,
-    paddingLeft: 16,
-    paddingRight: 4,
-  },
-
-  inputDisabled: {
-    opacity: 0.6,
-  },
+  addBtn: { marginRight: 0, marginBottom: 0 },
 
   limitText: {
-    fontSize: 14,
+    color: T.muted,
+    fontSize: 12,
     fontStyle: 'italic',
-    marginTop: 8,
+    marginTop: 6,
     textAlign: 'center',
-  },
-
-  title: {
-    fontSize: 18,
-    fontWeight: '600',
-    marginBottom: 12,
   },
 });

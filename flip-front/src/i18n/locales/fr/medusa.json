@@ -1,0 +1,82 @@
+{
+  "rules": {
+    "title": "Médusa",
+    "tagline": "Lève les yeux… et évite le regard",
+    "modalTitle": "Médusa",
+    "start": "Lancer la partie 🐍",
+    "steps": [
+      {
+        "n": "1",
+        "title": "Tout le monde regarde en bas",
+        "desc": "Le joueur actif dit « Regardez en bas ! » et le groupe obéit les yeux fermés."
+      },
+      {
+        "n": "2",
+        "title": "3… 2… 1… MÉDUSA !",
+        "desc": "Au signal, tout le monde lève la tête et fixe un autre joueur."
+      },
+      {
+        "n": "3",
+        "title": "Eye contact = pénalité",
+        "descDrink": "Si deux joueurs se regardent dans les yeux : 1 gorgée chacun.",
+        "descSober": "Si deux joueurs se regardent dans les yeux : 1 point chacun."
+      },
+      {
+        "n": "4",
+        "title": "Pas de contact = safe",
+        "desc": "Si personne ne te fixe en retour, tu survis. Joueur suivant, à toi."
+      }
+    ]
+  },
+  "caller": {
+    "round": "TOUR {{num}} / {{total}}",
+    "yourTurn": "c'est toi",
+    "instruction": "Dis à tout le monde :",
+    "say": "« Regardez en bas ! »",
+    "readyBtn": "Tout le monde est prêt → Lancer"
+  },
+  "countdown": {
+    "prepare": "Préparez-vous…",
+    "medusa": "MÉDUSA !",
+    "liftEyes": "Levez les yeux !"
+  },
+  "report": {
+    "chip": "Médusa · résolution",
+    "title": "Qui s'est\nregardé ?",
+    "sub": "Tapez deux joueurs qui ont croisé le regard.",
+    "selectHint": "Tape le joueur qui a croisé le regard de {{name}}",
+    "pairsLabel": "EYE CONTACTS · {{count}}",
+    "confirmBtn_one": "Confirmer · {{count}} paire",
+    "confirmBtn_other": "Confirmer · {{count}} paires",
+    "noOneBtn": "Personne ne s'est regardé"
+  },
+  "roundResult": {
+    "contact": "CONTACT !",
+    "allSafe": "TOUT LE MONDE EST SAFE",
+    "caught": "Attrapés !",
+    "niceTry": "Bien joué !",
+    "contacts_one": "{{count}} eye contact ce tour",
+    "contacts_other": "{{count}} eye contacts ce tour",
+    "noContact": "Aucun eye contact. Impressionnant.",
+    "safeLabel": "SAFE CE TOUR",
+    "penaltyEach": "{{unit}} CHACUN",
+    "seeEnd": "Voir le bilan final",
+    "nextRound": "Tour suivant →"
+  },
+  "end": {
+    "badge": "FIN DE PARTIE",
+    "title": "Le bilan\ndes regards",
+    "toursLabel": "TOURS JOUÉS",
+    "eyeContactsLabel": "EYE CONTACTS",
+    "ranking": "CLASSEMENT",
+    "recap": "RÉCAP PAR TOUR",
+    "intouchable": "INTOUCHABLE",
+    "laMeduse": "LA MÉDUSE",
+    "leads": "mène",
+    "noContact": "· aucun contact",
+    "pairs_one": "· {{count}} paire",
+    "pairs_other": "· {{count}} paires",
+    "playAgain": "Rejouer",
+    "backToHub": "Retour au hub"
+  }
+}

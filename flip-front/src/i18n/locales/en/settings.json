@@ -1,22 +1,37 @@
 {
-    "title": "Settings",
-    "language": {
-        "title": "Language",
-        "subtitle": "Choose your preferred language",
-        "options": {
-            "fr": "Français",
-            "en": "English",
-            "zh": "中文"
-        }
-    },
-    "appearance": {
-        "title": "Appearance",
-        "subtitle": "Light/Dark theme",
-        "darkMode": "Dark Mode"
-    },
-    "about": {
-        "title": "About",
-        "version": "Version {{version}}",
-        "description": "FL!P - The ultimate drinking game to spice up your parties with friends!"
+  "title": "Settings",
+  "language": {
+    "title": "Language",
+    "subtitle": "Choose your preferred language",
+    "options": {
+      "fr": "Français",
+      "en": "English"
     }
+  },
+  "about": {
+    "title": "About",
+    "version": "Version {{version}}",
+    "description": "FL!P - The ultimate drinking game to spice up your parties with friends!"
+  },
+  "suggest": {
+    "label": "Suggest a question",
+    "hint": "Got an idea for a question or phrase for a game?",
+    "title": "Suggest a question",
+    "gameLabel": "Which game?",
+    "allGames": "All games",
+    "questionLabel": "Your question / phrase",
+    "placeholder": "E.g. \"Have you ever eaten standing up over the sink?\"",
+    "submit": "Send my suggestion",
+    "successTitle": "Thanks!",
+    "successDesc": "We'll read your suggestion carefully. The best questions make it into the game 🤞",
+    "close": "Close",
+    "emailSubject": "[FL!P] Suggestion – {{game}}",
+    "emailBody": "Game: {{game}}\n\nSuggested question / phrase:\n{{suggestion}}"
+  },
+  "drinks": {
+    "title": "Drinking game mode",
+    "label": "Hand out sips",
+    "description": "Enable sips distribution across games to turn Fl!p into a real drinking game.",
+    "lockedHint": "Unlock Premium to enable drinking game mode"
+  }
 }

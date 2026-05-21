@@ -1,12 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import Animated, { FadeInRight, FadeOutLeft } from 'react-native-reanimated';
 import { useTranslation } from 'react-i18next';
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import Animated, { FadeInRight, FadeOutLeft } from 'react-native-reanimated';
+import { T } from '../../constants/flipTokens';
+import { useImagePicker } from '../../hooks/useImagePicker';
 import { Player } from '../../types';
 import { Avatar } from './Avatar';
-import { useImagePicker } from '../../hooks/useImagePicker';
-import { useTheme } from '../../contexts/ThemeContext';
 
 interface PlayersListProps {
   players: Player[];
@@ -17,122 +16,148 @@ interface PlayersListProps {
 export function PlayersList({ players, onRemovePlayer, onUpdateAvatar }: PlayersListProps) {
   const { showImagePicker } = useImagePicker();
   const { t } = useTranslation();
-  const { theme } = useTheme();
+
   const handleAvatarPress = async (player: Player) => {
     const imageUri = await showImagePicker();
-    if (imageUri) {
-      onUpdateAvatar(player.id, imageUri);
-    }
+    if (imageUri) onUpdateAvatar(player.id, imageUri);
   };
 
   if (players.length === 0) {
     return (
-      <View style={styles.emptyContainer}>
-        <Text style={[styles.emptyText, { color: theme.colors.text.secondary }]}>
-          {t('messages.noPlayersAdded')}
-        </Text>
-        <Text style={[styles.emptySubText, { color: theme.colors.text.light }]}>
-          {t('messages.addAtLeastOnePlayerToStart')}
-        </Text>
+      <View style={styles.empty}>
+        <Text style={styles.emptyArrow}>↑</Text>
+        <Text style={styles.emptyText}>{t('home:playersList.empty')}</Text>
       </View>
     );
   }
 
-  const renderPlayer = ({ item, index }: { item: Player; index: number }) => (
-    <Animated.View
-      entering={FadeInRight.delay(index * 100)}
-      exiting={FadeOutLeft}
-      style={[styles.playerItem, { backgroundColor: theme.colors.surface }]}
-    >
-      <View style={styles.playerInfo}>
-        <Avatar
-          name={item.name}
-          avatar={item.avatar}
-          size={50}
-          onPress={() => handleAvatarPress(item)}
-          showEditIcon
-        />
-        <Text style={[styles.playerName, { color: theme.colors.text.primary }]}>{item.name}</Text>
-      </View>
+  const renderPlayer = ({ item, index }: { item: Player; index: number }) => {
+    return (
+      <Animated.View entering={FadeInRight.delay(index * 80)} exiting={FadeOutLeft}>
+        <View style={styles.playerRow}>
+          <Avatar
+            name={item.name}
+            avatar={item.avatar}
+            size={40}
+            onPress={() => handleAvatarPress(item)}
+          />
 
-      <TouchableOpacity style={styles.removeButton} onPress={() => onRemovePlayer(item.id)}>
-        <Ionicons name="close" size={20} color={theme.colors.danger} />
-      </TouchableOpacity>
-    </Animated.View>
-  );
+          <Text style={styles.playerName} numberOfLines={1}>
+            {item.name}
+          </Text>
+
+          <TouchableOpacity
+            style={styles.removeBtn}
+            onPress={() => onRemovePlayer(item.id)}
+            activeOpacity={0.7}
+          >
+            <Text style={styles.removeBtnText}>✕</Text>
+          </TouchableOpacity>
+        </View>
+      </Animated.View>
+    );
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.listTitle, { color: theme.colors.text.primary }]}>
-        {t('labels.players')} ({players.length})
-      </Text>
+      <View style={styles.listHeader}>
+        <Text style={styles.listLabel}>JOUEURS</Text>
+        <View style={styles.countBadge}>
+          <Text style={styles.countText}>{players.length}</Text>
+        </View>
+      </View>
       <FlatList
         data={players}
         renderItem={renderPlayer}
         keyExtractor={(item) => item.id}
-        // @ts-ignore
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.listContent}
+        contentContainerStyle={styles.list}
       />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginBottom: 20,
-  },
+  container: { flex: 1 },
 
-  emptyContainer: {
+  listHeader: {
+    flexDirection: 'row',
     alignItems: 'center',
-    flex: 1,
+    gap: 8,
+    marginBottom: 12,
+  },
+  listLabel: {
+    color: T.muted,
+    fontSize: 11,
+    fontWeight: '700',
+    letterSpacing: 1.5,
+    textTransform: 'uppercase',
+  },
+  countBadge: {
+    backgroundColor: T.tomato,
+    borderRadius: 999,
+    borderWidth: 1.5,
+    borderColor: T.ink,
+    width: 22,
+    height: 22,
+    alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 40,
   },
+  countText: { color: '#fff', fontSize: 11, fontWeight: '900' },
 
-  emptySubText: {
-    fontSize: 14,
-    textAlign: 'center',
-  },
+  list: { gap: 10, paddingRight: 4, paddingBottom: 4 },
 
-  emptyText: {
-    fontSize: 16,
-    marginBottom: 5,
-  },
-
-  listContent: {
-    gap: 12,
-  },
-
-  listTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    marginBottom: 15,
-  },
-
-  playerInfo: {
-    alignItems: 'center',
+  playerRow: {
     flexDirection: 'row',
-    flex: 1,
-    gap: 12,
-  },
-
-  playerItem: {
     alignItems: 'center',
-    borderRadius: 12,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    gap: 12,
+    backgroundColor: T.paper,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: T.rSm,
+    paddingLeft: 8,
+    paddingRight: 14,
+    paddingVertical: 8,
+    shadowColor: T.ink,
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 3,
   },
 
   playerName: {
-    fontSize: 16,
-    fontWeight: '500',
+    flex: 1,
+    color: T.ink,
+    fontSize: 17,
+    fontWeight: '700',
+    letterSpacing: -0.2,
   },
 
-  removeButton: {
-    padding: 8,
+  removeBtn: {
+    width: 32,
+    height: 32,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  removeBtnText: { color: T.muted, fontSize: 16 },
+
+  empty: {
+    flex: 1,
+    alignItems: 'center',
+    paddingTop: 24,
+    gap: 4,
+  },
+  emptyArrow: {
+    color: T.tomato,
+    fontSize: 28,
+    fontWeight: '900',
+    lineHeight: 32,
+  },
+  emptyText: {
+    color: T.muted,
+    fontSize: 15,
+    fontWeight: '600',
+    textAlign: 'center',
   },
 });

@@ -1,216 +1,254 @@
-import { Ionicons } from '@expo/vector-icons';
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import React from 'react';
-import { FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Animated, { FadeInDown } from 'react-native-reanimated';
-
+import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { createGlobalStyles } from '../constants';
-import { AVAILABLE_GAMES, navigateToGame } from '../constants/games';
-import { useTheme } from '../contexts/ThemeContext';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import Animated, { FadeInDown } from 'react-native-reanimated';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+import { ChunkyButton, DotBackground, PlayersModal } from '../components';
+import { GAMES } from '../config';
+import { T } from '../constants/flipTokens';
+import { navigateToGame } from '../constants/games';
+import { usePlayers } from '../contexts/PlayersContext';
+import { gameRegistry } from '../games/gameRegistry';
 import { RootStackParamList } from '../types';
 
-type GameSelectScreenRouteProp = RouteProp<RootStackParamList, 'GameSelect'>;
-
-interface GameMetadata {
-  id: string;
-  name: string;
-  minPlayers: number;
-  maxPlayers: number;
-  description: string;
-}
-
 export function GameSelectScreen() {
-  const route = useRoute<GameSelectScreenRouteProp>();
-  const navigation = useNavigation();
-  const { players } = route.params;
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const { t } = useTranslation();
-  const { theme } = useTheme();
-  const GlobalStyles = createGlobalStyles(theme);
-  const handleSelectGame = (game: GameMetadata) => {
-    try {
-      navigateToGame(navigation, game.id, players);
-    } catch (error) {
-      // Fallback pour les jeux non encore migrés
-      if (game.id === 'purity-test') {
-        navigation.navigate('PurityTest', { players });
-      } else if (game.id === 'cameleon') {
-        navigation.navigate('Cameleon', { players });
-      } else {
-        alert(
-          `Game "${game.name}" selected with ${players.length} players!\nFeature under development.`,
-        );
-      }
+  const { players } = usePlayers();
+
+  const [pendingGameId, setPendingGameId] = useState<string | null>(null);
+  const [playersModalVisible, setPlayersModalVisible] = useState(false);
+
+  const games = GAMES.filter((g) => g.enabled && (!g.developmentOnly || __DEV__));
+
+  const handleSelect = (gameId: string) => {
+    const game = gameRegistry.getGame(gameId);
+    if (game && (players.length < game.minPlayers || players.length > game.maxPlayers)) {
+      setPendingGameId(gameId);
+      setPlayersModalVisible(true);
+      return;
+    }
+    navigateToGame(navigation, gameId, players);
+  };
+
+  const handlePlayersModalClose = () => {
+    setPlayersModalVisible(false);
+    if (!pendingGameId) return;
+    const game = gameRegistry.getGame(pendingGameId);
+    if (game && players.length >= game.minPlayers && players.length <= game.maxPlayers) {
+      navigateToGame(navigation, pendingGameId, players);
+      setPendingGameId(null);
     }
   };
 
-  const handleGoBack = () => {
-    navigation.goBack();
-  };
-
-  const renderGame = ({ item, index }: { item: GameMetadata; index: number }) => (
-    <Animated.View entering={FadeInDown.delay(index * 200)}>
-      <TouchableOpacity
-        style={[
-          styles.gameCard,
-          { backgroundColor: theme.colors.surface, shadowColor: theme.colors.primary },
-        ]}
-        onPress={() => handleSelectGame(item)}
-      >
-        <View style={[styles.gameIcon, { backgroundColor: theme.colors.primary }]}>
-          <Ionicons name="game-controller" size={32} color={theme.colors.text.white} />
-        </View>
-
-        <View style={styles.gameContent}>
-          <Text style={[styles.gameTitle, { color: theme.colors.text.primary }]}>{item.name}</Text>
-          <Text style={[styles.gameInfo, { color: theme.colors.text.secondary }]}>
-            {item.minPlayers}-{item.maxPlayers} {t('common:labels.players')}
-          </Text>
-          <Text style={[styles.gameDescription, { color: theme.colors.text.secondary }]}>
-            {item.description}
-          </Text>
-        </View>
-
-        <View style={styles.playButton}>
-          <Ionicons name="play" size={20} color={theme.colors.primary} />
-        </View>
-      </TouchableOpacity>
-    </Animated.View>
-  );
+  const pendingGame = pendingGameId ? gameRegistry.getGame(pendingGameId) : null;
+  const pendingGamePlayersLabel = pendingGame ? t(pendingGame.playersLabelKey) : '';
+  const playersModalHint = pendingGame
+    ? players.length < pendingGame.minPlayers
+      ? t('games:selection.minPlayersHint', {
+        min: pendingGame.minPlayers,
+        label: pendingGamePlayersLabel,
+      })
+      : t('games:selection.maxPlayersHint', {
+        max: pendingGame.maxPlayers,
+        label: pendingGamePlayersLabel,
+      })
+    : undefined;
 
   return (
-    <SafeAreaView
-      style={[
-        GlobalStyles.container,
-        styles.container,
-        { backgroundColor: theme.colors.background },
-      ]}
-    >
+    <SafeAreaView style={styles.screen}>
+      <DotBackground opacity={0.06} />
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
-          <Ionicons name="arrow-back" size={24} color={theme.colors.text.primary} />
-        </TouchableOpacity>
-
-        <View style={styles.headerContent}>
-          <Text style={[styles.headerTitle, { color: theme.colors.text.primary }]}>
-            {t('navigation:screens.gameSelect')}
-          </Text>
-          <Text style={[styles.headerSubtitle, { color: theme.colors.text.secondary }]}>
-            {players.length} {t('common:labels.players')} · {t('common:labels.readyToPlay')}
+        <ChunkyButton square size="sm" color={T.paper} onPress={() => navigation.goBack()}>
+          <Feather name="arrow-left" size={18} color={T.ink} />
+        </ChunkyButton>
+        <View style={{ flex: 1 }}>
+          <Text style={styles.headerTitle}>{t('games:selection.title')}</Text>
+          <Text style={styles.headerSub}>
+            {t('games:selection.subtitle', { count: players.length })}
           </Text>
         </View>
       </View>
 
-      <FlatList
-        data={AVAILABLE_GAMES}
-        renderItem={renderGame}
-        keyExtractor={(item) => item.id}
-        contentContainerStyle={styles.gamesList}
-        showsVerticalScrollIndicator={false}
+      <ScrollView contentContainerStyle={styles.list} showsVerticalScrollIndicator={false}>
+        {games.map((game, i) => {
+          const bgColor = T[game.color] as string;
+          const Icon = game.icon;
+
+          return (
+            <Animated.View key={game.id} entering={FadeInDown.delay(i * 120)}>
+              <TouchableOpacity
+                style={[styles.gameCard, { backgroundColor: bgColor }]}
+                onPress={() => handleSelect(game.id)}
+                activeOpacity={0.85}
+              >
+                <View style={styles.gameIconPanel}>
+                  {Icon ? (
+                    <Icon size={64} />
+                  ) : (
+                    <MaterialCommunityIcons name="alert-circle" size={36} color={T.ink} />
+                  )}
+                </View>
+
+                <View style={styles.gameContent}>
+                  <Text style={styles.gameName}>{t(game.titleKey)}</Text>
+                  <Text style={styles.gameTagline}>{t(game.taglineKey)}</Text>
+                  <View style={styles.chipRow}>
+                    <View style={styles.chip}>
+                      <Text style={styles.chipText}>👥 {t(game.playersLabelKey)}</Text>
+                    </View>
+                    <View style={styles.chip}>
+                      <Text style={styles.chipText}>⏱ {t(game.durationLabelKey)}</Text>
+                    </View>
+                  </View>
+                </View>
+
+                <Text style={styles.arrow}>→</Text>
+
+                {game.isNew && (
+                  <View style={styles.favBadge}>
+                    <Text style={styles.favBadgeText}>{t('common:new')}</Text>
+                  </View>
+                )}
+              </TouchableOpacity>
+            </Animated.View>
+          );
+        })}
+
+        <ChunkyButton
+          color={T.tomato}
+          textColor="#fff"
+          size="lg"
+          full
+          onPress={() => handleSelect(games[Math.floor(Math.random() * games.length)].id)}
+          style={{ marginTop: 4 }}
+        >
+          <View style={styles.surpriseRow}>
+            <Text style={styles.surpriseText}>{t('games:selection.surprise')}</Text>
+            <MaterialCommunityIcons name="dice-multiple" size={20} color="#fff" />
+          </View>
+        </ChunkyButton>
+      </ScrollView>
+
+      <PlayersModal
+        visible={playersModalVisible}
+        onClose={handlePlayersModalClose}
+        onPlayersChange={() => { }}
+        hint={playersModalHint}
       />
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  backButton: {
-    marginRight: 12,
-    padding: 8,
-  },
+  screen: { flex: 1, backgroundColor: T.bg },
 
-  container: {
-    flex: 1,
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 14,
+    paddingHorizontal: 20,
+    paddingTop: 8,
+    paddingBottom: 16,
   },
+  backBtnText: { fontSize: 20, color: T.ink, fontWeight: '900' },
+  headerTitle: {
+    color: T.ink,
+    fontSize: 28,
+    fontWeight: '900',
+    letterSpacing: -1,
+    lineHeight: 30,
+  },
+  headerSub: { color: T.inkSoft, fontSize: 13, marginTop: 2 },
+
+  list: { paddingHorizontal: 20, paddingBottom: 40, gap: 16 },
 
   gameCard: {
-    alignItems: 'center',
-    borderRadius: 16,
-    elevation: 4,
     flexDirection: 'row',
-    padding: 20,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: T.rLg,
+    overflow: 'hidden',
+    shadowColor: T.ink,
+    shadowOffset: { width: 5, height: 5 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 4,
+    minHeight: 120,
+    position: 'relative',
+  },
+
+  gameIconPanel: {
+    width: 96,
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRightWidth: 2,
+    borderRightColor: T.ink,
+    backgroundColor: 'rgba(255,255,255,0.2)',
   },
 
   gameContent: {
     flex: 1,
-  },
-
-  gameDescription: {
-    fontSize: 14,
-    lineHeight: 18,
-  },
-
-  gameIcon: {
-    alignItems: 'center',
-    borderRadius: 30,
-    height: 60,
+    padding: 16,
     justifyContent: 'center',
-    marginRight: 16,
-    width: 60,
   },
-
-  gameInfo: {
-    fontSize: 12,
-    fontWeight: '500',
-    marginBottom: 8,
-  },
-
-  gameTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
+  gameName: {
+    color: T.ink,
+    fontSize: 22,
+    fontWeight: '900',
+    letterSpacing: -0.8,
+    lineHeight: 24,
     marginBottom: 4,
   },
-
-  gamesList: {
-    gap: 16,
+  gameTagline: {
+    color: T.inkSoft,
+    fontSize: 13,
+    lineHeight: 18,
+    marginBottom: 10,
   },
 
-  gamesSection: {
-    flex: 1,
+  chipRow: { flexDirection: 'row', gap: 6 },
+  chip: {
+    backgroundColor: T.paper,
+    borderWidth: 1.5,
+    borderColor: T.ink,
+    borderRadius: 999,
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+  },
+  chipText: { color: T.ink, fontSize: 11, fontWeight: '700' },
+
+  arrow: {
+    color: T.ink,
+    fontSize: 22,
+    fontWeight: '900',
+    paddingRight: 16,
   },
 
-  header: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginBottom: 30,
+  favBadge: {
+    position: 'absolute',
+    top: 8,
+    right: 14,
+    backgroundColor: T.tomato,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: 999,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    shadowColor: T.ink,
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 3,
+    transform: [{ rotate: '6deg' }],
   },
-
-  headerContent: {
-    flex: 1,
-  },
-
-  headerSubtitle: {
-    fontSize: 14,
-  },
-
-  headerTitle: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    marginBottom: 4,
-  },
-
-  infoSection: {
-    alignItems: 'center',
-    paddingVertical: 20,
-  },
-
-  infoText: {
-    fontSize: 14,
-    fontStyle: 'italic',
-  },
-
-  playButton: {
-    marginLeft: 12,
-  },
-
-  sectionTitle: {
-    fontSize: 20,
-    fontWeight: '600',
-    marginBottom: 20,
-  },
+  favBadgeText: { color: '#fff', fontSize: 11, fontWeight: '900' },
+  surpriseRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  surpriseText: { color: '#fff', fontSize: 16, fontWeight: '900', letterSpacing: -0.3 },
 });

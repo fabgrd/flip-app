@@ -1,94 +1,239 @@
 {
-    "name": "Caméléon",
-    "description": "Devinez les imposteurs à partir d’indices... sans dévoiler votre mot !",
-    "game": {
-        "title": "Caméléon",
-        "subtitle": "Réglages et distribution des rôles"
-    },
-    "settings": {
-        "title": "Réglages",
-        "subtitle": "{{count}} joueurs",
-        "undercover": "Undercover",
-        "mrWhite": "Mr White"
-    },
-    "actions": {
-        "start": "Démarrer",
-        "reveal": "Révéler",
-        "seeResults": "Voir les résultats",
-        "reset": "Réinitialiser",
-        "goToVote": "Passer au vote",
-        "eliminate": "Éliminer",
-        "submit": "Valider"
-    },
-    "reveal": {
-        "title": "Révélation des mots",
-        "subtitle": "Passez le téléphone à chaque joueur",
-        "secretWord": "Mot secret: {{word}}",
-        "mrWhiteWarning": "Tu es Mr White ! Aucun mot pour toi, bluffe intelligemment."
-    },
-    "roles": {
-        "civilian": "Civil",
-        "cameleon": "Undercover",
-        "mrWhite": "Mr White"
-    },
-    "results": {
-        "title": "Résultats",
-        "subtitle": "Rôles et mots"
-    },
-    "outcome": {
-        "civiliansWin": "Les civils gagnent !",
-        "undercoverWin": "Les Undercover gagnent !"
-    },
-    "badges": {
-        "eliminated": "KO"
-    },
-    "modals": {
-        "firstPlayer": "{{name}} commence !"
-    },
-    "notices": {
-        "eliminatedRole": "1 {{role}} éliminé"
-    },
-    "counters": {
-        "remainingImpostors": "Imposteurs restants: {{count}}"
-    },
-    "mrWhite": {
-        "guessTitle": "Mr White",
-        "guessPrompt": "Mince, tu as été découvert. Tu peux quand même tenter de trouver le mot. Si tu trouves tu le sauras à la fin du jeu",
-        "placeholder": "Tape ton mot ici"
-    },
-    "wordPairs": {
-        "chat": "Chat",
-        "tigre": "Tigre",
-        "plage": "Plage",
-        "desert": "Désert",
-        "pizza": "Pizza",
-        "tarte": "Tarte",
-        "avion": "Avion",
-        "fusee": "Fusée",
-        "hiver": "Hiver",
-        "automne": "Automne",
-        "infirmier": "Infirmier",
-        "medecin": "Médecin",
-        "boulanger": "Boulanger",
-        "patissier": "Pâtissier",
-        "football": "Football",
-        "rugby": "Rugby",
-        "cinema": "Cinéma",
-        "theatre": "Théâtre",
-        "concert": "Concert",
-        "festival": "Festival",
-        "foret": "Forêt",
-        "jungle": "Jungle",
-        "marijuana": "Marijuana",
-        "hashish": "Hashish",
-        "neige": "Neige",
-        "glace": "Glace",
-        "biere": "Bière",
-        "vin": "Vin",
-        "gta": "GTA",
-        "redDeadRedemption": "Red Dead Redemption",
-        "onePiece": "One Piece",
-        "dragonBall": "Dragon Ball"
-    }
+  "name": "Caméléon",
+  "description": "Devinez les imposteurs à partir d’indices... sans dévoiler votre mot !",
+  "game": {
+    "title": "Caméléon",
+    "subtitle": "Réglages et distribution des rôles"
+  },
+  "settings": {
+    "title": "Réglages",
+    "subtitle": "{{count}} joueurs",
+    "players": "Joueurs",
+    "impostors": "Imposteurs",
+    "undercover": "Undercover",
+    "mrWhite": "Mr White",
+    "theme": "Thème",
+    "themeHint": "Choisis l’ambiance avant de lancer la manche."
+  },
+  "actions": {
+    "start": "Démarrer",
+    "reveal": "Révéler",
+    "seeResults": "Voir les résultats",
+    "reset": "Réinitialiser",
+    "goToVote": "Passer au vote",
+    "eliminate": "Éliminer",
+    "submit": "Valider"
+  },
+  "reveal": {
+    "title": "Révélation des mots",
+    "subtitle": "Passez le téléphone à chaque joueur",
+    "secretWord": "Mot secret: {{word}}",
+    "mrWhiteWarning": "Tu es Mr White ! Aucun mot pour toi, bluffe intelligemment."
+  },
+  "roles": {
+    "civilian": "Civil",
+    "cameleon": "Undercover",
+    "mrWhite": "Mr White"
+  },
+  "results": {
+    "title": "Résultats",
+    "subtitle": "Rôles et mots"
+  },
+  "outcome": {
+    "civiliansWin": "Les civils gagnent !",
+    "undercoverWin": "Les Undercover gagnent !"
+  },
+  "badges": {
+    "eliminated": "KO"
+  },
+  "modals": {
+    "firstPlayer": "{{name}} commence !"
+  },
+  "notices": {
+    "eliminatedRole": "1 {{role}} éliminé"
+  },
+  "counters": {
+    "remainingImpostors": "Imposteurs restants: {{count}}"
+  },
+  "mrWhite": {
+    "guessTitle": "Mr White",
+    "guessPrompt": "Mince, tu as été découvert. Tu peux quand même tenter de trouver le mot. Si tu trouves tu le sauras à la fin du jeu",
+    "placeholder": "Tape ton mot ici"
+  },
+  "themes": {
+    "random": "Aléatoire",
+    "randomDesc": "Mélange tous les univers",
+    "daily": "Vie quotidienne",
+    "dailyDesc": "Mots simples et lisibles",
+    "football": "Football",
+    "footballDesc": "Culture sport et rivalités",
+    "hot": "Hot",
+    "hotDesc": "Ambiance plus piquante",
+    "wtf": "WTF",
+    "wtfDesc": "Paires absurdes, sales ou WTF",
+    "sousculture": "Sous-culture",
+    "souscultureDesc": "Mélange de références cultes et de niche",
+    "rap": "Rap",
+    "rapDesc": "Mots liés à la culture hip-hop",
+    "decadence": "Décadence",
+    "decadenceDesc": "Paires de mots ultra décadents pour les amateurs de vice"
+  },
+  "wordPairsByTheme": {
+    "daily": [
+      { "w": "Chat", "c": "Tigre" },
+      { "w": "Chien", "c": "Loup" },
+      { "w": "Plage", "c": "Piscine" },
+      { "w": "Pizza", "c": "Tarte flambée" },
+      { "w": "Avion", "c": "Hélicoptère" },
+      { "w": "Hiver", "c": "Automne" },
+      { "w": "Infirmier", "c": "Médecin" },
+      { "w": "Boulanger", "c": "Pâtissier" },
+      { "w": "Cinéma", "c": "Théâtre" },
+      { "w": "Concert", "c": "Festival" },
+      { "w": "Forêt", "c": "Jungle" },
+      { "w": "Neige", "c": "Grêle" },
+      { "w": "Voiture", "c": "Moto" },
+      { "w": "Lit", "c": "Canapé" },
+      { "w": "Café", "c": "Thé" },
+      { "w": "Vélo", "c": "Trottinette" },
+      { "w": "Supermarché", "c": "Épicerie" },
+      { "w": "Mairie", "c": "Préfecture" },
+      { "w": "Camembert", "c": "Brie" },
+      { "w": "Boulangerie", "c": "Sandwicherie" },
+      { "w": "Musée", "c": "Galerie d'art" },
+      { "w": "Médecin", "c": "Pharmacien" },
+      { "w": "Train", "c": "Bus" },
+      { "w": "Bibliothèque", "c": "Librairie" },
+      { "w": "Vacances", "c": "Week-end" },
+      { "w": "Maison", "c": "Appartement" },
+      { "w": "Pluie", "c": "Brume" },
+      { "w": "Montagne", "c": "Colline" },
+      { "w": "Chaussures", "c": "Baskets" },
+      { "w": "Réveil", "c": "Alarme de téléphone" }
+    ],
+    "sousculture": [
+      { "w": "Football", "c": "Rugby" },
+      { "w": "Handball", "c": "Basket" },
+      { "w": "Le Mans", "c": "Monaco (F1)" },
+      { "w": "GTA", "c": "Red Dead Redemption" },
+      { "w": "Fortnite", "c": "PUBG" },
+      { "w": "PS5", "c": "Xbox" },
+      { "w": "Minecraft", "c": "Roblox" },
+      { "w": "League of Legends", "c": "Dota 2" },
+      { "w": "One Piece", "c": "Dragon Ball" },
+      { "w": "Naruto", "c": "Bleach" },
+      { "w": "Marvel", "c": "DC Comics" },
+      { "w": "Netflix", "c": "Disney+" },
+      { "w": "Breaking Bad", "c": "Peaky Blinders" },
+      { "w": "TikTok", "c": "Instagram" },
+      { "w": "Snapchat", "c": "Telegram" },
+      { "w": "Rap", "c": "R&B" },
+      { "w": "Beyoncé", "c": "Rihanna" },
+      { "w": "PNL", "c": "Nekfeu" },
+      { "w": "Nike", "c": "Adidas" },
+      { "w": "Supreme", "c": "Palace" },
+      { "w": "iPhone", "c": "Samsung Galaxy" },
+      { "w": "YouTube", "c": "Twitch" },
+      { "w": "Spotify", "c": "Deezer" },
+      { "w": "Festival (musique)", "c": "Rave" }
+    ],
+    "football": [
+      { "w": "Football", "c": "Rugby" },
+      { "w": "OM", "c": "OL" },
+      { "w": "Arsenal", "c": "Tottenham" },
+      { "w": "Messi", "c": "Ronaldo" },
+      { "w": "Ligue 1", "c": "Premier League" },
+      { "w": "Coupe du monde", "c": "Euro" },
+      { "w": "Mbappé", "c": "Dembélé" },
+      { "w": "Zidane", "c": "Platini" },
+      { "w": "Neymar", "c": "Suarez" },
+      { "w": "Benzema", "c": "Giroud" },
+      { "w": "Lloris", "c": "Lucas Chevalier" },
+      { "w": "Maradona", "c": "Pelé" },
+      { "w": "Real Madrid", "c": "Atlético Madrid" },
+      { "w": "Manchester United", "c": "Manchester City" },
+      { "w": "Bayern Munich", "c": "Borussia Dortmund" },
+      { "w": "Ligue des Champions", "c": "Europa League" }
+    ],
+    "rap": [
+      { "w": "PNL", "c": "Nekfeu" },
+      { "w": "Booba", "c": "Kaaris" },
+      { "w": "Freeze Corleone", "c": "Kalash Criminel" },
+      { "w": "Jul", "c": "Maes" },
+      { "w": "Vald", "c": "Gringe" },
+      { "w": "Orelsan", "c": "Roméo Elvis" },
+      { "w": "Sadek", "c": "Rohff" },
+      { "w": "Jcvd", "c": "Heuss l'enfoiré" },
+      { "w": "Moha La Squale", "c": "13 Block" },
+      { "w": "Lacrim", "c": "Kof Kof" }
+    ],
+    "hot": [
+      { "w": "OnlyFans", "c": "Mym" },
+      { "w": "Pornhub", "c": "Xvideos" },
+      { "w": "Gland", "c": "Frein (anatomique)" },
+      { "w": "Baiser", "c": "Sucer" },
+      { "w": "Pénis", "c": "Clitoris" }
+    ],
+    "decadence": [
+      { "w": "Marijuana", "c": "Hashisch" },
+      { "w": "Coke", "c": "MDMA" },
+      { "w": "Chicha", "c": "Pétard" },
+      { "w": "Gueule de bois", "c": "Bad trip" },
+      { "w": "Binge drinking", "c": "Prégame" },
+      { "w": "Vodka", "c": "Rhum" },
+      { "w": "Bière", "c": "Cidre" },
+      { "w": "Cuite", "c": "Défonce" }
+    ],
+    "wtf": [
+      { "w": "Bouzelouf", "c": "Tasty Crousty" },
+      { "w": "Bite de cheval", "c": "Couille de taureau" },
+      { "w": "Ballon (protoxyde)", "c": "Bombonne de protoxyde" },
+      { "w": "Pet", "c": "Rot" },
+      { "w": "Vomi", "c": "Caca" },
+      { "w": "Rouge qui tache", "c": "Porto" },
+      { "w": "Cheval de Troie", "c": "Ransomware" },
+      { "w": "Jean-Michel", "c": "Gérard" },
+      { "w": "Skibidi toilet", "c": "Sigma grindset" },
+      { "w": "Soupe de cailloux", "c": "Smoothie de terre" },
+      { "w": "Caillou (dessin animé)", "c": "Oui-Oui" }
+    ]
+  },
+  "phases": {
+    "vote": "Vote final",
+    "clues": "Indices"
+  },
+  "vote": {
+    "hint": "Discutez puis votez ensemble."
+  },
+  "ui": {
+    "title": "Caméléon",
+    "tagline": "Démasque l'imposteur",
+    "modalTitle": "Le Caméléon",
+    "start": "Lancer la partie 🦎",
+    "steps": [
+      {
+        "n": "1",
+        "title": "Faites tourner le tel",
+        "desc": "Chacun voit son mot secret… sauf le caméléon."
+      },
+      {
+        "n": "2",
+        "title": "À tour de rôle, un indice",
+        "desc": "Un mot, pas plus. Ni trop évident, ni trop vague."
+      },
+      {
+        "n": "3",
+        "title": "Discutez",
+        "desc": "Débattez — qui semble ne pas savoir de quoi il parle ?"
+      },
+      {
+        "n": "4",
+        "title": "Tout le monde vote",
+        "desc": "Désignez l'imposteur. S'il est démasqué, les civils gagnent."
+      }
+    ],
+    "whoIsTitle": "Qui est\nle caméléon ?",
+    "drinkCaught": "🍻 {{name}} bois 3 gorgées (démasqué·e !)",
+    "drinkBadVote": "🍻 {{name}} bois 2 gorgées (mauvais vote du groupe)"
+  }
 }
-

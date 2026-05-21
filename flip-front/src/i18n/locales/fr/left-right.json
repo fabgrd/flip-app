@@ -1,0 +1,78 @@
+{
+  "game": {
+    "name": "Gauche ou Droite",
+    "description": "Découvrez les orientations politiques de vos amis !",
+    "questionPrefix": "Selon vous, c'est plutôt...",
+    "leftChoice": "C'est de gauche",
+    "rightChoice": "C'est de droite",
+    "swipeLeft": "Glissez à gauche",
+    "swipeRight": "Glissez à droite"
+  },
+  "results": {
+    "title": "Résultats politiques",
+    "leftOrientation": "Plutôt de gauche",
+    "rightOrientation": "Plutôt de droite",
+    "centrist": "Centriste",
+    "extremeLeft": "Très à gauche",
+    "extremeRight": "Très à droite",
+    "percentageLeft": "{{percentage}}% gauche",
+    "percentageRight": "{{percentage}}% droite",
+    "dominantOrientation": "Orientation dominante",
+    "politicalProfile": "Profil politique"
+  },
+  "orientations": {
+    "veryLeft": "Très à gauche",
+    "left": "À gauche",
+    "centerLeft": "Centre-gauche",
+    "center": "Centre",
+    "centerRight": "Centre-droite",
+    "right": "À droite",
+    "veryRight": "Très à droite"
+  },
+  "questions": {
+    "pol_1": "Dormir avec une couette même en été",
+    "pol_2": "Jouer à des FPS",
+    "pol_3": "Se laver les fesses à l'eau après être allé aux toilettes",
+    "pol_4": "Mettre de l'ananas sur une pizza",
+    "pol_5": "Faire des listes pour tout",
+    "pol_6": "Acheter du café de spécialité",
+    "pol_7": "Regarder des vidéos de bricolage sur YouTube",
+    "pol_8": "Faire pousser des herbes aromatiques chez soi",
+    "pol_9": "Dire bonjour dans l'ascenseur",
+    "pol_10": "Avoir un tote bag"
+  },
+  "ui": {
+    "title": "Gauche\nou droite ?",
+    "tagline": "Place la phrase sur l'échiquier politique",
+    "modalTitle": "Gauche ou Droite",
+    "start": "Lancer la partie ⚖️",
+    "steps": [
+      {
+        "n": "1",
+        "title": "Une phrase apparaît",
+        "desc": "Elle raconte une situation courante."
+      },
+      {
+        "n": "2",
+        "title": "Chacun choisit si c'est un truc de gauche ou de droite",
+        "desc": "Glisse vers la gauche ou la droite selon tes convictions."
+      },
+      {
+        "n": "3",
+        "title": "Résultats collectifs",
+        "desc": "On révèle le spectre politique de chaque joueur à la fin."
+      }
+    ],
+    "remaining_one": "{{count}} restant",
+    "remaining_other": "{{count}} restants",
+    "reveal": {
+      "title": "Camp minoritaire",
+      "left": "Gauche",
+      "right": "Droite",
+      "tie": "🤝 Égalité — personne ne bois ce tour",
+      "unanimous": "🎉 Unanimité — personne ne bois",
+      "drink": "🍻 {{names}} bois 1 gorgée",
+      "nextBtn": "Question suivante →"
+    }
+  }
+}

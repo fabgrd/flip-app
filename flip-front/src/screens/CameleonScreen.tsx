@@ -1,29 +1,41 @@
+import { Feather } from '@expo/vector-icons';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { PopModal } from '../components/common';
-import { createGlobalStyles } from '../constants';
-import { useTheme } from '../contexts/ThemeContext';
-import { useCameleon } from '../games/cameleon';
+import {
+  DotBackground,
+  GameRulesScreen,
+  PlayerPickerGrid,
+  PopModal,
+} from '../components/common';
+import { ChameleonIcon } from '../components/icons';
+import { T } from '../constants/flipTokens';
+import { useCameleon, useCameleonThemeAccess } from '../games/cameleon';
+import { useDrinksMode } from '../hooks';
 import {
   ActionBar,
   MrWhiteGuessModal,
-  PlayerGrid,
   RevealCard,
   SettingsPanel,
 } from '../games/cameleon/components';
+import type { CameleonTheme } from '../games/cameleon/types';
 import { Player, RootStackParamList } from '../types';
 
 type CameleonRouteProp = RouteProp<RootStackParamList, 'Cameleon'>;
+
 
 export function CameleonScreen() {
   const route = useRoute<CameleonRouteProp>();
   const navigation = useNavigation();
   const { t } = useTranslation();
   const { players } = route.params as { players: Player[] };
+  const [localPlayers, setLocalPlayers] = useState(players);
+  const { enabled: drinksEnabled } = useDrinksMode();
+  const [eliminationDrink, setEliminationDrink] = useState<string | null>(null);
 
   const {
     gameState,
@@ -41,26 +53,34 @@ export function CameleonScreen() {
     proceedAfterResults,
     mrWhiteToGuessId,
     submitMrWhiteGuess,
-  } = useCameleon(players);
+  } = useCameleon(localPlayers);
 
   const [overrideUC, setOverrideUC] = useState<number | undefined>(undefined);
   const [overrideMW, setOverrideMW] = useState<number | undefined>(undefined);
+  const [selectedThemes, setSelectedThemes] = useState<CameleonTheme[]>(['random']);
+  const { isThemeAllowed, requestUnlockFor, filterAllowed } = useCameleonThemeAccess();
 
-  const currentUC = overrideUC ?? defaultDistribution.undercovers;
+  const currentUC = Math.max(1, overrideUC ?? defaultDistribution.undercovers);
   const currentMW = overrideMW ?? defaultDistribution.mrWhites;
-
-  const maxImpostors = Math.floor(players.length / 2);
+  const maxImpostors = Math.floor(localPlayers.length / 2);
   const totalImpostors = currentUC + currentMW;
   const canStart = useMemo(
-    () => totalImpostors <= maxImpostors && totalImpostors < players.length,
-    [totalImpostors, maxImpostors, players.length],
+    () => totalImpostors <= maxImpostors && totalImpostors < localPlayers.length,
+    [totalImpostors, maxImpostors, localPlayers.length],
   );
 
   const handleStart = () => {
-    startGame({ overrideDistribution: { undercovers: currentUC, mrWhites: currentMW } });
+    const safeThemes = selectedThemes.includes('random')
+      ? selectedThemes
+      : filterAllowed(selectedThemes);
+    const pairsData = t('cameleon:wordPairsByTheme', { returnObjects: true }) as Record<string, Array<{ w: string; c: string }>>;
+    startGame({
+      overrideDistribution: { undercovers: currentUC, mrWhites: currentMW },
+      themes: safeThemes.length > 0 ? safeThemes : ['random'],
+      pairsData,
+    });
   };
 
-  // Start modal
   const [showStartModal, setShowStartModal] = useState(false);
   useEffect(() => {
     if (phase === 'clues' && clueOrder.length > 0) {
@@ -70,7 +90,6 @@ export function CameleonScreen() {
     }
   }, [phase, clueOrder]);
 
-  // Post-elimination modal
   const [eliminationNotice, setEliminationNotice] = useState<string | null>(null);
   const [eliminatedForModal, setEliminatedForModal] = useState<{
     name: string;
@@ -89,19 +108,36 @@ export function CameleonScreen() {
               : t('cameleon:roles.civilian');
         setEliminatedForModal({ name: eliminated.name, avatar: eliminated.avatar });
         setEliminationNotice(t('cameleon:notices.eliminatedRole', { role: roleLabel }));
-        const timer = setTimeout(() => {
-          setEliminationNotice(null);
-          setEliminatedForModal(null);
-          if (!gameOver) {
-            proceedAfterResults();
-          }
-        }, 1500);
+        if (drinksEnabled) {
+          const isImpostor = eliminated.role === 'cameleon' || eliminated.role === 'mrWhite';
+          setEliminationDrink(
+            isImpostor
+              ? t('cameleon:ui.drinkCaught', { name: eliminated.name })
+              : t('cameleon:ui.drinkBadVote', { name: eliminated.name }),
+          );
+        }
+        const timer = setTimeout(
+          () => {
+            setEliminationNotice(null);
+            setEliminatedForModal(null);
+            setEliminationDrink(null);
+            if (!gameOver) proceedAfterResults();
+          },
+          drinksEnabled ? 2400 : 1500,
+        );
         return () => clearTimeout(timer);
       }
     }
-  }, [phase, selectedForElimination, gameState.players, t, gameOver, proceedAfterResults]);
+  }, [
+    phase,
+    selectedForElimination,
+    gameState.players,
+    t,
+    gameOver,
+    proceedAfterResults,
+    drinksEnabled,
+  ]);
 
-  // Auto-navigate to final results when game is over
   useEffect(() => {
     if (phase === 'results' && gameOver) {
       const timer = setTimeout(
@@ -113,109 +149,16 @@ export function CameleonScreen() {
   }, [phase, gameOver, gameState.players, navigation]);
 
   const orderedPlayers = useMemo(() => {
-    if (clueOrder.length > 0) {
+    if (clueOrder.length > 0)
       return clueOrder.map((id) => gameState.players.find((p) => p.id === id)!).filter(Boolean);
-    }
     return gameState.players;
   }, [clueOrder, gameState.players]);
 
-  // Alive impostors counter (combined cameleon + mrWhite)
-  // const aliveImpostors = useMemo(
-  //   () =>
-  //     gameState.players.filter(
-  //       (p) => !p.isEliminated && (p.role === 'cameleon' || p.role === 'mrWhite'),
-  //     ).length,
-  //   [gameState.players],
-  // );
-
-  // const renderMainGrid = () => {
-  //   const isVote = phase === 'vote' || phase === 'results';
-  //   return (
-  //     <View style={{ paddingHorizontal: 12, flex: 1 }}>
-  //       <Text style={styles.sectionTitle}>{t('cameleon:game.subtitle')}</Text>
-  //       <Text style={styles.counterInfo}>
-  //         {t('cameleon:counters.remainingImpostors', { count: aliveImpostors })}
-  //       </Text>
-
-  //       <FlatList
-  //         style={{ flex: 1 }}
-  //         data={orderedPlayers}
-  //         keyExtractor={(item) => item.id}
-  //         numColumns={3}
-  //         renderItem={({ item, index }) => {
-  //           const inner = (
-  //             <>
-  //               <Avatar name={item.name} avatar={item.avatar} size={72} />
-  //               <View style={styles.statusContainer}>
-  //                 {item.isEliminated ? (
-  //                   <View style={styles.eliminatedPill}>
-  //                     <Text style={styles.eliminatedPillText}>
-  //                       {t('cameleon:badges.eliminated')}
-  //                     </Text>
-  //                   </View>
-  //                 ) : (
-  //                   <Text style={styles.gridOrder}>{index + 1}</Text>
-  //                 )}
-  //               </View>
-  //               <Text style={styles.gridName} numberOfLines={1}>
-  //                 {item.name}
-  //               </Text>
-  //             </>
-  //           );
-  //           if (isVote && !item.isEliminated) {
-  //             return (
-  //               <TouchableOpacity
-  //                 style={[
-  //                   styles.gridItem,
-  //                   selectedForElimination === item.id && styles.selectedItem,
-  //                 ]}
-  //                 onPress={() => selectElimination(item.id)}
-  //               >
-  //                 {inner}
-  //               </TouchableOpacity>
-  //             );
-  //           }
-  //           return (
-  //             <View
-  //               style={[
-  //                 styles.gridItem,
-  //                 selectedForElimination === item.id && isVote && styles.selectedItem,
-  //               ]}
-  //             >
-  //               {inner}
-  //             </View>
-  //           );
-  //         }}
-  //       />
-
-  //       {isVote ? (
-  //         <TouchableOpacity
-  //           style={[styles.primaryBtn, !selectedForElimination && styles.btnDisabled]}
-  //           onPress={confirmElimination}
-  //           disabled={!selectedForElimination}
-  //         >
-  //           <Text style={styles.primaryBtnText}>{t('cameleon:actions.eliminate')}</Text>
-  //         </TouchableOpacity>
-  //       ) : (
-  //         <TouchableOpacity style={styles.secondaryBtn} onPress={beginVote}>
-  //           <Text style={styles.secondaryBtnText}>{t('cameleon:actions.goToVote')}</Text>
-  //         </TouchableOpacity>
-  //       )}
-  //     </View>
-  //   );
-  // };
-
-  // Planned impostors count for settings screen (combined UC + MW)
-  // const plannedImpostors = currentUC + currentMW;
-
-  // First player for start modal
   const firstPlayerForModal = useMemo(() => {
     if (phase !== 'clues' || clueOrder.length === 0) return null;
-    const id = clueOrder[0];
-    return gameState.players.find((p) => p.id === id) || null;
+    return gameState.players.find((p) => p.id === clueOrder[0]) || null;
   }, [phase, clueOrder, gameState.players]);
 
-  // Mr White guess modal state
   const mrWhitePlayer = useMemo(
     () => gameState.players.find((p) => p.id === mrWhiteToGuessId) || null,
     [gameState.players, mrWhiteToGuessId],
@@ -225,60 +168,84 @@ export function CameleonScreen() {
     if (mrWhiteToGuessId) setGuess('');
   }, [mrWhiteToGuessId]);
 
-  const { theme } = useTheme();
-  const globalStyles = createGlobalStyles(theme);
+  const bgColor = phase === 'settings' ? T.mint : phase === 'reveal' ? T.paper : T.bg;
 
-  return (
-    <SafeAreaView
-      style={[
-        globalStyles.container,
-        styles.container,
-        { backgroundColor: theme.colors.background },
-      ]}
-    >
-      <View style={styles.header}>
-        <Text style={[styles.title, { color: theme.colors.primary }]}>
-          {t('cameleon:game.title')}
-        </Text>
-        <Text style={[styles.subtitle, { color: theme.colors.text.secondary }]}>
-          {t('cameleon:game.subtitle')}
-        </Text>
-      </View>
+  const toggleTheme = (theme: CameleonTheme) => {
+    if (theme === 'random') {
+      setSelectedThemes(['random']);
+      return;
+    }
+    setSelectedThemes((prev) => {
+      const withoutRandom = prev.filter((tt) => tt !== 'random');
+      const isOn = withoutRandom.includes(theme);
+      const next = isOn ? withoutRandom.filter((tt) => tt !== theme) : [...withoutRandom, theme];
+      return next.length === 0 ? ['random'] : next;
+    });
+  };
 
-      {phase === 'settings' && (
-        <Animated.View
-          entering={FadeIn}
-          exiting={FadeOut}
-          style={[
-            styles.settingsBox,
-            { flex: 1, backgroundColor: theme.colors.background, borderColor: theme.colors.border },
-          ]}
-        >
-          {/* SettingsPanel already uses theme via parent-provided callbacks */}
+  if (phase === 'settings') {
+    return (
+      <GameRulesScreen
+        accentColor={T.mint}
+        title={t('cameleon:ui.title')}
+        tagline={t('cameleon:ui.tagline')}
+        icon={<ChameleonIcon size={86} />}
+        rulesModal={{ rules: t('cameleon:ui.steps', { returnObjects: true }) as any, title: t('cameleon:ui.modalTitle') }}
+        players={localPlayers}
+        onPlayersChange={setLocalPlayers}
+        onExit={() => navigation.goBack()}
+        onSettings={() => navigation.navigate('Settings')}
+        minPlayers={3}
+        onStart={handleStart}
+        startLabel={t('cameleon:ui.start')}
+        startDisabled={!canStart}
+      >
+        <Animated.View entering={FadeIn} exiting={FadeOut} style={styles.flex}>
           <SettingsPanel
-            playersCount={players.length}
+            playersCount={localPlayers.length}
             currentUC={currentUC}
             currentMW={currentMW}
+            selectedThemes={selectedThemes}
             maxImpostors={maxImpostors}
-            canStart={canStart}
             onChangeUC={(val) =>
-              setOverrideUC(Math.min(players.length - 1, Math.min(val, maxImpostors - currentMW)))
+              setOverrideUC(
+                Math.max(
+                  1,
+                  Math.min(localPlayers.length - 1, Math.min(val, maxImpostors - currentMW)),
+                ),
+              )
             }
             onChangeMW={(val) =>
               setOverrideMW(
-                Math.min(players.length - 1 - currentUC, Math.min(val, maxImpostors - currentUC)),
+                Math.min(
+                  localPlayers.length - 1 - currentUC,
+                  Math.min(val, maxImpostors - currentUC),
+                ),
               )
             }
-            onStart={handleStart}
+            onToggleTheme={toggleTheme}
+            isThemeAllowed={isThemeAllowed}
+            onRequestUnlock={requestUnlockFor}
             t={t}
           />
         </Animated.View>
+      </GameRulesScreen>
+    );
+  }
+
+  return (
+    <SafeAreaView style={[styles.container, { backgroundColor: bgColor }]}>
+      {(phase === 'clues' || phase === 'vote' || phase === 'results') && (
+        <DotBackground opacity={0.06} color={T.ink} />
       )}
 
+      {/* ── REVEAL ── */}
       {phase === 'reveal' && currentRevealPlayer && (
-        <View style={{ flex: 1 }}>
+        <View style={styles.flex}>
           <RevealCard
+            key={currentRevealPlayer.id}
             name={currentRevealPlayer.name}
+            avatar={currentRevealPlayer.avatar}
             roleLabel={
               currentRevealPlayer.role === 'mrWhite'
                 ? t('cameleon:roles.mrWhite')
@@ -293,15 +260,65 @@ export function CameleonScreen() {
         </View>
       )}
 
+      {/* ── CLUES / VOTE ── */}
       {(phase === 'clues' || phase === 'vote' || phase === 'results') && (
         <>
-          <PlayerGrid
+          <View style={styles.header}>
+            <View style={styles.chipRow}>
+              <View style={[styles.chip, { backgroundColor: T.mint }]}>
+                <Text style={styles.chipText}>
+                  {phase === 'vote' || phase === 'results'
+                    ? t('cameleon:phases.vote', 'Vote final')
+                    : t('cameleon:phases.clues', 'Indices')}
+                </Text>
+              </View>
+            </View>
+            <Text style={styles.phaseTitle}>
+              {phase === 'vote' || phase === 'results'
+                ? t('cameleon:ui.whoIsTitle')
+                : t('cameleon:game.title', 'Le Caméléon')}
+            </Text>
+            {(phase === 'vote' || phase === 'results') && (
+              <Text style={styles.phaseSubtitle}>
+                {t('cameleon:vote.hint', 'Discutez puis votez ensemble.')}
+              </Text>
+            )}
+          </View>
+          <PlayerPickerGrid
             players={orderedPlayers}
-            isVote={phase === 'vote' || phase === 'results'}
-            clueOrder={clueOrder}
-            selectedForElimination={selectedForElimination}
-            onSelect={selectElimination}
-            t={t}
+            selectedId={
+              phase === 'vote' || phase === 'results' ? selectedForElimination : null
+            }
+            onSelect={
+              phase === 'vote' || phase === 'results'
+                ? (p) => selectElimination(p.id)
+                : undefined
+            }
+            isDisabled={(p) => p.isEliminated}
+            selectedColor={T.tomato}
+            selectedNameColor="#fff"
+            avatarSize={60}
+            minCardHeight={120}
+            renderBadge={(item, index, selected) =>
+              item.isEliminated ? (
+                <View style={cmStyles.eliminatedBadge}>
+                  <Text style={cmStyles.eliminatedBadgeText}>
+                    {t('cameleon:badges.eliminated', 'Éliminé')}
+                  </Text>
+                </View>
+              ) : (
+                <View style={[cmStyles.orderBadge, selected && cmStyles.orderBadgeSelected]}>
+                  <Text
+                    style={[
+                      cmStyles.orderBadgeText,
+                      selected && cmStyles.orderBadgeTextSelected,
+                    ]}
+                  >
+                    {index + 1}
+                  </Text>
+                </View>
+              )
+            }
           />
           <ActionBar
             isVote={phase === 'vote' || phase === 'results'}
@@ -323,7 +340,6 @@ export function CameleonScreen() {
         name={firstPlayerForModal?.name}
         avatar={firstPlayerForModal?.avatar}
       />
-
       <PopModal
         visible={!!eliminationNotice}
         title={eliminationNotice ?? undefined}
@@ -331,8 +347,9 @@ export function CameleonScreen() {
         avatar={eliminatedForModal?.avatar}
         badgeEmoji="❌"
         badgeColor="#C62828"
-      />
-
+      >
+        {eliminationDrink && <Text style={styles.drinkInstruction}>{eliminationDrink}</Text>}
+      </PopModal>
       <MrWhiteGuessModal
         visible={!!mrWhiteToGuessId}
         name={mrWhitePlayer?.name}
@@ -348,68 +365,79 @@ export function CameleonScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  header: { alignItems: 'center', padding: 20 },
-  title: { fontSize: 24, fontWeight: 'bold' },
-  subtitle: { fontSize: 14, marginTop: 4, textAlign: 'center' },
-  settingsBox: { borderRadius: 12, borderWidth: 1, margin: 16, padding: 16 },
-  sectionTitle: { fontSize: 18, fontWeight: 'bold', marginBottom: 8, textAlign: 'center' },
-  sectionSubtitle: { fontSize: 14, marginBottom: 8, textAlign: 'center' },
-  counterInfo: { fontSize: 13, marginBottom: 12, textAlign: 'center' },
-  row: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 12,
-  },
-  label: { fontSize: 16, fontWeight: '600' },
-  stepper: { alignItems: 'center', flexDirection: 'row' },
-  stepperBtn: {
-    alignItems: 'center',
-    borderRadius: 8,
-    borderWidth: 1,
-    height: 36,
-    justifyContent: 'center',
-    width: 36,
-  },
-  stepperBtnText: { fontSize: 20 },
-  stepperValue: { fontSize: 16, textAlign: 'center', width: 40 },
-  primaryBtn: { alignItems: 'center', borderRadius: 12, marginTop: 8, paddingVertical: 14 },
-  primaryBtnText: { fontSize: 16, fontWeight: 'bold' },
-  btnDisabled: { opacity: 0.5 },
-  revealBox: { borderRadius: 12, borderWidth: 1, margin: 16, padding: 16 },
-  gridItem: {
-    alignItems: 'center',
-    alignSelf: 'stretch',
-    borderRadius: 12,
-    flexBasis: '33.333%',
-    height: 134,
-    paddingVertical: 14,
-  },
-  gridOrder: { fontSize: 13 },
-  statusContainer: { alignItems: 'center', height: 24, justifyContent: 'center', marginTop: 6 },
-  gridName: { fontSize: 13, marginTop: 6, maxWidth: 100, textAlign: 'center' },
-  eliminatedPill: { borderRadius: 12, paddingHorizontal: 10, paddingVertical: 3 },
-  eliminatedPillText: { fontSize: 11, fontWeight: '800' },
-  secondaryBtn: { alignItems: 'center', borderRadius: 12, marginTop: 16, paddingVertical: 12 },
-  secondaryBtnText: { fontSize: 16, fontWeight: '600' },
-  ghostBtn: { alignItems: 'center', marginTop: 12, paddingVertical: 10 },
-  ghostBtnText: { fontSize: 14 },
-  selectedItem: { borderWidth: 1.5 },
-  resultCard: { alignItems: 'center', borderRadius: 12, borderWidth: 1, padding: 16 },
-  resultTitle: { fontSize: 18, fontWeight: '700', marginBottom: 8 },
-  eliminatedName: { fontSize: 20, fontWeight: '800', marginTop: 4 },
-  eliminatedRole: { fontSize: 22, fontWeight: '800', marginTop: 4 },
-  winnerText: { fontSize: 18, fontWeight: '800', marginTop: 12 },
-  winnerCivilians: {},
-  winnerUndercover: {},
-  // Mr White
-  mrWhitePrompt: { fontSize: 15, marginTop: 8, textAlign: 'center' },
-  input: {
-    borderRadius: 10,
-    borderWidth: 1,
-    marginTop: 12,
-    minWidth: 220,
+  flex: { flex: 1 },
+
+  header: { paddingHorizontal: 20, paddingTop: 12, paddingBottom: 8 },
+  chipRow: { flexDirection: 'row', marginBottom: 10 },
+  chip: {
+    borderRadius: 999,
+    borderWidth: 1.5,
+    borderColor: T.ink,
     paddingHorizontal: 12,
-    paddingVertical: 10,
+    paddingVertical: 4,
+    alignSelf: 'flex-start',
+  },
+  chipText: {
+    color: T.ink,
+    fontSize: 12,
+    fontWeight: '800',
+    letterSpacing: 0.5,
+    textTransform: 'uppercase',
+  },
+  phaseTitle: {
+    color: T.ink,
+    fontSize: 38,
+    fontWeight: '900',
+    letterSpacing: -1.5,
+    lineHeight: 38,
+  },
+  phaseSubtitle: { color: T.inkSoft, fontSize: 14, marginTop: 6, lineHeight: 20 },
+  drinkInstruction: {
+    marginTop: 12,
+    color: T.ink,
+    fontSize: 15,
+    fontWeight: '800',
+    textAlign: 'center',
+    backgroundColor: T.lemon,
+    borderWidth: 1.5,
+    borderColor: T.ink,
+    borderRadius: 12,
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+  },
+});
+
+const cmStyles = StyleSheet.create({
+  orderBadge: {
+    position: 'absolute',
+    top: 8,
+    left: 10,
+    width: 22,
+    height: 22,
+    borderRadius: 8,
+    backgroundColor: T.bg,
+    borderWidth: 1.5,
+    borderColor: T.ink,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  orderBadgeSelected: { backgroundColor: T.ink },
+  orderBadgeText: { color: T.ink, fontSize: 11, fontWeight: '900' },
+  orderBadgeTextSelected: { color: '#fff' },
+  eliminatedBadge: {
+    position: 'absolute',
+    top: 8,
+    left: 10,
+    backgroundColor: T.inkSoft,
+    borderRadius: 999,
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+  },
+  eliminatedBadgeText: {
+    color: '#fff',
+    fontSize: 9,
+    fontWeight: '900',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
 });

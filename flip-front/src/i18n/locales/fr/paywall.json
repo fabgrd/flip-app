@@ -1,0 +1,51 @@
+{
+  "default": {
+    "title": "Passe en Fl!p VIP",
+    "pitch": "Débloque tout · Annule quand tu veux",
+    "benefits": [
+      {
+        "icon": "games",
+        "title": "Tous les jeux débloqués",
+        "sub": "Caméléon, Pureté, Paranoïa + futurs jeux"
+      },
+      {
+        "icon": "drink",
+        "title": "Mode à boire activé",
+        "sub": "Transforme chaque jeu en soirée arrosée"
+      },
+      {
+        "icon": "difficulty",
+        "title": "Niveau des questions",
+        "sub": "Doux, Spicy, Hardcore… contrôle l'intensité"
+      },
+      {
+        "icon": "themes",
+        "title": "Thèmes exclusifs débloqués",
+        "sub": "Décadence, Hot, Tabou, Soirées, Spicy…"
+      },
+      {
+        "icon": "questions",
+        "title": "5 000+ questions",
+        "sub": "Nouveau contenu exclusif chaque semaine"
+      }
+    ]
+  },
+  "plans": {
+    "annual": "Annuel",
+    "monthly": "Mensuel",
+    "weekly": "Hebdo",
+    "perWeek": "soit {{price}}/sem",
+    "label": "CHOISIS TON PLAN",
+    "discount": "−70%"
+  },
+  "cta": {
+    "trial": "Essayer gratuitement",
+    "trialBadge": "7 jours offerts"
+  },
+  "footer": {
+    "secure": "Paiement sécurisé via App Store",
+    "restore": "Restaurer",
+    "terms": "CGV",
+    "privacy": "Confidentialité"
+  }
+}

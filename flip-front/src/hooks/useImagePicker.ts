@@ -9,7 +9,7 @@ export const useImagePicker = () => {
   const requestPermissions = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (status !== 'granted') {
-      Alert.alert(t('errors.permissionRequired'));
+      Alert.alert(t('alert:errors.permissionRequired'));
       return false;
     }
     return true;
@@ -41,7 +41,7 @@ export const useImagePicker = () => {
       return null;
     } catch (error) {
       setIsLoading(false);
-      Alert.alert(t('errors.imageSelectionFailed'));
+      Alert.alert(t('alert:errors.imageSelectionFailed'));
       return null;
     }
   };
@@ -52,7 +52,7 @@ export const useImagePicker = () => {
     try {
       const { status } = await ImagePicker.requestCameraPermissionsAsync();
       if (status !== 'granted') {
-        Alert.alert(t('errors.permissionRequired'));
+        Alert.alert(t('alert:errors.permissionRequired'));
         setIsLoading(false);
         return null;
       }
@@ -72,7 +72,7 @@ export const useImagePicker = () => {
       return null;
     } catch (error) {
       setIsLoading(false);
-      Alert.alert(t('errors.photoTakingFailed'));
+      Alert.alert(t('alert:errors.photoTakingFailed'));
       return null;
     }
   };
@@ -80,25 +80,25 @@ export const useImagePicker = () => {
   const showImagePicker = (): Promise<string | null> => {
     return new Promise((resolve) => {
       Alert.alert(
-        t('errors.addPhoto'),
-        t('chooseOption'),
+        t('alert:errors.addPhoto'),
+        t('alert:errors.chooseOption'),
         [
           {
-            text: t('errors.gallery'),
+            text: t('alert:errors.gallery'),
             onPress: async () => {
               const uri = await pickImage();
               resolve(uri);
             },
           },
           {
-            text: t('errors.camera'),
+            text: t('alert:errors.camera'),
             onPress: async () => {
               const uri = await takePhoto();
               resolve(uri);
             },
           },
           {
-            text: t('errors.cancel'),
+            text: t('alert:errors.cancel'),
             style: 'cancel',
             onPress: () => resolve(null),
           },
