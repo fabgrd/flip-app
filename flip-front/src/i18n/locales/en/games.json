@@ -2,7 +2,31 @@
   "selection": {
     "title": "Choose a game",
     "subtitle": "{{count}} player(s) · ready to embarrass yourselves",
-    "surprise": "Surprise me"
+    "surprise": "Surprise me",
+    "minPlayersHint": "This game needs at least {{min}} players ({{label}}).",
+    "maxPlayersHint": "This game supports up to {{max}} players ({{label}})."
+  },
+  "labels": {
+    "players": {
+      "redFlag": "1+ player",
+      "casting": "3–11 players",
+      "apero": "2+ players",
+      "medusa": "5+ players",
+      "paranoia": "4+ players",
+      "cameleon": "4–10 players",
+      "leftRight": "2+ players",
+      "purityTest": "1+ player"
+    },
+    "duration": {
+      "redFlag": "5 min",
+      "casting": "20 min",
+      "apero": "20 min",
+      "medusa": "10 min",
+      "paranoia": "15 min",
+      "cameleon": "15 min",
+      "leftRight": "10 min",
+      "purityTest": "5 min"
+    }
   },
   "redFlag": {
     "title": "Are you a Red Flag?",

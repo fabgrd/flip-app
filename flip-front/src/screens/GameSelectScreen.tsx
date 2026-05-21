@@ -46,10 +46,17 @@ export function GameSelectScreen() {
   };
 
   const pendingGame = pendingGameId ? gameRegistry.getGame(pendingGameId) : null;
+  const pendingGamePlayersLabel = pendingGame ? t(pendingGame.playersLabelKey) : '';
   const playersModalHint = pendingGame
     ? players.length < pendingGame.minPlayers
-      ? `Il faut au moins ${pendingGame.minPlayers} joueurs pour ce jeu (${pendingGame.playersLabel}).`
-      : `Ce jeu supporte au maximum ${pendingGame.maxPlayers} joueurs (${pendingGame.playersLabel}).`
+      ? t('games:selection.minPlayersHint', {
+        min: pendingGame.minPlayers,
+        label: pendingGamePlayersLabel,
+      })
+      : t('games:selection.maxPlayersHint', {
+        max: pendingGame.maxPlayers,
+        label: pendingGamePlayersLabel,
+      })
     : undefined;
 
   return (
@@ -80,7 +87,11 @@ export function GameSelectScreen() {
                 activeOpacity={0.85}
               >
                 <View style={styles.gameIconPanel}>
-                  <Icon size={64} />
+                  {Icon ? (
+                    <Icon size={64} />
+                  ) : (
+                    <MaterialCommunityIcons name="alert-circle" size={36} color={T.ink} />
+                  )}
                 </View>
 
                 <View style={styles.gameContent}>
@@ -88,10 +99,10 @@ export function GameSelectScreen() {
                   <Text style={styles.gameTagline}>{t(game.taglineKey)}</Text>
                   <View style={styles.chipRow}>
                     <View style={styles.chip}>
-                      <Text style={styles.chipText}>👥 {game.playersLabel}</Text>
+                      <Text style={styles.chipText}>👥 {t(game.playersLabelKey)}</Text>
                     </View>
                     <View style={styles.chip}>
-                      <Text style={styles.chipText}>⏱ {game.durationLabel}</Text>
+                      <Text style={styles.chipText}>⏱ {t(game.durationLabelKey)}</Text>
                     </View>
                   </View>
                 </View>

@@ -21,7 +21,7 @@ const LANGUAGE_DETECTOR = {
       callback('fr');
     }
   },
-  init: () => {},
+  init: () => { },
   cacheUserLanguage: async (language: string) => {
     try {
       await AsyncStorage.setItem('user-language', language);
@@ -43,6 +43,7 @@ const NAMESPACES = [
   'leftRight',
   'paranoia',
   'paywall',
+  'apero',
 ] as const;
 
 i18n

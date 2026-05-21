@@ -1,23 +1,198 @@
 {
   "title": "Paranoia",
   "tagline": "Who said your name… and why?",
+  "ui": {
+    "rules": {
+      "title": "Paranoia",
+      "tagline": "Who said your name… and why?",
+      "start": "Start paranoia",
+      "steps": [
+        {
+          "n": "1",
+          "title": "The questioner sees a question",
+          "desc": "Like \"who would crack in prison?\". They keep it secret."
+        },
+        {
+          "n": "2",
+          "title": "The target sees the question and chooses",
+          "desc": "They point at someone in the group. Out loud."
+        },
+        {
+          "n": "3",
+          "title": "The group hears the answer, not the question",
+          "desc": "Everyone panics: why ME?"
+        },
+        {
+          "n": "4",
+          "title": "Heads or tails — reveal or not",
+          "desc": "If the target loses the flip, the question shows to everyone."
+        }
+      ]
+    },
+    "handoff": {
+      "roleLabel": "ROLE · {{role}}",
+      "givePhone": "Hand the phone to {{name}}",
+      "ready": "It's me — show",
+      "subtitleQuestioner": "You will see a question. Keep it secret.",
+      "subtitleTarget": "A question is about you. You'll see which one."
+    },
+    "questionShow": {
+      "chipQuestioner": "Questioner · {{name}}",
+      "secretLabel": "YOUR SECRET QUESTION",
+      "askTo": "YOU ASK IT TO",
+      "targetLabel": "THE TARGET",
+      "hint": "Ask the question out loud… but without saying it 😶",
+      "passToTarget": "Pass the phone to {{name}}"
+    },
+    "targetPick": {
+      "chipTarget": "Target · {{name}}",
+      "questionLabel": "THE QUESTION",
+      "pickTitle": "Answer out loud.",
+      "pickSub": "And pick the person in the app.",
+      "coinFlip": "Heads or tails →"
+    },
+    "coinFlip": {
+      "chipTarget": "Target · {{name}}",
+      "titleSecretKept": "You keep the secret 🤫",
+      "titleRevealed": "It's revealed… 😬",
+      "titleFlip": "Flip the coin!",
+      "titleChoose": "Pick your side",
+      "sidePile": "Heads",
+      "sideFace": "Tails",
+      "flipCta": "Flip 🪙",
+      "flipping": "Spinning…",
+      "seeVerdict": "See verdict →"
+    },
+    "reveal": {
+      "badgeKept": "🤫 SECRET KEPT",
+      "badgeRevealed": "😈 REVEALED",
+      "verdictKept": "Saved.",
+      "verdictRevealed": "Busted!",
+      "questionWas": "THE QUESTION WAS",
+      "answerLabel": "ANSWER →",
+      "keptTextBefore": "keeps the question to themselves. The group stays in the dark. ",
+      "keptTextAfter": " can smirk in the corner.",
+      "drink": "{{name}} drinks {{count}} sip{{plural}}",
+      "next": "Next round →"
+    },
+    "end": {
+      "badge": "GAME OVER",
+      "title": "Secrets\n recap 🕵️",
+      "kept": "KEPT",
+      "revealed": "REVEALED",
+      "statusRevealed": "BUSTED",
+      "statusKept": "SECRET",
+      "answerShort": " · ans. ",
+      "playAgain": "Play again",
+      "backToHub": "Back to hub"
+    },
+    "roles": {
+      "questioner": "questioner",
+      "target": "target"
+    }
+  },
   "questions": [
-    { "id": "p_001", "text": "Who would make the best parent?", "tier": "free", "tags": [] },
-    { "id": "p_002", "text": "Who has the worst taste in music?", "tier": "free", "tags": [] },
-    { "id": "p_003", "text": "Who would you go on a road trip with?", "tier": "free", "tags": [] },
-    { "id": "p_004", "text": "Who lies the best?", "tier": "free", "tags": [] },
-    { "id": "p_005", "text": "Who has the most embarrassing crush?", "tier": "free", "tags": [] },
-    { "id": "p_006", "text": "Who would crack first in prison?", "tier": "free", "tags": [] },
-    { "id": "p_007", "text": "Who would make the worst ex?", "tier": "free", "tags": [] },
-    { "id": "p_008", "text": "Who has the most striking glow-up?", "tier": "free", "tags": [] },
-    { "id": "p_009", "text": "Who would survive a zombie apocalypse?", "tier": "free", "tags": [] },
-    { "id": "p_010", "text": "Who has the most skeletons in the closet?", "tier": "free", "tags": [] },
-    { "id": "p_011", "text": "Who is secretly the meanest?", "tier": "free", "tags": [] },
-    { "id": "p_012", "text": "Who would make the best reality TV star?", "tier": "free", "tags": [] },
-    { "id": "p_013", "text": "Who would be the worst roommate?", "tier": "free", "tags": [] },
-    { "id": "p_014", "text": "Who is the most jealous?", "tier": "free", "tags": [] },
-    { "id": "p_015", "text": "Who would send the most messages after a breakup?", "tier": "free", "tags": [] },
-    { "id": "p_016", "text": "Who is the most dramatic over nothing?", "tier": "free", "tags": [] },
-    { "id": "p_017", "text": "Who would be the most corruptible?", "tier": "free", "tags": [] }
+    {
+      "id": "p_001",
+      "text": "Who would make the best parent?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_002",
+      "text": "Who has the worst taste in music?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_003",
+      "text": "Who would you go on a road trip with?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_004",
+      "text": "Who lies the best?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_005",
+      "text": "Who has the most embarrassing crush?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_006",
+      "text": "Who would crack first in prison?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_007",
+      "text": "Who would make the worst ex?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_008",
+      "text": "Who has the most striking glow-up?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_009",
+      "text": "Who would survive a zombie apocalypse?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_010",
+      "text": "Who has the most skeletons in the closet?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_011",
+      "text": "Who is secretly the meanest?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_012",
+      "text": "Who would make the best reality TV star?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_013",
+      "text": "Who would be the worst roommate?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_014",
+      "text": "Who is the most jealous?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_015",
+      "text": "Who would send the most messages after a breakup?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_016",
+      "text": "Who is the most dramatic over nothing?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_017",
+      "text": "Who would be the most corruptible?",
+      "tier": "free",
+      "tags": []
+    }
   ]
 }

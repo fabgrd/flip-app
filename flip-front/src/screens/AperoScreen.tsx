@@ -4,6 +4,7 @@ import { Feather } from '@expo/vector-icons';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import * as Haptics from 'expo-haptics';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Animated,
   Easing,
@@ -60,10 +61,14 @@ const AP_PTS: Record<ApVal, number> = {
 };
 
 const AP_SUITS = ['♠', '♥', '♦', '♣'] as const;
-const AP_NAMES: Partial<Record<ApVal, string>> = { A: 'As', V: 'Valet', D: 'Dame', R: 'Roi' };
-
-function apName(v: ApVal): string {
-  return AP_NAMES[v] ?? v;
+function apName(v: ApVal, t: (key: string) => string): string {
+  const labels: Partial<Record<ApVal, string>> = {
+    A: t('apero:cards.A'),
+    V: t('apero:cards.V'),
+    D: t('apero:cards.D'),
+    R: t('apero:cards.R'),
+  };
+  return labels[v] ?? v;
 }
 const apIsRed = isRedSuit;
 
@@ -109,6 +114,7 @@ const ROW1: ApVal[] = ['2', '3', '4', '5', '6', '7'];
 const ROW2: ApVal[] = ['8', '9', '10', 'V', 'D', 'R', 'A'];
 
 function APBridge({ cards }: { cards: PlayedCard[] }) {
+  const { t } = useTranslation();
   const groups: Record<string, PlayedCard[]> = {};
   for (const v of AP_VALS) groups[v] = [];
   cards.forEach((c) => groups[c.v].push(c));
@@ -154,7 +160,10 @@ function APBridge({ cards }: { cards: PlayedCard[] }) {
   return (
     <View style={br.wrap}>
       <Text style={br.label}>
-        TRAVERSÉE · {cards.length} CARTE{cards.length > 1 ? 'S' : ''}
+        {t('apero:bridge.label', {
+          count: cards.length,
+          plural: cards.length > 1 ? 'S' : '',
+        })}
       </Text>
       <View style={br.row}>{ROW1.map(renderSlot)}</View>
       <View style={[br.row, { marginTop: 4 }]}>{ROW2.map(renderSlot)}</View>
@@ -285,42 +294,43 @@ function APRules({
 }) {
   const [showPlayersModal, setShowPlayersModal] = useState(false);
   const { enabled: drinksEnabled } = useDrinksMode();
+  const { t } = useTranslation();
   const RULES = [
     {
-      n: '1',
-      t: 'Le donneur pioche une carte',
-      d: 'La carte reste cachée. Le joueur actif tente de la deviner.',
+      n: t('apero:rules.steps.0.n'),
+      t: t('apero:rules.steps.0.title'),
+      d: t('apero:rules.steps.0.desc'),
     },
     {
-      n: '2',
-      t: 'Premier essai — plus ou moins ?',
-      d: "Le joueur dit un chiffre. L'app répond « c'est plus » ou « c'est moins ».",
+      n: t('apero:rules.steps.1.n'),
+      t: t('apero:rules.steps.1.title'),
+      d: t('apero:rules.steps.1.desc'),
     },
     {
-      n: '3',
-      t: 'Deuxième essai — dernière chance',
+      n: t('apero:rules.steps.2.n'),
+      t: t('apero:rules.steps.2.title'),
       d: drinksEnabled
-        ? 'Si raté, le joueur boit la différence entre sa réponse et la carte.'
-        : 'Si raté, le joueur encaisse la différence en points entre sa réponse et la carte.',
+        ? t('apero:rules.steps.2.descDrink')
+        : t('apero:rules.steps.2.descSober'),
     },
     {
-      n: '4',
-      t: drinksEnabled ? 'Trouvé ? Le donneur trinque' : 'Trouvé ? Le donneur encaisse',
+      n: t('apero:rules.steps.3.n'),
+      t: drinksEnabled ? t('apero:rules.steps.3.titleDrink') : t('apero:rules.steps.3.titleSober'),
       d: drinksEnabled
-        ? 'Si un joueur trouve, le donneur boit 2 gorgées et sa série repart à zéro.'
-        : 'Si un joueur trouve, le donneur prend 2 points et sa série repart à zéro.',
+        ? t('apero:rules.steps.3.descDrink')
+        : t('apero:rules.steps.3.descSober'),
     },
     {
-      n: '5',
-      t: '3 tours safe = le donneur passe',
-      d: 'Si personne ne trouve en 3 tours, le donneur file le tel à un autre.',
+      n: t('apero:rules.steps.4.n'),
+      t: t('apero:rules.steps.4.title'),
+      d: t('apero:rules.steps.4.desc'),
     },
     {
-      n: '★',
-      t: 'Règle spéciale : le quadruplé',
+      n: t('apero:rules.steps.5.n'),
+      t: t('apero:rules.steps.5.title'),
       d: drinksEnabled
-        ? "Quand les 4 cartes d'une même valeur sont sorties, elles se retournent et le donneur boit 2 de plus."
-        : "Quand les 4 cartes d'une même valeur sont sorties, elles se retournent et le donneur prend 2 points de plus.",
+        ? t('apero:rules.steps.5.descDrink')
+        : t('apero:rules.steps.5.descSober'),
     },
   ];
   const rulesModal = RULES.map((r) => ({ n: r.n, title: r.t, desc: r.d }));
@@ -335,7 +345,7 @@ function APRules({
         <GameMenuActions
           showDice={false}
           onPressSettings={onSettings}
-          rules={{ rules: rulesModal, title: "L'Apéro", accentColor: T.pink }}
+          rules={{ rules: rulesModal, title: t('apero:rules.modalTitle'), accentColor: T.pink }}
           players={players}
           onPlayersChange={onPlayersChange}
         />
@@ -347,15 +357,15 @@ function APRules({
             <AperoIcon size={92} />
           </View>
           <GameChip color={T.paper} textStyle={{ fontSize: 11 }}>
-            Jeu n°6
+            {t('apero:rules.chip')}
           </GameChip>
-          <Text style={rls.title}>L'Apéro</Text>
+          <Text style={rls.title}>{t('apero:rules.title')}</Text>
         </View>
 
         <View style={rls.cardWrap}>
           <DrinkModeToggle accentColor={T.pink} style={{ marginBottom: 14 }} />
           <GameCard style={{ borderRadius: 22, padding: 18 }}>
-            <Text style={rls.cardLabel}>COMMENT ON JOUE</Text>
+            <Text style={rls.cardLabel}>{t('apero:rules.cardLabel')}</Text>
             {RULES.map((s, i) => (
               <View key={s.n} style={[rls.ruleRow, i < RULES.length - 1 && rls.divider]}>
                 <View style={[rls.ruleNum, { backgroundColor: s.n === '★' ? T.lemon : T.pink }]}>
@@ -385,7 +395,7 @@ function APRules({
               onStart();
             }}
           >
-            Distribuer les cartes
+            {t('apero:rules.start')}
           </ChunkyButton>
         </View>
       </ScrollView>
@@ -448,6 +458,7 @@ const rls = StyleSheet.create({
 // ─── Pick dealer ──────────────────────────────────────────────────────────────
 
 function APPickDealer({ players, onPick }: { players: Player[]; onPick: (i: number) => void }) {
+  const { t } = useTranslation();
   return (
     <View style={{ flex: 1, backgroundColor: T.ink }}>
       <SafeAreaView style={{ flex: 1 }}>
@@ -510,6 +521,7 @@ function APRound({
   const [g1, setG1] = useState<ApVal | null>(null);
   const [g2, setG2] = useState<ApVal | null>(null);
   const { enabled: drinksEnabled } = useDrinksMode();
+  const { t } = useTranslation();
 
   // ── Animations ──
   // Card scale (apPop on reveal) + shake (apShake on hint)
@@ -644,7 +656,7 @@ function APRound({
   };
 
   const found = (g1 !== null && AP_PTS[g1] === card.p) || (g2 !== null && AP_PTS[g2] === card.p);
-  const hint = g1 ? (card.p > AP_PTS[g1] ? 'plus' : 'moins') : null;
+  const hint = g1 ? (card.p > AP_PTS[g1] ? 'higher' : 'lower') : null;
   const finalGuess = g2 ?? g1;
   const penalty = finalGuess && !found ? Math.abs(AP_PTS[finalGuess] - card.p) : 0;
   // Content animation style: slide for g1/g2, pop for hint/result
@@ -677,8 +689,10 @@ function APRound({
         <Animated.View style={[rd.phaseWrap, contentAnimStyle]}>
           {phase === 'g1' && (
             <View style={{ alignItems: 'center', gap: 8, width: '100%' }}>
-              <Text style={rd.phaseTitle}>{guesser.name}, devine la carte</Text>
-              <Text style={rd.phaseSub}>Premier essai</Text>
+              <Text style={rd.phaseTitle}>
+                {t('apero:round.guessTitle', { name: guesser.name })}
+              </Text>
+              <Text style={rd.phaseSub}>{t('apero:round.firstTry')}</Text>
               <APValuePicker onPick={doG1} disabled={exhaustedVals} />
             </View>
           )}
@@ -686,14 +700,26 @@ function APRound({
           {phase === 'hint' && hint && (
             <View style={{ alignItems: 'center', gap: 10 }}>
               <View
-                style={[rd.hintBadge, { backgroundColor: hint === 'plus' ? T.tomato : T.cobalt }]}
+                style={[
+                  rd.hintBadge,
+                  { backgroundColor: hint === 'higher' ? T.tomato : T.cobalt },
+                ]}
               >
                 <Text style={rd.hintText}>
-                  C'est {hint} {hint === 'plus' ? '↑' : '↓'}
+                  {t('apero:round.hintBadge', {
+                    hint:
+                      hint === 'higher'
+                        ? t('apero:hints.higher')
+                        : t('apero:hints.lower'),
+                    arrow: hint === 'higher' ? '↑' : '↓',
+                  })}
                 </Text>
               </View>
               <Text style={rd.phaseSub}>
-                Tu as dit {apName(g1!)} ({AP_PTS[g1!]} pts)
+                {t('apero:round.youSaid', {
+                  card: apName(g1!, t),
+                  points: AP_PTS[g1!],
+                })}
               </Text>
             </View>
           )}
@@ -701,15 +727,23 @@ function APRound({
           {phase === 'g2' && hint && (
             <View style={{ alignItems: 'center', gap: 8, width: '100%' }}>
               <GameChip
-                color={hint === 'plus' ? T.tomato : T.cobalt}
+                color={hint === 'higher' ? T.tomato : T.cobalt}
                 textColor="#fff"
                 style={{ alignSelf: 'center' }}
                 textStyle={{ fontSize: 11 }}
               >
-                C'est {hint} que {apName(g1!)}
+                {t('apero:round.secondTryChip', {
+                  hint:
+                    hint === 'higher'
+                      ? t('apero:hints.higher')
+                      : t('apero:hints.lower'),
+                  card: apName(g1!, t),
+                })}
               </GameChip>
-              <Text style={rd.phaseTitle}>Deuxième chance !</Text>
-              <Text style={rd.phaseSub}>Dernier essai, {guesser.name}</Text>
+              <Text style={rd.phaseTitle}>{t('apero:round.secondChance')}</Text>
+              <Text style={rd.phaseSub}>
+                {t('apero:round.lastTry', { name: guesser.name })}
+              </Text>
               <APValuePicker onPick={doG2} disabled={g1 ? [g1, ...exhaustedVals] : exhaustedVals} />
             </View>
           )}
@@ -719,26 +753,32 @@ function APRound({
               {found ? (
                 <>
                   <StickerBadge color={T.mint} rotation={-4}>
-                    TROUVÉ !
+                    {t('apero:round.found')}
                   </StickerBadge>
                   <Text style={rd.resultTitle}>
-                    {dealer.name} {drinksEnabled ? 'boit' : 'prend'}{' '}
-                    {drinkUnitLower(2, drinksEnabled)}
+                    {t('apero:round.dealerResult', {
+                      name: dealer.name,
+                      verb: drinksEnabled ? t('apero:verbs.drink') : t('apero:verbs.take'),
+                      unit: drinkUnitLower(2, drinksEnabled),
+                    })}
                   </Text>
-                  <Text style={rd.phaseSub}>Série du donneur remise à zéro</Text>
+                  <Text style={rd.phaseSub}>{t('apero:round.resetStreak')}</Text>
                 </>
               ) : (
                 <>
                   <StickerBadge color={T.tomato} rotation={4} textColor="#fff">
-                    RATÉ !
+                    {t('apero:round.missed')}
                   </StickerBadge>
                   <Text style={rd.resultTitle}>
-                    {guesser.name} {drinksEnabled ? 'boit' : 'prend'}{' '}
-                    {drinkUnitLower(penalty, drinksEnabled)}
+                    {t('apero:round.dealerResult', {
+                      name: guesser.name,
+                      verb: drinksEnabled ? t('apero:verbs.drink') : t('apero:verbs.take'),
+                      unit: drinkUnitLower(penalty, drinksEnabled),
+                    })}
                   </Text>
                   {finalGuess && (
                     <Text style={rd.phaseMono}>
-                      |{apName(finalGuess)} − {apName(card.v)}| = |{AP_PTS[finalGuess]} − {card.p}|
+                      |{apName(finalGuess, t)} − {apName(card.v, t)}| = |{AP_PTS[finalGuess]} − {card.p}|
                       = {penalty}
                     </Text>
                   )}
@@ -753,12 +793,14 @@ function APRound({
         <View style={rd.footer}>
           {phase === 'result' && (
             <ChunkyButton full color={T.pink} onPress={() => onDone(found, penalty)}>
-              {cardNum >= total ? 'Voir le bilan →' : 'Carte suivante →'}
+              {cardNum >= total
+                ? t('apero:round.seeSummary')
+                : t('apero:round.nextCard')}
             </ChunkyButton>
           )}
           {streak >= 3 && (
             <ChunkyButton full color={T.paper} textColor={T.ink} onPress={onRequestPass}>
-              Donner le tas →
+              {t('apero:round.passPile')}
             </ChunkyButton>
           )}
         </View>
@@ -825,6 +867,7 @@ function APSpecialFlip({
   const popAnim = useRef(new Animated.Value(0.4)).current;
   const popOpacity = useRef(new Animated.Value(0)).current;
   const { enabled: drinksEnabled } = useDrinksMode();
+  const { t } = useTranslation();
 
   useEffect(() => {
     Animated.parallel([
@@ -838,13 +881,13 @@ function APSpecialFlip({
       <SafeAreaView style={{ flex: 1 }}>
         <DotBackground color={T.ink} opacity={0.08} />
         <ScrollView contentContainerStyle={sf.center}>
-          <Animated.View style={{ transform: [{ scale: popAnim }], opacity: popOpacity }}>
-            <StickerBadge color={T.tomato} rotation={-6} textColor="#fff">
-              ★ QUADRUPLÉ !
-            </StickerBadge>
-          </Animated.View>
+          <StickerBadge color={T.tomato} rotation={-6} textColor="#fff">
+            {t('apero:pickDealer.badge')}
+          </StickerBadge>
+          <Text style={pk.title}>{t('apero:pickDealer.title')}</Text>
+          <Text style={pk.sub}>{t('apero:pickDealer.sub')}</Text>
           <Text style={sf.title}>
-            Les 4 {apName(quadVal)}
+            Les 4 {apName(quadVal, t)}
             {'\n'}sont sortis !
           </Text>
           <Text style={sf.sub}>Les 4 cartes se retournent sur la traversée.</Text>
@@ -1287,7 +1330,7 @@ function AperoGame({ players: initialPlayers, onExit }: { players: Player[]; onE
         onPlayersChange={handlePlayersChange}
         onStart={() => setStep('pick')}
         onExit={onExit}
-        onSettings={() => {}}
+        onSettings={() => { }}
       />
     );
   }

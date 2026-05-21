@@ -105,5 +105,95 @@
       "tier": "free",
       "tags": []
     }
-  ]
+  ],
+  "ui": {
+    "rules": {
+    "title": "Paranoïa",
+    "tagline": "Qui a dit ton prénom… et pourquoi ?",
+    "start": "Lancer la paranoïa",
+    "steps": [
+      {
+        "n": "1",
+        "title": "Le questionneur voit une question",
+        "desc": "Genre « qui craquerait en prison ? ». Il la garde secrète."
+      },
+      {
+        "n": "2",
+        "title": "La cible voit la question et choisit",
+        "desc": "Elle désigne quelqu'un dans le groupe. À voix haute."
+      },
+      {
+        "n": "3",
+        "title": "Le groupe entend la réponse, pas la question",
+        "desc": "Tout le monde panique : pourquoi MOI ?"
+      },
+      {
+        "n": "4",
+        "title": "Pile ou face — ça révèle ou pas",
+        "desc": "Si la cible perd au flip, la question s'affiche pour tout le monde."
+      }
+    ]
+  },
+  "handoff": {
+    "roleLabel": "RÔLE · {{role}}",
+    "givePhone": "Donnes le tel à {{name}}",
+    "ready": "C'est moi — afficher",
+    "subtitleQuestioner": "Tu vas voir une question. Garde-la secrète.",
+    "subtitleTarget": "Une question te concerne. Tu vas voir laquelle."
+  },
+  "questionShow": {
+    "chipQuestioner": "Questionneur · {{name}}",
+    "secretLabel": "TA QUESTION SECRÈTE",
+    "askTo": "TU LA POSES À",
+    "targetLabel": "LA CIBLE",
+    "hint": "Pose la question à voix haute… mais sans la dire 😶",
+    "passToTarget": "Passer le tel à {{name}}"
+  },
+  "targetPick": {
+    "chipTarget": "Cible · {{name}}",
+    "questionLabel": "LA QUESTION",
+    "pickTitle": "Réponds à voix haute.",
+    "pickSub": "Et désigne ici la personne dans l'app.",
+    "coinFlip": "Pile ou face →"
+  },
+  "coinFlip": {
+    "chipTarget": "Cible · {{name}}",
+    "titleSecretKept": "Tu gardes le secret 🤫",
+    "titleRevealed": "C'est révélé… 😬",
+    "titleFlip": "Lance la pièce !",
+    "titleChoose": "Choisis ton camp",
+    "sidePile": "Pile",
+    "sideFace": "Face",
+    "flipCta": "Lancer 🪙",
+    "flipping": "Ça tourne…",
+    "seeVerdict": "Voir le verdict →"
+  },
+  "reveal": {
+    "badgeKept": "🤫 SECRET GARDÉ",
+    "badgeRevealed": "😈 RÉVÉLATION",
+    "verdictKept": "Sauvé.",
+    "verdictRevealed": "Cramé !",
+    "questionWas": "LA QUESTION ÉTAIT",
+    "answerLabel": "RÉPONSE →",
+    "keptTextBefore": "garde la question pour lui-même. Le groupe reste dans le flou. ",
+    "keptTextAfter": " peut sourire dans son coin.",
+    "drink": "{{name}} bois {{count}} gorgée{{plural}}",
+    "next": "Tour suivant →"
+  },
+  "end": {
+    "badge": "FIN DE PARTIE",
+    "title": "Le récap\n des secrets 🕵️",
+    "kept": "GARDÉS",
+    "revealed": "RÉVÉLÉS",
+    "statusRevealed": "CRAMÉ",
+    "statusKept": "SECRET",
+    "answerShort": " · rép. ",
+    "playAgain": "Rejouer",
+    "backToHub": "Retour au hub"
+  },
+  "roles": {
+    "questioner": "questionneur",
+    "target": "cible"
+  }
+  }
 }

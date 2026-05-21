@@ -9,7 +9,7 @@ import {
   ParanoiaIcon,
   PureteIcon,
   RedFlagIcon,
-} from '../components';
+} from '../components/icons';
 import { T } from '../constants/flipTokens';
 import { Entitlement } from '../entitlements';
 
@@ -48,8 +48,8 @@ export interface GameConfig {
   color: GameColorToken;
   minPlayers: number;
   maxPlayers: number;
-  playersLabel: string;
-  durationLabel: string;
+  playersLabelKey: string;
+  durationLabelKey: string;
   route: GameRoute;
   requires: readonly Entitlement[];
   variants?: readonly GameVariantConfig[];
@@ -67,8 +67,8 @@ export const GAMES: readonly GameConfig[] = [
     color: 'tomato',
     minPlayers: 1,
     maxPlayers: 99,
-    playersLabel: '1+',
-    durationLabel: '5 min',
+    playersLabelKey: 'games:labels.players.redFlag',
+    durationLabelKey: 'games:labels.duration.redFlag',
     route: 'RedFlag',
     requires: [],
     enabled: true,
@@ -82,8 +82,8 @@ export const GAMES: readonly GameConfig[] = [
     color: 'castingOrange',
     minPlayers: 3,
     maxPlayers: 11,
-    playersLabel: '3–11',
-    durationLabel: '20 min',
+    playersLabelKey: 'games:labels.players.casting',
+    durationLabelKey: 'games:labels.duration.casting',
     route: 'Casting',
     requires: [],
     variants: [{ id: 'drinks', requires: 'drinks_mode' }],
@@ -97,8 +97,8 @@ export const GAMES: readonly GameConfig[] = [
     color: 'pink',
     minPlayers: 2,
     maxPlayers: 99,
-    playersLabel: '2+',
-    durationLabel: '20 min',
+    playersLabelKey: 'games:labels.players.apero',
+    durationLabelKey: 'games:labels.duration.apero',
     route: 'Apero',
     requires: [],
     variants: [{ id: 'drinks', requires: 'drinks_mode' }],
@@ -112,8 +112,8 @@ export const GAMES: readonly GameConfig[] = [
     color: 'cobalt',
     minPlayers: 5,
     maxPlayers: 20,
-    playersLabel: '5+',
-    durationLabel: '10 min',
+    playersLabelKey: 'games:labels.players.medusa',
+    durationLabelKey: 'games:labels.duration.medusa',
     route: 'Medusa',
     requires: [],
     variants: [{ id: 'drinks', requires: 'drinks_mode' }],
@@ -127,8 +127,8 @@ export const GAMES: readonly GameConfig[] = [
     color: 'teal',
     minPlayers: 4,
     maxPlayers: 10,
-    playersLabel: '4+',
-    durationLabel: '15 min',
+    playersLabelKey: 'games:labels.players.paranoia',
+    durationLabelKey: 'games:labels.duration.paranoia',
     route: 'Paranoia',
     requires: [],
     enabled: true,
@@ -141,8 +141,8 @@ export const GAMES: readonly GameConfig[] = [
     color: 'mint',
     minPlayers: 4,
     maxPlayers: 10,
-    playersLabel: '4–10',
-    durationLabel: '15 min',
+    playersLabelKey: 'games:labels.players.cameleon',
+    durationLabelKey: 'games:labels.duration.cameleon',
     route: 'Cameleon',
     requires: [],
     enabled: true,
@@ -155,8 +155,8 @@ export const GAMES: readonly GameConfig[] = [
     color: 'lemon',
     minPlayers: 2,
     maxPlayers: 99,
-    playersLabel: '2+',
-    durationLabel: '10 min',
+    playersLabelKey: 'games:labels.players.leftRight',
+    durationLabelKey: 'games:labels.duration.leftRight',
     route: 'LeftRight',
     requires: [],
     enabled: true,
@@ -169,8 +169,8 @@ export const GAMES: readonly GameConfig[] = [
     color: 'violet',
     minPlayers: 1,
     maxPlayers: 99,
-    playersLabel: '1+',
-    durationLabel: '5 min',
+    playersLabelKey: 'games:labels.players.purityTest',
+    durationLabelKey: 'games:labels.duration.purityTest',
     route: 'PurityTest',
     requires: [],
     variants: [

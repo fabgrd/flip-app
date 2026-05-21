@@ -28,9 +28,9 @@ export function SuggestButton() {
     if (!text.trim()) return;
     const game = selectedGameId ? GAMES.find((g) => g.id === selectedGameId) : null;
     const gameName = game ? t(game.titleKey) : t('settings:suggest.allGames');
-    const subject = encodeURIComponent(`[FL!P] Suggestion – ${gameName}`);
+    const subject = encodeURIComponent(t('settings:suggest.emailSubject', { game: gameName }));
     const body = encodeURIComponent(
-      `Jeu : ${gameName}\n\nQuestion / phrase suggérée :\n${text.trim()}`,
+      t('settings:suggest.emailBody', { game: gameName, suggestion: text.trim() }),
     );
     Linking.openURL(`mailto:hello@flipgame.app?subject=${subject}&body=${body}`);
     setSubmitted(true);

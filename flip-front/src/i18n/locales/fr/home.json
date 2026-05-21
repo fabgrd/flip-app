@@ -16,7 +16,17 @@
     "title": "Joueurs ({{count}})",
     "empty": "Aucun joueur ajouté"
   },
+  "hero": {
+    "titlePrefix": "Qui est",
+    "titleHighlight": "de la partie",
+    "titleSuffix": "?",
+    "ready_one": "{{count}} joueur prêt à se ridiculiser.",
+    "ready_other": "{{count}} joueurs prêts à se ridiculiser.",
+    "addAtLeast_one": "Ajoute au moins {{min}} joueur pour démarrer.",
+    "addAtLeast_other": "Ajoute au moins {{min}} joueurs pour démarrer."
+  },
   "actions": {
-    "start": "Commencer à jouer !"
+    "start": "Commencer à jouer !",
+    "startCta": "C'est parti →"
   }
 }

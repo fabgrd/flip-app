@@ -24,7 +24,9 @@
     "submit": "Send my suggestion",
     "successTitle": "Thanks!",
     "successDesc": "We'll read your suggestion carefully. The best questions make it into the game 🤞",
-    "close": "Close"
+    "close": "Close",
+    "emailSubject": "[FL!P] Suggestion – {{game}}",
+    "emailBody": "Game: {{game}}\n\nSuggested question / phrase:\n{{suggestion}}"
   },
   "drinks": {
     "title": "Drinking game mode",

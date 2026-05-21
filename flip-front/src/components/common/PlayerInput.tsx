@@ -40,7 +40,7 @@ export function PlayerInput({ onAddPlayer, maxPlayers, currentPlayerCount }: Pla
       <View style={[styles.inputRow, isMaxReached && styles.inputRowDisabled]}>
         <TextInput
           style={styles.input}
-          placeholder="Prénom du joueur"
+          placeholder={t('common:labels.playerName')}
           placeholderTextColor={T.muted}
           value={playerName}
           onChangeText={setPlayerName}
@@ -57,7 +57,7 @@ export function PlayerInput({ onAddPlayer, maxPlayers, currentPlayerCount }: Pla
           disabled={!canAdd}
           style={styles.addBtn}
         >
-          Ajouter +
+          {t('common:buttons.addPlus')}
         </FlatChunkyButton>
       </View>
       {isMaxReached && (

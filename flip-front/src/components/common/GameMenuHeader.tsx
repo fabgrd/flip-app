@@ -1,6 +1,7 @@
 import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Alert,
   Modal,
@@ -43,6 +44,7 @@ export function PlayersModal({
   hint?: string;
 }) {
   const { players, addPlayer, removePlayer } = usePlayers();
+  const { t } = useTranslation();
   const [name, setName] = useState('');
 
   const handleAdd = () => {
@@ -50,7 +52,7 @@ export function PlayersModal({
     if (!trimmed) return;
     const ok = addPlayer(trimmed);
     if (!ok) {
-      Alert.alert('Ce prénom existe déjà ou limite atteinte');
+      Alert.alert(t('common:errors.playerNameAlreadyExists'));
       return;
     }
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
@@ -88,7 +90,7 @@ export function PlayersModal({
 
           {/* Header */}
           <View style={pm.header}>
-            <Text style={pm.title}>Joueurs</Text>
+            <Text style={pm.title}>{t('common:labels.players')}</Text>
             <View style={pm.countBadge}>
               <Text style={pm.countText}>{players.length}</Text>
             </View>
@@ -100,7 +102,7 @@ export function PlayersModal({
           <View style={pm.inputRow}>
             <TextInput
               style={pm.input}
-              placeholder="Prénom du joueur"
+              placeholder={t('common:labels.playerName')}
               placeholderTextColor={T.muted}
               value={name}
               onChangeText={setName}
@@ -115,7 +117,7 @@ export function PlayersModal({
               activeOpacity={0.8}
               disabled={!name.trim()}
             >
-              <Text style={pm.addBtnText}>+ Ajouter</Text>
+              <Text style={pm.addBtnText}>{t('common:buttons.addPlus')}</Text>
             </TouchableOpacity>
           </View>
 
@@ -127,7 +129,7 @@ export function PlayersModal({
           >
             {players.length === 0 ? (
               <View style={pm.empty}>
-                <Text style={pm.emptyText}>Aucun joueur pour l'instant</Text>
+                <Text style={pm.emptyText}>{t('common:messages.noPlayersAdded')}</Text>
               </View>
             ) : (
               players.map((p) => (
@@ -149,7 +151,7 @@ export function PlayersModal({
 
           {/* Close */}
           <TouchableOpacity style={pm.closeBtn} onPress={onClose} activeOpacity={0.85}>
-            <Text style={pm.closeBtnText}>Fermer</Text>
+            <Text style={pm.closeBtnText}>{t('common:buttons.close')}</Text>
           </TouchableOpacity>
         </Animated.View>
       </Animated.View>

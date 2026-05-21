@@ -16,7 +16,17 @@
     "title": "Players ({{count}})",
     "empty": "No players added"
   },
+  "hero": {
+    "titlePrefix": "Who's",
+    "titleHighlight": "in",
+    "titleSuffix": "?",
+    "ready_one": "{{count}} player ready to embarrass themselves.",
+    "ready_other": "{{count}} players ready to embarrass themselves.",
+    "addAtLeast_one": "Add at least {{min}} player to start.",
+    "addAtLeast_other": "Add at least {{min}} players to start."
+  },
   "actions": {
-    "start": "Start playing!"
+    "start": "Start playing!",
+    "startCta": "Let's go →"
   }
 }

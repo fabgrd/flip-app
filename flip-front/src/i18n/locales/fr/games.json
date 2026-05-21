@@ -2,7 +2,31 @@
   "selection": {
     "title": "Choisis un jeu",
     "subtitle": "{{count}} joueur(s) · prêts à se ridiculiser",
-    "surprise": "Surprends-moi"
+    "surprise": "Surprends-moi",
+    "minPlayersHint": "Il faut au moins {{min}} joueurs pour ce jeu ({{label}}).",
+    "maxPlayersHint": "Ce jeu supporte au maximum {{max}} joueurs ({{label}})."
+  },
+  "labels": {
+    "players": {
+      "redFlag": "1+ joueur",
+      "casting": "3–11 joueurs",
+      "apero": "2+ joueurs",
+      "medusa": "5+ joueurs",
+      "paranoia": "4+ joueurs",
+      "cameleon": "4–10 joueurs",
+      "leftRight": "2+ joueurs",
+      "purityTest": "1+ joueur"
+    },
+    "duration": {
+      "redFlag": "5 min",
+      "casting": "20 min",
+      "apero": "20 min",
+      "medusa": "10 min",
+      "paranoia": "15 min",
+      "cameleon": "15 min",
+      "leftRight": "10 min",
+      "purityTest": "5 min"
+    }
   },
   "redFlag": {
     "title": "Es-tu un Red Flag ?",

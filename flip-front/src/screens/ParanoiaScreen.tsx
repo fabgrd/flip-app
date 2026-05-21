@@ -66,29 +66,10 @@ function PNRules({
   onSettings: () => void;
 }) {
   const [showPlayersModal, setShowPlayersModal] = useState(false);
-  const RULES = [
-    {
-      n: '1',
-      t: 'Le questionneur voit une question',
-      d: 'Genre « qui craquerait en prison ? ». Il la garde secrète.',
-    },
-    {
-      n: '2',
-      t: 'La cible voit la question et choisit',
-      d: "Elle désigne quelqu'un dans le groupe. À voix haute.",
-    },
-    {
-      n: '3',
-      t: 'Le groupe entend la réponse, pas la question',
-      d: 'Tout le monde panique : pourquoi MOI ?',
-    },
-    {
-      n: '4',
-      t: 'Pile ou face — ça révèle ou pas',
-      d: "Si la cible perd au flip, la question s'affiche pour tout le monde.",
-    },
-  ];
-  const rulesModal = RULES.map((rule) => ({ n: rule.n, title: rule.t, desc: rule.d }));
+  const { t } = useTranslation();
+  const rulesModal = t('paranoia:ui.rules.steps', {
+    returnObjects: true,
+  }) as { n: string; title: string; desc: string }[];
 
   return (
     <SafeAreaView style={rules.screen}>
@@ -101,7 +82,7 @@ function PNRules({
         <GameMenuActions
           showDice={false}
           onPressSettings={onSettings}
-          rules={{ rules: rulesModal, title: 'Paranoïa', accentColor: T.teal }}
+          rules={{ rules: rulesModal, title: t('paranoia:ui.rules.title'), accentColor: T.teal }}
           players={players}
           onPlayersChange={onPlayersChange}
         />
@@ -113,8 +94,8 @@ function PNRules({
           <ParanoiaIcon size={80} />
         </View>
 
-        <Text style={rules.title}>Paranoïa</Text>
-        <Text style={rules.tagline}>Qui a dit ton prénom… et pourquoi ?</Text>
+        <Text style={rules.title}>{t('paranoia:ui.rules.title')}</Text>
+        <Text style={rules.tagline}>{t('paranoia:ui.rules.tagline')}</Text>
       </View>
 
       <View style={{ flex: 1 }} />
@@ -136,7 +117,7 @@ function PNRules({
             onStart();
           }}
         >
-          Lancer la paranoïa
+          {t('paranoia:ui.rules.start')}
         </ChunkyButton>
       </View>
       <PlayersModal
@@ -197,13 +178,16 @@ function PNHandoff({
   onReady: () => void;
 }) {
   const btnTextColor = accentColor === T.lemon ? T.ink : '#fff';
+  const { t } = useTranslation();
 
   return (
     <View style={{ flex: 1, backgroundColor: T.ink }}>
       <SafeAreaView style={ho.screen}>
         <View style={ho.center}>
           <View style={[ho.roleBadge, { backgroundColor: accentColor, borderColor: accentColor }]}>
-            <Text style={ho.roleBadgeText}>RÔLE · {role.toUpperCase()}</Text>
+            <Text style={ho.roleBadgeText}>
+              {t('paranoia:ui.handoff.roleLabel', { role: role.toUpperCase() })}
+            </Text>
           </View>
 
           <InitialAvatar
@@ -215,7 +199,7 @@ function PNHandoff({
             shadowColor={accentColor}
           />
 
-          <Text style={ho.name}>Donnes le tel à {playerName}</Text>
+          <Text style={ho.name}>{t('paranoia:ui.handoff.givePhone', { name: playerName })}</Text>
           <Text style={ho.subtitle}>{subtitle}</Text>
         </View>
 
@@ -227,7 +211,7 @@ function PNHandoff({
             shadowColor={accentColor}
             onPress={onReady}
           >
-            C'est moi — afficher
+            {t('paranoia:ui.handoff.ready')}
           </ChunkyButton>
         </View>
       </SafeAreaView>
@@ -285,38 +269,39 @@ function PNQuestionShow({
   question: string;
   onNext: () => void;
 }) {
+  const { t } = useTranslation();
   return (
     <SafeAreaView style={qs.screen}>
       <DotBackground opacity={0.05} />
       <View style={qs.header}>
         <GameChip color={T.teal} textColor="#fff">
-          Questionneur · {questionerName}
+          {t('paranoia:ui.questionShow.chipQuestioner', { name: questionerName })}
         </GameChip>
       </View>
       <View style={qs.body}>
-        <Text style={qs.label}>TA QUESTION SECRÈTE</Text>
+        <Text style={qs.label}>{t('paranoia:ui.questionShow.secretLabel')}</Text>
         <GameCard color={T.lemon} style={{ padding: 28 }}>
           <Text style={qs.questionText}>« {question} »</Text>
         </GameCard>
 
         <View style={{ marginTop: 24 }}>
-          <Text style={qs.label}>TU LA POSES À</Text>
+          <Text style={qs.label}>{t('paranoia:ui.questionShow.askTo')}</Text>
           <GameCard style={{ padding: 14 }}>
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
               <InitialAvatar index={targetIdx} size={44} radius={12} />
               <View>
-                <Text style={qs.targetLabel}>LA CIBLE</Text>
+                <Text style={qs.targetLabel}>{t('paranoia:ui.questionShow.targetLabel')}</Text>
                 <Text style={qs.targetName}>{targetName}</Text>
               </View>
             </View>
           </GameCard>
         </View>
 
-        <Text style={qs.hint}>Pose la question à voix haute… mais sans la dire 😶</Text>
+        <Text style={qs.hint}>{t('paranoia:ui.questionShow.hint')}</Text>
       </View>
       <View style={qs.footer}>
         <ChunkyButton full color={T.teal} onPress={onNext}>
-          Passer le tel à {targetName}
+          {t('paranoia:ui.questionShow.passToTarget', { name: targetName })}
         </ChunkyButton>
       </View>
     </SafeAreaView>
@@ -367,23 +352,22 @@ function PNTargetPick({
   setAnswer: (i: number) => void;
   onNext: () => void;
 }) {
+  const { t } = useTranslation();
   return (
     <SafeAreaView style={tp.screen}>
       <DotBackground color={T.ink} opacity={0.1} />
       <View style={tp.header}>
-        <GameChip color={T.paper}>Cible · {targetName}</GameChip>
+        <GameChip color={T.paper}>{t('paranoia:ui.targetPick.chipTarget', { name: targetName })}</GameChip>
       </View>
       <View style={tp.questionArea}>
-        <Text style={tp.label}>LA QUESTION</Text>
+        <Text style={tp.label}>{t('paranoia:ui.targetPick.questionLabel')}</Text>
         <GameCard style={{ padding: 18 }}>
           <Text style={tp.questionText}>« {question} »</Text>
         </GameCard>
       </View>
       <View style={tp.pickHeader}>
-        <Text style={tp.pickTitle}>
-          Réponds <Text style={{ fontStyle: 'italic' }}>à voix haute.</Text>
-        </Text>
-        <Text style={tp.pickSub}>Et désigne ici la personne dans l'app.</Text>
+        <Text style={tp.pickTitle}>{t('paranoia:ui.targetPick.pickTitle')}</Text>
+        <Text style={tp.pickSub}>{t('paranoia:ui.targetPick.pickSub')}</Text>
       </View>
 
       <ScrollView
@@ -410,7 +394,7 @@ function PNTargetPick({
 
       <View style={tp.footer}>
         <ChunkyButton full color={T.paper} onPress={onNext} disabled={answer == null}>
-          Pile ou face →
+          {t('paranoia:ui.targetPick.coinFlip')}
         </ChunkyButton>
       </View>
     </SafeAreaView>
@@ -489,6 +473,7 @@ function PNCoinFlip({
   setCoin: (r: 'pile' | 'face') => void;
   onNext: () => void;
 }) {
+  const { t } = useTranslation();
   const [flipping, setFlipping] = useState(false);
   const spinAnim = useRef(new Animated.Value(0)).current;
 
@@ -516,23 +501,29 @@ function PNCoinFlip({
   const titleText =
     coin != null
       ? chosenSide === coin
-        ? 'Tu gardes le secret 🤫'
-        : "C'est révélé… 😬"
+        ? t('paranoia:ui.coinFlip.titleSecretKept')
+        : t('paranoia:ui.coinFlip.titleRevealed')
       : chosenSide
-        ? 'Lance la pièce !'
-        : 'Choisis ton camp';
+        ? t('paranoia:ui.coinFlip.titleFlip')
+        : t('paranoia:ui.coinFlip.titleChoose');
 
   const coinBg = coin === 'face' ? T.teal : T.lemon;
   const coinTextColor = coin === 'face' ? '#fff' : T.ink;
   // Hide text during spin — a circle mid-air shows nothing readable
-  const coinLabel = flipping ? '' : (coin ?? 'pile').toUpperCase();
+  const coinLabel =
+    flipping
+      ? ''
+      : (coin === 'face'
+        ? t('paranoia:ui.coinFlip.sideFace')
+        : t('paranoia:ui.coinFlip.sidePile')
+      ).toUpperCase();
 
   return (
     <SafeAreaView style={cf.screen}>
       <DotBackground opacity={0.06} />
       <View style={cf.header}>
         <GameChip color={T.violet} textColor="#fff">
-          Cible · {targetName}
+          {t('paranoia:ui.coinFlip.chipTarget', { name: targetName })}
         </GameChip>
       </View>
 
@@ -557,7 +548,9 @@ function PNCoinFlip({
                   activeOpacity={0.85}
                 >
                   <Text style={[cf.sideBtnText, { color: txtColor }]}>
-                    {side.charAt(0).toUpperCase() + side.slice(1)}
+                    {side === 'pile'
+                      ? t('paranoia:ui.coinFlip.sidePile')
+                      : t('paranoia:ui.coinFlip.sideFace')}
                   </Text>
                 </TouchableOpacity>
               );
@@ -569,11 +562,11 @@ function PNCoinFlip({
       <View style={cf.footer}>
         {coin == null ? (
           <ChunkyButton full color={T.ink} onPress={flip} disabled={!chosenSide || flipping}>
-            {flipping ? 'Ça tourne…' : 'Lancer 🪙'}
+            {flipping ? t('paranoia:ui.coinFlip.flipping') : t('paranoia:ui.coinFlip.flipCta')}
           </ChunkyButton>
         ) : (
           <ChunkyButton full color={T.ink} onPress={onNext}>
-            Voir le verdict →
+            {t('paranoia:ui.coinFlip.seeVerdict')}
           </ChunkyButton>
         )}
       </View>
@@ -657,29 +650,31 @@ function PNReveal({
   onNext: () => void;
 }) {
   const { enabled: drinksEnabled } = useDrinksMode();
+  const { t } = useTranslation();
   // Drink rule: revealed → the picked player drinks 2 sips. Kept secret → the target drinks 1.
   const drinker = won ? targetName : pickedPlayerName;
   const sips = won ? 1 : 2;
+  const drinkPlural = sips > 1 ? 's' : '';
   return (
     <SafeAreaView style={[rev.screen, { backgroundColor: won ? T.mint : T.teal }]}>
       <DotBackground color={T.ink} opacity={0.1} />
 
       <View style={rev.top}>
         <StickerBadge color={T.paper} rotation={-6}>
-          {won ? '🤫 SECRET GARDÉ' : '😈 RÉVÉLATION'}
+          {won ? t('paranoia:ui.reveal.badgeKept') : t('paranoia:ui.reveal.badgeRevealed')}
         </StickerBadge>
         <Text style={[rev.verdict, { color: won ? T.ink : '#fff' }]}>
-          {won ? 'Sauvé.' : 'Cramé !'}
+          {won ? t('paranoia:ui.reveal.verdictKept') : t('paranoia:ui.reveal.verdictRevealed')}
         </Text>
       </View>
 
       <View style={rev.cardArea}>
         {!won ? (
           <GameCard>
-            <Text style={rev.cardLabel}>LA QUESTION ÉTAIT</Text>
+            <Text style={rev.cardLabel}>{t('paranoia:ui.reveal.questionWas')}</Text>
             <Text style={rev.revealQuestion}>« {question} »</Text>
             <View style={rev.answerRow}>
-              <Text style={rev.answerLabel}>RÉPONSE →</Text>
+              <Text style={rev.answerLabel}>{t('paranoia:ui.reveal.answerLabel')}</Text>
               <InitialAvatar index={pickedPlayerIdx} size={32} radius={10} />
               <Text style={rev.answerName}>{pickedPlayerName}</Text>
             </View>
@@ -687,10 +682,10 @@ function PNReveal({
         ) : (
           <GameCard>
             <Text style={rev.wonText}>
-              <Text style={{ fontWeight: '900' }}>{targetName}</Text> garde la question pour
-              lui-même. Le groupe reste dans le flou.{' '}
-              <Text style={{ fontWeight: '900' }}>{questionerName}</Text> peut sourire dans son
-              coin.
+              <Text style={{ fontWeight: '900' }}>{targetName}</Text>{' '}
+              {t('paranoia:ui.reveal.keptTextBefore')}
+              <Text style={{ fontWeight: '900' }}>{questionerName}</Text>
+              {t('paranoia:ui.reveal.keptTextAfter')}
             </Text>
           </GameCard>
         )}
@@ -700,17 +695,18 @@ function PNReveal({
         <View style={rev.drinkBanner}>
           <Text style={rev.drinkBannerEmoji}>🍻</Text>
           <Text style={rev.drinkBannerText}>
-            <Text style={{ fontWeight: '900' }}>{drinker}</Text> bois{' '}
-            <Text style={{ fontWeight: '900' }}>
-              {sips} gorgée{sips > 1 ? 's' : ''}
-            </Text>
+            {t('paranoia:ui.reveal.drink', {
+              name: drinker,
+              count: sips,
+              plural: drinkPlural,
+            })}
           </Text>
         </View>
       )}
 
       <View style={rev.footer}>
         <ChunkyButton full color={T.paper} onPress={onNext}>
-          Tour suivant →
+          {t('paranoia:ui.reveal.next')}
         </ChunkyButton>
       </View>
     </SafeAreaView>
@@ -787,6 +783,7 @@ function PNEnd({
 }) {
   const revealedCount = history.filter((h) => h.revealed).length;
   const keptCount = history.length - revealedCount;
+  const { t } = useTranslation();
 
   return (
     <SafeAreaView style={end.screen}>
@@ -794,18 +791,18 @@ function PNEnd({
 
       <View style={end.hero}>
         <StickerBadge color={T.teal} rotation={-4}>
-          FIN DE PARTIE
+          {t('paranoia:ui.end.badge')}
         </StickerBadge>
-        <Text style={end.title}>Le récap{'\n'}des secrets 🕵️</Text>
+        <Text style={end.title}>{t('paranoia:ui.end.title')}</Text>
       </View>
 
       <View style={end.statsRow}>
         <GameCard color={T.mint} style={{ flex: 1, padding: 14 }}>
-          <Text style={end.statLabel}>GARDÉS</Text>
+          <Text style={end.statLabel}>{t('paranoia:ui.end.kept')}</Text>
           <Text style={end.statValue}>{keptCount}</Text>
         </GameCard>
         <GameCard color={T.teal} style={{ flex: 1, padding: 14 }}>
-          <Text style={end.statLabel}>RÉVÉLÉS</Text>
+          <Text style={end.statLabel}>{t('paranoia:ui.end.revealed')}</Text>
           <Text style={end.statValue}>{revealedCount}</Text>
         </GameCard>
       </View>
@@ -815,13 +812,17 @@ function PNEnd({
           <View key={i} style={end.historyCard}>
             <View style={end.historyRow}>
               <View style={[end.badge, { backgroundColor: h.revealed ? T.teal : T.mint }]}>
-                <Text style={end.badgeText}>{h.revealed ? 'CRAMÉ' : 'SECRET'}</Text>
+                <Text style={end.badgeText}>
+                  {h.revealed
+                    ? t('paranoia:ui.end.statusRevealed')
+                    : t('paranoia:ui.end.statusKept')}
+                </Text>
               </View>
               <Text style={end.historyText} numberOfLines={1}>
                 <Text style={{ fontWeight: '900', color: T.ink }}>{players[h.q]?.name}</Text>
                 <Text style={{ color: T.inkSoft }}> → </Text>
                 <Text style={{ fontWeight: '900', color: T.ink }}>{players[h.t]?.name}</Text>
-                <Text style={{ color: T.inkSoft }}> · rép. </Text>
+                <Text style={{ color: T.inkSoft }}>{t('paranoia:ui.end.answerShort')}</Text>
                 <Text style={{ fontWeight: '900', color: T.ink }}>{players[h.a]?.name}</Text>
               </Text>
             </View>
@@ -831,10 +832,10 @@ function PNEnd({
 
         <View style={end.btnStack}>
           <ChunkyButton full color={T.teal} onPress={onRestart}>
-            Rejouer
+            {t('paranoia:ui.end.playAgain')}
           </ChunkyButton>
           <ChunkyButton full color={T.paper} textColor={T.ink} onPress={onExit}>
-            Retour au hub
+            {t('paranoia:ui.end.backToHub')}
           </ChunkyButton>
         </View>
       </ScrollView>
@@ -953,8 +954,8 @@ export function ParanoiaScreen() {
       <PNHandoff
         playerIdx={cur.q}
         playerName={questioner.name}
-        role="questioneur"
-        subtitle="Tu vas voir une question. Garde-la secrète."
+        role={t('paranoia:ui.roles.questioner')}
+        subtitle={t('paranoia:ui.handoff.subtitleQuestioner')}
         accentColor={T.teal}
         onReady={() => setStep('q-show')}
       />
@@ -978,8 +979,8 @@ export function ParanoiaScreen() {
       <PNHandoff
         playerIdx={cur.t}
         playerName={target.name}
-        role="cible"
-        subtitle="Une question te concerne. Tu vas voir laquelle."
+        role={t('paranoia:ui.roles.target')}
+        subtitle={t('paranoia:ui.handoff.subtitleTarget')}
         accentColor={T.violet}
         onReady={() => setStep('t-pick')}
       />

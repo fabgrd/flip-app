@@ -1,4 +1,5 @@
 import alert from './alert.json';
+import apero from './apero.json';
 import cameleon from './cameleon.json';
 import common from './common.json';
 import games from './games.json';
@@ -22,4 +23,5 @@ export default {
   leftRight,
   paranoia,
   paywall,
+  apero,
 };
