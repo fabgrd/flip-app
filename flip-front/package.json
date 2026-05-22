@@ -32,6 +32,7 @@
     "@react-navigation/native": "^7.1.17",
     "@react-navigation/stack": "^7.4.8",
     "expo": "~56.0.3",
+    "expo-dev-client": "~56.0.14",
     "expo-font": "~56.0.5",
     "expo-haptics": "~56.0.3",
     "expo-image": "^56.0.8",

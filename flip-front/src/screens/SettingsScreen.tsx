@@ -1,17 +1,13 @@
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import React, { useCallback } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { BeerMugIcon, ChunkyButton, DotBackground, SuggestButton, ToggleSwitch } from '../components';
 import { T } from '../constants/flipTokens';
-import { getBetaPremium, setBetaPremium } from '../entitlements/adapters/BetaSubscriptionAdapter';
-import { useEntitlements } from '../entitlements/EntitlementsContext';
 import { useDrinksMode } from '../hooks';
 import { usePaywall } from '../paywall';
-
-const IS_BETA = process.env.APP_VARIANT === 'beta';
 
 const LANGUAGES = [
   { code: 'fr', name: 'Français', flag: '🇫🇷' },
@@ -23,26 +19,6 @@ export function SettingsScreen() {
   const { t, i18n } = useTranslation();
   const drinks = useDrinksMode();
   const { open: openPaywall } = usePaywall();
-  const { refresh: refreshEntitlements } = useEntitlements();
-
-  const handleVersionLongPress = useCallback(async () => {
-    if (!IS_BETA) return;
-    const current = await getBetaPremium();
-    Alert.alert(
-      '🔧 Beta',
-      `Premium : ${current ? '✅ activé' : '❌ désactivé'}`,
-      [
-        {
-          text: current ? 'Désactiver premium' : 'Activer premium',
-          onPress: async () => {
-            await setBetaPremium(!current);
-            await refreshEntitlements();
-          },
-        },
-        { text: 'Fermer', style: 'cancel' },
-      ],
-    );
-  }, [refreshEntitlements]);
 
   const handleLanguageChange = async (languageCode: string) => {
     await i18n.changeLanguage(languageCode);
@@ -159,15 +135,11 @@ export function SettingsScreen() {
           <Text style={styles.sectionTitle}>{t('settings:about.title')}</Text>
           <View style={[styles.card, styles.aboutCard]}>
             <Text style={styles.aboutDescription}>{t('settings:about.description')}</Text>
-            <TouchableOpacity
-              onLongPress={handleVersionLongPress}
-              activeOpacity={IS_BETA ? 0.7 : 1}
-              style={styles.versionPill}
-            >
+            <View style={styles.versionPill}>
               <Text style={styles.versionText}>
                 {t('settings:about.version', { version: '1.0.0' })}
               </Text>
-            </TouchableOpacity>
+            </View>
           </View>
         </View>
       </ScrollView>
