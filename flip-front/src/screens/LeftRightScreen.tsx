@@ -1,5 +1,5 @@
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import React, { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -383,7 +383,7 @@ const styles = StyleSheet.create({
   hintText: { color: T.inkSoft, fontSize: 13, fontStyle: 'italic' },
 
   revealOverlay: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     backgroundColor: 'rgba(24,22,19,0.55)',
     alignItems: 'center',
     justifyContent: 'center',

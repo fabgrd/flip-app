@@ -287,7 +287,7 @@ const cd = StyleSheet.create({
   medusaWrap: { alignItems: 'center' },
   medusaText: { color: '#fff', fontSize: 72, fontWeight: '900', letterSpacing: -3, lineHeight: 70 },
   medusaSub: { color: '#fff', fontSize: 20, fontWeight: '600', marginTop: 20, opacity: 0.85 },
-  flash: { ...StyleSheet.absoluteFillObject, backgroundColor: '#fff' },
+  flash: { ...StyleSheet.absoluteFill, backgroundColor: '#fff' },
 });
 
 // ─── Report ───────────────────────────────────────────────────────────────────
