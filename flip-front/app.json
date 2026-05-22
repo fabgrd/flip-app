@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "flip-front",
-    "slug": "flip-front",
+    "name": "flip",
+    "slug": "flip",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -33,6 +33,9 @@
       "eas": {
         "projectId": "bb645508-4d3c-46f5-94f3-3f63bca9ce53"
       }
-    }
+    },
+    "plugins": [
+      "expo-font"
+    ]
   }
 }
