@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "flip",
+    "name": "Flip",
     "slug": "flip-front",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -9,6 +9,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.fabgrd.flipfront",
+      "buildNumber": "1",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }

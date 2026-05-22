@@ -11,6 +11,13 @@
     "preview": {
       "distribution": "internal"
     },
+    "beta": {
+      "distribution": "store",
+      "env": {
+        "APP_VARIANT": "beta"
+      },
+      "autoIncrement": true
+    },
     "production": {
       "autoIncrement": true
     }

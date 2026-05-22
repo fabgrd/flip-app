@@ -342,7 +342,163 @@ Pattern recommandé pour les tests : ajoute un menu debug derrière un long-pres
 
 ---
 
-## 7. Récap : check-list par jeu
+## 7. Stratégie TestFlight — accès premium à la demande
+
+### Objectif
+
+Pendant la beta TestFlight, on veut deux choses en même temps :
+
+1. **Montrer que le gating fonctionne** : les testeurs voient les cadenas, le paywall, les restrictions free — c'est ce qu'on veut valider.
+2. **Débloquer premium sur demande** pour un testeur qui veut explorer les features payantes, sans passer par StoreKit ou un vrai paiement.
+
+### Pourquoi pas `devTools.ts` ?
+
+`setDevTier` / `setDevOverride` sont compilés uniquement quand `__DEV__ === true`. Un build TestFlight (mode Release) les ignore totalement.
+
+---
+
+### Solution recommandée : `BetaSubscriptionAdapter`
+
+Créer un adapter spécifique qui lit un flag dans `AsyncStorage`. Il est activable depuis un geste secret dans l'app, sans toucher au code de production.
+
+#### 1. L'adapter
+
+```ts
+// src/entitlements/adapters/BetaSubscriptionAdapter.ts
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { SubscriptionAdapter, SubscriptionState } from './types';
+
+const BETA_KEY = '@flip_beta_premium';
+
+export class BetaSubscriptionAdapter implements SubscriptionAdapter {
+  async getState(): Promise<SubscriptionState> {
+    const value = await AsyncStorage.getItem(BETA_KEY);
+    const isPremium = value === 'true';
+    return {
+      tier: isPremium ? 'premium' : 'free',
+      entitlements: isPremium
+        ? ['drinks_mode', 'spicy_content', 'hardcore_content', 'extra_questions', 'premium_themes', 'unlimited_players']
+        : [],
+    };
+  }
+
+  subscribe(callback: (state: SubscriptionState) => void) {
+    // pas de flux temps réel — le toggle nécessite un redémarrage ou un refresh
+    return () => {};
+  }
+}
+
+// Helpers exposés uniquement dans le build beta
+export async function setBetaPremium(enabled: boolean) {
+  await AsyncStorage.setItem(BETA_KEY, String(enabled));
+}
+
+export async function isBetaPremium(): Promise<boolean> {
+  return (await AsyncStorage.getItem(BETA_KEY)) === 'true';
+}
+```
+
+#### 2. Activer l'adapter dans le build beta
+
+Dans `src/entitlements/defaults.ts`, switcher l'adapter selon une variable d'environnement EAS :
+
+```ts
+import Constants from 'expo-constants';
+
+const isBeta = Constants.expoConfig?.extra?.isBetaBuild === true;
+
+export const defaultSubscriptionAdapter = isBeta
+  ? new BetaSubscriptionAdapter()
+  : new MockSubscriptionAdapter(); // remplacé plus tard par RevenueCat
+```
+
+Dans `app.config.ts` (ou `eas.json` via `APP_VARIANT`):
+
+```ts
+// app.config.ts
+extra: {
+  isBetaBuild: process.env.APP_VARIANT === 'beta',
+},
+```
+
+```jsonc
+// eas.json
+{
+  "build": {
+    "beta": {
+      "env": { "APP_VARIANT": "beta" },
+      "distribution": "internal"
+    },
+    "production": {
+      "env": { "APP_VARIANT": "production" }
+    }
+  }
+}
+```
+
+#### 3. Le geste secret dans l'app
+
+Un long-press sur le numéro de version dans Settings (ou tout endroit discret) ouvre un modal beta :
+
+```tsx
+// src/screens/SettingsScreen.tsx (ou équivalent)
+import { setBetaPremium, isBetaPremium } from '../entitlements/adapters/BetaSubscriptionAdapter';
+import Constants from 'expo-constants';
+
+const isBeta = Constants.expoConfig?.extra?.isBetaBuild;
+
+// Afficher seulement si build beta
+{isBeta && (
+  <TouchableOpacity onLongPress={openBetaPanel}>
+    <Text style={styles.version}>v{appVersion}</Text>
+  </TouchableOpacity>
+)}
+```
+
+Le panel beta (simple Alert ou modal discret) :
+
+```tsx
+async function openBetaPanel() {
+  const current = await isBetaPremium();
+  Alert.alert(
+    '🔧 Beta',
+    `Premium actuellement : ${current ? '✅ ON' : '❌ OFF'}`,
+    [
+      { text: current ? 'Désactiver premium' : 'Activer premium', onPress: async () => {
+        await setBetaPremium(!current);
+        // Forcer un refresh du contexte entitlements
+        await EntitlementsContext.refresh?.();
+        // ou simplement : demander au testeur de relancer l'app
+      }},
+      { text: 'Fermer' },
+    ]
+  );
+}
+```
+
+> **Note** : si l'adapter ne supporte pas de `refresh()` temps-réel, le plus simple est de demander au testeur de **quitter et relancer l'app** après le toggle. Ça suffit pour une beta.
+
+---
+
+### Flux testeur : ce qu'on valide
+
+| Scénario | Comment | Ce qu'on vérifie |
+|---|---|---|
+| **Free par défaut** | Build beta sans avoir activé le toggle | Cadenas visibles, paywall s'ouvre au tap |
+| **Premium sur demande** | Long-press version → activer → relancer | Toutes les features débloquées |
+| **Retour à free** | Long-press version → désactiver → relancer | Re-gating immédiat, cadenas reviennent |
+
+---
+
+### Ce qu'il ne faut PAS faire en beta
+
+- ❌ Hardcoder `tier: 'premium'` dans `MockSubscriptionAdapter` : les testeurs ne verront jamais le free flow.
+- ❌ Exposer le toggle en production : l'adapter `BetaSubscriptionAdapter` ne doit être chargé que si `isBetaBuild === true`.
+- ❌ Utiliser `setDevOverride` : ne fonctionne pas en build Release.
+
+---
+
+## 9. Récap : check-list par jeu
 
 Avant de merger l'intégration premium d'un jeu :
 
