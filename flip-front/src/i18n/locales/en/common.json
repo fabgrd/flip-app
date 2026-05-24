@@ -13,7 +13,9 @@
     "addPlus": "Add +",
     "close": "Close",
     "confirm": "Confirm",
-    "playAgain": "Play again"
+    "playAgain": "Play again",
+    "settings": "Settings",
+    "howToPlay": "How to play"
   },
   "labels": {
     "players": "Players",

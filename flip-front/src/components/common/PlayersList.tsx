@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Animated, { FadeInRight, FadeOutLeft } from 'react-native-reanimated';
@@ -23,12 +22,7 @@ export function PlayersList({ players, onRemovePlayer, onUpdateAvatar }: Players
   };
 
   if (players.length === 0) {
-    return (
-      <View style={styles.empty}>
-        <Text style={styles.emptyArrow}>↑</Text>
-        <Text style={styles.emptyText}>{t('home:playersList.empty')}</Text>
-      </View>
-    );
+    return <CrewEmptyState />;
   }
 
   const renderPlayer = ({ item, index }: { item: Player; index: number }) => {
@@ -76,6 +70,77 @@ export function PlayersList({ players, onRemovePlayer, onUpdateAvatar }: Players
     </View>
   );
 }
+
+function CrewEmptyState() {
+  return (
+    <View style={emptyStyles.wrapper}>
+      {/* Formes déco */}
+      <View style={[emptyStyles.deco, { top: 12, left: 20, transform: [{ rotate: '-15deg' }] }]}>
+        <View style={[emptyStyles.decoShape, { width: 36, height: 36, borderRadius: 10, borderColor: T.tomato }]} />
+      </View>
+      <View style={[emptyStyles.deco, { top: 20, right: 30, transform: [{ rotate: '12deg' }] }]}>
+        <View style={[emptyStyles.decoShape, { width: 28, height: 28, borderRadius: 999, borderColor: T.cobalt }]} />
+      </View>
+      <View style={[emptyStyles.deco, { bottom: 18, left: 50, transform: [{ rotate: '8deg' }] }]}>
+        <View style={[emptyStyles.decoShape, { width: 24, height: 24, borderRadius: 6, borderColor: T.mint, transform: [{ rotate: '45deg' }] }]} />
+      </View>
+      <View style={[emptyStyles.deco, { bottom: 14, right: 40, transform: [{ rotate: '-10deg' }] }]}>
+        <View style={[emptyStyles.decoShape, { width: 32, height: 32, borderRadius: 8, borderColor: T.violet }]} />
+      </View>
+
+      {/* Avatars fantômes */}
+      <View style={emptyStyles.avatarRow}>
+        {(['tomato', 'cobalt', 'lemon'] as const).map((c, i) => (
+          <View key={i} style={[emptyStyles.ghostAvatar, { backgroundColor: T[c], marginLeft: i > 0 ? -12 : 0, transform: [{ rotate: `${(i - 1) * 6}deg` }] }]}>
+            <Text style={emptyStyles.ghostQ}>?</Text>
+          </View>
+        ))}
+      </View>
+
+      <View style={emptyStyles.textBlock}>
+        <Text style={emptyStyles.title}>La soirée attend ses héros</Text>
+        <Text style={emptyStyles.sub}>Qui ose jouer ?</Text>
+      </View>
+    </View>
+  );
+}
+
+const emptyStyles = StyleSheet.create({
+  wrapper: {
+    margin: 8,
+    marginHorizontal: 0,
+    padding: 40,
+    paddingHorizontal: 20,
+    borderRadius: 24,
+    borderWidth: 2,
+    borderColor: T.muted,
+    borderStyle: 'dashed',
+    alignItems: 'center',
+    gap: 16,
+    position: 'relative',
+    overflow: 'hidden',
+  },
+  deco: { position: 'absolute' },
+  decoShape: { borderWidth: 2, opacity: 0.3 },
+  avatarRow: { flexDirection: 'row' },
+  ghostAvatar: {
+    width: 56, height: 56, borderRadius: 16,
+    borderWidth: 2, borderColor: T.ink,
+    opacity: 0.2,
+    alignItems: 'center', justifyContent: 'center',
+  },
+  ghostQ: {
+    fontWeight: '800', fontSize: 24, color: T.ink,
+  },
+  textBlock: { alignItems: 'center' },
+  title: {
+    fontWeight: '800', fontSize: 20, color: T.ink,
+    letterSpacing: -0.5, textAlign: 'center',
+  },
+  sub: {
+    fontSize: 14, color: T.muted, marginTop: 4,
+  },
+});
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
@@ -142,22 +207,4 @@ const styles = StyleSheet.create({
   },
   removeBtnText: { color: T.muted, fontSize: 16 },
 
-  empty: {
-    flex: 1,
-    alignItems: 'center',
-    paddingTop: 24,
-    gap: 4,
-  },
-  emptyArrow: {
-    color: T.tomato,
-    fontSize: 28,
-    fontWeight: '900',
-    lineHeight: 32,
-  },
-  emptyText: {
-    color: T.muted,
-    fontSize: 15,
-    fontWeight: '600',
-    textAlign: 'center',
-  },
 });

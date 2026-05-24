@@ -1,6 +1,5 @@
 // L'Apéro — card guessing drinking game
 // Flow: rules → pick dealer → rounds (guess1 → hint → guess2 → reveal) → dealer-pass / quad-flip → end
-import { Feather } from '@expo/vector-icons';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import * as Haptics from 'expo-haptics';
 import React, { useEffect, useRef, useState } from 'react';
@@ -22,11 +21,10 @@ import {
   DrinkModeToggle,
   GameCard,
   GameChip,
-  GameMenuActions,
+  GameHeader,
   GameRulesScreen,
   isRedSuit,
   PlayerPickerGrid,
-  PlayersModal,
   PlayingCardBack,
   PlayingCardFace,
   RulesStepsCard,
@@ -1151,10 +1149,12 @@ const en = StyleSheet.create({
 
 const playTopBar = {
   paddingHorizontal: 14,
-  paddingVertical: 6,
+  paddingTop: 4,
+  paddingBottom: 8,
   flexDirection: 'row' as const,
-  justifyContent: 'space-between' as const,
+  justifyContent: 'center' as const,
   alignItems: 'center' as const,
+  flexWrap: 'wrap' as const,
   gap: 6,
 };
 
@@ -1162,6 +1162,7 @@ const playTopBar = {
 
 function AperoGame({ players: initialPlayers, onExit }: { players: Player[]; onExit: () => void }) {
   const navigation = useNavigation<any>();
+  const { t } = useTranslation();
   const [players, setPlayers] = useState<Player[]>(initialPlayers);
   const [step, setStep] = useState<ApStep>('rules');
   const [deck] = useState<ApCard[]>(() => apDeck());
@@ -1268,24 +1269,36 @@ function AperoGame({ players: initialPlayers, onExit }: { players: Player[]; onE
       return count >= 4;
     });
 
+    const aperoRulesSteps = (t('apero:rules.steps', { returnObjects: true }) as any[]).map((s: any) => ({
+      n: s.n,
+      title: s.title,
+      desc: s.desc ?? s.descSober ?? s.descDrink ?? '',
+    }));
     return (
       <View style={{ flex: 1, backgroundColor: T.bg }}>
         <SafeAreaView style={{ flex: 1 }}>
           <DotBackground opacity={0.04} />
 
-          {/* Persistent header — never remounts */}
+          <GameHeader
+            tint={T.paper}
+            onExit={onExit}
+            onSettings={() => navigation.navigate('Settings')}
+            rules={{ title: t('apero:rules.modalTitle'), rules: aperoRulesSteps, accentColor: T.pink }}
+            players={players}
+            onPlayersChange={handlePlayersChange}
+          />
+
+          {/* Persistent meta row — centered cluster under the header */}
           <View style={playTopBar}>
             <GameChip color={T.pink} textColor="#fff" textStyle={{ fontSize: 11 }}>
               🃏 {players[dealerIdx].name}
             </GameChip>
-            <View style={{ flexDirection: 'row', gap: 6 }}>
-              <GameChip color={T.paper} textStyle={{ fontSize: 11 }}>
-                {cardPos + 1}/{deck.length}
-              </GameChip>
-              <GameChip color={streak >= 3 ? T.lemon : T.paper} textStyle={{ fontSize: 11 }}>
-                Série {streak}
-              </GameChip>
-            </View>
+            <GameChip color={T.paper} textStyle={{ fontSize: 11 }}>
+              {cardPos + 1}/{deck.length}
+            </GameChip>
+            <GameChip color={streak >= 3 ? T.lemon : T.paper} textStyle={{ fontSize: 11 }}>
+              Série {streak}
+            </GameChip>
           </View>
 
           {/* Persistent bridge — never remounts */}

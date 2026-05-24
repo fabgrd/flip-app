@@ -13,6 +13,7 @@ import {
   DotBackground,
   DrinkModeToggle,
   GameCard,
+  GameHeader,
   GameMenuActions,
   GameRulesScreen,
   PlayersModal,
@@ -373,13 +374,19 @@ const rls = StyleSheet.create({
 function RFPlay({
   questions,
   players,
+  setPlayers,
   cats,
   onFinish,
+  onExit,
+  onSettings,
 }: {
   questions: RFQuestion[];
   players: Player[];
+  setPlayers: (players: Player[]) => void;
   cats: typeof redFlagDataFr.categories;
   onFinish: (playerScores: Record<string, Record<string, number>>) => void;
+  onExit: () => void;
+  onSettings: () => void;
 }) {
   const { enabled: drinksEnabled } = useDrinksMode();
   const [questionIdx, setQuestionIdx] = useState(0);
@@ -417,24 +424,30 @@ function RFPlay({
     <SafeAreaView style={play.screen}>
       <DotBackground color={T.paper} opacity={0.08} />
 
-      {/* Header */}
-      <View style={play.header}>
-        <View style={play.headerRow}>
-          <View style={play.chip}>
-            <Text style={play.chipText}>
-              {questionIdx + 1} / {total}
-            </Text>
-          </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-            <Text style={play.remainingText}>
-              {t('redFlag:ui.play.remaining', { count: remainingPlayers.length })}
-            </Text>
-            <RulesButton rules={t('redFlag:ui.rules.steps', { returnObjects: true }) as any} title={t('redFlag:ui.rules.modalTitle')} accentColor={REDFLAG_BG} />
-          </View>
+      <GameHeader
+        onExit={onExit}
+        onSettings={onSettings}
+        rules={{
+          title: t('redFlag:ui.rules.modalTitle'),
+          rules: t('redFlag:ui.rules.steps', { returnObjects: true }) as any,
+          accentColor: REDFLAG_BG,
+        }}
+        players={players}
+        onPlayersChange={setPlayers}
+        progress={progress}
+        tint={T.paper}
+        progressTrackColor="rgba(255,255,255,0.25)"
+        progressFillColor={T.paper}
+      />
+      <View style={play.metaRow}>
+        <View style={play.chip}>
+          <Text style={play.chipText}>
+            {questionIdx + 1} / {total}
+          </Text>
         </View>
-        <View style={play.progressBar}>
-          <View style={[play.progressFill, { width: `${progress}%` as `${number}%` }]} />
-        </View>
+        <Text style={play.remainingText}>
+          {t('redFlag:ui.play.remaining', { count: remainingPlayers.length })}
+        </Text>
       </View>
 
       {/* Question card */}
@@ -477,6 +490,15 @@ function RFPlay({
 const play = StyleSheet.create({
   screen: { flex: 1, backgroundColor: REDFLAG_BG },
   header: { paddingHorizontal: 20, paddingTop: 8, paddingBottom: 12 },
+  metaRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 10,
+    paddingHorizontal: 20,
+    paddingTop: 8,
+    paddingBottom: 4,
+  },
   headerRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -753,11 +775,14 @@ export function RedFlagScreen() {
       <RFPlay
         questions={session.questions}
         players={players}
+        setPlayers={setPlayers}
         cats={redFlagData.categories}
         onFinish={(scores) => {
           setPlayerScores(scores);
           setStep('result');
         }}
+        onExit={() => navigation.goBack()}
+        onSettings={() => navigation.navigate('Settings')}
       />
     );
   }

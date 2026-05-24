@@ -8,6 +8,7 @@ import {
   ChunkyButton,
   DotBackground,
   DrinkModeToggle,
+  GameHeader,
   GameRulesScreen,
   GaucheDroiteIcon,
   RulesButton
@@ -163,24 +164,28 @@ export function LeftRightScreen() {
   return (
     <SafeAreaView style={styles.screen}>
       <DotBackground color={T.ink} opacity={0.06} />
-      {/* Header / progress */}
-      <View style={styles.header}>
-        <View style={styles.headerRow}>
-          <View style={styles.chip}>
-            <Text style={styles.chipText}>
-              {t('common:labels.question')} {gameState.currentQuestionIndex + 1}/{totalQuestions}
-            </Text>
-          </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-            <Text style={styles.remainingText}>
-              {t('leftRight:ui.remaining', { count: remaining })}
-            </Text>
-            <RulesButton rules={t('leftRight:ui.steps', { returnObjects: true }) as any} title={t('leftRight:ui.modalTitle')} accentColor={T.lemon} />
-          </View>
+      <GameHeader
+        onExit={() => navigation.goBack()}
+        onSettings={() => navigation.navigate('Settings' as never)}
+        rules={{
+          title: t('leftRight:ui.modalTitle'),
+          rules: t('leftRight:ui.steps', { returnObjects: true }) as any,
+          accentColor: T.lemon,
+        }}
+        players={players}
+        onPlayersChange={setPlayers}
+        progress={progress}
+        progressFillColor={T.lemon}
+      />
+      <View style={styles.metaRow}>
+        <View style={styles.chip}>
+          <Text style={styles.chipText}>
+            {t('common:labels.question')} {gameState.currentQuestionIndex + 1}/{totalQuestions}
+          </Text>
         </View>
-        <View style={styles.progressBar}>
-          <View style={[styles.progressFill, { width: `${progress}%` as `${number}%` }]} />
-        </View>
+        <Text style={styles.remainingText}>
+          {t('leftRight:ui.remaining', { count: remaining })}
+        </Text>
       </View>
 
       {/* Question card */}
@@ -287,6 +292,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 8,
     paddingBottom: 12,
+  },
+  metaRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 10,
+    paddingHorizontal: 20,
+    paddingTop: 8,
+    paddingBottom: 4,
   },
   headerRow: {
     flexDirection: 'row',

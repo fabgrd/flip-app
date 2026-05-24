@@ -12,7 +12,9 @@
     "add": "Ajouter",
     "addPlus": "Ajouter +",
     "close": "Fermer",
-    "confirm": "Confirmer"
+    "confirm": "Confirmer",
+    "settings": "Paramètres",
+    "howToPlay": "Comment jouer"
   },
   "labels": {
     "players": "Joueurs",

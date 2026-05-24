@@ -1,6 +1,5 @@
 // Médusa — eye contact game
 // Flow: rules → caller → countdown 3,2,1 MÉDUSA → report pairs → round results → next caller → end
-import { Feather } from '@expo/vector-icons';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import * as Haptics from 'expo-haptics';
 import React, { useEffect, useRef, useState } from 'react';
@@ -22,11 +21,10 @@ import {
   DrinkModeToggle,
   GameCard,
   GameChip,
-  GameMenuActions,
+  GameHeader,
   GameRulesScreen,
   InitialAvatar,
   MedusaIcon,
-  PlayersModal,
   StickerBadge,
 } from '../components';
 import { getPlayerBgColor, getPlayerTextColor } from '../constants';
@@ -298,12 +296,18 @@ function MDReport({
   pairs,
   setPairs,
   onConfirm,
+  onExit,
+  onSettings,
+  setPlayers,
 }: {
   players: Player[];
   callerName: string;
   pairs: MedusaPair[];
   setPairs: (p: MedusaPair[]) => void;
   onConfirm: () => void;
+  onExit: () => void;
+  onSettings: () => void;
+  setPlayers: (p: Player[]) => void;
 }) {
   const { t } = useTranslation();
   const [selecting, setSelecting] = useState<number | null>(null);
@@ -332,9 +336,18 @@ function MDReport({
     setPairs(pairs.filter((_, j) => j !== i));
   };
 
+  const rulesSteps = t('medusa:rules.steps', { returnObjects: true }) as any;
   return (
     <SafeAreaView style={rep.screen}>
       <DotBackground opacity={0.06} />
+      <GameHeader
+        tint={T.paper}
+        onExit={onExit}
+        onSettings={onSettings}
+        rules={{ title: t('medusa:rules.modalTitle'), rules: rulesSteps, accentColor: T.cobalt }}
+        players={players}
+        onPlayersChange={setPlayers}
+      />
 
       <View style={rep.header}>
         <GameChip color={T.cobalt} textColor="#fff">
@@ -530,12 +543,18 @@ function MDResults({
   roundNum,
   totalRounds,
   onNext,
+  onExit,
+  onSettings,
+  setPlayers,
 }: {
   players: Player[];
   pairs: MedusaPair[];
   roundNum: number;
   totalRounds: number;
   onNext: () => void;
+  onExit: () => void;
+  onSettings: () => void;
+  setPlayers: (p: Player[]) => void;
 }) {
   const { t } = useTranslation();
   const hasCatches = pairs.length > 0;
@@ -544,9 +563,18 @@ function MDResults({
   const safePlayers = players.filter((_, i) => !caughtSet.has(i));
   const isLast = roundNum >= totalRounds;
 
+  const rulesSteps = t('medusa:rules.steps', { returnObjects: true }) as any;
   return (
     <SafeAreaView style={[res.screen, { backgroundColor: hasCatches ? T.tomato : T.mint }]}>
       <DotBackground color={T.ink} opacity={0.1} />
+      <GameHeader
+        tint={T.paper}
+        onExit={onExit}
+        onSettings={onSettings}
+        rules={{ title: t('medusa:rules.modalTitle'), rules: rulesSteps, accentColor: T.cobalt }}
+        players={players}
+        onPlayersChange={setPlayers}
+      />
 
       <View style={res.top}>
         <StickerBadge color={T.paper} rotation={-6} textColor={T.ink}>
@@ -895,6 +923,9 @@ export function MedusaScreen() {
         pairs={roundPairs}
         setPairs={setRoundPairs}
         onConfirm={() => setStep('results')}
+        onExit={() => (navigation as any).goBack()}
+        onSettings={() => (navigation as any).navigate('Settings')}
+        setPlayers={setPlayers}
       />
     );
   }
@@ -906,6 +937,9 @@ export function MedusaScreen() {
         roundNum={callerIdx + 1}
         totalRounds={players.length}
         onNext={confirmRound}
+        onExit={() => (navigation as any).goBack()}
+        onSettings={() => (navigation as any).navigate('Settings')}
+        setPlayers={setPlayers}
       />
     );
   }

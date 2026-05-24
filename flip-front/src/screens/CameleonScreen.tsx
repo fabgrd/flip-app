@@ -1,4 +1,3 @@
-import { Feather } from '@expo/vector-icons';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -8,6 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import {
   DotBackground,
+  GameHeader,
   GameRulesScreen,
   PlayerPickerGrid,
   PopModal,
@@ -242,6 +242,19 @@ export function CameleonScreen() {
       {/* ── REVEAL ── */}
       {phase === 'reveal' && currentRevealPlayer && (
         <View style={styles.flex}>
+          <GameHeader
+            floating
+            tint={T.paper}
+            onExit={() => navigation.goBack()}
+            onSettings={() => (navigation as any).navigate('Settings')}
+            rules={{
+              title: t('cameleon:ui.modalTitle'),
+              rules: t('cameleon:ui.steps', { returnObjects: true }) as any,
+              accentColor: T.mint,
+            }}
+            players={localPlayers}
+            onPlayersChange={setLocalPlayers}
+          />
           <RevealCard
             key={currentRevealPlayer.id}
             name={currentRevealPlayer.name}
@@ -263,6 +276,18 @@ export function CameleonScreen() {
       {/* ── CLUES / VOTE ── */}
       {(phase === 'clues' || phase === 'vote' || phase === 'results') && (
         <>
+          <GameHeader
+            tint={T.paper}
+            onExit={() => navigation.goBack()}
+            onSettings={() => (navigation as any).navigate('Settings')}
+            rules={{
+              title: t('cameleon:ui.modalTitle'),
+              rules: t('cameleon:ui.steps', { returnObjects: true }) as any,
+              accentColor: T.mint,
+            }}
+            players={localPlayers}
+            onPlayersChange={setLocalPlayers}
+          />
           <View style={styles.header}>
             <View style={styles.chipRow}>
               <View style={[styles.chip, { backgroundColor: T.mint }]}>

@@ -1,6 +1,5 @@
 // Le Casting — jeu d'acting avec chiffres secrets
 // Flow: rules → pick-devin → scenario → handoff+reveal (each actor) → perform → guess → results
-import { Feather } from '@expo/vector-icons';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import * as Haptics from 'expo-haptics';
 import React, { useMemo, useRef, useState } from 'react';
@@ -15,11 +14,10 @@ import {
   DrinkModeToggle,
   GameCard,
   GameChip,
-  GameMenuActions,
+  GameHeader,
   GameRulesScreen,
   InitialAvatar,
   PlayerPickerGrid,
-  PlayersModal,
   StickerBadge,
   ThemeGrid,
 } from '../components';
@@ -196,15 +194,32 @@ function CAScenario({
   scenario,
   devin,
   onNext,
+  onExit,
+  onSettings,
+  players,
+  setPlayers,
 }: {
   scenario: string;
   devin: Player;
   onNext: () => void;
+  onExit: () => void;
+  onSettings: () => void;
+  players: Player[];
+  setPlayers: (p: Player[]) => void;
 }) {
   const { t } = useTranslation();
+  const rulesSteps = t('casting:rules.steps', { returnObjects: true }) as any;
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: CASTING_ORANGE }}>
       <DotBackground color={T.ink} opacity={0.07} />
+      <GameHeader
+        tint={T.paper}
+        onExit={onExit}
+        onSettings={onSettings}
+        rules={{ title: t('casting:rules.modalTitle'), rules: rulesSteps, accentColor: CASTING_ORANGE }}
+        players={players}
+        onPlayersChange={setPlayers}
+      />
       <View style={sc.header}>
         <GameChip color={T.paper}>{t('casting:scenario.devinChip', { name: devin.name })}</GameChip>
       </View>
@@ -341,12 +356,20 @@ function CARevealNumber({
   number,
   scenario,
   onNext,
+  onExit,
+  onSettings,
+  players,
+  setPlayers,
 }: {
   player: Player;
   playerIdx: number;
   number: number;
   scenario: string;
   onNext: () => void;
+  onExit: () => void;
+  onSettings: () => void;
+  players: Player[];
+  setPlayers: (p: Player[]) => void;
 }) {
   const { t } = useTranslation();
   const [revealed, setRevealed] = useState(false);
@@ -367,9 +390,18 @@ function CARevealNumber({
   const numFg = number >= 9 ? T.ink : '#fff';
   const label = t(`casting:labels.${number}`);
 
+  const rulesSteps = t('casting:rules.steps', { returnObjects: true }) as any;
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: T.paper }}>
       <DotBackground opacity={0.05} />
+      <GameHeader
+        tint={T.paper}
+        onExit={onExit}
+        onSettings={onSettings}
+        rules={{ title: t('casting:rules.modalTitle'), rules: rulesSteps, accentColor: CASTING_ORANGE }}
+        players={players}
+        onPlayersChange={setPlayers}
+      />
       <View style={rn.header}>
         <GameChip color={CASTING_ORANGE} textColor="#fff">
           {player.name}
@@ -619,6 +651,10 @@ function CAGuessPlayer({
   total,
   usedNums,
   onGuess,
+  onExit,
+  onSettings,
+  players,
+  setPlayers,
 }: {
   actor: Player;
   actorIdx: number;
@@ -627,13 +663,26 @@ function CAGuessPlayer({
   total: number;
   usedNums: number[];
   onGuess: (num: number) => void;
+  onExit: () => void;
+  onSettings: () => void;
+  players: Player[];
+  setPlayers: (p: Player[]) => void;
 }) {
   const { t } = useTranslation();
   const [guess, setGuess] = useState<number | null>(null);
+  const rulesSteps = t('casting:rules.steps', { returnObjects: true }) as any;
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: T.bg }}>
       <DotBackground opacity={0.06} />
+      <GameHeader
+        tint={T.paper}
+        onExit={onExit}
+        onSettings={onSettings}
+        rules={{ title: t('casting:rules.modalTitle'), rules: rulesSteps, accentColor: CASTING_ORANGE }}
+        players={players}
+        onPlayersChange={setPlayers}
+      />
       <View style={gp.header}>
         <GameChip color={CASTING_ORANGE} textColor="#fff">
           {t('casting:guess.devinChip', { name: devin.name })}
@@ -693,8 +742,10 @@ const gp = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 8,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: 8,
   },
   body: {
     flex: 1,
@@ -1179,6 +1230,10 @@ function CastingGame({
           setCurPos(0);
           setStep('handoff');
         }}
+        onExit={onExit}
+        onSettings={onSettings}
+        players={players}
+        setPlayers={setPlayers}
       />
     );
   }
@@ -1214,6 +1269,10 @@ function CastingGame({
             setStep('perform');
           }
         }}
+        onExit={onExit}
+        onSettings={onSettings}
+        players={players}
+        setPlayers={setPlayers}
       />
     );
   }
@@ -1246,6 +1305,10 @@ function CastingGame({
         pos={guessPos}
         total={actors.length}
         usedNums={usedNums}
+        onExit={onExit}
+        onSettings={onSettings}
+        players={players}
+        setPlayers={setPlayers}
         onGuess={(num) => {
           const ng = { ...guesses, [actorIdx]: num };
           setGuesses(ng);

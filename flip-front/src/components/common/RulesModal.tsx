@@ -16,6 +16,73 @@ interface RulesModalProps {
   accentColor?: string;
 }
 
+export function RulesModalView({
+  visible,
+  onClose,
+  rules,
+  title,
+  accentColor = T.mint,
+}: RulesModalProps & { visible: boolean; onClose: () => void }) {
+  return (
+    <Modal visible={visible} transparent animationType="none" onRequestClose={onClose}>
+      <Animated.View
+        entering={FadeIn.duration(150)}
+        exiting={FadeOut.duration(150)}
+        style={styles.overlay}
+      >
+        <TouchableOpacity style={StyleSheet.absoluteFill} onPress={onClose} />
+        <Animated.View
+          entering={ZoomIn.duration(200)}
+          exiting={ZoomOut.duration(150)}
+          style={styles.card}
+        >
+          <View style={[styles.cardHeader, { backgroundColor: accentColor }]}>
+            <Text style={styles.cardTitle}>{title}</Text>
+            <FlatChunkyButton
+              size="xs"
+              square
+              color={T.paper}
+              textColor={T.ink}
+              metrics={{ height: 30, radius: 9, paddingH: 0, fontSize: 13 }}
+              onPress={onClose}
+            >
+              <Text style={styles.closeBtnText}>✕</Text>
+            </FlatChunkyButton>
+          </View>
+
+          <ScrollView
+            contentContainerStyle={styles.rulesContent}
+            showsVerticalScrollIndicator={false}
+          >
+            {rules.map((rule) => (
+              <View key={rule.n} style={styles.ruleRow}>
+                <View style={styles.ruleNum}>
+                  <Text style={styles.ruleNumText}>{rule.n}</Text>
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={styles.ruleTitle}>{rule.title}</Text>
+                  <Text style={styles.ruleDesc}>{rule.desc}</Text>
+                </View>
+              </View>
+            ))}
+          </ScrollView>
+
+          <FlatChunkyButton
+            size="sm"
+            color={T.ink}
+            textColor="#fff"
+            metrics={{ fontSize: 16 }}
+            style={styles.doneBtn}
+            onPress={onClose}
+          >
+            {"OK, j'ai compris !"}
+          </FlatChunkyButton>
+        </Animated.View>
+      </Animated.View>
+    </Modal>
+  );
+}
+
 export function RulesButton({ rules, title, accentColor = T.mint }: RulesModalProps) {
   const [visible, setVisible] = useState(false);
 
@@ -30,69 +97,13 @@ export function RulesButton({ rules, title, accentColor = T.mint }: RulesModalPr
       >
         <Text style={styles.triggerText}>?</Text>
       </FlatChunkyButton>
-
-      <Modal
+      <RulesModalView
         visible={visible}
-        transparent
-        animationType="none"
-        onRequestClose={() => setVisible(false)}
-      >
-        <Animated.View
-          entering={FadeIn.duration(150)}
-          exiting={FadeOut.duration(150)}
-          style={styles.overlay}
-        >
-          <TouchableOpacity style={StyleSheet.absoluteFill} onPress={() => setVisible(false)} />
-          <Animated.View
-            entering={ZoomIn.duration(200)}
-            exiting={ZoomOut.duration(150)}
-            style={styles.card}
-          >
-            {/* Header */}
-            <View style={[styles.cardHeader, { backgroundColor: accentColor }]}>
-              <Text style={styles.cardTitle}>{title}</Text>
-              <FlatChunkyButton
-                size="xs"
-                square
-                color={T.paper}
-                textColor={T.ink}
-                metrics={{ height: 30, radius: 9, paddingH: 0, fontSize: 13 }}
-                onPress={() => setVisible(false)}
-              >
-                <Text style={styles.closeBtnText}>✕</Text>
-              </FlatChunkyButton>
-            </View>
-
-            <ScrollView
-              contentContainerStyle={styles.rulesContent}
-              showsVerticalScrollIndicator={false}
-            >
-              {rules.map((rule) => (
-                <View key={rule.n} style={styles.ruleRow}>
-                  <View style={styles.ruleNum}>
-                    <Text style={styles.ruleNumText}>{rule.n}</Text>
-                  </View>
-                  <View style={{ flex: 1 }}>
-                    <Text style={styles.ruleTitle}>{rule.title}</Text>
-                    <Text style={styles.ruleDesc}>{rule.desc}</Text>
-                  </View>
-                </View>
-              ))}
-            </ScrollView>
-
-            <FlatChunkyButton
-              size="sm"
-              color={T.ink}
-              textColor="#fff"
-              metrics={{ fontSize: 16 }}
-              style={styles.doneBtn}
-              onPress={() => setVisible(false)}
-            >
-              {"OK, j'ai compris !"}
-            </FlatChunkyButton>
-          </Animated.View>
-        </Animated.View>
-      </Modal>
+        onClose={() => setVisible(false)}
+        rules={rules}
+        title={title}
+        accentColor={accentColor}
+      />
     </>
   );
 }

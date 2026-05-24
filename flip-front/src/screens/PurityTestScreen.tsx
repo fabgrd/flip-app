@@ -10,6 +10,7 @@ import {
   ChunkyButton,
   DotBackground,
   DrinkModeToggle,
+  GameHeader,
   GameMenuActions,
   GameRulesScreen,
   PlayersModal,
@@ -353,24 +354,28 @@ export function PurityTestScreen() {
   return (
     <SafeAreaView style={styles.screen}>
       <DotBackground color={T.paper} opacity={0.08} />
-      {/* Header */}
-      <View style={styles.header}>
-        <View style={styles.headerRow}>
-          <View style={styles.chip}>
-            <Text style={styles.chipText}>
-              {gameState.currentQuestionIndex + 1} / {totalQuestions}
-            </Text>
-          </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-            <Text style={styles.remainingText}>
-              {t('purityTest:game.remainingPlayers', { count: remaining })}
-            </Text>
-            <RulesButton rules={t('purityTest:ui.steps', { returnObjects: true }) as any} title={t('purityTest:ui.rulesBtn')} accentColor={T.violet} />
-          </View>
+      <GameHeader
+        onExit={() => navigation.goBack()}
+        onSettings={() => navigation.navigate('Settings' as never)}
+        rules={{
+          title: t('purityTest:ui.rulesBtn'),
+          rules: t('purityTest:ui.steps', { returnObjects: true }) as any,
+          accentColor: T.violet,
+        }}
+        players={players}
+        onPlayersChange={setPlayers}
+        progress={progress}
+        progressFillColor={T.violet}
+      />
+      <View style={styles.metaRow}>
+        <View style={styles.chip}>
+          <Text style={styles.chipText}>
+            {gameState.currentQuestionIndex + 1} / {totalQuestions}
+          </Text>
         </View>
-        <View style={styles.progressBar}>
-          <View style={[styles.progressFill, { width: `${progress}%` as `${number}%` }]} />
-        </View>
+        <Text style={styles.remainingText}>
+          {t('purityTest:game.remainingPlayers', { count: remaining })}
+        </Text>
       </View>
 
       {/* Question card */}
@@ -416,6 +421,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 8,
     paddingBottom: 12,
+  },
+  metaRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 10,
+    paddingHorizontal: 20,
+    paddingTop: 8,
+    paddingBottom: 4,
   },
   headerRow: {
     flexDirection: 'row',

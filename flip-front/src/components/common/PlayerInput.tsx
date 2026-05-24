@@ -46,6 +46,7 @@ export function PlayerInput({ onAddPlayer, maxPlayers, currentPlayerCount }: Pla
           onChangeText={setPlayerName}
           onSubmitEditing={handleAdd}
           returnKeyType="done"
+          autoCorrect={false}
           maxLength={20}
           editable={!isMaxReached}
         />

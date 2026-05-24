@@ -1,8 +1,6 @@
 // Paranoïa — secret question, target picks, coin flip reveals or hides
 // Flow: rules → handoff Q → q-show → handoff Target → t-pick → coin → reveal → next/end
-import { Feather } from '@expo/vector-icons';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import * as Haptics from 'expo-haptics';
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -22,11 +20,10 @@ import {
   DrinkModeToggle,
   GameCard,
   GameChip,
-  GameMenuActions,
+  GameHeader,
   GameRulesScreen,
   InitialAvatar,
   ParanoiaIcon,
-  PlayersModal,
   StickerBadge,
 } from '../components';
 import { T } from '../constants/flipTokens';
@@ -195,17 +192,34 @@ function PNQuestionShow({
   targetName,
   question,
   onNext,
+  onExit,
+  onSettings,
+  players,
+  setPlayers,
 }: {
   questionerName: string;
   targetIdx: number;
   targetName: string;
   question: string;
   onNext: () => void;
+  onExit: () => void;
+  onSettings: () => void;
+  players: Player[];
+  setPlayers: (p: Player[]) => void;
 }) {
   const { t } = useTranslation();
+  const rulesSteps = t('paranoia:ui.rules.steps', { returnObjects: true }) as any;
   return (
     <SafeAreaView style={qs.screen}>
       <DotBackground opacity={0.05} />
+      <GameHeader
+        tint={T.paper}
+        onExit={onExit}
+        onSettings={onSettings}
+        rules={{ title: t('paranoia:ui.rules.title'), rules: rulesSteps, accentColor: T.teal }}
+        players={players}
+        onPlayersChange={setPlayers}
+      />
       <View style={qs.header}>
         <GameChip color={T.teal} textColor="#fff">
           {t('paranoia:ui.questionShow.chipQuestioner', { name: questionerName })}
@@ -276,6 +290,9 @@ function PNTargetPick({
   answer,
   setAnswer,
   onNext,
+  onExit,
+  onSettings,
+  setPlayers,
 }: {
   targetName: string;
   question: string;
@@ -284,11 +301,23 @@ function PNTargetPick({
   answer: number | null;
   setAnswer: (i: number) => void;
   onNext: () => void;
+  onExit: () => void;
+  onSettings: () => void;
+  setPlayers: (p: Player[]) => void;
 }) {
   const { t } = useTranslation();
+  const rulesSteps = t('paranoia:ui.rules.steps', { returnObjects: true }) as any;
   return (
     <SafeAreaView style={tp.screen}>
       <DotBackground color={T.ink} opacity={0.1} />
+      <GameHeader
+        tint={T.paper}
+        onExit={onExit}
+        onSettings={onSettings}
+        rules={{ title: t('paranoia:ui.rules.title'), rules: rulesSteps, accentColor: T.teal }}
+        players={players}
+        onPlayersChange={setPlayers}
+      />
       <View style={tp.header}>
         <GameChip color={T.paper}>{t('paranoia:ui.targetPick.chipTarget', { name: targetName })}</GameChip>
       </View>
@@ -398,6 +427,10 @@ function PNCoinFlip({
   coin,
   setCoin,
   onNext,
+  onExit,
+  onSettings,
+  players,
+  setPlayers,
 }: {
   targetName: string;
   chosenSide: 'pile' | 'face' | null;
@@ -405,6 +438,10 @@ function PNCoinFlip({
   coin: 'pile' | 'face' | null;
   setCoin: (r: 'pile' | 'face') => void;
   onNext: () => void;
+  onExit: () => void;
+  onSettings: () => void;
+  players: Player[];
+  setPlayers: (p: Player[]) => void;
 }) {
   const { t } = useTranslation();
   const [flipping, setFlipping] = useState(false);
@@ -451,9 +488,18 @@ function PNCoinFlip({
         : t('paranoia:ui.coinFlip.sidePile')
       ).toUpperCase();
 
+  const rulesSteps = t('paranoia:ui.rules.steps', { returnObjects: true }) as any;
   return (
     <SafeAreaView style={cf.screen}>
       <DotBackground opacity={0.06} />
+      <GameHeader
+        tint={T.paper}
+        onExit={onExit}
+        onSettings={onSettings}
+        rules={{ title: t('paranoia:ui.rules.title'), rules: rulesSteps, accentColor: T.teal }}
+        players={players}
+        onPlayersChange={setPlayers}
+      />
       <View style={cf.header}>
         <GameChip color={T.violet} textColor="#fff">
           {t('paranoia:ui.coinFlip.chipTarget', { name: targetName })}
@@ -573,6 +619,10 @@ function PNReveal({
   pickedPlayerIdx,
   pickedPlayerName,
   onNext,
+  onExit,
+  onSettings,
+  players,
+  setPlayers,
 }: {
   won: boolean;
   questionerName: string;
@@ -581,6 +631,10 @@ function PNReveal({
   pickedPlayerIdx: number;
   pickedPlayerName: string;
   onNext: () => void;
+  onExit: () => void;
+  onSettings: () => void;
+  players: Player[];
+  setPlayers: (p: Player[]) => void;
 }) {
   const { enabled: drinksEnabled } = useDrinksMode();
   const { t } = useTranslation();
@@ -588,9 +642,18 @@ function PNReveal({
   const drinker = won ? targetName : pickedPlayerName;
   const sips = won ? 1 : 2;
   const drinkPlural = sips > 1 ? 's' : '';
+  const rulesSteps = t('paranoia:ui.rules.steps', { returnObjects: true }) as any;
   return (
     <SafeAreaView style={[rev.screen, { backgroundColor: won ? T.mint : T.teal }]}>
       <DotBackground color={T.ink} opacity={0.1} />
+      <GameHeader
+        tint={T.paper}
+        onExit={onExit}
+        onSettings={onSettings}
+        rules={{ title: t('paranoia:ui.rules.title'), rules: rulesSteps, accentColor: T.teal }}
+        players={players}
+        onPlayersChange={setPlayers}
+      />
 
       <View style={rev.top}>
         <StickerBadge color={T.paper} rotation={-6}>
@@ -903,6 +966,10 @@ export function ParanoiaScreen() {
         targetName={target.name}
         question={cur.question}
         onNext={() => setStep('t-handoff')}
+        onExit={() => (navigation as any).goBack()}
+        onSettings={() => (navigation as any).navigate('Settings')}
+        players={players}
+        setPlayers={setPlayers}
       />
     );
   }
@@ -930,6 +997,9 @@ export function ParanoiaScreen() {
         answer={answer}
         setAnswer={setAnswer}
         onNext={() => setStep('coin')}
+        onExit={() => (navigation as any).goBack()}
+        onSettings={() => (navigation as any).navigate('Settings')}
+        setPlayers={setPlayers}
       />
     );
   }
@@ -943,6 +1013,10 @@ export function ParanoiaScreen() {
         coin={coin}
         setCoin={setCoin}
         onNext={() => setStep('reveal')}
+        onExit={() => (navigation as any).goBack()}
+        onSettings={() => (navigation as any).navigate('Settings')}
+        players={players}
+        setPlayers={setPlayers}
       />
     );
   }
@@ -958,6 +1032,10 @@ export function ParanoiaScreen() {
         pickedPlayerIdx={answer ?? 0}
         pickedPlayerName={players[answer ?? 0]?.name ?? ''}
         onNext={goToNext}
+        onExit={() => (navigation as any).goBack()}
+        onSettings={() => (navigation as any).navigate('Settings')}
+        players={players}
+        setPlayers={setPlayers}
       />
     );
   }
