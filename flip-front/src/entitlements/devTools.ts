@@ -3,7 +3,6 @@ import { getDefaultAdapters } from './defaults';
 import { Entitlement, SubscriptionTier } from './types';
 
 export function setDevTier(tier: SubscriptionTier): void {
-  if (!__DEV__) return;
   const { subscription } = getDefaultAdapters();
   if (subscription instanceof MockSubscriptionAdapter) {
     subscription.setTier(tier);
