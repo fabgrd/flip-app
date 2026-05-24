@@ -17,8 +17,8 @@
     "empty": "Add players to get started"
   },
   "hero": {
-    "titlePrefix": "Who's",
-    "titleHighlight": "in",
+    "titlePrefix": "Who wants to get",
+    "titleHighlight": "wrecked",
     "titleSuffix": "?",
     "ready_one": "{{count}} player ready to embarrass themselves.",
     "ready_other": "{{count}} players ready to embarrass themselves.",

@@ -14,7 +14,6 @@ interface PlayersListProps {
 
 export function PlayersList({ players, onRemovePlayer, onUpdateAvatar }: PlayersListProps) {
   const { showImagePicker } = useImagePicker();
-  const { t } = useTranslation();
 
   const handleAvatarPress = async (player: Player) => {
     const imageUri = await showImagePicker();
@@ -72,6 +71,7 @@ export function PlayersList({ players, onRemovePlayer, onUpdateAvatar }: Players
 }
 
 function CrewEmptyState() {
+  const { t } = useTranslation();
   return (
     <View style={emptyStyles.wrapper}>
       {/* Formes déco */}
@@ -98,8 +98,8 @@ function CrewEmptyState() {
       </View>
 
       <View style={emptyStyles.textBlock}>
-        <Text style={emptyStyles.title}>La soirée attend ses héros</Text>
-        <Text style={emptyStyles.sub}>Qui ose jouer ?</Text>
+        <Text style={emptyStyles.title}>{t('common:emptyPlayers.title')}</Text>
+        <Text style={emptyStyles.sub}>{t('common:emptyPlayers.sub')}</Text>
       </View>
     </View>
   );

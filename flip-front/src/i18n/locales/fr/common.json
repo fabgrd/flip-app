@@ -33,6 +33,10 @@
     "playAgain": "Rejouer",
     "backToHome": "Retour à l'accueil"
   },
+  "emptyPlayers": {
+    "title": "La soirée attend ses héros",
+    "sub": "Qui ose jouer ?"
+  },
   "messages": {
     "success": "Succès !",
     "error": "Une erreur s'est produite",

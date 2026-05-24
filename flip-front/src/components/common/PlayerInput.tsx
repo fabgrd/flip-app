@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Alert, StyleSheet, Text, TextInput, View } from 'react-native';
+import Animated, { useAnimatedStyle, useSharedValue, withRepeat, withSequence, withTiming } from 'react-native-reanimated';
 import { T } from '../../constants/flipTokens';
 import { FlatChunkyButton } from './FlatChunkyButton';
 
@@ -35,6 +36,26 @@ export function PlayerInput({ onAddPlayer, maxPlayers, currentPlayerCount }: Pla
   const isMaxReached = currentPlayerCount >= maxPlayers;
   const canAdd = !isMaxReached && playerName.trim().length > 0;
 
+  const scale = useSharedValue(1);
+  const shouldPulse = !isMaxReached && playerName.trim().length === 0;
+
+  useEffect(() => {
+    if (shouldPulse) {
+      scale.value = withRepeat(
+        withSequence(
+          withTiming(1.07, { duration: 600 }),
+          withTiming(1, { duration: 600 }),
+        ),
+        -1,
+        false,
+      );
+    } else {
+      scale.value = withTiming(1, { duration: 150 });
+    }
+  }, [shouldPulse]);
+
+  const pulseStyle = useAnimatedStyle(() => ({ transform: [{ scale: scale.value }] }));
+
   return (
     <View style={styles.wrapper}>
       <View style={[styles.inputRow, isMaxReached && styles.inputRowDisabled]}>
@@ -50,16 +71,18 @@ export function PlayerInput({ onAddPlayer, maxPlayers, currentPlayerCount }: Pla
           maxLength={20}
           editable={!isMaxReached}
         />
-        <FlatChunkyButton
-          size="sm"
-          color={T.tomato}
-          textColor="#fff"
-          onPress={handleAdd}
-          disabled={!canAdd}
-          style={styles.addBtn}
-        >
-          {t('common:buttons.addPlus')}
-        </FlatChunkyButton>
+        <Animated.View style={pulseStyle}>
+          <FlatChunkyButton
+            size="sm"
+            color={T.tomato}
+            textColor="#fff"
+            onPress={handleAdd}
+            disabled={!canAdd}
+            style={styles.addBtn}
+          >
+            {t('common:buttons.addPlus')}
+          </FlatChunkyButton>
+        </Animated.View>
       </View>
       {isMaxReached && (
         <Text style={styles.limitText}>{t('errors.playerLimitReached', { maxPlayers })}</Text>

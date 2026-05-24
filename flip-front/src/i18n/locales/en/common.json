@@ -30,6 +30,10 @@
     "error": "Error",
     "readyToPlay": "Ready to play"
   },
+  "emptyPlayers": {
+    "title": "The night awaits its heroes",
+    "sub": "Who dares to play?"
+  },
   "messages": {
     "success": "Success!",
     "error": "An error occurred",

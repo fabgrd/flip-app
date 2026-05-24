@@ -410,14 +410,12 @@ function RFPlay({
   };
 
   const handleAllAnswered = () => {
-    setTimeout(() => {
-      if (questionIdx + 1 >= total) {
-        onFinish(playerScores.current);
-      } else {
-        setQuestionIdx((i) => i + 1);
-        setAnsweredIds(new Set());
-      }
-    }, 300);
+    if (questionIdx + 1 >= total) {
+      onFinish(playerScores.current);
+    } else {
+      setQuestionIdx((i) => i + 1);
+      setAnsweredIds(new Set());
+    }
   };
 
   return (

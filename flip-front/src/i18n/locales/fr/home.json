@@ -17,9 +17,9 @@
     "empty": "Ajoute des joueurs pour commencer"
   },
   "hero": {
-    "titlePrefix": "Qui est",
-    "titleHighlight": "de la partie",
-    "titleSuffix": "?",
+    "titlePrefix": "Qui veut se",
+    "titleHighlight": "retourner",
+    "titleSuffix": " ?",
     "ready_one": "{{count}} joueur prêt à se ridiculiser.",
     "ready_other": "{{count}} joueurs prêts à se ridiculiser.",
     "addAtLeast_one": "Ajoute au moins {{min}} joueur pour démarrer.",

@@ -12,6 +12,7 @@ import {
   ChunkyButton,
   DotBackground,
   FlatChunkyButton,
+  FlippingWord,
   PlayerInput,
   PlayersList,
 } from '../components';
@@ -99,10 +100,14 @@ export function HomeScreen() {
 
       {/* Hero text */}
       <View style={styles.hero}>
-        <Text style={styles.heroTitle}>
-          {t('home:hero.titlePrefix')}{'\n'}
-          <Text style={styles.heroHighlight}>{t('home:hero.titleHighlight')}</Text> ?
-        </Text>
+        <View style={styles.heroTitleRow}>
+          <Text style={styles.heroTitle}>{t('home:hero.titlePrefix')} </Text>
+          <FlippingWord
+            text={t('home:hero.titleHighlight')}
+            style={[styles.heroTitle, styles.heroHighlight]}
+          />
+          <Text style={styles.heroTitle}>{t('home:hero.titleSuffix')}</Text>
+        </View>
         <Text style={styles.heroSub}>
           {players.length > 0
             ? t('home:hero.ready', { count: players.length })
@@ -184,13 +189,18 @@ const styles = StyleSheet.create({
     paddingTop: 12,
     paddingBottom: 20,
   },
+  heroTitleRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'flex-end',
+    marginBottom: 8,
+  },
   heroTitle: {
     color: T.ink,
     fontSize: 40,
     fontWeight: '900',
     letterSpacing: -1.5,
     lineHeight: 42,
-    marginBottom: 8,
   },
   heroHighlight: {
     color: T.tomato,

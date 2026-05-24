@@ -298,9 +298,7 @@ export function PurityTestScreen() {
   };
 
   const handleAllCardsComplete = () => {
-    setTimeout(() => {
-      if (canProceedToNextQuestion) nextQuestion();
-    }, 300);
+    if (canProceedToNextQuestion) nextQuestion();
   };
 
   useEffect(() => {

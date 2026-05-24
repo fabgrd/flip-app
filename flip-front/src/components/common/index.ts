@@ -8,6 +8,7 @@ export { ConfettiBurst, ConfettiPiece } from './Confetti';
 export { DotBackground } from './DotBackground';
 export { DrinkModeToggle } from './DrinkModeToggle';
 export { FlatChunkyButton } from './FlatChunkyButton';
+export { FlippingWord } from './FlippingWord';
 export { GameMenuActions, GameMenuHeader, PlayersModal } from './GameMenuHeader';
 export { GameTopBar } from './GameTopBar';
 export { GameHeader } from './GameHeader';

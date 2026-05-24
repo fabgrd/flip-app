@@ -48,7 +48,7 @@ function LRRules({
       onPlayersChange={onPlayersChange}
       onExit={onExit}
       onSettings={onSettings}
-      minPlayers={2}
+      minPlayers={1}
       onStart={onStart}
       startLabel={t('leftRight:ui.start')}
     >

@@ -172,7 +172,7 @@ export const GAMES: readonly GameConfig[] = [
     taglineKey: 'games:leftRight.tagline',
     icon: GaucheDroiteIcon,
     color: 'lemon',
-    minPlayers: 2,
+    minPlayers: 1,
     maxPlayers: 99,
     playersLabelKey: 'games:labels.players.leftRight',
     durationLabelKey: 'games:labels.duration.leftRight',
