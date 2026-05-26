@@ -8,6 +8,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { withRetry } from '../lib/retry';
 import { EntitlementsAdapters, getDefaultAdapters } from './defaults';
 import { resolveSnapshot } from './resolve';
 import {
@@ -65,8 +66,9 @@ export function EntitlementsProvider({
   const refresh = useCallback(async () => {
     const { subscription, remoteConfig, overrides } = adaptersRef.current;
     const [sub, remote, ovr] = await Promise.all([
-      subscription.get(),
-      remoteConfig.get(),
+      withRetry(() => subscription.get(), { scope: 'entitlements.subscription' }),
+      withRetry(() => remoteConfig.get(), { scope: 'entitlements.remoteConfig' }),
+      // Local-only — no retry needed.
       overrides.get(),
     ]);
     subscriptionRef.current = sub;
@@ -79,8 +81,9 @@ export function EntitlementsProvider({
     const { subscription, remoteConfig, overrides } = adaptersRef.current;
     let cancelled = false;
 
-    refresh().catch((err) => {
-      if (!cancelled) console.warn('[entitlements] initial load failed', err);
+    // withRetry already logs to Sentry on final failure.
+    refresh().catch(() => {
+      if (cancelled) return;
     });
 
     const unsubSub = subscription.subscribe((s) => {

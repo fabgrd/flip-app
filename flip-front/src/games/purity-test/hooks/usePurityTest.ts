@@ -2,6 +2,7 @@ import { TFunction } from 'i18next';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Entitlement, useEntitlements } from '../../../entitlements';
+import { captureException } from '../../../lib/sentry';
 import { Player } from '../../../types';
 import { shuffleArray } from '../../../utils/array';
 import { levelRequiredEntitlement } from '../levelTiers';
@@ -258,7 +259,7 @@ function generateGameQuestions(t: TFunction, config?: PurityQuestionConfig): Que
           );
         }
       } catch (error) {
-        console.warn(`Could not load questions for ${theme}.${level}`);
+        captureException(error, { scope: 'purity.loadQuestions', theme, level });
       }
     });
 

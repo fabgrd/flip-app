@@ -1,5 +1,5 @@
 import { Image } from 'expo-image';
-import React from 'react';
+import React, { memo } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { T } from '../../constants/flipTokens';
 
@@ -27,7 +27,7 @@ function getTextColor(bg: string): string {
   return bg === T.lemon || bg === T.pink ? T.ink : '#fff';
 }
 
-export function Avatar({
+function AvatarBase({
   name,
   avatar,
   size = 50,
@@ -60,7 +60,13 @@ export function Avatar({
     return (
       <TouchableOpacity onPress={onPress} disabled={!onPress}>
         <View style={[styles.container, containerStyle]}>
-          <Image source={{ uri: avatar }} style={styles.image} contentFit="cover" />
+          <Image
+            source={{ uri: avatar }}
+            style={styles.image}
+            contentFit="cover"
+            cachePolicy="memory-disk"
+            transition={150}
+          />
           {renderBadge()}
           {showEditIcon && (
             <View style={styles.editIcon}>
@@ -90,6 +96,8 @@ export function Avatar({
     </TouchableOpacity>
   );
 }
+
+export const Avatar = memo(AvatarBase);
 
 const styles = StyleSheet.create({
   badge: {

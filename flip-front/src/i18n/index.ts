@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import { captureException } from '../lib/sentry';
 
 // Import translations
 import en from './locales/en';
@@ -26,7 +27,7 @@ const LANGUAGE_DETECTOR = {
     try {
       await AsyncStorage.setItem('user-language', language);
     } catch (error) {
-      console.error('Error saving language:', error);
+      captureException(error, { scope: 'i18n.saveLanguage' });
     }
   },
 };

@@ -2,7 +2,7 @@ import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import * as Haptics from 'expo-haptics';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -31,23 +31,29 @@ export function HomeScreen() {
   const { players, addPlayer, removePlayer, updatePlayerAvatar } = usePlayers();
   const { open: openPaywall } = usePaywall();
 
-  const handleAddPlayer = (name: string): boolean => {
-    const success = addPlayer(name);
-    if (success) Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    return success;
-  };
+  const handleAddPlayer = useCallback(
+    (name: string): boolean => {
+      const success = addPlayer(name);
+      if (success) Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+      return success;
+    },
+    [addPlayer],
+  );
 
-  const handleRemovePlayer = (id: string) => {
-    removePlayer(id);
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-  };
+  const handleRemovePlayer = useCallback(
+    (id: string) => {
+      removePlayer(id);
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    },
+    [removePlayer],
+  );
 
-  const handleStart = () => {
+  const handleStart = useCallback(() => {
     if (players.length >= MIN_PLAYERS_GLOBAL) {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
       navigation.navigate('GameSelect', { players });
     }
-  };
+  }, [navigation, players]);
 
   const canStart = players.length >= MIN_PLAYERS_GLOBAL;
 

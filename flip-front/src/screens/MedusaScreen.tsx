@@ -1,8 +1,8 @@
 // Médusa — eye contact game
 // Flow: rules → caller → countdown 3,2,1 MÉDUSA → report pairs → round results → next caller → end
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { NavigationProp, RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import * as Haptics from 'expo-haptics';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Animated,
@@ -35,6 +35,17 @@ import { Player, RootStackParamList } from '../types';
 import { drinkUnit, drinkUnitLower } from '../utils/drinks';
 
 type MedusaScreenRouteProp = RouteProp<RootStackParamList, 'Medusa'>;
+type MedusaNavProp = NavigationProp<RootStackParamList>;
+
+type RawRulesStep = {
+  n: string;
+  title: string;
+  desc?: string;
+  descDrink?: string;
+  descSober?: string;
+};
+
+type ResolvedRulesStep = { n: string; title: string; desc: string };
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -43,6 +54,20 @@ function pBg(idx: number): string {
 }
 function pText(idx: number): string {
   return getPlayerTextColor(idx);
+}
+
+function useMedusaRulesSteps(): ResolvedRulesStep[] {
+  const { t } = useTranslation();
+  const { enabled: drinksEnabled } = useDrinksMode();
+  return useMemo(() => {
+    const raw = t('medusa:rules.steps', { returnObjects: true });
+    if (!Array.isArray(raw)) return [];
+    return (raw as RawRulesStep[]).map((s) => ({
+      n: s.n,
+      title: s.title,
+      desc: drinksEnabled ? (s.descDrink ?? s.desc ?? '') : (s.descSober ?? s.desc ?? ''),
+    }));
+  }, [t, drinksEnabled]);
 }
 
 // ─── Rules ────────────────────────────────────────────────────────────────────
@@ -60,14 +85,8 @@ function MDRules({
   onExit: () => void;
   onSettings: () => void;
 }) {
-  const { enabled: drinksEnabled } = useDrinksMode();
   const { t } = useTranslation();
-  const rulesSteps = t('medusa:rules.steps', { returnObjects: true }) as { n: string; title: string; desc?: string; descDrink?: string; descSober?: string }[];
-  const resolvedSteps = rulesSteps.map((s) => ({
-    n: s.n,
-    title: s.title,
-    desc: drinksEnabled ? (s.descDrink ?? s.desc ?? '') : (s.descSober ?? s.desc ?? ''),
-  }));
+  const resolvedSteps = useMedusaRulesSteps();
 
   return (
     <GameRulesScreen
@@ -336,7 +355,7 @@ function MDReport({
     setPairs(pairs.filter((_, j) => j !== i));
   };
 
-  const rulesSteps = t('medusa:rules.steps', { returnObjects: true }) as any;
+  const rulesSteps = useMedusaRulesSteps();
   return (
     <SafeAreaView style={rep.screen}>
       <DotBackground opacity={0.06} />
@@ -558,12 +577,15 @@ function MDResults({
 }) {
   const { t } = useTranslation();
   const hasCatches = pairs.length > 0;
-  const caughtSet = new Set(pairs.flatMap(({ a, b }) => [a, b]));
   const { enabled: drinksEnabled } = useDrinksMode();
-  const safePlayers = players.filter((_, i) => !caughtSet.has(i));
+  const caughtSet = useMemo(() => new Set(pairs.flatMap(({ a, b }) => [a, b])), [pairs]);
+  const safePlayers = useMemo(
+    () => players.filter((_, i) => !caughtSet.has(i)),
+    [players, caughtSet],
+  );
   const isLast = roundNum >= totalRounds;
 
-  const rulesSteps = t('medusa:rules.steps', { returnObjects: true }) as any;
+  const rulesSteps = useMedusaRulesSteps();
   return (
     <SafeAreaView style={[res.screen, { backgroundColor: hasCatches ? T.tomato : T.mint }]}>
       <DotBackground color={T.ink} opacity={0.1} />
@@ -686,11 +708,18 @@ function MDEnd({
   onRestart: () => void;
 }) {
   const { t } = useTranslation();
-  const totalContacts = history.reduce((s, r) => s + r.pairs.length, 0);
   const { enabled: drinksEnabled } = useDrinksMode();
-  const ranked = players
-    .map((p, i) => ({ p, idx: i, pen: penalties[i] }))
-    .sort((a, b) => b.pen - a.pen);
+  const totalContacts = useMemo(
+    () => history.reduce((s, r) => s + r.pairs.length, 0),
+    [history],
+  );
+  const ranked = useMemo(
+    () =>
+      players
+        .map((p, i) => ({ p, idx: i, pen: penalties[i] }))
+        .sort((a, b) => b.pen - a.pen),
+    [players, penalties],
+  );
 
   return (
     <SafeAreaView style={en.screen}>
@@ -863,8 +892,8 @@ const en = StyleSheet.create({
 
 export function MedusaScreen() {
   const route = useRoute<MedusaScreenRouteProp>();
-  const navigation = useNavigation();
-  const [players, setPlayers] = useState<Player[]>(route.params.players as Player[]);
+  const navigation = useNavigation<MedusaNavProp>();
+  const [players, setPlayers] = useState<Player[]>(route.params.players);
 
   const [step, setStep] = useState<MedusaStep>('rules');
   const [callerIdx, setCallerIdx] = useState(0);
@@ -896,8 +925,8 @@ export function MedusaScreen() {
         players={players}
         onPlayersChange={setPlayers}
         onStart={() => setStep('caller')}
-        onExit={() => (navigation as any).goBack()}
-        onSettings={() => (navigation as any).navigate('Settings')}
+        onExit={() => navigation.goBack()}
+        onSettings={() => navigation.navigate('Settings')}
       />
     );
   }
@@ -923,8 +952,8 @@ export function MedusaScreen() {
         pairs={roundPairs}
         setPairs={setRoundPairs}
         onConfirm={() => setStep('results')}
-        onExit={() => (navigation as any).goBack()}
-        onSettings={() => (navigation as any).navigate('Settings')}
+        onExit={() => navigation.goBack()}
+        onSettings={() => navigation.navigate('Settings')}
         setPlayers={setPlayers}
       />
     );
@@ -937,8 +966,8 @@ export function MedusaScreen() {
         roundNum={callerIdx + 1}
         totalRounds={players.length}
         onNext={confirmRound}
-        onExit={() => (navigation as any).goBack()}
-        onSettings={() => (navigation as any).navigate('Settings')}
+        onExit={() => navigation.goBack()}
+        onSettings={() => navigation.navigate('Settings')}
         setPlayers={setPlayers}
       />
     );
@@ -949,7 +978,7 @@ export function MedusaScreen() {
         players={players}
         penalties={penalties}
         history={history}
-        onExit={() => (navigation as any).navigate('Home')}
+        onExit={() => navigation.navigate('Home')}
         onRestart={() => {
           setStep('rules');
           setCallerIdx(0);

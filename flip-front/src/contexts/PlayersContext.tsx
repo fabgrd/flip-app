@@ -1,5 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { captureException } from '../lib/sentry';
+import { randomUUID } from '../lib/uuid';
 import { Player } from '../types';
 
 interface PlayersContextType {
@@ -15,12 +17,32 @@ interface PlayersContextType {
 const PlayersContext = createContext<PlayersContextType | undefined>(undefined);
 
 const PLAYERS_STORAGE_KEY = 'flip_players';
+const MAX_PLAYERS = 10;
+
+function parsePlayers(raw: string): Player[] | null {
+  try {
+    const data = JSON.parse(raw);
+    if (!Array.isArray(data)) return null;
+    const players: Player[] = [];
+    for (const entry of data) {
+      if (!entry || typeof entry !== 'object') return null;
+      const { id, name, avatar } = entry as Record<string, unknown>;
+      if (typeof id !== 'string' || id.length === 0) return null;
+      if (typeof name !== 'string' || name.length === 0) return null;
+      if (avatar !== undefined && typeof avatar !== 'string') return null;
+      players.push(avatar ? { id, name, avatar } : { id, name });
+    }
+    return players.slice(0, MAX_PLAYERS);
+  } catch {
+    return null;
+  }
+}
 
 export function PlayersProvider({ children }: { children: ReactNode }) {
   const [players, setPlayers] = useState<Player[]>([]);
 
   const addPlayer = (name: string): boolean => {
-    if (players.length >= 10) return false;
+    if (players.length >= MAX_PLAYERS) return false;
 
     const trimmedName = name.trim();
     if (trimmedName === '') return false;
@@ -31,7 +53,7 @@ export function PlayersProvider({ children }: { children: ReactNode }) {
     }
 
     const newPlayer: Player = {
-      id: Date.now().toString(),
+      id: randomUUID(),
       name: trimmedName,
     };
 
@@ -54,11 +76,16 @@ export function PlayersProvider({ children }: { children: ReactNode }) {
   const loadPlayers = async () => {
     try {
       const storedPlayers = await AsyncStorage.getItem(PLAYERS_STORAGE_KEY);
-      if (storedPlayers) {
-        setPlayers(JSON.parse(storedPlayers));
+      if (!storedPlayers) return;
+      const parsed = parsePlayers(storedPlayers);
+      if (parsed) {
+        setPlayers(parsed);
+      } else {
+        // Corrupted payload — drop it so we don't keep crashing on next launch.
+        await AsyncStorage.removeItem(PLAYERS_STORAGE_KEY);
       }
     } catch (error) {
-      console.error('Erreur lors du chargement des joueurs:', error);
+      captureException(error, { scope: 'players.load' });
     }
   };
 
@@ -66,7 +93,7 @@ export function PlayersProvider({ children }: { children: ReactNode }) {
     try {
       await AsyncStorage.setItem(PLAYERS_STORAGE_KEY, JSON.stringify(players));
     } catch (error) {
-      console.error('Erreur lors de la sauvegarde des joueurs:', error);
+      captureException(error, { scope: 'players.save' });
     }
   };
 

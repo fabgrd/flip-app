@@ -6,6 +6,7 @@ export { Avatar } from './Avatar';
 export { ChunkyButton } from './ChunkyButton';
 export { ConfettiBurst, ConfettiPiece } from './Confetti';
 export { DotBackground } from './DotBackground';
+export { ErrorBoundary } from './ErrorBoundary';
 export { DrinkModeToggle } from './DrinkModeToggle';
 export { FlatChunkyButton } from './FlatChunkyButton';
 export { FlippingWord } from './FlippingWord';
