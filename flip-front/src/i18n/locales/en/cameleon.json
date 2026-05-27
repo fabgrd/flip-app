@@ -80,122 +80,480 @@
   },
   "wordPairsByTheme": {
     "daily": [
-      { "w": "Cat", "c": "Tiger" },
-      { "w": "Dog", "c": "Wolf" },
-      { "w": "Beach", "c": "Swimming pool" },
-      { "w": "Pizza", "c": "Flatbread" },
-      { "w": "Plane", "c": "Helicopter" },
-      { "w": "Winter", "c": "Autumn" },
-      { "w": "Nurse", "c": "Doctor" },
-      { "w": "Baker", "c": "Pastry chef" },
-      { "w": "Cinema", "c": "Theater" },
-      { "w": "Concert", "c": "Festival" },
-      { "w": "Forest", "c": "Jungle" },
-      { "w": "Snow", "c": "Hail" },
-      { "w": "Car", "c": "Motorcycle" },
-      { "w": "Bed", "c": "Couch" },
-      { "w": "Coffee", "c": "Tea" },
-      { "w": "Bike", "c": "Scooter" },
-      { "w": "Supermarket", "c": "Corner store" },
-      { "w": "Town hall", "c": "City hall" },
-      { "w": "Camembert", "c": "Brie" },
-      { "w": "Bakery", "c": "Sandwich shop" },
-      { "w": "Museum", "c": "Art gallery" },
-      { "w": "Doctor", "c": "Pharmacist" },
-      { "w": "Train", "c": "Bus" },
-      { "w": "Library", "c": "Bookstore" },
-      { "w": "Vacation", "c": "Weekend" },
-      { "w": "House", "c": "Apartment" },
-      { "w": "Rain", "c": "Drizzle" },
-      { "w": "Mountain", "c": "Hill" },
-      { "w": "Shoes", "c": "Sneakers" },
-      { "w": "Alarm clock", "c": "Phone alarm" }
+      {
+        "w": "Cat",
+        "c": "Tiger"
+      },
+      {
+        "w": "Dog",
+        "c": "Wolf"
+      },
+      {
+        "w": "Beach",
+        "c": "Swimming pool"
+      },
+      {
+        "w": "Pizza",
+        "c": "Flatbread"
+      },
+      {
+        "w": "Plane",
+        "c": "Helicopter"
+      },
+      {
+        "w": "Winter",
+        "c": "Autumn"
+      },
+      {
+        "w": "Nurse",
+        "c": "Doctor"
+      },
+      {
+        "w": "Baker",
+        "c": "Pastry chef"
+      },
+      {
+        "w": "Cinema",
+        "c": "Theater"
+      },
+      {
+        "w": "Concert",
+        "c": "Festival"
+      },
+      {
+        "w": "Forest",
+        "c": "Jungle"
+      },
+      {
+        "w": "Snow",
+        "c": "Hail"
+      },
+      {
+        "w": "Car",
+        "c": "Motorcycle"
+      },
+      {
+        "w": "Bed",
+        "c": "Couch"
+      },
+      {
+        "w": "Coffee",
+        "c": "Tea"
+      },
+      {
+        "w": "Bike",
+        "c": "Scooter"
+      },
+      {
+        "w": "Supermarket",
+        "c": "Corner store"
+      },
+      {
+        "w": "Town hall",
+        "c": "City hall"
+      },
+      {
+        "w": "Camembert",
+        "c": "Brie"
+      },
+      {
+        "w": "Bakery",
+        "c": "Sandwich shop"
+      },
+      {
+        "w": "Museum",
+        "c": "Art gallery"
+      },
+      {
+        "w": "Doctor",
+        "c": "Pharmacist"
+      },
+      {
+        "w": "Train",
+        "c": "Bus"
+      },
+      {
+        "w": "Library",
+        "c": "Bookstore"
+      },
+      {
+        "w": "Vacation",
+        "c": "Weekend"
+      },
+      {
+        "w": "House",
+        "c": "Apartment"
+      },
+      {
+        "w": "Rain",
+        "c": "Drizzle"
+      },
+      {
+        "w": "Mountain",
+        "c": "Hill"
+      },
+      {
+        "w": "Shoes",
+        "c": "Sneakers"
+      },
+      {
+        "w": "Alarm clock",
+        "c": "Phone alarm"
+      }
     ],
     "sousculture": [
-      { "w": "Football", "c": "Rugby" },
-      { "w": "Handball", "c": "Basketball" },
-      { "w": "Le Mans", "c": "Monaco (F1)" },
-      { "w": "GTA", "c": "Red Dead Redemption" },
-      { "w": "Fortnite", "c": "PUBG" },
-      { "w": "PS5", "c": "Xbox" },
-      { "w": "Minecraft", "c": "Roblox" },
-      { "w": "League of Legends", "c": "Dota 2" },
-      { "w": "One Piece", "c": "Dragon Ball" },
-      { "w": "Naruto", "c": "Bleach" },
-      { "w": "Marvel", "c": "DC Comics" },
-      { "w": "Netflix", "c": "Disney+" },
-      { "w": "Breaking Bad", "c": "Peaky Blinders" },
-      { "w": "TikTok", "c": "Instagram" },
-      { "w": "Snapchat", "c": "Telegram" },
-      { "w": "Rap", "c": "R&B" },
-      { "w": "Beyoncé", "c": "Rihanna" },
-      { "w": "PNL", "c": "Nekfeu" },
-      { "w": "Nike", "c": "Adidas" },
-      { "w": "Supreme", "c": "Palace" },
-      { "w": "iPhone", "c": "Samsung Galaxy" },
-      { "w": "YouTube", "c": "Twitch" },
-      { "w": "Spotify", "c": "Apple Music" },
-      { "w": "Music festival", "c": "Rave" }
+      {
+        "w": "Football",
+        "c": "Rugby"
+      },
+      {
+        "w": "Handball",
+        "c": "Basketball"
+      },
+      {
+        "w": "Le Mans",
+        "c": "Monaco (F1)"
+      },
+      {
+        "w": "GTA",
+        "c": "Red Dead Redemption"
+      },
+      {
+        "w": "Fortnite",
+        "c": "PUBG"
+      },
+      {
+        "w": "PS5",
+        "c": "Xbox"
+      },
+      {
+        "w": "Minecraft",
+        "c": "Roblox"
+      },
+      {
+        "w": "League of Legends",
+        "c": "Dota 2"
+      },
+      {
+        "w": "One Piece",
+        "c": "Dragon Ball"
+      },
+      {
+        "w": "Naruto",
+        "c": "Bleach"
+      },
+      {
+        "w": "Marvel",
+        "c": "DC Comics"
+      },
+      {
+        "w": "Netflix",
+        "c": "Disney+"
+      },
+      {
+        "w": "Breaking Bad",
+        "c": "Peaky Blinders"
+      },
+      {
+        "w": "TikTok",
+        "c": "Instagram"
+      },
+      {
+        "w": "Snapchat",
+        "c": "Telegram"
+      },
+      {
+        "w": "Rap",
+        "c": "R&B"
+      },
+      {
+        "w": "Beyoncé",
+        "c": "Rihanna"
+      },
+      {
+        "w": "PNL",
+        "c": "Nekfeu"
+      },
+      {
+        "w": "Nike",
+        "c": "Adidas"
+      },
+      {
+        "w": "Supreme",
+        "c": "Palace"
+      },
+      {
+        "w": "iPhone",
+        "c": "Samsung Galaxy"
+      },
+      {
+        "w": "YouTube",
+        "c": "Twitch"
+      },
+      {
+        "w": "Spotify",
+        "c": "Apple Music"
+      },
+      {
+        "w": "Music festival",
+        "c": "Rave"
+      }
     ],
     "football": [
-      { "w": "Football", "c": "Rugby" },
-      { "w": "OM", "c": "OL" },
-      { "w": "Arsenal", "c": "Tottenham" },
-      { "w": "Messi", "c": "Ronaldo" },
-      { "w": "Ligue 1", "c": "Premier League" },
-      { "w": "World Cup", "c": "Euro" },
-      { "w": "Mbappé", "c": "Dembélé" },
-      { "w": "Zidane", "c": "Platini" },
-      { "w": "Neymar", "c": "Suarez" },
-      { "w": "Benzema", "c": "Giroud" },
-      { "w": "Lloris", "c": "Lucas Chevalier" },
-      { "w": "Maradona", "c": "Pelé" },
-      { "w": "Real Madrid", "c": "Atlético Madrid" },
-      { "w": "Manchester United", "c": "Manchester City" },
-      { "w": "Bayern Munich", "c": "Borussia Dortmund" },
-      { "w": "Champions League", "c": "Europa League" }
+      {
+        "w": "Football",
+        "c": "Rugby"
+      },
+      {
+        "w": "OM",
+        "c": "OL"
+      },
+      {
+        "w": "Arsenal",
+        "c": "Tottenham"
+      },
+      {
+        "w": "Messi",
+        "c": "Ronaldo"
+      },
+      {
+        "w": "Ligue 1",
+        "c": "Premier League"
+      },
+      {
+        "w": "World Cup",
+        "c": "Euro"
+      },
+      {
+        "w": "Mbappé",
+        "c": "Dembélé"
+      },
+      {
+        "w": "Zidane",
+        "c": "Platini"
+      },
+      {
+        "w": "Neymar",
+        "c": "Suarez"
+      },
+      {
+        "w": "Benzema",
+        "c": "Giroud"
+      },
+      {
+        "w": "Lloris",
+        "c": "Lucas Chevalier"
+      },
+      {
+        "w": "Maradona",
+        "c": "Pelé"
+      },
+      {
+        "w": "Real Madrid",
+        "c": "Atlético Madrid"
+      },
+      {
+        "w": "Manchester United",
+        "c": "Manchester City"
+      },
+      {
+        "w": "Bayern Munich",
+        "c": "Borussia Dortmund"
+      },
+      {
+        "w": "Champions League",
+        "c": "Europa League"
+      }
     ],
     "rap": [
-      { "w": "PNL", "c": "Nekfeu" },
-      { "w": "Booba", "c": "Kaaris" },
-      { "w": "Freeze Corleone", "c": "Kalash Criminel" },
-      { "w": "Jul", "c": "Maes" },
-      { "w": "Vald", "c": "Gringe" },
-      { "w": "Orelsan", "c": "Roméo Elvis" },
-      { "w": "Sadek", "c": "Rohff" },
-      { "w": "Jcvd", "c": "Heuss l'enfoiré" },
-      { "w": "Moha La Squale", "c": "13 Block" },
-      { "w": "Lacrim", "c": "Kof Kof" }
+      [
+        {
+          "w": "Drake",
+          "c": "Kendrick Lamar"
+        },
+        {
+          "w": "Future",
+          "c": "Lil Baby"
+        },
+        {
+          "w": "Travis Scott",
+          "c": "Playboi Carti"
+        },
+        {
+          "w": "21 Savage",
+          "c": "Metro Boomin"
+        },
+        {
+          "w": "Lil Uzi Vert",
+          "c": "Yeat"
+        },
+        {
+          "w": "Eminem",
+          "c": "50 Cent"
+        },
+        {
+          "w": "Chief Keef",
+          "c": "King Von"
+        },
+        {
+          "w": "Pop Smoke",
+          "c": "Fivio Foreign"
+        },
+        {
+          "w": "Tyler, The Creator",
+          "c": "A$AP Rocky"
+        },
+        {
+          "w": "Kanye West",
+          "c": "Kid Cudi"
+        },
+        {
+          "w": "J. Cole",
+          "c": "Cordae"
+        },
+        {
+          "w": "Lil Wayne",
+          "c": "Birdman"
+        },
+        {
+          "w": "Juice WRLD",
+          "c": "XXXTENTACION"
+        },
+        {
+          "w": "Doja Cat",
+          "c": "Megan Thee Stallion"
+        },
+        {
+          "w": "Nicki Minaj",
+          "c": "Cardi B"
+        },
+        {
+          "w": "Snoop Dogg",
+          "c": "Wiz Khalifa"
+        },
+        {
+          "w": "Mac Miller",
+          "c": "Logic"
+        },
+        {
+          "w": "Post Malone",
+          "c": "Jack Harlow"
+        },
+        {
+          "w": "Ice Spice",
+          "c": "Sexyy Red"
+        },
+        {
+          "w": "NBA YoungBoy",
+          "c": "Kodak Black"
+        }
+      ]
     ],
     "hot": [
-      { "w": "OnlyFans", "c": "Fansly" },
-      { "w": "Pornhub", "c": "Xvideos" },
-      { "w": "Glans", "c": "Frenulum" },
-      { "w": "Fucking", "c": "Sucking" },
-      { "w": "Penis", "c": "Clitoris" }
+      {
+        "w": "Plan cul",
+        "c": "Sex friend"
+      },
+      {
+        "w": "OnlyFans",
+        "c": "Mym"
+      },
+      {
+        "w": "Pornhub",
+        "c": "Xvideos"
+      },
+      {
+        "w": "Glans",
+        "c": "Frenulum"
+      },
+      {
+        "w": "Fucking",
+        "c": "Sucking"
+      },
+      {
+        "w": "Penis",
+        "c": "Clitoris"
+      }
     ],
     "decadence": [
-      { "w": "Marijuana", "c": "Hash" },
-      { "w": "Coke", "c": "MDMA" },
-      { "w": "Hookah", "c": "Joint" },
-      { "w": "Hangover", "c": "Bad trip" },
-      { "w": "Binge drinking", "c": "Pre-game" },
-      { "w": "Vodka", "c": "Rum" },
-      { "w": "Beer", "c": "Cider" },
-      { "w": "Wasted", "c": "Stoned" }
+      {
+        "w": "Marijuana",
+        "c": "Hash"
+      },
+      {
+        "w": "Coke",
+        "c": "MDMA"
+      },
+      {
+        "w": "Hookah",
+        "c": "Joint"
+      },
+      {
+        "w": "Hangover",
+        "c": "Bad trip"
+      },
+      {
+        "w": "Binge drinking",
+        "c": "Pre-game"
+      },
+      {
+        "w": "Vodka",
+        "c": "Rum"
+      },
+      {
+        "w": "Beer",
+        "c": "Cider"
+      },
+      {
+        "w": "Wasted",
+        "c": "Stoned"
+      }
     ],
     "wtf": [
-      { "w": "Bouzelouf", "c": "Tasty Crousty" },
-      { "w": "Horse cock", "c": "Bull balls" },
-      { "w": "Balloon (nitrous)", "c": "Nitrous tank" },
-      { "w": "Fart", "c": "Burp" },
-      { "w": "Puke", "c": "Poop" },
-      { "w": "Red wine stain", "c": "Port wine" },
-      { "w": "Trojan horse", "c": "Ransomware" },
-      { "w": "Kevin", "c": "Karen" },
-      { "w": "Skibidi toilet", "c": "Sigma grindset" },
-      { "w": "Stone soup", "c": "Dirt smoothie" },
-      { "w": "Caillou (cartoon)", "c": "Noddy" }
+      {
+        "w": "Bouzelouf",
+        "c": "Tasty Crousty"
+      },
+      {
+        "w": "Horse cock",
+        "c": "Bull balls"
+      },
+      {
+        "w": "Balloon (nitrous)",
+        "c": "Nitrous tank"
+      },
+      {
+        "w": "Fart",
+        "c": "Burp"
+      },
+      {
+        "w": "Puke",
+        "c": "Poop"
+      },
+      {
+        "w": "Red wine stain",
+        "c": "Port wine"
+      },
+      {
+        "w": "Trojan horse",
+        "c": "Ransomware"
+      },
+      {
+        "w": "Kevin",
+        "c": "Karen"
+      },
+      {
+        "w": "Skibidi toilet",
+        "c": "Sigma grindset"
+      },
+      {
+        "w": "Stone soup",
+        "c": "Dirt smoothie"
+      },
+      {
+        "w": "Caillou (cartoon)",
+        "c": "Noddy"
+      }
     ]
   },
   "phases": {

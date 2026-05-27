@@ -1,6 +1,6 @@
 {
   "name": "Caméléon",
-  "description": "Devinez les imposteurs à partir d’indices... sans dévoiler votre mot !",
+  "description": "Devinez les imposteurs à partir d'indices... sans dévoiler votre mot !",
   "game": {
     "title": "Caméléon",
     "subtitle": "Réglages et distribution des rôles"
@@ -13,7 +13,7 @@
     "undercover": "Undercover",
     "mrWhite": "Mr White",
     "theme": "Thème",
-    "themeHint": "Choisis l’ambiance avant de lancer la manche."
+    "themeHint": "Choisis l'ambiance avant de lancer la manche."
   },
   "actions": {
     "start": "Démarrer",
@@ -80,122 +80,526 @@
   },
   "wordPairsByTheme": {
     "daily": [
-      { "w": "Chat", "c": "Tigre" },
-      { "w": "Chien", "c": "Loup" },
-      { "w": "Plage", "c": "Piscine" },
-      { "w": "Pizza", "c": "Tarte flambée" },
-      { "w": "Avion", "c": "Hélicoptère" },
-      { "w": "Hiver", "c": "Automne" },
-      { "w": "Infirmier", "c": "Médecin" },
-      { "w": "Boulanger", "c": "Pâtissier" },
-      { "w": "Cinéma", "c": "Théâtre" },
-      { "w": "Concert", "c": "Festival" },
-      { "w": "Forêt", "c": "Jungle" },
-      { "w": "Neige", "c": "Grêle" },
-      { "w": "Voiture", "c": "Moto" },
-      { "w": "Lit", "c": "Canapé" },
-      { "w": "Café", "c": "Thé" },
-      { "w": "Vélo", "c": "Trottinette" },
-      { "w": "Supermarché", "c": "Épicerie" },
-      { "w": "Mairie", "c": "Préfecture" },
-      { "w": "Camembert", "c": "Brie" },
-      { "w": "Boulangerie", "c": "Sandwicherie" },
-      { "w": "Musée", "c": "Galerie d'art" },
-      { "w": "Médecin", "c": "Pharmacien" },
-      { "w": "Train", "c": "Bus" },
-      { "w": "Bibliothèque", "c": "Librairie" },
-      { "w": "Vacances", "c": "Week-end" },
-      { "w": "Maison", "c": "Appartement" },
-      { "w": "Pluie", "c": "Brume" },
-      { "w": "Montagne", "c": "Colline" },
-      { "w": "Chaussures", "c": "Baskets" },
-      { "w": "Réveil", "c": "Alarme de téléphone" }
+      {
+        "w": "Chat",
+        "c": "Tigre"
+      },
+      {
+        "w": "Chien",
+        "c": "Loup"
+      },
+      {
+        "w": "Plage",
+        "c": "Piscine"
+      },
+      {
+        "w": "Pizza",
+        "c": "Tarte flambée"
+      },
+      {
+        "w": "Avion",
+        "c": "Hélicoptère"
+      },
+      {
+        "w": "Hiver",
+        "c": "Automne"
+      },
+      {
+        "w": "Infirmier",
+        "c": "Médecin"
+      },
+      {
+        "w": "Boulanger",
+        "c": "Pâtissier"
+      },
+      {
+        "w": "Cinéma",
+        "c": "Théâtre"
+      },
+      {
+        "w": "Concert",
+        "c": "Festival"
+      },
+      {
+        "w": "Forêt",
+        "c": "Jungle"
+      },
+      {
+        "w": "Neige",
+        "c": "Grêle"
+      },
+      {
+        "w": "Voiture",
+        "c": "Moto"
+      },
+      {
+        "w": "Lit",
+        "c": "Canapé"
+      },
+      {
+        "w": "Café",
+        "c": "Thé"
+      },
+      {
+        "w": "Vélo",
+        "c": "Trottinette"
+      },
+      {
+        "w": "Supermarché",
+        "c": "Épicerie"
+      },
+      {
+        "w": "Mairie",
+        "c": "Préfecture"
+      },
+      {
+        "w": "Camembert",
+        "c": "Brie"
+      },
+      {
+        "w": "Boulangerie",
+        "c": "Sandwicherie"
+      },
+      {
+        "w": "Musée",
+        "c": "Galerie d'art"
+      },
+      {
+        "w": "Médecin",
+        "c": "Pharmacien"
+      },
+      {
+        "w": "Train",
+        "c": "Bus"
+      },
+      {
+        "w": "Bibliothèque",
+        "c": "Librairie"
+      },
+      {
+        "w": "Vacances",
+        "c": "Week-end"
+      },
+      {
+        "w": "Maison",
+        "c": "Appartement"
+      },
+      {
+        "w": "Pluie",
+        "c": "Brume"
+      },
+      {
+        "w": "Montagne",
+        "c": "Colline"
+      },
+      {
+        "w": "Chaussures",
+        "c": "Baskets"
+      },
+      {
+        "w": "Réveil",
+        "c": "Alarme de téléphone"
+      }
     ],
     "sousculture": [
-      { "w": "Football", "c": "Rugby" },
-      { "w": "Handball", "c": "Basket" },
-      { "w": "Le Mans", "c": "Monaco (F1)" },
-      { "w": "GTA", "c": "Red Dead Redemption" },
-      { "w": "Fortnite", "c": "PUBG" },
-      { "w": "PS5", "c": "Xbox" },
-      { "w": "Minecraft", "c": "Roblox" },
-      { "w": "League of Legends", "c": "Dota 2" },
-      { "w": "One Piece", "c": "Dragon Ball" },
-      { "w": "Naruto", "c": "Bleach" },
-      { "w": "Marvel", "c": "DC Comics" },
-      { "w": "Netflix", "c": "Disney+" },
-      { "w": "Breaking Bad", "c": "Peaky Blinders" },
-      { "w": "TikTok", "c": "Instagram" },
-      { "w": "Snapchat", "c": "Telegram" },
-      { "w": "Rap", "c": "R&B" },
-      { "w": "Beyoncé", "c": "Rihanna" },
-      { "w": "PNL", "c": "Nekfeu" },
-      { "w": "Nike", "c": "Adidas" },
-      { "w": "Supreme", "c": "Palace" },
-      { "w": "iPhone", "c": "Samsung Galaxy" },
-      { "w": "YouTube", "c": "Twitch" },
-      { "w": "Spotify", "c": "Deezer" },
-      { "w": "Festival (musique)", "c": "Rave" }
+      {
+        "w": "Football",
+        "c": "Rugby"
+      },
+      {
+        "w": "Handball",
+        "c": "Basket"
+      },
+      {
+        "w": "Le Mans",
+        "c": "Monaco (F1)"
+      },
+      {
+        "w": "GTA",
+        "c": "Red Dead Redemption"
+      },
+      {
+        "w": "Fortnite",
+        "c": "PUBG"
+      },
+      {
+        "w": "PS5",
+        "c": "Xbox"
+      },
+      {
+        "w": "Minecraft",
+        "c": "Roblox"
+      },
+      {
+        "w": "League of Legends",
+        "c": "Dota 2"
+      },
+      {
+        "w": "One Piece",
+        "c": "Dragon Ball"
+      },
+      {
+        "w": "Naruto",
+        "c": "Bleach"
+      },
+      {
+        "w": "Marvel",
+        "c": "DC Comics"
+      },
+      {
+        "w": "Netflix",
+        "c": "Disney+"
+      },
+      {
+        "w": "Breaking Bad",
+        "c": "Peaky Blinders"
+      },
+      {
+        "w": "TikTok",
+        "c": "Instagram"
+      },
+      {
+        "w": "Snapchat",
+        "c": "Telegram"
+      },
+      {
+        "w": "Rap",
+        "c": "R&B"
+      },
+      {
+        "w": "Beyoncé",
+        "c": "Rihanna"
+      },
+      {
+        "w": "PNL",
+        "c": "Nekfeu"
+      },
+      {
+        "w": "Nike",
+        "c": "Adidas"
+      },
+      {
+        "w": "Supreme",
+        "c": "Palace"
+      },
+      {
+        "w": "iPhone",
+        "c": "Samsung Galaxy"
+      },
+      {
+        "w": "YouTube",
+        "c": "Twitch"
+      },
+      {
+        "w": "Spotify",
+        "c": "Deezer"
+      },
+      {
+        "w": "Festival (musique)",
+        "c": "Rave"
+      }
     ],
     "football": [
-      { "w": "Football", "c": "Rugby" },
-      { "w": "OM", "c": "OL" },
-      { "w": "Arsenal", "c": "Tottenham" },
-      { "w": "Messi", "c": "Ronaldo" },
-      { "w": "Ligue 1", "c": "Premier League" },
-      { "w": "Coupe du monde", "c": "Euro" },
-      { "w": "Mbappé", "c": "Dembélé" },
-      { "w": "Zidane", "c": "Platini" },
-      { "w": "Neymar", "c": "Suarez" },
-      { "w": "Benzema", "c": "Giroud" },
-      { "w": "Lloris", "c": "Lucas Chevalier" },
-      { "w": "Maradona", "c": "Pelé" },
-      { "w": "Real Madrid", "c": "Atlético Madrid" },
-      { "w": "Manchester United", "c": "Manchester City" },
-      { "w": "Bayern Munich", "c": "Borussia Dortmund" },
-      { "w": "Ligue des Champions", "c": "Europa League" }
+      {
+        "w": "Football",
+        "c": "Rugby"
+      },
+      {
+        "w": "OM",
+        "c": "OL"
+      },
+      {
+        "w": "Arsenal",
+        "c": "Tottenham"
+      },
+      {
+        "w": "Messi",
+        "c": "Ronaldo"
+      },
+      {
+        "w": "Ligue 1",
+        "c": "Premier League"
+      },
+      {
+        "w": "Coupe du monde",
+        "c": "Euro"
+      },
+      {
+        "w": "Mbappé",
+        "c": "Dembélé"
+      },
+      {
+        "w": "Zidane",
+        "c": "Platini"
+      },
+      {
+        "w": "Neymar",
+        "c": "Suarez"
+      },
+      {
+        "w": "Benzema",
+        "c": "Giroud"
+      },
+      {
+        "w": "Lloris",
+        "c": "Lucas Chevalier"
+      },
+      {
+        "w": "Maradona",
+        "c": "Pelé"
+      },
+      {
+        "w": "Real Madrid",
+        "c": "Atlético Madrid"
+      },
+      {
+        "w": "Manchester United",
+        "c": "Manchester City"
+      },
+      {
+        "w": "Bayern Munich",
+        "c": "Borussia Dortmund"
+      },
+      {
+        "w": "Ligue des Champions",
+        "c": "Europa League"
+      }
     ],
     "rap": [
-      { "w": "PNL", "c": "Nekfeu" },
-      { "w": "Booba", "c": "Kaaris" },
-      { "w": "Freeze Corleone", "c": "Kalash Criminel" },
-      { "w": "Jul", "c": "Maes" },
-      { "w": "Vald", "c": "Gringe" },
-      { "w": "Orelsan", "c": "Roméo Elvis" },
-      { "w": "Sadek", "c": "Rohff" },
-      { "w": "Jcvd", "c": "Heuss l'enfoiré" },
-      { "w": "Moha La Squale", "c": "13 Block" },
-      { "w": "Lacrim", "c": "Kof Kof" }
+      {
+        "w": "PNL",
+        "c": "DTF"
+      },
+      {
+        "w": "Booba",
+        "c": "Kaaris"
+      },
+      {
+        "w": "Freeze Corleone",
+        "c": "Kalash Criminel"
+      },
+      {
+        "w": "Jul",
+        "c": "Naps"
+      },
+      {
+        "w": "Vald",
+        "c": "SCH"
+      },
+      {
+        "w": "IAM",
+        "c": "Fonky Family"
+      },
+      {
+        "w": "13 Block",
+        "c": "XV Barbar"
+      },
+      {
+        "w": "Lacrim",
+        "c": "Mister You"
+      },
+      {
+        "w": "Sexion d'Assaut",
+        "c": "L'Entourage"
+      },
+      {
+        "w": "Nekfeu",
+        "c": "PLK"
+      },
+      {
+        "w": "Damso",
+        "c": "Josman"
+      },
+      {
+        "w": "Ninho",
+        "c": "Niska"
+      },
+      {
+        "w": "Hamza",
+        "c": "Tiakola"
+      },
+      {
+        "w": "Heuss L'Enfoiré",
+        "c": "Fianso"
+      },
+      {
+        "w": "Alpha Wann",
+        "c": "Da uzi"
+      },
+      {
+        "w": "Gazo",
+        "c": "La Rvfleuse"
+      },
+      {
+        "w": "Leto",
+        "c": "Zed"
+      },
+      {
+        "w": "Laylow",
+        "c": "Luv Resval"
+      },
+      {
+        "w": "Supreme NTM",
+        "c": "113"
+      }
     ],
     "hot": [
-      { "w": "OnlyFans", "c": "Mym" },
-      { "w": "Pornhub", "c": "Xvideos" },
-      { "w": "Gland", "c": "Frein (anatomique)" },
-      { "w": "Baiser", "c": "Sucer" },
-      { "w": "Pénis", "c": "Clitoris" }
+      {
+        "w": "Plan cul",
+        "c": "Sex friend"
+      },
+      {
+        "w": "OnlyFans",
+        "c": "Mym"
+      },
+      {
+        "w": "Pornhub",
+        "c": "Xvideos"
+      },
+      {
+        "w": "Gland",
+        "c": "Frein (anatomique)"
+      },
+      {
+        "w": "Baise",
+        "c": "Fellation"
+      },
+      {
+        "w": "Pénis",
+        "c": "Clitoris"
+      },
+      {
+        "w": "Vagin",
+        "c": "Anus"
+      },
+      {
+        "w": "Gode",
+        "c": "Vaginette"
+      },
+      {
+        "w": "BDSM",
+        "c": "Soumission"
+      },
+      {
+        "w": "Culotte",
+        "c": "String"
+      },
+      {
+        "w": "Lubrifiant",
+        "c": "Crachat"
+      },
+      {
+        "w": "Gode",
+        "c": "Vibromasseur"
+      },
+      {
+        "w": "Fellation",
+        "c": "Cunnilingus"
+      },
+      {
+        "w": "Sperme",
+        "c": "Mouille"
+      }
     ],
     "decadence": [
-      { "w": "Marijuana", "c": "Hashisch" },
-      { "w": "Coke", "c": "MDMA" },
-      { "w": "Chicha", "c": "Pétard" },
-      { "w": "Gueule de bois", "c": "Bad trip" },
-      { "w": "Binge drinking", "c": "Prégame" },
-      { "w": "Vodka", "c": "Rhum" },
-      { "w": "Bière", "c": "Cidre" },
-      { "w": "Cuite", "c": "Défonce" }
+      {
+        "w": "Marijuana",
+        "c": "Hashisch"
+      },
+      {
+        "w": "Coke",
+        "c": "MDMA"
+      },
+      {
+        "w": "Chicha",
+        "c": "Joint"
+      },
+      {
+        "w": "Gueule de bois",
+        "c": "Bad trip"
+      },
+      {
+        "w": "Binge drinking",
+        "c": "Prégame"
+      },
+      {
+        "w": "Vodka",
+        "c": "Rhum"
+      },
+      {
+        "w": "Bière",
+        "c": "Cidre"
+      },
+      {
+        "w": "Cuite",
+        "c": "Défonce"
+      },
+      {
+        "w": "Happy hour",
+        "c": "Open bar"
+      },
+      {
+        "w": "Shot",
+        "c": "Pinte"
+      },
+      {
+        "w": "Whisky coca",
+        "c": "Rhum coca"
+      },
+      {
+        "w": "Vody",
+        "c": "Lean"
+      },
+      {
+        "w": "Absinthe",
+        "c": "Charteuse"
+      },
+      {
+        "w": "Mojito",
+        "c": "Caipirinha"
+      }
     ],
     "wtf": [
-      { "w": "Bouzelouf", "c": "Tasty Crousty" },
-      { "w": "Bite de cheval", "c": "Couille de taureau" },
-      { "w": "Ballon (protoxyde)", "c": "Bombonne de protoxyde" },
-      { "w": "Pet", "c": "Rot" },
-      { "w": "Vomi", "c": "Caca" },
-      { "w": "Rouge qui tache", "c": "Porto" },
-      { "w": "Cheval de Troie", "c": "Ransomware" },
-      { "w": "Jean-Michel", "c": "Gérard" },
-      { "w": "Skibidi toilet", "c": "Sigma grindset" },
-      { "w": "Soupe de cailloux", "c": "Smoothie de terre" },
-      { "w": "Caillou (dessin animé)", "c": "Oui-Oui" }
+      {
+        "w": "Bouzelouf",
+        "c": "Tasty Crousty"
+      },
+      {
+        "w": "Bite de cheval",
+        "c": "Couille de taureau"
+      },
+      {
+        "w": "Ballon (protoxyde)",
+        "c": "Bombonne de protoxyde"
+      },
+      {
+        "w": "Pet",
+        "c": "Rot"
+      },
+      {
+        "w": "Vomi",
+        "c": "Caca"
+      },
+      {
+        "w": "Rouge qui tache",
+        "c": "Porto"
+      },
+      {
+        "w": "Skibidi tantafruit",
+        "c": "Skibidi toilet"
+      },
+      {
+        "w": "Modo Discord qui sent",
+        "c": "Gooner"
+      },
+      {
+        "w": "PNJ (jeux vidéo)",
+        "c": "Bot (jeux vidéo)"
+      },
+      {
+        "w": "Influenceur crypto",
+        "c": "Coach mindset"
+      }
     ]
   },
   "phases": {
