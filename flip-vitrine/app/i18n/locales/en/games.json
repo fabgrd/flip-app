@@ -1,0 +1,133 @@
+{
+  "index": {
+    "metaTitle": "Our games",
+    "metaDescription": "8 games to liven up any party.",
+    "eyebrow": "CATALOG",
+    "title": "Our games",
+    "lead": "8 games to liven up any party. No cards, dice or board needed — just the app."
+  },
+  "detail": {
+    "back": "Back to games",
+    "gameNumber": "GAME #{num}",
+    "rulesEyebrow": "RULES",
+    "rulesTitle": "How to play",
+    "ctaTitle": "Play {name}",
+    "ctaSub": "Download Fl!p for free.",
+    "othersTitle": "Other games"
+  },
+  "categories": {
+    "Bluff": "Bluff",
+    "Quiz": "Quiz",
+    "Solo": "Solo",
+    "Ambiance": "Vibe",
+    "Action": "Action",
+    "Cartes": "Cards",
+    "Acting": "Acting"
+  },
+  "items": {
+    "cameleon": {
+      "name": "Chameleon",
+      "tagline": "Unmask the impostor",
+      "category": "Bluff",
+      "players": "4–10",
+      "time": "15 min",
+      "desc": "A secret word is shared among all players… except one: the chameleon. Everyone gives a clue in turn, then the group votes to unmask the impostor. The chameleon has to bluff to blend in — and if unmasked, they get one last shot at survival by guessing the word.",
+      "rules": [
+        { "t": "Pass the phone around", "d": "Everyone sees the secret word… except the chameleon." },
+        { "t": "One clue per turn", "d": "One word, no more. Not too obvious, not too vague." },
+        { "t": "Everyone votes", "d": "Unmask the impostor or let them slip away." }
+      ]
+    },
+    "gauche-droite": {
+      "name": "Left or Right",
+      "tagline": "The political spectrum",
+      "category": "Quiz",
+      "players": "2–∞",
+      "time": "10 min",
+      "desc": "A statement from everyday life appears. Your job: guess whether it leans politically left or right. No judgement, just a quiz — the debate comes naturally after.",
+      "rules": [
+        { "t": "A statement appears", "d": "An opinion, a social fact, a hot take." },
+        { "t": "Cast your answer", "d": "Left or right? Pick your side." },
+        { "t": "The verdict drops", "d": "The app calls it — and the debate begins." }
+      ]
+    },
+    "purete": {
+      "name": "Purity Test",
+      "tagline": "How many sins on your record?",
+      "category": "Solo",
+      "players": "Solo+",
+      "time": "5 min",
+      "desc": "30 \"have you ever…\" questions. Every box you tick drops your purity score. The lower it goes, the more you've lived. Absolute honesty required — what's said here stays here.",
+      "rules": [
+        { "t": "30 questions show up", "d": "\"Have you ever…\" — one at a time." },
+        { "t": "Guilty or innocent", "d": "Tap Never or Guilty for each question." },
+        { "t": "Your score drops", "d": "From 100% (pure) to 0% (living legend)." }
+      ]
+    },
+    "paranoia": {
+      "name": "Paranoia",
+      "tagline": "Secret or reveal",
+      "category": "Ambiance",
+      "players": "4–10",
+      "time": "20 min",
+      "desc": "An asker gets a secret question aimed at a target. The target names someone in the group out loud — but no one knows the question. A coin flip decides whether it gets revealed or stays secret.",
+      "rules": [
+        { "t": "The asker sees a question", "d": "Something like \"who'd crack in prison?\". They keep it to themselves." },
+        { "t": "The target picks someone", "d": "They name a player out loud. The group panics." },
+        { "t": "Coin flip", "d": "Target loses? The question is revealed to everyone." }
+      ]
+    },
+    "medusa": {
+      "name": "Medusa",
+      "tagline": "Don't catch anyone's eye",
+      "category": "Action",
+      "players": "5+",
+      "time": "10 min",
+      "desc": "Everyone looks down. On the signal \"MEDUSA!\", look up and stare at someone. If two players lock eyes: penalty. Belly laughs guaranteed.",
+      "rules": [
+        { "t": "Everyone looks down", "d": "The active player says \"Look down!\"." },
+        { "t": "3… 2… 1… MEDUSA!", "d": "On the signal, look up and stare at a player." },
+        { "t": "Eye contact = penalty", "d": "Two locked stares? 1 sip each." }
+      ]
+    },
+    "apero": {
+      "name": "The Drink",
+      "tagline": "Guess the card or sip the gap",
+      "category": "Cartes",
+      "players": "3–8",
+      "time": "15 min",
+      "desc": "The dealer draws a card, the player guesses the value. Higher or lower? Miss: drink the gap between your guess and the card. Nail it: the dealer drinks.",
+      "rules": [
+        { "t": "The dealer draws", "d": "The card stays hidden. The player tries to guess." },
+        { "t": "Higher or lower?", "d": "One first guess, a hint, then one last guess." },
+        { "t": "Sip the gap", "d": "Miss = |your guess − the card| in sips." }
+      ]
+    },
+    "casting": {
+      "name": "The Casting",
+      "tagline": "Act the scene, fool the jury",
+      "category": "Acting",
+      "players": "3–11",
+      "time": "20 min",
+      "desc": "A scenario, secret numbers from 1 (disaster) to 10 (oscar-worthy). Each actor plays the scene at their number. The guesser watches and tries to figure out the numbers. Acting, bluff and belly laughs.",
+      "rules": [
+        { "t": "A guesser is picked", "d": "They watch. Everyone else acts." },
+        { "t": "Each actor gets a number", "d": "From 1 (terrible) to 10 (oscar). The guesser doesn't know." },
+        { "t": "Act, then guess", "d": "The guesser assigns a number. The gap = sips." }
+      ]
+    },
+    "red-flag": {
+      "name": "Red Flag",
+      "tagline": "Are you a red flag?",
+      "category": "Solo",
+      "players": "Solo",
+      "time": "5 min",
+      "desc": "Are you a red flag? 20 swipe-style questions Tinder-style. Shareable toxicity score. The test your exes wish they could've made you take.",
+      "rules": [
+        { "t": "Swipe the cards", "d": "20 questions — one at a time, Tinder-style." },
+        { "t": "Guilty or innocent", "d": "Swipe right for yes, left for no." },
+        { "t": "Your score drops", "d": "The higher it is, the redder the flag." }
+      ]
+    }
+  }
+}

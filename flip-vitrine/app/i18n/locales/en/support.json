@@ -1,0 +1,43 @@
+{
+  "meta": {
+    "title": "Support",
+    "description": "Help, FAQ and contact for the Fl!p team."
+  },
+  "header": {
+    "eyebrow": "SUPPORT",
+    "title": "We're here.",
+    "lead": "Question, bug, game idea? The Fl!p team gets back to you fast — promise."
+  },
+  "contact": {
+    "label": "GET IN TOUCH",
+    "responseTime": "Reply within 48 business hours.",
+    "email": "info@fabiengiraudier.com",
+    "button": "Send an email"
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Frequently asked questions",
+    "items": [
+      {
+        "q": "How do I install Fl!p?",
+        "a": "Fl!p is available on the App Store and Google Play. Search for \"Flip party games\" or use the download buttons on the home page."
+      },
+      {
+        "q": "Is the app free?",
+        "a": "Fl!p is free with a set of core games available to everyone. A premium subscription unlocks the full catalog and new content."
+      },
+      {
+        "q": "Do I need internet to play?",
+        "a": "A connection is needed for the first load. After that, most games work offline."
+      },
+      {
+        "q": "How do I report a bug or suggest a game?",
+        "a": "Email us directly at info@fabiengiraudier.com — we read every message and we love community ideas."
+      },
+      {
+        "q": "How do I manage my premium subscription?",
+        "a": "Manage your subscription from your App Store or Google Play account, in the subscriptions section of your device."
+      }
+    ]
+  }
+}

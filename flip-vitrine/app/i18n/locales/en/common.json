@@ -1,0 +1,32 @@
+{
+  "meta": {
+    "titleDefault": "Fl!p - Party games",
+    "titleTemplate": "%s - Fl!p",
+    "description": "Party games. Reinvented."
+  },
+  "nav": {
+    "home": "Home",
+    "games": "Games",
+    "support": "Support",
+    "download": "Download",
+    "downloadAria": "Download",
+    "logoAria": "Fl!p home"
+  },
+  "footer": {
+    "tagline": "Party games. Reinvented.",
+    "navigationLabel": "NAVIGATION",
+    "downloadLabel": "DOWNLOAD",
+    "links": {
+      "home": "Home",
+      "games": "Our games",
+      "support": "Support",
+      "appStore": "App Store",
+      "googlePlay": "Google Play"
+    },
+    "legal": "© 2026 Fl!p · All rights reserved"
+  },
+  "store": {
+    "appStore": "App Store",
+    "googlePlay": "Google Play"
+  }
+}

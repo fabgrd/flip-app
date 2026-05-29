@@ -1,0 +1,43 @@
+{
+  "meta": {
+    "title": "Support",
+    "description": "Aide, FAQ et contact de l'équipe Fl!p."
+  },
+  "header": {
+    "eyebrow": "SUPPORT",
+    "title": "On est là.",
+    "lead": "Une question, un bug, une idée de jeu ? L'équipe Fl!p te répond vite — promis."
+  },
+  "contact": {
+    "label": "NOUS ÉCRIRE",
+    "responseTime": "Réponse sous 48h ouvrées.",
+    "email": "info@fabiengiraudier.com",
+    "button": "Envoyer un mail"
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Questions fréquentes",
+    "items": [
+      {
+        "q": "Comment installer Fl!p ?",
+        "a": "Fl!p est disponible sur l'App Store et Google Play. Recherche « Flip jeux de soirée » ou utilise les boutons de téléchargement sur la page d'accueil."
+      },
+      {
+        "q": "L'app est-elle gratuite ?",
+        "a": "Fl!p est gratuit avec des jeux de base accessibles à tous. Un abonnement premium débloque l'intégralité du catalogue et de nouveaux contenus."
+      },
+      {
+        "q": "Faut-il une connexion internet pour jouer ?",
+        "a": "Une connexion est nécessaire pour le premier chargement. Ensuite, la plupart des jeux fonctionnent hors-ligne."
+      },
+      {
+        "q": "Comment signaler un bug ou suggérer un jeu ?",
+        "a": "Écris-nous directement à info@fabiengiraudier.com : on lit chaque message et on adore les idées de la communauté."
+      },
+      {
+        "q": "Comment gérer mon abonnement premium ?",
+        "a": "L'abonnement se gère depuis ton compte App Store ou Google Play, dans la section abonnements de ton appareil."
+      }
+    ]
+  }
+}

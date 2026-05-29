@@ -1,0 +1,32 @@
+{
+  "meta": {
+    "titleDefault": "Fl!p - Jeux de soirée",
+    "titleTemplate": "%s - Fl!p",
+    "description": "Les jeux de soirée. Réinventés."
+  },
+  "nav": {
+    "home": "Accueil",
+    "games": "Jeux",
+    "support": "Support",
+    "download": "Télécharger",
+    "downloadAria": "Télécharger",
+    "logoAria": "Accueil Fl!p"
+  },
+  "footer": {
+    "tagline": "Les jeux de soirée. Réinventés.",
+    "navigationLabel": "NAVIGATION",
+    "downloadLabel": "TÉLÉCHARGER",
+    "links": {
+      "home": "Accueil",
+      "games": "Nos jeux",
+      "support": "Support",
+      "appStore": "App Store",
+      "googlePlay": "Google Play"
+    },
+    "legal": "© 2026 Fl!p · Tous droits réservés"
+  },
+  "store": {
+    "appStore": "App Store",
+    "googlePlay": "Google Play"
+  }
+}

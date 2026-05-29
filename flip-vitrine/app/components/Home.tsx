@@ -1,8 +1,9 @@
 'use client';
 
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import styled from 'styled-components';
 import { T, bp, fonts } from '../lib/theme';
+import { Link } from '../i18n/navigation';
 import { GAMES } from '../lib/games';
 import SiteLogo from './SiteLogo';
 import SiteRiso from './SiteRiso';
@@ -142,11 +143,7 @@ const FeatureDesc = styled.div`
   line-height: 1.45;
 `;
 
-const FEATURES = [
-  { n: '8', label: 'jeux inclus', desc: "Du bluff à l'acting, il y en a pour tous les goûts et toutes les soirées.", color: T.tomato },
-  { n: '0€', label: 'pour jouer', desc: "L'essentiel est gratuit. Le premium débloque plus de contenu.", color: T.mint },
-  { n: '0', label: 'wifi requis', desc: 'Tout fonctionne offline. Parfait pour les apéros à la campagne.', color: T.cobalt },
-] as const;
+const FEATURE_COLORS = [T.tomato, T.mint, T.cobalt];
 
 const Preview = styled.section`
   padding: 72px 60px;
@@ -242,7 +239,12 @@ const DiscoverBtn = styled(Link)`
   }
 `;
 
+type FeatureItem = { n: string; label: string; desc: string };
+
 export default function Home() {
+  const t = useTranslations('Home');
+  const features = t.raw('features') as FeatureItem[];
+
   return (
     <>
       <Hero>
@@ -250,11 +252,9 @@ export default function Home() {
         <HeroInner>
           <SiteLogo size={96} />
           <HeroTitle>
-            Les jeux de soirée. <HeroBadge>Réinventés.</HeroBadge>
+            {t('hero.titlePrefix')} <HeroBadge>{t('hero.titleBadge')}</HeroBadge>
           </HeroTitle>
-          <HeroSub>
-            8 jeux dans une app. Pas de wifi, pas de matos — juste ton tel et ta bande de potes.
-          </HeroSub>
+          <HeroSub>{t('hero.subtitle')}</HeroSub>
           <HeroCta>
             <StoreBadges />
           </HeroCta>
@@ -263,9 +263,9 @@ export default function Home() {
 
       <Features>
         <FeaturesGrid>
-          {FEATURES.map((f) => (
+          {features.map((f, i) => (
             <FeatureCard key={f.label}>
-              <FeatureNumber $color={f.color}>{f.n}</FeatureNumber>
+              <FeatureNumber $color={FEATURE_COLORS[i] ?? T.tomato}>{f.n}</FeatureNumber>
               <FeatureLabel>{f.label}</FeatureLabel>
               <FeatureDesc>{f.desc}</FeatureDesc>
             </FeatureCard>
@@ -276,8 +276,8 @@ export default function Home() {
       <Preview>
         <PreviewInner>
           <PreviewHead>
-            <PreviewTitle>Nos jeux</PreviewTitle>
-            <SeeAllLink href="/jeux">Voir les 8 jeux →</SeeAllLink>
+            <PreviewTitle>{t('preview.title')}</PreviewTitle>
+            <SeeAllLink href="/jeux">{t('preview.seeAll')}</SeeAllLink>
           </PreviewHead>
           <CardGrid>
             {GAMES.slice(0, 4).map((g) => (
@@ -285,7 +285,7 @@ export default function Home() {
             ))}
           </CardGrid>
           <DiscoverWrap>
-            <DiscoverBtn href="/jeux">Découvrir tous les jeux →</DiscoverBtn>
+            <DiscoverBtn href="/jeux">{t('preview.discover')}</DiscoverBtn>
           </DiscoverWrap>
         </PreviewInner>
       </Preview>

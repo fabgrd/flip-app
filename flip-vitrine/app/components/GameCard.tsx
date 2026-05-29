@@ -1,9 +1,10 @@
 'use client';
 
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import styled from 'styled-components';
 import { T, fonts } from '../lib/theme';
-import type { Game } from '../lib/games';
+import { Link } from '../i18n/navigation';
+import type { GameMeta } from '../lib/games';
 
 const CardLink = styled(Link)`
   display: block;
@@ -87,7 +88,8 @@ const Tag = styled.span`
   color: ${T.ink};
 `;
 
-export default function GameCard({ game }: { game: Game }) {
+export default function GameCard({ game }: { game: GameMeta }) {
+  const t = useTranslations(`Games.items.${game.id}`);
   const { Icon } = game;
   return (
     <CardLink href={`/jeux/${game.id}`}>
@@ -97,11 +99,11 @@ export default function GameCard({ game }: { game: Game }) {
             <Icon size={56} />
           </IconCell>
           <Body>
-            <Name>{game.name}</Name>
-            <Tagline>{game.tagline}</Tagline>
+            <Name>{t('name')}</Name>
+            <Tagline>{t('tagline')}</Tagline>
             <Tags>
-              <Tag>👥 {game.players}</Tag>
-              <Tag>⏱ {game.time}</Tag>
+              <Tag>👥 {t('players')}</Tag>
+              <Tag>⏱ {t('time')}</Tag>
             </Tags>
           </Body>
         </Inner>

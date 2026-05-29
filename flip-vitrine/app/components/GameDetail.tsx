@@ -1,8 +1,9 @@
 'use client';
 
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import styled from 'styled-components';
 import { T, bp, fonts, onColor } from '../lib/theme';
+import { Link } from '../i18n/navigation';
 import { GAMES, getGame } from '../lib/games';
 import GameCard from './GameCard';
 import SiteRiso from './SiteRiso';
@@ -331,12 +332,27 @@ const Grid = styled.div`
   }
 `;
 
+type Rule = { t: string; d: string };
+
 export default function GameDetail({ id }: { id: string }) {
+  const tDetail = useTranslations('Games.detail');
+  const tCategories = useTranslations('Games.categories');
+  const tGame = useTranslations(`Games.items.${id}`);
+
   const game = getGame(id);
   if (!game) return null;
   const { Icon } = game;
   const txt = onColor(game.color);
   const others = GAMES.filter((g) => g.id !== game.id).slice(0, 4);
+
+  const name = tGame('name');
+  const tagline = tGame('tagline');
+  const desc = tGame('desc');
+  const players = tGame('players');
+  const time = tGame('time');
+  const categoryKey = tGame('category');
+  const category = tCategories(categoryKey);
+  const rules = tGame.raw('rules') as Rule[];
 
   return (
     <>
@@ -345,7 +361,7 @@ export default function GameDetail({ id }: { id: string }) {
           <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden>
             <path d="M8 1L3 6l5 5" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-          Retour aux jeux
+          {tDetail('back')}
         </BackLink>
       </BackBar>
 
@@ -356,13 +372,13 @@ export default function GameDetail({ id }: { id: string }) {
             <Icon size={80} />
           </IconBox>
           <div>
-            <HeroEyebrow $color={txt}>JEU N°{game.num}</HeroEyebrow>
-            <HeroTitle $color={txt}>{game.name}</HeroTitle>
-            <HeroTagline $color={txt}>{game.tagline}</HeroTagline>
+            <HeroEyebrow $color={txt}>{tDetail('gameNumber', { num: game.num })}</HeroEyebrow>
+            <HeroTitle $color={txt}>{name}</HeroTitle>
+            <HeroTagline $color={txt}>{tagline}</HeroTagline>
             <Pills>
-              <Pill $color={txt}>👥 {game.players}</Pill>
-              <Pill $color={txt}>⏱ {game.time}</Pill>
-              <Pill $color={txt}>{game.category}</Pill>
+              <Pill $color={txt}>👥 {players}</Pill>
+              <Pill $color={txt}>⏱ {time}</Pill>
+              <Pill $color={txt}>{category}</Pill>
             </Pills>
           </div>
         </HeroRow>
@@ -370,17 +386,17 @@ export default function GameDetail({ id }: { id: string }) {
 
       <DescSection>
         <DescInner>
-          <DescText>{game.desc}</DescText>
+          <DescText>{desc}</DescText>
         </DescInner>
       </DescSection>
 
       <RulesSection>
         <RulesInner>
-          <RulesEyebrow>RÈGLES</RulesEyebrow>
-          <RulesTitle>Comment jouer</RulesTitle>
+          <RulesEyebrow>{tDetail('rulesEyebrow')}</RulesEyebrow>
+          <RulesTitle>{tDetail('rulesTitle')}</RulesTitle>
           <RulesCard>
-            {game.rules.map((r, i) => (
-              <RuleRow key={r.t} $last={i === game.rules.length - 1}>
+            {rules.map((r, i) => (
+              <RuleRow key={r.t} $last={i === rules.length - 1}>
                 <RuleNum $bg={game.color} $color={txt}>{i + 1}</RuleNum>
                 <div>
                   <RuleTitle>{r.t}</RuleTitle>
@@ -394,8 +410,8 @@ export default function GameDetail({ id }: { id: string }) {
 
       <Cta>
         <CtaInner>
-          <CtaTitle>Joue à {game.name}</CtaTitle>
-          <CtaSub>Télécharge Fl!p gratuitement.</CtaSub>
+          <CtaTitle>{tDetail('ctaTitle', { name })}</CtaTitle>
+          <CtaSub>{tDetail('ctaSub')}</CtaSub>
           <CtaBadges>
             <StoreBadges />
           </CtaBadges>
@@ -404,7 +420,7 @@ export default function GameDetail({ id }: { id: string }) {
 
       <Others>
         <OthersInner>
-          <OthersTitle>Les autres jeux</OthersTitle>
+          <OthersTitle>{tDetail('othersTitle')}</OthersTitle>
           <Grid>
             {others.map((g) => (
               <GameCard key={g.id} game={g} />

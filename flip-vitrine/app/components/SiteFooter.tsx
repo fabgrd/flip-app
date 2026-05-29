@@ -1,8 +1,9 @@
 'use client';
 
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import styled from 'styled-components';
 import { T, bp, fonts } from '../lib/theme';
+import { Link } from '../i18n/navigation';
 import SiteLogo from './SiteLogo';
 
 const Footer = styled.footer`
@@ -91,31 +92,33 @@ const Legal = styled.div`
 `;
 
 export default function SiteFooter() {
+  const t = useTranslations('Common.footer');
   return (
     <Footer>
       <Top>
         <Brand>
           <SiteLogo size={36} color="#fff" />
-          <Tagline>Les jeux de soirée. Réinventés.</Tagline>
+          <Tagline>{t('tagline')}</Tagline>
         </Brand>
         <Columns>
           <Col>
-            <ColLabel>NAVIGATION</ColLabel>
+            <ColLabel>{t('navigationLabel')}</ColLabel>
             <ColLinks>
-              <FootLink href="/">Accueil</FootLink>
-              <FootLink href="/jeux">Nos jeux</FootLink>
+              <FootLink href="/">{t('links.home')}</FootLink>
+              <FootLink href="/jeux">{t('links.games')}</FootLink>
+              <FootLink href="/support">{t('links.support')}</FootLink>
             </ColLinks>
           </Col>
           <Col>
-            <ColLabel>TÉLÉCHARGER</ColLabel>
+            <ColLabel>{t('downloadLabel')}</ColLabel>
             <ColLinks>
-              <ExtLink href="#">App Store</ExtLink>
-              <ExtLink href="#">Google Play</ExtLink>
+              <ExtLink href="#">{t('links.appStore')}</ExtLink>
+              <ExtLink href="#">{t('links.googlePlay')}</ExtLink>
             </ColLinks>
           </Col>
         </Columns>
       </Top>
-      <Legal>© 2026 Fl!p · Tous droits réservés</Legal>
+      <Legal>{t('legal')}</Legal>
     </Footer>
   );
 }

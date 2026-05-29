@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import styled from 'styled-components';
 import { T, bp, fonts } from '../lib/theme';
 import { GAMES } from '../lib/games';
@@ -73,15 +74,14 @@ const Grid = styled.div`
 `;
 
 export default function GamesIndex() {
+  const t = useTranslations('Games.index');
   return (
     <Section>
       <Inner>
         <Header>
-          <Eyebrow>CATALOGUE</Eyebrow>
-          <Title>Nos jeux</Title>
-          <Lead>
-            8 jeux pour animer n&apos;importe quelle soirée. Pas besoin de cartes, de dés ou de plateau — juste l&apos;app.
-          </Lead>
+          <Eyebrow>{t('eyebrow')}</Eyebrow>
+          <Title>{t('title')}</Title>
+          <Lead>{t('lead')}</Lead>
         </Header>
         <Grid>
           {GAMES.map((g) => (

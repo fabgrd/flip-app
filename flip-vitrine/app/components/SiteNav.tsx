@@ -1,10 +1,11 @@
 'use client';
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import styled from 'styled-components';
 import { T, bp, fonts } from '../lib/theme';
+import { Link, usePathname } from '../i18n/navigation';
 import SiteLogo from './SiteLogo';
+import LanguageSwitcher from './LanguageSwitcher';
 
 const Nav = styled.nav`
   position: sticky;
@@ -17,10 +18,12 @@ const Nav = styled.nav`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
 
   @media ${bp.compact} {
     padding: 0 16px;
     height: 60px;
+    gap: 10px;
   }
 `;
 
@@ -30,7 +33,7 @@ const Links = styled.div`
   align-items: center;
 
   @media ${bp.compact} {
-    gap: 20px;
+    gap: 16px;
   }
 `;
 
@@ -45,6 +48,16 @@ const NavItem = styled(Link)<{ $active: boolean }>`
 
   @media ${bp.compact} {
     font-size: 14px;
+  }
+`;
+
+const Right = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  @media ${bp.compact} {
+    gap: 10px;
   }
 `;
 
@@ -90,29 +103,37 @@ const LogoLink = styled(Link)`
 `;
 
 export default function SiteNav() {
+  const t = useTranslations('Common.nav');
   const pathname = usePathname() || '/';
   const onHome = pathname === '/';
   const onJeux = pathname.startsWith('/jeux');
+  const onSupport = pathname.startsWith('/support');
 
   return (
     <Nav>
-      <LogoLink href="/" aria-label="Accueil Fl!p">
+      <LogoLink href="/" aria-label={t('logoAria')}>
         <SiteLogo size={34} />
       </LogoLink>
       <Links>
         <NavItem href="/" $active={onHome}>
-          Accueil
+          {t('home')}
         </NavItem>
         <NavItem href="/jeux" $active={onJeux}>
-          Jeux
+          {t('games')}
+        </NavItem>
+        <NavItem href="/support" $active={onSupport}>
+          {t('support')}
         </NavItem>
       </Links>
-      <DownloadCta href="#">Télécharger</DownloadCta>
-      <DownloadIcon href="#" aria-label="Télécharger">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
-          <path d="M8 2v8M4 7l4 4 4-4M3 14h10" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </DownloadIcon>
+      <Right>
+        <LanguageSwitcher />
+        <DownloadCta href="#">{t('download')}</DownloadCta>
+        <DownloadIcon href="#" aria-label={t('downloadAria')}>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
+            <path d="M8 2v8M4 7l4 4 4-4M3 14h10" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </DownloadIcon>
+      </Right>
     </Nav>
   );
 }

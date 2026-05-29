@@ -1,0 +1,29 @@
+{
+  "hero": {
+    "titlePrefix": "Les jeux de soirée.",
+    "titleBadge": "Réinventés.",
+    "subtitle": "8 jeux dans une app. Pas de wifi, pas de matos, juste ton tel et ta bande de potes."
+  },
+  "features": [
+    {
+      "n": "8",
+      "label": "jeux inclus",
+      "desc": "Du bluff à l'acting, il y en a pour tous les goûts et toutes les soirées."
+    },
+    {
+      "n": "0€",
+      "label": "pour jouer",
+      "desc": "L'essentiel est gratuit. Le premium débloque plus de contenu."
+    },
+    {
+      "n": "0",
+      "label": "wifi requis",
+      "desc": "Tout fonctionne offline. Parfait pour les apéros à la campagne."
+    }
+  ],
+  "preview": {
+    "title": "Nos jeux",
+    "seeAll": "Voir les 8 jeux →",
+    "discover": "Découvrir tous les jeux →"
+  }
+}
