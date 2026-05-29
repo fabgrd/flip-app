@@ -97,7 +97,7 @@ export default function SiteFooter() {
     <Footer>
       <Top>
         <Brand>
-          <SiteLogo size={36} color="#fff" />
+          <SiteLogo size={64} />
           <Tagline>{t('tagline')}</Tagline>
         </Brand>
         <Columns>

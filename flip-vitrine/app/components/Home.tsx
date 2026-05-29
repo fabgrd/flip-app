@@ -250,7 +250,7 @@ export default function Home() {
       <Hero>
         <SiteRiso opacity={0.04} gap={18} />
         <HeroInner>
-          <SiteLogo size={96} />
+          <SiteLogo size={140} />
           <HeroTitle>
             {t('hero.titlePrefix')} <HeroBadge>{t('hero.titleBadge')}</HeroBadge>
           </HeroTitle>

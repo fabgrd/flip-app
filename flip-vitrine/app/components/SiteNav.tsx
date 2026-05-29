@@ -112,7 +112,7 @@ export default function SiteNav() {
   return (
     <Nav>
       <LogoLink href="/" aria-label={t('logoAria')}>
-        <SiteLogo size={34} />
+        <SiteLogo size={52} />
       </LogoLink>
       <Links>
         <NavItem href="/" $active={onHome}>
