@@ -15,7 +15,7 @@ export type PlayerPoliticalAnswer = {
 export type PoliticalPlayer = {
   id: string;
   name: string;
-  avatar?: string;
+  color: string;
   answers: PlayerPoliticalAnswer[];
   leftScore: number;
   rightScore: number;

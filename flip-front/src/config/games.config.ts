@@ -159,7 +159,7 @@ export const GAMES: readonly GameConfig[] = [
     icon: ChameleonIcon,
     color: 'mint',
     minPlayers: 4,
-    maxPlayers: 10,
+    maxPlayers: 20,
     playersLabelKey: 'games:labels.players.cameleon',
     durationLabelKey: 'games:labels.duration.cameleon',
     route: 'Cameleon',

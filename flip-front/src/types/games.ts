@@ -19,7 +19,7 @@ import type {
 export interface Player {
   id: string;
   name: string;
-  avatar?: string; // Image URI or undefined to use default avatar
+  color: string;
 }
 
 export interface GameMetadata {

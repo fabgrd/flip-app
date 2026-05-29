@@ -8,7 +8,7 @@ import { T } from '../../../constants/flipTokens';
 interface MrWhiteGuessModalProps {
   visible: boolean;
   name?: string;
-  avatar?: string;
+  color?: string;
   guess: string;
   onChangeGuess: (g: string) => void;
   onSubmit: () => void;
@@ -18,7 +18,7 @@ interface MrWhiteGuessModalProps {
 export function MrWhiteGuessModal({
   visible,
   name,
-  avatar,
+  color,
   guess,
   onChangeGuess,
   onSubmit,
@@ -29,7 +29,7 @@ export function MrWhiteGuessModal({
       visible={visible}
       title={t('cameleon:mrWhite.guessTitle')}
       name={name}
-      avatar={avatar}
+      color={color}
     >
       <Text style={styles.prompt}>{t('cameleon:mrWhite.guessPrompt')}</Text>
       <TextInput

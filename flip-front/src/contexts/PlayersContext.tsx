@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { T } from '../constants/flipTokens';
 import { captureException } from '../lib/sentry';
 import { randomUUID } from '../lib/uuid';
 import { Player } from '../types';
@@ -8,7 +9,6 @@ interface PlayersContextType {
   players: Player[];
   addPlayer: (name: string) => boolean;
   removePlayer: (id: string) => void;
-  updatePlayerAvatar: (id: string, avatar: string) => void;
   clearPlayers: () => void;
   loadPlayers: () => Promise<void>;
   savePlayers: () => Promise<void>;
@@ -17,20 +17,42 @@ interface PlayersContextType {
 const PlayersContext = createContext<PlayersContextType | undefined>(undefined);
 
 const PLAYERS_STORAGE_KEY = 'flip_players';
-const MAX_PLAYERS = 10;
+const MAX_PLAYERS = 20;
+
+const PLAYER_COLORS: string[] = [
+  T.tomato,
+  T.cobalt,
+  T.mint,
+  T.violet,
+  T.lemon,
+  T.pink,
+  T.teal,
+  T.crimson,
+  T.sky,
+  T.lime,
+];
+
+function pickAvailableColor(used: string[]): string {
+  const free = PLAYER_COLORS.find((c) => !used.includes(c));
+  if (free) return free;
+  return PLAYER_COLORS[used.length % PLAYER_COLORS.length];
+}
 
 function parsePlayers(raw: string): Player[] | null {
   try {
     const data = JSON.parse(raw);
     if (!Array.isArray(data)) return null;
     const players: Player[] = [];
+    const usedColors: string[] = [];
     for (const entry of data) {
       if (!entry || typeof entry !== 'object') return null;
-      const { id, name, avatar } = entry as Record<string, unknown>;
+      const { id, name, color } = entry as Record<string, unknown>;
       if (typeof id !== 'string' || id.length === 0) return null;
       if (typeof name !== 'string' || name.length === 0) return null;
-      if (avatar !== undefined && typeof avatar !== 'string') return null;
-      players.push(avatar ? { id, name, avatar } : { id, name });
+      const resolvedColor =
+        typeof color === 'string' && color.length > 0 ? color : pickAvailableColor(usedColors);
+      usedColors.push(resolvedColor);
+      players.push({ id, name, color: resolvedColor });
     }
     return players.slice(0, MAX_PLAYERS);
   } catch {
@@ -47,7 +69,6 @@ export function PlayersProvider({ children }: { children: ReactNode }) {
     const trimmedName = name.trim();
     if (trimmedName === '') return false;
 
-    // Vérifier si le nom existe déjà
     if (players.some((player) => player.name.toLowerCase() === trimmedName.toLowerCase())) {
       return false;
     }
@@ -55,6 +76,7 @@ export function PlayersProvider({ children }: { children: ReactNode }) {
     const newPlayer: Player = {
       id: randomUUID(),
       name: trimmedName,
+      color: pickAvailableColor(players.map((p) => p.color)),
     };
 
     setPlayers((prev) => [newPlayer, ...prev]);
@@ -63,10 +85,6 @@ export function PlayersProvider({ children }: { children: ReactNode }) {
 
   const removePlayer = (id: string) => {
     setPlayers((prev) => prev.filter((player) => player.id !== id));
-  };
-
-  const updatePlayerAvatar = (id: string, avatar: string) => {
-    setPlayers((prev) => prev.map((player) => (player.id === id ? { ...player, avatar } : player)));
   };
 
   const clearPlayers = () => {
@@ -81,7 +99,6 @@ export function PlayersProvider({ children }: { children: ReactNode }) {
       if (parsed) {
         setPlayers(parsed);
       } else {
-        // Corrupted payload — drop it so we don't keep crashing on next launch.
         await AsyncStorage.removeItem(PLAYERS_STORAGE_KEY);
       }
     } catch (error) {
@@ -111,7 +128,6 @@ export function PlayersProvider({ children }: { children: ReactNode }) {
     players,
     addPlayer,
     removePlayer,
-    updatePlayerAvatar,
     clearPlayers,
     loadPlayers,
     savePlayers,

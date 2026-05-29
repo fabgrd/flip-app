@@ -1,13 +1,14 @@
-import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
+import { AntDesign, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import * as Haptics from 'expo-haptics';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { ChunkyButton, DotBackground, PlayersModal } from '../components';
+import { ChunkyButton, DotBackground, FlatChunkyButton, PlayersModal } from '../components';
 import { GAMES } from '../config';
 import { T } from '../constants/flipTokens';
 import { navigateToGame } from '../constants/games';
@@ -66,11 +67,34 @@ export function GameSelectScreen() {
         <ChunkyButton square size="sm" color={T.paper} onPress={() => navigation.goBack()}>
           <Feather name="arrow-left" size={18} color={T.ink} />
         </ChunkyButton>
-        <View style={{ flex: 1 }}>
-          <Text style={styles.headerTitle}>{t('games:selection.title')}</Text>
+        <View style={{ flex: 1, flexShrink: 1 }}>
+          <Text style={styles.headerTitle} numberOfLines={1}>{t('games:selection.title')}</Text>
           <Text style={styles.headerSub}>
             {t('games:selection.subtitle', { count: players.length })}
           </Text>
+        </View>
+        <View style={styles.headerActions}>
+          <FlatChunkyButton
+            size="xs"
+            square
+            color={T.paper}
+            textColor={T.ink}
+            onPress={() => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+              setPlayersModalVisible(true);
+            }}
+          >
+            <AntDesign name="usergroup-add" size={18} color={T.ink} />
+          </FlatChunkyButton>
+          <FlatChunkyButton
+            size="xs"
+            square
+            color={T.paper}
+            textColor={T.ink}
+            onPress={() => navigation.navigate('Settings')}
+          >
+            <MaterialCommunityIcons name="cog-outline" size={18} color={T.ink} />
+          </FlatChunkyButton>
         </View>
       </View>
 
@@ -129,7 +153,7 @@ export function GameSelectScreen() {
         >
           <View style={styles.surpriseRow}>
             <Text style={styles.surpriseText}>{t('games:selection.surprise')}</Text>
-            <MaterialCommunityIcons name="dice-multiple" size={20} color="#fff" />
+            <Text style={styles.surpriseQuestion}>?</Text>
           </View>
         </ChunkyButton>
       </ScrollView>
@@ -251,4 +275,6 @@ const styles = StyleSheet.create({
   favBadgeText: { color: '#fff', fontSize: 11, fontWeight: '900' },
   surpriseRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   surpriseText: { color: '#fff', fontSize: 16, fontWeight: '900', letterSpacing: -0.3 },
+  surpriseQuestion: { color: '#fff', fontSize: 18, fontWeight: '900' },
+  headerActions: { flexDirection: 'row', gap: 8, alignItems: 'center', flexShrink: 0 },
 });

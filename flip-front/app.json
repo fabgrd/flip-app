@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "Flip",
+    "name": "Flip Front",
     "slug": "flip-front",
-    "version": "1.0.0",
+    "version": "0.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -19,10 +19,7 @@
       "bundleIdentifier": "com.fabgrd.flipfront",
       "buildNumber": "1",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false,
-        "NSPhotoLibraryUsageDescription": "Flip needs access to your photo library so you can set a custom avatar for each player.",
-        "NSCameraUsageDescription": "Flip needs access to your camera so you can take a photo as a player avatar.",
-        "NSPhotoLibraryAddUsageDescription": "Flip needs permission to save avatars to your photo library."
+        "ITSAppUsesNonExemptEncryption": false
       },
       "privacyManifests": {
         "NSPrivacyAccessedAPITypes": [
@@ -55,7 +52,6 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "permissions": ["CAMERA", "READ_MEDIA_IMAGES"],
       "intentFilters": [
         {
           "action": "VIEW",
@@ -73,14 +69,7 @@
       }
     },
     "plugins": [
-      "expo-font",
-      [
-        "expo-image-picker",
-        {
-          "photosPermission": "Flip needs access to your photo library so you can set a custom avatar for each player.",
-          "cameraPermission": "Flip needs access to your camera so you can take a photo as a player avatar."
-        }
-      ]
+      "expo-font"
     ]
   }
 }

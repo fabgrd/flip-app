@@ -2,24 +2,15 @@ import { useTranslation } from 'react-i18next';
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Animated, { FadeInRight, FadeOutLeft } from 'react-native-reanimated';
 import { T } from '../../constants/flipTokens';
-import { useImagePicker } from '../../hooks/useImagePicker';
 import { Player } from '../../types';
 import { Avatar } from './Avatar';
 
 interface PlayersListProps {
   players: Player[];
   onRemovePlayer: (id: string) => void;
-  onUpdateAvatar: (id: string, avatar: string) => void;
 }
 
-export function PlayersList({ players, onRemovePlayer, onUpdateAvatar }: PlayersListProps) {
-  const { showImagePicker } = useImagePicker();
-
-  const handleAvatarPress = async (player: Player) => {
-    const imageUri = await showImagePicker();
-    if (imageUri) onUpdateAvatar(player.id, imageUri);
-  };
-
+export function PlayersList({ players, onRemovePlayer }: PlayersListProps) {
   if (players.length === 0) {
     return <CrewEmptyState />;
   }
@@ -28,12 +19,7 @@ export function PlayersList({ players, onRemovePlayer, onUpdateAvatar }: Players
     return (
       <Animated.View entering={FadeInRight.delay(index * 80)} exiting={FadeOutLeft}>
         <View style={styles.playerRow}>
-          <Avatar
-            name={item.name}
-            avatar={item.avatar}
-            size={40}
-            onPress={() => handleAvatarPress(item)}
-          />
+          <Avatar name={item.name} color={item.color} size={40} />
 
           <Text style={styles.playerName} numberOfLines={1}>
             {item.name}

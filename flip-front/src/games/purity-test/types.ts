@@ -17,7 +17,7 @@ export type PlayerAnswer = {
 export type PurityPlayer = {
   id: string;
   name: string;
-  avatar?: string;
+  color: string;
   answers: PlayerAnswer[];
   score: number;
   themeScores: Record<Theme, { score: number; maxScore: number }>;

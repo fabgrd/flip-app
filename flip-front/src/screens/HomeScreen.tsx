@@ -4,9 +4,8 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import * as Haptics from 'expo-haptics';
 import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Svg, { Circle, Path, Rect } from 'react-native-svg';
 import { setDevTier } from '../../src/entitlements';
 import {
   ChunkyButton,
@@ -19,7 +18,6 @@ import {
 import { MAX_PLAYERS_GLOBAL, MIN_PLAYERS_GLOBAL } from '../constants';
 import { T } from '../constants/flipTokens';
 import { usePlayers } from '../contexts/PlayersContext';
-import { usePaywall } from '../paywall';
 import { RootStackParamList } from '../types';
 
 type HomeNav = StackNavigationProp<RootStackParamList, 'Home'>;
@@ -28,8 +26,7 @@ export function HomeScreen() {
   useEffect(() => { setDevTier('premium'); }, []);
   const navigation = useNavigation<HomeNav>();
   const { t } = useTranslation();
-  const { players, addPlayer, removePlayer, updatePlayerAvatar } = usePlayers();
-  const { open: openPaywall } = usePaywall();
+  const { players, addPlayer, removePlayer } = usePlayers();
 
   const handleAddPlayer = useCallback(
     (name: string): boolean => {
@@ -62,36 +59,13 @@ export function HomeScreen() {
       <DotBackground opacity={0.06} />
       {/* Header row */}
       <View style={styles.header}>
-        <View>
-          <Text style={styles.logo}>
-            Fl<Text style={styles.logoAccent}>!</Text>p
-          </Text>
-        </View>
+        <Image
+          source={require('../../assets/logo_banniere.webp')}
+          style={styles.logo}
+          resizeMode="contain"
+          accessibilityLabel="Fl!p"
+        />
         <View style={styles.headerActions}>
-          <FlatChunkyButton size="sm" square color={T.lemon} onPress={() => openPaywall()}>
-            <Svg width={18} height={18} viewBox="0 0 48 48" fill="none">
-              <Path
-                d="M6 36h36V20l-9 6-9-12-9 12-9-6v16z"
-                fill={T.lemon}
-                stroke={T.ink}
-                strokeWidth="2.5"
-                strokeLinejoin="round"
-              />
-              <Rect
-                x="6"
-                y="34"
-                width="36"
-                height="6"
-                rx="1"
-                fill={T.lemon}
-                stroke={T.ink}
-                strokeWidth="2.5"
-              />
-              <Circle cx="15" cy="14" r="3" fill={T.lemon} stroke={T.ink} strokeWidth="2" />
-              <Circle cx="33" cy="14" r="3" fill={T.lemon} stroke={T.ink} strokeWidth="2" />
-              <Circle cx="24" cy="8" r="3" fill={T.tomato} stroke={T.ink} strokeWidth="2" />
-            </Svg>
-          </FlatChunkyButton>
           <FlatChunkyButton
             size="sm"
             square
@@ -132,11 +106,7 @@ export function HomeScreen() {
 
       {/* Players list */}
       <View style={styles.listWrapper}>
-        <PlayersList
-          players={players}
-          onRemovePlayer={handleRemovePlayer}
-          onUpdateAvatar={updatePlayerAvatar}
-        />
+        <PlayersList players={players} onRemovePlayer={handleRemovePlayer} />
       </View>
 
       {/* CTA */}
@@ -181,14 +151,9 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   logo: {
-    fontFamily: 'System',
-    fontSize: 40,
-    fontWeight: '900',
-    color: T.ink,
-    letterSpacing: -1.5,
-    lineHeight: 44,
+    width: 160,
+    height: 80,
   },
-  logoAccent: { color: T.tomato },
 
   hero: {
     paddingHorizontal: 20,

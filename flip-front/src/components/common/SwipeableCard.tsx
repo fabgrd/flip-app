@@ -124,7 +124,7 @@ export function SwipeableCard({
       <GestureDetector gesture={panGesture}>
         <Animated.View style={[styles.cardOuter, cardAnimStyle]}>
           <View style={styles.cardInner}>
-            <Avatar name={player.name} avatar={player.avatar} size={88} />
+            <Avatar name={player.name} color={player.color} size={88} />
             <Text style={styles.playerName}>{player.name}</Text>
           </View>
         </Animated.View>

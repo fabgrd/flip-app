@@ -1,5 +1,5 @@
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import React, { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, View } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
@@ -15,7 +15,6 @@ import {
 import { ChameleonIcon } from '../components/icons';
 import { T } from '../constants/flipTokens';
 import { useCameleon, useCameleonThemeAccess } from '../games/cameleon';
-import { useDrinksMode } from '../hooks';
 import {
   ActionBar,
   MrWhiteGuessModal,
@@ -23,6 +22,7 @@ import {
   SettingsPanel,
 } from '../games/cameleon/components';
 import type { CameleonTheme } from '../games/cameleon/types';
+import { useDrinksMode } from '../hooks';
 import { Player, RootStackParamList } from '../types';
 
 type CameleonRouteProp = RouteProp<RootStackParamList, 'Cameleon'>;
@@ -53,6 +53,7 @@ export function CameleonScreen() {
     proceedAfterResults,
     mrWhiteToGuessId,
     submitMrWhiteGuess,
+    resetGame,
   } = useCameleon(localPlayers);
 
   const [overrideUC, setOverrideUC] = useState<number | undefined>(undefined);
@@ -93,7 +94,7 @@ export function CameleonScreen() {
   const [eliminationNotice, setEliminationNotice] = useState<string | null>(null);
   const [eliminatedForModal, setEliminatedForModal] = useState<{
     name: string;
-    avatar?: string;
+    color: string;
   } | null>(null);
   useEffect(() => {
     if (phase === 'results') {
@@ -106,7 +107,7 @@ export function CameleonScreen() {
             : eliminated.role === 'cameleon'
               ? t('cameleon:roles.cameleon')
               : t('cameleon:roles.civilian');
-        setEliminatedForModal({ name: eliminated.name, avatar: eliminated.avatar });
+        setEliminatedForModal({ name: eliminated.name, color: eliminated.color });
         setEliminationNotice(t('cameleon:notices.eliminatedRole', { role: roleLabel }));
         if (drinksEnabled) {
           const isImpostor = eliminated.role === 'cameleon' || eliminated.role === 'mrWhite';
@@ -168,6 +169,7 @@ export function CameleonScreen() {
     if (mrWhiteToGuessId) setGuess('');
   }, [mrWhiteToGuessId]);
 
+  const displayPhase = phase === 'clues' ? 'vote' : phase;
   const bgColor = phase === 'settings' ? T.mint : phase === 'reveal' ? T.paper : T.bg;
 
   const toggleTheme = (theme: CameleonTheme) => {
@@ -235,7 +237,7 @@ export function CameleonScreen() {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: bgColor }]}>
-      {(phase === 'clues' || phase === 'vote' || phase === 'results') && (
+      {(displayPhase === 'vote' || displayPhase === 'results') && (
         <DotBackground opacity={0.06} color={T.ink} />
       )}
 
@@ -245,7 +247,7 @@ export function CameleonScreen() {
           <GameHeader
             floating
             tint={T.paper}
-            onExit={() => navigation.goBack()}
+            onExit={resetGame}
             onSettings={() => (navigation as any).navigate('Settings')}
             rules={{
               title: t('cameleon:ui.modalTitle'),
@@ -258,7 +260,7 @@ export function CameleonScreen() {
           <RevealCard
             key={currentRevealPlayer.id}
             name={currentRevealPlayer.name}
-            avatar={currentRevealPlayer.avatar}
+            color={currentRevealPlayer.color}
             roleLabel={
               currentRevealPlayer.role === 'mrWhite'
                 ? t('cameleon:roles.mrWhite')
@@ -274,11 +276,11 @@ export function CameleonScreen() {
       )}
 
       {/* ── CLUES / VOTE ── */}
-      {(phase === 'clues' || phase === 'vote' || phase === 'results') && (
+      {(displayPhase === 'vote' || displayPhase === 'results') && (
         <>
           <GameHeader
             tint={T.paper}
-            onExit={() => navigation.goBack()}
+            onExit={resetGame}
             onSettings={() => (navigation as any).navigate('Settings')}
             rules={{
               title: t('cameleon:ui.modalTitle'),
@@ -292,18 +294,18 @@ export function CameleonScreen() {
             <View style={styles.chipRow}>
               <View style={[styles.chip, { backgroundColor: T.mint }]}>
                 <Text style={styles.chipText}>
-                  {phase === 'vote' || phase === 'results'
+                  {displayPhase === 'vote' || displayPhase === 'results'
                     ? t('cameleon:phases.vote', 'Vote final')
                     : t('cameleon:phases.clues', 'Indices')}
                 </Text>
               </View>
             </View>
             <Text style={styles.phaseTitle}>
-              {phase === 'vote' || phase === 'results'
+              {displayPhase === 'vote' || displayPhase === 'results'
                 ? t('cameleon:ui.whoIsTitle')
                 : t('cameleon:game.title', 'Le Caméléon')}
             </Text>
-            {(phase === 'vote' || phase === 'results') && (
+            {(displayPhase === 'vote' || displayPhase === 'results') && (
               <Text style={styles.phaseSubtitle}>
                 {t('cameleon:vote.hint', 'Discutez puis votez ensemble.')}
               </Text>
@@ -312,10 +314,12 @@ export function CameleonScreen() {
           <PlayerPickerGrid
             players={orderedPlayers}
             selectedId={
-              phase === 'vote' || phase === 'results' ? selectedForElimination : null
+              displayPhase === 'vote' || displayPhase === 'results'
+                ? selectedForElimination
+                : null
             }
             onSelect={
-              phase === 'vote' || phase === 'results'
+              displayPhase === 'vote' || displayPhase === 'results'
                 ? (p) => selectElimination(p.id)
                 : undefined
             }
@@ -346,7 +350,7 @@ export function CameleonScreen() {
             }
           />
           <ActionBar
-            isVote={phase === 'vote' || phase === 'results'}
+            isVote={displayPhase === 'vote' || displayPhase === 'results'}
             selectedForElimination={selectedForElimination}
             onConfirmElimination={confirmElimination}
             onBeginVote={beginVote}
@@ -363,13 +367,13 @@ export function CameleonScreen() {
             : undefined
         }
         name={firstPlayerForModal?.name}
-        avatar={firstPlayerForModal?.avatar}
+        color={firstPlayerForModal?.color}
       />
       <PopModal
         visible={!!eliminationNotice}
         title={eliminationNotice ?? undefined}
         name={eliminatedForModal?.name}
-        avatar={eliminatedForModal?.avatar}
+        color={eliminatedForModal?.color}
         badgeEmoji="❌"
         badgeColor="#C62828"
       >
@@ -378,7 +382,7 @@ export function CameleonScreen() {
       <MrWhiteGuessModal
         visible={!!mrWhiteToGuessId}
         name={mrWhitePlayer?.name}
-        avatar={mrWhitePlayer?.avatar}
+        color={mrWhitePlayer?.color}
         guess={guess}
         onChangeGuess={setGuess}
         onSubmit={() => submitMrWhiteGuess(guess)}

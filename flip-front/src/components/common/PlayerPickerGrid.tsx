@@ -57,7 +57,7 @@ export function PlayerPickerGrid<P extends Player = Player>({
         const inner = (
           <>
             {renderBadge?.(item, index, selected)}
-            <Avatar name={item.name} avatar={item.avatar} size={avatarSize} />
+            <Avatar name={item.name} color={item.color} size={avatarSize} />
             <Text style={nameStyle} numberOfLines={1}>
               {item.name}
             </Text>

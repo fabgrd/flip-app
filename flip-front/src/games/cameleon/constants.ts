@@ -8,6 +8,16 @@ export const DEFAULT_DISTRIBUTION_BY_PLAYER_COUNT: Record<number, CameleonRoleDi
   8: { undercovers: 2, mrWhites: 1 },
   9: { undercovers: 3, mrWhites: 1 },
   10: { undercovers: 3, mrWhites: 1 },
+  11: { undercovers: 3, mrWhites: 1 },
+  12: { undercovers: 3, mrWhites: 2 },
+  13: { undercovers: 4, mrWhites: 1 },
+  14: { undercovers: 4, mrWhites: 2 },
+  15: { undercovers: 4, mrWhites: 2 },
+  16: { undercovers: 5, mrWhites: 2 },
+  17: { undercovers: 5, mrWhites: 2 },
+  18: { undercovers: 5, mrWhites: 2 },
+  19: { undercovers: 6, mrWhites: 2 },
+  20: { undercovers: 6, mrWhites: 2 },
 };
 
 // ─────────────────────────────────────────────────────────────

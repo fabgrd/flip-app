@@ -8,7 +8,7 @@ export interface PopModalProps {
   visible: boolean;
   title?: string;
   name?: string;
-  avatar?: string;
+  color?: string;
   children?: React.ReactNode;
   badgeEmoji?: string;
   badgeColor?: string;
@@ -18,7 +18,7 @@ export function PopModal({
   visible,
   title,
   name,
-  avatar,
+  color,
   children,
   badgeEmoji,
   badgeColor,
@@ -30,7 +30,7 @@ export function PopModal({
       <View style={styles.card} pointerEvents="auto">
         {name && (
           <View style={styles.avatarWrapper}>
-            <Avatar name={name} avatar={avatar} size={80} />
+            <Avatar name={name} color={color ?? T.tomato} size={80} />
             {!!badgeEmoji && (
               <Animated.Text
                 entering={ZoomIn}

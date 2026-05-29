@@ -134,7 +134,7 @@ export function PlayersModal({
             ) : (
               players.map((p) => (
                 <View key={p.id} style={pm.playerRow}>
-                  <Avatar name={p.name} avatar={p.avatar} size={26} />
+                  <Avatar name={p.name} color={p.color} size={26} />
                   <Text style={pm.playerName} numberOfLines={1} ellipsizeMode="tail">{p.name}</Text>
                   <TouchableOpacity
                     style={pm.removeBtn}
