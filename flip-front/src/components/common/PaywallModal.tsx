@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Modal, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Linking, Modal, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Animated, {
   cancelAnimation,
   Easing,
@@ -16,6 +16,7 @@ import Animated, {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Circle, Path, Rect } from 'react-native-svg';
 import { T } from '../../constants/flipTokens';
+import { getPremiumCodeAdapter, useEntitlements } from '../../entitlements';
 import { getPaywallContent } from '../../paywall/paywallContent';
 import { PaywallPlanId } from '../../paywall/types';
 import {
@@ -26,6 +27,7 @@ import {
   PaywallThemesIcon,
 } from '../icons';
 import { DotBackground } from './DotBackground';
+import { RedeemCodeModal } from './RedeemCodeModal';
 
 const BENEFIT_ICONS: Record<string, React.ReactNode> = {
   games: <PaywallGamesIcon size={28} />,
@@ -147,12 +149,29 @@ function PlanButton({
 }
 
 export function PaywallModal({ visible, onClose }: PaywallModalProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const insets = useSafeAreaInsets();
 
   const content = useMemo(() => getPaywallContent(t), [t]);
+  const { refresh } = useEntitlements();
+  const lang = i18n.language?.startsWith('en') ? 'en' : 'fr';
+  const VITRINE_BASE = 'https://flip-app.fr';
+
+  const handleRestore = async () => {
+    try {
+      await getPremiumCodeAdapter().refresh();
+      await refresh();
+    } catch {
+      /* noop */
+    }
+  };
+
+  const openExternal = (path: string) => {
+    Linking.openURL(`${VITRINE_BASE}/${lang}${path}`).catch(() => {});
+  };
 
   const [selectedPlan, setSelectedPlan] = useState<PaywallPlanId>(content.recommendedPlan);
+  const [redeemVisible, setRedeemVisible] = useState(false);
 
   const planLabel = (id: PaywallPlanId) => t(`paywall:plans.${id}`);
 
@@ -236,23 +255,38 @@ export function PaywallModal({ visible, onClose }: PaywallModalProps) {
             </View>
           </TouchableOpacity>
 
+          <TouchableOpacity
+            onPress={() => setRedeemVisible(true)}
+            style={styles.redeemBtn}
+            activeOpacity={0.7}
+          >
+            <Text style={styles.redeemBtnIcon}>🎟️</Text>
+            <Text style={styles.redeemBtnText}>{t('paywall:footer.redeem')}</Text>
+          </TouchableOpacity>
+
           <View style={styles.footer}>
             <Text style={styles.footerNote}>{t('paywall:footer.secure')}</Text>
             <View style={styles.footerLinks}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={handleRestore}>
                 <Text style={styles.footerLink}>{t('paywall:footer.restore')}</Text>
               </TouchableOpacity>
               <Text style={styles.footerDot}>·</Text>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => openExternal('/cgu')}>
                 <Text style={styles.footerLink}>{t('paywall:footer.terms')}</Text>
               </TouchableOpacity>
               <Text style={styles.footerDot}>·</Text>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => openExternal('/privacy')}>
                 <Text style={styles.footerLink}>{t('paywall:footer.privacy')}</Text>
               </TouchableOpacity>
             </View>
           </View>
         </Animated.View>
+
+        <RedeemCodeModal
+          visible={redeemVisible}
+          onClose={() => setRedeemVisible(false)}
+          onSuccess={onClose}
+        />
       </Animated.View>
     </Modal>
   );
@@ -398,6 +432,26 @@ const styles = StyleSheet.create({
   },
   ctaBadgeText: { fontSize: 11, fontWeight: '800', color: T.lemon, letterSpacing: 0.2 },
 
+  redeemBtn: {
+    alignSelf: 'center',
+    marginTop: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 18,
+    borderRadius: 999,
+    borderWidth: 1.5,
+    borderColor: T.lemon,
+    backgroundColor: 'rgba(255,210,63,0.08)',
+  },
+  redeemBtnIcon: { fontSize: 16 },
+  redeemBtnText: {
+    color: T.lemon,
+    fontSize: 14,
+    fontWeight: '800',
+    letterSpacing: 0.2,
+  },
   footer: { alignItems: 'center', gap: 4 },
   footerNote: { fontSize: 11, color: 'rgba(255,255,255,0.25)', textAlign: 'center' },
   footerLinks: { flexDirection: 'row', alignItems: 'center', gap: 6 },

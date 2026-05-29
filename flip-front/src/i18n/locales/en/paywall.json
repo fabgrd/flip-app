@@ -46,6 +46,23 @@
     "secure": "Secure payment via App Store",
     "restore": "Restore",
     "terms": "Terms",
-    "privacy": "Privacy"
+    "privacy": "Privacy",
+    "redeem": "I have a code"
+  },
+  "redeem": {
+    "title": "Fl!p VIP Code",
+    "subtitle": "Enter the code you've been given",
+    "placeholder": "FLIP-XXXX-XXXX",
+    "submit": "Activate",
+    "cancel": "Cancel",
+    "success": "🎉 Premium activated!",
+    "errors": {
+      "empty": "Enter a code",
+      "not_found": "Unknown code",
+      "revoked": "This code is no longer active",
+      "already_claimed": "Code already used on another device",
+      "network": "Can't reach server. Try again.",
+      "unknown": "Something went wrong"
+    }
   }
 }

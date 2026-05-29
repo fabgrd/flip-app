@@ -12,6 +12,6 @@ export type {
   SubscriptionTier,
   LocalOverrides,
 } from './types';
-export { getDefaultAdapters } from './defaults';
+export { getDefaultAdapters, getPremiumCodeAdapter } from './defaults';
 export type { EntitlementsAdapters } from './defaults';
 export { setDevTier, setDevOverride, clearDevOverrides } from './devTools';

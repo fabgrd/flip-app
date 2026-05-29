@@ -2,10 +2,11 @@ import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { BeerMugIcon, ChunkyButton, DotBackground, SuggestButton, ToggleSwitch } from '../components';
+import { BeerMugIcon, ChunkyButton, CrownIcon, DotBackground, SuggestButton, ToggleSwitch } from '../components';
 import { T } from '../constants/flipTokens';
+import { getPremiumCodeAdapter, useEntitlements } from '../entitlements';
 import { useDrinksMode } from '../hooks';
 import { usePaywall } from '../paywall';
 
@@ -19,6 +20,25 @@ export function SettingsScreen() {
   const { t, i18n } = useTranslation();
   const drinks = useDrinksMode();
   const { open: openPaywall } = usePaywall();
+  const { tier, refresh } = useEntitlements();
+
+  const handleRemoveCode = () => {
+    Alert.alert(
+      t('settings:premium.removeCodeConfirmTitle'),
+      t('settings:premium.removeCodeConfirmMessage'),
+      [
+        { text: t('settings:premium.cancel'), style: 'cancel' },
+        {
+          text: t('settings:premium.removeCodeConfirm'),
+          style: 'destructive',
+          onPress: async () => {
+            await getPremiumCodeAdapter().clearCode();
+            await refresh();
+          },
+        },
+      ],
+    );
+  };
 
   const handleLanguageChange = async (languageCode: string) => {
     await i18n.changeLanguage(languageCode);
@@ -92,6 +112,37 @@ export function SettingsScreen() {
               disabled={!drinks.available}
             />
           </TouchableOpacity>
+        </View>
+
+        {/* Premium */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>{t('settings:premium.title')}</Text>
+          {tier === 'premium' ? (
+            <View style={styles.premiumCard}>
+              <CrownIcon size={32} />
+              <View style={styles.toggleTextWrap}>
+                <Text style={styles.toggleLabel}>{t('settings:premium.activeLabel')}</Text>
+                <Text style={styles.toggleDescription}>{t('settings:premium.activeHint')}</Text>
+              </View>
+              <TouchableOpacity onPress={handleRemoveCode} style={styles.removeBtn} activeOpacity={0.7}>
+                <Feather name="x" size={16} color={T.ink} />
+                <Text style={styles.removeBtnText}>{t('settings:premium.removeCode')}</Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <TouchableOpacity
+              style={styles.premiumCardLocked}
+              onPress={() => openPaywall()}
+              activeOpacity={0.85}
+            >
+              <CrownIcon size={32} />
+              <View style={styles.toggleTextWrap}>
+                <Text style={styles.toggleLabel}>Fl!p VIP</Text>
+                <Text style={styles.toggleDescription}>{t('paywall:default.pitch')}</Text>
+              </View>
+              <Feather name="chevron-right" size={20} color={T.ink} />
+            </TouchableOpacity>
+          )}
         </View>
 
         {/* Language */}
@@ -223,6 +274,50 @@ const styles = StyleSheet.create({
     paddingVertical: 3,
   },
   proBadgeText: { color: '#fff', fontSize: 10, fontWeight: '900', letterSpacing: 0.5 },
+
+  premiumCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    flexWrap: 'wrap',
+    backgroundColor: T.lemon,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: 18,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    shadowColor: T.ink,
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 3,
+  },
+  premiumCardLocked: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    backgroundColor: T.paper,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: 18,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    shadowColor: T.ink,
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 3,
+  },
+  removeBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    backgroundColor: 'rgba(0,0,0,0.08)',
+    borderRadius: 999,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+  },
+  removeBtnText: { color: T.ink, fontSize: 12, fontWeight: '800' },
 
   languageRow: {
     flexDirection: 'row',

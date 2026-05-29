@@ -11,3 +11,4 @@ export { PaywallGamesIcon } from './PaywallGamesIcon';
 export { PaywallDifficultyIcon } from './PaywallDifficultyIcon';
 export { PaywallThemesIcon } from './PaywallThemesIcon';
 export { PaywallQuestionsIcon } from './PaywallQuestionsIcon';
+export { CrownIcon } from './CrownIcon';

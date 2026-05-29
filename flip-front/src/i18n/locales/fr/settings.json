@@ -33,5 +33,15 @@
     "label": "Distribuer les gorgées",
     "description": "Active la distribution de gorgées dans les jeux pour transformer Fl!p en jeu à boire.",
     "lockedHint": "Débloque le Premium pour activer le mode jeu à boire"
+  },
+  "premium": {
+    "title": "Abonnement",
+    "activeLabel": "Fl!p VIP actif",
+    "activeHint": "Toutes les fonctionnalités débloquées",
+    "removeCode": "Retirer mon code",
+    "removeCodeConfirmTitle": "Retirer le code ?",
+    "removeCodeConfirmMessage": "Tu perdras l'accès Premium sur cet appareil.",
+    "removeCodeConfirm": "Retirer",
+    "cancel": "Annuler"
   }
 }

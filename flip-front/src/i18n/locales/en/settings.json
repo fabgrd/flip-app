@@ -33,5 +33,15 @@
     "label": "Hand out sips",
     "description": "Enable sips distribution across games to turn Fl!p into a real drinking game.",
     "lockedHint": "Unlock Premium to enable drinking game mode"
+  },
+  "premium": {
+    "title": "Subscription",
+    "activeLabel": "Fl!p VIP active",
+    "activeHint": "All features unlocked",
+    "removeCode": "Remove my code",
+    "removeCodeConfirmTitle": "Remove code?",
+    "removeCodeConfirmMessage": "You will lose Premium access on this device.",
+    "removeCodeConfirm": "Remove",
+    "cancel": "Cancel"
   }
 }

@@ -2,19 +2,21 @@ import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import * as Haptics from 'expo-haptics';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { setDevTier } from '../../src/entitlements';
 import {
   ChunkyButton,
+  CrownIcon,
   DotBackground,
   FlatChunkyButton,
   FlippingWord,
   PlayerInput,
   PlayersList,
 } from '../components';
+import { useEntitlements } from '../entitlements';
+import { usePaywall } from '../paywall';
 import { MAX_PLAYERS_GLOBAL, MIN_PLAYERS_GLOBAL } from '../constants';
 import { T } from '../constants/flipTokens';
 import { usePlayers } from '../contexts/PlayersContext';
@@ -23,10 +25,11 @@ import { RootStackParamList } from '../types';
 type HomeNav = StackNavigationProp<RootStackParamList, 'Home'>;
 
 export function HomeScreen() {
-  useEffect(() => { setDevTier('premium'); }, []);
   const navigation = useNavigation<HomeNav>();
   const { t } = useTranslation();
   const { players, addPlayer, removePlayer } = usePlayers();
+  const { tier } = useEntitlements();
+  const { open: openPaywall } = usePaywall();
 
   const handleAddPlayer = useCallback(
     (name: string): boolean => {
@@ -66,6 +69,25 @@ export function HomeScreen() {
           accessibilityLabel="Fl!p"
         />
         <View style={styles.headerActions}>
+          {tier === 'premium' ? (
+            <View style={styles.vipBadge}>
+              <CrownIcon size={14} />
+              <Text style={styles.vipBadgeText}>VIP</Text>
+            </View>
+          ) : (
+            <FlatChunkyButton
+              size="sm"
+              square
+              color={T.lemon}
+              textColor={T.ink}
+              onPress={() => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                openPaywall();
+              }}
+            >
+              <CrownIcon size={20} />
+            </FlatChunkyButton>
+          )}
           <FlatChunkyButton
             size="sm"
             square
@@ -148,7 +170,30 @@ const styles = StyleSheet.create({
 
   headerActions: {
     flexDirection: 'row',
+    alignItems: 'center',
     gap: 8,
+  },
+  vipBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+    backgroundColor: T.lemon,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: 999,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    shadowColor: T.ink,
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 2,
+  },
+  vipBadgeText: {
+    color: T.ink,
+    fontSize: 12,
+    fontWeight: '900',
+    letterSpacing: 1,
   },
   logo: {
     width: 160,
