@@ -16,12 +16,16 @@
     "tagline": "Les jeux de soirée. Réinventés.",
     "navigationLabel": "NAVIGATION",
     "downloadLabel": "TÉLÉCHARGER",
+    "legalLabel": "LÉGAL",
     "links": {
       "home": "Accueil",
       "games": "Nos jeux",
       "support": "Support",
       "appStore": "App Store",
-      "googlePlay": "Google Play"
+      "googlePlay": "Google Play",
+      "privacy": "Confidentialité",
+      "terms": "CGU",
+      "mentions": "Mentions légales"
     },
     "legal": "© 2026 Fl!p · Tous droits réservés"
   },

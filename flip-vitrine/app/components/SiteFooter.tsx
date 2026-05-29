@@ -116,6 +116,14 @@ export default function SiteFooter() {
               <ExtLink href="#">{t('links.googlePlay')}</ExtLink>
             </ColLinks>
           </Col>
+          <Col>
+            <ColLabel>{t('legalLabel')}</ColLabel>
+            <ColLinks>
+              <FootLink href="/privacy">{t('links.privacy')}</FootLink>
+              <FootLink href="/cgu">{t('links.terms')}</FootLink>
+              <FootLink href="/mentions-legales">{t('links.mentions')}</FootLink>
+            </ColLinks>
+          </Col>
         </Columns>
       </Top>
       <Legal>{t('legal')}</Legal>

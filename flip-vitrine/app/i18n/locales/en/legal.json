@@ -1,0 +1,228 @@
+{
+  "privacy": {
+    "metaTitle": "Privacy Policy",
+    "metaDescription": "Flip Front's privacy policy.",
+    "eyebrow": "LEGAL",
+    "title": "Privacy Policy",
+    "updated": "Last updated: May 29, 2026",
+    "sections": [
+      {
+        "title": "1. Introduction",
+        "paragraphs": [
+          "Flip Front (\"we\", \"our\") is a mobile app of games to use with friends. We take the privacy of your data very seriously."
+        ]
+      },
+      {
+        "title": "2. Data collected",
+        "paragraphs": [
+          "Flip Front is designed to work without collecting any personally identifiable data.",
+          "• Locally stored data: the player names you enter are saved only on your device (via local storage) and are never transmitted to our servers.",
+          "• Anonymous technical data: in case of an error, anonymized reports may be sent to our monitoring tool (Sentry) to improve app stability. These reports contain no personally identifiable information.",
+          "• In-app purchases: transactions are handled directly by Apple (App Store) or Google (Play Store). We do not collect or store any payment information."
+        ]
+      },
+      {
+        "title": "3. Data not collected",
+        "paragraphs": [
+          "Flip Front does not collect:",
+          "• Your name, email or phone number",
+          "• Your contacts, photos or location",
+          "• Your advertising identifiers",
+          "• Any behavioral data sold to third parties"
+        ]
+      },
+      {
+        "title": "4. Data sharing",
+        "paragraphs": [
+          "We do not sell, rent or share any data with third parties for advertising or commercial purposes."
+        ]
+      },
+      {
+        "title": "5. Your rights",
+        "paragraphs": [
+          "Under GDPR, you can at any time:",
+          "• Delete player names from the app (delete button or uninstall)",
+          "• Uninstall the app to remove all local data"
+        ]
+      },
+      {
+        "title": "6. Security",
+        "paragraphs": [
+          "Since data stays on your device, its security depends on your device's. We recommend protecting it with a passcode."
+        ]
+      },
+      {
+        "title": "7. Minors",
+        "paragraphs": [
+          "Flip Front is strictly reserved for adults (18 and over). The app contains recurring adult themes, references to alcohol and mature questions, matching the 17+ rating (App Store) and PEGI 18 / ESRB Mature rating (Google Play). It is not intended for minors."
+        ]
+      },
+      {
+        "title": "8. Changes",
+        "paragraphs": [
+          "This policy may be updated. The date of the latest update is shown at the top of the document."
+        ]
+      },
+      {
+        "title": "9. Contact",
+        "paragraphs": [
+          "For any question: info@flip-flop.app"
+        ]
+      }
+    ]
+  },
+  "terms": {
+    "metaTitle": "Terms of Use",
+    "metaDescription": "Flip Front's terms of use.",
+    "eyebrow": "LEGAL",
+    "title": "Terms of Use",
+    "updated": "Last updated: May 29, 2026",
+    "sections": [
+      {
+        "title": "1. Acceptance",
+        "paragraphs": [
+          "By downloading and using the Flip Front app, you fully accept these terms of use."
+        ]
+      },
+      {
+        "title": "2. Service description",
+        "paragraphs": [
+          "Flip Front is a mobile app offering a selection of social games to play with friends (party games, vibe games, quizzes). The app is intended for personal, non-commercial recreational use."
+        ]
+      },
+      {
+        "title": "3. Minimum age",
+        "paragraphs": [
+          "Use of Flip Front is strictly reserved for adults (18 and over). The app contains recurring adult themes, references to alcohol and mature questions. It is rated 17+ on the App Store and PEGI 18 / ESRB Mature on Google Play.",
+          "By using the app, you declare that you are at least 18 years old. Any use by a minor is prohibited and falls under the sole responsibility of their legal guardian."
+        ]
+      },
+      {
+        "title": "4. Responsible drinking",
+        "paragraphs": [
+          "Some games include a \"drinks\" mode for humorous purposes. Flip Front encourages responsible alcohol consumption. Alcohol abuse is dangerous to your health. Never play while driving. The publishers disclaim any liability for unreasonable use of the drinks mode."
+        ]
+      },
+      {
+        "title": "5. In-app purchases",
+        "paragraphs": [
+          "Flip Front offers premium features available through a one-time purchase or subscription, handled by the App Store or Google Play Store. Refund conditions are those of Apple or Google. Any claim must be addressed to the relevant platform."
+        ]
+      },
+      {
+        "title": "6. Acceptable use",
+        "paragraphs": [
+          "You agree to:",
+          "• Not use Flip Front for illegal or harmful purposes",
+          "• Not attempt to copy, modify, disassemble or decompile the app",
+          "• Not enter illegal, defamatory or rights-infringing content (especially in player names)"
+        ]
+      },
+      {
+        "title": "7. Intellectual property",
+        "paragraphs": [
+          "The app, its name, logo, design, texts and all its content (questions, scenarios, illustrations) are the exclusive property of the publisher. Any reproduction is forbidden without prior authorization."
+        ]
+      },
+      {
+        "title": "8. Limitation of liability",
+        "paragraphs": [
+          "Flip Front is provided \"as is\", with no warranty of any kind. The publisher cannot be held liable for:",
+          "• Bugs, interruptions or service unavailability",
+          "• Direct or indirect damages resulting from use of the app",
+          "• Consequences of unreasonable use of the games (in particular the drinks mode)"
+        ]
+      },
+      {
+        "title": "9. Content",
+        "paragraphs": [
+          "Some app content may include adult themes, off-beat humor or references to alcohol consumption. This content is intended for a mature audience."
+        ]
+      },
+      {
+        "title": "10. Service changes",
+        "paragraphs": [
+          "The publisher reserves the right to modify, suspend or discontinue all or part of the app at any time and without notice."
+        ]
+      },
+      {
+        "title": "11. Changes to the terms",
+        "paragraphs": [
+          "These terms may be modified at any time. Your continued use of the app after a change means acceptance of the new terms."
+        ]
+      },
+      {
+        "title": "12. Applicable law",
+        "paragraphs": [
+          "These terms are governed by French law. Any dispute will fall under the competent courts of France."
+        ]
+      },
+      {
+        "title": "13. Contact",
+        "paragraphs": [
+          "For any question: info@flip-flop.app"
+        ]
+      }
+    ]
+  },
+  "mentions": {
+    "metaTitle": "Legal Notice",
+    "metaDescription": "Flip Front's legal notice.",
+    "eyebrow": "LEGAL",
+    "title": "Legal Notice",
+    "updated": "Last updated: May 29, 2026",
+    "sections": [
+      {
+        "title": "1. Publisher",
+        "paragraphs": [
+          "The Flip Front website and app are published by FABRIC8.",
+          "• Legal form: Sole proprietorship (Entrepreneur individuel)",
+          "• Name: FABRIC8",
+          "• Registered office: 268 chemin des Vignes de Choudans, 01630 Saint-Jean-de-Gonville, France",
+          "• SIREN: 919 323 709",
+          "• SIRET (head office): 919 323 709 00023",
+          "• EU VAT number: FR15 919 323 709",
+          "• APE / NAF code: 62.01Z — Computer programming",
+          "• INSEE registration: 22/09/2022",
+          "• RNE (INPI) registration: 18/05/2026"
+        ]
+      },
+      {
+        "title": "2. Contact",
+        "paragraphs": [
+          "For any question regarding the website or the app: info@flip-flop.app"
+        ]
+      },
+      {
+        "title": "3. Publication director",
+        "paragraphs": [
+          "The publication director is the legal representative of FABRIC8."
+        ]
+      },
+      {
+        "title": "4. Hosting",
+        "paragraphs": [
+          "The website is hosted by Vercel Inc., 440 N Barranca Avenue #4133, Covina, CA 91723, United States — vercel.com."
+        ]
+      },
+      {
+        "title": "5. Intellectual property",
+        "paragraphs": [
+          "All elements present on the website and in the Flip Front app (texts, images, logos, trademarks, game content) are the exclusive property of FABRIC8, unless stated otherwise. Any reproduction, representation or use, in whole or in part, without prior written authorization, is prohibited."
+        ]
+      },
+      {
+        "title": "6. Personal data",
+        "paragraphs": [
+          "The processing of personal data is detailed in the Privacy Policy."
+        ]
+      },
+      {
+        "title": "7. Applicable law",
+        "paragraphs": [
+          "This legal notice is governed by French law. Any dispute will fall under the competent courts of France."
+        ]
+      }
+    ]
+  }
+}

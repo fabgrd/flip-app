@@ -16,12 +16,16 @@
     "tagline": "Party games. Reinvented.",
     "navigationLabel": "NAVIGATION",
     "downloadLabel": "DOWNLOAD",
+    "legalLabel": "LEGAL",
     "links": {
       "home": "Home",
       "games": "Our games",
       "support": "Support",
       "appStore": "App Store",
-      "googlePlay": "Google Play"
+      "googlePlay": "Google Play",
+      "privacy": "Privacy",
+      "terms": "Terms",
+      "mentions": "Legal notice"
     },
     "legal": "© 2026 Fl!p · All rights reserved"
   },
