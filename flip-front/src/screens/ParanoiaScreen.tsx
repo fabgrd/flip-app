@@ -24,6 +24,7 @@ import {
   GameRulesScreen,
   InitialAvatar,
   ParanoiaIcon,
+  RoundsStepper,
   StickerBadge,
 } from '../components';
 import { T } from '../constants/flipTokens';
@@ -56,12 +57,16 @@ function PNRules({
   onStart,
   onExit,
   onSettings,
+  totalRounds,
+  onTotalRoundsChange,
 }: {
   players: Player[];
   onPlayersChange: (players: Player[]) => void;
   onStart: () => void;
   onExit: () => void;
   onSettings: () => void;
+  totalRounds: number;
+  onTotalRoundsChange: (n: number) => void;
 }) {
   const { t } = useTranslation();
   const rulesSteps = t('paranoia:ui.rules.steps', {
@@ -83,7 +88,14 @@ function PNRules({
       onStart={onStart}
       startLabel={t('paranoia:ui.rules.start')}
     >
-      <View style={{ paddingHorizontal: 20, paddingBottom: 12, marginTop: 'auto' }}>
+      <View style={{ paddingHorizontal: 20, paddingBottom: 12, marginTop: 'auto', gap: 12 }}>
+        <RoundsStepper
+          value={totalRounds}
+          onChange={onTotalRoundsChange}
+          min={1}
+          max={20}
+          accentColor={T.teal}
+        />
         <DrinkModeToggle accentColor={T.teal} />
       </View>
     </GameRulesScreen>
@@ -901,6 +913,7 @@ export function ParanoiaScreen() {
   const [order] = useState<ParanoiaOrder[]>(() => buildOrder(players, questions));
   const [step, setStep] = useState<ParanoiaStep>('rules');
   const [round, setRound] = useState(0);
+  const [totalRounds, setTotalRounds] = useState<number>((route.params.players as Player[]).length);
   const [answer, setAnswer] = useState<number | null>(null);
   const [coin, setCoin] = useState<'pile' | 'face' | null>(null);
   const [chosenSide, setChosenSide] = useState<'pile' | 'face' | null>(null);
@@ -925,7 +938,7 @@ export function ParanoiaScreen() {
     setCoin(null);
     setChosenSide(null);
 
-    if (round + 1 >= order.length) {
+    if (round + 1 >= Math.min(totalRounds, order.length)) {
       setStep('end');
     } else {
       setRound((r) => r + 1);
@@ -941,6 +954,8 @@ export function ParanoiaScreen() {
         onStart={() => setStep('q-handoff')}
         onExit={() => (navigation as any).goBack()}
         onSettings={() => (navigation as any).navigate('Settings')}
+        totalRounds={totalRounds}
+        onTotalRoundsChange={setTotalRounds}
       />
     );
   }

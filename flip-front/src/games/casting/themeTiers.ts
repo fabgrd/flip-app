@@ -11,6 +11,8 @@ export const CASTING_THEME_TIER: Readonly<Record<CastingTheme, ContentTier>> = {
   family: 'spicy',
   party: 'spicy',
   taboo: 'hardcore',
+  cinema: 'free',
+  sports: 'free',
 };
 
 const TIER_ENTITLEMENT: Readonly<Record<ContentTier, Entitlement | null>> = {

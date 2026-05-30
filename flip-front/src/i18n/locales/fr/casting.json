@@ -110,7 +110,19 @@
       "Se faire surprendre en train de chanter fort dans sa voiture aux feux rouges",
       "Poster une story en pensant que c'est en close friends",
       "Oublier son chargeur de téléphone en partant en weekend",
-      "Se tromper de jour pour un rendez-vous important"
+      "Se tromper de jour pour un rendez-vous important",
+      "Se prendre un poteau en regardant son téléphone",
+      "Faire tomber son téléphone dans les toilettes",
+      "Oublier son sac à dos dans le bus et courir après",
+      "Renverser son café sur ses vêtements juste avant un rendez-vous",
+      "Se faire claquer la porte de l'ascenseur au nez",
+      "Glisser sur le sol mouillé d'un supermarché",
+      "Perdre une chaussure en marchant dans la rue",
+      "Se faire asperger par une flaque d'eau par une voiture",
+      "Oublier ses clés à l'intérieur et rester bloqué dehors",
+      "Faire tomber tout le contenu de son sac dans le métro",
+      "Se tromper de sens dans un escalator bondé",
+      "Recevoir un coup de vent qui fait voler tous tes papiers"
     ],
     "relations": [
       "Recevoir un message de son ex à 3h du matin",
@@ -184,14 +196,12 @@
       "Se faire surprendre en train de regarder du porno",
       "Avouer qu'on ne va plus à la fac depuis 2 mois",
       "Se faire comparer à son cousin qui réussit tout",
-      "Faire un scandale en famille après avoir trop bu"
+      "Faire un scandale en famille après avoir trop bu",
+      "Avouer qu'on a raté ses exams depuis plusieurs mois"
     ],
     "studies": [
       "Se tromper de salle d'examen le jour du bac",
-      "Rendre une copie complètement blanche",
       "Se faire interroger sur le seul chapitre non révisé",
-      "Avoir ses règles pendant un oral important",
-      "Faire un exposé avec une énorme faute sur la première slide",
       "Appeler son boss par son prénom dans un mail ultra formel",
       "Envoyer une plainte sur le boss… au boss",
       "Se faire surprendre en train de dormir pendant une visio",
@@ -201,21 +211,46 @@
       "Copier sur son voisin et se faire prendre en flag",
       "Oublier de rendre son mémoire la veille de la deadline",
       "Se présenter à l'oral complètement défoncé",
-      "Recevoir un mail 'on ne te garde pas' après 6 mois de stage"
+      "Recevoir un mail 'on ne te garde pas' après 6 mois de stage",
+      "Se tromper de salle pour un entretien important",
+      "Se coincer la cravate dans la machine à café"
     ],
     "party": [
       "Vomir sur la piste de danse devant tout le monde",
       "Perdre son téléphone + portefeuille + clés en soirée",
       "Embrasser la mauvaise personne pendant un jeu",
-      "Se réveiller avec un tatouage temporaire ultra honteux",
-      "Faire un striptease involontaire en dansant",
+      "Se réveiller avec un tatouage de bite sur le front",
       "Se faire jeter de la soirée par les hôtes",
-      "Perdre ses chaussures et rentrer pieds nus",
       "Se réveiller dans une baignoire chez des inconnus",
       "Faire une déclaration d'amour bourrée à la mauvaise personne",
       "Se battre pour une raison complètement débile",
-      "Poster des stories ultra compromettantes en étant déchiré",
-      "Avoir un black-out total de 4 heures"
+      "Avoir un black-out total de 4 heures",
+      "Se réveiller avec un tatouage temporaire de bite sur le front",
+      "Danser comme un fou et tomber du haut de la table"
+    ],
+    "cinema": [
+      "Se battre contre 10 ennemis dans un film d'action",
+      "Jouer une scène de mort dramatique ultra exagérée",
+      "Faire une déclaration d'amour comme dans un film romantique",
+      "Imiter une scène de combat au ralenti",
+      "Jouer un méchant qui rit de manière diabolique",
+      "Faire une scène de peur extrême dans un film d'horreur",
+      "Danser comme dans une comédie musicale",
+      "Jouer un gangster qui se fait tirer dessus",
+      "Imiter une scène de baiser ultra passionné",
+      "Faire une explosion avec des effets spéciaux ridicules"
+    ],
+    "sports": [
+      "Rater un penalty devant tout le stade",
+      "Se prendre un smash de tennis en plein visage",
+      "Tomber du tapis de course en pleine salle de sport",
+      "Faire un strike au bowling puis glisser et tomber",
+      "Se faire humilier au foot par un enfant de 10 ans",
+      "Rater complètement une figure de skateboard",
+      "Se tordre la cheville en faisant le malin",
+      "Perdre un match de ping-pong 11-0",
+      "Essayer de faire du parkour et se vautrer",
+      "Se noyer dans 1m50 d'eau à la piscine"
     ]
   },
   "themes": {
@@ -226,7 +261,9 @@
     "family": "Famille",
     "studies": "Études & Boulot",
     "spicy": "Spicy",
-    "taboo": "Tabou"
+    "taboo": "Tabou",
+    "cinema": "Scènes de Film",
+    "sports": "Sports & Fails"
   },
   "labels": {
     "1": "Catastrophique",

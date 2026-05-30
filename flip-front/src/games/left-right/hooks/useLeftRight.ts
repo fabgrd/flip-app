@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Player } from '../../../types';
 import { shuffleArray } from '../../../utils/array';
@@ -10,11 +10,13 @@ import {
   PoliticalResults,
 } from '../types';
 
-export const useLeftRight = (initialPlayers: Player[]) => {
+export const useLeftRight = (initialPlayers: Player[], maxQuestions?: number) => {
   const { t } = useTranslation();
 
   const [gameState, setGameState] = useState<PoliticalGameState>(() => {
-    const questions = shuffleArray([...POLITICAL_QUESTION_CONFIG]).map((config) => ({
+    const shuffled = shuffleArray([...POLITICAL_QUESTION_CONFIG]);
+    const limit = maxQuestions && maxQuestions > 0 ? Math.min(maxQuestions, shuffled.length) : shuffled.length;
+    const questions = shuffled.slice(0, limit).map((config) => ({
       id: config.id,
       text: t(`leftRight:questions.${config.id}`),
       points: config.points,
@@ -32,6 +34,23 @@ export const useLeftRight = (initialPlayers: Player[]) => {
       isGameFinished: false,
     };
   });
+
+  useEffect(() => {
+    setGameState((prev) => {
+      if (prev.currentQuestionIndex !== 0 || prev.players.some((p) => p.answers.length > 0)) {
+        return prev;
+      }
+      const target = maxQuestions && maxQuestions > 0 ? Math.min(maxQuestions, POLITICAL_QUESTION_CONFIG.length) : POLITICAL_QUESTION_CONFIG.length;
+      if (prev.questions.length === target) return prev;
+      const shuffled = shuffleArray([...POLITICAL_QUESTION_CONFIG]);
+      const questions = shuffled.slice(0, target).map((config) => ({
+        id: config.id,
+        text: t(`leftRight:questions.${config.id}`),
+        points: config.points,
+      }));
+      return { ...prev, questions };
+    });
+  }, [maxQuestions, t]);
 
   const currentQuestion = useMemo(
     () => gameState.questions[gameState.currentQuestionIndex],

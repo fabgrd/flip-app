@@ -28,12 +28,12 @@
       }
     ]
   },
-  "caller": {
+  "ready": {
     "round": "TOUR {{num}} / {{total}}",
-    "yourTurn": "c'est toi",
-    "instruction": "Dis à tout le monde :",
+    "title": "Tout le monde\nest prêt ?",
+    "instruction": "Posez le téléphone au centre et :",
     "say": "« Regardez en bas ! »",
-    "readyBtn": "Tout le monde est prêt → Lancer"
+    "startBtn": "On y va →"
   },
   "countdown": {
     "prepare": "Préparez-vous…",

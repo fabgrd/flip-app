@@ -8,7 +8,9 @@ export type CastingTheme =
   | 'gaming'
   | 'family'
   | 'studies'
-  | 'party';
+  | 'party'
+  | 'cinema'
+  | 'sports';
 
 export interface CastingThemeOption {
   value: CastingTheme;
@@ -26,6 +28,8 @@ export const CASTING_THEME_OPTIONS: readonly CastingThemeOption[] = [
   { value: 'studies', label: 'Études & Boulot', emoji: '📚', desc: 'École, fac, stages & taf' },
   { value: 'spicy', label: 'Spicy', emoji: '🔥', desc: 'Sexe, alcool, corps & gênes adultes' },
   { value: 'taboo', label: 'Tabou', emoji: '😈', desc: 'Famille, secrets & vrais malaises' },
+  { value: 'cinema', label: 'Scènes de Film', emoji: '🎭', desc: 'Acting, drama & ciné' },
+  { value: 'sports', label: 'Sports & Fails', emoji: '⚽', desc: 'Sports, fails & humiliations' },
 ];
 
 const SCENARIOS_DAILY: string[] = [
@@ -163,6 +167,32 @@ const SCENARIOS_PARTY: string[] = [
   'Avoir un black-out total de 4 heures',
 ];
 
+const SCENARIOS_CINEMA: string[] = [
+  "Se battre contre 10 ennemis dans un film d'action",
+  'Jouer une scène de mort dramatique ultra exagérée',
+  "Faire une déclaration d'amour comme dans un film romantique",
+  'Imiter une scène de combat au ralenti',
+  'Jouer un méchant qui rit de manière diabolique',
+  "Faire une scène de peur extrême dans un film d'horreur",
+  'Danser comme dans une comédie musicale',
+  'Jouer un gangster qui se fait tirer dessus',
+  'Imiter une scène de baiser ultra passionné',
+  'Faire une explosion avec des effets spéciaux ridicules',
+];
+
+const SCENARIOS_SPORTS: string[] = [
+  'Rater un penalty devant tout le stade',
+  'Se prendre un smash de tennis en plein visage',
+  'Tomber du tapis de course en pleine salle de sport',
+  'Faire un strike au bowling puis glisser et tomber',
+  "Se faire humilier au foot par un enfant de 10 ans",
+  'Rater complètement une figure de skateboard',
+  'Se tordre la cheville en faisant le malin',
+  'Perdre un match de ping-pong 11-0',
+  'Essayer de faire du parkour et se vautrer',
+  "Se noyer dans 1m50 d'eau à la piscine",
+];
+
 export const CASTING_SCENARIOS_BY_THEME: Readonly<Record<CastingTheme, readonly string[]>> = {
   daily: SCENARIOS_DAILY,
   relations: SCENARIOS_RELATIONS,
@@ -172,6 +202,8 @@ export const CASTING_SCENARIOS_BY_THEME: Readonly<Record<CastingTheme, readonly 
   family: SCENARIOS_FAMILY,
   studies: SCENARIOS_STUDIES,
   party: SCENARIOS_PARTY,
+  cinema: SCENARIOS_CINEMA,
+  sports: SCENARIOS_SPORTS,
 };
 
 export function getScenariosForThemes(themes: readonly CastingTheme[]): string[] {

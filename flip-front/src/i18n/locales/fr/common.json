@@ -27,7 +27,8 @@
     "score": "Score",
     "loading": "Chargement...",
     "error": "Erreur",
-    "readyToPlay": "Prêt à jouer"
+    "readyToPlay": "Prêt à jouer",
+    "rounds": "Tours"
   },
   "actions": {
     "playAgain": "Rejouer",

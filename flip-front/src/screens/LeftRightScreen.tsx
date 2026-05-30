@@ -11,6 +11,7 @@ import {
   GameHeader,
   GameRulesScreen,
   GaucheDroiteIcon,
+  RoundsStepper,
   RulesButton
 } from '../components';
 import { T } from '../constants/flipTokens';
@@ -28,12 +29,16 @@ function LRRules({
   onStart,
   onExit,
   onSettings,
+  totalRounds,
+  onTotalRoundsChange,
 }: {
   players: Player[];
   onPlayersChange: (players: Player[]) => void;
   onStart: () => void;
   onExit: () => void;
   onSettings: () => void;
+  totalRounds: number;
+  onTotalRoundsChange: (n: number) => void;
 }) {
   const { t } = useTranslation();
   const rules = (t('leftRight:ui.steps', { returnObjects: true }) as { n: string; title: string; desc: string }[]);
@@ -52,7 +57,14 @@ function LRRules({
       onStart={onStart}
       startLabel={t('leftRight:ui.start')}
     >
-      <View style={{ paddingHorizontal: 20, paddingBottom: 12, marginTop: 'auto' }}>
+      <View style={{ paddingHorizontal: 20, paddingBottom: 12, marginTop: 'auto', gap: 12 }}>
+        <RoundsStepper
+          value={totalRounds}
+          onChange={onTotalRoundsChange}
+          min={1}
+          max={20}
+          accentColor={T.gaucheDroiteAccent ?? T.lemon}
+        />
         <DrinkModeToggle accentColor={T.lemon} />
       </View>
     </GameRulesScreen>
@@ -67,6 +79,7 @@ export function LeftRightScreen() {
   const [players, setPlayers] = useState<Player[]>(route.params.players as Player[]);
   const [showRules, setShowRules] = useState(true);
   const [revealQuestionId, setRevealQuestionId] = useState<string | null>(null);
+  const [totalRounds, setTotalRounds] = useState<number>(10);
   const {
     gameState,
     currentQuestion,
@@ -77,7 +90,7 @@ export function LeftRightScreen() {
     calculateResults,
     isGameFinished,
     totalQuestions,
-  } = useLeftRight(players);
+  } = useLeftRight(players, totalRounds);
 
   const handleSwipe = (playerId: string, direction: 'left' | 'right') => {
     submitAnswer(playerId, direction);
@@ -143,6 +156,8 @@ export function LeftRightScreen() {
         onStart={() => setShowRules(false)}
         onExit={() => navigation.goBack()}
         onSettings={() => navigation.navigate('Settings')}
+        totalRounds={totalRounds}
+        onTotalRoundsChange={setTotalRounds}
       />
     );
   }

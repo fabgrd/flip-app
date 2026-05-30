@@ -169,6 +169,7 @@ function RFRules({
   maxLevel,
   onChangeCatCount,
   onChangeMaxLevel,
+  cats,
 }: {
   players: Player[];
   onPlayersChange: (p: Player[]) => void;
@@ -179,6 +180,7 @@ function RFRules({
   maxLevel: RFLevelKey;
   onChangeCatCount: (cat: RFCategoryId, value: number) => void;
   onChangeMaxLevel: (level: RFLevelKey) => void;
+  cats: typeof redFlagDataFr.categories;
 }) {
   const { t } = useTranslation();
   const { isLevelAllowed, requestUnlockFor } = useRedFlagLevelAccess();
@@ -252,7 +254,7 @@ function RFRules({
             {RF_CATEGORIES.map((cat) => (
               <View key={cat} style={rls.sliderRow}>
                 <View style={rls.sliderHeader}>
-                  <Text style={rls.sliderLabel}>{RF_CATEGORY_LABELS[cat]}</Text>
+                  <Text style={rls.sliderLabel}>{getCatById(cat, cats).name}</Text>
                   <Text style={rls.sliderValue}>{catCounts[cat] ?? 0}</Text>
                 </View>
                 <Slider
@@ -764,6 +766,7 @@ export function RedFlagScreen() {
           setCatCounts((prev) => ({ ...prev, [cat]: Math.max(0, Math.round(value)) }))
         }
         onChangeMaxLevel={setMaxLevel}
+        cats={redFlagData.categories}
       />
     );
   }

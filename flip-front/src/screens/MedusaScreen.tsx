@@ -25,6 +25,7 @@ import {
   GameRulesScreen,
   InitialAvatar,
   MedusaIcon,
+  RoundsStepper,
   StickerBadge,
 } from '../components';
 import { getPlayerBgColor, getPlayerTextColor } from '../constants';
@@ -78,12 +79,16 @@ function MDRules({
   onStart,
   onExit,
   onSettings,
+  totalRounds,
+  onTotalRoundsChange,
 }: {
   players: Player[];
   onPlayersChange: (players: Player[]) => void;
   onStart: () => void;
   onExit: () => void;
   onSettings: () => void;
+  totalRounds: number;
+  onTotalRoundsChange: (n: number) => void;
 }) {
   const { t } = useTranslation();
   const resolvedSteps = useMedusaRulesSteps();
@@ -103,24 +108,27 @@ function MDRules({
       onStart={onStart}
       startLabel={t('medusa:rules.start')}
     >
-      <View style={{ paddingHorizontal: 20, paddingBottom: 12, marginTop: 'auto' }}>
+      <View style={{ paddingHorizontal: 20, paddingBottom: 12, marginTop: 'auto', gap: 12 }}>
+        <RoundsStepper
+          value={totalRounds}
+          onChange={onTotalRoundsChange}
+          min={1}
+          max={20}
+          accentColor={T.cobalt}
+        />
         <DrinkModeToggle accentColor={T.cobalt} />
       </View>
     </GameRulesScreen>
   );
 }
 
-// ─── Caller ───────────────────────────────────────────────────────────────────
+// ─── Ready ────────────────────────────────────────────────────────────────────
 
-function MDCaller({
-  playerIdx,
-  playerName,
+function MDReady({
   roundNum,
   totalRounds,
   onStart,
 }: {
-  playerIdx: number;
-  playerName: string;
   roundNum: number;
   totalRounds: number;
   onStart: () => void;
@@ -132,26 +140,16 @@ function MDCaller({
         <View style={cal.center}>
           <View style={[cal.roundBadge]}>
             <Text style={cal.roundBadgeText}>
-              {t('medusa:caller.round', { num: roundNum, total: totalRounds })}
+              {t('medusa:ready.round', { num: roundNum, total: totalRounds })}
             </Text>
           </View>
 
-          <InitialAvatar
-            index={playerIdx}
-            label={playerName[0].toUpperCase()}
-            size={120}
-            radius={32}
-            borderColor={T.paper}
-            shadowColor={T.cobalt}
-            style={{ borderWidth: 3, shadowOffset: { width: 8, height: 8 }, elevation: 8 }}
-          />
+          <MedusaIcon size={120} />
 
-          <Text style={cal.name}>
-            {playerName},{'\n'}{t('medusa:caller.yourTurn')}
-          </Text>
+          <Text style={cal.name}>{t('medusa:ready.title')}</Text>
           <Text style={cal.sub}>
-            {t('medusa:caller.instruction')}{'\n'}
-            <Text style={cal.subAccent}>{t('medusa:caller.say')}</Text>
+            {t('medusa:ready.instruction')}{'\n'}
+            <Text style={cal.subAccent}>{t('medusa:ready.say')}</Text>
           </Text>
         </View>
 
@@ -165,7 +163,7 @@ function MDCaller({
               onStart();
             }}
           >
-            {t('medusa:caller.readyBtn')}
+            {t('medusa:ready.startBtn')}
           </ChunkyButton>
         </View>
       </SafeAreaView>
@@ -900,6 +898,7 @@ export function MedusaScreen() {
   const [roundPairs, setRoundPairs] = useState<MedusaPair[]>([]);
   const [history, setHistory] = useState<MedusaRoundHistory[]>([]);
   const [penalties, setPenalties] = useState<number[]>(() => players.map(() => 0));
+  const [totalRounds, setTotalRounds] = useState<number>(route.params.players.length);
 
   const confirmRound = () => {
     const np = [...penalties];
@@ -908,16 +907,18 @@ export function MedusaScreen() {
       np[b]++;
     });
     setPenalties(np);
-    setHistory((h) => [...h, { callerIdx, pairs: [...roundPairs] }]);
+    setHistory((h) => [...h, { callerIdx: callerPlayerIdx, pairs: [...roundPairs] }]);
     setRoundPairs([]);
 
-    if (callerIdx + 1 >= players.length) {
+    if (callerIdx + 1 >= totalRounds) {
       setStep('end');
     } else {
       setCallerIdx((c) => c + 1);
       setStep('caller');
     }
   };
+
+  const callerPlayerIdx = players.length > 0 ? callerIdx % players.length : 0;
 
   if (step === 'rules') {
     return (
@@ -927,16 +928,16 @@ export function MedusaScreen() {
         onStart={() => setStep('caller')}
         onExit={() => navigation.goBack()}
         onSettings={() => navigation.navigate('Settings')}
+        totalRounds={totalRounds}
+        onTotalRoundsChange={setTotalRounds}
       />
     );
   }
   if (step === 'caller') {
     return (
-      <MDCaller
-        playerIdx={callerIdx}
-        playerName={players[callerIdx].name}
+      <MDReady
         roundNum={callerIdx + 1}
-        totalRounds={players.length}
+        totalRounds={totalRounds}
         onStart={() => setStep('countdown')}
       />
     );
@@ -948,7 +949,7 @@ export function MedusaScreen() {
     return (
       <MDReport
         players={players}
-        callerName={players[callerIdx].name}
+        callerName={players[callerPlayerIdx].name}
         pairs={roundPairs}
         setPairs={setRoundPairs}
         onConfirm={() => setStep('results')}
@@ -964,7 +965,7 @@ export function MedusaScreen() {
         players={players}
         pairs={roundPairs}
         roundNum={callerIdx + 1}
-        totalRounds={players.length}
+        totalRounds={totalRounds}
         onNext={confirmRound}
         onExit={() => navigation.goBack()}
         onSettings={() => navigation.navigate('Settings')}

@@ -149,7 +149,7 @@ function PurityRules({
             {(Object.keys(themeCounts) as Theme[]).map((theme) => (
               <View key={theme} style={pr.sliderRow}>
                 <View style={pr.sliderHeader}>
-                  <Text style={pr.sliderLabel}>{THEME_LABELS[theme]}</Text>
+                  <Text style={pr.sliderLabel}>{t(`purityTest:themes.${theme}`)}</Text>
                   <Text style={pr.sliderValue}>{themeCounts[theme]}</Text>
                 </View>
                 <Slider
@@ -273,10 +273,10 @@ export function PurityTestScreen() {
   const [players, setPlayers] = useState<Player[]>(route.params.players as Player[]);
   const [showRules, setShowRules] = useState(true);
   const [themeCounts, setThemeCounts] = useState<Record<Theme, number>>({
-    sex: 5,
-    drugs: 5,
-    morality: 5,
-    hygiene: 5,
+    sex: 7,
+    drugs: 6,
+    morality: 4,
+    hygiene: 3,
   });
   const [maxLevel, setMaxLevel] = useState<LevelKey>(highestAllowedLevel);
   const levelCounts = maxLevelToLevelCounts(maxLevel);
@@ -379,7 +379,7 @@ export function PurityTestScreen() {
       {/* Question card */}
       <View style={styles.questionCard}>
         <View style={[styles.themeBadge, { backgroundColor: themeColor }]}>
-          <Text style={styles.themeBadgeText}>{THEME_LABELS[currentQuestion.theme]}</Text>
+          <Text style={styles.themeBadgeText}>{t(`purityTest:themes.${currentQuestion.theme}`)}</Text>
         </View>
         <Text style={styles.questionPrefix}>{t('purityTest:game.questionPrefix')}</Text>
         <Text style={styles.questionText}>{currentQuestion.text}</Text>

@@ -18,6 +18,7 @@ import {
   GameRulesScreen,
   InitialAvatar,
   PlayerPickerGrid,
+  RoundsStepper,
   StickerBadge,
   ThemeGrid,
 } from '../components';
@@ -73,6 +74,8 @@ function CARules({
   onSettings,
   selectedThemes,
   onToggleTheme,
+  totalRounds,
+  onTotalRoundsChange,
 }: {
   players: Player[];
   onPlayersChange: (players: Player[]) => void;
@@ -81,6 +84,8 @@ function CARules({
   onSettings: () => void;
   selectedThemes: CastingTheme[];
   onToggleTheme: (theme: CastingTheme) => void;
+  totalRounds: number;
+  onTotalRoundsChange: (n: number) => void;
 }) {
   const { t } = useTranslation();
   const { enabled: drinksEnabled } = useDrinksMode();
@@ -111,6 +116,14 @@ function CARules({
     >
       <View style={rls.scroll}>
         <DrinkModeToggle accentColor={CASTING_ORANGE} style={{ marginBottom: 14 }} />
+        <RoundsStepper
+          value={totalRounds}
+          onChange={onTotalRoundsChange}
+          min={1}
+          max={20}
+          accentColor={CASTING_ORANGE}
+          style={{ marginBottom: 14 }}
+        />
         <Text style={rls.themesSectionLabel}>{t('casting:rules.themeLabel')}</Text>
         <ThemeGrid
           options={CASTING_THEME_OPTIONS.map((opt) => ({
@@ -1165,6 +1178,7 @@ function CastingGame({
   const [guessPos, setGuessPos] = useState(0);
   const [guesses, setGuesses] = useState<Record<number, number>>({});
   const [selectedThemes, setSelectedThemes] = useState<CastingTheme[]>(['daily']);
+  const [totalRounds, setTotalRounds] = useState<number>(1);
   const { filterAllowed } = useCastingThemeAccess();
 
   const toggleTheme = (theme: CastingTheme) => {
@@ -1213,6 +1227,8 @@ function CastingGame({
         onSettings={onSettings}
         selectedThemes={selectedThemes}
         onToggleTheme={toggleTheme}
+        totalRounds={totalRounds}
+        onTotalRoundsChange={setTotalRounds}
       />
     );
   }

@@ -28,12 +28,12 @@
       }
     ]
   },
-  "caller": {
+  "ready": {
     "round": "ROUND {{num}} / {{total}}",
-    "yourTurn": "it's you",
-    "instruction": "Tell everyone:",
+    "title": "Everyone\nready?",
+    "instruction": "Place the phone in the middle and:",
     "say": "\"Look down!\"",
-    "readyBtn": "Everyone is ready → Go"
+    "startBtn": "Let's go →"
   },
   "countdown": {
     "prepare": "Get ready…",

@@ -110,7 +110,19 @@
       "Getting caught singing loudly in your car at a red light",
       "Posting a story thinking it's close friends only",
       "Forgetting your phone charger on a weekend trip",
-      "Getting the day wrong for an important appointment"
+      "Getting the day wrong for an important appointment",
+      "Walking into a pole while looking at your phone",
+      "Dropping your phone in the toilet",
+      "Forgetting your backpack on the bus and chasing after it",
+      "Spilling coffee on your clothes right before a date",
+      "Getting the elevator door slammed in your face",
+      "Slipping on a wet supermarket floor",
+      "Losing a shoe while walking down the street",
+      "Getting splashed by a car driving through a puddle",
+      "Forgetting your keys inside and getting locked out",
+      "Dropping everything from your bag in the subway",
+      "Going the wrong way on a packed escalator",
+      "Getting hit by a gust of wind that scatters all your papers"
     ],
     "relations": [
       "Getting a text from your ex at 3am",
@@ -184,7 +196,8 @@
       "Getting caught watching porn",
       "Admitting you've stopped going to class for 2 months",
       "Getting compared to your cousin who succeeds at everything",
-      "Causing a scene at a family gathering after drinking too much"
+      "Causing a scene at a family gathering after drinking too much",
+      "Admitting you've been failing your exams for months"
     ],
     "studies": [
       "Going to the wrong exam room on exam day",
@@ -201,7 +214,9 @@
       "Copying from your neighbor and getting caught red-handed",
       "Forgetting to submit your thesis the day before the deadline",
       "Showing up to an oral exam completely high",
-      "Getting a 'we're not keeping you' email after 6 months of internship"
+      "Getting a 'we're not keeping you' email after 6 months of internship",
+      "Going to the wrong room for an important interview",
+      "Getting your tie stuck in the coffee machine"
     ],
     "party": [
       "Throwing up on the dance floor in front of everyone",
@@ -215,7 +230,33 @@
       "Making a drunk love confession to the wrong person",
       "Getting into a fight over something completely stupid",
       "Posting extremely compromising stories while wasted",
-      "Having a complete 4-hour blackout"
+      "Having a complete 4-hour blackout",
+      "Waking up with a dick-shaped temporary tattoo on your forehead",
+      "Dancing wildly and falling off the top of the table"
+    ],
+    "cinema": [
+      "Fighting 10 enemies in an action movie scene",
+      "Playing an ultra-dramatic, over-the-top death scene",
+      "Making a love declaration like in a romantic movie",
+      "Imitating a slow-motion fight scene",
+      "Playing a villain laughing diabolically",
+      "Acting out a terrified scene in a horror movie",
+      "Dancing like in a musical",
+      "Playing a gangster getting shot",
+      "Imitating an ultra-passionate kiss scene",
+      "Causing an explosion with ridiculous special effects"
+    ],
+    "sports": [
+      "Missing a penalty in front of the whole stadium",
+      "Taking a tennis smash right in the face",
+      "Falling off the treadmill in the middle of the gym",
+      "Bowling a strike then slipping and falling",
+      "Getting humiliated at soccer by a 10-year-old kid",
+      "Completely failing a skateboard trick",
+      "Twisting your ankle while showing off",
+      "Losing a ping-pong match 11-0",
+      "Trying parkour and totally wiping out",
+      "Drowning in 1.5m of water at the pool"
     ]
   },
   "themes": {
@@ -226,7 +267,9 @@
     "family": "Family",
     "studies": "Studies & Work",
     "spicy": "Spicy",
-    "taboo": "Taboo"
+    "taboo": "Taboo",
+    "cinema": "Movie Scenes",
+    "sports": "Sports & Fails"
   },
   "labels": {
     "1": "Catastrophic",

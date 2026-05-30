@@ -28,7 +28,15 @@
     "title": "Word reveal",
     "subtitle": "Pass the phone to each player",
     "secretWord": "Secret word: {{word}}",
-    "mrWhiteWarning": "You are Mr White! No word for you — bluff smart."
+    "mrWhiteWarning": "You are Mr White! No word for you — bluff smart.",
+    "handoffTo": "Pass the phone to",
+    "handoffHint": "Find a quiet spot before tapping.",
+    "revealRole": "Reveal my role",
+    "next": "Got it — next",
+    "youAreCameleon": "YOU ARE THE CHAMELEON",
+    "category": "CATEGORY",
+    "cameleonHint": "You don't know the word. Bluff your best: a plausible clue, not too specific.",
+    "wordHint": "Give a clue that's not too obvious, not too vague."
   },
   "roles": {
     "civilian": "Civilian",

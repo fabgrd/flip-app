@@ -28,7 +28,8 @@
     "score": "Score",
     "loading": "Loading...",
     "error": "Error",
-    "readyToPlay": "Ready to play"
+    "readyToPlay": "Ready to play",
+    "rounds": "Rounds"
   },
   "emptyPlayers": {
     "title": "The night awaits its heroes",

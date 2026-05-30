@@ -47,12 +47,12 @@ export function RevealCard({ name, color, roleLabel, secretWord, onNext, t }: Re
         >
           <Avatar name={name} color={color} size={72} />
 
-          <Text style={styles.handoffTitle}>{name},</Text>
-          <Text style={styles.handoffSubtitle}>passe le tel</Text>
-          <Text style={styles.handoffHint}>Trouve un coin discret avant d'appuyer.</Text>
+          <Text style={styles.handoffSubtitle}>{t('cameleon:reveal.handoffTo')}</Text>
+          <Text style={styles.handoffTitle}>{name}</Text>
+          <Text style={styles.handoffHint}>{t('cameleon:reveal.handoffHint')}</Text>
 
           <FlipButton color={T.lemon} textColor={T.ink} onPress={handleReveal}>
-            {t('cameleon:actions.reveal', 'Révéler mon rôle')}
+            {t('cameleon:reveal.revealRole')}
           </FlipButton>
         </Animated.View>
 
@@ -65,15 +65,12 @@ export function RevealCard({ name, color, roleLabel, secretWord, onNext, t }: Re
           {secretWord === null ? (
             <View style={styles.backContent}>
               <View style={styles.cameleonBadge}>
-                <Text style={styles.cameleonBadgeText}>TU ES LE CAMÉLÉON</Text>
+                <Text style={styles.cameleonBadgeText}>{t('cameleon:reveal.youAreCameleon')}</Text>
               </View>
               <View style={styles.cameleonCard}>
-                <Text style={styles.cameleonCardLabel}>CATÉGORIE</Text>
+                <Text style={styles.cameleonCardLabel}>{t('cameleon:reveal.category')}</Text>
                 <Text style={styles.cameleonCardRole}>{roleLabel}</Text>
-                <Text style={styles.cameleonCardHint}>
-                  Tu ne connais pas le mot. Bluff comme tu peux : un indice plausible, pas trop
-                  précis.
-                </Text>
+                <Text style={styles.cameleonCardHint}>{t('cameleon:reveal.cameleonHint')}</Text>
               </View>
             </View>
           ) : (
@@ -82,12 +79,12 @@ export function RevealCard({ name, color, roleLabel, secretWord, onNext, t }: Re
               <View style={styles.wordCard}>
                 <Text style={styles.wordText}>{secretWord}</Text>
               </View>
-              <Text style={styles.wordHint}>Donne un indice ni trop évident, ni trop vague.</Text>
+              <Text style={styles.wordHint}>{t('cameleon:reveal.wordHint')}</Text>
             </View>
           )}
 
           <FlipButton color={T.ink} textColor="#fff" shadowColor={T.mint} onPress={onNext}>
-            {t('common:buttons.continue', "J'ai vu — suivant")}
+            {t('cameleon:reveal.next')}
           </FlipButton>
         </Animated.View>
       </View>
