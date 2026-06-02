@@ -6,6 +6,7 @@
     "questionPrefix": "As-tu déjà...",
     "questionCounter": "Question {{current}} / {{total}}",
     "remainingPlayers": "{{count}} joueur(s) restant(s)",
+    "hint": "← Non | Oui →   ·   ↓ MEGA ×2",
     "finished": {
       "title": "🎉 Test terminé !",
       "subtitle": "Tous les joueurs ont répondu aux {{total}} questions",
@@ -799,6 +800,11 @@
       },
       {
         "n": "3",
+        "title": "↓ MEGA ×2",
+        "desc": "La question colle TROP au joueur ? Swipe vers le bas : double malus d'impureté 😈"
+      },
+      {
+        "n": "4",
         "title": "Résultats",
         "desc": "Le score final révèle ton niveau de pureté… ou d'impureté 😈"
       }

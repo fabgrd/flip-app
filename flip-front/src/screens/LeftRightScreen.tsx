@@ -10,6 +10,7 @@ import {
   DrinkModeToggle,
   GameHeader,
   GameRulesScreen,
+  GameSetupCard,
   GaucheDroiteIcon,
   RoundsStepper,
   RulesButton
@@ -57,15 +58,21 @@ function LRRules({
       onStart={onStart}
       startLabel={t('leftRight:ui.start')}
     >
-      <View style={{ paddingHorizontal: 20, paddingBottom: 12, marginTop: 'auto', gap: 12 }}>
-        <RoundsStepper
-          value={totalRounds}
-          onChange={onTotalRoundsChange}
-          min={1}
-          max={20}
+      <View style={{ paddingHorizontal: 20, paddingBottom: 12, marginTop: 'auto' }}>
+        <GameSetupCard
           accentColor={T.gaucheDroiteAccent ?? T.lemon}
-        />
-        <DrinkModeToggle accentColor={T.lemon} />
+          title={t('common:labels.setup').toUpperCase()}
+        >
+          <RoundsStepper
+            value={totalRounds}
+            onChange={onTotalRoundsChange}
+            min={1}
+            max={20}
+            accentColor={T.gaucheDroiteAccent ?? T.lemon}
+            inline
+          />
+          <DrinkModeToggle accentColor={T.lemon} inline />
+        </GameSetupCard>
       </View>
     </GameRulesScreen>
   );

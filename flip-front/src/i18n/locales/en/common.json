@@ -13,6 +13,7 @@
     "addPlus": "Add +",
     "close": "Close",
     "confirm": "Confirm",
+    "gotIt": "OK, got it!",
     "playAgain": "Play again",
     "settings": "Settings",
     "howToPlay": "How to play"
@@ -29,7 +30,9 @@
     "loading": "Loading...",
     "error": "Error",
     "readyToPlay": "Ready to play",
-    "rounds": "Rounds"
+    "rounds": "Rounds",
+    "setup": "Setup",
+    "themes": "Themes"
   },
   "emptyPlayers": {
     "title": "The night awaits its heroes",

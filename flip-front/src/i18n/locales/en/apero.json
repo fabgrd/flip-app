@@ -5,6 +5,7 @@
     "rules": {
         "modalTitle": "The Aperitif",
         "title": "The Aperitif",
+        "tagline": "Guess, bluff, sip — the card waits for no one.",
         "chip": "Game #6",
         "cardLabel": "HOW TO PLAY",
         "start": "Start the game 🍻",

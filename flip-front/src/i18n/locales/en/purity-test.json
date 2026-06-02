@@ -6,6 +6,7 @@
     "questionPrefix": "Have you ever...",
     "questionCounter": "Question {{current}} / {{total}}",
     "remainingPlayers": "{{count}} player(s) remaining",
+    "hint": "← No | Yes →   ·   ↓ MEGA ×2",
     "finished": {
       "title": "🎉 Test completed!",
       "subtitle": "All players answered {{total}} questions",
@@ -798,6 +799,11 @@
       },
       {
         "n": "3",
+        "title": "↓ MEGA ×2",
+        "desc": "Question fits the player WAY too much? Swipe down: double impurity malus 😈"
+      },
+      {
+        "n": "4",
         "title": "Results",
         "desc": "The final score reveals your level of purity… or impurity 😈"
       }

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Animated, { FadeIn, FadeOut, ZoomIn, ZoomOut } from 'react-native-reanimated';
 import { T } from '../../constants/flipTokens';
@@ -23,6 +24,7 @@ export function RulesModalView({
   title,
   accentColor = T.mint,
 }: RulesModalProps & { visible: boolean; onClose: () => void }) {
+  const { t } = useTranslation();
   return (
     <Modal visible={visible} transparent animationType="none" onRequestClose={onClose}>
       <Animated.View
@@ -75,7 +77,7 @@ export function RulesModalView({
             style={styles.doneBtn}
             onPress={onClose}
           >
-            {"OK, j'ai compris !"}
+            {t('common:buttons.gotIt')}
           </FlatChunkyButton>
         </Animated.View>
       </Animated.View>

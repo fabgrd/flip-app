@@ -17,6 +17,7 @@ export type { GameHeaderProps } from './GameHeader';
 export { GameCard, GameChip, StickerBadge } from './GamePrimitives';
 export { GameRulesScreen } from './GameRulesScreen';
 export type { RulesStep } from './GameRulesScreen';
+export { GameSetupCard, GameSetupSection } from './GameSetupCard';
 export { RulesStepsCard } from './RulesStepsCard';
 export type { RulesStepItem } from './RulesStepsCard';
 export { InitialAvatar } from './InitialAvatar';

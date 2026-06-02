@@ -16,6 +16,8 @@ import {
   GameHeader,
   GameMenuActions,
   GameRulesScreen,
+  GameSetupCard,
+  GameSetupSection,
   PlayersModal,
   RedFlagIcon,
   RulesButton,
@@ -133,7 +135,7 @@ function RFPlayerCard({
   zIndex = 1,
 }: {
   item: Player;
-  onSwipe: (dir: 'oui' | 'non') => void;
+  onSwipe: (dir: 'oui' | 'non' | 'mega') => void;
   onSwipeComplete?: () => void;
   isActive?: boolean;
   zIndex?: number;
@@ -149,7 +151,14 @@ function RFPlayerCard({
         emoji: '🚩',
         label: 'Oui',
       }}
-      onSwipe={(dir) => onSwipe(dir as 'oui' | 'non')}
+      downDirection={{
+        key: 'mega',
+        color: '#8B0000',
+        overlayColor: 'rgba(139, 0, 0, 0.92)',
+        emoji: '🚩',
+        label: 'MEGA ×2',
+      }}
+      onSwipe={(dir) => onSwipe(dir as 'oui' | 'non' | 'mega')}
       onSwipeComplete={onSwipeComplete}
       isActive={isActive}
       zIndex={zIndex}
@@ -207,69 +216,67 @@ function RFRules({
     >
       <View style={rls.cardWrap}>
         <ScrollView contentContainerStyle={rls.cardScroll} showsVerticalScrollIndicator={false}>
-          <DrinkModeToggle accentColor={REDFLAG_BG} />
-
-          <View style={rls.card}>
-            <Text style={rls.cardLabel}>{t('redFlag:ui.rules.levelLabel')}</Text>
-            <Text style={rls.helperText}>{t('redFlag:ui.rules.levelHelper')}</Text>
-            <View style={rls.levelRow}>
-              {RF_LEVEL_KEYS.map((level, i) => {
-                const isActive = i <= maxIdx;
-                const isSelected = level === maxLevel;
-                const allowed = isLevelAllowed(level);
-                return (
-                  <TouchableOpacity
-                    key={level}
-                    style={[
-                      rls.levelBtn,
-                      isActive &&
-                        allowed && { backgroundColor: RF_LEVEL_COLORS[level], borderColor: T.ink },
-                      isSelected && allowed && rls.levelBtnSelected,
-                      !allowed && rls.levelBtnLocked,
-                    ]}
-                    onPress={() => (allowed ? onChangeMaxLevel(level) : requestUnlockFor(level))}
-                    activeOpacity={0.75}
-                  >
-                    {!allowed && (
-                      <Feather name="lock" size={10} color={T.ink} style={rls.levelLockIcon} />
-                    )}
-                    <Text
+          <GameSetupCard accentColor={REDFLAG_BG} title={t('common:labels.setup').toUpperCase()}>
+            <GameSetupSection label={t('redFlag:ui.rules.levelLabel')}>
+              <Text style={rls.helperText}>{t('redFlag:ui.rules.levelHelper')}</Text>
+              <View style={rls.levelRow}>
+                {RF_LEVEL_KEYS.map((level, i) => {
+                  const isActive = i <= maxIdx;
+                  const isSelected = level === maxLevel;
+                  const allowed = isLevelAllowed(level);
+                  return (
+                    <TouchableOpacity
+                      key={level}
                       style={[
-                        rls.levelBtnText,
-                        isActive && allowed && rls.levelBtnTextActive,
-                        !allowed && rls.levelBtnTextLocked,
+                        rls.levelBtn,
+                        isActive &&
+                          allowed && { backgroundColor: RF_LEVEL_COLORS[level], borderColor: T.ink },
+                        isSelected && allowed && rls.levelBtnSelected,
+                        !allowed && rls.levelBtnLocked,
                       ]}
+                      onPress={() => (allowed ? onChangeMaxLevel(level) : requestUnlockFor(level))}
+                      activeOpacity={0.75}
                     >
-                      {RF_LEVEL_LABELS[level]}
-                    </Text>
-                  </TouchableOpacity>
-                );
-              })}
-            </View>
-          </View>
-
-          <View style={rls.card}>
-            <Text style={rls.cardLabel}>{t('redFlag:ui.rules.themeLabel')}</Text>
-            <Text style={rls.helperText}>{t('redFlag:ui.rules.themeHelper', { count: catTotal })}</Text>
-            {RF_CATEGORIES.map((cat) => (
-              <View key={cat} style={rls.sliderRow}>
-                <View style={rls.sliderHeader}>
-                  <Text style={rls.sliderLabel}>{getCatById(cat, cats).name}</Text>
-                  <Text style={rls.sliderValue}>{catCounts[cat] ?? 0}</Text>
-                </View>
-                <Slider
-                  minimumValue={0}
-                  maximumValue={10}
-                  step={1}
-                  value={catCounts[cat] ?? 0}
-                  onValueChange={(value: number) => onChangeCatCount(cat, Math.round(value))}
-                  minimumTrackTintColor={RF_CATEGORY_COLORS[cat]}
-                  maximumTrackTintColor="#E6E2DD"
-                  thumbTintColor={T.ink}
-                />
+                      {!allowed && (
+                        <Feather name="lock" size={10} color={T.ink} style={rls.levelLockIcon} />
+                      )}
+                      <Text
+                        style={[
+                          rls.levelBtnText,
+                          isActive && allowed && rls.levelBtnTextActive,
+                          !allowed && rls.levelBtnTextLocked,
+                        ]}
+                      >
+                        {RF_LEVEL_LABELS[level]}
+                      </Text>
+                    </TouchableOpacity>
+                  );
+                })}
               </View>
-            ))}
-          </View>
+            </GameSetupSection>
+            <GameSetupSection label={t('redFlag:ui.rules.themeLabel')}>
+              <Text style={rls.helperText}>{t('redFlag:ui.rules.themeHelper', { count: catTotal })}</Text>
+              {RF_CATEGORIES.map((cat) => (
+                <View key={cat} style={rls.sliderRow}>
+                  <View style={rls.sliderHeader}>
+                    <Text style={rls.sliderLabel}>{getCatById(cat, cats).name}</Text>
+                    <Text style={rls.sliderValue}>{catCounts[cat] ?? 0}</Text>
+                  </View>
+                  <Slider
+                    minimumValue={0}
+                    maximumValue={10}
+                    step={1}
+                    value={catCounts[cat] ?? 0}
+                    onValueChange={(value: number) => onChangeCatCount(cat, Math.round(value))}
+                    minimumTrackTintColor={RF_CATEGORY_COLORS[cat]}
+                    maximumTrackTintColor="#E6E2DD"
+                    thumbTintColor={T.ink}
+                  />
+                </View>
+              ))}
+            </GameSetupSection>
+            <DrinkModeToggle accentColor={REDFLAG_BG} inline />
+          </GameSetupCard>
         </ScrollView>
       </View>
     </GameRulesScreen>
@@ -402,11 +409,12 @@ function RFPlay({
   const remainingPlayers = players.filter((p) => !answeredIds.has(p.id));
   const progress = total > 0 ? (questionIdx / total) * 100 : 0;
 
-  const handleSwipe = (player: Player, dir: 'oui' | 'non') => {
-    if (dir === 'oui') {
+  const handleSwipe = (player: Player, dir: 'oui' | 'non' | 'mega') => {
+    if (dir === 'oui' || dir === 'mega') {
       if (!playerScores.current[player.id]) playerScores.current[player.id] = {};
       const ps = playerScores.current[player.id];
-      ps[currentQ.c] = (ps[currentQ.c] ?? 0) + currentQ.p;
+      const mult = dir === 'mega' ? 2 : 1;
+      ps[currentQ.c] = (ps[currentQ.c] ?? 0) + currentQ.p * mult;
     }
     setAnsweredIds((prev) => new Set([...prev, player.id]));
   };
@@ -469,7 +477,7 @@ function RFPlay({
       {/* Player card stack */}
       <View style={play.cardsArea}>
         {remainingPlayers.length > 0 ? (
-          <SwipeableCardStack<Player, 'oui' | 'non'>
+          <SwipeableCardStack<Player, 'oui' | 'non' | 'mega'>
             items={remainingPlayers}
             onSwipe={(player, dir) => handleSwipe(player, dir)}
             onComplete={handleAllAnswered}

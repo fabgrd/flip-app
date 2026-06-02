@@ -15,8 +15,9 @@ import { T } from '../../constants/flipTokens';
 import { Player } from '../../types';
 import { Avatar } from './Avatar';
 
-const { width: SCREEN_WIDTH } = Dimensions.get('window');
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const SWIPE_THRESHOLD = SCREEN_WIDTH * 0.3;
+const DOWN_SWIPE_THRESHOLD = 110;
 const ROTATION_ANGLE = 18;
 const CARD_WIDTH = SCREEN_WIDTH * 0.82;
 const CARD_HEIGHT = 320;
@@ -33,6 +34,7 @@ export interface SwipeableCardProps {
   player: Player;
   leftDirection: SwipeDirection;
   rightDirection: SwipeDirection;
+  downDirection?: SwipeDirection;
   onSwipe: (direction: string) => void;
   onSwipeComplete?: () => void;
   isActive?: boolean;
@@ -43,6 +45,7 @@ export function SwipeableCard({
   player,
   leftDirection,
   rightDirection,
+  downDirection,
   onSwipe,
   onSwipeComplete,
   isActive = true,
@@ -74,15 +77,26 @@ export function SwipeableCard({
     .onUpdate((event) => {
       if (!isActive) return;
       translateX.value = event.translationX;
-      translateY.value = event.translationY * 0.12;
+      if (downDirection && event.translationY > 0 && Math.abs(event.translationY) > Math.abs(event.translationX)) {
+        translateY.value = event.translationY;
+      } else {
+        translateY.value = event.translationY * 0.12;
+      }
     })
     .onEnd(() => {
       if (!isActive) return;
 
-      const shouldSwipeLeft = translateX.value < -SWIPE_THRESHOLD;
-      const shouldSwipeRight = translateX.value > SWIPE_THRESHOLD;
+      const isVerticalDominant = Math.abs(translateY.value) > Math.abs(translateX.value);
+      const shouldSwipeDown =
+        !!downDirection && isVerticalDominant && translateY.value > DOWN_SWIPE_THRESHOLD;
+      const shouldSwipeLeft = !shouldSwipeDown && translateX.value < -SWIPE_THRESHOLD;
+      const shouldSwipeRight = !shouldSwipeDown && translateX.value > SWIPE_THRESHOLD;
 
-      if (shouldSwipeLeft) {
+      if (shouldSwipeDown) {
+        translateY.value = withTiming(SCREEN_HEIGHT, { duration: 300 });
+        opacity.value = withTiming(0, { duration: 280 });
+        runOnJS(handleSwipeComplete)(downDirection!.key);
+      } else if (shouldSwipeLeft) {
         translateX.value = withTiming(-SCREEN_WIDTH * 1.5, { duration: 300 });
         translateY.value = withTiming(translateY.value + 60, { duration: 300 });
         opacity.value = withTiming(0, { duration: 280 });
@@ -98,6 +112,13 @@ export function SwipeableCard({
         scale.value = withSpring(isActive ? 1 : 0.95, { damping: 15 });
       }
     });
+
+  const downOverlayStyle = useAnimatedStyle(() => {
+    const o = downDirection
+      ? interpolate(translateY.value, [0, 20, DOWN_SWIPE_THRESHOLD], [0, 0.15, 1], 'clamp')
+      : 0;
+    return { opacity: o };
+  });
 
   // Card transform
   const cardAnimStyle = useAnimatedStyle(() => {
@@ -126,6 +147,19 @@ export function SwipeableCard({
           <View style={styles.cardInner}>
             <Avatar name={player.name} color={player.color} size={88} />
             <Text style={styles.playerName}>{player.name}</Text>
+            {downDirection && (
+              <Animated.View
+                pointerEvents="none"
+                style={[
+                  styles.downOverlay,
+                  { backgroundColor: downDirection.overlayColor },
+                  downOverlayStyle,
+                ]}
+              >
+                <Text style={styles.downOverlayEmoji}>{downDirection.emoji}</Text>
+                <Text style={styles.downOverlayLabel}>{downDirection.label}</Text>
+              </Animated.View>
+            )}
           </View>
         </Animated.View>
       </GestureDetector>
@@ -177,4 +211,24 @@ const styles = StyleSheet.create({
     lineHeight: 36,
   },
 
+  downOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+  },
+  downOverlayEmoji: { fontSize: 64 },
+  downOverlayLabel: {
+    color: '#fff',
+    fontSize: 28,
+    fontWeight: '900',
+    letterSpacing: 1,
+    textShadowColor: T.ink,
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 0,
+  },
 });

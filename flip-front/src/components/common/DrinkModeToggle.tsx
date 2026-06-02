@@ -13,9 +13,10 @@ import { ToggleSwitch } from './ToggleSwitch';
 interface DrinkModeToggleProps {
   accentColor?: string;
   style?: StyleProp<ViewStyle>;
+  inline?: boolean;
 }
 
-export function DrinkModeToggle({ accentColor = T.mint, style }: DrinkModeToggleProps) {
+export function DrinkModeToggle({ accentColor = T.mint, style, inline = false }: DrinkModeToggleProps) {
   const { t } = useTranslation();
   const drinks = useDrinksMode();
   const { open: openPaywall } = usePaywall();
@@ -38,7 +39,7 @@ export function DrinkModeToggle({ accentColor = T.mint, style }: DrinkModeToggle
       activeOpacity={drinks.available ? 1 : 0.85}
       disabled={drinks.available}
       onPress={handleRowPress}
-      style={[s.card, style]}
+      style={[inline ? s.inline : s.card, style]}
     >
       <BeerMugIcon size={28} />
       <View style={s.labelWrap}>
@@ -76,6 +77,13 @@ const s = StyleSheet.create({
     shadowOpacity: 1,
     shadowRadius: 0,
     elevation: 3,
+  },
+  inline: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 14,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
   },
   labelWrap: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: 8 },
   label: { color: T.ink, fontSize: 15, fontWeight: '700', letterSpacing: -0.2 },

@@ -3,6 +3,7 @@ import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { ChunkyButton } from '../../../components/common/ChunkyButton';
 import { DrinkModeToggle } from '../../../components/common/DrinkModeToggle';
+import { GameSetupCard, GameSetupSection } from '../../../components/common/GameSetupCard';
 import { ThemeGrid } from '../../../components/common/ThemeGrid';
 import { T } from '../../../constants/flipTokens';
 import { CAMELEON_THEME_OPTIONS } from '../constants';
@@ -53,8 +54,6 @@ export function SettingsPanel({
       showsVerticalScrollIndicator={false}
       keyboardShouldPersistTaps="handled"
     >
-      <DrinkModeToggle accentColor={T.mint} style={{ marginBottom: 12 }} />
-
       <View style={styles.statsRow}>
         <View style={[styles.statCard, { backgroundColor: T.paper }]}>
           <Text style={styles.statValue}>{playersCount}</Text>
@@ -66,82 +65,88 @@ export function SettingsPanel({
         </View>
       </View>
 
-      <View style={styles.stepperRow}>
-        <View style={styles.stepperCol}>
-          <Text style={styles.sectionLabel}>{t('cameleon:settings.undercover', 'Undercover')}</Text>
-          <View style={styles.stepperCard}>
-            <ChunkyButton
-              size="sm"
-              square
-              color={T.bg}
-              textColor={T.ink}
-              shadowColor={T.ink}
-              metrics={stepperMetrics}
-              onPress={() => onChangeUC(Math.max(0, currentUC - 1))}
-            >
-              <Text style={styles.stepBtnText}>−</Text>
-            </ChunkyButton>
-            <Text style={styles.stepValue}>{currentUC}</Text>
-            <ChunkyButton
-              size="sm"
-              square
-              color={T.bg}
-              textColor={T.ink}
-              shadowColor={T.ink}
-              metrics={stepperMetrics}
-              onPress={() => onChangeUC(currentUC + 1)}
-            >
-              <Text style={styles.stepBtnText}>+</Text>
-            </ChunkyButton>
-          </View>
-        </View>
+      <GameSetupCard accentColor={T.mint} title={t('common:labels.setup', 'Réglages').toUpperCase()}>
+        <GameSetupSection label={t('cameleon:settings.impostors', 'Imposteurs')}>
+          <View style={styles.stepperRow}>
+            <View style={styles.stepperCol}>
+              <Text style={styles.subLabel}>{t('cameleon:settings.undercover', 'Undercover')}</Text>
+              <View style={styles.stepperCard}>
+                <ChunkyButton
+                  size="sm"
+                  square
+                  color={T.bg}
+                  textColor={T.ink}
+                  shadowColor={T.ink}
+                  metrics={stepperMetrics}
+                  onPress={() => onChangeUC(Math.max(0, currentUC - 1))}
+                >
+                  <Text style={styles.stepBtnText}>−</Text>
+                </ChunkyButton>
+                <Text style={styles.stepValue}>{currentUC}</Text>
+                <ChunkyButton
+                  size="sm"
+                  square
+                  color={T.bg}
+                  textColor={T.ink}
+                  shadowColor={T.ink}
+                  metrics={stepperMetrics}
+                  onPress={() => onChangeUC(currentUC + 1)}
+                >
+                  <Text style={styles.stepBtnText}>+</Text>
+                </ChunkyButton>
+              </View>
+            </View>
 
-        <View style={styles.stepperCol}>
-          <Text style={styles.sectionLabel}>{t('cameleon:settings.mrWhite', 'Mr White')}</Text>
-          <View style={styles.stepperCard}>
-            <ChunkyButton
-              size="sm"
-              square
-              color={T.bg}
-              textColor={T.ink}
-              shadowColor={T.ink}
-              metrics={stepperMetrics}
-              onPress={() => onChangeMW(Math.max(0, currentMW - 1))}
-            >
-              <Text style={styles.stepBtnText}>−</Text>
-            </ChunkyButton>
-            <Text style={styles.stepValue}>{currentMW}</Text>
-            <ChunkyButton
-              size="sm"
-              square
-              color={T.bg}
-              textColor={T.ink}
-              shadowColor={T.ink}
-              metrics={stepperMetrics}
-              onPress={() => onChangeMW(currentMW + 1)}
-            >
-              <Text style={styles.stepBtnText}>+</Text>
-            </ChunkyButton>
+            <View style={styles.stepperCol}>
+              <Text style={styles.subLabel}>{t('cameleon:settings.mrWhite', 'Mr White')}</Text>
+              <View style={styles.stepperCard}>
+                <ChunkyButton
+                  size="sm"
+                  square
+                  color={T.bg}
+                  textColor={T.ink}
+                  shadowColor={T.ink}
+                  metrics={stepperMetrics}
+                  onPress={() => onChangeMW(Math.max(0, currentMW - 1))}
+                >
+                  <Text style={styles.stepBtnText}>−</Text>
+                </ChunkyButton>
+                <Text style={styles.stepValue}>{currentMW}</Text>
+                <ChunkyButton
+                  size="sm"
+                  square
+                  color={T.bg}
+                  textColor={T.ink}
+                  shadowColor={T.ink}
+                  metrics={stepperMetrics}
+                  onPress={() => onChangeMW(currentMW + 1)}
+                >
+                  <Text style={styles.stepBtnText}>+</Text>
+                </ChunkyButton>
+              </View>
+            </View>
           </View>
-        </View>
-      </View>
-
-      <Text style={styles.sectionLabel}>{t('cameleon:settings.themes', 'Thèmes')}</Text>
-      <ThemeGrid<CameleonTheme>
-        options={CAMELEON_THEME_OPTIONS.map((opt) => ({
-          value: opt.value,
-          label: t(opt.labelKey),
-          emoji: THEME_META[opt.value].emoji,
-        }))}
-        isActive={(v) =>
-          v === 'random'
-            ? selectedThemes.includes('random')
-            : !selectedThemes.includes('random') && selectedThemes.includes(v)
-        }
-        isAllowed={isThemeAllowed}
-        onSelect={onToggleTheme}
-        onLockedPress={onRequestUnlock}
-      />
+        </GameSetupSection>
+        <GameSetupSection label={t('cameleon:settings.themes', 'Thèmes')}>
+          <ThemeGrid<CameleonTheme>
+            options={CAMELEON_THEME_OPTIONS.map((opt) => ({
+              value: opt.value,
+              label: t(opt.labelKey),
+              emoji: THEME_META[opt.value].emoji,
+              color: opt.color,
+            }))}
+            isActive={(v) =>
+              v === 'random'
+                ? selectedThemes.includes('random')
+                : !selectedThemes.includes('random') && selectedThemes.includes(v)
+            }
+            isAllowed={isThemeAllowed}
+            onSelect={onToggleTheme}
+            onLockedPress={onRequestUnlock}
+          />
+        </GameSetupSection>
+        <DrinkModeToggle accentColor={T.mint} inline />
+      </GameSetupCard>
 
     </ScrollView>
   );
@@ -184,7 +189,14 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
 
-  stepperRow: { flexDirection: 'row', gap: 10, marginBottom: 18 },
+  subLabel: {
+    color: T.inkSoft,
+    fontSize: 11,
+    fontWeight: '800',
+    marginBottom: 6,
+    letterSpacing: 0.5,
+  },
+  stepperRow: { flexDirection: 'row', gap: 10 },
   stepperCol: { flex: 1 },
   stepperCard: {
     flexDirection: 'row',

@@ -178,15 +178,15 @@ const ALL: CameleonWordPair[] = [
   ...WTF,
 ];
 
-export const CAMELEON_THEME_OPTIONS: Array<{ value: CameleonTheme; labelKey: string }> = [
-  { value: 'random', labelKey: 'cameleon:themes.random' },
-  { value: 'daily', labelKey: 'cameleon:themes.daily' },
-  { value: 'sousculture', labelKey: 'cameleon:themes.sousculture' },
-  { value: 'rap', labelKey: 'cameleon:themes.rap' },
-  { value: 'football', labelKey: 'cameleon:themes.football' },
-  { value: 'hot', labelKey: 'cameleon:themes.hot' },
-  { value: 'decadence', labelKey: 'cameleon:themes.decadence' },
-  { value: 'wtf', labelKey: 'cameleon:themes.wtf' },
+export const CAMELEON_THEME_OPTIONS: Array<{ value: CameleonTheme; labelKey: string; color: string }> = [
+  { value: 'random', labelKey: 'cameleon:themes.random', color: '#9B5BFF' },
+  { value: 'daily', labelKey: 'cameleon:themes.daily', color: '#5BC8FF' },
+  { value: 'sousculture', labelKey: 'cameleon:themes.sousculture', color: '#181613' },
+  { value: 'rap', labelKey: 'cameleon:themes.rap', color: '#FFD23F' },
+  { value: 'football', labelKey: 'cameleon:themes.football', color: '#4FCB8A' },
+  { value: 'hot', labelKey: 'cameleon:themes.hot', color: '#FF5B3A' },
+  { value: 'decadence', labelKey: 'cameleon:themes.decadence', color: '#FF8FB1' },
+  { value: 'wtf', labelKey: 'cameleon:themes.wtf', color: '#C4F034' },
 ];
 
 export const WORD_PAIRS_BY_THEME: Record<Exclude<CameleonTheme, 'random'>, CameleonWordPair[]> = {

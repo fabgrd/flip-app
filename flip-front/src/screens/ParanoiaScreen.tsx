@@ -22,6 +22,7 @@ import {
   GameChip,
   GameHeader,
   GameRulesScreen,
+  GameSetupCard,
   InitialAvatar,
   ParanoiaIcon,
   RoundsStepper,
@@ -88,15 +89,18 @@ function PNRules({
       onStart={onStart}
       startLabel={t('paranoia:ui.rules.start')}
     >
-      <View style={{ paddingHorizontal: 20, paddingBottom: 12, marginTop: 'auto', gap: 12 }}>
-        <RoundsStepper
-          value={totalRounds}
-          onChange={onTotalRoundsChange}
-          min={1}
-          max={20}
-          accentColor={T.teal}
-        />
-        <DrinkModeToggle accentColor={T.teal} />
+      <View style={{ paddingHorizontal: 20, paddingBottom: 12, marginTop: 'auto' }}>
+        <GameSetupCard accentColor={T.teal} title={t('common:labels.setup').toUpperCase()}>
+          <RoundsStepper
+            value={totalRounds}
+            onChange={onTotalRoundsChange}
+            min={1}
+            max={20}
+            accentColor={T.teal}
+            inline
+          />
+          <DrinkModeToggle accentColor={T.teal} inline />
+        </GameSetupCard>
       </View>
     </GameRulesScreen>
   );

@@ -23,11 +23,11 @@ import {
   GameChip,
   GameHeader,
   GameRulesScreen,
+  GameSetupCard,
   isRedSuit,
   PlayerPickerGrid,
   PlayingCardBack,
   PlayingCardFace,
-  RulesStepsCard,
   StickerBadge,
 } from '../components';
 import { AperoIcon } from '../components/icons/AperoIcon';
@@ -338,6 +338,7 @@ function APRules({
     <GameRulesScreen
       accentColor={T.pink}
       title={t('apero:rules.title')}
+      tagline={t('apero:rules.tagline')}
       icon={<AperoIcon size={92} />}
       iconRotation={-8}
       rulesModal={{ rules: rulesModal, title: t('apero:rules.modalTitle') }}
@@ -348,11 +349,11 @@ function APRules({
       minPlayers={2}
       onStart={onStart}
       startLabel={t('apero:rules.start')}
-      scrollable
     >
-      <View style={{ paddingHorizontal: 20 }}>
-        <DrinkModeToggle accentColor={T.pink} style={{ marginBottom: 14 }} />
-        <RulesStepsCard steps={RULES} accentColor={T.pink} label={t('apero:rules.cardLabel')} />
+      <View style={{ paddingHorizontal: 20, paddingBottom: 12, marginTop: 'auto' }}>
+        <GameSetupCard accentColor={T.pink} title={t('common:labels.setup').toUpperCase()}>
+          <DrinkModeToggle accentColor={T.pink} inline />
+        </GameSetupCard>
       </View>
     </GameRulesScreen>
   );

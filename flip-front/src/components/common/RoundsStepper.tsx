@@ -15,6 +15,7 @@ interface RoundsStepperProps {
   label?: string;
   accentColor?: string;
   style?: StyleProp<ViewStyle>;
+  inline?: boolean;
 }
 
 export function RoundsStepper({
@@ -26,6 +27,7 @@ export function RoundsStepper({
   label,
   accentColor = T.lemon,
   style,
+  inline = false,
 }: RoundsStepperProps) {
   const { t } = useTranslation();
   const resolvedLabel = label ?? t('common:labels.rounds', 'Tours');
@@ -42,7 +44,7 @@ export function RoundsStepper({
   };
 
   return (
-    <View style={[s.card, style]}>
+    <View style={[inline ? s.inline : s.card, style]}>
       <View style={[s.iconWrap, { backgroundColor: accentColor }]}>
         <Feather name="repeat" size={16} color={T.ink} />
       </View>
@@ -86,6 +88,13 @@ const s = StyleSheet.create({
     shadowOpacity: 1,
     shadowRadius: 0,
     elevation: 3,
+  },
+  inline: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 14,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
   },
   iconWrap: {
     width: 28,

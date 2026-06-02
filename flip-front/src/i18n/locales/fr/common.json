@@ -13,6 +13,7 @@
     "addPlus": "Ajouter +",
     "close": "Fermer",
     "confirm": "Confirmer",
+    "gotIt": "OK, j'ai compris !",
     "settings": "Paramètres",
     "howToPlay": "Comment jouer"
   },
@@ -28,7 +29,9 @@
     "loading": "Chargement...",
     "error": "Erreur",
     "readyToPlay": "Prêt à jouer",
-    "rounds": "Tours"
+    "rounds": "Tours",
+    "setup": "Réglages",
+    "themes": "Thèmes"
   },
   "actions": {
     "playAgain": "Rejouer",

@@ -615,6 +615,11 @@
         },
         {
           "n": "3",
+          "title": "↓ MEGA ×2",
+          "desc": "Question fits the player WAY too much? Swipe down: double penalty, giant red flag 🚩"
+        },
+        {
+          "n": "4",
           "title": "Results",
           "desc": "Your score reveals your level of romantic toxicity."
         }
@@ -627,7 +632,7 @@
       "sipsIfYes_one": "🍻 {{count}} sip if yes",
       "sipsIfYes_other": "🍻 {{count}} sips if yes",
       "ptsIfYes": "🚩 +{{count}} pts",
-      "hint": "← No | Yes →"
+      "hint": "← No | Yes →   ·   ↓ MEGA ×2"
     },
     "verdicts": [
       {

@@ -5,13 +5,13 @@ import { SwipeableCard } from './SwipeableCard';
 
 interface CardStackProps {
   players: PurityPlayer[];
-  onSwipe: (playerId: string, direction: 'yes' | 'no') => void;
+  onSwipe: (playerId: string, direction: 'yes' | 'no' | 'mega') => void;
   onComplete?: () => void;
 }
 
 export function CardStack({ players, onSwipe, onComplete }: CardStackProps) {
   return (
-    <SwipeableCardStack
+    <SwipeableCardStack<PurityPlayer, 'yes' | 'no' | 'mega'>
       items={players}
       heightRatio={0.8}
       onSwipe={(player, direction) => onSwipe(player.id, direction)}

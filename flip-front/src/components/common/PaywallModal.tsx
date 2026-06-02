@@ -155,7 +155,7 @@ export function PaywallModal({ visible, onClose }: PaywallModalProps) {
   const content = useMemo(() => getPaywallContent(t), [t]);
   const { refresh } = useEntitlements();
   const lang = i18n.language?.startsWith('en') ? 'en' : 'fr';
-  const VITRINE_BASE = 'https://flip-app.fr';
+  const VITRINE_BASE = 'https://www.flip-flop.app';
 
   const handleRestore = async () => {
     try {

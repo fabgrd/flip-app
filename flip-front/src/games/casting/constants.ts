@@ -17,19 +17,20 @@ export interface CastingThemeOption {
   label: string;
   emoji: string;
   desc: string;
+  color: string;
 }
 
 export const CASTING_THEME_OPTIONS: readonly CastingThemeOption[] = [
-  { value: 'daily', label: 'Quotidien', emoji: '🎬', desc: 'Cringe de tous les jours' },
-  { value: 'relations', label: 'Relations', emoji: '💞', desc: 'Amour, crush, ex & drama' },
-  { value: 'party', label: 'Soirées', emoji: '🥳', desc: 'Fêtes, cuite & délires' },
-  { value: 'gaming', label: 'Gaming', emoji: '🎮', desc: 'Fail vidéo, rage & internet' },
-  { value: 'family', label: 'Famille', emoji: '👨‍👩‍👧', desc: 'Réunions familiales & parents' },
-  { value: 'studies', label: 'Études & Boulot', emoji: '📚', desc: 'École, fac, stages & taf' },
-  { value: 'spicy', label: 'Spicy', emoji: '🔥', desc: 'Sexe, alcool, corps & gênes adultes' },
-  { value: 'taboo', label: 'Tabou', emoji: '😈', desc: 'Famille, secrets & vrais malaises' },
-  { value: 'cinema', label: 'Scènes de Film', emoji: '🎭', desc: 'Acting, drama & ciné' },
-  { value: 'sports', label: 'Sports & Fails', emoji: '⚽', desc: 'Sports, fails & humiliations' },
+  { value: 'daily', label: 'Quotidien', emoji: '🎬', desc: 'Cringe de tous les jours', color: '#5BC8FF' },
+  { value: 'relations', label: 'Relations', emoji: '💞', desc: 'Amour, crush, ex & drama', color: '#FF8FB1' },
+  { value: 'party', label: 'Soirées', emoji: '🥳', desc: 'Fêtes, cuite & délires', color: '#FFD23F' },
+  { value: 'gaming', label: 'Gaming', emoji: '🎮', desc: 'Fail vidéo, rage & internet', color: '#9B5BFF' },
+  { value: 'family', label: 'Famille', emoji: '👨‍👩‍👧', desc: 'Réunions familiales & parents', color: '#4FCB8A' },
+  { value: 'studies', label: 'Études & Boulot', emoji: '📚', desc: 'École, fac, stages & taf', color: '#4482FF' },
+  { value: 'spicy', label: 'Spicy', emoji: '🔥', desc: 'Sexe, alcool, corps & gênes adultes', color: '#FF5B3A' },
+  { value: 'taboo', label: 'Tabou', emoji: '😈', desc: 'Famille, secrets & vrais malaises', color: '#181613' },
+  { value: 'cinema', label: 'Scènes de Film', emoji: '🎭', desc: 'Acting, drama & ciné', color: '#FF8C42' },
+  { value: 'sports', label: 'Sports & Fails', emoji: '⚽', desc: 'Sports, fails & humiliations', color: '#00C4AE' },
 ];
 
 const SCENARIOS_DAILY: string[] = [

@@ -615,6 +615,11 @@
         },
         {
           "n": "3",
+          "title": "↓ MEGA ×2",
+          "desc": "La question colle TROP au joueur ? Swipe vers le bas : double malus, drapeau géant 🚩"
+        },
+        {
+          "n": "4",
           "title": "Résultats",
           "desc": "Ton score révèle ton niveau de toxicité sentimentale."
         }
@@ -627,7 +632,7 @@
       "sipsIfYes_one": "🍻 {{count}} gorgée si oui",
       "sipsIfYes_other": "🍻 {{count}} gorgées si oui",
       "ptsIfYes": "🚩 +{{count}} pts",
-      "hint": "← Non | Oui →"
+      "hint": "← Non | Oui →   ·   ↓ MEGA ×2"
     },
     "verdicts": [
       {

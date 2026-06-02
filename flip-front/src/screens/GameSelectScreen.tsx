@@ -153,7 +153,6 @@ export function GameSelectScreen() {
         >
           <View style={styles.surpriseRow}>
             <Text style={styles.surpriseText}>{t('games:selection.surprise')}</Text>
-            <Text style={styles.surpriseQuestion}>?</Text>
           </View>
         </ChunkyButton>
       </ScrollView>

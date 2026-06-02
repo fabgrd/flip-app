@@ -13,6 +13,8 @@ import {
   GameHeader,
   GameMenuActions,
   GameRulesScreen,
+  GameSetupCard,
+  GameSetupSection,
   PlayersModal,
   PureteIcon,
   RulesButton,
@@ -102,69 +104,67 @@ function PurityRules({
     >
       <View style={pr.cardWrap}>
         <ScrollView contentContainerStyle={pr.cardScroll} showsVerticalScrollIndicator={false}>
-          <DrinkModeToggle accentColor={T.violet} />
-
-          <View style={pr.card}>
-            <Text style={pr.cardLabel}>{t('purityTest:ui.levelLabel')}</Text>
-            <Text style={pr.helperText}>{t('purityTest:ui.levelHelper')}</Text>
-            <View style={pr.levelRow}>
-              {LEVEL_KEYS.map((level, i) => {
-                const isActive = i <= maxIdx;
-                const isSelected = level === maxLevel;
-                const allowed = isLevelAllowed(level);
-                return (
-                  <TouchableOpacity
-                    key={level}
-                    style={[
-                      pr.levelBtn,
-                      isActive &&
-                        allowed && { backgroundColor: LEVEL_COLORS[i], borderColor: T.ink },
-                      isSelected && allowed && pr.levelBtnSelected,
-                      !allowed && pr.levelBtnLocked,
-                    ]}
-                    onPress={() => (allowed ? onChangeMaxLevel(level) : requestUnlockFor(level))}
-                    activeOpacity={0.75}
-                  >
-                    {!allowed && (
-                      <Feather name="lock" size={10} color={T.ink} style={pr.levelLockIcon} />
-                    )}
-                    <Text
+          <GameSetupCard accentColor={T.violet} title={t('common:labels.setup').toUpperCase()}>
+            <GameSetupSection label={t('purityTest:ui.levelLabel')}>
+              <Text style={pr.helperText}>{t('purityTest:ui.levelHelper')}</Text>
+              <View style={pr.levelRow}>
+                {LEVEL_KEYS.map((level, i) => {
+                  const isActive = i <= maxIdx;
+                  const isSelected = level === maxLevel;
+                  const allowed = isLevelAllowed(level);
+                  return (
+                    <TouchableOpacity
+                      key={level}
                       style={[
-                        pr.levelBtnText,
-                        isActive && allowed && pr.levelBtnTextActive,
-                        !allowed && pr.levelBtnTextLocked,
+                        pr.levelBtn,
+                        isActive &&
+                          allowed && { backgroundColor: LEVEL_COLORS[i], borderColor: T.ink },
+                        isSelected && allowed && pr.levelBtnSelected,
+                        !allowed && pr.levelBtnLocked,
                       ]}
+                      onPress={() => (allowed ? onChangeMaxLevel(level) : requestUnlockFor(level))}
+                      activeOpacity={0.75}
                     >
-                      {LEVEL_LABELS[level]}
-                    </Text>
-                  </TouchableOpacity>
-                );
-              })}
-            </View>
-          </View>
-
-          <View style={pr.card}>
-            <Text style={pr.cardLabel}>{t('purityTest:ui.themeLabel')}</Text>
-            <Text style={pr.helperText}>{t('purityTest:ui.themeTotal', { count: themeTotal })}</Text>
-            {(Object.keys(themeCounts) as Theme[]).map((theme) => (
-              <View key={theme} style={pr.sliderRow}>
-                <View style={pr.sliderHeader}>
-                  <Text style={pr.sliderLabel}>{t(`purityTest:themes.${theme}`)}</Text>
-                  <Text style={pr.sliderValue}>{themeCounts[theme]}</Text>
-                </View>
-                <Slider
-                  minimumValue={0}
-                  maximumValue={10}
-                  step={1}
-                  value={themeCounts[theme]}
-                  onValueChange={(value: number) => onChangeThemeCount(theme, value)}
-                  minimumTrackTintColor={THEME_COLORS[theme]}
-                  maximumTrackTintColor="#E6E2DD"
-                  thumbTintColor={T.ink}
-                />
+                      {!allowed && (
+                        <Feather name="lock" size={10} color={T.ink} style={pr.levelLockIcon} />
+                      )}
+                      <Text
+                        style={[
+                          pr.levelBtnText,
+                          isActive && allowed && pr.levelBtnTextActive,
+                          !allowed && pr.levelBtnTextLocked,
+                        ]}
+                      >
+                        {LEVEL_LABELS[level]}
+                      </Text>
+                    </TouchableOpacity>
+                  );
+                })}
               </View>
-            ))}
-          </View>
+            </GameSetupSection>
+            <GameSetupSection label={t('purityTest:ui.themeLabel')}>
+              <Text style={pr.helperText}>{t('purityTest:ui.themeTotal', { count: themeTotal })}</Text>
+              {(Object.keys(themeCounts) as Theme[]).map((theme) => (
+                <View key={theme} style={pr.sliderRow}>
+                  <View style={pr.sliderHeader}>
+                    <Text style={pr.sliderLabel}>{t(`purityTest:themes.${theme}`)}</Text>
+                    <Text style={pr.sliderValue}>{themeCounts[theme]}</Text>
+                  </View>
+                  <Slider
+                    minimumValue={0}
+                    maximumValue={10}
+                    step={1}
+                    value={themeCounts[theme]}
+                    onValueChange={(value: number) => onChangeThemeCount(theme, value)}
+                    minimumTrackTintColor={THEME_COLORS[theme]}
+                    maximumTrackTintColor="#E6E2DD"
+                    thumbTintColor={T.ink}
+                  />
+                </View>
+              ))}
+            </GameSetupSection>
+            <DrinkModeToggle accentColor={T.violet} inline />
+          </GameSetupCard>
         </ScrollView>
       </View>
     </GameRulesScreen>
@@ -293,8 +293,12 @@ export function PurityTestScreen() {
     resetGame,
   } = usePurityTest(players);
 
-  const handleSwipe = (playerId: string, direction: 'yes' | 'no') => {
-    submitAnswer(playerId, direction);
+  const handleSwipe = (playerId: string, direction: 'yes' | 'no' | 'mega') => {
+    if (direction === 'mega') {
+      submitAnswer(playerId, 'yes', 2);
+    } else {
+      submitAnswer(playerId, direction);
+    }
   };
 
   const handleAllCardsComplete = () => {
@@ -404,7 +408,7 @@ export function PurityTestScreen() {
       </View>
 
       <View style={styles.hint}>
-        <Text style={styles.hintText}>← Non | Oui →</Text>
+        <Text style={styles.hintText}>{t('purityTest:game.hint')}</Text>
       </View>
     </SafeAreaView>
   );

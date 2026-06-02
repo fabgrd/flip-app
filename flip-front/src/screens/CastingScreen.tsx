@@ -16,6 +16,8 @@ import {
   GameChip,
   GameHeader,
   GameRulesScreen,
+  GameSetupCard,
+  GameSetupSection,
   InitialAvatar,
   PlayerPickerGrid,
   RoundsStepper,
@@ -115,27 +117,31 @@ function CARules({
       scrollable
     >
       <View style={rls.scroll}>
-        <DrinkModeToggle accentColor={CASTING_ORANGE} style={{ marginBottom: 14 }} />
-        <RoundsStepper
-          value={totalRounds}
-          onChange={onTotalRoundsChange}
-          min={1}
-          max={20}
-          accentColor={CASTING_ORANGE}
-          style={{ marginBottom: 14 }}
-        />
-        <Text style={rls.themesSectionLabel}>{t('casting:rules.themeLabel')}</Text>
-        <ThemeGrid
-          options={CASTING_THEME_OPTIONS.map((opt) => ({
-            value: opt.value,
-            label: t(`casting:themes.${opt.value}`),
-            emoji: opt.emoji,
-          }))}
-          isActive={(v) => selectedThemes.includes(v as CastingTheme)}
-          isAllowed={(v) => isThemeAllowed(v as CastingTheme)}
-          onSelect={(v) => onToggleTheme(v as CastingTheme)}
-          onLockedPress={(v) => requestUnlockFor(v as CastingTheme)}
-        />
+        <GameSetupCard accentColor={CASTING_ORANGE} title={t('common:labels.setup').toUpperCase()}>
+          <RoundsStepper
+            value={totalRounds}
+            onChange={onTotalRoundsChange}
+            min={1}
+            max={20}
+            accentColor={CASTING_ORANGE}
+            inline
+          />
+          <GameSetupSection label={t('casting:rules.themeLabel')}>
+            <ThemeGrid
+              options={CASTING_THEME_OPTIONS.map((opt) => ({
+                value: opt.value,
+                label: t(`casting:themes.${opt.value}`),
+                emoji: opt.emoji,
+                color: opt.color,
+              }))}
+              isActive={(v) => selectedThemes.includes(v as CastingTheme)}
+              isAllowed={(v) => isThemeAllowed(v as CastingTheme)}
+              onSelect={(v) => onToggleTheme(v as CastingTheme)}
+              onLockedPress={(v) => requestUnlockFor(v as CastingTheme)}
+            />
+          </GameSetupSection>
+          <DrinkModeToggle accentColor={CASTING_ORANGE} inline />
+        </GameSetupCard>
       </View>
     </GameRulesScreen>
   );

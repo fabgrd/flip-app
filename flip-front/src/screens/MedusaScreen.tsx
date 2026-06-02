@@ -23,6 +23,7 @@ import {
   GameChip,
   GameHeader,
   GameRulesScreen,
+  GameSetupCard,
   InitialAvatar,
   MedusaIcon,
   RoundsStepper,
@@ -108,15 +109,18 @@ function MDRules({
       onStart={onStart}
       startLabel={t('medusa:rules.start')}
     >
-      <View style={{ paddingHorizontal: 20, paddingBottom: 12, marginTop: 'auto', gap: 12 }}>
-        <RoundsStepper
-          value={totalRounds}
-          onChange={onTotalRoundsChange}
-          min={1}
-          max={20}
-          accentColor={T.cobalt}
-        />
-        <DrinkModeToggle accentColor={T.cobalt} />
+      <View style={{ paddingHorizontal: 20, paddingBottom: 12, marginTop: 'auto' }}>
+        <GameSetupCard accentColor={T.cobalt} title={t('common:labels.setup').toUpperCase()}>
+          <RoundsStepper
+            value={totalRounds}
+            onChange={onTotalRoundsChange}
+            min={1}
+            max={20}
+            accentColor={T.cobalt}
+            inline
+          />
+          <DrinkModeToggle accentColor={T.cobalt} inline />
+        </GameSetupCard>
       </View>
     </GameRulesScreen>
   );

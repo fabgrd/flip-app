@@ -329,7 +329,7 @@ export const usePurityTest = (initialPlayers: Player[], config?: PurityQuestionC
   );
 
   const submitAnswer = useCallback(
-    (playerId: string, answer: 'yes' | 'no') => {
+    (playerId: string, answer: 'yes' | 'no', bonusMultiplier = 1) => {
       setGameState((prev) => ({
         ...prev,
         players: prev.players.map((player) => {
@@ -341,7 +341,7 @@ export const usePurityTest = (initialPlayers: Player[], config?: PurityQuestionC
             };
 
             const updatedAnswers = [...player.answers, newAnswer];
-            const points = currentQuestion.points[answer];
+            const points = currentQuestion.points[answer] * bonusMultiplier;
             const newScore = player.score + points;
 
             const newThemeScores = { ...player.themeScores };
