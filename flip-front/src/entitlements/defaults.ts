@@ -5,6 +5,7 @@ import {
   MockSubscriptionAdapter,
   NoopOverridesAdapter,
   PremiumCodeAdapter,
+  RevenueCatAdapter,
 } from './adapters';
 import { LocalOverridesAdapter, RemoteConfigAdapter, SubscriptionAdapter } from './adapters/types';
 
@@ -25,6 +26,7 @@ export function getDefaultAdapters(): EntitlementsAdapters {
       subscription: new CompositeSubscriptionAdapter([
         new MockSubscriptionAdapter('free'),
         premiumCode,
+        new RevenueCatAdapter(),
       ]),
       remoteConfig: new LocalRemoteConfigAdapter(),
       overrides: __DEV__ ? new AsyncStorageOverridesAdapter() : new NoopOverridesAdapter(),

@@ -1,5 +1,6 @@
 export { MockSubscriptionAdapter } from './MockSubscriptionAdapter';
 export { PremiumCodeAdapter } from './PremiumCodeAdapter';
+export { RevenueCatAdapter } from './RevenueCatAdapter';
 export { CompositeSubscriptionAdapter } from './CompositeSubscriptionAdapter';
 export { LocalRemoteConfigAdapter, DEFAULT_REMOTE_FLAGS } from './LocalRemoteConfigAdapter';
 export { AsyncStorageOverridesAdapter, NoopOverridesAdapter } from './LocalOverridesAdapter';

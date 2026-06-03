@@ -40,7 +40,11 @@
   },
   "cta": {
     "trial": "Try for free",
-    "trialBadge": "7 days free"
+    "start": "Start",
+    "trialBadge": "7 days free",
+    "subtextWeekly": "Free for 7 days, then {{price}}/week",
+    "subtextMonthly": "Renews monthly, cancel anytime",
+    "subtextYearly": "Renews yearly, cancel anytime"
   },
   "footer": {
     "secure": "Secure payment via App Store",

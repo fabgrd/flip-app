@@ -17,6 +17,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Circle, Path, Rect } from 'react-native-svg';
 import { T } from '../../constants/flipTokens';
 import { getPremiumCodeAdapter, useEntitlements } from '../../entitlements';
+import {
+  purchasePlan,
+  restorePurchasesRC,
+  type RcPlanId,
+} from '../../lib/revenuecat';
 import { getPaywallContent } from '../../paywall/paywallContent';
 import { PaywallPlanId } from '../../paywall/types';
 import {
@@ -157,12 +162,29 @@ export function PaywallModal({ visible, onClose }: PaywallModalProps) {
   const lang = i18n.language?.startsWith('en') ? 'en' : 'fr';
   const VITRINE_BASE = 'https://www.flip-flop.app';
 
+  const [purchasing, setPurchasing] = useState(false);
+
   const handleRestore = async () => {
     try {
+      await restorePurchasesRC();
       await getPremiumCodeAdapter().refresh();
       await refresh();
     } catch {
       /* noop */
+    }
+  };
+
+  const handlePurchase = async () => {
+    if (purchasing) return;
+    setPurchasing(true);
+    try {
+      await purchasePlan(selectedPlan as RcPlanId);
+      await refresh();
+      onClose();
+    } catch {
+      /* user cancelled or error — silent for now */
+    } finally {
+      setPurchasing(false);
     }
   };
 
@@ -174,6 +196,28 @@ export function PaywallModal({ visible, onClose }: PaywallModalProps) {
   const [redeemVisible, setRedeemVisible] = useState(false);
 
   const planLabel = (id: PaywallPlanId) => t(`paywall:plans.${id}`);
+
+  const isTrial = selectedPlan === 'weekly';
+  const selectedPriceObj = PLANS.find((p) => p.id === selectedPlan);
+  const ctaSubtext = (() => {
+    const price = selectedPriceObj?.price ?? '';
+    if (selectedPlan === 'weekly') return t('paywall:cta.subtextWeekly', { price });
+    if (selectedPlan === 'monthly') return t('paywall:cta.subtextMonthly');
+    return t('paywall:cta.subtextYearly');
+  })();
+
+  const pulse = useSharedValue(1);
+  useEffect(() => {
+    pulse.value = withRepeat(
+      withTiming(1.03, { duration: 900, easing: Easing.inOut(Easing.quad) }),
+      -1,
+      true,
+    );
+    return () => cancelAnimation(pulse);
+  }, []);
+  const ctaPulseStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: pulse.value }],
+  }));
 
   return (
     <Modal
@@ -238,22 +282,35 @@ export function PaywallModal({ visible, onClose }: PaywallModalProps) {
             ))}
           </View>
 
-          <TouchableOpacity activeOpacity={0.9} style={styles.ctaBtn}>
-            <Svg width={20} height={20} viewBox="0 0 16 16" fill="none">
-              <Rect x="3" y="7" width="10" height="8" rx="2" fill={T.ink} />
-              <Path
-                d="M5 7V5a3 3 0 0 1 6 0v2"
-                stroke={T.ink}
-                strokeWidth="1.8"
-                fill="none"
-                strokeLinecap="round"
-              />
-            </Svg>
-            <Text style={styles.ctaText}>{t('paywall:cta.trial')}</Text>
-            <View style={styles.ctaBadge}>
-              <Text style={styles.ctaBadgeText}>{t('paywall:cta.trialBadge')}</Text>
-            </View>
-          </TouchableOpacity>
+          <Animated.View style={ctaPulseStyle}>
+            <TouchableOpacity
+              activeOpacity={0.9}
+              style={styles.ctaBtn}
+              onPress={handlePurchase}
+              disabled={purchasing}
+            >
+              <Svg width={20} height={20} viewBox="0 0 16 16" fill="none">
+                <Rect x="3" y="7" width="10" height="8" rx="2" fill={T.ink} />
+                <Path
+                  d="M5 7V5a3 3 0 0 1 6 0v2"
+                  stroke={T.ink}
+                  strokeWidth="1.8"
+                  fill="none"
+                  strokeLinecap="round"
+                />
+              </Svg>
+              <Text style={styles.ctaText}>
+                {isTrial ? t('paywall:cta.trial') : t('paywall:cta.start')}
+              </Text>
+              {isTrial && (
+                <View style={styles.ctaBadge}>
+                  <Text style={styles.ctaBadgeText}>{t('paywall:cta.trialBadge')}</Text>
+                </View>
+              )}
+            </TouchableOpacity>
+          </Animated.View>
+
+          <Text style={styles.ctaSubtext}>{ctaSubtext}</Text>
 
           <TouchableOpacity
             onPress={() => setRedeemVisible(true)}
@@ -431,6 +488,13 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   ctaBadgeText: { fontSize: 11, fontWeight: '800', color: T.lemon, letterSpacing: 0.2 },
+  ctaSubtext: {
+    fontSize: 12,
+    color: 'rgba(255,255,255,0.5)',
+    textAlign: 'center',
+    marginTop: 10,
+    paddingHorizontal: 16,
+  },
 
   redeemBtn: {
     alignSelf: 'center',

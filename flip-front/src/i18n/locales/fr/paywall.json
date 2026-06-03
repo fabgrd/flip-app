@@ -40,7 +40,11 @@
   },
   "cta": {
     "trial": "Essayer gratuitement",
-    "trialBadge": "7 jours offerts"
+    "start": "Commencer",
+    "trialBadge": "7 jours offerts",
+    "subtextWeekly": "Gratuit pendant 7 jours, puis {{price}}/semaine",
+    "subtextMonthly": "Renouvellement chaque mois, annulable à tout moment",
+    "subtextYearly": "Renouvellement chaque année, annulable à tout moment"
   },
   "footer": {
     "secure": "Paiement sécurisé via App Store",

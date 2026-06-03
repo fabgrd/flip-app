@@ -18,6 +18,7 @@ import { PreferencesProvider } from './src/contexts/PreferencesContext';
 import { ThemeProvider, useTheme } from './src/contexts/ThemeContext';
 import { EntitlementsProvider } from './src/entitlements';
 import { linking } from './src/lib/linking';
+import { initRevenueCat } from './src/lib/revenuecat';
 import { initSentry } from './src/lib/sentry';
 import { PaywallProvider } from './src/paywall';
 import {
@@ -39,6 +40,7 @@ import {
 import { RootStackParamList } from './src/types';
 
 initSentry();
+initRevenueCat();
 
 const Stack = createStackNavigator<RootStackParamList>();
 
