@@ -27,7 +27,12 @@ export function CameleonResultsScreen() {
   const winner: 'civilians' | 'undercover' = useMemo(() => {
     const alive = players.filter((p) => !p.isEliminated);
     const civiliansAlive = alive.filter((p) => p.role === 'civilian').length;
-    return civiliansAlive === 0 ? 'undercover' : 'civilians';
+    const impostorsAlive = alive.filter(
+      (p) => p.role === 'cameleon' || p.role === 'mrWhite',
+    ).length;
+    if (civiliansAlive === 0) return 'undercover';
+    if (alive.length <= 2 && impostorsAlive >= 1) return 'undercover';
+    return 'civilians';
   }, [players]);
 
   const computeRoundPoints = (p: CameleonAssignedPlayer) => {

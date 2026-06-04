@@ -865,36 +865,11 @@ function APDealerPass({
           </Text>
           <Text style={dp.sub}>Choisis à qui passer le tas.</Text>
         </View>
-        <View style={dp.grid}>
-          {players.map(
-            (p, i) =>
-              i !== dealerIdx && (
-                <ChunkyButton
-                  key={i}
-                  style={{ width: '47%' }}
-                  color={T.paper}
-                  metrics={{ height: 68, radius: 18, paddingH: 0 }}
-                  innerStyle={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'flex-start',
-                    padding: 14,
-                    gap: 10,
-                  }}
-                  onPress={() => onPass(i)}
-                >
-                  <View style={[dp.avatar, { backgroundColor: pBg(i) }]}>
-                    <Text style={[dp.avatarText, { color: pText(i) }]}>
-                      {p.name[0].toUpperCase()}
-                    </Text>
-                  </View>
-                  <Text style={dp.name} numberOfLines={1}>
-                    {p.name}
-                  </Text>
-                </ChunkyButton>
-              ),
-          )}
-        </View>
+        <PlayerPickerGrid
+          players={players.filter((_, i) => i !== dealerIdx)}
+          onSelect={(p) => onPass(players.indexOf(p))}
+          shadowColor={T.ink}
+        />
       </SafeAreaView>
     </View>
   );

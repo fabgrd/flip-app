@@ -158,7 +158,7 @@ export const GAMES: readonly GameConfig[] = [
     taglineKey: 'games:cameleon.tagline',
     icon: ChameleonIcon,
     color: 'mint',
-    minPlayers: 4,
+    minPlayers: 3,
     maxPlayers: 20,
     playersLabelKey: 'games:labels.players.cameleon',
     durationLabelKey: 'games:labels.duration.cameleon',

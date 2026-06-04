@@ -126,6 +126,14 @@ export function SettingsPanel({
               </View>
             </View>
           </View>
+          {currentUC + currentMW === 0 && (
+            <Text style={styles.warningText}>
+              {t(
+                'cameleon:settings.needAtLeastOneImpostor',
+                'Ajoute au moins 1 imposteur (Undercover ou Mr White) pour lancer la partie.',
+              )}
+            </Text>
+          )}
         </GameSetupSection>
         <GameSetupSection label={t('cameleon:settings.themes', 'Thèmes')}>
           <ThemeGrid<CameleonTheme>
@@ -213,6 +221,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     shadowRadius: 0,
     elevation: 3,
+  },
+  warningText: {
+    marginTop: 10,
+    color: '#C0392B',
+    fontSize: 12,
+    fontWeight: '700',
+    textAlign: 'center',
   },
   stepBtnText: { color: T.ink, fontSize: 20, fontWeight: '900', lineHeight: 22 },
   stepValue: { color: T.ink, fontSize: 22, fontWeight: '900', width: 36, textAlign: 'center' },

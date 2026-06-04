@@ -13,7 +13,8 @@
     "undercover": "Undercover",
     "mrWhite": "Mr White",
     "theme": "Thème",
-    "themeHint": "Choisis l'ambiance avant de lancer la manche."
+    "themeHint": "Choisis l'ambiance avant de lancer la manche.",
+    "needAtLeastOneImpostor": "Ajoute au moins 1 imposteur (Undercover ou Mr White) pour lancer la partie."
   },
   "actions": {
     "start": "Démarrer",

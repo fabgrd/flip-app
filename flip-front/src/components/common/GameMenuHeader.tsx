@@ -21,6 +21,7 @@ import { T } from '../../constants/flipTokens';
 import { usePlayers } from '../../contexts/PlayersContext';
 import { Player } from '../../types';
 import { Avatar } from './Avatar';
+import { ChunkyButton } from './ChunkyButton';
 import { FlatChunkyButton } from './FlatChunkyButton';
 import { RulesButton } from './RulesModal';
 
@@ -150,9 +151,15 @@ export function PlayersModal({
           </ScrollView>
 
           {/* Close */}
-          <TouchableOpacity style={pm.closeBtn} onPress={onClose} activeOpacity={0.85}>
-            <Text style={pm.closeBtnText}>{t('common:buttons.close')}</Text>
-          </TouchableOpacity>
+          <ChunkyButton
+            onPress={onClose}
+            color={T.mint}
+            size="md"
+            full
+            style={pm.closeBtnWrap}
+          >
+            {t('common:buttons.allGood')}
+          </ChunkyButton>
         </Animated.View>
       </Animated.View>
     </Modal>
@@ -311,22 +318,9 @@ const pm = StyleSheet.create({
   },
   removeBtnText: { color: T.inkSoft, fontSize: 11, fontWeight: '700' },
 
-  closeBtn: {
+  closeBtnWrap: {
     marginTop: 16,
-    height: 52,
-    borderRadius: T.rMd,
-    backgroundColor: T.ink,
-    borderWidth: 2,
-    borderColor: T.ink,
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: T.ink,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 5,
   },
-  closeBtnText: { fontSize: 16, fontWeight: '900', color: T.paper, letterSpacing: -0.3 },
 });
 
 // ─── GameMenuActions ──────────────────────────────────────────────────────────

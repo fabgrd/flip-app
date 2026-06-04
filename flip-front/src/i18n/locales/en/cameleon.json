@@ -13,7 +13,8 @@
     "undercover": "Undercover",
     "mrWhite": "Mr White",
     "theme": "Theme",
-    "themeHint": "Pick the vibe before starting the round."
+    "themeHint": "Pick the vibe before starting the round.",
+    "needAtLeastOneImpostor": "Add at least 1 impostor (Undercover or Mr White) to start the game."
   },
   "actions": {
     "start": "Start",

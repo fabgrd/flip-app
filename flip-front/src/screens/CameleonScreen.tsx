@@ -61,12 +61,12 @@ export function CameleonScreen() {
   const [selectedThemes, setSelectedThemes] = useState<CameleonTheme[]>(['random']);
   const { isThemeAllowed, requestUnlockFor, filterAllowed } = useCameleonThemeAccess();
 
-  const currentUC = Math.max(1, overrideUC ?? defaultDistribution.undercovers);
+  const currentUC = Math.max(0, overrideUC ?? defaultDistribution.undercovers);
   const currentMW = overrideMW ?? defaultDistribution.mrWhites;
-  const maxImpostors = Math.floor(localPlayers.length / 2);
+  const maxImpostors = Math.max(1, Math.floor(localPlayers.length / 2));
   const totalImpostors = currentUC + currentMW;
   const canStart = useMemo(
-    () => totalImpostors <= maxImpostors && totalImpostors < localPlayers.length,
+    () => totalImpostors >= 1 && totalImpostors <= maxImpostors && totalImpostors < localPlayers.length,
     [totalImpostors, maxImpostors, localPlayers.length],
   );
 
@@ -212,7 +212,7 @@ export function CameleonScreen() {
             onChangeUC={(val) =>
               setOverrideUC(
                 Math.max(
-                  1,
+                  0,
                   Math.min(localPlayers.length - 1, Math.min(val, maxImpostors - currentMW)),
                 ),
               )

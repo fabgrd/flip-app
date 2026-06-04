@@ -193,12 +193,12 @@ export function useCameleon(initialPlayers: Player[]) {
       ).length;
 
       // Game over conditions
-      if (civiliansAlive === 0) {
-        setGameOver(true);
-        setWinner('undercover');
-      } else if (impostorsAlive === 0) {
+      if (impostorsAlive === 0) {
         setGameOver(true);
         setWinner('civilians');
+      } else if (alive.length <= 2 && impostorsAlive >= 1) {
+        setGameOver(true);
+        setWinner('undercover');
       } else {
         setGameOver(false);
         setWinner(null);
@@ -251,12 +251,12 @@ export function useCameleon(initialPlayers: Player[]) {
           (p) => p.role === 'cameleon' || p.role === 'mrWhite',
         ).length;
 
-        if (civiliansAlive === 0) {
-          setGameOver(true);
-          setWinner('undercover');
-        } else if (impostorsAlive === 0) {
+        if (impostorsAlive === 0) {
           setGameOver(true);
           setWinner('civilians');
+        } else if (alive.length <= 2 && impostorsAlive >= 1) {
+          setGameOver(true);
+          setWinner('undercover');
         } else {
           setGameOver(false);
           setWinner(null);

@@ -74,7 +74,6 @@ export function RevealCard({ name, color, roleLabel, secretWord, onNext, t }: Re
             </View>
           ) : (
             <View style={styles.backContent}>
-              <Text style={styles.wordCategory}>{roleLabel.toUpperCase()}</Text>
               <View style={styles.wordCard}>
                 <Text style={styles.wordText}>{secretWord}</Text>
               </View>
