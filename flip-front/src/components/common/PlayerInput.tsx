@@ -18,7 +18,6 @@ export function PlayerInput({ onAddPlayer, maxPlayers, currentPlayerCount }: Pla
   const handleAdd = () => {
     const trimmed = playerName.trim();
     if (!trimmed) {
-      Alert.alert(t('errors.playerNameRequired'));
       return;
     }
     if (currentPlayerCount >= maxPlayers) {

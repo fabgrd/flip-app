@@ -33,10 +33,10 @@
     "handoffHint": "Trouve un coin discret avant d'appuyer.",
     "revealRole": "Révéler mon rôle",
     "next": "J'ai vu — suivant",
-    "youAreCameleon": "TU ES LE CAMÉLÉON",
     "category": "CATÉGORIE",
-    "cameleonHint": "Tu ne connais pas le mot. Bluff comme tu peux : un indice plausible, pas trop précis.",
-    "wordHint": "Donne un indice ni trop évident, ni trop vague."
+    "wordHint": "Donne un indice ni trop évident, ni trop vague.",
+    "youAreMrWhite": "TU ES MR WHITE",
+    "mrWhiteHint": "Tu n'as aucun mot. Bluff intelligemment et essaie de deviner celui des autres."
   },
   "roles": {
     "civilian": "Civil",

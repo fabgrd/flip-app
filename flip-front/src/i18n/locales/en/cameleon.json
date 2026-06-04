@@ -33,10 +33,10 @@
     "handoffHint": "Find a quiet spot before tapping.",
     "revealRole": "Reveal my role",
     "next": "Got it — next",
-    "youAreCameleon": "YOU ARE THE CHAMELEON",
     "category": "CATEGORY",
-    "cameleonHint": "You don't know the word. Bluff your best: a plausible clue, not too specific.",
-    "wordHint": "Give a clue that's not too obvious, not too vague."
+    "wordHint": "Give a clue that's not too obvious, not too vague.",
+    "youAreMrWhite": "YOU ARE MR WHITE",
+    "mrWhiteHint": "You have no word. Bluff your best and try to guess the others'."
   },
   "roles": {
     "civilian": "Civilian",

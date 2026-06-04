@@ -64,14 +64,13 @@ export function RevealCard({ name, color, roleLabel, secretWord, onNext, t }: Re
         >
           {secretWord === null ? (
             <View style={styles.backContent}>
-              <View style={styles.cameleonBadge}>
-                <Text style={styles.cameleonBadgeText}>{t('cameleon:reveal.youAreCameleon')}</Text>
+              <View style={styles.mrWhiteBadge}>
+                <Text style={styles.mrWhiteBadgeText}>{t('cameleon:reveal.youAreMrWhite')}</Text>
               </View>
-              <View style={styles.cameleonCard}>
-                <Text style={styles.cameleonCardLabel}>{t('cameleon:reveal.category')}</Text>
-                <Text style={styles.cameleonCardRole}>{roleLabel}</Text>
-                <Text style={styles.cameleonCardHint}>{t('cameleon:reveal.cameleonHint')}</Text>
+              <View style={styles.wordCard}>
+                <Text style={styles.wordText}>???</Text>
               </View>
+              <Text style={styles.wordHint}>{t('cameleon:reveal.mrWhiteHint')}</Text>
             </View>
           ) : (
             <View style={styles.backContent}>
@@ -177,52 +176,26 @@ const styles = StyleSheet.create({
 
   backContent: { flex: 1, alignItems: 'center', justifyContent: 'center', width: '100%' },
 
-  cameleonBadge: {
+  mrWhiteBadge: {
     backgroundColor: T.tomato,
     borderWidth: 2,
     borderColor: T.ink,
     borderRadius: 999,
     paddingHorizontal: 14,
     paddingVertical: 6,
-    marginBottom: 20,
+    marginBottom: 16,
     transform: [{ rotate: '-3deg' }],
     shadowColor: T.ink,
     shadowOffset: { width: 3, height: 3 },
     shadowOpacity: 1,
     shadowRadius: 0,
   },
-  cameleonBadgeText: {
+  mrWhiteBadgeText: {
     color: '#fff',
     fontSize: 13,
     fontWeight: '900',
     letterSpacing: 0.5,
     textTransform: 'uppercase',
-  },
-  cameleonCard: {
-    backgroundColor: T.ink,
-    borderRadius: T.rMd,
-    borderWidth: 2,
-    borderColor: T.ink,
-    padding: 20,
-    alignItems: 'center',
-    alignSelf: 'stretch',
-    marginBottom: 16,
-  },
-  cameleonCardLabel: {
-    color: 'rgba(255,255,255,0.5)',
-    fontSize: 11,
-    fontWeight: '700',
-    letterSpacing: 2,
-    marginBottom: 6,
-    textTransform: 'uppercase',
-  },
-  cameleonCardRole: { color: '#fff', fontSize: 28, fontWeight: '900', letterSpacing: -1 },
-  cameleonCardHint: {
-    color: 'rgba(255,255,255,0.7)',
-    fontSize: 13,
-    textAlign: 'center',
-    marginTop: 12,
-    lineHeight: 18,
   },
 
   wordCategory: {

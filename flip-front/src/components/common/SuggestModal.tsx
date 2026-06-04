@@ -3,8 +3,9 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
+  ActivityIndicator,
+  Alert,
   Keyboard,
-  Linking,
   Modal,
   ScrollView,
   StyleSheet,
@@ -16,6 +17,7 @@ import {
 import Animated, { FadeIn, FadeOut, ZoomIn, ZoomOut } from 'react-native-reanimated';
 import { GAMES } from '../../config/games.config';
 import { T } from '../../constants/flipTokens';
+import { supabase } from '../../lib/supabase';
 import { FlatChunkyButton } from './FlatChunkyButton';
 
 export function SuggestButton() {
@@ -24,17 +26,25 @@ export function SuggestButton() {
   const [selectedGameId, setSelectedGameId] = useState<string | null>(null);
   const [text, setText] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
 
-  const handleSubmit = () => {
-    if (!text.trim()) return;
+  const handleSubmit = async () => {
+    if (!text.trim() || sending) return;
     const game = selectedGameId ? GAMES.find((g) => g.id === selectedGameId) : null;
     const gameName = game ? t(game.titleKey) : t('settings:suggest.allGames');
-    const subject = encodeURIComponent(t('settings:suggest.emailSubject', { game: gameName }));
-    const body = encodeURIComponent(
-      t('settings:suggest.emailBody', { game: gameName, suggestion: text.trim() }),
-    );
-    Linking.openURL(`mailto:hello@flipgame.app?subject=${subject}&body=${body}`);
-    setSubmitted(true);
+
+    setSending(true);
+    try {
+      const { error } = await supabase.functions.invoke('send-suggestion', {
+        body: { game: gameName, suggestion: text.trim() },
+      });
+      if (error) throw error;
+      setSubmitted(true);
+    } catch (e) {
+      Alert.alert(t('settings:suggest.errorTitle'), t('settings:suggest.errorDesc'));
+    } finally {
+      setSending(false);
+    }
   };
 
   const handleClose = () => {
@@ -150,9 +160,13 @@ export function SuggestButton() {
                   textColor="#fff"
                   style={styles.submitBtn}
                   onPress={handleSubmit}
-                  disabled={!text.trim()}
+                  disabled={!text.trim() || sending}
                 >
-                  {t('settings:suggest.submit')}
+                  {sending ? (
+                    <ActivityIndicator color="#fff" />
+                  ) : (
+                    t('settings:suggest.submit')
+                  )}
                 </FlatChunkyButton>
               </ScrollView>
             )}

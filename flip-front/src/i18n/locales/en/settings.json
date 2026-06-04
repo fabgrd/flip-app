@@ -25,8 +25,8 @@
     "successTitle": "Thanks!",
     "successDesc": "We'll read your suggestion carefully. The best questions make it into the game 🤞",
     "close": "Close",
-    "emailSubject": "[FL!P] Suggestion – {{game}}",
-    "emailBody": "Game: {{game}}\n\nSuggested question / phrase:\n{{suggestion}}"
+    "errorTitle": "Oops",
+    "errorDesc": "Could not send your suggestion. Check your connection and try again."
   },
   "drinks": {
     "title": "Drinking game mode",
