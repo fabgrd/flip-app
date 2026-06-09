@@ -119,7 +119,9 @@ function ThemedAppNavigator() {
           AsyncStorage.setItem(NAV_STATE_STORAGE_KEY, JSON.stringify(payload)).catch(() => {});
         }}
       >
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Navigator
+          screenOptions={{ headerShown: false, gestureResponseDistance: 25 }}
+        >
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="GameSelect" component={GameSelectScreen} />
           <Stack.Screen name="PurityTest" component={PurityTestScreen} />

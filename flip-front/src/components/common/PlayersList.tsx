@@ -169,11 +169,6 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
     paddingRight: 14,
     paddingVertical: 8,
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
   },
 
   playerName: {

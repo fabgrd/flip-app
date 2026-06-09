@@ -375,88 +375,86 @@
       }
     ],
     "rap": [
-      [
-        {
-          "w": "Drake",
-          "c": "Kendrick Lamar"
-        },
-        {
-          "w": "Future",
-          "c": "Lil Baby"
-        },
-        {
-          "w": "Travis Scott",
-          "c": "Playboi Carti"
-        },
-        {
-          "w": "21 Savage",
-          "c": "Metro Boomin"
-        },
-        {
-          "w": "Lil Uzi Vert",
-          "c": "Yeat"
-        },
-        {
-          "w": "Eminem",
-          "c": "50 Cent"
-        },
-        {
-          "w": "Chief Keef",
-          "c": "King Von"
-        },
-        {
-          "w": "Pop Smoke",
-          "c": "Fivio Foreign"
-        },
-        {
-          "w": "Tyler, The Creator",
-          "c": "A$AP Rocky"
-        },
-        {
-          "w": "Kanye West",
-          "c": "Kid Cudi"
-        },
-        {
-          "w": "J. Cole",
-          "c": "Cordae"
-        },
-        {
-          "w": "Lil Wayne",
-          "c": "Birdman"
-        },
-        {
-          "w": "Juice WRLD",
-          "c": "XXXTENTACION"
-        },
-        {
-          "w": "Doja Cat",
-          "c": "Megan Thee Stallion"
-        },
-        {
-          "w": "Nicki Minaj",
-          "c": "Cardi B"
-        },
-        {
-          "w": "Snoop Dogg",
-          "c": "Wiz Khalifa"
-        },
-        {
-          "w": "Mac Miller",
-          "c": "Logic"
-        },
-        {
-          "w": "Post Malone",
-          "c": "Jack Harlow"
-        },
-        {
-          "w": "Ice Spice",
-          "c": "Sexyy Red"
-        },
-        {
-          "w": "NBA YoungBoy",
-          "c": "Kodak Black"
-        }
-      ]
+      {
+        "w": "Drake",
+        "c": "Kendrick Lamar"
+      },
+      {
+        "w": "Future",
+        "c": "Lil Baby"
+      },
+      {
+        "w": "Travis Scott",
+        "c": "Playboi Carti"
+      },
+      {
+        "w": "21 Savage",
+        "c": "Metro Boomin"
+      },
+      {
+        "w": "Lil Uzi Vert",
+        "c": "Yeat"
+      },
+      {
+        "w": "Eminem",
+        "c": "50 Cent"
+      },
+      {
+        "w": "Chief Keef",
+        "c": "King Von"
+      },
+      {
+        "w": "Pop Smoke",
+        "c": "Fivio Foreign"
+      },
+      {
+        "w": "Tyler, The Creator",
+        "c": "A$AP Rocky"
+      },
+      {
+        "w": "Kanye West",
+        "c": "Kid Cudi"
+      },
+      {
+        "w": "J. Cole",
+        "c": "Cordae"
+      },
+      {
+        "w": "Lil Wayne",
+        "c": "Birdman"
+      },
+      {
+        "w": "Juice WRLD",
+        "c": "XXXTENTACION"
+      },
+      {
+        "w": "Doja Cat",
+        "c": "Megan Thee Stallion"
+      },
+      {
+        "w": "Nicki Minaj",
+        "c": "Cardi B"
+      },
+      {
+        "w": "Snoop Dogg",
+        "c": "Wiz Khalifa"
+      },
+      {
+        "w": "Mac Miller",
+        "c": "Logic"
+      },
+      {
+        "w": "Post Malone",
+        "c": "Jack Harlow"
+      },
+      {
+        "w": "Ice Spice",
+        "c": "Sexyy Red"
+      },
+      {
+        "w": "NBA YoungBoy",
+        "c": "Kodak Black"
+      }
     ],
     "hot": [
       {

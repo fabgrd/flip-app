@@ -38,6 +38,15 @@ export function SwipeableCard({
     label: t('leftRight:game.rightChoice'),
   };
 
+  const downDirection = {
+    key: 'center',
+    color: POLITICAL_COLORS.center,
+    overlayColor: 'rgba(155, 89, 182, 0.92)',
+    emoji: POLITICAL_EMOJIS.center,
+    label: t('leftRight:game.centerChoice'),
+    hideOverlay: true,
+  };
+
   const handleSwipe = (direction: string) => {
     onSwipe(direction as PoliticalOrientation);
   };
@@ -47,6 +56,7 @@ export function SwipeableCard({
       player={player}
       leftDirection={leftDirection}
       rightDirection={rightDirection}
+      downDirection={downDirection}
       onSwipe={handleSwipe}
       onSwipeComplete={onSwipeComplete}
       isActive={isActive}

@@ -1216,8 +1216,16 @@ function CastingGame({
     const pool = getScenariosForThemesI18n(activeThemes, scenariosData);
     setScenario(pickRandom(pool.length > 0 ? pool : getScenariosForThemes(activeThemes)));
     const nums: Record<number, number> = {};
+    const numPool = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    for (let i = numPool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [numPool[i], numPool[j]] = [numPool[j], numPool[i]];
+    }
+    let k = 0;
     players.forEach((_, i) => {
-      if (i !== idx) nums[i] = Math.floor(Math.random() * 10) + 1;
+      if (i !== idx) {
+        nums[i] = numPool[k++];
+      }
     });
     setNumbers(nums);
     setStep('scenario');

@@ -17,15 +17,28 @@
     "title": "🏆 Impurity Test Results",
     "subtitle": "Ranking by impurity percentage",
     "themeDetails": "Details by theme:",
+    "overallImpurity": "Overall impurity",
+    "crowned": "👑 The most impure",
     "backToHome": "Back to home",
+    "themeFlair": {
+      "sex": "🔥 What a wild bedroom life!",
+      "drugs": "🌿 The walking pharmacy",
+      "morality": "😈 Morality? Never heard of her.",
+      "hygiene": "🧼 Soap and water avoid you"
+    },
     "impurityLevels": {
       "saint": "Saint",
       "pure": "Quite pure",
       "mostlyPure": "Rather wise",
+      "corrupted": "Corrupted",
       "mixed": "Mixed",
       "naughty": "Naughty",
-      "veryImpure": "Very impure",
-      "diabolical": "Diabolical"
+      "sinner": "Notorious sinner",
+      "veryImpure": "Damned soul",
+      "demon": "Devil's minion",
+      "diabolical": "Diabolical",
+      "hellspawn": "Antichrist",
+      "beyondEvil": "Satan"
     }
   },
   "themes": {

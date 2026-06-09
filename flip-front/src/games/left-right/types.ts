@@ -1,4 +1,4 @@
-export type PoliticalOrientation = 'left' | 'right';
+export type PoliticalOrientation = 'left' | 'right' | 'center';
 
 export type PoliticalQuestion = {
   id: string;
@@ -33,6 +33,7 @@ export type PoliticalResults = {
     player: PoliticalPlayer;
     leftPercentage: number;
     rightPercentage: number;
+    centerCount: number;
     dominantOrientation: PoliticalOrientation;
     rank: number;
   }>;

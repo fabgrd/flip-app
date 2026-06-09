@@ -75,10 +75,11 @@ export const useLeftRight = (initialPlayers: Player[], maxQuestions?: number) =>
             };
 
             const updatedAnswers = [...player.answers, newAnswer];
-            const points = currentQuestion.points[answer];
+            const leftPoints = answer === 'left' ? currentQuestion.points.left : 0;
+            const rightPoints = answer === 'right' ? currentQuestion.points.right : 0;
 
-            const newLeftScore = player.leftScore + (answer === 'left' ? points : 0);
-            const newRightScore = player.rightScore + (answer === 'right' ? points : 0);
+            const newLeftScore = player.leftScore + leftPoints;
+            const newRightScore = player.rightScore + rightPoints;
 
             return {
               ...player,
@@ -117,18 +118,24 @@ export const useLeftRight = (initialPlayers: Player[], maxQuestions?: number) =>
     const playersWithResults = gameState.players
       .map((player) => {
         const totalScore = player.leftScore + player.rightScore;
+        const centerCount = player.answers.filter((a) => a.answer === 'center').length;
 
         const leftPercentage =
           totalScore > 0 ? Math.round((player.leftScore / totalScore) * 100) : 50;
         const rightPercentage = 100 - leftPercentage;
 
         const dominantOrientation: PoliticalOrientation =
-          player.leftScore > player.rightScore ? 'left' : 'right';
+          player.leftScore === 0 && player.rightScore === 0
+            ? 'center'
+            : player.leftScore > player.rightScore
+              ? 'left'
+              : 'right';
 
         return {
           player,
           leftPercentage,
           rightPercentage,
+          centerCount,
           dominantOrientation,
           rank: 0,
         };

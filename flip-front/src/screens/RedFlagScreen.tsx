@@ -10,6 +10,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import {
   ChunkyButton,
+  ConfettiBurst,
   DotBackground,
   DrinkModeToggle,
   GameCard,
@@ -624,59 +625,105 @@ function RFResult({
   const { t } = useTranslation();
   const verdicts = (t('redFlag:ui.verdicts', { returnObjects: true }) as { pctMax: number; title: string; quote: string }[])
     .map((v, i) => ({ ...v, color: RF_VERDICT_COLORS[i] as string }));
+  const getRankEmoji = (rank: number) => ['👑', '🥈', '🥉'][rank - 1] ?? '🚩';
   const results = players
     .map((p) => {
       const scores = playerScores[p.id] ?? {};
       const total = Object.values(scores).reduce((s, v) => s + v, 0);
       const pct = rfMax > 0 ? Math.round((total / rfMax) * 100) : 0;
       const verdict = getVerdict(pct, verdicts);
-      return { player: p, scores, pct, verdict };
+      const catEntries = RF_CATEGORIES.map((catId) => {
+        const max = catMax[catId] ?? 0;
+        const catPct = max > 0 ? Math.round(((scores[catId] ?? 0) / max) * 100) : 0;
+        return { catId, max, catPct };
+      });
+      const topCategory = catEntries
+        .filter((c) => c.max > 0 && c.catPct > 0)
+        .sort((a, b) => b.catPct - a.catPct)[0];
+      return { player: p, scores, pct, verdict, catEntries, topCategory };
     })
-    .sort((a, b) => b.pct - a.pct);
+    .sort((a, b) => b.pct - a.pct)
+    .map((r, i) => ({ ...r, rank: i + 1 }));
 
   return (
     <SafeAreaView style={res.screen}>
       <DotBackground color={T.paper} opacity={0.07} />
+      <ConfettiBurst visible />
       <ScrollView contentContainerStyle={res.scroll} showsVerticalScrollIndicator={false}>
+        <View style={res.heroBadge}>
+          <Text style={res.heroBadgeText}>🚩 VERDICT FINAL</Text>
+        </View>
         <Text style={res.title}>{t('redFlag:ui.results.title')}</Text>
+        <Text style={res.subtitle}>{t('redFlag:ui.results.subtitle')}</Text>
 
-        {results.map(({ player, scores, pct, verdict }) => (
-          <GameCard
-            key={player.id}
-            style={[res.playerCard, { borderLeftColor: verdict.color, borderLeftWidth: 6 }]}
-          >
-            <View style={res.playerHeader}>
-              <Text style={res.playerName}>{player.name}</Text>
-              <View style={[res.scoreBadge, { backgroundColor: verdict.color }]}>
-                <Text style={res.scorePct}>{pct}%</Text>
+        {results.map(({ player, pct, verdict, catEntries, topCategory, rank }) => {
+          const isWinner = rank === 1;
+          const topCat = topCategory ? getCatById(topCategory.catId, cats) : null;
+          return (
+            <GameCard
+              key={player.id}
+              style={[
+                res.playerCard,
+                { borderLeftColor: verdict.color, borderLeftWidth: 6 },
+                isWinner && res.winnerCard,
+              ]}
+            >
+              {isWinner && (
+                <View style={res.crownRibbon}>
+                  <Text style={res.crownRibbonText}>{t('redFlag:ui.results.crowned')}</Text>
+                </View>
+              )}
+              <View style={res.playerHeader}>
+                <Text style={res.rankEmoji}>{getRankEmoji(rank)}</Text>
+                <Text style={res.playerName} numberOfLines={1}>{player.name}</Text>
+                <View style={[res.scoreBadge, { backgroundColor: verdict.color }]}>
+                  <Text style={res.scorePct} numberOfLines={1}>{pct}%</Text>
+                </View>
               </View>
-            </View>
-            <Text style={res.verdictTitle}>{verdict.title}</Text>
-            <Text style={res.verdictQuote}>"{verdict.quote}"</Text>
-            <View style={res.bars}>
-              {RF_CATEGORIES.map((catId) => {
-                const cat = getCatById(catId, cats);
-                const max = catMax[catId] ?? 0;
-                const catPct = max > 0 ? Math.round(((scores[catId] ?? 0) / max) * 100) : 0;
-                if (max === 0) return null;
-                return (
-                  <View key={catId} style={res.catRow}>
-                    <Text style={res.catName}>{cat.name}</Text>
-                    <View style={res.barTrack}>
-                      <View
-                        style={[
-                          res.barFill,
-                          { width: `${catPct}%` as `${number}%`, backgroundColor: cat.color },
-                        ]}
-                      />
+              <Text style={[res.verdictTitle, { color: verdict.color }]}>{verdict.title}</Text>
+              <Text style={res.verdictQuote}>"{verdict.quote}"</Text>
+
+              {topCat && topCategory && topCategory.catPct > 0 && (
+                <View style={[res.specialtyChip, { backgroundColor: topCat.color }]}>
+                  <Text style={res.specialtyLabel}>
+                    {t('redFlag:ui.results.specialty')}
+                  </Text>
+                  <Text style={res.specialtyValue}>{topCat.name.toUpperCase()}</Text>
+                </View>
+              )}
+
+              <View style={res.barsDivider} />
+              <Text style={res.barsLabel}>{t('redFlag:ui.results.breakdown')}</Text>
+              <View style={res.bars}>
+                {catEntries.map(({ catId, max, catPct }) => {
+                  if (max === 0) return null;
+                  const cat = getCatById(catId, cats);
+                  const flair =
+                    catPct >= 80 ? t(`redFlag:ui.results.categoryFlair.${catId}`, '') : '';
+                  return (
+                    <View key={catId} style={res.catBlock}>
+                      <View style={res.catRow}>
+                        <Text style={res.catName} numberOfLines={1}>{cat.name}</Text>
+                        <View style={res.barTrack}>
+                          <View
+                            style={[
+                              res.barFill,
+                              { width: `${catPct}%` as `${number}%`, backgroundColor: cat.color },
+                            ]}
+                          />
+                        </View>
+                        <Text style={res.catPct} numberOfLines={1}>{catPct}%</Text>
+                      </View>
+                      {flair ? (
+                        <Text style={[res.catFlair, { color: cat.color }]}>{flair}</Text>
+                      ) : null}
                     </View>
-                    <Text style={res.catPct}>{catPct}%</Text>
-                  </View>
-                );
-              })}
-            </View>
-          </GameCard>
-        ))}
+                  );
+                })}
+              </View>
+            </GameCard>
+          );
+        })}
 
         <View style={res.btnRow}>
           <ChunkyButton color={T.paper} onPress={onReplay} style={{ flex: 1 }}>
@@ -694,10 +741,62 @@ function RFResult({
 const res = StyleSheet.create({
   screen: { flex: 1, backgroundColor: REDFLAG_BG },
   scroll: { paddingHorizontal: 20, paddingBottom: 40, paddingTop: 16, gap: 14 },
-  title: { color: '#fff', fontSize: 32, fontWeight: '900', letterSpacing: -1, marginBottom: 4 },
-  playerCard: { gap: 8, overflow: 'hidden' },
-  playerHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  playerName: { color: T.ink, fontSize: 20, fontWeight: '900', letterSpacing: -0.6 },
+  heroBadge: {
+    alignSelf: 'flex-start',
+    backgroundColor: T.paper,
+    borderWidth: 2,
+    borderColor: T.ink,
+    borderRadius: 999,
+    paddingHorizontal: 14,
+    paddingVertical: 6,
+    shadowColor: T.ink,
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 3,
+    transform: [{ rotate: '-2deg' }],
+  },
+  heroBadgeText: {
+    color: T.ink,
+    fontSize: 12,
+    fontWeight: '900',
+    letterSpacing: 1,
+  },
+  title: { color: '#fff', fontSize: 36, fontWeight: '900', letterSpacing: -1.2, marginTop: 6 },
+  subtitle: {
+    color: 'rgba(255,255,255,0.85)',
+    fontSize: 14,
+    fontWeight: '700',
+    letterSpacing: -0.2,
+    marginBottom: 6,
+  },
+  playerCard: { gap: 8, overflow: 'hidden', position: 'relative' },
+  winnerCard: {
+    borderWidth: 3,
+    borderColor: T.ink,
+    shadowColor: T.ink,
+    shadowOffset: { width: 6, height: 6 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 6,
+  },
+  crownRibbon: {
+    position: 'absolute',
+    top: 10,
+    right: -8,
+    backgroundColor: T.lemon,
+    borderWidth: 1.5,
+    borderColor: T.ink,
+    borderRadius: T.rSm,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    transform: [{ rotate: '8deg' }],
+    zIndex: 2,
+  },
+  crownRibbonText: { color: T.ink, fontSize: 10, fontWeight: '900', letterSpacing: 0.4 },
+  playerHeader: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+  rankEmoji: { fontSize: 28, width: 36, textAlign: 'center' },
+  playerName: { flex: 1, color: T.ink, fontSize: 20, fontWeight: '900', letterSpacing: -0.6 },
   scoreBadge: {
     borderRadius: 999,
     borderWidth: 1.5,
@@ -711,9 +810,39 @@ const res = StyleSheet.create({
     elevation: 2,
   },
   scorePct: { color: '#fff', fontSize: 15, fontWeight: '900' },
-  verdictTitle: { color: T.ink, fontSize: 16, fontWeight: '900', letterSpacing: -0.4 },
+  verdictTitle: { fontSize: 17, fontWeight: '900', letterSpacing: -0.5, marginTop: 2 },
   verdictQuote: { color: T.inkSoft, fontSize: 13, fontStyle: 'italic', lineHeight: 18 },
-  bars: { gap: 6, marginTop: 4 },
+  specialtyChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'flex-start',
+    gap: 6,
+    borderRadius: 999,
+    borderWidth: 1.5,
+    borderColor: T.ink,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    marginTop: 6,
+  },
+  specialtyLabel: {
+    color: 'rgba(255,255,255,0.85)',
+    fontSize: 10,
+    fontWeight: '800',
+    letterSpacing: 0.5,
+    textTransform: 'uppercase',
+  },
+  specialtyValue: { color: '#fff', fontSize: 12, fontWeight: '900', letterSpacing: 0.5 },
+  barsDivider: { height: 1, backgroundColor: `${T.muted}25`, marginTop: 10 },
+  barsLabel: {
+    color: T.muted,
+    fontSize: 10,
+    fontWeight: '800',
+    letterSpacing: 1.5,
+    textTransform: 'uppercase',
+    marginTop: 2,
+  },
+  bars: { gap: 8, marginTop: 2 },
+  catBlock: { gap: 3 },
   catRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   catName: { width: 86, fontSize: 11, fontWeight: '800', color: T.inkSoft },
   barTrack: {
@@ -726,7 +855,14 @@ const res = StyleSheet.create({
     borderColor: `${T.ink}15`,
   },
   barFill: { height: '100%', borderRadius: 4, minWidth: 3 },
-  catPct: { width: 32, textAlign: 'right', fontSize: 11, fontWeight: '800', color: T.ink },
+  catPct: { minWidth: 38, textAlign: 'right', fontSize: 11, fontWeight: '800', color: T.ink },
+  catFlair: {
+    marginLeft: 94,
+    fontSize: 11,
+    fontWeight: '800',
+    fontStyle: 'italic',
+    letterSpacing: -0.1,
+  },
   btnRow: { flexDirection: 'row', gap: 12 },
 });
 

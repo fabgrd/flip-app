@@ -668,8 +668,19 @@
     ],
     "results": {
       "title": "🚩 Résultats",
+      "subtitle": "Qui a le plus de red flags ?",
+      "crowned": "👑 Red Flag suprême",
+      "specialty": "Spécialité",
+      "breakdown": "Détail des red flags",
       "replay": "Rejouer",
-      "back": "Retour"
+      "back": "Retour",
+      "categoryFlair": {
+        "stalker": "👁️ Sherlock niveau toxique.",
+        "manipulateur": "🎭 Manipulateur·trice de génie.",
+        "narcisse": "🪞 Le miroir est ton meilleur pote.",
+        "drama": "🎬 Ta vie est une telenovela.",
+        "collant": "🧷 Lâche-le/la deux minutes !"
+      }
     }
   }
 }

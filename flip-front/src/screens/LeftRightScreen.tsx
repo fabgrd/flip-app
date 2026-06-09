@@ -99,7 +99,7 @@ export function LeftRightScreen() {
     totalQuestions,
   } = useLeftRight(players, totalRounds);
 
-  const handleSwipe = (playerId: string, direction: 'left' | 'right') => {
+  const handleSwipe = (playerId: string, direction: 'left' | 'right' | 'center') => {
     submitAnswer(playerId, direction);
   };
 
@@ -134,20 +134,32 @@ export function LeftRightScreen() {
     if (!revealQuestionId) return null;
     const leftPlayers: Player[] = [];
     const rightPlayers: Player[] = [];
+    const centerPlayers: Player[] = [];
     gameState.players.forEach((p) => {
       const a = p.answers.find((x) => x.questionId === revealQuestionId);
       if (a?.answer === 'left') leftPlayers.push(p);
       else if (a?.answer === 'right') rightPlayers.push(p);
+      else if (a?.answer === 'center') centerPlayers.push(p);
     });
-    const isTie = leftPlayers.length === rightPlayers.length;
-    const minoritySide: 'left' | 'right' | null = isTie
-      ? null
-      : leftPlayers.length < rightPlayers.length
-        ? 'left'
-        : 'right';
+    const sides: Array<{ key: 'left' | 'right' | 'center'; count: number }> = [
+      { key: 'left', count: leftPlayers.length },
+      { key: 'right', count: rightPlayers.length },
+      { key: 'center', count: centerPlayers.length },
+    ].filter((s) => s.count > 0) as Array<{ key: 'left' | 'right' | 'center'; count: number }>;
+    const minCount = sides.length > 0 ? Math.min(...sides.map((s) => s.count)) : 0;
+    const minorityKeys = sides.filter((s) => s.count === minCount).map((s) => s.key);
+    const isTie = minorityKeys.length === sides.length;
+    const minoritySide: 'left' | 'right' | 'center' | null =
+      isTie || minorityKeys.length !== 1 ? null : minorityKeys[0];
     const drinkers =
-      minoritySide === 'left' ? leftPlayers : minoritySide === 'right' ? rightPlayers : [];
-    return { leftPlayers, rightPlayers, minoritySide, drinkers, isTie };
+      minoritySide === 'left'
+        ? leftPlayers
+        : minoritySide === 'right'
+          ? rightPlayers
+          : minoritySide === 'center'
+            ? centerPlayers
+            : [];
+    return { leftPlayers, rightPlayers, centerPlayers, minoritySide, drinkers, isTie };
   }, [revealQuestionId, gameState.players]);
 
   const closeReveal = () => {
@@ -227,6 +239,15 @@ export function LeftRightScreen() {
         <View
           style={[
             styles.indicator,
+            { backgroundColor: POLITICAL_COLORS.center, borderColor: T.ink },
+          ]}
+        >
+          <Text style={styles.indicatorEmoji}>⚖️</Text>
+          <Text style={styles.indicatorLabel}>{t('leftRight:game.centerChoice')}</Text>
+        </View>
+        <View
+          style={[
+            styles.indicator,
             { backgroundColor: POLITICAL_COLORS.right, borderColor: T.ink },
           ]}
         >
@@ -251,6 +272,7 @@ export function LeftRightScreen() {
         <Text style={styles.hintText}>
           {t('leftRight:game.swipeLeft')} ← | → {t('leftRight:game.swipeRight')}
         </Text>
+        <Text style={styles.hintText}>↓ {t('leftRight:game.swipeDown')}</Text>
       </View>
 
       {revealData && (
@@ -269,6 +291,19 @@ export function LeftRightScreen() {
                 <Text style={styles.revealSideCount}>{revealData.leftPlayers.length}</Text>
                 <Text style={styles.revealSideNames} numberOfLines={3}>
                   {revealData.leftPlayers.map((p) => p.name).join(', ') || '—'}
+                </Text>
+              </View>
+              <View
+                style={[
+                  styles.revealSide,
+                  { backgroundColor: POLITICAL_COLORS.center, borderColor: T.ink },
+                  revealData.minoritySide === 'center' && styles.revealSideMinority,
+                ]}
+              >
+                <Text style={styles.revealSideLabel}>{t('leftRight:ui.reveal.center')}</Text>
+                <Text style={styles.revealSideCount}>{revealData.centerPlayers.length}</Text>
+                <Text style={styles.revealSideNames} numberOfLines={3}>
+                  {revealData.centerPlayers.map((p) => p.name).join(', ') || '—'}
                 </Text>
               </View>
               <View

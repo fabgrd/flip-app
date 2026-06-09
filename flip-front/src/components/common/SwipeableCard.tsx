@@ -28,6 +28,7 @@ export interface SwipeDirection {
   overlayColor: string;
   emoji: string;
   label: string;
+  hideOverlay?: boolean;
 }
 
 export interface SwipeableCardProps {
@@ -147,7 +148,7 @@ export function SwipeableCard({
           <View style={styles.cardInner}>
             <Avatar name={player.name} color={player.color} size={88} />
             <Text style={styles.playerName}>{player.name}</Text>
-            {downDirection && (
+            {downDirection && !downDirection.hideOverlay && (
               <Animated.View
                 pointerEvents="none"
                 style={[

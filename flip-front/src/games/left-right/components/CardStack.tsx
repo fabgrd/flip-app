@@ -11,7 +11,7 @@ interface CardStackProps {
 
 export function CardStack({ players, onSwipe, onComplete }: CardStackProps) {
   return (
-    <SwipeableCardStack
+    <SwipeableCardStack<PoliticalPlayer, PoliticalOrientation>
       items={players}
       heightRatio={0.6}
       onSwipe={(player, direction) => onSwipe(player.id, direction)}

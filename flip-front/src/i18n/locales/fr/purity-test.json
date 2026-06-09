@@ -17,15 +17,27 @@
     "title": "🏆 Résultats du tests",
     "subtitle": "Classement par pourcentage d'impureté",
     "themeDetails": "Détail par thème :",
+    "overallImpurity": "Impureté globale",
+    "crowned": "👑 Le·la plus impur·e",
     "backToHome": "Retour à l'accueil",
+    "themeFlair": {
+      "sex": "🔥 Une vie de chambre... très active !",
+      "drugs": "🌿 La pharmacie ambulante",
+      "morality": "😈 La morale ? Connais pas.",
+      "hygiene": "🧼 L'eau et le savon t'évitent"
+    },
     "impurityLevels": {
       "saint": "Ange",
       "pure": "Détérioré",
       "mostlyPure": "Décadent",
+      "corrupted": "Corrompu",
       "mixed": "Déviant",
       "naughty": "Dégénéré",
+      "sinner": "Pécheur notoire",
       "veryImpure": "Âme damnée",
+      "demon": "Suppôt du diable",
       "diabolical": "Diabolique",
+      "hellspawn": "Antéchrist",
       "beyondEvil": "Satan"
     }
   },

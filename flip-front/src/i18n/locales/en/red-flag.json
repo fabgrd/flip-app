@@ -668,8 +668,19 @@
     ],
     "results": {
       "title": "🚩 Results",
+      "subtitle": "Who flies the most red flags?",
+      "crowned": "👑 Supreme Red Flag",
+      "specialty": "Specialty",
+      "breakdown": "Red flag breakdown",
       "replay": "Play again",
-      "back": "Back"
+      "back": "Back",
+      "categoryFlair": {
+        "stalker": "👁️ Sherlock at a toxic level.",
+        "manipulateur": "🎭 Manipulation genius.",
+        "narcisse": "🪞 The mirror is your best friend.",
+        "drama": "🎬 Your life is a telenovela.",
+        "collant": "🧷 Let them breathe for two minutes!"
+      }
     }
   }
 }
