@@ -4,7 +4,6 @@ import {
   LocalRemoteConfigAdapter,
   MockSubscriptionAdapter,
   NoopOverridesAdapter,
-  PremiumCodeAdapter,
   RevenueCatAdapter,
 } from './adapters';
 import { LocalOverridesAdapter, RemoteConfigAdapter, SubscriptionAdapter } from './adapters/types';
@@ -16,16 +15,15 @@ export interface EntitlementsAdapters {
 }
 
 let cached: EntitlementsAdapters | null = null;
-let premiumCodeAdapterRef: PremiumCodeAdapter | null = null;
 
 export function getDefaultAdapters(): EntitlementsAdapters {
   if (!cached) {
-    const premiumCode = new PremiumCodeAdapter();
-    premiumCodeAdapterRef = premiumCode;
+    // Premium is granted exclusively via In-App Purchase (RevenueCat).
+    // Free access for testers is handled through App Store Offer Codes,
+    // redeemed via Apple's native sheet — no out-of-IAP unlock path (guideline 3.1.1).
     cached = {
       subscription: new CompositeSubscriptionAdapter([
         new MockSubscriptionAdapter('free'),
-        premiumCode,
         new RevenueCatAdapter(),
       ]),
       remoteConfig: new LocalRemoteConfigAdapter(),
@@ -33,9 +31,4 @@ export function getDefaultAdapters(): EntitlementsAdapters {
     };
   }
   return cached;
-}
-
-export function getPremiumCodeAdapter(): PremiumCodeAdapter {
-  if (!premiumCodeAdapterRef) getDefaultAdapters();
-  return premiumCodeAdapterRef as PremiumCodeAdapter;
 }

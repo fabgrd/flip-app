@@ -22,7 +22,6 @@ export { RulesStepsCard } from './RulesStepsCard';
 export type { RulesStepItem } from './RulesStepsCard';
 export { InitialAvatar } from './InitialAvatar';
 export { PaywallModal } from './PaywallModal';
-export { RedeemCodeModal } from './RedeemCodeModal';
 export { RoundsStepper } from './RoundsStepper';
 export { PlayerInput } from './PlayerInput';
 export { PlayerPickerGrid } from './PlayerPickerGrid';

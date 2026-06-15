@@ -16,8 +16,9 @@ import Animated, {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Circle, Path, Rect } from 'react-native-svg';
 import { T } from '../../constants/flipTokens';
-import { getPremiumCodeAdapter, useEntitlements } from '../../entitlements';
+import { useEntitlements } from '../../entitlements';
 import {
+  presentCodeRedemptionSheet,
   purchasePlan,
   restorePurchasesRC,
   type RcPlanId,
@@ -32,7 +33,6 @@ import {
   PaywallThemesIcon,
 } from '../icons';
 import { DotBackground } from './DotBackground';
-import { RedeemCodeModal } from './RedeemCodeModal';
 
 const BENEFIT_ICONS: Record<string, React.ReactNode> = {
   games: <PaywallGamesIcon size={28} />,
@@ -167,11 +167,19 @@ export function PaywallModal({ visible, onClose }: PaywallModalProps) {
   const handleRestore = async () => {
     try {
       await restorePurchasesRC();
-      await getPremiumCodeAdapter().refresh();
       await refresh();
     } catch {
       /* noop */
     }
+  };
+
+  const handleRedeem = () => {
+    // Opens Apple's native Offer Code redemption sheet (App Store handles it).
+    // RevenueCat fires a customer-info update on success; we also refresh here.
+    presentCodeRedemptionSheet();
+    setTimeout(() => {
+      refresh().catch(() => {});
+    }, 1500);
   };
 
   const handlePurchase = async () => {
@@ -193,7 +201,6 @@ export function PaywallModal({ visible, onClose }: PaywallModalProps) {
   };
 
   const [selectedPlan, setSelectedPlan] = useState<PaywallPlanId>(content.recommendedPlan);
-  const [redeemVisible, setRedeemVisible] = useState(false);
 
   const planLabel = (id: PaywallPlanId) => t(`paywall:plans.${id}`);
 
@@ -313,7 +320,7 @@ export function PaywallModal({ visible, onClose }: PaywallModalProps) {
           <Text style={styles.ctaSubtext}>{ctaSubtext}</Text>
 
           <TouchableOpacity
-            onPress={() => setRedeemVisible(true)}
+            onPress={handleRedeem}
             style={styles.redeemBtn}
             activeOpacity={0.7}
           >
@@ -338,12 +345,6 @@ export function PaywallModal({ visible, onClose }: PaywallModalProps) {
             </View>
           </View>
         </Animated.View>
-
-        <RedeemCodeModal
-          visible={redeemVisible}
-          onClose={() => setRedeemVisible(false)}
-          onSuccess={onClose}
-        />
       </Animated.View>
     </Modal>
   );

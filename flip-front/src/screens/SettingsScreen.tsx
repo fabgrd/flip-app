@@ -2,11 +2,11 @@ import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { BeerMugIcon, ChunkyButton, CrownIcon, DotBackground, SuggestButton, ToggleSwitch } from '../components';
 import { T } from '../constants/flipTokens';
-import { getPremiumCodeAdapter, useEntitlements } from '../entitlements';
+import { useEntitlements } from '../entitlements';
 import { useDrinksMode } from '../hooks';
 import { usePaywall } from '../paywall';
 
@@ -20,25 +20,7 @@ export function SettingsScreen() {
   const { t, i18n } = useTranslation();
   const drinks = useDrinksMode();
   const { open: openPaywall } = usePaywall();
-  const { tier, refresh } = useEntitlements();
-
-  const handleRemoveCode = () => {
-    Alert.alert(
-      t('settings:premium.removeCodeConfirmTitle'),
-      t('settings:premium.removeCodeConfirmMessage'),
-      [
-        { text: t('settings:premium.cancel'), style: 'cancel' },
-        {
-          text: t('settings:premium.removeCodeConfirm'),
-          style: 'destructive',
-          onPress: async () => {
-            await getPremiumCodeAdapter().clearCode();
-            await refresh();
-          },
-        },
-      ],
-    );
-  };
+  const { tier } = useEntitlements();
 
   const handleLanguageChange = async (languageCode: string) => {
     await i18n.changeLanguage(languageCode);
@@ -124,10 +106,6 @@ export function SettingsScreen() {
                 <Text style={styles.toggleLabel}>{t('settings:premium.activeLabel')}</Text>
                 <Text style={styles.toggleDescription}>{t('settings:premium.activeHint')}</Text>
               </View>
-              <TouchableOpacity onPress={handleRemoveCode} style={styles.removeBtn} activeOpacity={0.7}>
-                <Feather name="x" size={16} color={T.ink} />
-                <Text style={styles.removeBtnText}>{t('settings:premium.removeCode')}</Text>
-              </TouchableOpacity>
             </View>
           ) : (
             <TouchableOpacity
@@ -308,17 +286,6 @@ const styles = StyleSheet.create({
     shadowRadius: 0,
     elevation: 3,
   },
-  removeBtn: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-    backgroundColor: 'rgba(0,0,0,0.08)',
-    borderRadius: 999,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-  },
-  removeBtnText: { color: T.ink, fontSize: 12, fontWeight: '800' },
-
   languageRow: {
     flexDirection: 'row',
     alignItems: 'center',

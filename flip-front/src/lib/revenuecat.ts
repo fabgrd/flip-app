@@ -63,6 +63,17 @@ export async function restorePurchasesRC(): Promise<CustomerInfo | null> {
   return Purchases.restorePurchases();
 }
 
+/**
+ * Opens Apple's native In-App Purchase code redemption sheet (Offer Codes).
+ * iOS only — the App Store handles the redemption, so this is the
+ * App Store Review-compliant way to grant free/discounted access (guideline 3.1.1).
+ * No-op on Android / when RevenueCat isn't ready.
+ */
+export function presentCodeRedemptionSheet(): void {
+  if (!initialized || Platform.OS !== 'ios') return;
+  Purchases.presentCodeRedemptionSheet();
+}
+
 export function hasActivePremium(info: CustomerInfo): boolean {
   return info.entitlements.active[RC_ENTITLEMENT_ID] !== undefined;
 }

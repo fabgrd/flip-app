@@ -37,11 +37,6 @@
   "premium": {
     "title": "Subscription",
     "activeLabel": "Fl!p VIP active",
-    "activeHint": "All features unlocked",
-    "removeCode": "Remove my code",
-    "removeCodeConfirmTitle": "Remove code?",
-    "removeCodeConfirmMessage": "You will lose Premium access on this device.",
-    "removeCodeConfirm": "Remove",
-    "cancel": "Cancel"
+    "activeHint": "All features unlocked"
   }
 }
