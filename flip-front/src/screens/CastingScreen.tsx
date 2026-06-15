@@ -2,7 +2,7 @@
 // Flow: rules → pick-devin → scenario → handoff+reveal (each actor) → perform → guess → results
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import * as Haptics from 'expo-haptics';
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Animated, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -33,24 +33,15 @@ import {
   CASTING_THEME_OPTIONS,
   getScenariosForThemes,
   getScenariosForThemesI18n,
+  useCasting,
   useCastingThemeAccess,
 } from '../games/casting';
-import { CastingResult } from '../games/casting/types';
+import { CastingResult, CastingStep } from '../games/casting/types';
 import { useDrinksMode } from '../hooks';
 import { Player, RootStackParamList } from '../types';
 import { drinkColumnLabel, drinkSoberLabel, drinkUnit, drinkUnitLower } from '../utils/drinks';
 
 type CastingScreenRouteProp = RouteProp<RootStackParamList, 'Casting'>;
-
-type CastingStep =
-  | 'rules'
-  | 'pick-devin'
-  | 'scenario'
-  | 'handoff'
-  | 'reveal-number'
-  | 'perform'
-  | 'guess'
-  | 'results';
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -1175,60 +1166,38 @@ function CastingGame({
   onSettings: () => void;
 }) {
   const { t } = useTranslation();
-  const [players, setPlayers] = useState<Player[]>(initialPlayers);
-  const [step, setStep] = useState<CastingStep>('rules');
-  const [devinIdx, setDevinIdx] = useState<number | null>(null);
-  const [scenario, setScenario] = useState('');
-  const [numbers, setNumbers] = useState<Record<number, number>>({});
-  const [curPos, setCurPos] = useState(0);
-  const [guessPos, setGuessPos] = useState(0);
-  const [guesses, setGuesses] = useState<Record<number, number>>({});
-  const [selectedThemes, setSelectedThemes] = useState<CastingTheme[]>(['daily']);
-  const [totalRounds, setTotalRounds] = useState<number>(1);
   const { filterAllowed } = useCastingThemeAccess();
+  const {
+    players,
+    setPlayers,
+    step,
+    setStep,
+    devinIdx,
+    scenario,
+    numbers,
+    curPos,
+    guessPos,
+    guesses,
+    selectedThemes,
+    totalRounds,
+    setTotalRounds,
+    toggleTheme,
+    actors,
+    actorIndices,
+    pickDevin: pickDevinAction,
+    startActors,
+    advanceReveal,
+    startGuesses,
+    submitGuess,
+  } = useCasting(initialPlayers);
 
-  const toggleTheme = (theme: CastingTheme) => {
-    setSelectedThemes((prev) => {
-      const isOn = prev.includes(theme);
-      const next = isOn ? prev.filter((t) => t !== theme) : [...prev, theme];
-      return next.length === 0 ? ['daily'] : next;
-    });
-  };
-
-  const { actors, actorIndices } = useMemo(() => {
-    if (devinIdx === null) return { actors: [] as Player[], actorIndices: [] as number[] };
-    const a: Player[] = [];
-    const ai: number[] = [];
-    players.forEach((p, i) => {
-      if (i !== devinIdx) {
-        a.push(p);
-        ai.push(i);
-      }
-    });
-    return { actors: a, actorIndices: ai };
-  }, [devinIdx, players]);
-
-  const pickDevin = (idx: number) => {
-    setDevinIdx(idx);
+  const onPickDevin = (idx: number) => {
     const safeThemes = filterAllowed(selectedThemes);
     const activeThemes = safeThemes.length > 0 ? safeThemes : ['daily' as CastingTheme];
     const scenariosData = t('casting:scenarios', { returnObjects: true }) as Record<CastingTheme, string[]>;
     const pool = getScenariosForThemesI18n(activeThemes, scenariosData);
-    setScenario(pickRandom(pool.length > 0 ? pool : getScenariosForThemes(activeThemes)));
-    const nums: Record<number, number> = {};
-    const numPool = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    for (let i = numPool.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [numPool[i], numPool[j]] = [numPool[j], numPool[i]];
-    }
-    let k = 0;
-    players.forEach((_, i) => {
-      if (i !== idx) {
-        nums[i] = numPool[k++];
-      }
-    });
-    setNumbers(nums);
-    setStep('scenario');
+    const finalPool = pool.length > 0 ? pool : getScenariosForThemes(activeThemes);
+    pickDevinAction(idx, pickRandom(finalPool));
   };
 
   if (step === 'rules') {
@@ -1248,7 +1217,7 @@ function CastingGame({
   }
 
   if (step === 'pick-devin') {
-    return <CAPickDevin players={players} onPick={pickDevin} />;
+    return <CAPickDevin players={players} onPick={onPickDevin} />;
   }
 
   if (step === 'scenario' && devinIdx !== null) {
@@ -1256,10 +1225,7 @@ function CastingGame({
       <CAScenario
         scenario={scenario}
         devin={players[devinIdx]}
-        onNext={() => {
-          setCurPos(0);
-          setStep('handoff');
-        }}
+        onNext={startActors}
         onExit={onExit}
         onSettings={onSettings}
         players={players}
@@ -1291,14 +1257,7 @@ function CastingGame({
         playerIdx={actorIdx}
         number={numbers[actorIdx]}
         scenario={scenario}
-        onNext={() => {
-          if (curPos + 1 < actors.length) {
-            setCurPos(curPos + 1);
-            setStep('handoff');
-          } else {
-            setStep('perform');
-          }
-        }}
+        onNext={advanceReveal}
         onExit={onExit}
         onSettings={onSettings}
         players={players}
@@ -1314,10 +1273,7 @@ function CastingGame({
         devin={players[devinIdx]}
         actors={actors}
         actorIndices={actorIndices}
-        onNext={() => {
-          setGuessPos(0);
-          setStep('guess');
-        }}
+        onNext={startGuesses}
       />
     );
   }
@@ -1339,15 +1295,7 @@ function CastingGame({
         onSettings={onSettings}
         players={players}
         setPlayers={setPlayers}
-        onGuess={(num) => {
-          const ng = { ...guesses, [actorIdx]: num };
-          setGuesses(ng);
-          if (guessPos + 1 < actors.length) {
-            setGuessPos(guessPos + 1);
-          } else {
-            setStep('results');
-          }
-        }}
+        onGuess={(num) => submitGuess(actorIdx, num)}
       />
     );
   }

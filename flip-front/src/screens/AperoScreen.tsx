@@ -33,34 +33,24 @@ import {
 import { AperoIcon } from '../components/icons/AperoIcon';
 import { getPlayerBgColor, getPlayerTextColor } from '../constants';
 import { T } from '../constants/flipTokens';
+import {
+  AP_PTS,
+  AP_SUITS,
+  AP_VALS,
+  type ApCard,
+  type ApVal,
+  type PlayedCard,
+  type RoundPhase,
+  useApero,
+} from '../games/apero';
 import { useDrinksMode } from '../hooks';
 import { Player, RootStackParamList } from '../types';
 import { drinkColumnLabel, drinkSoberLabel, drinkUnit, drinkUnitLower } from '../utils/drinks';
 
 type AperoScreenRouteProp = RouteProp<RootStackParamList, 'Apero'>;
 
-// ─── Card constants ───────────────────────────────────────────────────────────
+// ─── Card helpers ─────────────────────────────────────────────────────────────
 
-const AP_VALS = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'V', 'D', 'R', 'A'] as const;
-type ApVal = (typeof AP_VALS)[number];
-
-const AP_PTS: Record<ApVal, number> = {
-  '2': 2,
-  '3': 3,
-  '4': 4,
-  '5': 5,
-  '6': 6,
-  '7': 7,
-  '8': 8,
-  '9': 9,
-  '10': 10,
-  V: 11,
-  D: 12,
-  R: 13,
-  A: 14,
-};
-
-const AP_SUITS = ['♠', '♥', '♦', '♣'] as const;
 function apName(v: ApVal, t: (key: string) => string): string {
   const labels: Partial<Record<ApVal, string>> = {
     A: t('apero:cards.A'),
@@ -71,29 +61,6 @@ function apName(v: ApVal, t: (key: string) => string): string {
   return labels[v] ?? v;
 }
 const apIsRed = isRedSuit;
-
-// ─── Types ────────────────────────────────────────────────────────────────────
-
-type ApCard = { s: string; v: ApVal; p: number };
-type PlayedCard = ApCard & { found: boolean; flipped: boolean };
-type ApStep = 'rules' | 'pick' | 'play' | 'special' | 'dealer-win' | 'end';
-type RoundPhase = 'g1' | 'hint' | 'g2' | 'result';
-
-// ─── Full 52-card deck ────────────────────────────────────────────────────────
-
-function apDeck(): ApCard[] {
-  const cards: ApCard[] = [];
-  for (const v of AP_VALS) {
-    for (const s of AP_SUITS) {
-      cards.push({ s, v, p: AP_PTS[v] });
-    }
-  }
-  for (let i = cards.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [cards[i], cards[j]] = [cards[j], cards[i]];
-  }
-  return cards;
-}
 
 // ─── Player colors ────────────────────────────────────────────────────────────
 
@@ -1139,79 +1106,34 @@ const playTopBar = {
 function AperoGame({ players: initialPlayers, onExit }: { players: Player[]; onExit: () => void }) {
   const navigation = useNavigation<any>();
   const { t } = useTranslation();
-  const [players, setPlayers] = useState<Player[]>(initialPlayers);
-  const [step, setStep] = useState<ApStep>('rules');
-  const [deck] = useState<ApCard[]>(() => apDeck());
-  const [dealerIdx, setDealerIdx] = useState(0);
-  const [cardPos, setCardPos] = useState(0);
-  const [played, setPlayed] = useState<PlayedCard[]>([]);
-  const [foundTotal, setFoundTotal] = useState(0);
-  const [streak, setStreak] = useState(0);
-  const [rot, setRot] = useState(0);
-  const [sips, setSips] = useState<number[]>(() => initialPlayers.map(() => 0));
-  const [lastQuad, setLastQuad] = useState<ApVal | null>(null);
-
-  const handlePlayersChange = (newPlayers: Player[]) => {
-    setPlayers(newPlayers);
-    setSips((prev) => newPlayers.map((_, i) => prev[i] ?? 0));
-  };
-
-  const guessers = React.useMemo(
-    () => players.map((_, i) => i).filter((i) => i !== dealerIdx),
-    [dealerIdx, players.length],
-  );
-  const curGuesserIdx = guessers.length > 0 ? guessers[rot % guessers.length] : 0;
-
-  const advanceRound = (found: boolean, penalty: number) => {
-    const card = deck[cardPos];
-    const newPlayed: PlayedCard[] = [...played, { ...card, found, flipped: false }];
-    const ns = [...sips];
-    let nStreak = streak;
-    let nFound = foundTotal;
-
-    if (found) {
-      ns[dealerIdx] += 2;
-      nFound++;
-      nStreak = 0;
-    } else {
-      ns[curGuesserIdx] += penalty;
-      nStreak++;
-    }
-
-    const newCardPos = cardPos + 1;
-    const newRot = rot + 1;
-
-    // Quadruplé: all 4 cards of this value are now out — dealer drinks 2 extra
-    const quadCount = newPlayed.filter((c) => c.v === card.v).length;
-    if (quadCount === 4) {
-      ns[dealerIdx] += 2;
-      const withFlipped = newPlayed.map((c) => (c.v === card.v ? { ...c, flipped: true } : c));
-      setSips([...ns]);
-      setPlayed(withFlipped);
-      setFoundTotal(nFound);
-      setStreak(nStreak);
-      setCardPos(newCardPos);
-      setRot(newRot);
-      setLastQuad(card.v);
-      setStep('special');
-      return;
-    }
-
-    setSips(ns);
-    setPlayed(newPlayed);
-    setFoundTotal(nFound);
-    setStreak(nStreak);
-    setCardPos(newCardPos);
-    setRot(newRot);
-
-    if (newCardPos >= deck.length) setStep('end');
-  };
+  const {
+    players,
+    updatePlayers,
+    step,
+    setStep,
+    deck,
+    dealerIdx,
+    cardPos,
+    played,
+    foundTotal,
+    streak,
+    sips,
+    lastQuad,
+    curGuesserIdx,
+    exhaustedVals,
+    pickDealer,
+    advanceRound,
+    afterSpecial,
+    passDealer,
+    requestDealerPass,
+    finishGame,
+  } = useApero(initialPlayers);
 
   if (step === 'rules') {
     return (
       <APRules
         players={players}
-        onPlayersChange={handlePlayersChange}
+        onPlayersChange={updatePlayers}
         onStart={() => setStep('pick')}
         onExit={onExit}
         onSettings={() => navigation.navigate('Settings')}
@@ -1220,30 +1142,14 @@ function AperoGame({ players: initialPlayers, onExit }: { players: Player[]; onE
   }
 
   if (step === 'pick') {
-    return (
-      <APPickDealer
-        players={players}
-        onPick={(i) => {
-          setDealerIdx(i);
-          setStep('play');
-        }}
-      />
-    );
+    return <APPickDealer players={players} onPick={pickDealer} />;
   }
 
   if (step === 'play') {
     if (cardPos >= deck.length) {
-      setStep('end');
+      finishGame();
       return null;
     }
-
-    const exhaustedVals = AP_VALS.filter((v) => {
-      let count = 0;
-      for (const c of played) {
-        if (c.v === v) count++;
-      }
-      return count >= 4;
-    });
 
     const aperoRulesSteps = (t('apero:rules.steps', { returnObjects: true }) as any[]).map((s: any) => ({
       n: s.n,
@@ -1261,7 +1167,7 @@ function AperoGame({ players: initialPlayers, onExit }: { players: Player[]; onE
             onSettings={() => navigation.navigate('Settings')}
             rules={{ title: t('apero:rules.modalTitle'), rules: aperoRulesSteps, accentColor: T.pink }}
             players={players}
-            onPlayersChange={handlePlayersChange}
+            onPlayersChange={updatePlayers}
           />
 
           {/* Persistent meta row — centered cluster under the header */}
@@ -1291,7 +1197,7 @@ function AperoGame({ players: initialPlayers, onExit }: { players: Player[]; onE
             cardNum={cardPos + 1}
             total={deck.length}
             onDone={advanceRound}
-            onRequestPass={() => setStep('dealer-win')}
+            onRequestPass={requestDealerPass}
           />
         </SafeAreaView>
       </View>
@@ -1304,7 +1210,7 @@ function AperoGame({ players: initialPlayers, onExit }: { players: Player[]; onE
         played={played}
         dealer={players[dealerIdx]}
         quadVal={lastQuad}
-        onNext={() => setStep(cardPos >= deck.length ? 'end' : 'play')}
+        onNext={afterSpecial}
       />
     );
   }
@@ -1315,12 +1221,7 @@ function AperoGame({ players: initialPlayers, onExit }: { players: Player[]; onE
         dealer={players[dealerIdx]}
         players={players}
         dealerIdx={dealerIdx}
-        onPass={(i) => {
-          setDealerIdx(i);
-          setStreak(0);
-          setRot(0);
-          setStep(cardPos >= deck.length ? 'end' : 'play');
-        }}
+        onPass={passDealer}
       />
     );
   }

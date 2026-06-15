@@ -30,25 +30,11 @@ import {
 } from '../components';
 import { T } from '../constants/flipTokens';
 import { ContentItem, useGameContent } from '../content';
-import { ParanoiaHistoryEntry, ParanoiaOrder, ParanoiaStep } from '../games/paranoia';
+import { ParanoiaHistoryEntry, useParanoia } from '../games/paranoia';
 import { useDrinksMode } from '../hooks';
 import { Player, RootStackParamList } from '../types';
-import { shuffleArray } from '../utils/array';
 
 type ParanoiaScreenRouteProp = RouteProp<RootStackParamList, 'Paranoia'>;
-
-// ─── Helpers ──────────────────────────────────────────────────────────────────
-
-function buildOrder(players: Player[], questions: readonly ContentItem[]): ParanoiaOrder[] {
-  if (players.length < 2 || questions.length === 0) return [];
-  const idxs = players.map((_, i) => i).sort(() => Math.random() - 0.5);
-  const qs = shuffleArray([...questions]).slice(0, players.length);
-  return idxs.map((qIdx, i) => {
-    const others = players.map((_, j) => j).filter((j) => j !== qIdx);
-    const tIdx = others[Math.floor(Math.random() * others.length)];
-    return { q: qIdx, t: tIdx, question: qs[i].text };
-  });
-}
 
 // ─── Screen: Rules ────────────────────────────────────────────────────────────
 
@@ -909,46 +895,31 @@ export function ParanoiaScreen() {
   const route = useRoute<ParanoiaScreenRouteProp>();
   const navigation = useNavigation();
   const { t } = useTranslation();
-  const [players, setPlayers] = useState<Player[]>(route.params.players as Player[]);
 
   const allQuestions = t('paranoia:questions', { returnObjects: true }) as ContentItem[];
   const questions = useGameContent(allQuestions);
 
-  const [order] = useState<ParanoiaOrder[]>(() => buildOrder(players, questions));
-  const [step, setStep] = useState<ParanoiaStep>('rules');
-  const [round, setRound] = useState(0);
-  const [totalRounds, setTotalRounds] = useState<number>((route.params.players as Player[]).length);
-  const [answer, setAnswer] = useState<number | null>(null);
-  const [coin, setCoin] = useState<'pile' | 'face' | null>(null);
-  const [chosenSide, setChosenSide] = useState<'pile' | 'face' | null>(null);
-  const [history, setHistory] = useState<ParanoiaHistoryEntry[]>([]);
-
-  const cur = order[round];
-  const questioner = players[cur?.q ?? 0];
-  const target = players[cur?.t ?? 0];
-
-  const goToNext = () => {
-    const won = chosenSide === coin;
-    const entry: ParanoiaHistoryEntry = {
-      q: cur.q,
-      t: cur.t,
-      a: answer!,
-      question: cur.question,
-      revealed: !won,
-    };
-    const nextHistory = [...history, entry];
-    setHistory(nextHistory);
-    setAnswer(null);
-    setCoin(null);
-    setChosenSide(null);
-
-    if (round + 1 >= Math.min(totalRounds, order.length)) {
-      setStep('end');
-    } else {
-      setRound((r) => r + 1);
-      setStep('q-handoff');
-    }
-  };
+  const {
+    players,
+    setPlayers,
+    step,
+    setStep,
+    totalRounds,
+    setTotalRounds,
+    answer,
+    setAnswer,
+    coin,
+    setCoin,
+    chosenSide,
+    setChosenSide,
+    history,
+    cur,
+    questioner,
+    target,
+    won,
+    goToNext,
+    restart,
+  } = useParanoia(route.params.players as Player[], questions);
 
   if (step === 'rules') {
     return (
@@ -1041,7 +1012,6 @@ export function ParanoiaScreen() {
   }
 
   if (step === 'reveal') {
-    const won = chosenSide === coin;
     return (
       <PNReveal
         won={won}
@@ -1065,14 +1035,7 @@ export function ParanoiaScreen() {
         history={history}
         players={players}
         onExit={() => (navigation as any).navigate('Home')}
-        onRestart={() => {
-          setStep('rules');
-          setRound(0);
-          setAnswer(null);
-          setCoin(null);
-          setChosenSide(null);
-          setHistory([]);
-        }}
+        onRestart={restart}
       />
     );
   }

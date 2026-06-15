@@ -14,3 +14,4 @@ export { CASTING_THEME_TIER, castingThemeRequiredEntitlement } from './themeTier
 export { useCastingThemeAccess } from './useCastingThemeAccess';
 export type { CastingThemeAccess } from './useCastingThemeAccess';
 export type { CastingResult, CastingStep } from './types';
+export { useCasting } from './hooks/useCasting';
