@@ -4,7 +4,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { BeerMugIcon, ChunkyButton, CrownIcon, DotBackground, SuggestButton, ToggleSwitch } from '../components';
+import { BeerMugIcon, ChunkyButton, CrownIcon, DotBackground, SuggestButton, TikTokRewardButton, ToggleSwitch } from '../components';
 import { T } from '../constants/flipTokens';
 import { useEntitlements } from '../entitlements';
 import { useDrinksMode } from '../hooks';
@@ -96,33 +96,6 @@ export function SettingsScreen() {
           </TouchableOpacity>
         </View>
 
-        {/* Premium */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{t('settings:premium.title')}</Text>
-          {tier === 'premium' ? (
-            <View style={styles.premiumCard}>
-              <CrownIcon size={32} />
-              <View style={styles.toggleTextWrap}>
-                <Text style={styles.toggleLabel}>{t('settings:premium.activeLabel')}</Text>
-                <Text style={styles.toggleDescription}>{t('settings:premium.activeHint')}</Text>
-              </View>
-            </View>
-          ) : (
-            <TouchableOpacity
-              style={styles.premiumCardLocked}
-              onPress={() => openPaywall()}
-              activeOpacity={0.85}
-            >
-              <CrownIcon size={32} />
-              <View style={styles.toggleTextWrap}>
-                <Text style={styles.toggleLabel}>Fl!p VIP</Text>
-                <Text style={styles.toggleDescription}>{t('paywall:default.pitch')}</Text>
-              </View>
-              <Feather name="chevron-right" size={20} color={T.ink} />
-            </TouchableOpacity>
-          )}
-        </View>
-
         {/* Language */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t('settings:language.title')}</Text>
@@ -150,6 +123,43 @@ export function SettingsScreen() {
             })}
           </View>
         </View>
+
+        {/* Premium */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>{t('settings:premium.title')}</Text>
+          {tier === 'premium' ? (
+            <View style={styles.premiumCard}>
+              <CrownIcon size={32} />
+              <View style={styles.toggleTextWrap}>
+                <Text style={styles.toggleLabel}>{t('settings:premium.activeLabel')}</Text>
+                <Text style={styles.toggleDescription}>{t('settings:premium.activeHint')}</Text>
+              </View>
+            </View>
+          ) : (
+            <TouchableOpacity
+              style={styles.premiumCardLocked}
+              onPress={() => openPaywall()}
+              activeOpacity={0.85}
+            >
+              <CrownIcon size={32} />
+              <View style={styles.toggleTextWrap}>
+                <Text style={styles.toggleLabel}>Fl!p VIP</Text>
+                <Text style={styles.toggleDescription}>{t('paywall:default.pitch')}</Text>
+              </View>
+              <Feather name="chevron-right" size={20} color={T.ink} />
+            </TouchableOpacity>
+          )}
+        </View>
+
+        {/* TikTok reward */}
+        {tier !== 'premium' && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>{t('settings:tiktok.title')}</Text>
+            <View style={styles.card}>
+              <TikTokRewardButton />
+            </View>
+          </View>
+        )}
 
         {/* Suggest */}
         <View style={styles.section}>

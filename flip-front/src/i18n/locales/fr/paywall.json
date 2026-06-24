@@ -52,5 +52,9 @@
     "terms": "CGV",
     "privacy": "Confidentialité",
     "redeem": "J'ai un code"
+  },
+  "success": {
+    "title": "Abonnement VIP activé !",
+    "subtitle": "Tu as maintenant accès à tout. Profite bien 🎉"
   }
 }

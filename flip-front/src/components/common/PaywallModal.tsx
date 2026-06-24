@@ -20,7 +20,6 @@ import { useEntitlements } from '../../entitlements';
 import {
   presentCodeRedemptionSheet,
   purchasePlan,
-  restorePurchasesRC,
   type RcPlanId,
 } from '../../lib/revenuecat';
 import { getPaywallContent } from '../../paywall/paywallContent';
@@ -32,6 +31,7 @@ import {
   PaywallQuestionsIcon,
   PaywallThemesIcon,
 } from '../icons';
+import { ConfettiBurst } from './Confetti';
 import { DotBackground } from './DotBackground';
 
 const BENEFIT_ICONS: Record<string, React.ReactNode> = {
@@ -163,22 +163,19 @@ export function PaywallModal({ visible, onClose }: PaywallModalProps) {
   const VITRINE_BASE = 'https://www.flip-flop.app';
 
   const [purchasing, setPurchasing] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
-  const handleRestore = async () => {
-    try {
-      await restorePurchasesRC();
-      await refresh();
-    } catch {
-      /* noop */
-    }
-  };
+  // Reset the success overlay whenever the paywall is dismissed/reopened.
+  useEffect(() => {
+    if (!visible) setShowSuccess(false);
+  }, [visible]);
 
   const handleRedeem = () => {
     // Opens Apple's native Offer Code redemption sheet (App Store handles it).
     // RevenueCat fires a customer-info update on success; we also refresh here.
     presentCodeRedemptionSheet();
     setTimeout(() => {
-      refresh().catch(() => {});
+      refresh().catch(() => { });
     }, 1500);
   };
 
@@ -188,7 +185,9 @@ export function PaywallModal({ visible, onClose }: PaywallModalProps) {
     try {
       await purchasePlan(selectedPlan as RcPlanId);
       await refresh();
-      onClose();
+      // Celebrate, then close the paywall once the confetti has played.
+      setShowSuccess(true);
+      setTimeout(() => onClose(), 2600);
     } catch {
       /* user cancelled or error — silent for now */
     } finally {
@@ -197,7 +196,7 @@ export function PaywallModal({ visible, onClose }: PaywallModalProps) {
   };
 
   const openExternal = (path: string) => {
-    Linking.openURL(`${VITRINE_BASE}/${lang}${path}`).catch(() => {});
+    Linking.openURL(`${VITRINE_BASE}/${lang}${path}`).catch(() => { });
   };
 
   const [selectedPlan, setSelectedPlan] = useState<PaywallPlanId>(content.recommendedPlan);
@@ -296,16 +295,7 @@ export function PaywallModal({ visible, onClose }: PaywallModalProps) {
               onPress={handlePurchase}
               disabled={purchasing}
             >
-              <Svg width={20} height={20} viewBox="0 0 16 16" fill="none">
-                <Rect x="3" y="7" width="10" height="8" rx="2" fill={T.ink} />
-                <Path
-                  d="M5 7V5a3 3 0 0 1 6 0v2"
-                  stroke={T.ink}
-                  strokeWidth="1.8"
-                  fill="none"
-                  strokeLinecap="round"
-                />
-              </Svg>
+
               <Text style={styles.ctaText}>
                 {isTrial ? t('paywall:cta.trial') : t('paywall:cta.start')}
               </Text>
@@ -331,9 +321,6 @@ export function PaywallModal({ visible, onClose }: PaywallModalProps) {
           <View style={styles.footer}>
             <Text style={styles.footerNote}>{t('paywall:footer.secure')}</Text>
             <View style={styles.footerLinks}>
-              <TouchableOpacity onPress={handleRestore}>
-                <Text style={styles.footerLink}>{t('paywall:footer.restore')}</Text>
-              </TouchableOpacity>
               <Text style={styles.footerDot}>·</Text>
               <TouchableOpacity onPress={() => openExternal('/cgu')}>
                 <Text style={styles.footerLink}>{t('paywall:footer.terms')}</Text>
@@ -345,6 +332,19 @@ export function PaywallModal({ visible, onClose }: PaywallModalProps) {
             </View>
           </View>
         </Animated.View>
+
+        {showSuccess && (
+          <Animated.View
+            entering={FadeIn.duration(250)}
+            style={styles.successOverlay}
+            pointerEvents="auto"
+          >
+            <ConfettiBurst visible={showSuccess} count={40} />
+            <CrownIcon size={72} />
+            <Text style={styles.successTitle}>{t('paywall:success.title')}</Text>
+            <Text style={styles.successSub}>{t('paywall:success.subtitle')}</Text>
+          </Animated.View>
+        )}
       </Animated.View>
     </Modal>
   );
@@ -517,6 +517,34 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     letterSpacing: 0.2,
   },
+  successOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: '#1A1613',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 32,
+    zIndex: 10,
+  },
+  successTitle: {
+    fontSize: 26,
+    fontWeight: '900',
+    color: T.lemon,
+    textAlign: 'center',
+    letterSpacing: -0.5,
+    marginTop: 20,
+  },
+  successSub: {
+    fontSize: 15,
+    color: 'rgba(255,255,255,0.6)',
+    textAlign: 'center',
+    marginTop: 10,
+    lineHeight: 21,
+  },
+
   footer: { alignItems: 'center', gap: 4 },
   footerNote: { fontSize: 11, color: 'rgba(255,255,255,0.25)', textAlign: 'center' },
   footerLinks: { flexDirection: 'row', alignItems: 'center', gap: 6 },

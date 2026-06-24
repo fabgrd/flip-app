@@ -52,5 +52,9 @@
     "terms": "Terms",
     "privacy": "Privacy",
     "redeem": "I have a code"
+  },
+  "success": {
+    "title": "VIP subscription activated!",
+    "subtitle": "You now have access to everything. Enjoy 🎉"
   }
 }

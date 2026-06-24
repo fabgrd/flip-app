@@ -38,5 +38,27 @@
     "title": "Abonnement",
     "activeLabel": "Fl!p VIP actif",
     "activeHint": "Toutes les fonctionnalités débloquées"
+  },
+  "tiktok": {
+    "title": "Gagne 1 an de VIP",
+    "label": "Fais un TikTok, gagne 1 an de VIP",
+    "hint": "Poste une vidéo Fl!p qui dépasse 1 000 likes 🎁",
+    "reward": "🎁 1 an de Fl!p VIP offert",
+    "pitch": "Crée un TikTok qui parle de Fl!p. S'il dépasse 1 000 likes, on t'offre un an d'abonnement VIP. C'est aussi simple que ça.",
+    "steps": {
+      "1": "Poste un TikTok original sur Fl!p",
+      "2": "Dépasse {{likes}} likes",
+      "3": "Colle le lien de ta vidéo ici"
+    },
+    "linkLabel": "Lien de ton TikTok",
+    "linkPlaceholder": "https://www.tiktok.com/@toi/video/...",
+    "handleLabel": "Ton @ ou ton email",
+    "handlePlaceholder": "@ton_pseudo ou email pour te contacter",
+    "submit": "Réclamer ma récompense",
+    "successTitle": "Bien reçu !",
+    "successDesc": "On vérifie ta vidéo et on te recontacte pour activer ton année VIP. Merci d'aider Fl!p à grandir 💛",
+    "close": "Fermer",
+    "errorTitle": "Oups",
+    "errorDesc": "Impossible d'envoyer ta demande. Vérifie ta connexion et réessaie."
   }
 }

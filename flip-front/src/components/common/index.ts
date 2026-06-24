@@ -34,5 +34,6 @@ export { SwipeableCard } from './SwipeableCard';
 export { SwipeableCardStack } from './SwipeableCardStack';
 export { ThemeGrid } from './ThemeGrid';
 export type { ThemeGridOption } from './ThemeGrid';
+export { TikTokRewardButton } from './TikTokRewardButton';
 export { ToggleSwitch } from './ToggleSwitch';
 

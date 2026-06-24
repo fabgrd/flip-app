@@ -38,5 +38,27 @@
     "title": "Subscription",
     "activeLabel": "Fl!p VIP active",
     "activeHint": "All features unlocked"
+  },
+  "tiktok": {
+    "title": "Win 1 year of VIP",
+    "label": "Make a TikTok, win 1 year of VIP",
+    "hint": "Post a Fl!p video that passes 1,000 likes 🎁",
+    "reward": "🎁 1 free year of Fl!p VIP",
+    "pitch": "Create a TikTok about Fl!p. If it gets more than 1,000 likes, we'll gift you a year of VIP. It's that simple.",
+    "steps": {
+      "1": "Post an original TikTok about Fl!p",
+      "2": "Get more than {{likes}} likes",
+      "3": "Paste your video link here"
+    },
+    "linkLabel": "Your TikTok link",
+    "linkPlaceholder": "https://www.tiktok.com/@you/video/...",
+    "handleLabel": "Your @ or email",
+    "handlePlaceholder": "@your_handle or email to reach you",
+    "submit": "Claim my reward",
+    "successTitle": "Got it!",
+    "successDesc": "We'll review your video and get back to you to activate your VIP year. Thanks for helping Fl!p grow 💛",
+    "close": "Close",
+    "errorTitle": "Oops",
+    "errorDesc": "Could not send your request. Check your connection and try again."
   }
 }
