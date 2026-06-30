@@ -105,6 +105,10 @@ export function LeftRightScreen() {
 
   const handleAllCardsComplete = () => { };
 
+  // The "minority camp drinks" rule is mathematically impossible below 3 players
+  // (you can only ever get unanimity or a 1/1 tie), so drinks mode is gated here.
+  const drinksActive = drinksEnabled && gameState.players.length >= 3;
+
   useEffect(() => {
     if (isGameFinished) {
       const results = calculateResults();
@@ -114,7 +118,7 @@ export function LeftRightScreen() {
 
   useEffect(() => {
     if (!canProceedToNextQuestion || isGameFinished) return;
-    if (drinksEnabled) {
+    if (drinksActive) {
       if (currentQuestion && revealQuestionId !== currentQuestion.id) {
         setRevealQuestionId(currentQuestion.id);
       }
@@ -124,7 +128,7 @@ export function LeftRightScreen() {
   }, [
     canProceedToNextQuestion,
     isGameFinished,
-    drinksEnabled,
+    drinksActive,
     currentQuestion,
     revealQuestionId,
     nextQuestion,
@@ -146,20 +150,27 @@ export function LeftRightScreen() {
       { key: 'right', count: rightPlayers.length },
       { key: 'center', count: centerPlayers.length },
     ].filter((s) => s.count > 0) as Array<{ key: 'left' | 'right' | 'center'; count: number }>;
+
     const minCount = sides.length > 0 ? Math.min(...sides.map((s) => s.count)) : 0;
-    const minorityKeys = sides.filter((s) => s.count === minCount).map((s) => s.key);
-    const isTie = minorityKeys.length === sides.length;
-    const minoritySide: 'left' | 'right' | 'center' | null =
-      isTie || minorityKeys.length !== 1 ? null : minorityKeys[0];
-    const drinkers =
-      minoritySide === 'left'
-        ? leftPlayers
-        : minoritySide === 'right'
-          ? rightPlayers
-          : minoritySide === 'center'
-            ? centerPlayers
-            : [];
-    return { leftPlayers, rightPlayers, centerPlayers, minoritySide, drinkers, isTie };
+    const minorityKeys = sides
+      .filter((s) => s.count === minCount)
+      .map((s) => s.key);
+
+    // Only one camp voted → everyone agreed.
+    const isUnanimous = sides.length <= 1;
+    // Every active camp has the same count → no camp is smaller than another.
+    const isTie = sides.length > 1 && minorityKeys.length === sides.length;
+    // Otherwise the smallest camp(s) drink — including a partial tie for the
+    // smallest count (e.g. 3/1/1 → both camps of 1 drink).
+    const minoritySides: Array<'left' | 'right' | 'center'> =
+      isUnanimous || isTie ? [] : minorityKeys;
+
+    const drinkers = gameState.players.filter((p) => {
+      const a = p.answers.find((x) => x.questionId === revealQuestionId);
+      return a ? minoritySides.includes(a.answer) : false;
+    });
+
+    return { leftPlayers, rightPlayers, centerPlayers, minoritySides, drinkers, isTie, isUnanimous };
   }, [revealQuestionId, gameState.players]);
 
   const closeReveal = () => {
@@ -284,7 +295,7 @@ export function LeftRightScreen() {
                 style={[
                   styles.revealSide,
                   { backgroundColor: POLITICAL_COLORS.left, borderColor: T.ink },
-                  revealData.minoritySide === 'left' && styles.revealSideMinority,
+                  revealData.minoritySides.includes('left') && styles.revealSideMinority,
                 ]}
               >
                 <Text style={styles.revealSideLabel}>{t('leftRight:ui.reveal.left')}</Text>
@@ -297,7 +308,7 @@ export function LeftRightScreen() {
                 style={[
                   styles.revealSide,
                   { backgroundColor: POLITICAL_COLORS.center, borderColor: T.ink },
-                  revealData.minoritySide === 'center' && styles.revealSideMinority,
+                  revealData.minoritySides.includes('center') && styles.revealSideMinority,
                 ]}
               >
                 <Text style={styles.revealSideLabel}>{t('leftRight:ui.reveal.center')}</Text>
@@ -310,7 +321,7 @@ export function LeftRightScreen() {
                 style={[
                   styles.revealSide,
                   { backgroundColor: POLITICAL_COLORS.right, borderColor: T.ink },
-                  revealData.minoritySide === 'right' && styles.revealSideMinority,
+                  revealData.minoritySides.includes('right') && styles.revealSideMinority,
                 ]}
               >
                 <Text style={styles.revealSideLabel}>{t('leftRight:ui.reveal.right')}</Text>
@@ -322,10 +333,10 @@ export function LeftRightScreen() {
             </View>
             <View style={styles.revealDrinkBanner}>
               <Text style={styles.revealDrinkText}>
-                {revealData.isTie
-                  ? t('leftRight:ui.reveal.tie')
-                  : revealData.drinkers.length === 0
-                    ? t('leftRight:ui.reveal.unanimous')
+                {revealData.isUnanimous
+                  ? t('leftRight:ui.reveal.unanimous')
+                  : revealData.isTie
+                    ? t('leftRight:ui.reveal.tie')
                     : t('leftRight:ui.reveal.drink', { names: revealData.drinkers.map((p) => p.name).join(', ') })}
               </Text>
             </View>

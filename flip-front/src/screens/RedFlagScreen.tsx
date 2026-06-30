@@ -157,7 +157,7 @@ function RFPlayerCard({
         color: '#8B0000',
         overlayColor: 'rgba(139, 0, 0, 0.92)',
         emoji: '🚩',
-        label: 'MEGA ×2',
+        label: 'MEGA 🚩',
       }}
       onSwipe={(dir) => onSwipe(dir as 'oui' | 'non' | 'mega')}
       onSwipeComplete={onSwipeComplete}
@@ -414,8 +414,10 @@ function RFPlay({
     if (dir === 'oui' || dir === 'mega') {
       if (!playerScores.current[player.id]) playerScores.current[player.id] = {};
       const ps = playerScores.current[player.id];
-      const mult = dir === 'mega' ? 2 : 1;
-      ps[currentQ.c] = (ps[currentQ.c] ?? 0) + currentQ.p * mult;
+      // "mega" is a fun, expressive way to flag someone but scores the same as a plain "oui".
+      // It must NOT multiply the points: the per-question max isn't multiplied either, so any
+      // multiplier would push percentages past 100% (badly so when a theme has few questions).
+      ps[currentQ.c] = (ps[currentQ.c] ?? 0) + currentQ.p;
     }
     setAnsweredIds((prev) => new Set([...prev, player.id]));
   };
@@ -630,11 +632,13 @@ function RFResult({
     .map((p) => {
       const scores = playerScores[p.id] ?? {};
       const total = Object.values(scores).reduce((s, v) => s + v, 0);
-      const pct = rfMax > 0 ? Math.round((total / rfMax) * 100) : 0;
+      // Defensive clamp to the 0–100 verdict scale: scores can't exceed rfMax now that no swipe
+      // multiplies points, but this guards against any future scoring multiplier regressing.
+      const pct = rfMax > 0 ? Math.min(100, Math.round((total / rfMax) * 100)) : 0;
       const verdict = getVerdict(pct, verdicts);
       const catEntries = RF_CATEGORIES.map((catId) => {
         const max = catMax[catId] ?? 0;
-        const catPct = max > 0 ? Math.round(((scores[catId] ?? 0) / max) * 100) : 0;
+        const catPct = max > 0 ? Math.min(100, Math.round(((scores[catId] ?? 0) / max) * 100)) : 0;
         return { catId, max, catPct };
       });
       const topCategory = catEntries

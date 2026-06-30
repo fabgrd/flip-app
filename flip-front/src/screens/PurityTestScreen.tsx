@@ -294,8 +294,10 @@ export function PurityTestScreen() {
   } = usePurityTest(players);
 
   const handleSwipe = (playerId: string, direction: 'yes' | 'no' | 'mega') => {
+    // "mega" is an expressive shortcut for "yes" — it scores the same, with no points bonus.
+    // Multiplying here would push percentages past 100% since the max isn't multiplied.
     if (direction === 'mega') {
-      submitAnswer(playerId, 'yes', 2);
+      submitAnswer(playerId, 'yes');
     } else {
       submitAnswer(playerId, direction);
     }

@@ -148,8 +148,32 @@
       "points": 5
     },
     {
+      "id": "stk_5_4",
+      "text": "hacked someone's account",
+      "category": "stalker",
+      "points": 5
+    },
+    {
+      "id": "stk_5_5",
+      "text": "broke into someone's home to check your suspicions",
+      "category": "stalker",
+      "points": 5
+    },
+    {
       "id": "man_2_1",
       "text": "said 'whatever you want' while clearly thinking the exact opposite",
+      "category": "manipulateur",
+      "points": 2
+    },
+    {
+      "id": "man_2_5",
+      "text": "ended a relationship by text or through a friend",
+      "category": "manipulateur",
+      "points": 2
+    },
+    {
+      "id": "man_2_6",
+      "text": "pretended to be busy while posting on social media",
       "category": "manipulateur",
       "points": 2
     },
@@ -208,6 +232,18 @@
       "points": 3
     },
     {
+      "id": "man_3_7",
+      "text": "promised to change just to keep someone around, then did nothing",
+      "category": "manipulateur",
+      "points": 3
+    },
+    {
+      "id": "man_3_8",
+      "text": "played the victim to dodge accountability",
+      "category": "manipulateur",
+      "points": 3
+    },
+    {
       "id": "man_4_1",
       "text": "cried strategically to win an argument or get what you wanted",
       "category": "manipulateur",
@@ -244,6 +280,18 @@
       "points": 4
     },
     {
+      "id": "man_4_7",
+      "text": "used silence to punish someone after a fight",
+      "category": "manipulateur",
+      "points": 4
+    },
+    {
+      "id": "man_4_8",
+      "text": "made someone question their own memory during an argument",
+      "category": "manipulateur",
+      "points": 4
+    },
+    {
       "id": "man_5_1",
       "text": "used the threat of a breakup as a control tool during an argument",
       "category": "manipulateur",
@@ -258,6 +306,18 @@
     {
       "id": "man_5_3",
       "text": "made someone believe they misremembered an event that had actually happened",
+      "category": "manipulateur",
+      "points": 5
+    },
+    {
+      "id": "man_5_4",
+      "text": "used guilt to keep someone close to you",
+      "category": "manipulateur",
+      "points": 5
+    },
+    {
+      "id": "man_5_5",
+      "text": "turned a lie into truth by repeating it enough times",
       "category": "manipulateur",
       "points": 5
     },
@@ -282,6 +342,18 @@
     {
       "id": "nar_2_4",
       "text": "genuinely believed you were the best-dressed person at a party",
+      "category": "narcisse",
+      "points": 2
+    },
+    {
+      "id": "nar_2_5",
+      "text": "taken a selfie even when you felt awful",
+      "category": "narcisse",
+      "points": 2
+    },
+    {
+      "id": "nar_2_6",
+      "text": "lied about an achievement to impress someone",
       "category": "narcisse",
       "points": 2
     },
@@ -352,6 +424,24 @@
       "points": 4
     },
     {
+      "id": "nar_4_6",
+      "text": "refused to admit a mistake because it would hurt your image",
+      "category": "narcisse",
+      "points": 4
+    },
+    {
+      "id": "nar_4_7",
+      "text": "demanded photos of yourself as proof of love",
+      "category": "narcisse",
+      "points": 4
+    },
+    {
+      "id": "nar_4_8",
+      "text": "believed you deserved special treatment just because you're you",
+      "category": "narcisse",
+      "points": 4
+    },
+    {
       "id": "nar_5_1",
       "text": "thought your ex had left you out of jealousy of your success or potential",
       "category": "narcisse",
@@ -384,6 +474,18 @@
     {
       "id": "dra_2_3",
       "text": "sulked for more than a day over something objectively minor",
+      "category": "drama",
+      "points": 2
+    },
+    {
+      "id": "dra_2_4",
+      "text": "reacted wildly to a tiny annoyance just to get attention",
+      "category": "drama",
+      "points": 2
+    },
+    {
+      "id": "dra_2_5",
+      "text": "yelled at someone when they hadn't really done anything",
       "category": "drama",
       "points": 2
     },
@@ -460,6 +562,18 @@
       "points": 4
     },
     {
+      "id": "dra_4_7",
+      "text": "threatened to hurt yourself or leave to manipulate someone",
+      "category": "drama",
+      "points": 4
+    },
+    {
+      "id": "dra_4_8",
+      "text": "blocked and unblocked someone repeatedly just to mess with them",
+      "category": "drama",
+      "points": 4
+    },
+    {
       "id": "dra_5_1",
       "text": "broke or threw an object during an argument to show how angry you were",
       "category": "drama",
@@ -474,6 +588,18 @@
     {
       "id": "dra_5_3",
       "text": "organized a public humiliation of your partner to get revenge for infidelity",
+      "category": "drama",
+      "points": 5
+    },
+    {
+      "id": "dra_5_4",
+      "text": "threatened to reveal secrets to force someone to do what you wanted",
+      "category": "drama",
+      "points": 5
+    },
+    {
+      "id": "dra_5_5",
+      "text": "intentionally started a fight between two people for the drama",
       "category": "drama",
       "points": 5
     },
@@ -498,6 +624,18 @@
     {
       "id": "col_2_4",
       "text": "checked if someone was online while they weren't replying to your messages",
+      "category": "collant",
+      "points": 2
+    },
+    {
+      "id": "col_2_5",
+      "text": "thought someone stopped loving you because they didn't reply fast enough",
+      "category": "collant",
+      "points": 2
+    },
+    {
+      "id": "col_2_6",
+      "text": "felt the need to constantly check where your relationship stood",
       "category": "collant",
       "points": 2
     },
@@ -538,6 +676,18 @@
       "points": 3
     },
     {
+      "id": "col_3_7",
+      "text": "needed reassurance dozens of times a day",
+      "category": "collant",
+      "points": 3
+    },
+    {
+      "id": "col_3_8",
+      "text": "sent a follow-up after 5 minutes of silence",
+      "category": "collant",
+      "points": 3
+    },
+    {
       "id": "col_4_1",
       "text": "said 'I love you' to someone before the end of the first month",
       "category": "collant",
@@ -570,6 +720,18 @@
     {
       "id": "col_4_6",
       "text": "showed up at someone's place unannounced because they had stopped responding",
+      "category": "collant",
+      "points": 4
+    },
+    {
+      "id": "col_4_7",
+      "text": "created fake accounts to join someone's groups",
+      "category": "collant",
+      "points": 4
+    },
+    {
+      "id": "col_4_8",
+      "text": "needed someone to text you constantly",
       "category": "collant",
       "points": 4
     },

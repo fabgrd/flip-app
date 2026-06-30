@@ -329,7 +329,7 @@ export const usePurityTest = (initialPlayers: Player[], config?: PurityQuestionC
   );
 
   const submitAnswer = useCallback(
-    (playerId: string, answer: 'yes' | 'no', bonusMultiplier = 1) => {
+    (playerId: string, answer: 'yes' | 'no') => {
       setGameState((prev) => ({
         ...prev,
         players: prev.players.map((player) => {
@@ -341,7 +341,7 @@ export const usePurityTest = (initialPlayers: Player[], config?: PurityQuestionC
             };
 
             const updatedAnswers = [...player.answers, newAnswer];
-            const points = currentQuestion.points[answer] * bonusMultiplier;
+            const points = currentQuestion.points[answer];
             const newScore = player.score + points;
 
             const newThemeScores = { ...player.themeScores };
@@ -398,8 +398,10 @@ export const usePurityTest = (initialPlayers: Player[], config?: PurityQuestionC
       .map((player) => {
         const totalScore = player.score;
 
+        // Defensive clamp to the 0–100 verdict scale: scores can't exceed maxPossibleScore now
+        // that no swipe multiplies points, but this guards against a future scoring regression.
         const impurityPercentage =
-          maxPossibleScore > 0 ? Math.round((totalScore / maxPossibleScore) * 100) : 0;
+          maxPossibleScore > 0 ? Math.min(100, Math.round((totalScore / maxPossibleScore) * 100)) : 0;
 
         let impurityLevel: string;
         if (impurityPercentage <= 25) impurityLevel = 'saint';
@@ -416,7 +418,9 @@ export const usePurityTest = (initialPlayers: Player[], config?: PurityQuestionC
           const themeKey = theme as Theme;
           const themeData = player.themeScores[themeKey];
           themePercentages[themeKey] =
-            themeData.maxScore > 0 ? Math.round((themeData.score / themeData.maxScore) * 100) : 0;
+            themeData.maxScore > 0
+              ? Math.min(100, Math.round((themeData.score / themeData.maxScore) * 100))
+              : 0;
         });
 
         return {

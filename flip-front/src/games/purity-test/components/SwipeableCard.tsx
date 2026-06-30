@@ -39,7 +39,7 @@ export function SwipeableCard({
     color: '#6D28D9',
     overlayColor: 'rgba(109, 40, 217, 0.92)',
     emoji: '😈',
-    label: 'MEGA ×2',
+    label: 'MEGA 😈',
   };
 
   const handleSwipe = (direction: string) => {
