@@ -1,0 +1,81 @@
+{
+  "categories": [
+    "Soda brands",
+    "Boomer first names",
+    "Things in a fridge",
+    "Disney movies",
+    "Things people post in stories",
+    "Apps on your phone",
+    "Excuses for being late",
+    "TikTok sounds",
+    "European countries",
+    "Clothing brands",
+    "Things people forget when leaving",
+    "Mario characters",
+    "Drinks at a pre-game",
+    "Emojis you overuse",
+    "Shows you binged",
+    "Things that stink"
+  ],
+  "ui": {
+    "rules": {
+      "title": "The Bomb",
+      "tagline": "The \"pass the phone before it explodes\" trend. The fuse is hidden. Good luck.",
+      "start": "Arm the bomb",
+      "howToPlay": "HOW TO PLAY",
+      "warning": "⚠︎ The ticking speeds up but never tells you when it blows. No stalling, no cheating: pass.",
+      "steps": [
+        {
+          "n": "1",
+          "title": "A category + the phone starts moving",
+          "desc": "E.g. \"Soda brands\". Sit in a circle."
+        },
+        {
+          "n": "2",
+          "title": "Name one, pass it fast",
+          "desc": "Say a word from the category, then hand the phone to your neighbor."
+        },
+        {
+          "n": "3",
+          "title": "💥 punishes whoever's holding it",
+          "desc": "When the fuse runs out, you're stuck: you drink. Most explosions gets crowned."
+        }
+      ]
+    },
+    "live": {
+      "roundChip": "💥 {{round}} / {{target}}",
+      "categoryLabel": "CATEGORY",
+      "startFuse": "Light the fuse 🔥",
+      "passHintFirst": "Say a word… then pass it fast!",
+      "passHint": "passed {{count}} time{{plural}} — getting hot",
+      "passCta": "PASSED ✓"
+    },
+    "boom": {
+      "title": "BOOM!",
+      "continue": "tap to continue"
+    },
+    "blame": {
+      "badge": "💥 EXPLOSION",
+      "title": "Who was\nholding it?",
+      "subtitle": "Point out the unlucky one. A sip is on the line."
+    },
+    "exploded": {
+      "badge": "💥 BUSTED",
+      "title": "{{name}} blew up",
+      "subtitle": "The phone went off in your hands. Own it.",
+      "drink": "Drink {{count}} sip{{plural}} and hand out {{count}} to whoever you want 🍻",
+      "next": "Next round →",
+      "podium": "See the podium →"
+    },
+    "podium": {
+      "badge": "💣 CATASTROPHIC BOMB SQUAD",
+      "title": "{{name}} blew it up every time",
+      "titleNone": "No victims?!",
+      "subtitle": "{{count}} explosion{{plural}} in their hands. The bar awaits.",
+      "subtitleNone": "Ninja reflexes, all of you. Suspicious.",
+      "explosionsLabel": "💥 EXPLOSIONS",
+      "playAgain": "Play another round",
+      "backToHub": "Back to hub"
+    }
+  }
+}

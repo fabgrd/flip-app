@@ -96,6 +96,9 @@ export type RootStackParamList = {
 
   // Red Flag
   RedFlag: { players: Player[] };
+
+  // The Bomb
+  TheBomb: { players: Player[] };
 };
 
 // =============================================================================

@@ -36,6 +36,7 @@ import {
   PurityTestScreen,
   RedFlagScreen,
   SettingsScreen,
+  TheBombScreen,
 } from './src/screens';
 import { RootStackParamList } from './src/types';
 
@@ -144,6 +145,7 @@ function ThemedAppNavigator() {
           <Stack.Screen name="Apero" component={AperoScreen} />
           <Stack.Screen name="Casting" component={CastingScreen} />
           <Stack.Screen name="RedFlag" component={RedFlagScreen} />
+          <Stack.Screen name="TheBomb" component={TheBombScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </View>

@@ -1,4 +1,4 @@
-export const CASTING_ORANGE = '#FF8C42';
+export const CASTING_ACCENT = '#D633C9'; // magenta — distinct de La Bombe (orange) et des autres jeux
 
 export type CastingTheme =
   | 'daily'
@@ -21,16 +21,76 @@ export interface CastingThemeOption {
 }
 
 export const CASTING_THEME_OPTIONS: readonly CastingThemeOption[] = [
-  { value: 'daily', label: 'Quotidien', emoji: '🎬', desc: 'Cringe de tous les jours', color: '#5BC8FF' },
-  { value: 'relations', label: 'Relations', emoji: '💞', desc: 'Amour, crush, ex & drama', color: '#FF8FB1' },
-  { value: 'party', label: 'Soirées', emoji: '🥳', desc: 'Fêtes, cuite & délires', color: '#FFD23F' },
-  { value: 'gaming', label: 'Gaming', emoji: '🎮', desc: 'Fail vidéo, rage & internet', color: '#9B5BFF' },
-  { value: 'family', label: 'Famille', emoji: '👨‍👩‍👧', desc: 'Réunions familiales & parents', color: '#4FCB8A' },
-  { value: 'studies', label: 'Études & Boulot', emoji: '📚', desc: 'École, fac, stages & taf', color: '#4482FF' },
-  { value: 'spicy', label: 'Spicy', emoji: '🔥', desc: 'Sexe, alcool, corps & gênes adultes', color: '#FF5B3A' },
-  { value: 'taboo', label: 'Tabou', emoji: '😈', desc: 'Famille, secrets & vrais malaises', color: '#181613' },
-  { value: 'cinema', label: 'Scènes de Film', emoji: '🎭', desc: 'Acting, drama & ciné', color: '#FF8C42' },
-  { value: 'sports', label: 'Sports & Fails', emoji: '⚽', desc: 'Sports, fails & humiliations', color: '#00C4AE' },
+  {
+    value: 'daily',
+    label: 'Quotidien',
+    emoji: '🎬',
+    desc: 'Cringe de tous les jours',
+    color: '#5BC8FF',
+  },
+  {
+    value: 'relations',
+    label: 'Relations',
+    emoji: '💞',
+    desc: 'Amour, crush, ex & drama',
+    color: '#FF8FB1',
+  },
+  {
+    value: 'party',
+    label: 'Soirées',
+    emoji: '🥳',
+    desc: 'Fêtes, cuite & délires',
+    color: '#FFD23F',
+  },
+  {
+    value: 'gaming',
+    label: 'Gaming',
+    emoji: '🎮',
+    desc: 'Fail vidéo, rage & internet',
+    color: '#9B5BFF',
+  },
+  {
+    value: 'family',
+    label: 'Famille',
+    emoji: '👨‍👩‍👧',
+    desc: 'Réunions familiales & parents',
+    color: '#4FCB8A',
+  },
+  {
+    value: 'studies',
+    label: 'Études & Boulot',
+    emoji: '📚',
+    desc: 'École, fac, stages & taf',
+    color: '#4482FF',
+  },
+  {
+    value: 'spicy',
+    label: 'Spicy',
+    emoji: '🔥',
+    desc: 'Sexe, alcool, corps & gênes adultes',
+    color: '#FF5B3A',
+  },
+  {
+    value: 'taboo',
+    label: 'Tabou',
+    emoji: '😈',
+    desc: 'Famille, secrets & vrais malaises',
+    color: '#181613',
+  },
+  {
+    value: 'cinema',
+    label: 'Scènes de Film',
+    emoji: '🎭',
+    desc: 'Acting, drama & ciné',
+    color: '#FF8C42',
+  },
+  {
+    value: 'sports',
+    label: 'Sports & Fails',
+    emoji: '⚽',
+    desc: 'Sports, fails & humiliations',
+    color: '#00C4AE',
+  },
 ];
 
 const SCENARIOS_DAILY: string[] = [
@@ -186,7 +246,7 @@ const SCENARIOS_SPORTS: string[] = [
   'Se prendre un smash de tennis en plein visage',
   'Tomber du tapis de course en pleine salle de sport',
   'Faire un strike au bowling puis glisser et tomber',
-  "Se faire humilier au foot par un enfant de 10 ans",
+  'Se faire humilier au foot par un enfant de 10 ans',
   'Rater complètement une figure de skateboard',
   'Se tordre la cheville en faisant le malin',
   'Perdre un match de ping-pong 11-0',

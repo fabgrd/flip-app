@@ -1,7 +1,6 @@
 // Le Casting — jeu d'acting avec chiffres secrets
 // Flow: rules → pick-devin → scenario → handoff+reveal (each actor) → perform → guess → results
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import * as Haptics from 'expo-haptics';
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Animated, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -28,15 +27,14 @@ import { getPlayerBgColor, getPlayerTextColor } from '../constants';
 import { T } from '../constants/flipTokens';
 import type { CastingTheme } from '../games/casting';
 import {
-  CASTING_LABELS,
-  CASTING_ORANGE,
+  CASTING_ACCENT,
   CASTING_THEME_OPTIONS,
   getScenariosForThemes,
   getScenariosForThemesI18n,
   useCasting,
   useCastingThemeAccess,
 } from '../games/casting';
-import { CastingResult, CastingStep } from '../games/casting/types';
+import { CastingResult } from '../games/casting/types';
 import { useDrinksMode } from '../hooks';
 import { Player, RootStackParamList } from '../types';
 import { drinkColumnLabel, drinkSoberLabel, drinkUnit, drinkUnitLower } from '../utils/drinks';
@@ -83,7 +81,17 @@ function CARules({
   const { t } = useTranslation();
   const { enabled: drinksEnabled } = useDrinksMode();
   const { isThemeAllowed, requestUnlockFor } = useCastingThemeAccess();
-  const rawSteps = t('casting:rules.steps', { returnObjects: true }) as { n: string; title: string; desc?: string; descDrink?: string; descSober?: string }[];
+  // Thèmes débloqués d'abord, bloqués (premium) à la fin — tri stable
+  const sortedThemeOptions = [...CASTING_THEME_OPTIONS].sort(
+    (a, b) => Number(isThemeAllowed(b.value)) - Number(isThemeAllowed(a.value)),
+  );
+  const rawSteps = t('casting:rules.steps', { returnObjects: true }) as {
+    n: string;
+    title: string;
+    desc?: string;
+    descDrink?: string;
+    descSober?: string;
+  }[];
   const STEPS = rawSteps.map((s) => ({
     n: s.n,
     title: s.title,
@@ -92,7 +100,7 @@ function CARules({
 
   return (
     <GameRulesScreen
-      accentColor={CASTING_ORANGE}
+      accentColor={CASTING_ACCENT}
       title={t('casting:rules.title')}
       tagline={t('casting:rules.tagline')}
       icon={<CastingIcon size={88} />}
@@ -108,18 +116,18 @@ function CARules({
       scrollable
     >
       <View style={rls.scroll}>
-        <GameSetupCard accentColor={CASTING_ORANGE} title={t('common:labels.setup').toUpperCase()}>
+        <GameSetupCard accentColor={CASTING_ACCENT} title={t('common:labels.setup').toUpperCase()}>
           <RoundsStepper
             value={totalRounds}
             onChange={onTotalRoundsChange}
             min={1}
             max={20}
-            accentColor={CASTING_ORANGE}
+            accentColor={CASTING_ACCENT}
             inline
           />
           <GameSetupSection label={t('casting:rules.themeLabel')}>
             <ThemeGrid
-              options={CASTING_THEME_OPTIONS.map((opt) => ({
+              options={sortedThemeOptions.map((opt) => ({
                 value: opt.value,
                 label: t(`casting:themes.${opt.value}`),
                 emoji: opt.emoji,
@@ -131,7 +139,7 @@ function CARules({
               onLockedPress={(v) => requestUnlockFor(v as CastingTheme)}
             />
           </GameSetupSection>
-          <DrinkModeToggle accentColor={CASTING_ORANGE} inline />
+          <DrinkModeToggle accentColor={CASTING_ACCENT} inline />
         </GameSetupCard>
       </View>
     </GameRulesScreen>
@@ -163,7 +171,7 @@ function CAPickDevin({ players, onPick }: { players: Player[]; onPick: (idx: num
       <PlayerPickerGrid
         players={players}
         onSelect={(_, i) => onPick(i)}
-        shadowColor={CASTING_ORANGE}
+        shadowColor={CASTING_ACCENT}
       />
     </SafeAreaView>
   );
@@ -220,13 +228,17 @@ function CAScenario({
   const { t } = useTranslation();
   const rulesSteps = t('casting:rules.steps', { returnObjects: true }) as any;
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: CASTING_ORANGE }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: CASTING_ACCENT }}>
       <DotBackground color={T.ink} opacity={0.07} />
       <GameHeader
         tint={T.paper}
         onExit={onExit}
         onSettings={onSettings}
-        rules={{ title: t('casting:rules.modalTitle'), rules: rulesSteps, accentColor: CASTING_ORANGE }}
+        rules={{
+          title: t('casting:rules.modalTitle'),
+          rules: rulesSteps,
+          accentColor: CASTING_ACCENT,
+        }}
         players={players}
         onPlayersChange={setPlayers}
       />
@@ -312,13 +324,13 @@ function CAHandoff({
           size={120}
           radius={32}
           borderColor={T.paper}
-          shadowColor={CASTING_ORANGE}
+          shadowColor={CASTING_ACCENT}
         />
         <Text style={hf.name}>{t('casting:handoff.instruction', { name: player.name })}</Text>
         <Text style={hf.sub}>{t('casting:handoff.sub')}</Text>
       </View>
       <View style={hf.footer}>
-        <ChunkyButton full color={CASTING_ORANGE} shadowColor={CASTING_ORANGE} onPress={onReady}>
+        <ChunkyButton full color={CASTING_ACCENT} shadowColor={CASTING_ACCENT} onPress={onReady}>
           {t('casting:handoff.revealBtn')}
         </ChunkyButton>
       </View>
@@ -396,7 +408,7 @@ function CARevealNumber({
   };
 
   const numBg =
-    number <= 3 ? T.cobalt : number <= 6 ? CASTING_ORANGE : number <= 8 ? T.tomato : T.lemon;
+    number <= 3 ? T.cobalt : number <= 6 ? CASTING_ACCENT : number <= 8 ? T.tomato : T.lemon;
   const numFg = number >= 9 ? T.ink : '#fff';
   const label = t(`casting:labels.${number}`);
 
@@ -408,12 +420,16 @@ function CARevealNumber({
         tint={T.paper}
         onExit={onExit}
         onSettings={onSettings}
-        rules={{ title: t('casting:rules.modalTitle'), rules: rulesSteps, accentColor: CASTING_ORANGE }}
+        rules={{
+          title: t('casting:rules.modalTitle'),
+          rules: rulesSteps,
+          accentColor: CASTING_ACCENT,
+        }}
         players={players}
         onPlayersChange={setPlayers}
       />
       <View style={rn.header}>
-        <GameChip color={CASTING_ORANGE} textColor="#fff">
+        <GameChip color={CASTING_ACCENT} textColor="#fff">
           {player.name}
         </GameChip>
       </View>
@@ -453,7 +469,7 @@ function CARevealNumber({
       <View style={rn.footer}>
         <ChunkyButton
           full
-          color={CASTING_ORANGE}
+          color={CASTING_ACCENT}
           onPress={revealed ? onNext : undefined}
           disabled={!revealed}
         >
@@ -486,7 +502,7 @@ const rn = StyleSheet.create({
     width: 160,
     height: 160,
     borderRadius: 80,
-    backgroundColor: CASTING_ORANGE,
+    backgroundColor: CASTING_ACCENT,
     borderWidth: 3,
     borderColor: T.ink,
     alignItems: 'center',
@@ -597,7 +613,7 @@ function CAPerform({
         <Text style={pf.hint}>{t('casting:perform.hint', { devin: devin.name })}</Text>
       </View>
       <View style={pf.footer}>
-        <ChunkyButton full color={CASTING_ORANGE} shadowColor={CASTING_ORANGE} onPress={onNext}>
+        <ChunkyButton full color={CASTING_ACCENT} shadowColor={CASTING_ACCENT} onPress={onNext}>
           {t('casting:perform.judgeBtn')}
         </ChunkyButton>
       </View>
@@ -614,7 +630,7 @@ const pf = StyleSheet.create({
     gap: 24,
   },
   action: {
-    color: CASTING_ORANGE,
+    color: CASTING_ACCENT,
     fontSize: 72,
     fontWeight: '900',
     letterSpacing: -3,
@@ -689,12 +705,16 @@ function CAGuessPlayer({
         tint={T.paper}
         onExit={onExit}
         onSettings={onSettings}
-        rules={{ title: t('casting:rules.modalTitle'), rules: rulesSteps, accentColor: CASTING_ORANGE }}
+        rules={{
+          title: t('casting:rules.modalTitle'),
+          rules: rulesSteps,
+          accentColor: CASTING_ACCENT,
+        }}
         players={players}
         onPlayersChange={setPlayers}
       />
       <View style={gp.header}>
-        <GameChip color={CASTING_ORANGE} textColor="#fff">
+        <GameChip color={CASTING_ACCENT} textColor="#fff">
           {t('casting:guess.devinChip', { name: devin.name })}
         </GameChip>
         <GameChip color={T.paper}>
@@ -703,9 +723,11 @@ function CAGuessPlayer({
       </View>
 
       <View style={gp.body}>
-        <InitialAvatar index={actorIdx} size={88} radius={24} shadowColor={CASTING_ORANGE} />
+        <InitialAvatar index={actorIdx} size={88} radius={24} shadowColor={CASTING_ACCENT} />
         <Text style={gp.question}>{t('casting:guess.question', { name: actor.name })}</Text>
-        {guess !== null && <Text style={gp.guessLabel}>{t(`casting:labels.${guess}`).toUpperCase()}</Text>}
+        {guess !== null && (
+          <Text style={gp.guessLabel}>{t(`casting:labels.${guess}`).toUpperCase()}</Text>
+        )}
 
         <View style={gp.grid}>
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => {
@@ -736,7 +758,7 @@ function CAGuessPlayer({
       <View style={gp.footer}>
         <ChunkyButton
           full
-          color={CASTING_ORANGE}
+          color={CASTING_ACCENT}
           onPress={guess !== null ? () => onGuess(guess!) : undefined}
           disabled={guess === null}
         >
@@ -803,7 +825,7 @@ const gp = StyleSheet.create({
     elevation: 3,
   },
   numBtnSelected: {
-    backgroundColor: CASTING_ORANGE,
+    backgroundColor: CASTING_ACCENT,
     shadowOpacity: 0,
     elevation: 0,
     transform: [{ translateX: 3 }, { translateY: 3 }],
@@ -907,7 +929,7 @@ function CAResults({
       <DotBackground opacity={0.06} />
       <ScrollView contentContainerStyle={res.scroll} showsVerticalScrollIndicator={false}>
         {/* Header */}
-        <StickerBadge color={CASTING_ORANGE} rotation={-3} textColor="#fff">
+        <StickerBadge color={CASTING_ACCENT} rotation={-3} textColor="#fff">
           {t('casting:results.badge')}
         </StickerBadge>
         <Text style={res.title}>{t('casting:results.title')}</Text>
@@ -938,12 +960,21 @@ function CAResults({
             <Text style={res.bonusIcon}>{hasCastingParfait ? '🎬' : '💀'}</Text>
             <View style={{ flex: 1 }}>
               <Text style={res.bonusTitle}>
-                {hasCastingParfait ? t('casting:results.castingParfait') : t('casting:results.flopTotal')}
+                {hasCastingParfait
+                  ? t('casting:results.castingParfait')
+                  : t('casting:results.flopTotal')}
               </Text>
               <Text style={res.bonusSub}>
                 {hasCastingParfait
-                  ? t('casting:results.castingParfaitSub', { devin: devin.name, verb: drinksEnabled ? 'boivent' : 'prennent', unit: drinkUnitLower(2, drinksEnabled) })
-                  : t('casting:results.flopTotalSub', { verb: drinksEnabled ? 'boivent' : 'prennent', unit: drinkUnitLower(3, drinksEnabled) })}
+                  ? t('casting:results.castingParfaitSub', {
+                      devin: devin.name,
+                      verb: drinksEnabled ? 'boivent' : 'prennent',
+                      unit: drinkUnitLower(2, drinksEnabled),
+                    })
+                  : t('casting:results.flopTotalSub', {
+                      verb: drinksEnabled ? 'boivent' : 'prennent',
+                      unit: drinkUnitLower(3, drinksEnabled),
+                    })}
               </Text>
             </View>
           </View>
@@ -975,7 +1006,10 @@ function CAResults({
                   <Text style={[res.tagText, { color: tagFg }]}>{tagLabel(r.tag)}</Text>
                 </View>
                 <Text style={res.drinkInfo}>
-                  {t(drinksEnabled ? 'casting:results.actorDrinks' : 'casting:results.actorSober', { name: r.player.name, count: r.playerSips })}
+                  {t(drinksEnabled ? 'casting:results.actorDrinks' : 'casting:results.actorSober', {
+                    name: r.player.name,
+                    count: r.playerSips,
+                  })}
                 </Text>
               </View>
             </View>
@@ -984,7 +1018,10 @@ function CAResults({
 
         {/* Scoreboard */}
         <Text style={res.sectionLabel}>
-          {t('casting:results.rankingLabel', { total: totalSips, unit: drinkColumnLabel(drinksEnabled) })}
+          {t('casting:results.rankingLabel', {
+            total: totalSips,
+            unit: drinkColumnLabel(drinksEnabled),
+          })}
         </Text>
         {ranked.map((item, i) => {
           const isTop = i === 0 && item.s > 0;
@@ -992,7 +1029,7 @@ function CAResults({
           return (
             <View
               key={item.player.id}
-              style={[res.rankCard, isTop && { backgroundColor: CASTING_ORANGE }]}
+              style={[res.rankCard, isTop && { backgroundColor: CASTING_ACCENT }]}
             >
               <View style={[res.rankNum, isTop && { backgroundColor: 'rgba(255,255,255,0.25)' }]}>
                 <Text style={[res.rankNumText, isTop && { color: '#fff' }]}>#{i + 1}</Text>
@@ -1001,7 +1038,9 @@ function CAResults({
               <View style={{ flex: 1 }}>
                 <Text style={[res.rankName, isTop && { color: '#fff' }]}>
                   {item.player.name}
-                  {isDevinPlayer ? <Text style={res.devinBadge}>{t('casting:results.devinBadge')}</Text> : null}
+                  {isDevinPlayer ? (
+                    <Text style={res.devinBadge}>{t('casting:results.devinBadge')}</Text>
+                  ) : null}
                 </Text>
                 <Text style={[res.rankSub, isTop && { color: 'rgba(255,255,255,0.7)' }]}>
                   {item.s === 0 ? drinkSoberLabel(drinksEnabled) : drinkUnit(item.s, drinksEnabled)}
@@ -1022,7 +1061,7 @@ function CAResults({
         })}
 
         {/* CTAs */}
-        <ChunkyButton full color={CASTING_ORANGE} onPress={onExit}>
+        <ChunkyButton full color={CASTING_ACCENT} onPress={onExit}>
           {t('casting:results.playAgain')}
         </ChunkyButton>
         <ChunkyButton full color={T.paper} textColor={T.ink} onPress={onExit}>
@@ -1194,7 +1233,10 @@ function CastingGame({
   const onPickDevin = (idx: number) => {
     const safeThemes = filterAllowed(selectedThemes);
     const activeThemes = safeThemes.length > 0 ? safeThemes : ['daily' as CastingTheme];
-    const scenariosData = t('casting:scenarios', { returnObjects: true }) as Record<CastingTheme, string[]>;
+    const scenariosData = t('casting:scenarios', { returnObjects: true }) as Record<
+      CastingTheme,
+      string[]
+    >;
     const pool = getScenariosForThemesI18n(activeThemes, scenariosData);
     const finalPool = pool.length > 0 ? pool : getScenariosForThemes(activeThemes);
     pickDevinAction(idx, pickRandom(finalPool));

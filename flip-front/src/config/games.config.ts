@@ -9,6 +9,7 @@ import {
   ParanoiaIcon,
   PureteIcon,
   RedFlagIcon,
+  TheBombIcon,
 } from '../components/icons';
 import { T } from '../constants/flipTokens';
 import { Entitlement } from '../entitlements';
@@ -21,7 +22,8 @@ export type GameId =
   | 'paranoia'
   | 'cameleon'
   | 'left-right'
-  | 'purity-test';
+  | 'purity-test'
+  | 'the-bomb';
 
 export type GameRoute =
   | 'PurityTest'
@@ -31,7 +33,8 @@ export type GameRoute =
   | 'Medusa'
   | 'Apero'
   | 'Casting'
-  | 'RedFlag';
+  | 'RedFlag'
+  | 'TheBomb';
 
 export type GameColorToken = keyof typeof T;
 
@@ -98,7 +101,7 @@ export const GAMES: readonly GameConfig[] = [
     titleKey: 'games:casting.title',
     taglineKey: 'games:casting.tagline',
     icon: CastingIcon,
-    color: 'castingOrange',
+    color: 'castingMagenta',
     minPlayers: 3,
     maxPlayers: 11,
     playersLabelKey: 'games:labels.players.casting',
@@ -179,6 +182,21 @@ export const GAMES: readonly GameConfig[] = [
     route: 'LeftRight',
     requires: [],
     enabled: true,
+  },
+  {
+    id: 'the-bomb',
+    titleKey: 'games:theBomb.title',
+    taglineKey: 'games:theBomb.tagline',
+    icon: TheBombIcon,
+    color: 'bombAccent',
+    minPlayers: 3,
+    maxPlayers: 20,
+    playersLabelKey: 'games:labels.players.theBomb',
+    durationLabelKey: 'games:labels.duration.theBomb',
+    route: 'TheBomb',
+    requires: [],
+    enabled: true,
+    isNew: true,
   },
 ];
 

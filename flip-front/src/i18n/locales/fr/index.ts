@@ -13,6 +13,7 @@ import paywall from './paywall.json';
 import purityTest from './purity-test.json';
 import redFlag from './red-flag.json';
 import settings from './settings.json';
+import theBomb from './the-bomb.json';
 
 export default {
   alert,
@@ -30,4 +31,5 @@ export default {
   medusa,
   casting,
   redFlag,
+  theBomb,
 };

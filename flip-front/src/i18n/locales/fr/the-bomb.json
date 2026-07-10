@@ -1,0 +1,81 @@
+{
+  "categories": [
+    "Marques de soda",
+    "Prénoms de boomers",
+    "Trucs dans un frigo",
+    "Films Disney",
+    "Choses qu'on poste en story",
+    "Applis sur ton tel",
+    "Excuses de retard",
+    "Sons TikTok",
+    "Pays d'Europe",
+    "Marques de fringues",
+    "Trucs qu'on oublie en partant",
+    "Personnages de Mario",
+    "Boissons d'apéro",
+    "Émojis qu'on utilise trop",
+    "Séries qu'on a binge",
+    "Choses qui puent"
+  ],
+  "ui": {
+    "rules": {
+      "title": "La Bombe",
+      "tagline": "Le trend « passe le tel avant qu'il explose ». La mèche est cachée. Bonne chance.",
+      "start": "Amorcer la bombe",
+      "howToPlay": "COMMENT ON JOUE",
+      "warning": "⚠︎ Le tic-tac s'accélère mais ne dit jamais quand ça pète. Pas de blocage, pas de triche : passe.",
+      "steps": [
+        {
+          "n": "1",
+          "title": "Une catégorie + le tel qui tourne",
+          "desc": "Ex. « Marques de soda ». Vous êtes en cercle."
+        },
+        {
+          "n": "2",
+          "title": "Tu cites un truc, tu passes vite",
+          "desc": "Dis un mot de la catégorie puis refile le tel au voisin."
+        },
+        {
+          "n": "3",
+          "title": "Le 💥 punit celui qui tient",
+          "desc": "Quand la mèche explose, t'es coincé·e : tu bois. Le plus maladroit monte au podium."
+        }
+      ]
+    },
+    "live": {
+      "roundChip": "💥 {{round}} / {{target}}",
+      "categoryLabel": "CATÉGORIE",
+      "startFuse": "Allumer la mèche 🔥",
+      "passHintFirst": "Cite un mot… puis passe vite !",
+      "passHint": "{{count}} passage{{plural}} — ça chauffe",
+      "passCta": "PASSÉ ✓"
+    },
+    "boom": {
+      "title": "BOOM !",
+      "continue": "toucher pour continuer"
+    },
+    "blame": {
+      "badge": "💥 EXPLOSION",
+      "title": "Qui tenait\nle tel ?",
+      "subtitle": "Désigne le ou la malchanceux·se. Une gorgée à la clé."
+    },
+    "exploded": {
+      "badge": "💥 GRILLÉ·E",
+      "title": "{{name}} a explosé",
+      "subtitle": "Le tel t'a pété entre les mains. Assume.",
+      "drink": "Bois {{count}} gorgée{{plural}} et distribue-en {{count}} à qui tu veux 🍻",
+      "next": "Manche suivante →",
+      "podium": "Voir le podium →"
+    },
+    "podium": {
+      "badge": "💣 DÉMINEUR CATASTROPHIQUE",
+      "title": "{{name}} a tout fait sauter",
+      "titleNone": "Aucune victime ?!",
+      "subtitle": "{{count}} explosion{{plural}} dans les mains. Le bar t'attend.",
+      "subtitleNone": "Vous avez des réflexes de ninja. Suspect.",
+      "explosionsLabel": "💥 EXPLOSIONS",
+      "playAgain": "Rejouer une manche",
+      "backToHub": "Retour au hub"
+    }
+  }
+}

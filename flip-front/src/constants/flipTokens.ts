@@ -12,22 +12,24 @@ export const T = {
 
   // Accent palette — risograph
   tomato: '#FF5B3A',
-  cobalt: '#4482FF',   // was #2447FF — brightened for readability on backgrounds
+  cobalt: '#4482FF', // was #2447FF — brightened for readability on backgrounds
   lemon: '#FFD23F',
   mint: '#4FCB8A',
   violet: '#9B5BFF',
   pink: '#FF8FB1',
-  teal: '#00C4AE',     // Paranoïa
-  crimson: '#FF2D55',  // future (Red Flag)
-  sky: '#5BC8FF',      // future
-  lime: '#C4F034',     // future
+  teal: '#00C4AE', // Paranoïa
+  crimson: '#FF2D55', // future (Red Flag)
+  sky: '#5BC8FF', // future
+  lime: '#C4F034', // future
 
   // Game-specific
   chameleonAccent: '#4FCB8A',
   gaucheDroiteAccent: '#FFD23F',
   pureteAccent: '#9B5BFF',
   paranoiaAccent: '#00C4AE',
-  castingOrange: '#FF8C42',
+  castingMagenta: '#D633C9',
+  bombAccent: '#FF7A1A',
+  bombAccentDark: '#D6610C',
 
   // Radii
   rXs: 8,
