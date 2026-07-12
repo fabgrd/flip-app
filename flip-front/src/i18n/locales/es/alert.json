@@ -1,0 +1,7 @@
+{
+  "errors": {
+    "playerNameRequired": "Introduce el nombre de un jugador.",
+    "playerNameAlreadyExists": "Este nombre de jugador ya existe.",
+    "playerLimitReached": "No puedes añadir más de {{maxPlayers}} jugadores."
+  }
+}

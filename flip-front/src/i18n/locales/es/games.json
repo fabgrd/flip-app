@@ -1,0 +1,75 @@
+{
+  "selection": {
+    "title": "Elige un juego",
+    "subtitle": "{{count}} jugador(es) · listos para hacer el ridículo",
+    "surprise": "Sorpréndeme",
+    "minPlayersHint": "Este juego necesita al menos {{min}} jugadores ({{label}}).",
+    "maxPlayersHint": "Este juego admite hasta {{max}} jugadores ({{label}})."
+  },
+  "labels": {
+    "players": {
+      "redFlag": "1+ jugador",
+      "casting": "3–11 jugadores",
+      "apero": "2+ jugadores",
+      "medusa": "5+ jugadores",
+      "paranoia": "4+ jugadores",
+      "cameleon": "3+ jugadores",
+      "leftRight": "1+ jugador",
+      "purityTest": "1+ jugador",
+      "theBomb": "3+ jugadores",
+      "quiPourrait": "3+ jugadores"
+    },
+    "duration": {
+      "redFlag": "5 min",
+      "casting": "20 min",
+      "apero": "20 min",
+      "medusa": "10 min",
+      "paranoia": "15 min",
+      "cameleon": "15 min",
+      "leftRight": "10 min",
+      "purityTest": "5 min",
+      "theBomb": "10 min",
+      "quiPourrait": "15 min"
+    }
+  },
+  "purityTest": {
+    "title": "Test de Pureza",
+    "tagline": "¿Cuántos pecados cargas encima?"
+  },
+  "redFlag": {
+    "title": "¿Eres una Red Flag?",
+    "tagline": "A tus ex les habría encantado hacerte este test"
+  },
+  "casting": {
+    "title": "El Casting",
+    "tagline": "Actúa la escena más o menos"
+  },
+  "apero": {
+    "title": "El Aperitivo",
+    "tagline": "Adivina la carta del repartidor"
+  },
+  "medusa": {
+    "title": "Medusa",
+    "tagline": "Mira hacia arriba… y evita la mirada"
+  },
+  "paranoia": {
+    "title": "Paranoia",
+    "tagline": "¿Quién dijo tu nombre… y por qué?"
+  },
+  "cameleon": {
+    "title": "Camaleón",
+    "tagline": "Desenmascara al impostor"
+  },
+  "leftRight": {
+    "title": "Izquierda o Derecha",
+    "tagline": "Coloca la frase en la brújula política"
+  },
+  "theBomb": {
+    "title": "La Bomba",
+    "tagline": "Pásala antes de que explote"
+  },
+  "quiPourrait": {
+    "title": "¿Quién Podría?",
+    "tagline": "Votos secretos, dedos señalando, sin piedad"
+  }
+}

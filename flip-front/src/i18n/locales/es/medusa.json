@@ -1,0 +1,82 @@
+{
+  "rules": {
+    "title": "Medusa",
+    "tagline": "Mira hacia arriba… y evita el contacto visual",
+    "modalTitle": "Medusa",
+    "start": "Empezar la partida 🐍",
+    "steps": [
+      {
+        "n": "1",
+        "title": "Todos miran hacia abajo",
+        "desc": "El jugador activo dice «¡Mirad abajo!» y el grupo obedece con los ojos cerrados."
+      },
+      {
+        "n": "2",
+        "title": "3… 2… 1… ¡MEDUSA!",
+        "desc": "A la señal, todos levantan la cabeza y miran fijamente a otro jugador."
+      },
+      {
+        "n": "3",
+        "title": "Contacto visual = penalización",
+        "descDrink": "Si dos jugadores se miran a los ojos: 1 trago cada uno.",
+        "descSober": "Si dos jugadores se miran a los ojos: 1 punto cada uno."
+      },
+      {
+        "n": "4",
+        "title": "Sin contacto = a salvo",
+        "desc": "Si nadie te devuelve la mirada, sobrevives. Siguiente jugador, tu turno."
+      }
+    ]
+  },
+  "ready": {
+    "round": "RONDA {{num}} / {{total}}",
+    "title": "¿Todos\nlistos?",
+    "instruction": "Pon el móvil en el centro y:",
+    "say": "«¡Mirad abajo!»",
+    "startBtn": "¡Vamos! →"
+  },
+  "countdown": {
+    "prepare": "Preparaos…",
+    "medusa": "¡MEDUSA!",
+    "liftEyes": "¡Mirad arriba!"
+  },
+  "report": {
+    "chip": "Medusa · resolución",
+    "title": "¿Quién hizo\ncontacto visual?",
+    "sub": "Toca a dos jugadores que se miraron a los ojos.",
+    "selectHint": "Toca al jugador que se cruzó la mirada con {{name}}",
+    "pairsLabel": "CONTACTOS VISUALES · {{count}}",
+    "confirmBtn_one": "Confirmar · {{count}} pareja",
+    "confirmBtn_other": "Confirmar · {{count}} parejas",
+    "noOneBtn": "Nadie hizo contacto visual"
+  },
+  "roundResult": {
+    "contact": "¡CONTACTO!",
+    "allSafe": "TODOS A SALVO",
+    "caught": "¡Pillado!",
+    "niceTry": "¡Bien jugado!",
+    "contacts_one": "{{count}} contacto visual esta ronda",
+    "contacts_other": "{{count}} contactos visuales esta ronda",
+    "noContact": "Ningún contacto visual. Impresionante.",
+    "safeLabel": "A SALVO ESTA RONDA",
+    "penaltyEach": "{{unit}} CADA UNO",
+    "seeEnd": "Ver resumen final",
+    "nextRound": "Siguiente ronda →"
+  },
+  "end": {
+    "badge": "FIN DE LA PARTIDA",
+    "title": "Resumen de\ncontactos visuales",
+    "toursLabel": "RONDAS JUGADAS",
+    "eyeContactsLabel": "CONTACTOS VISUALES",
+    "ranking": "CLASIFICACIÓN",
+    "recap": "RESUMEN DE RONDAS",
+    "intouchable": "INTOCABLE",
+    "laMeduse": "LA MEDUSA",
+    "leads": "lidera",
+    "noContact": "· sin contacto",
+    "pairs_one": "· {{count}} pareja",
+    "pairs_other": "· {{count}} parejas",
+    "playAgain": "Jugar otra vez",
+    "backToHub": "Volver al hub"
+  }
+}

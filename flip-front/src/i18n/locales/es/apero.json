@@ -1,0 +1,106 @@
+{
+    "bridge": {
+        "label": "PUENTE · {{count}} CARTA{{plural}}"
+    },
+    "rules": {
+        "modalTitle": "El Aperitivo",
+        "title": "El Aperitivo",
+        "tagline": "Adivina, farolea, bebe — la carta no espera a nadie.",
+        "chip": "Juego n.º 6",
+        "cardLabel": "CÓMO SE JUEGA",
+        "start": "Empezar la partida 🍻",
+        "steps": [
+            {
+                "n": "1",
+                "title": "El repartidor saca una carta",
+                "desc": "La carta permanece oculta. El jugador activo intenta adivinarla."
+            },
+            {
+                "n": "2",
+                "title": "Primer intento — ¿más alta o más baja?",
+                "desc": "El jugador dice un número. La app responde «más alta» o «más baja»."
+            },
+            {
+                "n": "3",
+                "title": "Segundo intento — última oportunidad",
+                "descDrink": "Si falla, el jugador bebe la diferencia entre su apuesta y la carta.",
+                "descSober": "Si falla, el jugador se lleva como puntos la diferencia entre su apuesta y la carta."
+            },
+            {
+                "n": "4",
+                "titleDrink": "¿Acierta? El repartidor bebe",
+                "titleSober": "¿Acierta? El repartidor suma puntos",
+                "descDrink": "Si alguien acierta, el repartidor bebe 2 tragos y su racha se reinicia.",
+                "descSober": "Si alguien acierta, el repartidor se lleva 2 puntos y su racha se reinicia."
+            },
+            {
+                "n": "5",
+                "title": "3 rondas a salvo = el repartidor pasa",
+                "desc": "Si nadie acierta en 3 rondas, el repartidor pasa el móvil."
+            },
+            {
+                "n": "★",
+                "title": "Regla especial: el cuádruple",
+                "descDrink": "Cuando salen las 4 cartas del mismo valor, se voltean y el repartidor bebe 2 más.",
+                "descSober": "Cuando salen las 4 cartas del mismo valor, se voltean y el repartidor se lleva 2 puntos más."
+            }
+        ]
+    },
+    "pickDealer": {
+        "badge": "¿QUIÉN ES EL REPARTIDOR?",
+        "title": "Elige quién\n sostiene el móvil",
+        "sub": "El repartidor saca la carta y asume las consecuencias."
+    },
+    "round": {
+        "guessTitle": "{{name}}, adivina la carta",
+        "firstTry": "Primer intento",
+        "hintBadge": "Es {{hint}} {{arrow}}",
+        "youSaid": "Dijiste {{card}} ({{points}} pts)",
+        "secondTryChip": "Es {{hint}} que {{card}}",
+        "secondChance": "¡Segunda oportunidad!",
+        "lastTry": "Último intento, {{name}}",
+        "found": "¡ACERTADO!",
+        "missed": "¡FALLADO!",
+        "dealerResult": "{{name}} {{verb}} {{unit}}",
+        "resetStreak": "Racha del repartidor reiniciada",
+        "nextCard": "Siguiente carta →",
+        "seeSummary": "Ver resumen →",
+        "passPile": "Pasar el montón →"
+    },
+    "special": {
+        "badge": "★ ¡CUÁDRUPLE!",
+        "title": "¡Las 4 {{card}}\n han salido!",
+        "sub": "Las 4 cartas se voltean en el puente.",
+        "penaltyTitle": "{{name}} {{verb}} {{unit}}",
+        "penaltySub": "Penalización del cuádruple",
+        "continue": "Continuar →"
+    },
+    "dealerPass": {
+        "badge": "PASA EL MONTÓN",
+        "title": "{{name}}\n cede el turno",
+        "sub": "Elige quién recibe el montón."
+    },
+    "end": {
+        "badge": "FIN DE LA PARTIDA",
+        "title": "Resumen del\n Aperitivo",
+        "cards": "CARTAS",
+        "found": "ACERTADAS",
+        "ranking": "CLASIFICACIÓN",
+        "playAgain": "Jugar otra vez",
+        "backToHub": "Volver al hub"
+    },
+    "hints": {
+        "higher": "más alta",
+        "lower": "más baja"
+    },
+    "cards": {
+        "A": "As",
+        "V": "Jota",
+        "D": "Reina",
+        "R": "Rey"
+    },
+    "verbs": {
+        "drink": "bebe",
+        "take": "suma"
+    }
+}

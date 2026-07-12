@@ -1,0 +1,65 @@
+{
+  "title": "Ajustes",
+  "language": {
+    "title": "Idioma",
+    "subtitle": "Elige tu idioma preferido",
+    "options": {
+      "fr": "Français",
+      "en": "English",
+      "es": "Español"
+    }
+  },
+  "about": {
+    "title": "Acerca de",
+    "version": "Versión {{version}}",
+    "description": "FL!P - ¡El juego de beber definitivo para animar tus fiestas con amigos!"
+  },
+  "suggest": {
+    "label": "Sugerir una pregunta",
+    "hint": "¿Tienes una idea para una pregunta o frase de un juego?",
+    "title": "Sugerir una pregunta",
+    "gameLabel": "¿Qué juego?",
+    "allGames": "Todos los juegos",
+    "questionLabel": "Tu pregunta / frase",
+    "placeholder": "Ej. «¿Alguna vez has comido de pie sobre el fregadero?»",
+    "submit": "Enviar mi sugerencia",
+    "successTitle": "¡Gracias!",
+    "successDesc": "Leeremos tu sugerencia con atención. Las mejores preguntas entran en el juego 🤞",
+    "close": "Cerrar",
+    "errorTitle": "Vaya",
+    "errorDesc": "No se pudo enviar tu sugerencia. Comprueba tu conexión e inténtalo de nuevo."
+  },
+  "drinks": {
+    "title": "Modo juego de beber",
+    "label": "Repartir tragos",
+    "description": "Activa el reparto de tragos en los juegos para convertir Fl!p en un auténtico juego de beber.",
+    "lockedHint": "Desbloquea Premium para activar el modo juego de beber"
+  },
+  "premium": {
+    "title": "Suscripción",
+    "activeLabel": "Fl!p VIP activo",
+    "activeHint": "Todas las funciones desbloqueadas"
+  },
+  "tiktok": {
+    "title": "Gana 1 año de VIP",
+    "label": "Haz un TikTok y gana 1 año de VIP",
+    "hint": "Publica un vídeo de Fl!p que supere los 1.000 likes 🎁",
+    "reward": "🎁 1 año gratis de Fl!p VIP",
+    "pitch": "Crea un TikTok sobre Fl!p. Si consigue más de 1.000 likes, te regalamos un año de VIP. Así de simple.",
+    "steps": {
+      "1": "Publica un TikTok original sobre Fl!p",
+      "2": "Consigue más de {{likes}} likes",
+      "3": "Pega aquí el enlace de tu vídeo"
+    },
+    "linkLabel": "Tu enlace de TikTok",
+    "linkPlaceholder": "https://www.tiktok.com/@tu/video/...",
+    "handleLabel": "Tu @ o email",
+    "handlePlaceholder": "@tu_usuario o email para contactarte",
+    "submit": "Reclamar mi recompensa",
+    "successTitle": "¡Recibido!",
+    "successDesc": "Revisaremos tu vídeo y te contactaremos para activar tu año VIP. Gracias por ayudar a que Fl!p crezca 💛",
+    "close": "Cerrar",
+    "errorTitle": "Vaya",
+    "errorDesc": "No se pudo enviar tu solicitud. Comprueba tu conexión e inténtalo de nuevo."
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "default": {
+    "title": "Hazte Fl!p VIP",
+    "pitch": "Desbloquéalo todo · Cancela cuando quieras",
+    "benefits": [
+      {
+        "icon": "games",
+        "title": "Todos los juegos desbloqueados",
+        "sub": "Camaleón, Pureza, Paranoia + juegos futuros"
+      },
+      {
+        "icon": "drink",
+        "title": "Modo beber desbloqueado",
+        "sub": "Convierte cualquier juego en una sesión de tragos"
+      },
+      {
+        "icon": "difficulty",
+        "title": "Nivel de dificultad de las preguntas",
+        "sub": "Suave, Picante, Hardcore… controla la intensidad"
+      },
+      {
+        "icon": "themes",
+        "title": "Temas exclusivos desbloqueados",
+        "sub": "Decadencia, Hot, Tabú, Fiestas, Picante…"
+      },
+      {
+        "icon": "questions",
+        "title": "Más de 5.000 preguntas",
+        "sub": "Contenido exclusivo nuevo cada semana"
+      }
+    ]
+  },
+  "plans": {
+    "annual": "Anual",
+    "monthly": "Mensual",
+    "weekly": "Semanal",
+    "perWeek": "{{price}}/sem",
+    "label": "ELIGE TU PLAN",
+    "discount": "−70%"
+  },
+  "cta": {
+    "trial": "Prueba gratis",
+    "start": "Empezar",
+    "trialBadge": "7 días gratis",
+    "subtextWeekly": "Gratis 7 días, luego {{price}}/semana",
+    "subtextMonthly": "Se renueva cada mes, cancela cuando quieras",
+    "subtextYearly": "Se renueva cada año, cancela cuando quieras"
+  },
+  "footer": {
+    "secure": "Pago seguro a través de App Store",
+    "restore": "Restaurar",
+    "terms": "Términos",
+    "privacy": "Privacidad",
+    "redeem": "Tengo un código"
+  },
+  "success": {
+    "title": "¡Suscripción VIP activada!",
+    "subtitle": "Ahora tienes acceso a todo. Disfruta 🎉"
+  }
+}

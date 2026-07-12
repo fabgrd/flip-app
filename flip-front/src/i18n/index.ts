@@ -5,6 +5,7 @@ import { captureException } from '../lib/sentry';
 
 // Import translations
 import en from './locales/en';
+import es from './locales/es';
 import fr from './locales/fr';
 
 const LANGUAGE_DETECTOR = {
@@ -67,6 +68,7 @@ i18n
     },
     resources: {
       en,
+      es,
       fr,
     },
     returnNull: false,

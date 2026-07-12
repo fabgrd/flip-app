@@ -1,0 +1,286 @@
+{
+  "rules": {
+    "title": "El\nCasting",
+    "tagline": "Actúa la escena según tu número secreto",
+    "modalTitle": "El Casting",
+    "start": "Empezar la partida 🎬",
+    "themeLabel": "TEMA",
+    "steps": [
+      {
+        "n": "1",
+        "title": "Se elige a un adivino",
+        "desc": "Él observa. Los demás son actores."
+      },
+      {
+        "n": "2",
+        "title": "Cada actor recibe un número secreto",
+        "desc": "Del 1 (catastrófico) al 10 (óscar). El adivino no lo sabe."
+      },
+      {
+        "n": "3",
+        "title": "El adivino lee un escenario",
+        "desc": "Ejemplo: «Tropezar en la cafetería con tu bandeja»."
+      },
+      {
+        "n": "4",
+        "title": "Todos actúan la escena",
+        "desc": "Según su número: 1 = pésimo, 10 = actuación alucinante."
+      },
+      {
+        "n": "5",
+        "title": "El adivino adivina los números",
+        "descDrink": "Asigna un número a cada actor. Cuanto más falle, más bebe.",
+        "descSober": "Asigna un número a cada actor. Cuanto más falle, más acumula."
+      }
+    ]
+  },
+  "pickDevin": {
+    "mono": "¿QUIÉN ES EL ADIVINO?",
+    "title": "Elige el\njurado del casting",
+    "sub": "El adivino observa, juzga y adivina los números."
+  },
+  "scenario": {
+    "mono": "EL ESCENARIO",
+    "devinChip": "El Adivino · {{name}}",
+    "hint": "Lee este escenario en voz alta.\nLuego pasa el móvil a cada actor para ver su número.",
+    "distributeBtn": "Repartir números →"
+  },
+  "handoff": {
+    "instruction": "Pasa el móvil a {{name}}",
+    "sub": "Mira tu número en secreto antes de pulsar.",
+    "revealBtn": "Estoy solo — revelar"
+  },
+  "revealNumber": {
+    "holdTitle": "Mantén pulsado para\nver tu número",
+    "holdBtn": "MANTÉN",
+    "scenarioMono": "ESCENARIO",
+    "scaleTip": "1 = catastrófico · 10 = óscar",
+    "nextBtn": "Visto — pasar al siguiente"
+  },
+  "perform": {
+    "action": "¡ACCIÓN!",
+    "scenarioMono": "ESCENARIO",
+    "hint": "Cada actor actúa la escena según su número.\n{{devin}} observa con atención.",
+    "judgeBtn": "Todos actuaron → Juicio"
+  },
+  "guess": {
+    "devinChip": "Adivino · {{name}}",
+    "question": "¿Qué número tenía\n{{name}}?",
+    "nextBtn": "Siguiente jugador →",
+    "verdictBtn": "Ver el veredicto →"
+  },
+  "results": {
+    "badge": "EL VEREDICTO",
+    "title": "Resultados\ndel casting",
+    "pilePoil": "CLAVADO",
+    "presque": "CERCA",
+    "rates": "FALLADO",
+    "castingParfait": "¡Casting Perfecto!",
+    "castingParfaitSub": "{{devin}} lo adivinó todo — los actores {{verb}} {{unit}} más (¡demasiado obvio!)",
+    "flopTotal": "¡Fracaso Total!",
+    "flopTotalSub": "Nadie acertó — los actores {{verb}} {{unit}} más (¡demasiado caótico!)",
+    "actorDetail": "DESGLOSE POR ACTOR",
+    "realArrow": "REAL →",
+    "devinedLabel": "ADIVINADO",
+    "rankingLabel": "CLASIFICACIÓN · {{total}} {{unit}} EN TOTAL",
+    "devinBadge": " ADIVINO",
+    "playAgain": "Jugar otra vez",
+    "backToHub": "Volver al hub",
+    "actorDrinks": "{{name}} bebe {{count}}",
+    "actorSober": "{{name}} se lleva {{count}}"
+  },
+  "scenarios": {
+    "daily": [
+      "Tropezar en la cafetería con la bandeja llena",
+      "Ver una araña enorme en la ducha y gritar",
+      "Que te pillen mintiendo a tus amigos",
+      "Darte cuenta de que estás en ropa interior en una videollamada importante",
+      "Fallar al aparcar en paralelo frente a una terraza llena",
+      "Que te pillen sin billete en el metro",
+      "Decirles a tus padres que has suspendido los exámenes",
+      "Descubrir que tu vuelo se cancela 30 minutos antes de salir",
+      "Pisar una caca de perro con zapatos nuevos",
+      "Darte cuenta de que enviaste un audio vergonzoso al grupo equivocado",
+      "Derramar tu café en el portátil de tu jefe durante una reunión",
+      "Que se te quede la mano atascada en una máquina expendedora",
+      "Enterarte de que te despiden por un email grupal",
+      "Quedarte solo en el escenario sin saberte el guion",
+      "Olvidar la bolsa de deporte el día de la clase de natación",
+      "Llamar «mamá» a la profesora delante de toda la clase",
+      "Que te pillen cantando a grito pelado en el coche en un semáforo",
+      "Publicar una historia creyendo que era solo para mejores amigos",
+      "Olvidar el cargador del móvil en una escapada de fin de semana",
+      "Confundirte de día para una cita importante",
+      "Chocarte con una farola mirando el móvil",
+      "Que se te caiga el móvil al váter",
+      "Olvidar la mochila en el autobús y salir corriendo tras él",
+      "Mancharte de café justo antes de una cita",
+      "Que se te cierre la puerta del ascensor en las narices",
+      "Resbalar en el suelo mojado del supermercado",
+      "Perder un zapato caminando por la calle",
+      "Que un coche te salpique al pasar por un charco",
+      "Olvidar las llaves dentro y quedarte fuera de casa",
+      "Que se te caiga todo del bolso en el metro",
+      "Ir en dirección contraria en una escalera mecánica abarrotada",
+      "Que una ráfaga de viento te esparza todos los papeles"
+    ],
+    "relations": [
+      "Recibir un mensaje de tu ex a las 3 de la mañana",
+      "Que te dejen en medio de un restaurante delante de todos",
+      "Cruzarte con tu crush en el súper en pijama y zapatillas",
+      "Que te pique una avispa en una cita",
+      "Intentar ligar en un idioma que no hablas nada",
+      "Presentar a tu nueva pareja a amigos que ya le habían hecho ghosting",
+      "Darte cuenta de que llamaste a tu cita por el nombre de tu ex",
+      "Ver a tu cita darle like a la foto de otra persona delante de ti",
+      "Que te hagan ghosting justo después de la primera noche juntos",
+      "Descubrir que tu crush sale con tu mejor amigo",
+      "Enviar un «te quiero» tras solo 3 días",
+      "Que te dejen en la friendzone a mitad de conversación",
+      "Tener una cita catastrófica de Tinder",
+      "Que te bloqueen tras confesar un fetiche raro",
+      "Darte cuenta de que tu cita tenía pareja todo el tiempo",
+      "Que te dejen con un audio de 2 minutos",
+      "Cruzarte con tu ex y su nueva pareja justo tras la ruptura"
+    ],
+    "spicy": [
+      "Despertar en la cama de un desconocido sin recordar la noche anterior",
+      "Vomitar sobre tu cita durante la cena",
+      "Descubrir un chupetón enorme antes de una cena familiar",
+      "Mojar la cama tras una gran noche de fiesta",
+      "Enviar un nude al contacto equivocado (padre/jefe)",
+      "Caer completamente desnudo a la piscina delante de los suegros",
+      "Que tu compañero de piso te pille en pleno acto",
+      "Darte cuenta de que entraste al baño equivocado en un bar lleno",
+      "Dar un discurso de boda completamente borracho",
+      "Soltar un pedo sonoro durante el sexo",
+      "Que se te quede la mano atascada en un juguete sexual",
+      "Que el condón se rompa en el peor momento posible",
+      "Que tu madre te pille viendo porno",
+      "Tener diarrea durante el sexo",
+      "Perder la ropa interior en un Uber tras una noche de fiesta",
+      "Despertar con pintalabios por toda la cara"
+    ],
+    "taboo": [
+      "Contarle a tu familia algo muy vergonzoso de tu vida sexual",
+      "Enterarte de una infidelidad por las historias de Instagram",
+      "Que te dejen el día de tu boda",
+      "Descubrir que uno de tus padres tiene una doble vida",
+      "Confesar a tus padres que perdiste el trabajo hace 3 meses",
+      "Que tu mejor amigo te deje en evidencia delante de todos",
+      "Descubrir que eres el tema de un grupo de WhatsApp de burlas",
+      "Enterarte de que tus padres vieron tus nudes",
+      "Que te pillen robando dinero de la cartera de tus padres",
+      "Confesar a tu familia que estás deprimido",
+      "Darte cuenta de que toda la familia sabe que te acostaste con tu ex"
+    ],
+    "gaming": [
+      "Ir 0-13 en ranked y que todo el equipo te eche la bronca",
+      "Olvidar apagar el micro mientras despotricas contra tus compañeros",
+      "Que te hagan stream sniping durante un torneo",
+      "Morir de forma estúpida justo tras chulearte del rival",
+      "Sufrir un lag brutal en un momento decisivo",
+      "Que te baneen del Discord de tus amigos por una broma",
+      "Acusar a alguien de hacer trampas cuando la culpa era tuya",
+      "Perder todos tus objetos raros por una estafa",
+      "Que te echen del servidor justo antes del jefe final",
+      "Desactivar el mute sin querer en una llamada con desconocidos",
+      "Que un amigo grabe tu épico rage quit"
+    ],
+    "family": [
+      "Que toda la familia te pregunte «¿y sigues soltero?» en Navidad",
+      "Perderte la cena de Navidad por estar completamente borracho",
+      "Que tus abuelos te pillen fumando",
+      "Tener una erección durante un abrazo familiar",
+      "Que tu madre registre tu habitación con 20 años",
+      "Que te pillen viendo porno",
+      "Confesar que dejaste de ir a clase hace 2 meses",
+      "Que te comparen con tu primo que triunfa en todo",
+      "Montar una escena en una reunión familiar tras beber demasiado",
+      "Confesar que llevas meses suspendiendo los exámenes"
+    ],
+    "studies": [
+      "Ir al aula equivocada el día del examen",
+      "Entregar un examen completamente en blanco",
+      "Que te examinen del único tema que no estudiaste",
+      "Que te venga la regla durante un examen oral importante",
+      "Dar una presentación con una errata enorme en la primera diapositiva",
+      "Llamar a tu jefe por su nombre en un email muy formal",
+      "Enviar una queja sobre el jefe… al jefe",
+      "Que te pillen durmiendo durante una videollamada",
+      "Arruinar una presentación importante porque tenías un meme abierto",
+      "Quedarte en blanco por completo en una entrevista de trabajo",
+      "Que te despidan de las prácticas por publicar una historia de fiesta",
+      "Copiar del compañero y que te pillen con las manos en la masa",
+      "Olvidar entregar la tesis el día antes del plazo",
+      "Presentarte a un examen oral completamente colocado",
+      "Recibir un email de «no te renovamos» tras 6 meses de prácticas",
+      "Ir a la sala equivocada para una entrevista importante",
+      "Que se te enganche la corbata en la máquina de café"
+    ],
+    "party": [
+      "Vomitar en la pista de baile delante de todos",
+      "Perder el móvil + la cartera + las llaves en una fiesta",
+      "Besar a la persona equivocada durante un juego",
+      "Despertar con un tatuaje temporal muy vergonzoso",
+      "Hacer un striptease sin querer mientras bailas",
+      "Que los anfitriones te echen de la fiesta",
+      "Perder los zapatos y volver a casa descalzo",
+      "Despertar en una bañera en casa de un desconocido",
+      "Hacer una declaración de amor borracho a la persona equivocada",
+      "Meterte en una pelea por algo completamente estúpido",
+      "Publicar historias muy comprometidas estando borracho",
+      "Tener un blackout total de 4 horas",
+      "Despertar con un tatuaje temporal en forma de polla en la frente",
+      "Bailar como un loco y caerte desde lo alto de la mesa"
+    ],
+    "cinema": [
+      "Pelear contra 10 enemigos en una escena de película de acción",
+      "Actuar una escena de muerte ultra dramática y exagerada",
+      "Hacer una declaración de amor como en una peli romántica",
+      "Imitar una escena de pelea a cámara lenta",
+      "Interpretar a un villano riéndose diabólicamente",
+      "Actuar una escena aterrorizado en una película de terror",
+      "Bailar como en un musical",
+      "Interpretar a un gánster al que disparan",
+      "Imitar una escena de beso ultra apasionado",
+      "Provocar una explosión con efectos especiales ridículos"
+    ],
+    "sports": [
+      "Fallar un penalti ante todo el estadio",
+      "Recibir un smash de tenis en plena cara",
+      "Caerte de la cinta de correr en medio del gimnasio",
+      "Hacer un pleno en los bolos y luego resbalar y caerte",
+      "Que un niño de 10 años te humille al fútbol",
+      "Fallar por completo un truco de skate",
+      "Torcerte el tobillo intentando presumir",
+      "Perder un partido de ping-pong 11-0",
+      "Intentar parkour y estamparte por completo",
+      "Ahogarte en 1,5 m de agua en la piscina"
+    ]
+  },
+  "themes": {
+    "daily": "Día a día",
+    "relations": "Relaciones",
+    "party": "Fiestas",
+    "gaming": "Gaming",
+    "family": "Familia",
+    "studies": "Estudios y trabajo",
+    "spicy": "Picante",
+    "taboo": "Tabú",
+    "cinema": "Escenas de cine",
+    "sports": "Deporte y fails"
+  },
+  "labels": {
+    "1": "Catastrófico",
+    "2": "Horrible",
+    "3": "Malo",
+    "4": "Regulero",
+    "5": "Normal",
+    "6": "Aceptable",
+    "7": "Bueno",
+    "8": "Muy bueno",
+    "9": "Excelente",
+    "10": "Óscar"
+  }
+}

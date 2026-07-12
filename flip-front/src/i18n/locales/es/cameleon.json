@@ -1,0 +1,259 @@
+{
+  "name": "Camaleón",
+  "description": "¡Adivina a los impostores por sus pistas... sin revelar tu palabra!",
+  "game": {
+    "title": "Camaleón",
+    "subtitle": "Ajustes y reparto de roles"
+  },
+  "settings": {
+    "title": "Ajustes",
+    "subtitle": "{{count}} jugadores",
+    "players": "Jugadores",
+    "impostors": "Impostores",
+    "undercover": "Infiltrado",
+    "mrWhite": "Mr White",
+    "theme": "Tema",
+    "themeHint": "Elige el ambiente antes de empezar la ronda.",
+    "needAtLeastOneImpostor": "Añade al menos 1 impostor (Infiltrado o Mr White) para empezar la partida."
+  },
+  "actions": {
+    "start": "Empezar",
+    "reveal": "Revelar",
+    "seeResults": "Ver resultados",
+    "reset": "Reiniciar",
+    "goToVote": "Ir a votar",
+    "eliminate": "Eliminar",
+    "submit": "Enviar"
+  },
+  "reveal": {
+    "title": "Revelar palabra",
+    "subtitle": "Pasa el móvil a cada jugador",
+    "secretWord": "Palabra secreta: {{word}}",
+    "mrWhiteWarning": "¡Eres Mr White! No tienes palabra — farolea con astucia.",
+    "handoffTo": "Pasa el móvil a",
+    "handoffHint": "Busca un sitio tranquilo antes de pulsar.",
+    "revealRole": "Revelar mi rol",
+    "next": "Entendido — siguiente",
+    "category": "CATEGORÍA",
+    "wordHint": "Da una pista que no sea ni demasiado obvia ni demasiado vaga.",
+    "youAreMrWhite": "ERES MR WHITE",
+    "mrWhiteHint": "No tienes palabra. Farolea lo mejor que puedas e intenta adivinar la de los demás."
+  },
+  "roles": {
+    "civilian": "Civil",
+    "cameleon": "Infiltrado",
+    "mrWhite": "Mr White"
+  },
+  "results": {
+    "title": "Resultados",
+    "subtitle": "Roles y palabras"
+  },
+  "outcome": {
+    "civiliansWin": "¡Ganan los civiles!",
+    "undercoverWin": "¡Ganan los infiltrados!"
+  },
+  "badges": {
+    "eliminated": "FUERA"
+  },
+  "modals": {
+    "firstPlayer": "¡{{name}} empieza!"
+  },
+  "notices": {
+    "eliminatedRole": "1 {{role}} eliminado"
+  },
+  "counters": {
+    "remainingImpostors": "Impostores restantes: {{count}}"
+  },
+  "mrWhite": {
+    "guessTitle": "Mr White",
+    "guessPrompt": "Vaya, te han descubierto. Aún puedes intentar adivinar la palabra. Si aciertas, lo sabrás al final de la partida.",
+    "placeholder": "Escribe aquí tu respuesta"
+  },
+  "themes": {
+    "random": "Aleatorio",
+    "randomDesc": "Mezcla todos los universos",
+    "daily": "Día a día",
+    "dailyDesc": "Palabras simples y claras",
+    "football": "Fútbol",
+    "footballDesc": "Cultura y rivalidades del deporte",
+    "hot": "Hot",
+    "hotDesc": "Un ambiente más picante",
+    "wtf": "WTF",
+    "wtfDesc": "Parejas absurdas, sucias y raras",
+    "sousculture": "Subcultura",
+    "souscultureDesc": "Mezcla de referencias de culto y de nicho",
+    "rap": "Rap",
+    "rapDesc": "Palabras relacionadas con la cultura hip-hop",
+    "decadence": "Decadencia",
+    "decadenceDesc": "Parejas ultra decadentes para amantes del vicio"
+  },
+  "wordPairsByTheme": {
+    "daily": [
+      { "w": "Gato", "c": "Tigre" },
+      { "w": "Perro", "c": "Lobo" },
+      { "w": "Playa", "c": "Piscina" },
+      { "w": "Pizza", "c": "Coca de pan" },
+      { "w": "Avión", "c": "Helicóptero" },
+      { "w": "Invierno", "c": "Otoño" },
+      { "w": "Enfermera", "c": "Médico" },
+      { "w": "Panadero", "c": "Pastelero" },
+      { "w": "Cine", "c": "Teatro" },
+      { "w": "Concierto", "c": "Festival" },
+      { "w": "Bosque", "c": "Jungla" },
+      { "w": "Nieve", "c": "Granizo" },
+      { "w": "Coche", "c": "Moto" },
+      { "w": "Cama", "c": "Sofá" },
+      { "w": "Café", "c": "Té" },
+      { "w": "Bici", "c": "Patinete" },
+      { "w": "Supermercado", "c": "Tienda de barrio" },
+      { "w": "Ayuntamiento", "c": "Diputación" },
+      { "w": "Camembert", "c": "Brie" },
+      { "w": "Panadería", "c": "Bocatería" },
+      { "w": "Museo", "c": "Galería de arte" },
+      { "w": "Médico", "c": "Farmacéutico" },
+      { "w": "Tren", "c": "Autobús" },
+      { "w": "Biblioteca", "c": "Librería" },
+      { "w": "Vacaciones", "c": "Fin de semana" },
+      { "w": "Casa", "c": "Apartamento" },
+      { "w": "Lluvia", "c": "Llovizna" },
+      { "w": "Montaña", "c": "Colina" },
+      { "w": "Zapatos", "c": "Zapatillas" },
+      { "w": "Despertador", "c": "Alarma del móvil" }
+    ],
+    "sousculture": [
+      { "w": "Fútbol", "c": "Rugby" },
+      { "w": "Balonmano", "c": "Baloncesto" },
+      { "w": "Le Mans", "c": "Mónaco (F1)" },
+      { "w": "GTA", "c": "Red Dead Redemption" },
+      { "w": "Fortnite", "c": "PUBG" },
+      { "w": "PS5", "c": "Xbox" },
+      { "w": "Minecraft", "c": "Roblox" },
+      { "w": "League of Legends", "c": "Dota 2" },
+      { "w": "One Piece", "c": "Dragon Ball" },
+      { "w": "Naruto", "c": "Bleach" },
+      { "w": "Marvel", "c": "DC Comics" },
+      { "w": "Netflix", "c": "Disney+" },
+      { "w": "Breaking Bad", "c": "Peaky Blinders" },
+      { "w": "TikTok", "c": "Instagram" },
+      { "w": "Snapchat", "c": "Telegram" },
+      { "w": "Rap", "c": "R&B" },
+      { "w": "Beyoncé", "c": "Rihanna" },
+      { "w": "Bad Bunny", "c": "Rosalía" },
+      { "w": "Nike", "c": "Adidas" },
+      { "w": "Supreme", "c": "Palace" },
+      { "w": "iPhone", "c": "Samsung Galaxy" },
+      { "w": "YouTube", "c": "Twitch" },
+      { "w": "Spotify", "c": "Apple Music" },
+      { "w": "Festival de música", "c": "Rave" }
+    ],
+    "football": [
+      { "w": "Fútbol", "c": "Rugby" },
+      { "w": "Real Madrid", "c": "Barcelona" },
+      { "w": "Arsenal", "c": "Tottenham" },
+      { "w": "Messi", "c": "Ronaldo" },
+      { "w": "LaLiga", "c": "Premier League" },
+      { "w": "Mundial", "c": "Eurocopa" },
+      { "w": "Mbappé", "c": "Dembélé" },
+      { "w": "Zidane", "c": "Guardiola" },
+      { "w": "Neymar", "c": "Suárez" },
+      { "w": "Benzema", "c": "Lewandowski" },
+      { "w": "Courtois", "c": "Ter Stegen" },
+      { "w": "Maradona", "c": "Pelé" },
+      { "w": "Real Madrid", "c": "Atlético de Madrid" },
+      { "w": "Manchester United", "c": "Manchester City" },
+      { "w": "Bayern de Múnich", "c": "Borussia Dortmund" },
+      { "w": "Champions League", "c": "Europa League" }
+    ],
+    "rap": [
+      { "w": "Drake", "c": "Kendrick Lamar" },
+      { "w": "Future", "c": "Lil Baby" },
+      { "w": "Travis Scott", "c": "Playboi Carti" },
+      { "w": "21 Savage", "c": "Metro Boomin" },
+      { "w": "Lil Uzi Vert", "c": "Yeat" },
+      { "w": "Eminem", "c": "50 Cent" },
+      { "w": "Chief Keef", "c": "King Von" },
+      { "w": "Pop Smoke", "c": "Fivio Foreign" },
+      { "w": "Tyler, The Creator", "c": "A$AP Rocky" },
+      { "w": "Kanye West", "c": "Kid Cudi" },
+      { "w": "J. Cole", "c": "Cordae" },
+      { "w": "Lil Wayne", "c": "Birdman" },
+      { "w": "Juice WRLD", "c": "XXXTENTACION" },
+      { "w": "Doja Cat", "c": "Megan Thee Stallion" },
+      { "w": "Nicki Minaj", "c": "Cardi B" },
+      { "w": "Snoop Dogg", "c": "Wiz Khalifa" },
+      { "w": "Mac Miller", "c": "Logic" },
+      { "w": "Post Malone", "c": "Jack Harlow" },
+      { "w": "Ice Spice", "c": "Sexyy Red" },
+      { "w": "NBA YoungBoy", "c": "Kodak Black" }
+    ],
+    "hot": [
+      { "w": "Rollo de una noche", "c": "Amigo con derechos" },
+      { "w": "OnlyFans", "c": "Mym" },
+      { "w": "Pornhub", "c": "Xvideos" },
+      { "w": "Glande", "c": "Frenillo" },
+      { "w": "Follar", "c": "Mamada" },
+      { "w": "Pene", "c": "Clítoris" }
+    ],
+    "decadence": [
+      { "w": "Marihuana", "c": "Hachís" },
+      { "w": "Coca", "c": "MDMA" },
+      { "w": "Cachimba", "c": "Porro" },
+      { "w": "Resaca", "c": "Mal viaje" },
+      { "w": "Botellón", "c": "Precopeo" },
+      { "w": "Vodka", "c": "Ron" },
+      { "w": "Cerveza", "c": "Sidra" },
+      { "w": "Borracho", "c": "Colocado" }
+    ],
+    "wtf": [
+      { "w": "Bouzelouf", "c": "Tasty Crousty" },
+      { "w": "Polla de caballo", "c": "Huevos de toro" },
+      { "w": "Globo (de gas de la risa)", "c": "Bombona de óxido nitroso" },
+      { "w": "Pedo", "c": "Eructo" },
+      { "w": "Vómito", "c": "Caca" },
+      { "w": "Mancha de vino tinto", "c": "Vino de Oporto" },
+      { "w": "Caballo de Troya", "c": "Ransomware" },
+      { "w": "Kevin", "c": "Karen" },
+      { "w": "Skibidi toilet", "c": "Sigma grindset" },
+      { "w": "Sopa de piedra", "c": "Batido de tierra" },
+      { "w": "Caillou (dibujos)", "c": "Noddy" }
+    ]
+  },
+  "phases": {
+    "vote": "Voto final",
+    "clues": "Pistas"
+  },
+  "vote": {
+    "hint": "Debatid y luego votad juntos."
+  },
+  "ui": {
+    "title": "Camaleón",
+    "tagline": "Desenmascara al impostor",
+    "modalTitle": "El Camaleón",
+    "start": "Empezar la partida 🦎",
+    "steps": [
+      {
+        "n": "1",
+        "title": "Pasad el móvil",
+        "desc": "Todos ven su palabra secreta… excepto el camaleón."
+      },
+      {
+        "n": "2",
+        "title": "Una pista cada uno",
+        "desc": "Una palabra, no más. Ni demasiado obvia ni demasiado vaga."
+      },
+      {
+        "n": "3",
+        "title": "Debatid",
+        "desc": "Discutid — ¿quién parece no saber de qué habla?"
+      },
+      {
+        "n": "4",
+        "title": "Todos votan",
+        "desc": "Señalad al impostor. Si lo desenmascaráis, ganan los civiles."
+      }
+    ],
+    "whoIsTitle": "¿Quién es\nel camaleón?",
+    "drinkCaught": "🍻 {{name}} bebe 3 tragos (¡desenmascarado!)",
+    "drinkBadVote": "🍻 {{name}} bebe 2 tragos (mal voto del grupo)"
+  }
+}

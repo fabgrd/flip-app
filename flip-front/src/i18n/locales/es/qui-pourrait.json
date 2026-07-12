@@ -1,0 +1,371 @@
+{
+  "prompts": [
+    {
+      "id": "qp_daily_1",
+      "text": "olvidar su propio cumpleaños",
+      "theme": "daily",
+      "tier": "free"
+    },
+    {
+      "id": "qp_daily_2",
+      "text": "perderse en su propia ciudad",
+      "theme": "daily",
+      "tier": "free"
+    },
+    {
+      "id": "qp_daily_3",
+      "text": "escribir en el grupo equivocado",
+      "theme": "daily",
+      "tier": "free"
+    },
+    {
+      "id": "qp_daily_4",
+      "text": "quedarse dormido el día más importante",
+      "theme": "daily",
+      "tier": "free"
+    },
+    {
+      "id": "qp_daily_5",
+      "text": "hablar solo en el metro",
+      "theme": "daily",
+      "tier": "free"
+    },
+    {
+      "id": "qp_daily_6",
+      "text": "llorar con un anuncio de perros",
+      "theme": "daily",
+      "tier": "free"
+    },
+    {
+      "id": "qp_daily_7",
+      "text": "pasar un domingo entero sin salir de la cama",
+      "theme": "daily",
+      "tier": "free"
+    },
+    {
+      "id": "qp_daily_8",
+      "text": "caer dos veces en la misma estafa",
+      "theme": "daily",
+      "tier": "free"
+    },
+    {
+      "id": "qp_party_1",
+      "text": "acabar la noche contándole su vida a un desconocido",
+      "theme": "party",
+      "tier": "free"
+    },
+    {
+      "id": "qp_party_2",
+      "text": "perder el móvil en una fiesta y encontrarlo en la nevera",
+      "theme": "party",
+      "tier": "free"
+    },
+    {
+      "id": "qp_party_3",
+      "text": "hacerse mejor amigo del portero de la disco",
+      "theme": "party",
+      "tier": "free"
+    },
+    {
+      "id": "qp_party_4",
+      "text": "montar un karaoke sin micro",
+      "theme": "party",
+      "tier": "free"
+    },
+    {
+      "id": "qp_party_5",
+      "text": "ser el primero en dormirse en la fiesta",
+      "theme": "party",
+      "tier": "free"
+    },
+    {
+      "id": "qp_party_6",
+      "text": "bailar solo en una pista vacía",
+      "theme": "party",
+      "tier": "free"
+    },
+    {
+      "id": "qp_party_7",
+      "text": "pedir kebabs para todos a las 4 de la mañana",
+      "theme": "party",
+      "tier": "free"
+    },
+    {
+      "id": "qp_party_8",
+      "text": "prometer «solo una copa» y llegar a casa a las 6",
+      "theme": "party",
+      "tier": "free"
+    },
+    {
+      "id": "qp_love_1",
+      "text": "volver con su ex (otra vez)",
+      "theme": "love",
+      "tier": "free"
+    },
+    {
+      "id": "qp_love_2",
+      "text": "enamorarse en tres días",
+      "theme": "love",
+      "tier": "free"
+    },
+    {
+      "id": "qp_love_3",
+      "text": "mandar un «pensando en ti» a las 3 de la mañana",
+      "theme": "love",
+      "tier": "free"
+    },
+    {
+      "id": "qp_love_4",
+      "text": "stalkear al nuevo ligue de su ex",
+      "theme": "love",
+      "tier": "free"
+    },
+    {
+      "id": "qp_love_5",
+      "text": "escribir un poema de amor de vergüenza ajena",
+      "theme": "love",
+      "tier": "free"
+    },
+    {
+      "id": "qp_love_6",
+      "text": "tratar una cita como una entrevista de trabajo",
+      "theme": "love",
+      "tier": "free"
+    },
+    {
+      "id": "qp_love_7",
+      "text": "decir «te quiero» primero tras una semana",
+      "theme": "love",
+      "tier": "free"
+    },
+    {
+      "id": "qp_love_8",
+      "text": "casarse por un impulso en Las Vegas",
+      "theme": "love",
+      "tier": "free"
+    },
+    {
+      "id": "qp_wtf_1",
+      "text": "adoptar cinco gatos en secreto",
+      "theme": "wtf",
+      "tier": "free"
+    },
+    {
+      "id": "qp_wtf_2",
+      "text": "convertirse en influencer de la noche a la mañana",
+      "theme": "wtf",
+      "tier": "free"
+    },
+    {
+      "id": "qp_wtf_3",
+      "text": "ganar un concurso de discutir de mala fe",
+      "theme": "wtf",
+      "tier": "free"
+    },
+    {
+      "id": "qp_wtf_4",
+      "text": "mentir sobre su edad sin motivo",
+      "theme": "wtf",
+      "tier": "free"
+    },
+    {
+      "id": "qp_wtf_5",
+      "text": "unirse a una secta por educación",
+      "theme": "wtf",
+      "tier": "free"
+    },
+    {
+      "id": "qp_wtf_6",
+      "text": "pelearse con una paloma y perder",
+      "theme": "wtf",
+      "tier": "free"
+    },
+    {
+      "id": "qp_wtf_7",
+      "text": "creerse una teoría conspirativa totalmente absurda",
+      "theme": "wtf",
+      "tier": "free"
+    },
+    {
+      "id": "qp_wtf_8",
+      "text": "responder a un email de trabajo con un meme",
+      "theme": "wtf",
+      "tier": "free"
+    },
+    {
+      "id": "qp_hot_1",
+      "text": "mandar un nude al contacto equivocado",
+      "theme": "hot",
+      "tier": "spicy"
+    },
+    {
+      "id": "qp_hot_2",
+      "text": "tener un crush con el mejor amigo de su ex",
+      "theme": "hot",
+      "tier": "spicy"
+    },
+    {
+      "id": "qp_hot_3",
+      "text": "ligar con un compañero de trabajo",
+      "theme": "hot",
+      "tier": "spicy"
+    },
+    {
+      "id": "qp_hot_4",
+      "text": "acabar la noche en casa de un desconocido",
+      "theme": "hot",
+      "tier": "spicy"
+    },
+    {
+      "id": "qp_hot_5",
+      "text": "decir que sí a un trío sin dudarlo",
+      "theme": "hot",
+      "tier": "spicy"
+    },
+    {
+      "id": "qp_hot_6",
+      "text": "ligar solo para que le inviten a una copa",
+      "theme": "hot",
+      "tier": "spicy"
+    },
+    {
+      "id": "qp_hot_7",
+      "text": "volver con un ex solo por una noche",
+      "theme": "hot",
+      "tier": "spicy"
+    },
+    {
+      "id": "qp_hot_8",
+      "text": "mentir sobre con cuánta gente se ha acostado",
+      "theme": "hot",
+      "tier": "spicy"
+    },
+    {
+      "id": "qp_trash_1",
+      "text": "hacer ghosting tras una relación de dos años",
+      "theme": "trash",
+      "tier": "hardcore"
+    },
+    {
+      "id": "qp_trash_2",
+      "text": "soltar un secreto del grupo tras dos copas",
+      "theme": "trash",
+      "tier": "hardcore"
+    },
+    {
+      "id": "qp_trash_3",
+      "text": "acostarse con el ex de un amigo",
+      "theme": "trash",
+      "tier": "hardcore"
+    },
+    {
+      "id": "qp_trash_4",
+      "text": "ser infiel y no admitirlo jamás",
+      "theme": "trash",
+      "tier": "hardcore"
+    },
+    {
+      "id": "qp_trash_5",
+      "text": "hablar con dos personas a la vez sin ningún remordimiento",
+      "theme": "trash",
+      "tier": "hardcore"
+    },
+    {
+      "id": "qp_trash_6",
+      "text": "cotillear el móvil de su pareja",
+      "theme": "trash",
+      "tier": "hardcore"
+    },
+    {
+      "id": "qp_trash_7",
+      "text": "inventarse un funeral para no ir a una fiesta",
+      "theme": "trash",
+      "tier": "hardcore"
+    },
+    {
+      "id": "qp_trash_8",
+      "text": "ligar con la mitad de una pareja que son sus amigos",
+      "theme": "trash",
+      "tier": "hardcore"
+    }
+  ],
+  "themes": {
+    "daily": "Día a día",
+    "party": "Fiesta",
+    "love": "Amor y ex",
+    "wtf": "WTF",
+    "hot": "Hot",
+    "trash": "Trash"
+  },
+  "ui": {
+    "rules": {
+      "title": "¿Quién Podría?",
+      "tagline": "Votos secretos, dedos señalando, sin piedad.",
+      "start": "¡Vamos! 👉",
+      "howToPlay": "CÓMO SE JUEGA",
+      "warning": "⚠︎ Ningún voto va en serio. Ríete, bebe agua si quieres, seguid siendo amigos.",
+      "themeLabel": "TEMAS",
+      "multiVote": "Selección múltiple",
+      "steps": [
+        {
+          "n": "1",
+          "title": "Aparece una pregunta",
+          "desc": "«¿Quién podría…» seguido de algo vergonzoso o absurdo."
+        },
+        {
+          "n": "2",
+          "title": "Todos votan en secreto",
+          "desc": "El móvil va pasando y eliges a la persona más probable."
+        },
+        {
+          "n": "3",
+          "title": "El elegido lo asume",
+          "desc": "Se revela el más votado de la ronda. El más votado de la noche encabeza el podio."
+        }
+      ]
+    },
+    "prompt": {
+      "chip": "Pregunta {{round}} / {{total}}",
+      "sticker": "¿QUIÉN PODRÍA…",
+      "startVote": "Empezar la votación"
+    },
+    "handoff": {
+      "voterLabel": "VOTANTE {{idx}} / {{total}}",
+      "title": "{{name}},\ntu turno de votar",
+      "subtitle": "Nadie debe ver tu voto. Oculta la pantalla.",
+      "cta": "Soy yo — votar"
+    },
+    "vote": {
+      "chip": "Voto de {{name}}",
+      "label": "¿QUIÉN PODRÍA…",
+      "self": "{{name}} (tú)",
+      "submit": "Confirmar mi voto secreto"
+    },
+    "tally": {
+      "label": "¿QUIÉN PODRÍA…",
+      "subtitle": "Todos los votos están dentro. Redoble de tambores…",
+      "reveal": "Revelar al elegido 👇"
+    },
+    "result": {
+      "sticker": "EL ELEGIDO DE LA RONDA",
+      "stickerTie": "LOS ELEGIDOS DE LA RONDA",
+      "noVoteTitle": "¿Nadie? Sospechoso.",
+      "drink": "🍺 {{count}} trago{{plural}}{{each}} — quién podría {{prompt}}, por lo visto.",
+      "drinkEach": " cada uno",
+      "noDrink": "Recibió {{count}} voto{{plural}} — quién podría {{prompt}}, por lo visto.",
+      "detailLabel": "EL DESGLOSE DE LOS VOTOS",
+      "next": "Siguiente pregunta →",
+      "podium": "Ver el muro de la vergüenza 🏆"
+    },
+    "podium": {
+      "badge": "🏆 MURO DE LA VERGÜENZA",
+      "title": "{{name}}, la estrella de la noche",
+      "titleNone": "Un empate de vergüenza",
+      "subtitle": "Recibió {{count}} voto{{plural}}. Nadie tuvo dudas.",
+      "subtitleNone": "Nadie destacó de verdad. Otra ronda, entonces.",
+      "scoreLabel": "VECES ELEGIDO",
+      "playAgain": "Jugar otra ronda",
+      "backToHub": "Volver al hub"
+    }
+  }
+}
