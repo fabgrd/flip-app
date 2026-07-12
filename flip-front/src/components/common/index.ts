@@ -15,6 +15,8 @@ export { GameTopBar } from './GameTopBar';
 export { GameHeader } from './GameHeader';
 export type { GameHeaderProps } from './GameHeader';
 export { GameCard, GameChip, StickerBadge } from './GamePrimitives';
+export { GamePodium } from './GamePodium';
+export type { GamePodiumProps, PodiumEntry } from './GamePodium';
 export { GameRulesScreen } from './GameRulesScreen';
 export type { RulesStep } from './GameRulesScreen';
 export { GameSetupCard, GameSetupSection } from './GameSetupCard';

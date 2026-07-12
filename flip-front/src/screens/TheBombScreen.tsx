@@ -16,6 +16,7 @@ import {
   GameCard,
   GameChip,
   GameHeader,
+  GamePodium,
   GameRulesScreen,
   GameSetupCard,
   InitialAvatar,
@@ -862,112 +863,43 @@ function TBPodium({
   const rulesSteps = t('theBomb:ui.rules.steps', {
     returnObjects: true,
   }) as { n: string; title: string; desc: string }[];
-  const ranked = players.map((p, i) => ({ p, i, e: explosions[i] ?? 0 })).sort((a, b) => b.e - a.e);
+  const ranked = players
+    .map((p, i) => ({ player: p, index: i, value: explosions[i] ?? 0 }))
+    .sort((a, b) => b.value - a.value);
   const top = ranked[0];
-  const podium = ranked.slice(0, 3);
-  const hasVictim = (top?.e ?? 0) > 0;
+  const hasVictim = (top?.value ?? 0) > 0;
 
   return (
-    <SafeAreaView style={pd.screen}>
-      <DotBackground color={T.ink} opacity={0.08} gap={16} />
-      <GameHeader
-        tint={T.paper}
-        onExit={onExit}
-        onSettings={onSettings}
-        rules={{
-          title: t('theBomb:ui.rules.title'),
-          rules: rulesSteps,
-          accentColor: T.bombAccent,
-        }}
-        players={players}
-        onPlayersChange={setPlayers}
-      />
-
-      <ScrollView contentContainerStyle={pd.content} showsVerticalScrollIndicator={false}>
-        <View style={pd.hero}>
-          <StickerBadge color={T.paper} rotation={-5}>
-            {t('theBomb:ui.podium.badge')}
-          </StickerBadge>
-          <Text style={pd.title}>
-            {hasVictim
-              ? t('theBomb:ui.podium.title', { name: top.p.name })
-              : t('theBomb:ui.podium.titleNone')}
-          </Text>
-          <Text style={pd.subtitle}>
-            {hasVictim
-              ? t('theBomb:ui.podium.subtitle', { count: top.e, plural: top.e > 1 ? 's' : '' })
-              : t('theBomb:ui.podium.subtitleNone')}
-          </Text>
-        </View>
-
-        <View style={pd.cards}>
-          {podium.map(({ p, i, e }, idx) => (
-            <GameCard key={p.id} color={T.paper} style={pd.card}>
-              <View style={pd.cardRow}>
-                <Text style={pd.medal}>{MEDALS[idx]}</Text>
-                <InitialAvatar index={i} size={48} radius={14} />
-                <Text style={pd.playerName}>{p.name}</Text>
-                <View style={{ alignItems: 'flex-end' }}>
-                  <Text style={pd.count}>{e}</Text>
-                  <Text style={pd.countLabel}>{t('theBomb:ui.podium.explosionsLabel')}</Text>
-                </View>
-              </View>
-            </GameCard>
-          ))}
-        </View>
-
-        <View style={pd.btnStack}>
-          <ChunkyButton full color={T.ink} textColor="#fff" size="lg" onPress={onReplay}>
-            {t('theBomb:ui.podium.playAgain')}
-          </ChunkyButton>
-          <ChunkyButton full color={T.paper} size="md" onPress={onExit}>
-            {t('theBomb:ui.podium.backToHub')}
-          </ChunkyButton>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <GamePodium
+      players={players}
+      onPlayersChange={setPlayers}
+      entries={ranked}
+      medals={MEDALS}
+      backgroundColor={T.bombAccent}
+      onDark
+      accentColor={T.bombAccent}
+      countColor={T.bombAccentDark}
+      badge={{ text: t('theBomb:ui.podium.badge'), color: T.paper }}
+      title={
+        hasVictim
+          ? t('theBomb:ui.podium.title', { name: top.player.name })
+          : t('theBomb:ui.podium.titleNone')
+      }
+      subtitle={
+        hasVictim
+          ? t('theBomb:ui.podium.subtitle', { count: top.value, plural: top.value > 1 ? 's' : '' })
+          : t('theBomb:ui.podium.subtitleNone')
+      }
+      scoreLabel={t('theBomb:ui.podium.explosionsLabel')}
+      rules={{ title: t('theBomb:ui.rules.title'), steps: rulesSteps }}
+      playAgainLabel={t('theBomb:ui.podium.playAgain')}
+      backLabel={t('theBomb:ui.podium.backToHub')}
+      onReplay={onReplay}
+      onExit={onExit}
+      onSettings={onSettings}
+    />
   );
 }
-
-const pd = StyleSheet.create({
-  screen: { flex: 1, backgroundColor: T.bombAccent },
-  content: { paddingBottom: 40 },
-  hero: { paddingHorizontal: 20, paddingTop: 14, alignItems: 'center' },
-  title: {
-    marginTop: 22,
-    color: '#fff',
-    fontSize: 44,
-    fontWeight: '800',
-    letterSpacing: -1.5,
-    lineHeight: 48,
-    textAlign: 'center',
-  },
-  subtitle: {
-    marginTop: 12,
-    color: 'rgba(255,255,255,0.92)',
-    fontSize: 15,
-    textAlign: 'center',
-  },
-  cards: { paddingHorizontal: 20, paddingTop: 24, gap: 12 },
-  card: { borderRadius: 22, padding: 14 },
-  cardRow: { flexDirection: 'row', alignItems: 'center', gap: 14 },
-  medal: { fontSize: 28, width: 36, textAlign: 'center' },
-  playerName: {
-    flex: 1,
-    color: T.ink,
-    fontSize: 22,
-    fontWeight: '800',
-    letterSpacing: -0.6,
-  },
-  count: {
-    color: T.bombAccentDark,
-    fontSize: 26,
-    fontWeight: '800',
-    lineHeight: 28,
-  },
-  countLabel: { color: T.muted, fontSize: 9.5, letterSpacing: 0.5 },
-  btnStack: { paddingHorizontal: 20, paddingTop: 26, gap: 10 },
-});
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 

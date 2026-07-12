@@ -4,7 +4,7 @@
 import { Feather } from '@expo/vector-icons';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import * as Haptics from 'expo-haptics';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -16,6 +16,7 @@ import {
   GameCard,
   GameChip,
   GameHeader,
+  GamePodium,
   GameRulesScreen,
   GameSetupCard,
   GameSetupSection,
@@ -44,8 +45,13 @@ type QuiPourraitScreenRouteProp = RouteProp<RootStackParamList, 'QuiPourrait'>;
 type RulesStep = { n: string; title: string; desc: string };
 
 function useRulesSteps(): RulesStep[] {
-  const { t } = useTranslation();
-  return t('quiPourrait:ui.rules.steps', { returnObjects: true }) as RulesStep[];
+  const { t, i18n } = useTranslation();
+  // Stable reference per language: keeps the GameHeader `rules` prop referentially
+  // equal across renders so a memoized header isn't rebuilt on every tap.
+  return useMemo(
+    () => t('quiPourrait:ui.rules.steps', { returnObjects: true }) as RulesStep[],
+    [t, i18n.language],
+  );
 }
 
 // ─── Screen: Rules ────────────────────────────────────────────────────────────
@@ -430,9 +436,10 @@ function QPVote({
     });
   };
 
-  return (
-    <SafeAreaView style={vt.screen}>
-      <DotBackground opacity={0.06} gap={14} />
+  // Memoized element: keeps the heavy header (3 modals + player list) from
+  // re-rendering every time `picked` changes as the user taps players.
+  const header = useMemo(
+    () => (
       <GameHeader
         tint={T.paper}
         onExit={onExit}
@@ -445,6 +452,14 @@ function QPVote({
         players={players}
         onPlayersChange={setPlayers}
       />
+    ),
+    [onExit, onSettings, rulesSteps, players, setPlayers, t],
+  );
+
+  return (
+    <SafeAreaView style={vt.screen}>
+      <DotBackground opacity={0.06} gap={14} />
+      {header}
       <View style={vt.chipRow}>
         <GameChip color={T.quiPourraitAccent} textColor="#fff">
           {t('quiPourrait:ui.vote.chip', { name: players[voterIdx]?.name })}
@@ -829,119 +844,60 @@ function QPPodium({
 }) {
   const { t } = useTranslation();
   const rulesSteps = useRulesSteps();
-  const ranked = players.map((p, i) => ({ p, i, s: scores[i] ?? 0 })).sort((a, b) => b.s - a.s);
+  const ranked = players
+    .map((p, i) => ({ player: p, index: i, value: scores[i] ?? 0 }))
+    .sort((a, b) => b.value - a.value);
   const top = ranked[0];
-  const podium = ranked.slice(0, 3);
-  const hasWinner = (top?.s ?? 0) > 0;
+  const hasWinner = (top?.value ?? 0) > 0;
 
   return (
-    <SafeAreaView style={po.screen}>
-      <DotBackground color={T.ink} opacity={0.08} gap={16} />
-      <GameHeader
-        tint={T.paper}
-        onExit={onExit}
-        onSettings={onSettings}
-        rules={{
-          title: t('quiPourrait:ui.rules.title'),
-          rules: rulesSteps,
-          accentColor: T.quiPourraitAccent,
-        }}
-        players={players}
-        onPlayersChange={setPlayers}
-      />
-
-      <ScrollView contentContainerStyle={po.content} showsVerticalScrollIndicator={false}>
-        <View style={po.hero}>
-          <StickerBadge color={T.tomato} rotation={-5} textColor="#fff">
-            {t('quiPourrait:ui.podium.badge')}
-          </StickerBadge>
-          <Text style={po.title}>
-            {hasWinner
-              ? t('quiPourrait:ui.podium.title', { name: top.p.name })
-              : t('quiPourrait:ui.podium.titleNone')}
-          </Text>
-          <Text style={po.subtitle}>
-            {hasWinner
-              ? t('quiPourrait:ui.podium.subtitle', {
-                  count: top.s,
-                  plural: top.s > 1 ? 's' : '',
-                })
-              : t('quiPourrait:ui.podium.subtitleNone')}
-          </Text>
-        </View>
-
-        <View style={po.cards}>
-          {podium.map(({ p, i, s }, idx) => (
-            <GameCard key={p.id} color={T.paper} style={po.card}>
-              <View style={po.cardRow}>
-                <Text style={po.medal}>{MEDALS[idx]}</Text>
-                <InitialAvatar index={i} size={48} radius={14} />
-                <Text style={po.playerName}>{p.name}</Text>
-                <View style={{ alignItems: 'flex-end' }}>
-                  <Text style={po.count}>{s}</Text>
-                  <Text style={po.countLabel}>{t('quiPourrait:ui.podium.scoreLabel')}</Text>
-                </View>
-              </View>
-            </GameCard>
-          ))}
-        </View>
-
-        <View style={po.btnStack}>
-          <ChunkyButton full color={T.ink} textColor="#fff" size="lg" onPress={onReplay}>
-            {t('quiPourrait:ui.podium.playAgain')}
-          </ChunkyButton>
-          <ChunkyButton full color={T.paper} size="md" onPress={onExit}>
-            {t('quiPourrait:ui.podium.backToHub')}
-          </ChunkyButton>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <GamePodium
+      players={players}
+      onPlayersChange={setPlayers}
+      entries={ranked}
+      medals={MEDALS}
+      backgroundColor={T.lemon}
+      accentColor={T.quiPourraitAccent}
+      countColor={T.quiPourraitAccentDark}
+      badge={{ text: t('quiPourrait:ui.podium.badge'), color: T.tomato, textColor: '#fff' }}
+      title={
+        hasWinner
+          ? t('quiPourrait:ui.podium.title', { name: top.player.name })
+          : t('quiPourrait:ui.podium.titleNone')
+      }
+      subtitle={
+        hasWinner
+          ? t('quiPourrait:ui.podium.subtitle', {
+              count: top.value,
+              plural: top.value > 1 ? 's' : '',
+            })
+          : t('quiPourrait:ui.podium.subtitleNone')
+      }
+      scoreLabel={t('quiPourrait:ui.podium.scoreLabel')}
+      rules={{ title: t('quiPourrait:ui.rules.title'), steps: rulesSteps }}
+      playAgainLabel={t('quiPourrait:ui.podium.playAgain')}
+      backLabel={t('quiPourrait:ui.podium.backToHub')}
+      onReplay={onReplay}
+      onExit={onExit}
+      onSettings={onSettings}
+    />
   );
 }
-
-const po = StyleSheet.create({
-  screen: { flex: 1, backgroundColor: T.lemon },
-  content: { paddingBottom: 40 },
-  hero: { paddingHorizontal: 20, paddingTop: 14, alignItems: 'center' },
-  title: {
-    marginTop: 22,
-    color: T.ink,
-    fontSize: 42,
-    fontWeight: '800',
-    letterSpacing: -1.5,
-    lineHeight: 46,
-    textAlign: 'center',
-  },
-  subtitle: { marginTop: 12, color: T.inkSoft, fontSize: 15, textAlign: 'center' },
-  cards: { paddingHorizontal: 20, paddingTop: 24, gap: 12 },
-  card: { borderRadius: 22, padding: 14 },
-  cardRow: { flexDirection: 'row', alignItems: 'center', gap: 14 },
-  medal: { fontSize: 30, width: 36, textAlign: 'center' },
-  playerName: {
-    flex: 1,
-    color: T.ink,
-    fontSize: 22,
-    fontWeight: '800',
-    letterSpacing: -0.6,
-  },
-  count: {
-    color: T.quiPourraitAccentDark,
-    fontSize: 26,
-    fontWeight: '800',
-    lineHeight: 28,
-  },
-  countLabel: { color: T.muted, fontSize: 9.5, letterSpacing: 0.5 },
-  btnStack: { paddingHorizontal: 20, paddingTop: 26, gap: 10 },
-});
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export function QuiPourraitScreen() {
   const route = useRoute<QuiPourraitScreenRouteProp>();
   const navigation = useNavigation();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
-  const allPrompts = t('quiPourrait:prompts', { returnObjects: true }) as QuiPourraitPrompt[];
+  // Parse the prompt pool once per language. Without this memo, i18n returns a
+  // fresh array on every render, which defeated useGameContent's memo and
+  // re-filtered all prompts on each interaction (visible input latency).
+  const allPrompts = useMemo(
+    () => t('quiPourrait:prompts', { returnObjects: true }) as QuiPourraitPrompt[],
+    [t, i18n.language],
+  );
   const prompts = useGameContent(allPrompts);
   const { filterAllowed } = useQuiPourraitThemeAccess();
 
