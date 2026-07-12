@@ -1,6 +1,5 @@
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -178,7 +177,7 @@ export function SettingsScreen() {
             <Text style={styles.aboutDescription}>{t('settings:about.description')}</Text>
             <View style={styles.versionPill}>
               <Text style={styles.versionText}>
-                {t('settings:about.version', { version: '1.0.1' })}
+                {t('settings:about.version', { version: '1.1.0' })}
               </Text>
             </View>
           </View>
