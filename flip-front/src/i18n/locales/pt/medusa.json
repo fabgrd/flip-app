@@ -1,0 +1,82 @@
+{
+  "rules": {
+    "title": "Medusa",
+    "tagline": "Olhe para cima… e evite o contato visual",
+    "modalTitle": "Medusa",
+    "start": "Começar o jogo 🐍",
+    "steps": [
+      {
+        "n": "1",
+        "title": "Todos olham para baixo",
+        "desc": "O jogador ativo diz \"Olhem para baixo!\" e o grupo obedece de olhos fechados."
+      },
+      {
+        "n": "2",
+        "title": "3… 2… 1… MEDUSA!",
+        "desc": "Ao sinal, todos levantam a cabeça e encaram outro jogador."
+      },
+      {
+        "n": "3",
+        "title": "Contato visual = penalidade",
+        "descDrink": "Se dois jogadores se olham nos olhos: 1 gole cada.",
+        "descSober": "Se dois jogadores se olham nos olhos: 1 ponto cada."
+      },
+      {
+        "n": "4",
+        "title": "Sem contato = a salvo",
+        "desc": "Se ninguém te encarar de volta, você sobrevive. Próximo jogador, sua vez."
+      }
+    ]
+  },
+  "ready": {
+    "round": "RODADA {{num}} / {{total}}",
+    "title": "Todos\nprontos?",
+    "instruction": "Coloque o celular no meio e:",
+    "say": "\"Olhem para baixo!\"",
+    "startBtn": "Vamos! →"
+  },
+  "countdown": {
+    "prepare": "Preparem-se…",
+    "medusa": "MEDUSA!",
+    "liftEyes": "Olhem para cima!"
+  },
+  "report": {
+    "chip": "Medusa · resolução",
+    "title": "Quem fez\ncontato visual?",
+    "sub": "Toque em dois jogadores que se olharam nos olhos.",
+    "selectHint": "Toque no jogador que cruzou o olhar com {{name}}",
+    "pairsLabel": "CONTATOS VISUAIS · {{count}}",
+    "confirmBtn_one": "Confirmar · {{count}} par",
+    "confirmBtn_other": "Confirmar · {{count}} pares",
+    "noOneBtn": "Ninguém fez contato visual"
+  },
+  "roundResult": {
+    "contact": "CONTATO!",
+    "allSafe": "TODOS A SALVO",
+    "caught": "Pego!",
+    "niceTry": "Bem jogado!",
+    "contacts_one": "{{count}} contato visual nesta rodada",
+    "contacts_other": "{{count}} contatos visuais nesta rodada",
+    "noContact": "Nenhum contato visual. Impressionante.",
+    "safeLabel": "A SALVO NESTA RODADA",
+    "penaltyEach": "{{unit}} CADA",
+    "seeEnd": "Ver resumo final",
+    "nextRound": "Próxima rodada →"
+  },
+  "end": {
+    "badge": "FIM DE JOGO",
+    "title": "Resumo dos\ncontatos visuais",
+    "toursLabel": "RODADAS JOGADAS",
+    "eyeContactsLabel": "CONTATOS VISUAIS",
+    "ranking": "RANKING",
+    "recap": "RESUMO DAS RODADAS",
+    "intouchable": "INTOCÁVEL",
+    "laMeduse": "A MEDUSA",
+    "leads": "lidera",
+    "noContact": "· sem contato",
+    "pairs_one": "· {{count}} par",
+    "pairs_other": "· {{count}} pares",
+    "playAgain": "Jogar de novo",
+    "backToHub": "Voltar ao hub"
+  }
+}

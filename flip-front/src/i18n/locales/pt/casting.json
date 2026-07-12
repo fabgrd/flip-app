@@ -1,0 +1,286 @@
+{
+  "rules": {
+    "title": "O\nCasting",
+    "tagline": "Atue a cena de acordo com seu número secreto",
+    "modalTitle": "O Casting",
+    "start": "Começar o jogo 🎬",
+    "themeLabel": "TEMA",
+    "steps": [
+      {
+        "n": "1",
+        "title": "Escolhe-se um adivinho",
+        "desc": "Ele observa. Os outros são atores."
+      },
+      {
+        "n": "2",
+        "title": "Cada ator recebe um número secreto",
+        "desc": "De 1 (catastrófico) a 10 (oscar). O adivinho não sabe."
+      },
+      {
+        "n": "3",
+        "title": "O adivinho lê um cenário",
+        "desc": "Exemplo: \"Tropeçar no refeitório com sua bandeja\"."
+      },
+      {
+        "n": "4",
+        "title": "Todos atuam a cena",
+        "desc": "Conforme o número: 1 = péssimo, 10 = atuação de arrasar."
+      },
+      {
+        "n": "5",
+        "title": "O adivinho adivinha os números",
+        "descDrink": "Ele atribui um número a cada ator. Quanto mais erra, mais bebe.",
+        "descSober": "Ele atribui um número a cada ator. Quanto mais erra, mais acumula."
+      }
+    ]
+  },
+  "pickDevin": {
+    "mono": "QUEM É O ADIVINHO?",
+    "title": "Escolha o\njúri do casting",
+    "sub": "O adivinho observa, julga e adivinha os números."
+  },
+  "scenario": {
+    "mono": "O CENÁRIO",
+    "devinChip": "O Adivinho · {{name}}",
+    "hint": "Leia este cenário em voz alta.\nDepois passe o celular para cada ator ver seu número.",
+    "distributeBtn": "Distribuir números →"
+  },
+  "handoff": {
+    "instruction": "Passe o celular para {{name}}",
+    "sub": "Veja seu número em segredo antes de tocar.",
+    "revealBtn": "Estou sozinho — revelar"
+  },
+  "revealNumber": {
+    "holdTitle": "Segure para\nver seu número",
+    "holdBtn": "SEGURE",
+    "scenarioMono": "CENÁRIO",
+    "scaleTip": "1 = catastrófico · 10 = oscar",
+    "nextBtn": "Vi — passar ao próximo"
+  },
+  "perform": {
+    "action": "AÇÃO!",
+    "scenarioMono": "CENÁRIO",
+    "hint": "Cada ator atua a cena conforme seu número.\n{{devin}} observa com atenção.",
+    "judgeBtn": "Todos atuaram → Julgamento"
+  },
+  "guess": {
+    "devinChip": "Adivinho · {{name}}",
+    "question": "Que número\n{{name}} tinha?",
+    "nextBtn": "Próximo jogador →",
+    "verdictBtn": "Ver o veredito →"
+  },
+  "results": {
+    "badge": "O VEREDITO",
+    "title": "Resultados\ndo casting",
+    "pilePoil": "NA MOSCA",
+    "presque": "QUASE",
+    "rates": "ERROU",
+    "castingParfait": "Casting Perfeito!",
+    "castingParfaitSub": "{{devin}} adivinhou tudo — os atores {{verb}} {{unit}} a mais (óbvio demais!)",
+    "flopTotal": "Fracasso Total!",
+    "flopTotalSub": "Ninguém acertou — os atores {{verb}} {{unit}} a mais (caótico demais!)",
+    "actorDetail": "DETALHES POR ATOR",
+    "realArrow": "REAL →",
+    "devinedLabel": "ADIVINHADO",
+    "rankingLabel": "RANKING · {{total}} {{unit}} NO TOTAL",
+    "devinBadge": " ADIVINHO",
+    "playAgain": "Jogar de novo",
+    "backToHub": "Voltar ao hub",
+    "actorDrinks": "{{name}} bebe {{count}}",
+    "actorSober": "{{name}} leva {{count}}"
+  },
+  "scenarios": {
+    "daily": [
+      "Tropeçar no refeitório com a bandeja cheia",
+      "Ver uma aranha enorme no chuveiro e gritar",
+      "Ser pego mentindo para os amigos",
+      "Perceber que está de cueca/calcinha numa videochamada importante",
+      "Falhar em estacionar na frente de um bar lotado",
+      "Ser flagrado no metrô sem bilhete",
+      "Contar para os pais que reprovou nas provas",
+      "Descobrir que o voo foi cancelado 30 minutos antes de embarcar",
+      "Pisar em cocô de cachorro com tênis novo",
+      "Perceber que mandou um áudio vergonhoso para o grupo errado",
+      "Derramar o café no notebook do chefe numa reunião",
+      "Prender a mão numa máquina de vendas",
+      "Descobrir que foi demitido por um e-mail em grupo",
+      "Ficar sozinho no palco sem saber as falas",
+      "Esquecer a bolsa de ginástica no dia da aula de natação",
+      "Chamar a professora de 'mãe' na frente da turma toda",
+      "Ser pego cantando alto no carro num sinal vermelho",
+      "Postar um story achando que era só para os melhores amigos",
+      "Esquecer o carregador do celular numa viagem de fim de semana",
+      "Errar o dia de um compromisso importante",
+      "Bater num poste olhando para o celular",
+      "Deixar o celular cair no vaso sanitário",
+      "Esquecer a mochila no ônibus e sair correndo atrás",
+      "Manchar de café bem antes de um encontro",
+      "Levar a porta do elevador na cara",
+      "Escorregar no chão molhado do supermercado",
+      "Perder um sapato andando na rua",
+      "Ser respingado por um carro passando numa poça",
+      "Esquecer a chave dentro de casa e ficar trancado do lado de fora",
+      "Deixar tudo cair da bolsa no metrô",
+      "Ir na direção errada numa escada rolante lotada",
+      "Ser pego por uma rajada de vento que espalha todos os seus papéis"
+    ],
+    "relations": [
+      "Receber uma mensagem do ex às 3 da manhã",
+      "Levar um fora no meio de um restaurante na frente de todo mundo",
+      "Encontrar o crush no supermercado de pijama e chinelo",
+      "Ser picado por uma vespa num encontro",
+      "Tentar paquerar numa língua que você não fala nada",
+      "Apresentar o novo par para amigos que já tinham dado um perdido nele",
+      "Perceber que chamou o par pelo nome do ex",
+      "Ver seu par curtir a foto de outra pessoa bem na sua frente",
+      "Levar um perdido logo depois da primeira noite juntos",
+      "Descobrir que o crush está namorando seu melhor amigo",
+      "Mandar um 'te amo' depois de só 3 dias",
+      "Cair na friendzone no meio da conversa",
+      "Ter um encontro catastrófico do Tinder",
+      "Ser bloqueado depois de confessar um fetiche estranho",
+      "Perceber que seu par estava num relacionamento o tempo todo",
+      "Levar um fora por um áudio de 2 minutos",
+      "Esbarrar no ex com o novo par logo depois do término"
+    ],
+    "spicy": [
+      "Acordar na cama de um estranho sem lembrar da noite anterior",
+      "Vomitar no seu par durante o jantar",
+      "Descobrir um chupão enorme antes de um jantar em família",
+      "Fazer xixi na cama depois de uma noitada",
+      "Mandar um nude para o contato errado (pai/chefe)",
+      "Cair completamente pelado na piscina na frente dos sogros",
+      "Ser pego no ato pelo colega de quarto",
+      "Perceber que entrou no banheiro errado num bar lotado",
+      "Fazer um discurso de casamento completamente bêbado",
+      "Soltar um pum barulhento durante o sexo",
+      "Prender a mão num brinquedo sexual",
+      "A camisinha estourar na pior hora possível",
+      "Ser pego pela mãe assistindo pornô",
+      "Ter diarreia durante o sexo",
+      "Perder a roupa íntima num Uber depois da balada",
+      "Acordar com batom pela cara toda"
+    ],
+    "taboo": [
+      "Contar para a família algo muito vergonhoso da sua vida sexual",
+      "Descobrir uma traição pelos stories do Instagram",
+      "Levar um fora no dia do seu casamento",
+      "Descobrir que um dos seus pais tem uma vida dupla",
+      "Confessar aos pais que perdeu o emprego há 3 meses",
+      "Ser exposto pelo melhor amigo na frente de todo mundo",
+      "Descobrir que você é o assunto de um grupo de zoação no WhatsApp",
+      "Descobrir que seus pais viram seus nudes",
+      "Ser pego roubando dinheiro da carteira dos pais",
+      "Confessar para a família que está deprimido",
+      "Perceber que a família toda sabe que você dormiu com o ex"
+    ],
+    "gaming": [
+      "Ir 0-13 no ranqueado e levar bronca do time inteiro",
+      "Esquecer de desligar o mic enquanto xinga os companheiros",
+      "Ser stream sniped num torneio",
+      "Morrer de forma idiota logo depois de zoar o adversário",
+      "Sofrer um lag gigante num momento decisivo",
+      "Ser banido do Discord dos amigos depois de uma piada",
+      "Acusar alguém de trapaça quando a culpa era sua",
+      "Perder todos os seus itens raros num golpe",
+      "Ser expulso do servidor bem antes do chefão final",
+      "Tirar o mudo sem querer numa call com estranhos",
+      "Ter um rage quit épico filmado por um amigo"
+    ],
+    "family": [
+      "Ser perguntado 'e aí, ainda solteiro?' pela família toda no Natal",
+      "Perder a ceia de Natal por estar completamente bêbado",
+      "Ser pego fumando pelos avós",
+      "Ter uma ereção durante um abraço em família",
+      "A mãe revistar seu quarto aos 20 anos",
+      "Ser pego assistindo pornô",
+      "Confessar que parou de ir às aulas há 2 meses",
+      "Ser comparado ao primo que se dá bem em tudo",
+      "Dar um chilique numa reunião de família depois de beber demais",
+      "Confessar que está reprovando nas provas há meses"
+    ],
+    "studies": [
+      "Ir para a sala errada no dia da prova",
+      "Entregar uma prova completamente em branco",
+      "Cair na única matéria que você não estudou",
+      "Ficar menstruada durante uma prova oral importante",
+      "Fazer uma apresentação com um erro enorme no primeiro slide",
+      "Chamar o chefe pelo primeiro nome num e-mail bem formal",
+      "Mandar uma reclamação sobre o chefe… para o chefe",
+      "Ser pego dormindo durante uma videochamada",
+      "Estragar uma apresentação importante porque tinha um meme aberto",
+      "Dar um branco total numa entrevista de emprego",
+      "Ser demitido do estágio por postar um story de festa",
+      "Colar do colega e ser pego em flagrante",
+      "Esquecer de entregar o TCC no dia anterior ao prazo",
+      "Chegar numa prova oral completamente chapado",
+      "Receber um e-mail de 'não vamos te manter' depois de 6 meses de estágio",
+      "Ir para a sala errada numa entrevista importante",
+      "Prender a gravata na máquina de café"
+    ],
+    "party": [
+      "Vomitar na pista de dança na frente de todo mundo",
+      "Perder celular + carteira + chaves numa festa",
+      "Beijar a pessoa errada durante um jogo",
+      "Acordar com uma tatuagem temporária muito vergonhosa",
+      "Fazer um striptease sem querer enquanto dança",
+      "Ser expulso da festa pelos anfitriões",
+      "Perder os sapatos e voltar para casa descalço",
+      "Acordar numa banheira na casa de um estranho",
+      "Fazer uma declaração de amor bêbado para a pessoa errada",
+      "Entrar numa briga por algo completamente idiota",
+      "Postar stories super comprometedores bêbado",
+      "Ter um blackout total de 4 horas",
+      "Acordar com uma tatuagem temporária em forma de pinto na testa",
+      "Dançar feito louco e cair de cima da mesa"
+    ],
+    "cinema": [
+      "Lutar contra 10 inimigos numa cena de filme de ação",
+      "Atuar uma cena de morte ultra dramática e exagerada",
+      "Fazer uma declaração de amor como num filme romântico",
+      "Imitar uma cena de luta em câmera lenta",
+      "Interpretar um vilão rindo diabolicamente",
+      "Atuar uma cena aterrorizado num filme de terror",
+      "Dançar como num musical",
+      "Interpretar um gângster levando um tiro",
+      "Imitar uma cena de beijo ultra apaixonado",
+      "Provocar uma explosão com efeitos especiais ridículos"
+    ],
+    "sports": [
+      "Perder um pênalti diante do estádio inteiro",
+      "Levar um smash de tênis bem na cara",
+      "Cair da esteira no meio da academia",
+      "Fazer um strike no boliche e depois escorregar e cair",
+      "Ser humilhado no futebol por uma criança de 10 anos",
+      "Errar completamente uma manobra de skate",
+      "Torcer o tornozelo tentando se exibir",
+      "Perder uma partida de pingue-pongue de 11 a 0",
+      "Tentar parkour e se estabacar",
+      "Se afogar em 1,5 m de água na piscina"
+    ]
+  },
+  "themes": {
+    "daily": "Dia a dia",
+    "relations": "Relações",
+    "party": "Festas",
+    "gaming": "Gaming",
+    "family": "Família",
+    "studies": "Estudos e trabalho",
+    "spicy": "Picante",
+    "taboo": "Tabu",
+    "cinema": "Cenas de cinema",
+    "sports": "Esporte e micos"
+  },
+  "labels": {
+    "1": "Catastrófico",
+    "2": "Horrível",
+    "3": "Ruim",
+    "4": "Mais ou menos",
+    "5": "Na média",
+    "6": "Razoável",
+    "7": "Bom",
+    "8": "Muito bom",
+    "9": "Excelente",
+    "10": "Oscar"
+  }
+}

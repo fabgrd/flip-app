@@ -1,0 +1,106 @@
+{
+    "bridge": {
+        "label": "PONTE · {{count}} CARTA{{plural}}"
+    },
+    "rules": {
+        "modalTitle": "O Aperitivo",
+        "title": "O Aperitivo",
+        "tagline": "Adivinhe, blefe, beba — a carta não espera ninguém.",
+        "chip": "Jogo nº 6",
+        "cardLabel": "COMO JOGAR",
+        "start": "Começar o jogo 🍻",
+        "steps": [
+            {
+                "n": "1",
+                "title": "O dealer tira uma carta",
+                "desc": "A carta fica escondida. O jogador ativo tenta adivinhá-la."
+            },
+            {
+                "n": "2",
+                "title": "Primeira tentativa — maior ou menor?",
+                "desc": "O jogador diz um número. O app responde \"maior\" ou \"menor\"."
+            },
+            {
+                "n": "3",
+                "title": "Segunda tentativa — última chance",
+                "descDrink": "Se errar, o jogador bebe a diferença entre o palpite e a carta.",
+                "descSober": "Se errar, o jogador leva a diferença em pontos entre o palpite e a carta."
+            },
+            {
+                "n": "4",
+                "titleDrink": "Acertou? O dealer bebe",
+                "titleSober": "Acertou? O dealer leva pontos",
+                "descDrink": "Se alguém acertar, o dealer bebe 2 goles e a sequência dele zera.",
+                "descSober": "Se alguém acertar, o dealer leva 2 pontos e a sequência dele zera."
+            },
+            {
+                "n": "5",
+                "title": "3 rodadas a salvo = o dealer passa",
+                "desc": "Se ninguém acertar em 3 rodadas, o dealer passa o celular."
+            },
+            {
+                "n": "★",
+                "title": "Regra especial: a quadra",
+                "descDrink": "Quando saem as 4 cartas do mesmo valor, elas viram e o dealer bebe mais 2.",
+                "descSober": "Quando saem as 4 cartas do mesmo valor, elas viram e o dealer leva mais 2 pontos."
+            }
+        ]
+    },
+    "pickDealer": {
+        "badge": "QUEM É O DEALER?",
+        "title": "Escolha quem\n segura o celular",
+        "sub": "O dealer tira a carta e arca com as consequências."
+    },
+    "round": {
+        "guessTitle": "{{name}}, adivinhe a carta",
+        "firstTry": "Primeira tentativa",
+        "hintBadge": "É {{hint}} {{arrow}}",
+        "youSaid": "Você disse {{card}} ({{points}} pts)",
+        "secondTryChip": "É {{hint}} que {{card}}",
+        "secondChance": "Segunda chance!",
+        "lastTry": "Última tentativa, {{name}}",
+        "found": "ACERTOU!",
+        "missed": "ERROU!",
+        "dealerResult": "{{name}} {{verb}} {{unit}}",
+        "resetStreak": "Sequência do dealer zerada",
+        "nextCard": "Próxima carta →",
+        "seeSummary": "Ver resumo →",
+        "passPile": "Passar o monte →"
+    },
+    "special": {
+        "badge": "★ QUADRA!",
+        "title": "As 4 {{card}}\n saíram!",
+        "sub": "As 4 cartas viram na ponte.",
+        "penaltyTitle": "{{name}} {{verb}} {{unit}}",
+        "penaltySub": "Penalidade da quadra",
+        "continue": "Continuar →"
+    },
+    "dealerPass": {
+        "badge": "PASSE O MONTE",
+        "title": "{{name}}\n passa a vez",
+        "sub": "Escolha quem recebe o monte."
+    },
+    "end": {
+        "badge": "FIM DE JOGO",
+        "title": "Resumo do\n Aperitivo",
+        "cards": "CARTAS",
+        "found": "ACERTADAS",
+        "ranking": "RANKING",
+        "playAgain": "Jogar de novo",
+        "backToHub": "Voltar ao hub"
+    },
+    "hints": {
+        "higher": "maior",
+        "lower": "menor"
+    },
+    "cards": {
+        "A": "Ás",
+        "V": "Valete",
+        "D": "Dama",
+        "R": "Rei"
+    },
+    "verbs": {
+        "drink": "bebe",
+        "take": "leva"
+    }
+}

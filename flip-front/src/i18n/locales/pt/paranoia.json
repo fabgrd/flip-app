@@ -1,0 +1,146 @@
+{
+  "title": "Paranoia",
+  "tagline": "Quem disse seu nome… e por quê?",
+  "ui": {
+    "rules": {
+      "title": "Paranoia",
+      "tagline": "Quem disse seu nome… e por quê?",
+      "start": "Começar o jogo 👁️",
+      "steps": [
+        {
+          "n": "1",
+          "title": "O perguntador vê uma pergunta",
+          "desc": "Tipo \"quem desmoronaria na prisão?\". Ele mantém em segredo."
+        },
+        {
+          "n": "2",
+          "title": "O alvo vê a pergunta e escolhe",
+          "desc": "Ele aponta alguém do grupo. Em voz alta."
+        },
+        {
+          "n": "3",
+          "title": "O grupo ouve a resposta, não a pergunta",
+          "desc": "Todo mundo entra em pânico: por que EU?"
+        },
+        {
+          "n": "4",
+          "title": "Cara ou coroa — revela ou não",
+          "desc": "Se o alvo perder o sorteio, a pergunta aparece para todos."
+        }
+      ]
+    },
+    "handoff": {
+      "roleLabel": "PAPEL · {{role}}",
+      "givePhone": "Passe o celular para {{name}}",
+      "ready": "Sou eu — mostrar",
+      "subtitleQuestioner": "Você verá uma pergunta. Mantenha em segredo.",
+      "subtitleTarget": "Uma pergunta é sobre você. Você verá qual."
+    },
+    "questionShow": {
+      "chipQuestioner": "Perguntador · {{name}}",
+      "secretLabel": "SUA PERGUNTA SECRETA",
+      "askTo": "VOCÊ FAZ PARA",
+      "targetLabel": "O ALVO",
+      "hint": "Faça a pergunta em voz alta… mas sem dizê-la 😶",
+      "passToTarget": "Passe o celular para {{name}}"
+    },
+    "targetPick": {
+      "chipTarget": "Alvo · {{name}}",
+      "questionLabel": "A PERGUNTA",
+      "pickTitle": "Responda em voz alta.",
+      "pickSub": "E escolha a pessoa no app.",
+      "coinFlip": "Cara ou coroa →"
+    },
+    "coinFlip": {
+      "chipTarget": "Alvo · {{name}}",
+      "titleSecretKept": "Você guarda o segredo 🤫",
+      "titleRevealed": "Foi revelado… 😬",
+      "titleFlip": "Jogue a moeda!",
+      "titleChoose": "Escolha seu lado",
+      "sidePile": "Cara",
+      "sideFace": "Coroa",
+      "flipCta": "Jogar 🪙",
+      "flipping": "Girando…",
+      "seeVerdict": "Ver veredito →"
+    },
+    "reveal": {
+      "badgeKept": "🤫 SEGREDO MANTIDO",
+      "badgeRevealed": "😈 REVELADO",
+      "verdictKept": "Salvou.",
+      "verdictRevealed": "Pego!",
+      "questionWas": "A PERGUNTA ERA",
+      "answerLabel": "RESPOSTA →",
+      "keptTextBefore": "guarda a pergunta para si. O grupo fica no escuro. ",
+      "keptTextAfter": " pode dar aquele sorrisinho no canto.",
+      "drink": "{{name}} bebe {{count}} gole{{plural}}",
+      "next": "Próxima rodada →"
+    },
+    "end": {
+      "badge": "FIM DE JOGO",
+      "title": "Resumo dos\n segredos 🕵️",
+      "kept": "MANTIDOS",
+      "revealed": "REVELADOS",
+      "statusRevealed": "PEGO",
+      "statusKept": "SEGREDO",
+      "answerShort": " · resp. ",
+      "playAgain": "Jogar de novo",
+      "backToHub": "Voltar ao hub"
+    },
+    "roles": {
+      "questioner": "perguntador",
+      "target": "alvo"
+    }
+  },
+  "questions": [
+    { "id": "p_001", "text": "Quem seria o melhor pai/mãe?", "tier": "free", "tags": [] },
+    { "id": "p_002", "text": "Quem tem o pior gosto musical?", "tier": "free", "tags": [] },
+    { "id": "p_003", "text": "Com quem você faria uma viagem de carro?", "tier": "free", "tags": [] },
+    { "id": "p_004", "text": "Quem mente melhor?", "tier": "free", "tags": [] },
+    { "id": "p_005", "text": "Quem tem a queda mais vergonhosa?", "tier": "free", "tags": [] },
+    { "id": "p_006", "text": "Quem desmoronaria primeiro na prisão?", "tier": "free", "tags": [] },
+    { "id": "p_007", "text": "Quem seria o pior ex?", "tier": "free", "tags": [] },
+    { "id": "p_008", "text": "Quem teve o glow-up mais marcante?", "tier": "free", "tags": [] },
+    { "id": "p_009", "text": "Quem sobreviveria a um apocalipse zumbi?", "tier": "free", "tags": [] },
+    { "id": "p_010", "text": "Quem tem mais esqueletos no armário?", "tier": "free", "tags": [] },
+    { "id": "p_011", "text": "Quem é secretamente o mais maldoso?", "tier": "free", "tags": [] },
+    { "id": "p_012", "text": "Quem seria a melhor estrela de reality show?", "tier": "free", "tags": [] },
+    { "id": "p_013", "text": "Quem seria o pior colega de quarto?", "tier": "free", "tags": [] },
+    { "id": "p_014", "text": "Quem é o mais ciumento?", "tier": "free", "tags": [] },
+    { "id": "p_015", "text": "Quem mandaria mais mensagens depois de um término?", "tier": "free", "tags": [] },
+    { "id": "p_016", "text": "Quem faz mais drama por nada?", "tier": "free", "tags": [] },
+    { "id": "p_017", "text": "Quem seria o mais corruptível?", "tier": "free", "tags": [] },
+    { "id": "p_018", "text": "Quem conseguiria vender qualquer coisa para qualquer um?", "tier": "free", "tags": [] },
+    { "id": "p_019", "text": "Quem daria um perdido em alguém sem motivo?", "tier": "free", "tags": [] },
+    { "id": "p_020", "text": "Quem viralizaria no TikTok pelo pior motivo?", "tier": "free", "tags": [] },
+    { "id": "p_021", "text": "Quem se apaixona mais rápido?", "tier": "free", "tags": [] },
+    { "id": "p_022", "text": "Quem tem mais chance de fazer uma tatuagem bêbado?", "tier": "free", "tags": [] },
+    { "id": "p_023", "text": "Quem poderia entrar numa seita sem querer?", "tier": "free", "tags": [] },
+    { "id": "p_024", "text": "Quem daria mais medo com raiva?", "tier": "free", "tags": [] },
+    { "id": "p_025", "text": "Quem fingiria estar doente para escapar de algo?", "tier": "free", "tags": [] },
+    { "id": "p_026", "text": "Quem poderia esquecer o próprio aniversário?", "tier": "free", "tags": [] },
+    { "id": "p_027", "text": "Quem tem mais chance de stalkear o ex?", "tier": "free", "tags": [] },
+    { "id": "p_028", "text": "Quem seria o melhor ladrão?", "tier": "free", "tags": [] },
+    { "id": "p_029", "text": "Quem tem mais chance de passar uma noite na delegacia?", "tier": "free", "tags": [] },
+    { "id": "p_030", "text": "Quem sobreviveria menos tempo sozinho numa ilha?", "tier": "free", "tags": [] },
+    { "id": "p_031", "text": "Quem poderia começar um boato sem querer?", "tier": "free", "tags": [] },
+    { "id": "p_032", "text": "Quem seria o melhor sugar baby?", "tier": "free", "tags": [] },
+    { "id": "p_033", "text": "Quem tem mais chance de casar por impulso?", "tier": "free", "tags": [] },
+    { "id": "p_034", "text": "Quem brigaria por uma vaga de estacionamento?", "tier": "free", "tags": [] },
+    { "id": "p_035", "text": "Quem tem a risada mais contagiante?", "tier": "free", "tags": [] },
+    { "id": "p_036", "text": "Quem poderia sumir por 3 dias sem responder?", "tier": "free", "tags": [] },
+    { "id": "p_037", "text": "Quem faria o pior discurso de casamento?", "tier": "free", "tags": [] },
+    { "id": "p_038", "text": "Quem namoraria uma celebridade só por status?", "tier": "free", "tags": [] },
+    { "id": "p_039", "text": "Quem tem mais chance de chorar na balada?", "tier": "free", "tags": [] },
+    { "id": "p_040", "text": "Quem poderia virar influencer sem querer?", "tier": "free", "tags": [] },
+    { "id": "p_041", "text": "Quem é manipulador em segredo sem perceber?", "tier": "free", "tags": [] },
+    { "id": "p_042", "text": "Quem poderia arruinar umas férias em um dia?", "tier": "free", "tags": [] },
+    { "id": "p_043", "text": "Quem tem mais chance de ser demitido por um motivo ridículo?", "tier": "free", "tags": [] },
+    { "id": "p_044", "text": "Quem seria o mais perigoso com dinheiro ilimitado?", "tier": "free", "tags": [] },
+    { "id": "p_045", "text": "Quem poderia ter uma vida dupla em segredo?", "tier": "free", "tags": [] },
+    { "id": "p_046", "text": "Quem seria o pior num reality de sobrevivência?", "tier": "free", "tags": [] },
+    { "id": "p_047", "text": "Quem poderia esquecer alguém numa festa?", "tier": "free", "tags": [] },
+    { "id": "p_048", "text": "Quem seria o mais assustador sendo passivo-agressivo?", "tier": "free", "tags": [] },
+    { "id": "p_049", "text": "Quem tem mais chance de mandar uma mensagem da qual se arrepende?", "tier": "free", "tags": [] },
+    { "id": "p_050", "text": "Quem poderia ficar famoso da noite para o dia?", "tier": "free", "tags": [] }
+  ]
+}

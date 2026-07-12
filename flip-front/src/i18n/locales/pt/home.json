@@ -1,0 +1,32 @@
+{
+  "title": "FL!P",
+  "subtitle": "Jogo de bebida com os amigos",
+  "welcome": "Bem-vindo ao FL!P! 🍻",
+  "description": "O jogo de bebida definitivo para animar suas festas com os amigos!",
+  "addPlayers": {
+    "title": "Adicionar jogadores",
+    "subtitle": "Mínimo 1 jogador, máximo 20",
+    "placeholder": "Nome do jogador",
+    "add": "Adicionar",
+    "remove": "Remover",
+    "minPlayers": "Adicione pelo menos 1 jogador para começar",
+    "maxPlayers": "Você atingiu o número máximo de jogadores (20)"
+  },
+  "playersList": {
+    "title": "Jogadores ({{count}})",
+    "empty": "Adicione jogadores para começar"
+  },
+  "hero": {
+    "titlePrefix": "Quem quer acabar",
+    "titleHighlight": "detonado",
+    "titleSuffix": "?",
+    "ready_one": "{{count}} jogador pronto para pagar mico.",
+    "ready_other": "{{count}} jogadores prontos para pagar mico.",
+    "addAtLeast_one": "Adicione pelo menos {{min}} jogador para começar.",
+    "addAtLeast_other": "Adicione pelo menos {{min}} jogadores para começar."
+  },
+  "actions": {
+    "start": "Bora jogar!",
+    "startCta": "Vamos! →"
+  }
+}

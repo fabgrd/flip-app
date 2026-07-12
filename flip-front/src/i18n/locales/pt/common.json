@@ -1,0 +1,60 @@
+{
+  "new": "Novo",
+  "buttons": {
+    "back": "Voltar",
+    "continue": "Continuar",
+    "start": "Começar",
+    "finish": "Finalizar",
+    "cancel": "Cancelar",
+    "save": "Salvar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "add": "Adicionar",
+    "addPlus": "Adicionar +",
+    "close": "Fechar",
+    "allGood": "Tudo certo!",
+    "confirm": "Confirmar",
+    "gotIt": "Ok, entendi!",
+    "playAgain": "Jogar de novo",
+    "settings": "Configurações",
+    "howToPlay": "Como jogar"
+  },
+  "labels": {
+    "players": "Jogadores",
+    "player": "Jogador",
+    "addPlayer": "Adicionar jogador",
+    "playerName": "Nome do jogador",
+    "question": "Pergunta",
+    "result": "Resultado",
+    "results": "Resultados",
+    "score": "Pontuação",
+    "loading": "Carregando...",
+    "error": "Erro",
+    "readyToPlay": "Prontos para jogar",
+    "rounds": "Rodadas",
+    "setup": "Configuração",
+    "themes": "Temas"
+  },
+  "emptyPlayers": {
+    "title": "A noite espera seus heróis",
+    "sub": "Quem se atreve a jogar?"
+  },
+  "messages": {
+    "success": "Sucesso!",
+    "error": "Ocorreu um erro",
+    "noData": "Nenhum dado disponível",
+    "remainingPlayers": " jogador(es) restante(s)",
+    "selectGame": "Escolha um jogo",
+    "noPlayersAdded": "Nenhum jogador adicionado",
+    "addAtLeastOnePlayerToStart": "Adicione pelo menos 1 jogador para começar"
+  },
+  "actions": {
+    "playAgain": "Jogar de novo",
+    "backToHome": "Voltar ao início"
+  },
+  "errors": {
+    "playerNameRequired": "Digite o nome de um jogador.",
+    "playerLimitReached": "Você não pode adicionar mais de {{maxPlayers}} jogadores.",
+    "playerNameAlreadyExists": "Este nome de jogador já existe ou o limite foi atingido."
+  }
+}

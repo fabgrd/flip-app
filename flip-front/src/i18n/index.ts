@@ -7,6 +7,7 @@ import { captureException } from '../lib/sentry';
 import en from './locales/en';
 import es from './locales/es';
 import fr from './locales/fr';
+import pt from './locales/pt';
 
 const LANGUAGE_DETECTOR = {
   type: 'languageDetector' as const,
@@ -70,6 +71,7 @@ i18n
       en,
       es,
       fr,
+      pt,
     },
     returnNull: false,
   });

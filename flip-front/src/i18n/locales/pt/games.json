@@ -1,0 +1,75 @@
+{
+  "selection": {
+    "title": "Escolha um jogo",
+    "subtitle": "{{count}} jogador(es) · prontos para pagar mico",
+    "surprise": "Me surpreenda",
+    "minPlayersHint": "Este jogo precisa de pelo menos {{min}} jogadores ({{label}}).",
+    "maxPlayersHint": "Este jogo suporta até {{max}} jogadores ({{label}})."
+  },
+  "labels": {
+    "players": {
+      "redFlag": "1+ jogador",
+      "casting": "3–11 jogadores",
+      "apero": "2+ jogadores",
+      "medusa": "5+ jogadores",
+      "paranoia": "4+ jogadores",
+      "cameleon": "3+ jogadores",
+      "leftRight": "1+ jogador",
+      "purityTest": "1+ jogador",
+      "theBomb": "3+ jogadores",
+      "quiPourrait": "3+ jogadores"
+    },
+    "duration": {
+      "redFlag": "5 min",
+      "casting": "20 min",
+      "apero": "20 min",
+      "medusa": "10 min",
+      "paranoia": "15 min",
+      "cameleon": "15 min",
+      "leftRight": "10 min",
+      "purityTest": "5 min",
+      "theBomb": "10 min",
+      "quiPourrait": "15 min"
+    }
+  },
+  "purityTest": {
+    "title": "Teste de Pureza",
+    "tagline": "Quantos pecados você carrega?"
+  },
+  "redFlag": {
+    "title": "Você é uma Red Flag?",
+    "tagline": "Seus ex adorariam te fazer fazer este teste"
+  },
+  "casting": {
+    "title": "O Casting",
+    "tagline": "Atue a cena mais ou menos"
+  },
+  "apero": {
+    "title": "O Aperitivo",
+    "tagline": "Adivinhe a carta do dealer"
+  },
+  "medusa": {
+    "title": "Medusa",
+    "tagline": "Olhe para cima… e evite o olhar"
+  },
+  "paranoia": {
+    "title": "Paranoia",
+    "tagline": "Quem disse seu nome… e por quê?"
+  },
+  "cameleon": {
+    "title": "Camaleão",
+    "tagline": "Desmascare o impostor"
+  },
+  "leftRight": {
+    "title": "Esquerda ou Direita",
+    "tagline": "Coloque a frase na bússola política"
+  },
+  "theBomb": {
+    "title": "A Bomba",
+    "tagline": "Passe antes que exploda"
+  },
+  "quiPourrait": {
+    "title": "Quem Seria Capaz?",
+    "tagline": "Votos secretos, dedos apontados, sem piedade"
+  }
+}

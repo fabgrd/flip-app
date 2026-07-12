@@ -1,0 +1,66 @@
+{
+  "title": "Configurações",
+  "language": {
+    "title": "Idioma",
+    "subtitle": "Escolha seu idioma preferido",
+    "options": {
+      "fr": "Français",
+      "en": "English",
+      "es": "Español",
+      "pt": "Português"
+    }
+  },
+  "about": {
+    "title": "Sobre",
+    "version": "Versão {{version}}",
+    "description": "FL!P - O jogo de bebida definitivo para animar suas festas com os amigos!"
+  },
+  "suggest": {
+    "label": "Sugerir uma pergunta",
+    "hint": "Tem uma ideia de pergunta ou frase para um jogo?",
+    "title": "Sugerir uma pergunta",
+    "gameLabel": "Qual jogo?",
+    "allGames": "Todos os jogos",
+    "questionLabel": "Sua pergunta / frase",
+    "placeholder": "Ex.: \"Você já comeu em pé na frente da pia?\"",
+    "submit": "Enviar minha sugestão",
+    "successTitle": "Obrigado!",
+    "successDesc": "Vamos ler sua sugestão com atenção. As melhores perguntas entram no jogo 🤞",
+    "close": "Fechar",
+    "errorTitle": "Ops",
+    "errorDesc": "Não foi possível enviar sua sugestão. Verifique sua conexão e tente de novo."
+  },
+  "drinks": {
+    "title": "Modo jogo de bebida",
+    "label": "Distribuir goles",
+    "description": "Ative a distribuição de goles nos jogos para transformar o Fl!p num verdadeiro jogo de bebida.",
+    "lockedHint": "Desbloqueie o Premium para ativar o modo jogo de bebida"
+  },
+  "premium": {
+    "title": "Assinatura",
+    "activeLabel": "Fl!p VIP ativo",
+    "activeHint": "Todos os recursos desbloqueados"
+  },
+  "tiktok": {
+    "title": "Ganhe 1 ano de VIP",
+    "label": "Faça um TikTok e ganhe 1 ano de VIP",
+    "hint": "Poste um vídeo do Fl!p que passe de 1.000 curtidas 🎁",
+    "reward": "🎁 1 ano grátis de Fl!p VIP",
+    "pitch": "Crie um TikTok sobre o Fl!p. Se passar de 1.000 curtidas, a gente te dá um ano de VIP. Simples assim.",
+    "steps": {
+      "1": "Poste um TikTok original sobre o Fl!p",
+      "2": "Consiga mais de {{likes}} curtidas",
+      "3": "Cole aqui o link do seu vídeo"
+    },
+    "linkLabel": "Seu link do TikTok",
+    "linkPlaceholder": "https://www.tiktok.com/@voce/video/...",
+    "handleLabel": "Seu @ ou e-mail",
+    "handlePlaceholder": "@seu_perfil ou e-mail para contato",
+    "submit": "Resgatar minha recompensa",
+    "successTitle": "Recebido!",
+    "successDesc": "Vamos analisar seu vídeo e entrar em contato para ativar seu ano VIP. Obrigado por ajudar o Fl!p a crescer 💛",
+    "close": "Fechar",
+    "errorTitle": "Ops",
+    "errorDesc": "Não foi possível enviar seu pedido. Verifique sua conexão e tente de novo."
+  }
+}
