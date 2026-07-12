@@ -16,7 +16,8 @@
       "cameleon": "3+ players",
       "leftRight": "1+ player",
       "purityTest": "1+ player",
-      "theBomb": "3+ players"
+      "theBomb": "3+ players",
+      "quiPourrait": "3+ players"
     },
     "duration": {
       "redFlag": "5 min",
@@ -27,7 +28,8 @@
       "cameleon": "15 min",
       "leftRight": "10 min",
       "purityTest": "5 min",
-      "theBomb": "10 min"
+      "theBomb": "10 min",
+      "quiPourrait": "15 min"
     }
   },
   "purityTest": {
@@ -65,5 +67,9 @@
   "theBomb": {
     "title": "The Bomb",
     "tagline": "Pass it before it blows up"
+  },
+  "quiPourrait": {
+    "title": "Who Could?",
+    "tagline": "Secret votes, pointed fingers, no mercy"
   }
 }

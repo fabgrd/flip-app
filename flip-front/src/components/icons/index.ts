@@ -7,6 +7,7 @@ export { AperoIcon } from './AperoIcon';
 export { CastingIcon } from './CastingIcon';
 export { RedFlagIcon } from './RedFlagIcon';
 export { TheBombIcon } from './TheBombIcon';
+export { QuiPourraitIcon } from './QuiPourraitIcon';
 export { BeerMugIcon } from './BeerMugIcon';
 export { PaywallGamesIcon } from './PaywallGamesIcon';
 export { PaywallDifficultyIcon } from './PaywallDifficultyIcon';

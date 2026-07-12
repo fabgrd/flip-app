@@ -13,3 +13,4 @@ export { CastingScreen } from './CastingScreen';
 export { RedFlagScreen } from './RedFlagScreen';
 export { SettingsScreen } from './SettingsScreen';
 export { TheBombScreen } from './TheBombScreen';
+export { QuiPourraitScreen } from './QuiPourraitScreen';

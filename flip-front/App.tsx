@@ -1,10 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { PortalProvider } from '@gorhom/portal';
-import {
-  DefaultTheme,
-  NavigationContainer,
-  NavigationState,
-} from '@react-navigation/native';
+import { DefaultTheme, NavigationContainer, NavigationState } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, View } from 'react-native';
@@ -34,6 +30,7 @@ import {
   ParanoiaScreen,
   PurityResultsScreen,
   PurityTestScreen,
+  QuiPourraitScreen,
   RedFlagScreen,
   SettingsScreen,
   TheBombScreen,
@@ -120,9 +117,7 @@ function ThemedAppNavigator() {
           AsyncStorage.setItem(NAV_STATE_STORAGE_KEY, JSON.stringify(payload)).catch(() => {});
         }}
       >
-        <Stack.Navigator
-          screenOptions={{ headerShown: false, gestureResponseDistance: 25 }}
-        >
+        <Stack.Navigator screenOptions={{ headerShown: false, gestureResponseDistance: 25 }}>
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="GameSelect" component={GameSelectScreen} />
           <Stack.Screen name="PurityTest" component={PurityTestScreen} />
@@ -146,6 +141,7 @@ function ThemedAppNavigator() {
           <Stack.Screen name="Casting" component={CastingScreen} />
           <Stack.Screen name="RedFlag" component={RedFlagScreen} />
           <Stack.Screen name="TheBomb" component={TheBombScreen} />
+          <Stack.Screen name="QuiPourrait" component={QuiPourraitScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </View>

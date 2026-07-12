@@ -49,6 +49,7 @@ const NAMESPACES = [
   'casting',
   'redFlag',
   'theBomb',
+  'quiPourrait',
 ] as const;
 
 i18n
