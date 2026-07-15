@@ -16,8 +16,7 @@
       "cameleon": "3+ joueurs",
       "leftRight": "1+ joueur",
       "purityTest": "1+ joueur",
-      "theBomb": "3+ joueurs",
-      "quiPourrait": "3+ joueurs"
+      "theBomb": "3+ joueurs"
     },
     "duration": {
       "redFlag": "5 min",
@@ -28,8 +27,7 @@
       "cameleon": "15 min",
       "leftRight": "10 min",
       "purityTest": "5 min",
-      "theBomb": "10 min",
-      "quiPourrait": "15 min"
+      "theBomb": "10 min"
     }
   },
   "purityTest": {
@@ -67,9 +65,5 @@
   "theBomb": {
     "title": "La Bombe",
     "tagline": "Fais tourner le tel avant que ça pète"
-  },
-  "quiPourrait": {
-    "title": "Qui pourrait ?",
-    "tagline": "Vote secret, doigts pointés, zéro pitié"
   }
 }

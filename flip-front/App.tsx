@@ -35,7 +35,6 @@ import {
   ParanoiaScreen,
   PurityResultsScreen,
   PurityTestScreen,
-  QuiPourraitScreen,
   RedFlagScreen,
   SettingsScreen,
   TheBombScreen,
@@ -151,7 +150,6 @@ function ThemedAppNavigator() {
           <Stack.Screen name="Casting" component={CastingScreen} />
           <Stack.Screen name="RedFlag" component={RedFlagScreen} />
           <Stack.Screen name="TheBomb" component={TheBombScreen} />
-          <Stack.Screen name="QuiPourrait" component={QuiPourraitScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </View>

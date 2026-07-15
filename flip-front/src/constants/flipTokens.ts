@@ -30,8 +30,6 @@ export const T = {
   castingMagenta: '#D633C9',
   bombAccent: '#FF7A1A',
   bombAccentDark: '#D6610C',
-  quiPourraitAccent: '#FF3D77',
-  quiPourraitAccentDark: '#D11E59',
 
   // Radii
   rXs: 8,

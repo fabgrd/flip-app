@@ -8,7 +8,6 @@ import {
   MedusaIcon,
   ParanoiaIcon,
   PureteIcon,
-  QuiPourraitIcon,
   RedFlagIcon,
   TheBombIcon,
 } from '../components/icons';
@@ -24,8 +23,7 @@ export type GameId =
   | 'cameleon'
   | 'left-right'
   | 'purity-test'
-  | 'the-bomb'
-  | 'qui-pourrait';
+  | 'the-bomb';
 
 export type GameRoute =
   | 'PurityTest'
@@ -36,8 +34,7 @@ export type GameRoute =
   | 'Apero'
   | 'Casting'
   | 'RedFlag'
-  | 'TheBomb'
-  | 'QuiPourrait';
+  | 'TheBomb';
 
 export type GameColorToken = keyof typeof T;
 
@@ -197,25 +194,6 @@ export const GAMES: readonly GameConfig[] = [
     durationLabelKey: 'games:labels.duration.theBomb',
     route: 'TheBomb',
     requires: [],
-    enabled: true,
-    isNew: true,
-  },
-  {
-    id: 'qui-pourrait',
-    titleKey: 'games:quiPourrait.title',
-    taglineKey: 'games:quiPourrait.tagline',
-    icon: QuiPourraitIcon,
-    color: 'quiPourraitAccent',
-    minPlayers: 3,
-    maxPlayers: 20,
-    playersLabelKey: 'games:labels.players.quiPourrait',
-    durationLabelKey: 'games:labels.duration.quiPourrait',
-    route: 'QuiPourrait',
-    requires: [],
-    variants: [
-      { id: 'hot', requires: 'spicy_content' },
-      { id: 'trash', requires: 'hardcore_content' },
-    ],
     enabled: true,
     isNew: true,
   },

@@ -99,9 +99,6 @@ export type RootStackParamList = {
 
   // The Bomb
   TheBomb: { players: Player[] };
-
-  // Qui pourrait ?
-  QuiPourrait: { players: Player[] };
 };
 
 // =============================================================================

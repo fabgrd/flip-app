@@ -11,7 +11,6 @@ import navigation from './navigation.json';
 import paranoia from './paranoia.json';
 import paywall from './paywall.json';
 import purityTest from './purity-test.json';
-import quiPourrait from './qui-pourrait.json';
 import redFlag from './red-flag.json';
 import settings from './settings.json';
 import theBomb from './the-bomb.json';
@@ -33,5 +32,4 @@ export default {
   casting,
   redFlag,
   theBomb,
-  quiPourrait,
 };

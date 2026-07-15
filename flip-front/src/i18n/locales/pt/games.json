@@ -16,8 +16,7 @@
       "cameleon": "3+ jogadores",
       "leftRight": "1+ jogador",
       "purityTest": "1+ jogador",
-      "theBomb": "3+ jogadores",
-      "quiPourrait": "3+ jogadores"
+      "theBomb": "3+ jogadores"
     },
     "duration": {
       "redFlag": "5 min",
@@ -28,8 +27,7 @@
       "cameleon": "15 min",
       "leftRight": "10 min",
       "purityTest": "5 min",
-      "theBomb": "10 min",
-      "quiPourrait": "15 min"
+      "theBomb": "10 min"
     }
   },
   "purityTest": {
@@ -67,9 +65,5 @@
   "theBomb": {
     "title": "A Bomba",
     "tagline": "Passe antes que exploda"
-  },
-  "quiPourrait": {
-    "title": "Quem Seria Capaz?",
-    "tagline": "Votos secretos, dedos apontados, sem piedade"
   }
 }
