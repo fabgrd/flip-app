@@ -1,8 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { PortalProvider } from '@gorhom/portal';
-import { DefaultTheme, NavigationContainer, NavigationState } from '@react-navigation/native';
+import {
+  DefaultTheme,
+  NavigationContainer,
+  NavigationContainerRef,
+  NavigationState,
+} from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
@@ -15,7 +20,7 @@ import { ThemeProvider, useTheme } from './src/contexts/ThemeContext';
 import { EntitlementsProvider } from './src/entitlements';
 import { linking } from './src/lib/linking';
 import { initRevenueCat } from './src/lib/revenuecat';
-import { initSentry } from './src/lib/sentry';
+import { initSentry, sentryNavigationIntegration, withSentry } from './src/lib/sentry';
 import { PaywallProvider } from './src/paywall';
 import {
   AperoScreen,
@@ -53,6 +58,7 @@ type PersistedNavState = {
 
 function ThemedAppNavigator() {
   const { theme } = useTheme();
+  const navigationRef = useRef<NavigationContainerRef<RootStackParamList>>(null);
   const [initialState, setInitialState] = useState<NavigationState | undefined>();
   const [ready, setReady] = useState(false);
 
@@ -102,9 +108,13 @@ function ThemedAppNavigator() {
   return (
     <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
       <NavigationContainer
+        ref={navigationRef}
         theme={DefaultTheme}
         linking={linking}
         initialState={initialState}
+        onReady={() => {
+          sentryNavigationIntegration.registerNavigationContainer(navigationRef);
+        }}
         onStateChange={(state) => {
           if (!state) return;
           const route = state.routes[state.index];
@@ -148,7 +158,7 @@ function ThemedAppNavigator() {
   );
 }
 
-export default function App() {
+function App() {
   return (
     <ErrorBoundary>
       <SafeAreaProvider>
@@ -169,3 +179,5 @@ export default function App() {
     </ErrorBoundary>
   );
 }
+
+export default withSentry(App);

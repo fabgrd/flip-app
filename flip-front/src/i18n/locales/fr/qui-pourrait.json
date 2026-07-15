@@ -3608,5 +3608,76 @@
     "wtf": "WTF",
     "hot": "Hot",
     "trash": "Trash"
+  },
+  "ui": {
+    "rules": {
+      "title": "Qui pourrait ?",
+      "tagline": "Votes secrets, doigts pointés, aucune pitié.",
+      "start": "C'est parti 👉",
+      "howToPlay": "COMMENT ON JOUE",
+      "warning": "⚠︎ Aucun vote n'est sérieux. On en rit, on boit de l'eau si on veut, on reste potes.",
+      "themeLabel": "THÈMES",
+      "multiVote": "Choix multiples",
+      "steps": [
+        {
+          "n": "1",
+          "title": "Une question apparaît",
+          "desc": "\"Qui pourrait…\" suivi d'un truc gênant ou absurde."
+        },
+        {
+          "n": "2",
+          "title": "Chacun vote en secret",
+          "desc": "Le téléphone tourne, tu désignes la personne la plus probable."
+        },
+        {
+          "n": "3",
+          "title": "L'élu·e assume",
+          "desc": "Le plus voté du round est révélé. Le plus voté de la soirée monte sur le podium."
+        }
+      ]
+    },
+    "prompt": {
+      "chip": "Question {{round}} / {{total}}",
+      "sticker": "QUI POURRAIT…",
+      "startVote": "Lancer le vote"
+    },
+    "handoff": {
+      "voterLabel": "VOTANT·E {{idx}} / {{total}}",
+      "title": "{{name}},\nà toi de voter",
+      "subtitle": "Personne ne doit voir ton choix. Cache l'écran.",
+      "cta": "C'est moi — je vote"
+    },
+    "vote": {
+      "chip": "Vote de {{name}}",
+      "label": "QUI POURRAIT…",
+      "self": "{{name}} (toi)",
+      "submit": "Valider mon vote secret"
+    },
+    "tally": {
+      "label": "QUI POURRAIT…",
+      "subtitle": "Tous les votes sont tombés. Roulement de tambour…",
+      "reveal": "Révéler l'élu·e 👇"
+    },
+    "result": {
+      "sticker": "L'ÉLU·E DU ROUND",
+      "stickerTie": "LES ÉLU·E·S DU ROUND",
+      "noVoteTitle": "Personne ? Louche.",
+      "drink": "🍺 {{count}} gorgée{{plural}}{{each}} — qui pourrait {{prompt}}, apparemment.",
+      "drinkEach": " chacun·e",
+      "noDrink": "Voté·e {{count}} fois — qui pourrait {{prompt}}, apparemment.",
+      "detailLabel": "LE DÉTAIL DES VOTES",
+      "next": "Question suivante →",
+      "podium": "Voir le mur de la honte 🏆"
+    },
+    "podium": {
+      "badge": "🏆 MUR DE LA HONTE",
+      "title": "{{name}}, star de la soirée",
+      "titleNone": "Égalité dans la honte",
+      "subtitle": "Voté·e {{count}} fois. Personne n'a hésité.",
+      "subtitleNone": "Personne ne s'est vraiment démarqué. On remet ça, alors.",
+      "scoreLabel": "FOIS ÉLU·E",
+      "playAgain": "Rejouer une manche",
+      "backToHub": "Retour au hub"
+    }
   }
 }

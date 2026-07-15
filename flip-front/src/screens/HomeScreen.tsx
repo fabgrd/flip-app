@@ -15,11 +15,11 @@ import {
   PlayerInput,
   PlayersList,
 } from '../components';
-import { useEntitlements } from '../entitlements';
-import { usePaywall } from '../paywall';
 import { MAX_PLAYERS_GLOBAL, MIN_PLAYERS_GLOBAL } from '../constants';
 import { T } from '../constants/flipTokens';
 import { usePlayers } from '../contexts/PlayersContext';
+import { useEntitlements } from '../entitlements';
+import { usePaywall } from '../paywall';
 import { RootStackParamList } from '../types';
 
 type HomeNav = StackNavigationProp<RootStackParamList, 'Home'>;

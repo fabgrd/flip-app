@@ -9,21 +9,27 @@
       "distribution": "internal",
       "channel": "development",
       "env": {
-        "APP_ENV": "development"
+        "APP_ENV": "development",
+        "SENTRY_DISABLE_AUTO_UPLOAD": "true",
+        "EXPO_PUBLIC_SENTRY_DSN": "https://ed9731e30a3bbdf87c57f674b5e3b0b5@o4511738753384448.ingest.de.sentry.io/4511738830782544"
       }
     },
     "preview": {
       "distribution": "internal",
       "channel": "preview",
       "env": {
-        "APP_ENV": "preview"
+        "APP_ENV": "preview",
+        "SENTRY_DISABLE_AUTO_UPLOAD": "true",
+        "EXPO_PUBLIC_SENTRY_DSN": "https://ed9731e30a3bbdf87c57f674b5e3b0b5@o4511738753384448.ingest.de.sentry.io/4511738830782544"
       }
     },
     "production": {
       "autoIncrement": true,
       "channel": "production",
       "env": {
-        "APP_ENV": "production"
+        "APP_ENV": "production",
+        "SENTRY_DISABLE_AUTO_UPLOAD": "true",
+        "EXPO_PUBLIC_SENTRY_DSN": "https://ed9731e30a3bbdf87c57f674b5e3b0b5@o4511738753384448.ingest.de.sentry.io/4511738830782544"
       }
     }
   },
