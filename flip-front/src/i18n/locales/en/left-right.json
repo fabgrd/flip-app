@@ -8,7 +8,8 @@
     "centerChoice": "It's centrist",
     "swipeLeft": "Swipe left",
     "swipeRight": "Swipe right",
-    "swipeDown": "Swipe down for center"
+    "swipeDown": "Swipe down for center",
+    "hint": "← Left | Right →   ·   ↓ Center"
   },
   "results": {
     "title": "Political Results",

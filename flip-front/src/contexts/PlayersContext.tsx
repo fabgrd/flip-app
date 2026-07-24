@@ -79,7 +79,7 @@ export function PlayersProvider({ children }: { children: ReactNode }) {
       color: pickAvailableColor(players.map((p) => p.color)),
     };
 
-    setPlayers((prev) => [newPlayer, ...prev]);
+    setPlayers((prev) => [...prev, newPlayer]);
     return true;
   };
 

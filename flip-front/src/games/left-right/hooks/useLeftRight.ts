@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Player } from '../../../types';
 import { shuffleArray } from '../../../utils/array';
+import { reconcilePlayerList, samePlayerIds } from '../../../utils/reconcilePlayers';
 import { POLITICAL_QUESTION_CONFIG } from '../constants';
 import {
   PlayerPoliticalAnswer,
@@ -51,6 +52,22 @@ export const useLeftRight = (initialPlayers: Player[], maxQuestions?: number) =>
       return { ...prev, questions };
     });
   }, [maxQuestions, t]);
+
+  // Sync roster changes (players added/removed mid-game) while preserving progress.
+  useEffect(() => {
+    setGameState((prev) => {
+      if (samePlayerIds(prev.players, initialPlayers)) return prev;
+      return {
+        ...prev,
+        players: reconcilePlayerList(initialPlayers, prev.players, (p) => ({
+          ...p,
+          answers: [],
+          leftScore: 0,
+          rightScore: 0,
+        })),
+      };
+    });
+  }, [initialPlayers]);
 
   const currentQuestion = useMemo(
     () => gameState.questions[gameState.currentQuestionIndex],

@@ -177,7 +177,7 @@ export function SettingsScreen() {
             <Text style={styles.aboutDescription}>{t('settings:about.description')}</Text>
             <View style={styles.versionPill}>
               <Text style={styles.versionText}>
-                {t('settings:about.version', { version: '1.1.0' })}
+                {t('settings:about.version', { version: '1.2.0' })}
               </Text>
             </View>
           </View>

@@ -8,7 +8,8 @@
     "centerChoice": "Es de centro",
     "swipeLeft": "Desliza a la izquierda",
     "swipeRight": "Desliza a la derecha",
-    "swipeDown": "Desliza hacia abajo para el centro"
+    "swipeDown": "Desliza hacia abajo para el centro",
+    "hint": "← Izquierda | Derecha →   ·   ↓ Centro"
   },
   "results": {
     "title": "Resultados políticos",

@@ -1,10 +1,11 @@
 import { TFunction } from 'i18next';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Entitlement, useEntitlements } from '../../../entitlements';
 import { captureException } from '../../../lib/sentry';
 import { Player } from '../../../types';
 import { shuffleArray } from '../../../utils/array';
+import { reconcilePlayerList, samePlayerIds } from '../../../utils/reconcilePlayers';
 import { levelRequiredEntitlement } from '../levelTiers';
 import {
   LevelKey,
@@ -317,6 +318,27 @@ export const usePurityTest = (initialPlayers: Player[], config?: PurityQuestionC
   const [gameState, setGameState] = useState<PurityGameState>(() =>
     buildInitialState(t, initialPlayers, sanitizeConfigForEntitlements(config, has)),
   );
+
+  // Sync roster changes (players added/removed mid-game) while preserving progress.
+  useEffect(() => {
+    setGameState((prev) => {
+      if (samePlayerIds(prev.players, initialPlayers)) return prev;
+      return {
+        ...prev,
+        players: reconcilePlayerList(initialPlayers, prev.players, (player) => ({
+          ...player,
+          answers: [],
+          score: 0,
+          themeScores: {
+            sex: { score: 0, maxScore: 0 },
+            drugs: { score: 0, maxScore: 0 },
+            morality: { score: 0, maxScore: 0 },
+            hygiene: { score: 0, maxScore: 0 },
+          },
+        })),
+      };
+    });
+  }, [initialPlayers]);
 
   const currentQuestion = useMemo(
     () => gameState.questions[gameState.currentQuestionIndex],

@@ -239,34 +239,6 @@ export function LeftRightScreen() {
         <Text style={styles.questionText}>{currentQuestion.text}</Text>
       </View>
 
-      {/* Political direction indicators */}
-      <View style={styles.indicators}>
-        <View
-          style={[styles.indicator, { backgroundColor: POLITICAL_COLORS.left, borderColor: T.ink }]}
-        >
-          <Text style={styles.indicatorEmoji}>✊🌱</Text>
-          <Text style={styles.indicatorLabel}>{t('leftRight:game.leftChoice')}</Text>
-        </View>
-        <View
-          style={[
-            styles.indicator,
-            { backgroundColor: POLITICAL_COLORS.center, borderColor: T.ink },
-          ]}
-        >
-          <Text style={styles.indicatorEmoji}>⚖️</Text>
-          <Text style={styles.indicatorLabel}>{t('leftRight:game.centerChoice')}</Text>
-        </View>
-        <View
-          style={[
-            styles.indicator,
-            { backgroundColor: POLITICAL_COLORS.right, borderColor: T.ink },
-          ]}
-        >
-          <Text style={styles.indicatorEmoji}>🦅💼</Text>
-          <Text style={styles.indicatorLabel}>{t('leftRight:game.rightChoice')}</Text>
-        </View>
-      </View>
-
       {/* Card stack */}
       <View style={styles.cardsArea}>
         <CardStack
@@ -280,10 +252,7 @@ export function LeftRightScreen() {
 
       {/* Swipe hint */}
       <View style={styles.hint}>
-        <Text style={styles.hintText}>
-          {t('leftRight:game.swipeLeft')} ← | → {t('leftRight:game.swipeRight')}
-        </Text>
-        <Text style={styles.hintText}>↓ {t('leftRight:game.swipeDown')}</Text>
+        <Text style={styles.hintText}>{t('leftRight:game.hint')}</Text>
       </View>
 
       {revealData && (
@@ -433,28 +402,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 
-  indicators: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingHorizontal: 20,
-    marginBottom: 8,
-    gap: 10,
-  },
-  indicator: {
-    flex: 1,
-    alignItems: 'center',
-    borderWidth: 2,
-    borderRadius: T.rSm,
-    paddingVertical: 8,
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
-  },
-  indicatorEmoji: { fontSize: 18, marginBottom: 2 },
-  indicatorLabel: { color: '#fff', fontSize: 12, fontWeight: '900', textAlign: 'center' },
-
   cardsArea: {
     flex: 1,
     alignItems: 'center',
@@ -462,7 +409,7 @@ const styles = StyleSheet.create({
   },
 
   hint: { alignItems: 'center', paddingBottom: 20 },
-  hintText: { color: T.inkSoft, fontSize: 13, fontStyle: 'italic' },
+  hintText: { color: T.ink, fontSize: 17, fontWeight: '800', letterSpacing: 0.3 },
 
   revealOverlay: {
     ...StyleSheet.absoluteFill,

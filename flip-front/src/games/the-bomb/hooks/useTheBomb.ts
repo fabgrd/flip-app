@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { Player } from '../../../types';
 import { shuffleArray } from '../../../utils/array';
 import type { TheBombHistoryEntry, TheBombStep } from '../types';
@@ -12,6 +12,13 @@ export function useTheBomb(initialPlayers: Player[], categories: readonly string
   const [explosions, setExplosions] = useState<number[]>(() => initialPlayers.map(() => 0));
   const [victimIdx, setVictimIdx] = useState<number | null>(null);
   const [history, setHistory] = useState<TheBombHistoryEntry[]>([]);
+
+  // Keep the per-player explosions tally aligned when the roster changes mid-game.
+  useEffect(() => {
+    setExplosions((prev) =>
+      prev.length === players.length ? prev : players.map((_, i) => prev[i] ?? 0),
+    );
+  }, [players.length]);
 
   const category = useMemo(
     () => (categoryOrder.length > 0 ? categoryOrder[round % categoryOrder.length] : ''),

@@ -1,6 +1,7 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { Player } from '../../../types';
 import { shuffleArray } from '../../../utils/array';
+import { reconcilePlayerList, samePlayerIds } from '../../../utils/reconcilePlayers';
 import { DEFAULT_DISTRIBUTION_BY_PLAYER_COUNT, getWordPairsForThemes, getWordPairsForThemesLocalized } from '../constants';
 import type {
   CameleonAssignedPlayer,
@@ -140,6 +141,23 @@ export function useCameleon(initialPlayers: Player[]) {
     },
     [initialPlayers, playerCount, defaultDistribution],
   );
+
+  // Sync roster changes before the game starts (roles are assigned from the live
+  // roster in startGame, so only the pre-game settings list needs reconciling here).
+  useEffect(() => {
+    setGameState((prev) => {
+      if (prev.started || samePlayerIds(prev.players, initialPlayers)) return prev;
+      return {
+        ...prev,
+        players: reconcilePlayerList(initialPlayers, prev.players, (p) => ({
+          ...p,
+          role: 'civilian',
+          secretWord: null,
+          isEliminated: false,
+        })),
+      };
+    });
+  }, [initialPlayers]);
 
   const currentRevealPlayer = useMemo(
     () => gameState.players[revealIndex] ?? null,

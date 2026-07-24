@@ -602,7 +602,7 @@ const play = StyleSheet.create({
 
   cardsArea: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   hint: { alignItems: 'center', paddingBottom: 20 },
-  hintText: { color: 'rgba(255,255,255,0.7)', fontSize: 13, fontStyle: 'italic' },
+  hintText: { color: 'rgba(255,255,255,0.85)', fontSize: 17, fontWeight: '800', letterSpacing: 0.3 },
 });
 
 // ─── RFResult ─────────────────────────────────────────────────────────────────
