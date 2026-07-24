@@ -302,6 +302,234 @@
       "text": "Qui pourrait devenir célèbre du jour au lendemain ?",
       "tier": "free",
       "tags": []
+    },
+    {
+      "id": "p_051",
+      "text": "Qui finirait en prison en premier ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_052",
+      "text": "Qui craquerait le premier sur une île déserte ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_053",
+      "text": "Qui a le plus de secrets ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_054",
+      "text": "Qui serait le pire coloc ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_055",
+      "text": "Qui dépenserait tout son argent en une nuit ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_056",
+      "text": "Qui embrasserait un inconnu pour un pari ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_057",
+      "text": "Qui pleurerait devant un film Disney ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_058",
+      "text": "Qui oublierait l'anniversaire de son/sa meilleur·e ami·e ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_059",
+      "text": "Qui deviendrait riche le plus vite ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_060",
+      "text": "Qui ferait le meilleur espion ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_061",
+      "text": "Qui abandonnerait le groupe pour un date ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_062",
+      "text": "Qui a le plus de chances de devenir célèbre ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_063",
+      "text": "Qui checke son téléphone toutes les 2 minutes ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_064",
+      "text": "Qui gagnerait une bagarre dans le groupe ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_065",
+      "text": "Qui serait le premier à se marier ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_066",
+      "text": "Qui raconterait ta pire histoire à tout le monde ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_067",
+      "text": "Qui a déjà stalké son ex ce mois-ci ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_068",
+      "text": "Qui prendrait le plus de selfies en soirée ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_069",
+      "text": "Qui deviendrait influenceur du jour au lendemain ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_070",
+      "text": "Qui ghosterait quelqu'un sans hésiter ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_071",
+      "text": "Qui serait le plus jaloux en couple ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_072",
+      "text": "Qui pourrait rester une semaine sans parler ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_073",
+      "text": "Qui craquerait pour un·e collègue ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_074",
+      "text": "Qui serait le meilleur en karaoké ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_075",
+      "text": "Qui oserait envoyer un message à son crush maintenant ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_076",
+      "text": "Qui ferait le plus de bêtises bourré ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_077",
+      "text": "Qui garde des captures d'écran compromettantes ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_078",
+      "text": "Qui serait le plus difficile à vivre en vacances ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_079",
+      "text": "Qui trahirait le groupe pour de l'argent ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_080",
+      "text": "Qui a déjà pleuré pour attirer l'attention ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_081",
+      "text": "Qui serait le pire témoin de mariage ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_082",
+      "text": "Qui donnerait son dernier euro à un ami ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_083",
+      "text": "Qui pourrait devenir président ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_084",
+      "text": "Qui aurait le plus de mal à garder un secret ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_085",
+      "text": "Qui deviendrait le plus gros radin ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_086",
+      "text": "Qui a le plus de mal à dire non ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_087",
+      "text": "Qui enverrait un texto à son ex à 3h du matin ?",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_088",
+      "text": "Qui serait le plus perdu sans son téléphone ?",
+      "tier": "free",
+      "tags": []
     }
   ],
   "ui": {

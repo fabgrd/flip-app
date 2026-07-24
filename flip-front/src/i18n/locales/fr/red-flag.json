@@ -836,6 +836,186 @@
       "text": "mélangé ta vie complètement avec celle de quelqu'un en quelques semaines",
       "category": "collant",
       "points": 5
+    },
+    {
+      "id": "stk_2_8",
+      "text": "activé les notifications pour être alerté·e dès qu'un crush poste quelque chose",
+      "category": "stalker",
+      "points": 2
+    },
+    {
+      "id": "stk_2_9",
+      "text": "regardé qui avait vu ta story juste pour vérifier si une personne précise l'avait vue",
+      "category": "stalker",
+      "points": 2
+    },
+    {
+      "id": "stk_3_9",
+      "text": "créé un faux compte pour suivre quelqu'un qui t'avait bloqué·e",
+      "category": "stalker",
+      "points": 3
+    },
+    {
+      "id": "stk_3_10",
+      "text": "mémorisé l'emploi du temps de quelqu'un sans qu'il/elle te l'ait donné",
+      "category": "stalker",
+      "points": 3
+    },
+    {
+      "id": "stk_4_9",
+      "text": "scrollé jusqu'en 2016 sur le profil de ton crush en priant de ne pas liker par erreur",
+      "category": "stalker",
+      "points": 4
+    },
+    {
+      "id": "stk_5_6",
+      "text": "traversé toute la ville dans l'espoir de croiser 'par hasard' quelqu'un",
+      "category": "stalker",
+      "points": 5
+    },
+    {
+      "id": "man_2_7",
+      "text": "utilisé un compliment juste avant de demander un service",
+      "category": "manipulateur",
+      "points": 2
+    },
+    {
+      "id": "man_2_8",
+      "text": "répondu 'fais comme tu le sens' pour ensuite reprocher le choix fait",
+      "category": "manipulateur",
+      "points": 2
+    },
+    {
+      "id": "man_3_9",
+      "text": "joué la victime pour éviter d'assumer une erreur",
+      "category": "manipulateur",
+      "points": 3
+    },
+    {
+      "id": "man_3_10",
+      "text": "ressorti une vieille faveur pour obtenir ce que tu voulais",
+      "category": "manipulateur",
+      "points": 3
+    },
+    {
+      "id": "man_4_9",
+      "text": "monté deux amis l'un contre l'autre pour en tirer un avantage",
+      "category": "manipulateur",
+      "points": 4
+    },
+    {
+      "id": "man_5_6",
+      "text": "fait culpabiliser quelqu'un au point qu'il/elle s'excuse alors que t'avais tort",
+      "category": "manipulateur",
+      "points": 5
+    },
+    {
+      "id": "nar_2_7",
+      "text": "reposté un compliment reçu en story pour que tout le monde le voie",
+      "category": "narcisse",
+      "points": 2
+    },
+    {
+      "id": "nar_2_8",
+      "text": "coupé la parole pour raconter une histoire 'encore mieux'",
+      "category": "narcisse",
+      "points": 2
+    },
+    {
+      "id": "nar_3_9",
+      "text": "fait semblant d'écouter en attendant juste ton tour de parler",
+      "category": "narcisse",
+      "points": 3
+    },
+    {
+      "id": "nar_3_10",
+      "text": "choisi un resto uniquement pour la photo Instagram",
+      "category": "narcisse",
+      "points": 3
+    },
+    {
+      "id": "nar_4_9",
+      "text": "comparé ta réussite à celle d'un ami juste pour te sentir supérieur·e",
+      "category": "narcisse",
+      "points": 4
+    },
+    {
+      "id": "nar_5_6",
+      "text": "gâché la bonne nouvelle de quelqu'un en ramenant tout à toi",
+      "category": "narcisse",
+      "points": 5
+    },
+    {
+      "id": "dra_2_6",
+      "text": "répondu par un simple point à un long message pour marquer ton mécontentement",
+      "category": "drama",
+      "points": 2
+    },
+    {
+      "id": "dra_2_7",
+      "text": "posté une story vague et cryptique en espérant qu'on te demande ce qui va pas",
+      "category": "drama",
+      "points": 2
+    },
+    {
+      "id": "dra_3_9",
+      "text": "raccroché au nez de quelqu'un en pleine dispute pour l'effet dramatique",
+      "category": "drama",
+      "points": 3
+    },
+    {
+      "id": "dra_3_10",
+      "text": "transformé un petit malentendu en crise de trois jours",
+      "category": "drama",
+      "points": 3
+    },
+    {
+      "id": "dra_4_9",
+      "text": "menacé de partir d'une soirée juste pour qu'on te retienne",
+      "category": "drama",
+      "points": 4
+    },
+    {
+      "id": "dra_5_6",
+      "text": "clashé publiquement quelqu'un pour un truc qu'il aurait fallu régler en privé",
+      "category": "drama",
+      "points": 5
+    },
+    {
+      "id": "col_2_7",
+      "text": "vérifié si quelqu'un était en ligne toutes les dix minutes",
+      "category": "collant",
+      "points": 2
+    },
+    {
+      "id": "col_2_8",
+      "text": "annulé tes propres plans en espérant que ton crush soit libre",
+      "category": "collant",
+      "points": 2
+    },
+    {
+      "id": "col_3_9",
+      "text": "demandé 'ça va nous deux ?' plusieurs fois dans la même journée",
+      "category": "collant",
+      "points": 3
+    },
+    {
+      "id": "col_3_10",
+      "text": "calculé le temps de réponse à partir de l'heure du dernier 'vu'",
+      "category": "collant",
+      "points": 3
+    },
+    {
+      "id": "col_4_9",
+      "text": "débarqué là où tu savais que quelqu'un serait sans avoir été invité·e",
+      "category": "collant",
+      "points": 4
+    },
+    {
+      "id": "col_5_6",
+      "text": "fait une scène parce que ton/ta partenaire a mis trop longtemps à répondre",
+      "category": "collant",
+      "points": 5
     }
   ],
   "ui": {

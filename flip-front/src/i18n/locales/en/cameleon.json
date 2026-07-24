@@ -208,6 +208,134 @@
       {
         "w": "Alarm clock",
         "c": "Phone alarm"
+      },
+      {
+        "w": "Subway",
+        "c": "Tram"
+      },
+      {
+        "w": "Umbrella",
+        "c": "Raincoat"
+      },
+      {
+        "w": "Croissant",
+        "c": "Muffin"
+      },
+      {
+        "w": "Baguette",
+        "c": "Bagel"
+      },
+      {
+        "w": "Fork",
+        "c": "Spoon"
+      },
+      {
+        "w": "Plate",
+        "c": "Bowl"
+      },
+      {
+        "w": "Television",
+        "c": "Computer"
+      },
+      {
+        "w": "Light bulb",
+        "c": "Candle"
+      },
+      {
+        "w": "Broom",
+        "c": "Mop"
+      },
+      {
+        "w": "Shower",
+        "c": "Bath"
+      },
+      {
+        "w": "Soap",
+        "c": "Shower gel"
+      },
+      {
+        "w": "Fridge",
+        "c": "Freezer"
+      },
+      {
+        "w": "Oven",
+        "c": "Microwave"
+      },
+      {
+        "w": "Kettle",
+        "c": "Coffee maker"
+      },
+      {
+        "w": "Parking lot",
+        "c": "Garage"
+      },
+      {
+        "w": "Highway",
+        "c": "Country road"
+      },
+      {
+        "w": "Mailman",
+        "c": "Delivery guy"
+      },
+      {
+        "w": "Firefighter",
+        "c": "Police officer"
+      },
+      {
+        "w": "Butcher",
+        "c": "Deli"
+      },
+      {
+        "w": "Hairdresser",
+        "c": "Barber"
+      },
+      {
+        "w": "Dentist",
+        "c": "Orthodontist"
+      },
+      {
+        "w": "Airport",
+        "c": "Train station"
+      },
+      {
+        "w": "Stairs",
+        "c": "Elevator"
+      },
+      {
+        "w": "Keyboard",
+        "c": "Mouse"
+      },
+      {
+        "w": "Pencil",
+        "c": "Pen"
+      },
+      {
+        "w": "Glasses",
+        "c": "Contact lenses"
+      },
+      {
+        "w": "Watch",
+        "c": "Bracelet"
+      },
+      {
+        "w": "Coat",
+        "c": "Puffer jacket"
+      },
+      {
+        "w": "Scarf",
+        "c": "Beanie"
+      },
+      {
+        "w": "Glove",
+        "c": "Mitten"
+      },
+      {
+        "w": "Spring",
+        "c": "Summer"
+      },
+      {
+        "w": "Cloud",
+        "c": "Fog"
       }
     ],
     "sousculture": [
@@ -306,6 +434,114 @@
       {
         "w": "Music festival",
         "c": "Rave"
+      },
+      {
+        "w": "Zelda",
+        "c": "Elden Ring"
+      },
+      {
+        "w": "Mario",
+        "c": "Sonic"
+      },
+      {
+        "w": "Pokémon",
+        "c": "Digimon"
+      },
+      {
+        "w": "Call of Duty",
+        "c": "Battlefield"
+      },
+      {
+        "w": "Twitch",
+        "c": "Kick"
+      },
+      {
+        "w": "Discord",
+        "c": "TeamSpeak"
+      },
+      {
+        "w": "Reddit",
+        "c": "4chan"
+      },
+      {
+        "w": "Star Wars",
+        "c": "Star Trek"
+      },
+      {
+        "w": "Harry Potter",
+        "c": "Le Seigneur des Anneaux"
+      },
+      {
+        "w": "Game of Thrones",
+        "c": "The Witcher"
+      },
+      {
+        "w": "Squid Game",
+        "c": "Alice in Borderland"
+      },
+      {
+        "w": "Stranger Things",
+        "c": "Dark"
+      },
+      {
+        "w": "The Office",
+        "c": "Friends"
+      },
+      {
+        "w": "Rick et Morty",
+        "c": "South Park"
+      },
+      {
+        "w": "Les Simpson",
+        "c": "Family Guy"
+      },
+      {
+        "w": "L'Attaque des Titans",
+        "c": "Death Note"
+      },
+      {
+        "w": "My Hero Academia",
+        "c": "Jujutsu Kaisen"
+      },
+      {
+        "w": "Demon Slayer",
+        "c": "Chainsaw Man"
+      },
+      {
+        "w": "Kaamelott",
+        "c": "Bref"
+      },
+      {
+        "w": "OSS 117",
+        "c": "La Cité de la peur"
+      },
+      {
+        "w": "Among Us",
+        "c": "Fall Guys"
+      },
+      {
+        "w": "Genshin Impact",
+        "c": "Honkai"
+      },
+      {
+        "w": "Vinted",
+        "c": "Leboncoin"
+      },
+      {
+        "w": "Uber",
+        "c": "Bolt"
+      },
+      {
+        "w": "Deliveroo",
+        "c": "Uber Eats"
+      },
+      {
+        "w": "BeReal",
+        "c": "Instagram"
+      },
+      {
+        "w": "Valorant",
+        "c": "CS2"
       }
     ],
     "football": [
@@ -372,6 +608,94 @@
       {
         "w": "Champions League",
         "c": "Europa League"
+      },
+      {
+        "w": "PSG",
+        "c": "OM"
+      },
+      {
+        "w": "Liverpool",
+        "c": "Everton"
+      },
+      {
+        "w": "Chelsea",
+        "c": "Arsenal"
+      },
+      {
+        "w": "Barça",
+        "c": "Real Madrid"
+      },
+      {
+        "w": "Inter Milan",
+        "c": "AC Milan"
+      },
+      {
+        "w": "Juventus",
+        "c": "Naples"
+      },
+      {
+        "w": "Haaland",
+        "c": "Vinicius"
+      },
+      {
+        "w": "Vinicius",
+        "c": "Rodrygo"
+      },
+      {
+        "w": "Kanté",
+        "c": "Pogba"
+      },
+      {
+        "w": "Deschamps",
+        "c": "Guardiola"
+      },
+      {
+        "w": "Ancelotti",
+        "c": "Mourinho"
+      },
+      {
+        "w": "Ballon d'Or",
+        "c": "Soulier d'Or"
+      },
+      {
+        "w": "Ronaldinho",
+        "c": "Kaká"
+      },
+      {
+        "w": "Iniesta",
+        "c": "Xavi"
+      },
+      {
+        "w": "Buffon",
+        "c": "Casillas"
+      },
+      {
+        "w": "Drogba",
+        "c": "Eto'o"
+      },
+      {
+        "w": "Camp Nou",
+        "c": "Santiago Bernabéu"
+      },
+      {
+        "w": "Anfield",
+        "c": "Old Trafford"
+      },
+      {
+        "w": "Kvaratskhelia",
+        "c": "Osimhen"
+      },
+      {
+        "w": "Bellingham",
+        "c": "Wirtz"
+      },
+      {
+        "w": "Salah",
+        "c": "Mané"
+      },
+      {
+        "w": "De Bruyne",
+        "c": "Modric"
       }
     ],
     "rap": [
@@ -454,6 +778,110 @@
       {
         "w": "NBA YoungBoy",
         "c": "Kodak Black"
+      },
+      {
+        "w": "Orelsan",
+        "c": "Bigflo & Oli"
+      },
+      {
+        "w": "Soprano",
+        "c": "Black M"
+      },
+      {
+        "w": "Maître Gims",
+        "c": "Dadju"
+      },
+      {
+        "w": "Lomepal",
+        "c": "Roméo Elvis"
+      },
+      {
+        "w": "Lorenzo",
+        "c": "Seth Gueko"
+      },
+      {
+        "w": "Georgio",
+        "c": "Népal"
+      },
+      {
+        "w": "Népal",
+        "c": "Doums"
+      },
+      {
+        "w": "Alkpote",
+        "c": "Zola"
+      },
+      {
+        "w": "Koba LaD",
+        "c": "Maes"
+      },
+      {
+        "w": "Maes",
+        "c": "Guy2Bezbar"
+      },
+      {
+        "w": "Rim'K",
+        "c": "Sniper"
+      },
+      {
+        "w": "Diam's",
+        "c": "La Fouine"
+      },
+      {
+        "w": "La Fouine",
+        "c": "Rohff"
+      },
+      {
+        "w": "Rohff",
+        "c": "Mac Tyer"
+      },
+      {
+        "w": "Sefyu",
+        "c": "Kery James"
+      },
+      {
+        "w": "Kery James",
+        "c": "Médine"
+      },
+      {
+        "w": "Médine",
+        "c": "Youssoupha"
+      },
+      {
+        "w": "Youssoupha",
+        "c": "Disiz"
+      },
+      {
+        "w": "Vegedream",
+        "c": "Naza"
+      },
+      {
+        "w": "Naza",
+        "c": "Keblack"
+      },
+      {
+        "w": "Aya Nakamura",
+        "c": "Wejdene"
+      },
+      {
+        "w": "Werenoi",
+        "c": "Favé"
+      },
+      {
+        "w": "Favé",
+        "c": "Le Jly"
+      },
+      {
+        "w": "Jok'Air",
+        "c": "S.Pri Noir"
+      },
+      {
+        "w": "Ziak",
+        "c": "Winterfell"
+      },
+      {
+        "w": "PLK",
+        "c": "Zola"
       }
     ],
     "hot": [
@@ -480,6 +908,86 @@
       {
         "w": "Penis",
         "c": "Clitoris"
+      },
+      {
+        "w": "Sextape",
+        "c": "Nude"
+      },
+      {
+        "w": "Condom",
+        "c": "Birth control pill"
+      },
+      {
+        "w": "Doggy style",
+        "c": "Missionary"
+      },
+      {
+        "w": "Orgasm",
+        "c": "Ejaculation"
+      },
+      {
+        "w": "Masturbation",
+        "c": "Handjob"
+      },
+      {
+        "w": "Boobs",
+        "c": "Butt"
+      },
+      {
+        "w": "Nipple",
+        "c": "Belly button"
+      },
+      {
+        "w": "Handcuffs",
+        "c": "Rope"
+      },
+      {
+        "w": "Whip",
+        "c": "Riding crop"
+      },
+      {
+        "w": "Butt plug",
+        "c": "Ben Wa balls"
+      },
+      {
+        "w": "Striptease",
+        "c": "Lap dance"
+      },
+      {
+        "w": "G-spot",
+        "c": "Prostate"
+      },
+      {
+        "w": "Foreplay",
+        "c": "Cuddle"
+      },
+      {
+        "w": "Threesome",
+        "c": "Orgy"
+      },
+      {
+        "w": "Fantasy",
+        "c": "Fetish"
+      },
+      {
+        "w": "Escort",
+        "c": "Camgirl"
+      },
+      {
+        "w": "Sugar daddy",
+        "c": "Sugar baby"
+      },
+      {
+        "w": "Cougar",
+        "c": "Virgin"
+      },
+      {
+        "w": "Tinder",
+        "c": "Grindr"
+      },
+      {
+        "w": "Hickey",
+        "c": "Scratch"
       }
     ],
     "decadence": [
@@ -514,6 +1022,86 @@
       {
         "w": "Wasted",
         "c": "Stoned"
+      },
+      {
+        "w": "Champagne",
+        "c": "Prosecco"
+      },
+      {
+        "w": "Tequila",
+        "c": "Mezcal"
+      },
+      {
+        "w": "Gin & tonic",
+        "c": "Vodka tonic"
+      },
+      {
+        "w": "Jägerbomb",
+        "c": "Baby Guinness"
+      },
+      {
+        "w": "Cognac",
+        "c": "Brandy"
+      },
+      {
+        "w": "Ecstasy",
+        "c": "LSD"
+      },
+      {
+        "w": "Mushrooms",
+        "c": "DMT"
+      },
+      {
+        "w": "Ketamine",
+        "c": "GHB"
+      },
+      {
+        "w": "Crack",
+        "c": "Heroin"
+      },
+      {
+        "w": "Poppers",
+        "c": "Laughing gas"
+      },
+      {
+        "w": "Cocaine",
+        "c": "Speed"
+      },
+      {
+        "w": "Afters",
+        "c": "Pre-drinks"
+      },
+      {
+        "w": "Nightclub",
+        "c": "Rave"
+      },
+      {
+        "w": "Cocktail",
+        "c": "Punch"
+      },
+      {
+        "w": "Sangria",
+        "c": "Spritz"
+      },
+      {
+        "w": "Shot",
+        "c": "Round on the house"
+      },
+      {
+        "w": "Comedown",
+        "c": "Hangover"
+      },
+      {
+        "w": "Zombie",
+        "c": "Long Island"
+      },
+      {
+        "w": "Keg",
+        "c": "Beer tap"
+      },
+      {
+        "w": "Shooter",
+        "c": "Tequila slammer"
       }
     ],
     "wtf": [
@@ -560,6 +1148,94 @@
       {
         "w": "Caillou (cartoon)",
         "c": "Noddy"
+      },
+      {
+        "w": "Toe cheese",
+        "c": "Earwax"
+      },
+      {
+        "w": "Booger",
+        "c": "Dead skin"
+      },
+      {
+        "w": "Cold sore",
+        "c": "Wart"
+      },
+      {
+        "w": "Boil",
+        "c": "Blackhead"
+      },
+      {
+        "w": "Dirty undies",
+        "c": "Holey sock"
+      },
+      {
+        "w": "Lazy bum",
+        "c": "Hair in the soup"
+      },
+      {
+        "w": "Unibrow",
+        "c": "Hairy armpit"
+      },
+      {
+        "w": "Dragon breath",
+        "c": "Silent fart"
+      },
+      {
+        "w": "Burp",
+        "c": "Hiccup"
+      },
+      {
+        "w": "Snot",
+        "c": "Snail slime"
+      },
+      {
+        "w": "Limping pigeon",
+        "c": "Subway rat"
+      },
+      {
+        "w": "Cockroach",
+        "c": "Bed bug"
+      },
+      {
+        "w": "Clogged toilet",
+        "c": "Septic tank"
+      },
+      {
+        "w": "Conspiracy theorist",
+        "c": "Anti-vaxxer"
+      },
+      {
+        "w": "NFT",
+        "c": "Bitcoin"
+      },
+      {
+        "w": "Metaverse",
+        "c": "Second Life"
+      },
+      {
+        "w": "Sigma male",
+        "c": "Alpha male"
+      },
+      {
+        "w": "Rizz",
+        "c": "Aura"
+      },
+      {
+        "w": "Mewing",
+        "c": "Looksmaxxing"
+      },
+      {
+        "w": "Ohio",
+        "c": "Gyatt"
+      },
+      {
+        "w": "Gooner",
+        "c": "Discord mod"
+      },
+      {
+        "w": "Flat-earther",
+        "c": "Reptilian"
       }
     ]
   },

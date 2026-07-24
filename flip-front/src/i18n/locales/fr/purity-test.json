@@ -109,6 +109,16 @@
           "id": "sex_l5_12",
           "text": "vendu du contenu intime en ligne ?",
           "points": 5
+        },
+        {
+          "id": "sex_l5_13",
+          "text": "participé à un plan à plusieurs ?",
+          "points": 5
+        },
+        {
+          "id": "sex_l5_14",
+          "text": "trompé quelqu'un avec qui tu étais en couple ?",
+          "points": 5
         }
       ],
       "level4": [
@@ -185,6 +195,16 @@
         {
           "id": "sex_l4_15",
           "text": "eu un fantasme que tu trouves très tabou ?",
+          "points": 4
+        },
+        {
+          "id": "sex_l4_16",
+          "text": "couché avec quelqu'un dont tu ne connaissais pas le prénom ?",
+          "points": 4
+        },
+        {
+          "id": "sex_l4_17",
+          "text": "fait l'amour dans un lieu public ?",
           "points": 4
         }
       ],
@@ -268,6 +288,16 @@
           "id": "sex_l3_16",
           "text": "essayé des positions que tu as vues sur internet ?",
           "points": 3
+        },
+        {
+          "id": "sex_l3_17",
+          "text": "envoyé un nude à quelqu'un ?",
+          "points": 3
+        },
+        {
+          "id": "sex_l3_18",
+          "text": "eu un coup d'un soir ?",
+          "points": 3
         }
       ],
       "level2": [
@@ -330,6 +360,16 @@
           "id": "sex_l2_12",
           "text": "embrassé deux personnes dans la même soirée ?",
           "points": 2
+        },
+        {
+          "id": "sex_l2_13",
+          "text": "envoyé un message très coquin en pleine journée ?",
+          "points": 2
+        },
+        {
+          "id": "sex_l2_14",
+          "text": "eu un crush sur un·e collègue ?",
+          "points": 2
         }
       ],
       "level1": [
@@ -371,6 +411,16 @@
         {
           "id": "sex_l1_8",
           "text": "eu des relations sans contraception ?",
+          "points": 1
+        },
+        {
+          "id": "sex_l1_9",
+          "text": "eu un date via une appli de rencontre ?",
+          "points": 1
+        },
+        {
+          "id": "sex_l1_10",
+          "text": "embrassé deux personnes différentes le même soir ?",
           "points": 1
         }
       ]
@@ -420,6 +470,16 @@
         {
           "id": "drugs_l5_9",
           "text": "eu besoin de réhab ?",
+          "points": 5
+        },
+        {
+          "id": "drugs_l5_10",
+          "text": "pris de la drogue tout·e seul·e ?",
+          "points": 5
+        },
+        {
+          "id": "drugs_l5_11",
+          "text": "fini aux urgences à cause d'une soirée ?",
           "points": 5
         }
       ],
@@ -483,6 +543,16 @@
           "id": "drugs_l4_12",
           "text": "acheté de l'alcool avec une fausse pièce d'identité ?",
           "points": 4
+        },
+        {
+          "id": "drugs_l4_13",
+          "text": "essayé une drogue dure au moins une fois ?",
+          "points": 4
+        },
+        {
+          "id": "drugs_l4_14",
+          "text": "manqué un jour de boulot à cause d'une cuite ?",
+          "points": 4
         }
       ],
       "level3": [
@@ -534,6 +604,16 @@
         {
           "id": "drugs_l3_10",
           "text": "pris de la drogue avant une heure importante ?",
+          "points": 3
+        },
+        {
+          "id": "drugs_l3_11",
+          "text": "mélangé plusieurs alcools jusqu'à le regretter ?",
+          "points": 3
+        },
+        {
+          "id": "drugs_l3_12",
+          "text": "conduit après avoir bu ?",
           "points": 3
         }
       ],
@@ -587,6 +667,16 @@
           "id": "drugs_l2_10",
           "text": "bu jusqu'à tomber ?",
           "points": 2
+        },
+        {
+          "id": "drugs_l2_11",
+          "text": "pris un verre juste pour te donner du courage ?",
+          "points": 2
+        },
+        {
+          "id": "drugs_l2_12",
+          "text": "fumé un joint ?",
+          "points": 2
         }
       ],
       "level1": [
@@ -628,6 +718,16 @@
         {
           "id": "drugs_l1_8",
           "text": "fumé en cachette ?",
+          "points": 1
+        },
+        {
+          "id": "drugs_l1_9",
+          "text": "bu de l'alcool un jour de semaine sans occasion ?",
+          "points": 1
+        },
+        {
+          "id": "drugs_l1_10",
+          "text": "fumé une clope en soirée sans être fumeur ?",
           "points": 1
         }
       ]
@@ -682,6 +782,16 @@
         {
           "id": "morality_l5_10",
           "text": "fait du chantage avec des photos/vidéos ?",
+          "points": 5
+        },
+        {
+          "id": "morality_l5_11",
+          "text": "trahi la confiance d'un proche pour ton propre intérêt ?",
+          "points": 5
+        },
+        {
+          "id": "morality_l5_12",
+          "text": "laissé accuser quelqu'un à ta place ?",
           "points": 5
         }
       ],
@@ -744,6 +854,16 @@
         {
           "id": "morality_l4_12",
           "text": "menti sur ton identité pour arnaquer ?",
+          "points": 4
+        },
+        {
+          "id": "morality_l4_13",
+          "text": "volé quelque chose dans un magasin ?",
+          "points": 4
+        },
+        {
+          "id": "morality_l4_14",
+          "text": "menti à ton/ta partenaire sur où tu étais ?",
           "points": 4
         }
       ],
@@ -812,6 +932,16 @@
           "id": "morality_l3_13",
           "text": "utilisé des infos confidentielles pour ton avantage ?",
           "points": 3
+        },
+        {
+          "id": "morality_l3_14",
+          "text": "lu les messages de quelqu'un en cachette ?",
+          "points": 3
+        },
+        {
+          "id": "morality_l3_15",
+          "text": "ghosté quelqu'un après plusieurs rendez-vous ?",
+          "points": 3
         }
       ],
       "level2": [
@@ -854,6 +984,16 @@
           "id": "morality_l2_8",
           "text": "fait du chantage émotionnel léger ?",
           "points": 2
+        },
+        {
+          "id": "morality_l2_9",
+          "text": "resquillé dans les transports en commun ?",
+          "points": 2
+        },
+        {
+          "id": "morality_l2_10",
+          "text": "menti pour obtenir une réduction ?",
+          "points": 2
         }
       ],
       "level1": [
@@ -895,6 +1035,16 @@
         {
           "id": "morality_l1_8",
           "text": "triché durant tes études ?",
+          "points": 1
+        },
+        {
+          "id": "morality_l1_9",
+          "text": "fait semblant d'adorer un cadeau que tu détestais ?",
+          "points": 1
+        },
+        {
+          "id": "morality_l1_10",
+          "text": "menti sur ton âge ?",
           "points": 1
         }
       ],
@@ -962,6 +1112,16 @@
           "id": "hygiene_l5_8",
           "text": "retenu tes besoins pendant des jours ?",
           "points": 5
+        },
+        {
+          "id": "hygiene_l5_9",
+          "text": "reporté des sous-vêtements sales en les mettant à l'envers ?",
+          "points": 5
+        },
+        {
+          "id": "hygiene_l5_10",
+          "text": "pété volontairement dans un lieu public bondé ?",
+          "points": 5
         }
       ],
       "level4": [
@@ -1009,6 +1169,16 @@
           "id": "hygiene_l4_9",
           "text": "pissé en public en étant pas ivre ?",
           "points": 4
+        },
+        {
+          "id": "hygiene_l4_10",
+          "text": "reniflé un vêtement pour savoir s'il était mettable, puis l'avoir mis ?",
+          "points": 4
+        },
+        {
+          "id": "hygiene_l4_11",
+          "text": "dormi dans les mêmes draps plus d'un mois ?",
+          "points": 4
         }
       ],
       "level3": [
@@ -1046,6 +1216,16 @@
           "id": "hygiene_l3_7",
           "text": "craché par terre à plusieurs reprises ?",
           "points": 3
+        },
+        {
+          "id": "hygiene_l3_8",
+          "text": "oublié de te laver les mains en sortant des toilettes ?",
+          "points": 3
+        },
+        {
+          "id": "hygiene_l3_9",
+          "text": "gardé la même brosse à dents plus d'un an ?",
+          "points": 3
         }
       ],
       "level2": [
@@ -1072,6 +1252,16 @@
         {
           "id": "hygiene_l2_5",
           "text": "toussé dans ton coude ? Non, dans ta main ?",
+          "points": 2
+        },
+        {
+          "id": "hygiene_l2_6",
+          "text": "mangé un truc tombé par terre (règle des 5 secondes) ?",
+          "points": 2
+        },
+        {
+          "id": "hygiene_l2_7",
+          "text": "remis des chaussettes déjà portées trouvées par terre ?",
           "points": 2
         }
       ],
@@ -1114,6 +1304,16 @@
         {
           "id": "hygiene_l1_8",
           "text": "mis des chaussures sans chaussettes ?",
+          "points": 1
+        },
+        {
+          "id": "hygiene_l1_9",
+          "text": "porté deux jours de suite le même sous-vêtement ?",
+          "points": 1
+        },
+        {
+          "id": "hygiene_l1_10",
+          "text": "sauté une douche par pure flemme ?",
           "points": 1
         }
       ]

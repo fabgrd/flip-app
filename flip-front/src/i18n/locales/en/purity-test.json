@@ -109,6 +109,16 @@
           "id": "sex_l5_12",
           "text": "sold intimate content online?",
           "points": 5
+        },
+        {
+          "id": "sex_l5_13",
+          "text": "taken part in a group hookup?",
+          "points": 5
+        },
+        {
+          "id": "sex_l5_14",
+          "text": "cheated on a partner?",
+          "points": 5
         }
       ],
       "level4": [
@@ -185,6 +195,16 @@
         {
           "id": "sex_l4_15",
           "text": "had a fantasy you consider very taboo?",
+          "points": 4
+        },
+        {
+          "id": "sex_l4_16",
+          "text": "slept with someone whose name you didn't know?",
+          "points": 4
+        },
+        {
+          "id": "sex_l4_17",
+          "text": "had sex in a public place?",
           "points": 4
         }
       ],
@@ -303,6 +323,16 @@
           "id": "sex_l3_12",
           "text": "watched the video '2 girls one cup'?",
           "points": 3
+        },
+        {
+          "id": "sex_l3_17",
+          "text": "sent a nude to someone?",
+          "points": 3
+        },
+        {
+          "id": "sex_l3_18",
+          "text": "had a one-night stand?",
+          "points": 3
         }
       ],
       "level2": [
@@ -365,6 +395,16 @@
           "id": "sex_l2_12",
           "text": "kissed two different people in the same night?",
           "points": 2
+        },
+        {
+          "id": "sex_l2_13",
+          "text": "sent a very dirty text in the middle of the day?",
+          "points": 2
+        },
+        {
+          "id": "sex_l2_14",
+          "text": "had a crush on a coworker?",
+          "points": 2
         }
       ],
       "level1": [
@@ -406,6 +446,16 @@
         {
           "id": "sex_l1_8",
           "text": "had sex without contraception?",
+          "points": 1
+        },
+        {
+          "id": "sex_l1_9",
+          "text": "gone on a date from a dating app?",
+          "points": 1
+        },
+        {
+          "id": "sex_l1_10",
+          "text": "kissed two different people on the same night?",
           "points": 1
         }
       ]
@@ -455,6 +505,16 @@
         {
           "id": "drugs_l5_9",
           "text": "needed rehab?",
+          "points": 5
+        },
+        {
+          "id": "drugs_l5_10",
+          "text": "done drugs completely alone?",
+          "points": 5
+        },
+        {
+          "id": "drugs_l5_11",
+          "text": "ended up in the ER because of a night out?",
           "points": 5
         }
       ],
@@ -518,6 +578,16 @@
           "id": "drugs_l4_12",
           "text": "bought alcohol with a fake ID?",
           "points": 4
+        },
+        {
+          "id": "drugs_l4_13",
+          "text": "tried a hard drug at least once?",
+          "points": 4
+        },
+        {
+          "id": "drugs_l4_14",
+          "text": "missed a day of work because of a hangover?",
+          "points": 4
         }
       ],
       "level3": [
@@ -569,6 +639,16 @@
         {
           "id": "drugs_l3_10",
           "text": "used drugs before an important event?",
+          "points": 3
+        },
+        {
+          "id": "drugs_l3_11",
+          "text": "mixed several drinks until you regretted it?",
+          "points": 3
+        },
+        {
+          "id": "drugs_l3_12",
+          "text": "driven after drinking?",
           "points": 3
         }
       ],
@@ -622,6 +702,16 @@
           "id": "drugs_l2_10",
           "text": "drank until you fell over?",
           "points": 2
+        },
+        {
+          "id": "drugs_l2_11",
+          "text": "had a drink just to build up courage?",
+          "points": 2
+        },
+        {
+          "id": "drugs_l2_12",
+          "text": "smoked a joint?",
+          "points": 2
         }
       ],
       "level1": [
@@ -663,6 +753,16 @@
         {
           "id": "drugs_l1_8",
           "text": "smoked in secret?",
+          "points": 1
+        },
+        {
+          "id": "drugs_l1_9",
+          "text": "drunk alcohol on a weekday for no reason?",
+          "points": 1
+        },
+        {
+          "id": "drugs_l1_10",
+          "text": "smoked a cigarette at a party without being a smoker?",
           "points": 1
         }
       ]
@@ -717,6 +817,16 @@
         {
           "id": "morality_l5_10",
           "text": "used photos or videos as blackmail?",
+          "points": 5
+        },
+        {
+          "id": "morality_l5_11",
+          "text": "betrayed a loved one's trust for your own gain?",
+          "points": 5
+        },
+        {
+          "id": "morality_l5_12",
+          "text": "let someone take the blame in your place?",
           "points": 5
         }
       ],
@@ -779,6 +889,16 @@
         {
           "id": "morality_l4_12",
           "text": "lied about your identity to scam someone?",
+          "points": 4
+        },
+        {
+          "id": "morality_l4_13",
+          "text": "stolen something from a store?",
+          "points": 4
+        },
+        {
+          "id": "morality_l4_14",
+          "text": "lied to your partner about where you were?",
           "points": 4
         }
       ],
@@ -847,6 +967,16 @@
           "id": "morality_l3_13",
           "text": "used confidential info for your own gain?",
           "points": 3
+        },
+        {
+          "id": "morality_l3_14",
+          "text": "secretly read someone's messages?",
+          "points": 3
+        },
+        {
+          "id": "morality_l3_15",
+          "text": "ghosted someone after several dates?",
+          "points": 3
         }
       ],
       "level2": [
@@ -889,6 +1019,16 @@
           "id": "morality_l2_8",
           "text": "used emotional pressure a little?",
           "points": 2
+        },
+        {
+          "id": "morality_l2_9",
+          "text": "dodged the fare on public transport?",
+          "points": 2
+        },
+        {
+          "id": "morality_l2_10",
+          "text": "lied to get a discount?",
+          "points": 2
         }
       ],
       "level1": [
@@ -930,6 +1070,16 @@
         {
           "id": "morality_l1_8",
           "text": "cheated in school?",
+          "points": 1
+        },
+        {
+          "id": "morality_l1_9",
+          "text": "pretended to love a gift you hated?",
+          "points": 1
+        },
+        {
+          "id": "morality_l1_10",
+          "text": "lied about your age?",
           "points": 1
         }
       ],
@@ -997,6 +1147,16 @@
           "id": "hygiene_l5_8",
           "text": "held in your bodily needs for days?",
           "points": 5
+        },
+        {
+          "id": "hygiene_l5_9",
+          "text": "re-worn dirty underwear by turning it inside out?",
+          "points": 5
+        },
+        {
+          "id": "hygiene_l5_10",
+          "text": "farted on purpose in a crowded public place?",
+          "points": 5
         }
       ],
       "level4": [
@@ -1044,6 +1204,16 @@
           "id": "hygiene_l4_9",
           "text": "peed in public while sober?",
           "points": 4
+        },
+        {
+          "id": "hygiene_l4_10",
+          "text": "sniffed a piece of clothing to check if it was wearable, then worn it?",
+          "points": 4
+        },
+        {
+          "id": "hygiene_l4_11",
+          "text": "slept in the same sheets for over a month?",
+          "points": 4
         }
       ],
       "level3": [
@@ -1081,6 +1251,16 @@
           "id": "hygiene_l3_7",
           "text": "spat on the ground repeatedly?",
           "points": 3
+        },
+        {
+          "id": "hygiene_l3_8",
+          "text": "forgotten to wash your hands after using the toilet?",
+          "points": 3
+        },
+        {
+          "id": "hygiene_l3_9",
+          "text": "kept the same toothbrush for over a year?",
+          "points": 3
         }
       ],
       "level2": [
@@ -1107,6 +1287,16 @@
         {
           "id": "hygiene_l2_5",
           "text": "coughing into your hand instead of your elbow?",
+          "points": 2
+        },
+        {
+          "id": "hygiene_l2_6",
+          "text": "eaten something off the floor (5-second rule)?",
+          "points": 2
+        },
+        {
+          "id": "hygiene_l2_7",
+          "text": "put back on already-worn socks you found on the floor?",
           "points": 2
         }
       ],
@@ -1149,6 +1339,16 @@
         {
           "id": "hygiene_l1_8",
           "text": "worn shoes without socks?",
+          "points": 1
+        },
+        {
+          "id": "hygiene_l1_9",
+          "text": "worn the same underwear two days in a row?",
+          "points": 1
+        },
+        {
+          "id": "hygiene_l1_10",
+          "text": "skipped a shower out of pure laziness?",
           "points": 1
         }
       ]

@@ -1,10 +1,30 @@
 {
   "categories": [
-    { "id": "stalker", "name": "Stalker", "color": "#FF5B3A" },
-    { "id": "manipulateur", "name": "Manipulador", "color": "#9B5BFF" },
-    { "id": "narcisse", "name": "Narcisista", "color": "#FFD23F" },
-    { "id": "drama", "name": "Drama", "color": "#E63946" },
-    { "id": "collant", "name": "Grudento", "color": "#FF8FB1" }
+    {
+      "id": "stalker",
+      "name": "Stalker",
+      "color": "#FF5B3A"
+    },
+    {
+      "id": "manipulateur",
+      "name": "Manipulador",
+      "color": "#9B5BFF"
+    },
+    {
+      "id": "narcisse",
+      "name": "Narcisista",
+      "color": "#FFD23F"
+    },
+    {
+      "id": "drama",
+      "name": "Drama",
+      "color": "#E63946"
+    },
+    {
+      "id": "collant",
+      "name": "Grudento",
+      "color": "#FF8FB1"
+    }
   ],
   "questions": [
     { "id": "stk_2_1", "text": "olhou os stories do seu ex por uma conta secundária porque ele tinha te bloqueado", "category": "stalker", "points": 2 },
@@ -127,7 +147,37 @@
     { "id": "col_4_8", "text": "precisou que alguém te mandasse mensagem o tempo todo", "category": "collant", "points": 4 },
     { "id": "col_5_1", "text": "planejou juntos os nomes dos futuros filhos antes do fim do primeiro mês", "category": "collant", "points": 5 },
     { "id": "col_5_2", "text": "responsabilizou alguém pela sua saúde mental e felicidade diária", "category": "collant", "points": 5 },
-    { "id": "col_5_3", "text": "se recusou a aceitar um término e continuou contatando a pessoa por várias semanas", "category": "collant", "points": 5 }
+    { "id": "col_5_3", "text": "se recusou a aceitar um término e continuou contatando a pessoa por várias semanas", "category": "collant", "points": 5 },
+    { "id": "stk_2_6", "text": "ativado as notificações pra saber na hora que o crush posta algo", "category": "stalker", "points": 2 },
+    { "id": "stk_2_7", "text": "olhado quem viu seu story só pra ver se uma pessoa específica viu", "category": "stalker", "points": 2 },
+    { "id": "stk_3_7", "text": "criado uma conta fake pra seguir alguém que tinha te bloqueado", "category": "stalker", "points": 3 },
+    { "id": "stk_3_8", "text": "decorado a rotina de alguém sem que a pessoa tenha te contado", "category": "stalker", "points": 3 },
+    { "id": "stk_4_7", "text": "descido até 2016 no perfil do crush rezando pra não curtir sem querer", "category": "stalker", "points": 4 },
+    { "id": "stk_5_6", "text": "atravessado a cidade inteira torcendo pra esbarrar em alguém 'por acaso'", "category": "stalker", "points": 5 },
+    { "id": "man_2_7", "text": "jogado um elogio bem antes de pedir um favor", "category": "manipulateur", "points": 2 },
+    { "id": "man_2_8", "text": "dito 'faz como quiser' e depois cobrado a escolha feita", "category": "manipulateur", "points": 2 },
+    { "id": "man_3_9", "text": "bancado a vítima pra não assumir um erro", "category": "manipulateur", "points": 3 },
+    { "id": "man_3_10", "text": "puxado um favor antigo pra conseguir o que queria", "category": "manipulateur", "points": 3 },
+    { "id": "man_4_9", "text": "colocado dois amigos um contra o outro pra tirar vantagem", "category": "manipulateur", "points": 4 },
+    { "id": "man_5_6", "text": "feito alguém se sentir tão culpado que pediu desculpa mesmo você estando errado", "category": "manipulateur", "points": 5 },
+    { "id": "nar_2_7", "text": "repostado um elogio que recebeu no story pra todo mundo ver", "category": "narcisse", "points": 2 },
+    { "id": "nar_2_8", "text": "cortado alguém pra contar uma história 'ainda melhor'", "category": "narcisse", "points": 2 },
+    { "id": "nar_3_7", "text": "fingido escutar enquanto só esperava sua vez de falar", "category": "narcisse", "points": 3 },
+    { "id": "nar_3_8", "text": "escolhido um restaurante só pela foto do Instagram", "category": "narcisse", "points": 3 },
+    { "id": "nar_4_9", "text": "comparado seu sucesso ao de um amigo só pra se sentir superior", "category": "narcisse", "points": 4 },
+    { "id": "nar_5_4", "text": "estragado a boa notícia de alguém trazendo tudo pra você", "category": "narcisse", "points": 5 },
+    { "id": "dra_2_6", "text": "respondido com um simples ponto final a uma mensagem longa pra mostrar irritação", "category": "drama", "points": 2 },
+    { "id": "dra_2_7", "text": "postado um story vago e enigmático esperando que perguntassem o que houve", "category": "drama", "points": 2 },
+    { "id": "dra_3_7", "text": "desligado na cara de alguém no meio da discussão pelo efeito dramático", "category": "drama", "points": 3 },
+    { "id": "dra_3_8", "text": "transformado um mal-entendido pequeno numa crise de três dias", "category": "drama", "points": 3 },
+    { "id": "dra_4_9", "text": "ameaçado sair de uma festa só pra te pedirem pra ficar", "category": "drama", "points": 4 },
+    { "id": "dra_5_6", "text": "exposto alguém publicamente por algo que deveria ter ficado no privado", "category": "drama", "points": 5 },
+    { "id": "col_2_7", "text": "checado se alguém estava online a cada dez minutos", "category": "collant", "points": 2 },
+    { "id": "col_2_8", "text": "cancelado seus próprios planos torcendo pro crush estar livre", "category": "collant", "points": 2 },
+    { "id": "col_3_9", "text": "perguntado 'está tudo bem entre nós?' várias vezes no mesmo dia", "category": "collant", "points": 3 },
+    { "id": "col_3_10", "text": "calculado o tempo de resposta a partir do horário do último 'visto'", "category": "collant", "points": 3 },
+    { "id": "col_4_9", "text": "aparecido onde sabia que alguém estaria sem ter sido convidado", "category": "collant", "points": 4 },
+    { "id": "col_5_4", "text": "feito uma cena porque seu par demorou demais pra responder", "category": "collant", "points": 5 }
   ],
   "ui": {
     "rules": {

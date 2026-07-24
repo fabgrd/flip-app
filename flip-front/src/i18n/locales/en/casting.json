@@ -122,7 +122,13 @@
       "Forgetting your keys inside and getting locked out",
       "Dropping everything from your bag in the subway",
       "Going the wrong way on a packed escalator",
-      "Getting hit by a gust of wind that scatters all your papers"
+      "Getting hit by a gust of wind that scatters all your papers",
+      "Slipping on a puddle in public and barely catching yourself",
+      "Sending an awkward voice note to the wrong group",
+      "Getting your hand stuck in the subway doors",
+      "Looking for the glasses that are on your face",
+      "Saying 'you too' when the waiter says 'enjoy your meal'",
+      "Walking face-first into a glass door"
     ],
     "relations": [
       "Getting a text from your ex at 3am",
@@ -141,7 +147,13 @@
       "Getting blocked after admitting a weird kink",
       "Realizing your date has been in a relationship the whole time",
       "Getting dumped in a 2-minute voice message",
-      "Running into your ex with their new partner right after the breakup"
+      "Running into your ex with their new partner right after the breakup",
+      "Accidentally liking your crush's old photo",
+      "Getting stood up in front of everyone",
+      "Mixing up your date's name with your ex's",
+      "Getting caught stalking someone's profile",
+      "Waiting for a text while staring at your phone all night",
+      "Running into your ex and their new fling at the store"
     ],
     "spicy": [
       "Waking up in a stranger's bed with no memory of the night before",
@@ -159,7 +171,13 @@
       "Getting caught watching porn by your mom",
       "Having diarrhea during sex",
       "Losing your underwear in an Uber after a night out",
-      "Waking up with lipstick all over your face"
+      "Waking up with lipstick all over your face",
+      "Losing your swimsuit while diving into the pool",
+      "Getting caught dancing naked in front of the mirror",
+      "Sending a nude to the wrong contact",
+      "Realizing the bathroom door was open the whole time",
+      "Spotting a suspicious stain on your pants in a meeting",
+      "Tripping over your own thong at a party"
     ],
     "taboo": [
       "Telling your family something very embarrassing about your sex life",
@@ -172,7 +190,13 @@
       "Finding out your parents saw your nudes",
       "Getting caught stealing money from your parents' wallet",
       "Admitting to your family that you're depressed",
-      "Realizing the whole family knows you slept with your ex"
+      "Realizing the whole family knows you slept with your ex",
+      "Finding out your best friend is dating your ex",
+      "Accidentally reading a compromising text on someone's phone",
+      "Getting caught going through someone's stuff",
+      "Blurting out a secret in front of everyone",
+      "Running into your teacher or boss in a very awkward place",
+      "Confessing a ten-year-old lie at the dinner table"
     ],
     "gaming": [
       "Going 0-13 in ranked and getting flamed by the whole team",
@@ -185,7 +209,13 @@
       "Losing all your rare items to a scam",
       "Getting kicked from the server right before the final boss",
       "Accidentally unmuting yourself on a voice call with strangers",
-      "Having an epic rage quit filmed by a friend"
+      "Having an epic rage quit filmed by a friend",
+      "Rage quitting and throwing your controller across the room",
+      "Blaming the lag after missing an easy shot",
+      "Forgetting to save right before a boss fight",
+      "Realizing your mic was on the whole stream",
+      "Losing a game to an 8-year-old",
+      "Defending your rank like your life depends on it"
     ],
     "family": [
       "Getting asked 'so still single?' by the whole family at Christmas",
@@ -197,7 +227,13 @@
       "Admitting you've stopped going to class for 2 months",
       "Getting compared to your cousin who succeeds at everything",
       "Causing a scene at a family gathering after drinking too much",
-      "Admitting you've been failing your exams for months"
+      "Admitting you've been failing your exams for months",
+      "Getting your cheeks pinched by every aunt at a wedding",
+      "Getting a horrible gift and pretending to love it",
+      "Arguing about politics at family dinner",
+      "Singing off-key at Christmas karaoke in front of the family",
+      "Having your birth described in detail in front of your friends",
+      "Getting a comment about your weight from an uncle"
     ],
     "studies": [
       "Going to the wrong exam room on exam day",
@@ -216,7 +252,13 @@
       "Showing up to an oral exam completely high",
       "Getting a 'we're not keeping you' email after 6 months of internship",
       "Going to the wrong room for an important interview",
-      "Getting your tie stuck in the coffee machine"
+      "Getting your tie stuck in the coffee machine",
+      "Falling asleep in class and jolting awake",
+      "Handing in a blank exam with total confidence",
+      "Getting called to the board without knowing the answer",
+      "Arriving late and making a huge noise coming in",
+      "Giving a presentation and completely losing your notes",
+      "Answering a question without having heard the question"
     ],
     "party": [
       "Throwing up on the dance floor in front of everyone",
@@ -232,7 +274,13 @@
       "Posting extremely compromising stories while wasted",
       "Having a complete 4-hour blackout",
       "Waking up with a dick-shaped temporary tattoo on your forehead",
-      "Dancing wildly and falling off the top of the table"
+      "Dancing wildly and falling off the top of the table",
+      "Spilling a drink on the classiest person at the party",
+      "Dancing alone before the music even starts",
+      "Desperately looking for your friends who vanished in the club",
+      "Texting 'I love you' to everyone at 4am",
+      "Falling while trying an impressive dance move",
+      "Losing a shoe and dancing anyway"
     ],
     "cinema": [
       "Fighting 10 enemies in an action movie scene",
@@ -244,7 +292,13 @@
       "Dancing like in a musical",
       "Playing a gangster getting shot",
       "Imitating an ultra-passionate kiss scene",
-      "Causing an explosion with ridiculous special effects"
+      "Causing an explosion with ridiculous special effects",
+      "Playing a James Bond villain explaining their plan",
+      "Miming a slow-motion car chase",
+      "Doing a dramatic breakup scene in the rain",
+      "Imitating a zombie waking up",
+      "Dying theatrically for five minutes",
+      "Playing a ghost haunting a house"
     ],
     "sports": [
       "Missing a penalty in front of the whole stadium",
@@ -256,7 +310,13 @@
       "Twisting your ankle while showing off",
       "Losing a ping-pong match 11-0",
       "Trying parkour and totally wiping out",
-      "Drowning in 1.5m of water at the pool"
+      "Drowning in 1.5m of water at the pool",
+      "Celebrating a goal before you even scored it",
+      "Completely missing the ball in front of everyone",
+      "Faking an injury to waste time",
+      "Tripping during the relay race",
+      "Hitting the net mid-jump in volleyball",
+      "Celebrating a medal by falling off the podium"
     ]
   },
   "themes": {

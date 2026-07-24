@@ -46,3 +46,5 @@ supabase/.branches/
 sentry-wizard-installation-error-*.log
 .sentryclirc
 
+.ios/*
+.android/*

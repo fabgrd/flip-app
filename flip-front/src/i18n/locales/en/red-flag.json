@@ -752,6 +752,186 @@
       "text": "refused to accept a breakup and kept contacting the person for several weeks",
       "category": "collant",
       "points": 5
+    },
+    {
+      "id": "stk_2_6",
+      "text": "turned on notifications so you'd know the second a crush posts something",
+      "category": "stalker",
+      "points": 2
+    },
+    {
+      "id": "stk_2_7",
+      "text": "checked who viewed your story just to see if one specific person saw it",
+      "category": "stalker",
+      "points": 2
+    },
+    {
+      "id": "stk_3_7",
+      "text": "made a fake account to follow someone who had blocked you",
+      "category": "stalker",
+      "points": 3
+    },
+    {
+      "id": "stk_3_8",
+      "text": "memorized someone's schedule without them ever telling you it",
+      "category": "stalker",
+      "points": 3
+    },
+    {
+      "id": "stk_4_7",
+      "text": "scrolled back to 2016 on your crush's profile praying not to like by mistake",
+      "category": "stalker",
+      "points": 4
+    },
+    {
+      "id": "stk_5_6",
+      "text": "crossed the whole city hoping to run into someone 'by chance'",
+      "category": "stalker",
+      "points": 5
+    },
+    {
+      "id": "man_2_7",
+      "text": "dropped a compliment right before asking for a favor",
+      "category": "manipulateur",
+      "points": 2
+    },
+    {
+      "id": "man_2_8",
+      "text": "said 'do whatever you feel' then blamed them for the choice they made",
+      "category": "manipulateur",
+      "points": 2
+    },
+    {
+      "id": "man_3_9",
+      "text": "played the victim to avoid owning up to a mistake",
+      "category": "manipulateur",
+      "points": 3
+    },
+    {
+      "id": "man_3_10",
+      "text": "brought up an old favor to get what you wanted",
+      "category": "manipulateur",
+      "points": 3
+    },
+    {
+      "id": "man_4_9",
+      "text": "turned two friends against each other for your own gain",
+      "category": "manipulateur",
+      "points": 4
+    },
+    {
+      "id": "man_5_6",
+      "text": "guilt-tripped someone into apologizing when you were the one at fault",
+      "category": "manipulateur",
+      "points": 5
+    },
+    {
+      "id": "nar_2_7",
+      "text": "reposted a compliment you got to your story so everyone would see it",
+      "category": "narcisse",
+      "points": 2
+    },
+    {
+      "id": "nar_2_8",
+      "text": "cut someone off to tell an 'even better' story",
+      "category": "narcisse",
+      "points": 2
+    },
+    {
+      "id": "nar_3_7",
+      "text": "pretended to listen while just waiting for your turn to talk",
+      "category": "narcisse",
+      "points": 3
+    },
+    {
+      "id": "nar_3_8",
+      "text": "picked a restaurant purely for the Instagram photo",
+      "category": "narcisse",
+      "points": 3
+    },
+    {
+      "id": "nar_4_9",
+      "text": "compared your success to a friend's just to feel superior",
+      "category": "narcisse",
+      "points": 4
+    },
+    {
+      "id": "nar_5_4",
+      "text": "ruined someone's good news by making it all about you",
+      "category": "narcisse",
+      "points": 5
+    },
+    {
+      "id": "dra_2_6",
+      "text": "replied with a single period to a long message to show you were annoyed",
+      "category": "drama",
+      "points": 2
+    },
+    {
+      "id": "dra_2_7",
+      "text": "posted a vague cryptic story hoping someone would ask what's wrong",
+      "category": "drama",
+      "points": 2
+    },
+    {
+      "id": "dra_3_7",
+      "text": "hung up on someone mid-argument for the dramatic effect",
+      "category": "drama",
+      "points": 3
+    },
+    {
+      "id": "dra_3_8",
+      "text": "turned a tiny misunderstanding into a three-day crisis",
+      "category": "drama",
+      "points": 3
+    },
+    {
+      "id": "dra_4_9",
+      "text": "threatened to leave a party just so people would beg you to stay",
+      "category": "drama",
+      "points": 4
+    },
+    {
+      "id": "dra_5_6",
+      "text": "called someone out publicly over something that should have stayed private",
+      "category": "drama",
+      "points": 5
+    },
+    {
+      "id": "col_2_7",
+      "text": "checked whether someone was online every ten minutes",
+      "category": "collant",
+      "points": 2
+    },
+    {
+      "id": "col_2_8",
+      "text": "cancelled your own plans hoping your crush would be free",
+      "category": "collant",
+      "points": 2
+    },
+    {
+      "id": "col_3_9",
+      "text": "asked 'are we okay?' several times in the same day",
+      "category": "collant",
+      "points": 3
+    },
+    {
+      "id": "col_3_10",
+      "text": "calculated their reply time from the last 'seen' timestamp",
+      "category": "collant",
+      "points": 3
+    },
+    {
+      "id": "col_4_9",
+      "text": "showed up where you knew someone would be without being invited",
+      "category": "collant",
+      "points": 4
+    },
+    {
+      "id": "col_5_4",
+      "text": "made a scene because your partner took too long to reply",
+      "category": "collant",
+      "points": 5
     }
   ],
   "ui": {
