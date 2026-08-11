@@ -16,7 +16,7 @@ import {
 import Animated, { FadeIn, FadeOut, ZoomIn, ZoomOut } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { T } from '../../constants/flipTokens';
+import { offsetShadow, T } from '../../constants/flipTokens';
 import type { Player } from '../../types';
 import { FlatChunkyButton } from './FlatChunkyButton';
 import { PlayersModal } from './GameMenuHeader';
@@ -44,7 +44,6 @@ export interface GameHeaderProps {
 
 const MENU_WIDTH = 220;
 const MENU_MARGIN = 12;
-const BTN_SIZE = 36; // FlatChunkyButton size="xs" square = 36x36
 
 export function GameHeader({
   onExit,
@@ -93,13 +92,7 @@ export function GameHeader({
 
   return (
     <>
-      <View
-        style={[
-          s.header,
-          floating && [s.floating, { paddingTop: insets.top + 6 }],
-          style,
-        ]}
-      >
+      <View style={[s.header, floating && [s.floating, { paddingTop: insets.top + 6 }], style]}>
         <FlatChunkyButton
           size="xs"
           square
@@ -131,13 +124,7 @@ export function GameHeader({
 
         {hasMenu && (
           <View ref={dotsRef} collapsable={false}>
-            <FlatChunkyButton
-              size="xs"
-              square
-              color={tint}
-              textColor={T.ink}
-              onPress={openMenu}
-            >
+            <FlatChunkyButton size="xs" square color={tint} textColor={T.ink} onPress={openMenu}>
               <Feather name="more-vertical" size={18} color={T.ink} />
             </FlatChunkyButton>
           </View>
@@ -145,7 +132,14 @@ export function GameHeader({
       </View>
 
       {/* Popover menu */}
-      <Modal visible={!!menu} transparent animationType="none" onRequestClose={closeMenu}>
+      <Modal
+        visible={!!menu}
+        transparent
+        animationType="none"
+        onRequestClose={closeMenu}
+        statusBarTranslucent
+        navigationBarTranslucent
+      >
         <Animated.View
           entering={FadeIn.duration(120)}
           exiting={FadeOut.duration(100)}
@@ -277,11 +271,7 @@ const s = StyleSheet.create({
     borderColor: T.ink,
     borderRadius: T.rMd,
     paddingVertical: 6,
-    shadowColor: T.ink,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 8,
+    ...offsetShadow(4),
     overflow: 'hidden',
   },
   item: {

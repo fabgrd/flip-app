@@ -8,6 +8,7 @@ import en from './locales/en';
 import es from './locales/es';
 import fr from './locales/fr';
 import pt from './locales/pt';
+import zh from './locales/zh';
 
 const LANGUAGE_DETECTOR = {
   type: 'languageDetector' as const,
@@ -24,7 +25,7 @@ const LANGUAGE_DETECTOR = {
       callback('fr');
     }
   },
-  init: () => { },
+  init: () => {},
   cacheUserLanguage: async (language: string) => {
     try {
       await AsyncStorage.setItem('user-language', language);
@@ -71,6 +72,7 @@ i18n
       es,
       fr,
       pt,
+      zh,
     },
     returnNull: false,
   });

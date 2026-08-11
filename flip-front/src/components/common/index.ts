@@ -23,6 +23,7 @@ export { GameSetupCard, GameSetupSection } from './GameSetupCard';
 export { RulesStepsCard } from './RulesStepsCard';
 export type { RulesStepItem } from './RulesStepsCard';
 export { InitialAvatar } from './InitialAvatar';
+export { KeyboardAvoider } from './KeyboardAvoider';
 export { PaywallModal } from './PaywallModal';
 export { RoundsStepper } from './RoundsStepper';
 export { PlayerInput } from './PlayerInput';
@@ -38,4 +39,3 @@ export { ThemeGrid } from './ThemeGrid';
 export type { ThemeGridOption } from './ThemeGrid';
 export { TikTokRewardButton } from './TikTokRewardButton';
 export { ToggleSwitch } from './ToggleSwitch';
-

@@ -3,7 +3,7 @@ import * as Haptics from 'expo-haptics';
 import React, { useRef } from 'react';
 import { Animated, Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { T } from '../../constants/flipTokens';
+import { noShadow, offsetShadow, T } from '../../constants/flipTokens';
 
 export interface ThemeGridOption<V extends string = string> {
   value: V;
@@ -87,21 +87,19 @@ function ThemeCard<V extends string>({
   };
 
   return (
-    <Animated.View
-      style={[
-        { width: widthPct },
-        { transform: [{ scale }] },
-      ]}
-    >
+    <Animated.View style={[{ width: widthPct }, { transform: [{ scale }] }]}>
       <Pressable
         onPress={handlePress}
-        style={({ pressed }) => [
-          s.card,
-          { borderColor: allowed ? accent : '#DCD3C5', shadowColor: allowed ? accent : T.ink },
-          active && allowed && [s.cardActive, { backgroundColor: accent }],
-          !allowed && s.cardLocked,
-          pressed && allowed && s.cardPressed,
-        ]}
+        style={({ pressed }) => {
+          const shadowColor = allowed ? accent : T.ink;
+          return [
+            s.card,
+            { borderColor: allowed ? accent : '#DCD3C5', ...offsetShadow(3, shadowColor) },
+            active && allowed && [s.cardActive, { backgroundColor: accent }],
+            !allowed && s.cardLocked,
+            pressed && allowed && offsetShadow(1, shadowColor),
+          ];
+        }}
       >
         <View
           style={[
@@ -136,28 +134,17 @@ const s = StyleSheet.create({
     borderRadius: 14,
     paddingVertical: 10,
     paddingHorizontal: 12,
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
     position: 'relative',
   },
   cardActive: {
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0,
-    elevation: 0,
+    ...noShadow,
     transform: [{ translateX: 3 }, { translateY: 3 }],
-  },
-  cardPressed: {
-    shadowOffset: { width: 1, height: 1 },
   },
   cardLocked: {
     backgroundColor: '#EFEAE3',
     borderColor: '#DCD3C5',
     opacity: 0.78,
-    shadowOpacity: 0,
-    elevation: 0,
+    ...noShadow,
   },
   emojiCircle: {
     width: 32,

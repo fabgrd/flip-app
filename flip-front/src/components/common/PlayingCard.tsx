@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, ViewStyle } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 
-import { T } from '../../constants/flipTokens';
+import { noShadow, offsetShadow, T } from '../../constants/flipTokens';
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -73,10 +73,7 @@ export function PlayingCardFace({
           height,
           borderRadius: Math.round(12 * scale),
           borderWidth: bw,
-          shadowColor,
-          shadowOffset: { width: shadow ? 6 * scale : 0, height: shadow ? 6 * scale : 0 },
-          shadowOpacity: shadow ? 1 : 0,
-          elevation: shadow ? 6 : 0,
+          ...(shadow ? offsetShadow(6 * scale, shadowColor) : noShadow),
         },
         style,
       ]}
@@ -115,9 +112,7 @@ export function PlayingCardBack({
           height,
           borderRadius: Math.round(12 * scale),
           borderWidth: bw,
-          shadowOffset: { width: shadow ? 6 * scale : 0, height: shadow ? 6 * scale : 0 },
-          shadowOpacity: shadow ? 1 : 0,
-          elevation: shadow ? 6 : 0,
+          ...(shadow ? offsetShadow(6 * scale) : noShadow),
         },
         style,
       ]}
@@ -136,7 +131,6 @@ const styles = StyleSheet.create({
     borderColor: T.ink,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowRadius: 0,
   },
   value: {
     fontWeight: '900',
@@ -151,8 +145,6 @@ const styles = StyleSheet.create({
     borderColor: T.ink,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: T.ink,
-    shadowRadius: 0,
   },
   backMark: {
     color: '#fff',

@@ -13,9 +13,9 @@ import {
   GameSetupCard,
   GaucheDroiteIcon,
   RoundsStepper,
-  RulesButton
 } from '../components';
-import { T } from '../constants/flipTokens';
+import type { RulesStep } from '../components';
+import { offsetShadow, T } from '../constants/flipTokens';
 import { POLITICAL_COLORS } from '../games/left-right';
 import { CardStack } from '../games/left-right/components';
 import { useLeftRight } from '../games/left-right/hooks/useLeftRight';
@@ -42,7 +42,11 @@ function LRRules({
   onTotalRoundsChange: (n: number) => void;
 }) {
   const { t } = useTranslation();
-  const rules = (t('leftRight:ui.steps', { returnObjects: true }) as { n: string; title: string; desc: string }[]);
+  const rules = t('leftRight:ui.steps', { returnObjects: true }) as {
+    n: string;
+    title: string;
+    desc: string;
+  }[];
   return (
     <GameRulesScreen
       accentColor={T.gaucheDroiteAccent ?? T.lemon}
@@ -103,7 +107,7 @@ export function LeftRightScreen() {
     submitAnswer(playerId, direction);
   };
 
-  const handleAllCardsComplete = () => { };
+  const handleAllCardsComplete = () => {};
 
   // The "minority camp drinks" rule is mathematically impossible below 3 players
   // (you can only ever get unanimity or a 1/1 tie), so drinks mode is gated here.
@@ -152,9 +156,7 @@ export function LeftRightScreen() {
     ].filter((s) => s.count > 0) as Array<{ key: 'left' | 'right' | 'center'; count: number }>;
 
     const minCount = sides.length > 0 ? Math.min(...sides.map((s) => s.count)) : 0;
-    const minorityKeys = sides
-      .filter((s) => s.count === minCount)
-      .map((s) => s.key);
+    const minorityKeys = sides.filter((s) => s.count === minCount).map((s) => s.key);
 
     // Only one camp voted → everyone agreed.
     const isUnanimous = sides.length <= 1;
@@ -170,7 +172,15 @@ export function LeftRightScreen() {
       return a ? minoritySides.includes(a.answer) : false;
     });
 
-    return { leftPlayers, rightPlayers, centerPlayers, minoritySides, drinkers, isTie, isUnanimous };
+    return {
+      leftPlayers,
+      rightPlayers,
+      centerPlayers,
+      minoritySides,
+      drinkers,
+      isTie,
+      isUnanimous,
+    };
   }, [revealQuestionId, gameState.players]);
 
   const closeReveal = () => {
@@ -214,7 +224,7 @@ export function LeftRightScreen() {
         onSettings={() => navigation.navigate('Settings' as never)}
         rules={{
           title: t('leftRight:ui.modalTitle'),
-          rules: t('leftRight:ui.steps', { returnObjects: true }) as any,
+          rules: t('leftRight:ui.steps', { returnObjects: true }) as RulesStep[],
           accentColor: T.lemon,
         }}
         players={players}
@@ -306,7 +316,9 @@ export function LeftRightScreen() {
                   ? t('leftRight:ui.reveal.unanimous')
                   : revealData.isTie
                     ? t('leftRight:ui.reveal.tie')
-                    : t('leftRight:ui.reveal.drink', { names: revealData.drinkers.map((p) => p.name).join(', ') })}
+                    : t('leftRight:ui.reveal.drink', {
+                        names: revealData.drinkers.map((p) => p.name).join(', '),
+                      })}
               </Text>
             </View>
             <ChunkyButton full color={T.paper} onPress={closeReveal}>
@@ -378,11 +390,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginBottom: 12,
     padding: 20,
-    shadowColor: T.ink,
-    shadowOffset: { width: 5, height: 5 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 4,
+    ...offsetShadow(5),
   },
   questionPrefix: {
     color: T.muted,
@@ -427,11 +435,7 @@ const styles = StyleSheet.create({
     borderRadius: T.rLg,
     padding: 18,
     gap: 14,
-    shadowColor: T.ink,
-    shadowOffset: { width: 6, height: 6 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 8,
+    ...offsetShadow(6),
   },
   revealTitle: {
     color: T.ink,
@@ -450,11 +454,7 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   revealSideMinority: {
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 4,
+    ...offsetShadow(3),
   },
   revealSideLabel: { color: '#fff', fontSize: 12, fontWeight: '900', letterSpacing: 0.5 },
   revealSideCount: { color: '#fff', fontSize: 28, fontWeight: '900', letterSpacing: -1 },

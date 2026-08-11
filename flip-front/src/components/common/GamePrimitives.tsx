@@ -1,13 +1,6 @@
 import React from 'react';
-import {
-  StyleProp,
-  StyleSheet,
-  Text,
-  TextStyle,
-  View,
-  ViewStyle,
-} from 'react-native';
-import { T } from '../../constants/flipTokens';
+import { StyleProp, StyleSheet, Text, TextStyle, View, ViewStyle } from 'react-native';
+import { offsetShadow, T } from '../../constants/flipTokens';
 
 export function GameChip({
   color,
@@ -40,7 +33,6 @@ export function GameCard({
 }) {
   return <View style={[styles.card, { backgroundColor: color }, style]}>{children}</View>;
 }
-
 
 export function StickerBadge({
   color,
@@ -78,11 +70,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 5,
     alignSelf: 'flex-start',
-    shadowColor: T.ink,
-    shadowOffset: { width: 2, height: 2 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 2,
+    ...offsetShadow(2),
   },
   chipText: { fontSize: 12, fontWeight: '800', letterSpacing: 0.5 },
   card: {
@@ -90,11 +78,7 @@ const styles = StyleSheet.create({
     borderColor: T.ink,
     borderRadius: 24,
     padding: 20,
-    shadowColor: T.ink,
-    shadowOffset: { width: 5, height: 5 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 4,
+    ...offsetShadow(5),
   },
   sticker: {
     borderWidth: 2,
@@ -103,11 +87,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
     alignSelf: 'center',
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
+    ...offsetShadow(3),
   },
   stickerText: { fontSize: 13, fontWeight: '900', letterSpacing: 1 },
 });

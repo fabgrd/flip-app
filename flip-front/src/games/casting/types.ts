@@ -15,5 +15,5 @@ export interface CastingResult {
   ecart: number;
   playerSips: number;
   devinSips: number;
-  tag: 'PILE POIL' | 'PRESQUE' | 'RATÉ';
+  tag: 'perfect' | 'close' | 'missed';
 }

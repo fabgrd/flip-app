@@ -1,7 +1,6 @@
 // L'Apéro — card guessing drinking game
 // Flow: rules → pick dealer → rounds (guess1 → hint → guess2 → reveal) → dealer-pass / quad-flip → end
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import * as Haptics from 'expo-haptics';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -30,12 +29,12 @@ import {
   PlayingCardFace,
   StickerBadge,
 } from '../components';
+import type { RulesStep } from '../components';
 import { AperoIcon } from '../components/icons/AperoIcon';
 import { getPlayerBgColor, getPlayerTextColor } from '../constants';
-import { T } from '../constants/flipTokens';
+import { noShadow, offsetShadow, T } from '../constants/flipTokens';
 import {
   AP_PTS,
-  AP_SUITS,
   AP_VALS,
   type ApCard,
   type ApVal,
@@ -173,10 +172,7 @@ const br = StyleSheet.create({
   cardNormal: {
     backgroundColor: T.paper,
     borderColor: T.ink,
-    shadowColor: T.ink,
-    shadowOffset: { width: 1, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 0,
+    ...offsetShadow(1, T.ink, 0.2),
   },
   // Found: solid cream background, mint border — no transparency
   cardFound: { backgroundColor: T.paper, borderColor: T.mint, borderWidth: 2 },
@@ -232,13 +228,9 @@ const vp = StyleSheet.create({
     backgroundColor: T.paper,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
+    ...offsetShadow(3),
   },
-  btnDis: { backgroundColor: T.bgAlt, shadowOpacity: 0, elevation: 0, opacity: 0.35 },
+  btnDis: { backgroundColor: T.bgAlt, ...noShadow, opacity: 0.35 },
   btnText: { color: T.ink, fontSize: 19, fontWeight: '900' },
   btnText10: { fontSize: 15, letterSpacing: -1 },
   btnDisText: { color: T.muted },
@@ -275,16 +267,12 @@ function APRules({
     {
       n: t('apero:rules.steps.2.n'),
       t: t('apero:rules.steps.2.title'),
-      d: drinksEnabled
-        ? t('apero:rules.steps.2.descDrink')
-        : t('apero:rules.steps.2.descSober'),
+      d: drinksEnabled ? t('apero:rules.steps.2.descDrink') : t('apero:rules.steps.2.descSober'),
     },
     {
       n: t('apero:rules.steps.3.n'),
       t: drinksEnabled ? t('apero:rules.steps.3.titleDrink') : t('apero:rules.steps.3.titleSober'),
-      d: drinksEnabled
-        ? t('apero:rules.steps.3.descDrink')
-        : t('apero:rules.steps.3.descSober'),
+      d: drinksEnabled ? t('apero:rules.steps.3.descDrink') : t('apero:rules.steps.3.descSober'),
     },
     {
       n: t('apero:rules.steps.4.n'),
@@ -294,9 +282,7 @@ function APRules({
     {
       n: t('apero:rules.steps.5.n'),
       t: t('apero:rules.steps.5.title'),
-      d: drinksEnabled
-        ? t('apero:rules.steps.5.descDrink')
-        : t('apero:rules.steps.5.descSober'),
+      d: drinksEnabled ? t('apero:rules.steps.5.descDrink') : t('apero:rules.steps.5.descSober'),
     },
   ];
   const rulesModal = RULES.map((r) => ({ n: r.n, title: r.t, desc: r.d }));
@@ -571,17 +557,11 @@ function APRound({
           {phase === 'hint' && hint && (
             <View style={{ alignItems: 'center', gap: 10 }}>
               <View
-                style={[
-                  rd.hintBadge,
-                  { backgroundColor: hint === 'higher' ? T.tomato : T.cobalt },
-                ]}
+                style={[rd.hintBadge, { backgroundColor: hint === 'higher' ? T.tomato : T.cobalt }]}
               >
                 <Text style={rd.hintText}>
                   {t('apero:round.hintBadge', {
-                    hint:
-                      hint === 'higher'
-                        ? t('apero:hints.higher')
-                        : t('apero:hints.lower'),
+                    hint: hint === 'higher' ? t('apero:hints.higher') : t('apero:hints.lower'),
                     arrow: hint === 'higher' ? '↑' : '↓',
                   })}
                 </Text>
@@ -604,17 +584,12 @@ function APRound({
                 textStyle={{ fontSize: 11 }}
               >
                 {t('apero:round.secondTryChip', {
-                  hint:
-                    hint === 'higher'
-                      ? t('apero:hints.higher')
-                      : t('apero:hints.lower'),
+                  hint: hint === 'higher' ? t('apero:hints.higher') : t('apero:hints.lower'),
                   card: apName(g1!, t),
                 })}
               </GameChip>
               <Text style={rd.phaseTitle}>{t('apero:round.secondChance')}</Text>
-              <Text style={rd.phaseSub}>
-                {t('apero:round.lastTry', { name: guesser.name })}
-              </Text>
+              <Text style={rd.phaseSub}>{t('apero:round.lastTry', { name: guesser.name })}</Text>
               <APValuePicker onPick={doG2} disabled={g1 ? [g1, ...exhaustedVals] : exhaustedVals} />
             </View>
           )}
@@ -649,8 +624,8 @@ function APRound({
                   </Text>
                   {finalGuess && (
                     <Text style={rd.phaseMono}>
-                      |{apName(finalGuess, t)} − {apName(card.v, t)}| = |{AP_PTS[finalGuess]} − {card.p}|
-                      = {penalty}
+                      |{apName(finalGuess, t)} − {apName(card.v, t)}| = |{AP_PTS[finalGuess]} −{' '}
+                      {card.p}| = {penalty}
                     </Text>
                   )}
                 </>
@@ -664,9 +639,7 @@ function APRound({
         <View style={rd.footer}>
           {phase === 'result' && (
             <ChunkyButton full color={T.pink} onPress={() => onDone(found, penalty)}>
-              {cardNum >= total
-                ? t('apero:round.seeSummary')
-                : t('apero:round.nextCard')}
+              {cardNum >= total ? t('apero:round.seeSummary') : t('apero:round.nextCard')}
             </ChunkyButton>
           )}
           {streak >= 3 && (
@@ -705,11 +678,7 @@ const rd = StyleSheet.create({
     borderRadius: 18,
     borderWidth: 2.5,
     borderColor: T.ink,
-    shadowColor: T.ink,
-    shadowOffset: { width: 5, height: 5 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 5,
+    ...offsetShadow(5),
   },
   hintText: { color: '#fff', fontSize: 32, fontWeight: '900', letterSpacing: -1 },
   resultTitle: {
@@ -876,11 +845,7 @@ const dp = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10,
-    shadowColor: T.ink,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 4,
+    ...offsetShadow(4),
   },
   avatar: {
     width: 40,
@@ -1035,11 +1000,7 @@ const en = StyleSheet.create({
     padding: 12,
     borderWidth: 2,
     borderColor: T.ink,
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
+    ...offsetShadow(3),
   },
   statLabel: { color: '#fff', fontSize: 9, fontWeight: '700', letterSpacing: 1, opacity: 0.85 },
   statVal: { color: '#fff', fontSize: 28, fontWeight: '900' },
@@ -1059,11 +1020,7 @@ const en = StyleSheet.create({
     borderRadius: 16,
     borderWidth: 2,
     borderColor: T.ink,
-    shadowColor: T.ink,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 4,
+    ...offsetShadow(4),
   },
   rankNum: {
     width: 26,
@@ -1104,7 +1061,7 @@ const playTopBar = {
 // ─── Main state machine ───────────────────────────────────────────────────────
 
 function AperoGame({ players: initialPlayers, onExit }: { players: Player[]; onExit: () => void }) {
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation();
   const { t } = useTranslation();
   const {
     players,
@@ -1151,7 +1108,15 @@ function AperoGame({ players: initialPlayers, onExit }: { players: Player[]; onE
       return null;
     }
 
-    const aperoRulesSteps = (t('apero:rules.steps', { returnObjects: true }) as any[]).map((s: any) => ({
+    // Apéro's steps carry sober/drink variants, so `desc` may be absent.
+    type AperoRulesStep = Omit<RulesStep, 'desc'> & {
+      desc?: string;
+      descSober?: string;
+      descDrink?: string;
+    };
+    const aperoRulesSteps = (
+      t('apero:rules.steps', { returnObjects: true }) as AperoRulesStep[]
+    ).map((s) => ({
       n: s.n,
       title: s.title,
       desc: s.desc ?? s.descSober ?? s.descDrink ?? '',
@@ -1165,7 +1130,11 @@ function AperoGame({ players: initialPlayers, onExit }: { players: Player[]; onE
             tint={T.paper}
             onExit={onExit}
             onSettings={() => navigation.navigate('Settings')}
-            rules={{ title: t('apero:rules.modalTitle'), rules: aperoRulesSteps, accentColor: T.pink }}
+            rules={{
+              title: t('apero:rules.modalTitle'),
+              rules: aperoRulesSteps,
+              accentColor: T.pink,
+            }}
             players={players}
             onPlayersChange={updatePlayers}
           />

@@ -15,13 +15,9 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Circle, Path, Rect } from 'react-native-svg';
-import { T } from '../../constants/flipTokens';
+import { offsetShadow, T } from '../../constants/flipTokens';
 import { useEntitlements } from '../../entitlements';
-import {
-  presentCodeRedemptionSheet,
-  purchasePlan,
-  type RcPlanId,
-} from '../../lib/revenuecat';
+import { presentCodeRedemptionSheet, purchasePlan, type RcPlanId } from '../../lib/revenuecat';
 import { getPaywallContent } from '../../paywall/paywallContent';
 import { PaywallPlanId } from '../../paywall/types';
 import {
@@ -67,11 +63,7 @@ function CrownIcon({ size = 48 }: { size?: number }) {
   useEffect(() => {
     translateY.value = withDelay(
       300,
-      withRepeat(
-        withTiming(-8, { duration: 1500, easing: Easing.inOut(Easing.quad) }),
-        -1,
-        true,
-      ),
+      withRepeat(withTiming(-8, { duration: 1500, easing: Easing.inOut(Easing.quad) }), -1, true),
     );
     return () => cancelAnimation(translateY);
   }, []);
@@ -175,7 +167,7 @@ export function PaywallModal({ visible, onClose }: PaywallModalProps) {
     // RevenueCat fires a customer-info update on success; we also refresh here.
     presentCodeRedemptionSheet();
     setTimeout(() => {
-      refresh().catch(() => { });
+      refresh().catch(() => {});
     }, 1500);
   };
 
@@ -196,7 +188,7 @@ export function PaywallModal({ visible, onClose }: PaywallModalProps) {
   };
 
   const openExternal = (path: string) => {
-    Linking.openURL(`${VITRINE_BASE}/${lang}${path}`).catch(() => { });
+    Linking.openURL(`${VITRINE_BASE}/${lang}${path}`).catch(() => {});
   };
 
   const [selectedPlan, setSelectedPlan] = useState<PaywallPlanId>(content.recommendedPlan);
@@ -263,9 +255,7 @@ export function PaywallModal({ visible, onClose }: PaywallModalProps) {
                   i < content.benefits.length - 1 && styles.featureRowBorder,
                 ]}
               >
-                <View style={styles.featureIconWrap}>
-                  {BENEFIT_ICONS[b.icon] ?? null}
-                </View>
+                <View style={styles.featureIconWrap}>{BENEFIT_ICONS[b.icon] ?? null}</View>
                 <View style={styles.featureText}>
                   <Text style={styles.featureTitle}>{b.title}</Text>
                   <Text style={styles.featureSub}>{b.sub}</Text>
@@ -295,7 +285,6 @@ export function PaywallModal({ visible, onClose }: PaywallModalProps) {
               onPress={handlePurchase}
               disabled={purchasing}
             >
-
               <Text style={styles.ctaText}>
                 {isTrial ? t('paywall:cta.trial') : t('paywall:cta.start')}
               </Text>
@@ -309,11 +298,7 @@ export function PaywallModal({ visible, onClose }: PaywallModalProps) {
 
           <Text style={styles.ctaSubtext}>{ctaSubtext}</Text>
 
-          <TouchableOpacity
-            onPress={handleRedeem}
-            style={styles.redeemBtn}
-            activeOpacity={0.7}
-          >
+          <TouchableOpacity onPress={handleRedeem} style={styles.redeemBtn} activeOpacity={0.7}>
             <Text style={styles.redeemBtnIcon}>🎟️</Text>
             <Text style={styles.redeemBtnText}>{t('paywall:footer.redeem')}</Text>
           </TouchableOpacity>
@@ -474,11 +459,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 10,
-    shadowColor: T.ink,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 6,
+    ...offsetShadow(4),
     marginTop: 2,
   },
   ctaText: { fontSize: 18, fontWeight: '900', color: T.ink, letterSpacing: -0.3 },

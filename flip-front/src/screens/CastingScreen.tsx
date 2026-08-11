@@ -23,8 +23,9 @@ import {
   StickerBadge,
   ThemeGrid,
 } from '../components';
+import type { RulesStep } from '../components';
 import { getPlayerBgColor, getPlayerTextColor } from '../constants';
-import { T } from '../constants/flipTokens';
+import { noShadow, offsetShadow, T } from '../constants/flipTokens';
 import type { CastingTheme } from '../games/casting';
 import {
   CASTING_ACCENT,
@@ -226,7 +227,7 @@ function CAScenario({
   setPlayers: (p: Player[]) => void;
 }) {
   const { t } = useTranslation();
-  const rulesSteps = t('casting:rules.steps', { returnObjects: true }) as any;
+  const rulesSteps = t('casting:rules.steps', { returnObjects: true }) as RulesStep[];
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: CASTING_ACCENT }}>
       <DotBackground color={T.ink} opacity={0.07} />
@@ -412,7 +413,7 @@ function CARevealNumber({
   const numFg = number >= 9 ? T.ink : '#fff';
   const label = t(`casting:labels.${number}`);
 
-  const rulesSteps = t('casting:rules.steps', { returnObjects: true }) as any;
+  const rulesSteps = t('casting:rules.steps', { returnObjects: true }) as RulesStep[];
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: T.paper }}>
       <DotBackground opacity={0.05} />
@@ -507,11 +508,7 @@ const rn = StyleSheet.create({
     borderColor: T.ink,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: T.ink,
-    shadowOffset: { width: 6, height: 6 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 6,
+    ...offsetShadow(6),
     marginTop: 10,
   },
   holdBtnText: { color: '#fff', fontSize: 22, fontWeight: '900' },
@@ -524,11 +521,7 @@ const rn = StyleSheet.create({
     borderColor: T.ink,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: T.ink,
-    shadowOffset: { width: 8, height: 8 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 8,
+    ...offsetShadow(8),
   },
   numberText: { fontSize: 72, fontWeight: '900', letterSpacing: -3, lineHeight: 72 },
   numberSub: { fontSize: 11, fontWeight: '700', letterSpacing: 1.5, opacity: 0.8 },
@@ -696,7 +689,7 @@ function CAGuessPlayer({
 }) {
   const { t } = useTranslation();
   const [guess, setGuess] = useState<number | null>(null);
-  const rulesSteps = t('casting:rules.steps', { returnObjects: true }) as any;
+  const rulesSteps = t('casting:rules.steps', { returnObjects: true }) as RulesStep[];
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: T.bg }}>
@@ -818,22 +811,16 @@ const gp = StyleSheet.create({
     borderColor: T.ink,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
+    ...offsetShadow(3),
   },
   numBtnSelected: {
     backgroundColor: CASTING_ACCENT,
-    shadowOpacity: 0,
-    elevation: 0,
+    ...noShadow,
     transform: [{ translateX: 3 }, { translateY: 3 }],
   },
   numBtnUsed: {
     backgroundColor: T.bgAlt,
-    shadowOpacity: 0,
-    elevation: 0,
+    ...noShadow,
     opacity: 0.35,
   },
   numText: { color: T.ink, fontSize: 22, fontWeight: '900' },
@@ -874,15 +861,15 @@ function CAResults({
     if (ecart === 0) {
       // Trop évident — le devin l'a trouvé du premier coup
       playerSips = 3;
-      tag = 'PILE POIL';
+      tag = 'perfect';
     } else if (ecart === 1) {
       // Presque — légèrement lisible
       playerSips = 1;
-      tag = 'PRESQUE';
+      tag = 'close';
     } else {
       // Raté — l'acteur a mal joué et tout le monde est perdu
       playerSips = ecart;
-      tag = 'RATÉ';
+      tag = 'missed';
     }
     return { player: a, playerIdx: pIdx, real, guess, ecart, playerSips, devinSips, tag };
   });
@@ -913,14 +900,14 @@ function CAResults({
     .sort((a, b) => b.s - a.s);
 
   const tagLabel = (tag: string) => {
-    if (tag === 'PILE POIL') return t('casting:results.pilePoil');
-    if (tag === 'PRESQUE') return t('casting:results.presque');
+    if (tag === 'perfect') return t('casting:results.pilePoil');
+    if (tag === 'close') return t('casting:results.presque');
     return t('casting:results.rates');
   };
 
   const tagColor = (tag: CastingResult['tag']) => {
-    if (tag === 'PILE POIL') return T.mint;
-    if (tag === 'PRESQUE') return T.lemon;
+    if (tag === 'perfect') return T.mint;
+    if (tag === 'close') return T.lemon;
     return T.tomato;
   };
 
@@ -984,7 +971,7 @@ function CAResults({
         <Text style={res.sectionLabel}>{t('casting:results.actorDetail')}</Text>
         {results.map((r) => {
           const tc = tagColor(r.tag);
-          const tagFg = r.tag === 'PRESQUE' ? T.ink : '#fff';
+          const tagFg = r.tag === 'close' ? T.ink : '#fff';
           return (
             <View key={r.playerIdx} style={res.actorCard}>
               <InitialAvatar index={r.playerIdx} size={36} radius={10} shadowColor="transparent" />
@@ -1097,11 +1084,7 @@ const res = StyleSheet.create({
     borderColor: T.ink,
     borderRadius: 16,
     padding: 12,
-    shadowColor: T.ink,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 4,
+    ...offsetShadow(4),
   },
   statLabel: { fontSize: 9, fontWeight: '700', letterSpacing: 1 },
   statVal: { fontSize: 28, fontWeight: '900' },
@@ -1113,11 +1096,7 @@ const res = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
-    shadowColor: T.ink,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 4,
+    ...offsetShadow(4),
   },
   bonusIcon: { fontSize: 28 },
   bonusTitle: { color: '#fff', fontSize: 18, fontWeight: '900' },
@@ -1131,11 +1110,7 @@ const res = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10,
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
+    ...offsetShadow(3),
   },
   actorName: { color: T.ink, fontSize: 16, fontWeight: '800', letterSpacing: -0.3 },
   actorNums: { flexDirection: 'row', alignItems: 'center', gap: 5, marginTop: 4 },
@@ -1170,11 +1145,7 @@ const res = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10,
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
+    ...offsetShadow(3),
   },
   rankNum: {
     width: 26,
@@ -1370,8 +1341,8 @@ export function CastingScreen() {
     <View style={{ flex: 1 }}>
       <CastingGame
         players={players}
-        onExit={() => (navigation as any).goBack()}
-        onSettings={() => (navigation as any).navigate('Settings')}
+        onExit={() => navigation.goBack()}
+        onSettings={() => navigation.navigate('Settings')}
       />
     </View>
   );

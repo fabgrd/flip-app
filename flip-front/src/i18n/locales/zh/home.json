@@ -1,0 +1,32 @@
+{
+  "title": "FL!P",
+  "subtitle": "和朋友一起玩的酒局游戏",
+  "welcome": "欢迎来到 FL!P！🍻",
+  "description": "终极酒局游戏，让你的派对嗨到爆！",
+  "addPlayers": {
+    "title": "添加玩家",
+    "subtitle": "最少 1 人，最多 20 人",
+    "placeholder": "玩家名字",
+    "add": "添加",
+    "remove": "移除",
+    "minPlayers": "至少添加 1 位玩家才能开始",
+    "maxPlayers": "已达到玩家人数上限（20 人）"
+  },
+  "playersList": {
+    "title": "玩家（{{count}}）",
+    "empty": "添加玩家即可开始"
+  },
+  "hero": {
+    "titlePrefix": "今晚谁想",
+    "titleHighlight": "喝趴下",
+    "titleSuffix": "？",
+    "ready_one": "{{count}} 位玩家已准备好出洋相。",
+    "ready_other": "{{count}} 位玩家已准备好出洋相。",
+    "addAtLeast_one": "至少添加 {{min}} 位玩家才能开始。",
+    "addAtLeast_other": "至少添加 {{min}} 位玩家才能开始。"
+  },
+  "actions": {
+    "start": "开始游戏！",
+    "startCta": "出发 →"
+  }
+}

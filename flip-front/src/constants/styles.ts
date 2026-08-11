@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { T } from './flipTokens';
+import { offsetShadow, T } from './flipTokens';
 import { Theme } from './themes';
 
 export const createGlobalStyles = (theme: Theme) =>
@@ -14,11 +14,7 @@ export const createGlobalStyles = (theme: Theme) =>
       justifyContent: 'center',
       paddingHorizontal: 24,
       paddingVertical: 16,
-      shadowColor: T.ink,
-      shadowOffset: { width: 4, height: 4 },
-      shadowOpacity: 1,
-      shadowRadius: 0,
-      elevation: 4,
+      ...offsetShadow(4),
     },
 
     buttonSecondary: {
@@ -30,11 +26,7 @@ export const createGlobalStyles = (theme: Theme) =>
       justifyContent: 'center',
       paddingHorizontal: 24,
       paddingVertical: 16,
-      shadowColor: T.ink,
-      shadowOffset: { width: 4, height: 4 },
-      shadowOpacity: 1,
-      shadowRadius: 0,
-      elevation: 4,
+      ...offsetShadow(4),
     },
 
     buttonText: {

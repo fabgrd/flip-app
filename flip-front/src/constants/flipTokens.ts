@@ -1,6 +1,8 @@
 // Fl!p Design System — Pop risograph, warm cream, bold accents
 // Direction: fond crème chaud, accents vifs, ombre offset chunky
 
+import { Platform, ViewStyle } from 'react-native';
+
 export const T = {
   // Backgrounds
   bg: '#F5EFE3',
@@ -39,14 +41,53 @@ export const T = {
   rXl: 44,
 } as const;
 
-// Offset shadow helper for iOS — hard chunky shadow
-export const offsetShadow = (size = 4, color = T.ink) => ({
-  shadowColor: color,
-  shadowOffset: { width: size, height: size },
-  shadowOpacity: 1 as number,
-  shadowRadius: 0,
-  elevation: 4,
-});
+// #RGB / #RRGGBB + opacity -> rgba(), for the CSS-style colors boxShadow expects.
+const rgba = (color: string, opacity: number): string => {
+  if (opacity >= 1) return color;
+  const hex = color.replace('#', '');
+  const full =
+    hex.length === 3
+      ? hex
+          .split('')
+          .map((c) => c + c)
+          .join('')
+      : hex;
+  if (full.length !== 6) return color;
+  const r = parseInt(full.slice(0, 2), 16);
+  const g = parseInt(full.slice(2, 4), 16);
+  const b = parseInt(full.slice(4, 6), 16);
+  return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+};
+
+// Offset shadow helper — hard chunky shadow, identical on iOS and Android.
+// iOS honours shadowOffset/shadowRadius directly. Android ignores them and only
+// draws `elevation`, which is a blurred grey drop shadow — the opposite of the
+// risograph look — so it gets a `boxShadow` (RN 0.76+) and no elevation.
+// `size` is the offset in px — a number for the usual square offset, or [x, y].
+export const offsetShadow = (
+  size: number | [number, number] = 4,
+  color: string = T.ink,
+  opacity = 1,
+): ViewStyle => {
+  const [x, y] = typeof size === 'number' ? [size, size] : size;
+  return Platform.select({
+    android: {
+      boxShadow: [{ offsetX: x, offsetY: y, blurRadius: 0, color: rgba(color, opacity) }],
+    },
+    default: {
+      shadowColor: color,
+      shadowOffset: { width: x, height: y },
+      shadowOpacity: opacity as number,
+      shadowRadius: 0,
+    },
+  }) as ViewStyle;
+};
+
+// Cancels an offsetShadow (disabled buttons, flattened cards).
+export const noShadow = Platform.select({
+  android: { boxShadow: [] },
+  default: { shadowOpacity: 0 },
+}) as ViewStyle;
 
 // Card style: 2px border + offset shadow
 export const cardStyle = (bg = T.paper, radius = T.rLg) => ({

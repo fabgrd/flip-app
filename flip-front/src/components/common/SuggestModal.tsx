@@ -16,9 +16,10 @@ import {
 } from 'react-native';
 import Animated, { FadeIn, FadeOut, ZoomIn, ZoomOut } from 'react-native-reanimated';
 import { GAMES } from '../../config/games.config';
-import { T } from '../../constants/flipTokens';
+import { offsetShadow, T } from '../../constants/flipTokens';
 import { supabase } from '../../lib/supabase';
 import { FlatChunkyButton } from './FlatChunkyButton';
+import { KeyboardAvoider } from './KeyboardAvoider';
 
 export function SuggestButton() {
   const { t } = useTranslation();
@@ -56,7 +57,11 @@ export function SuggestButton() {
 
   return (
     <>
-      <TouchableOpacity style={styles.triggerRow} onPress={() => setVisible(true)} activeOpacity={0.85}>
+      <TouchableOpacity
+        style={styles.triggerRow}
+        onPress={() => setVisible(true)}
+        activeOpacity={0.85}
+      >
         <View style={styles.triggerIcon}>
           <MaterialCommunityIcons name="chat-question" size={24} color="black" />
         </View>
@@ -67,110 +72,115 @@ export function SuggestButton() {
         <Feather name="chevron-right" size={18} color={T.muted} />
       </TouchableOpacity>
 
-      <Modal visible={visible} transparent animationType="none" onRequestClose={handleClose}>
+      <Modal
+        visible={visible}
+        transparent
+        animationType="none"
+        onRequestClose={handleClose}
+        statusBarTranslucent
+        navigationBarTranslucent
+      >
         <Animated.View
           entering={FadeIn.duration(150)}
           exiting={FadeOut.duration(150)}
           style={styles.overlay}
         >
           <TouchableOpacity style={StyleSheet.absoluteFill} onPress={handleClose} />
-          <Animated.View
-            entering={ZoomIn.duration(200)}
-            exiting={ZoomOut.duration(150)}
-            style={styles.card}
-          >
-            <View style={[styles.cardHeader, { backgroundColor: T.lemon }]}>
-              <Text style={styles.cardTitle}>{t('settings:suggest.title')}</Text>
-              <FlatChunkyButton
-                size="xs"
-                square
-                color={T.paper}
-                textColor={T.ink}
-                metrics={{ height: 30, radius: 9, paddingH: 0, fontSize: 13 }}
-                onPress={handleClose}
-              >
-                <Text style={styles.closeBtnText}>✕</Text>
-              </FlatChunkyButton>
-            </View>
-
-            {submitted ? (
-              <View style={styles.successContent}>
-                <Text style={styles.successEmoji}>🎉</Text>
-                <Text style={styles.successTitle}>{t('settings:suggest.successTitle')}</Text>
-                <Text style={styles.successDesc}>{t('settings:suggest.successDesc')}</Text>
+          <KeyboardAvoider style={styles.avoider}>
+            <Animated.View
+              entering={ZoomIn.duration(200)}
+              exiting={ZoomOut.duration(150)}
+              style={styles.card}
+            >
+              <View style={[styles.cardHeader, { backgroundColor: T.lemon }]}>
+                <Text style={styles.cardTitle}>{t('settings:suggest.title')}</Text>
                 <FlatChunkyButton
-                  size="sm"
-                  color={T.ink}
-                  textColor="#fff"
-                  style={styles.doneBtn}
+                  size="xs"
+                  square
+                  color={T.paper}
+                  textColor={T.ink}
+                  metrics={{ height: 30, radius: 9, paddingH: 0, fontSize: 13 }}
                   onPress={handleClose}
                 >
-                  {t('settings:suggest.close')}
+                  <Text style={styles.closeBtnText}>✕</Text>
                 </FlatChunkyButton>
               </View>
-            ) : (
-              <ScrollView
-                contentContainerStyle={styles.formContent}
-                showsVerticalScrollIndicator={false}
-                keyboardShouldPersistTaps="handled"
-              >
-                <Text style={styles.sectionLabel}>{t('settings:suggest.gameLabel')}</Text>
+
+              {submitted ? (
+                <View style={styles.successContent}>
+                  <Text style={styles.successEmoji}>🎉</Text>
+                  <Text style={styles.successTitle}>{t('settings:suggest.successTitle')}</Text>
+                  <Text style={styles.successDesc}>{t('settings:suggest.successDesc')}</Text>
+                  <FlatChunkyButton
+                    size="sm"
+                    color={T.ink}
+                    textColor="#fff"
+                    style={styles.doneBtn}
+                    onPress={handleClose}
+                  >
+                    {t('settings:suggest.close')}
+                  </FlatChunkyButton>
+                </View>
+              ) : (
                 <ScrollView
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                  contentContainerStyle={styles.gameChips}
+                  contentContainerStyle={styles.formContent}
+                  showsVerticalScrollIndicator={false}
+                  keyboardShouldPersistTaps="handled"
                 >
-                  {GAMES.map((game) => {
-                    const active = selectedGameId === game.id;
-                    return (
-                      <TouchableOpacity
-                        key={game.id}
-                        style={[styles.gameChip, active && styles.gameChipActive]}
-                        onPress={() => setSelectedGameId(active ? null : game.id)}
-                        activeOpacity={0.8}
-                      >
-                        <Text style={[styles.gameChipText, active && styles.gameChipTextActive]}>
-                          {t(game.titleKey)}
-                        </Text>
-                      </TouchableOpacity>
-                    );
-                  })}
+                  <Text style={styles.sectionLabel}>{t('settings:suggest.gameLabel')}</Text>
+                  <ScrollView
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={styles.gameChips}
+                  >
+                    {GAMES.map((game) => {
+                      const active = selectedGameId === game.id;
+                      return (
+                        <TouchableOpacity
+                          key={game.id}
+                          style={[styles.gameChip, active && styles.gameChipActive]}
+                          onPress={() => setSelectedGameId(active ? null : game.id)}
+                          activeOpacity={0.8}
+                        >
+                          <Text style={[styles.gameChipText, active && styles.gameChipTextActive]}>
+                            {t(game.titleKey)}
+                          </Text>
+                        </TouchableOpacity>
+                      );
+                    })}
+                  </ScrollView>
+
+                  <Text style={[styles.sectionLabel, { marginTop: 16 }]}>
+                    {t('settings:suggest.questionLabel')}
+                  </Text>
+                  <TextInput
+                    style={styles.textInput}
+                    value={text}
+                    onChangeText={setText}
+                    placeholder={t('settings:suggest.placeholder')}
+                    placeholderTextColor={T.muted}
+                    multiline
+                    numberOfLines={4}
+                    textAlignVertical="top"
+                    returnKeyType="done"
+                    blurOnSubmit
+                    onSubmitEditing={() => Keyboard.dismiss()}
+                  />
+
+                  <FlatChunkyButton
+                    size="sm"
+                    color={text.trim() ? T.ink : T.muted}
+                    textColor="#fff"
+                    style={styles.submitBtn}
+                    onPress={handleSubmit}
+                    disabled={!text.trim() || sending}
+                  >
+                    {sending ? <ActivityIndicator color="#fff" /> : t('settings:suggest.submit')}
+                  </FlatChunkyButton>
                 </ScrollView>
-
-                <Text style={[styles.sectionLabel, { marginTop: 16 }]}>
-                  {t('settings:suggest.questionLabel')}
-                </Text>
-                <TextInput
-                  style={styles.textInput}
-                  value={text}
-                  onChangeText={setText}
-                  placeholder={t('settings:suggest.placeholder')}
-                  placeholderTextColor={T.muted}
-                  multiline
-                  numberOfLines={4}
-                  textAlignVertical="top"
-                  returnKeyType="done"
-                  blurOnSubmit
-                  onSubmitEditing={() => Keyboard.dismiss()}
-                />
-
-                <FlatChunkyButton
-                  size="sm"
-                  color={text.trim() ? T.ink : T.muted}
-                  textColor="#fff"
-                  style={styles.submitBtn}
-                  onPress={handleSubmit}
-                  disabled={!text.trim() || sending}
-                >
-                  {sending ? (
-                    <ActivityIndicator color="#fff" />
-                  ) : (
-                    t('settings:suggest.submit')
-                  )}
-                </FlatChunkyButton>
-              </ScrollView>
-            )}
-          </Animated.View>
+              )}
+            </Animated.View>
+          </KeyboardAvoider>
         </Animated.View>
       </Modal>
     </>
@@ -200,6 +210,7 @@ const styles = StyleSheet.create({
   triggerLabel: { color: T.ink, fontSize: 16, fontWeight: '900' },
   triggerHint: { color: T.inkSoft, fontSize: 12, lineHeight: 16 },
 
+  avoider: { width: '100%', alignItems: 'center', justifyContent: 'center' },
   overlay: {
     flex: 1,
     backgroundColor: 'rgba(24,22,19,0.6)',
@@ -216,11 +227,7 @@ const styles = StyleSheet.create({
     width: '100%',
     maxHeight: '85%',
     overflow: 'hidden',
-    shadowColor: T.ink,
-    shadowOffset: { width: 6, height: 6 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 8,
+    ...offsetShadow(6),
   },
 
   cardHeader: {

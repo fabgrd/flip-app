@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Animated, { FadeIn, FadeOut, ZoomIn, ZoomOut } from 'react-native-reanimated';
-import { T } from '../../constants/flipTokens';
+import { offsetShadow, T } from '../../constants/flipTokens';
 import { FlatChunkyButton } from './FlatChunkyButton';
 
 interface Rule {
@@ -26,7 +26,14 @@ export function RulesModalView({
 }: RulesModalProps & { visible: boolean; onClose: () => void }) {
   const { t } = useTranslation();
   return (
-    <Modal visible={visible} transparent animationType="none" onRequestClose={onClose}>
+    <Modal
+      visible={visible}
+      transparent
+      animationType="none"
+      onRequestClose={onClose}
+      statusBarTranslucent
+      navigationBarTranslucent
+    >
       <Animated.View
         entering={FadeIn.duration(150)}
         exiting={FadeOut.duration(150)}
@@ -129,11 +136,7 @@ const styles = StyleSheet.create({
     width: '100%',
     maxHeight: '80%',
     overflow: 'hidden',
-    shadowColor: T.ink,
-    shadowOffset: { width: 6, height: 6 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 8,
+    ...offsetShadow(6),
   },
 
   cardHeader: {

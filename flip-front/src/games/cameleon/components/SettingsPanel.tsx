@@ -5,19 +5,19 @@ import { ChunkyButton } from '../../../components/common/ChunkyButton';
 import { DrinkModeToggle } from '../../../components/common/DrinkModeToggle';
 import { GameSetupCard, GameSetupSection } from '../../../components/common/GameSetupCard';
 import { ThemeGrid } from '../../../components/common/ThemeGrid';
-import { T } from '../../../constants/flipTokens';
+import { offsetShadow, T } from '../../../constants/flipTokens';
 import { CAMELEON_THEME_OPTIONS } from '../constants';
 import type { CameleonTheme } from '../types';
 
-const THEME_META: Record<CameleonTheme, { emoji: string; desc: string }> = {
-  random: { emoji: '🎲', desc: 'Un mix de tout' },
-  daily: { emoji: '📅', desc: 'Mots du quotidien' },
-  football: { emoji: '⚽', desc: 'Foot & culture pop' },
-  hot: { emoji: '🔥', desc: 'Adulte & osé' },
-  wtf: { emoji: '🤪', desc: 'Complètement WTF' },
-  sousculture: { emoji: '🕶️', desc: 'Culture underground' },
-  rap: { emoji: '🎤', desc: 'Rap & punchlines' },
-  decadence: { emoji: '🍸', desc: 'Ambiance décadente' },
+const THEME_META: Record<CameleonTheme, { emoji: string }> = {
+  random: { emoji: '🎲' },
+  daily: { emoji: '📅' },
+  football: { emoji: '⚽' },
+  hot: { emoji: '🔥' },
+  wtf: { emoji: '🤪' },
+  sousculture: { emoji: '🕶️' },
+  rap: { emoji: '🎤' },
+  decadence: { emoji: '🍸' },
 };
 
 interface SettingsPanelProps {
@@ -65,7 +65,7 @@ export function SettingsPanel({
         </View>
       </View>
 
-      <GameSetupCard accentColor={T.mint} title={t('common:labels.setup', 'Réglages').toUpperCase()}>
+      <GameSetupCard accentColor={T.mint} title={t('common:labels.setup').toUpperCase()}>
         <GameSetupSection label={t('cameleon:settings.impostors', 'Imposteurs')}>
           <View style={styles.stepperRow}>
             <View style={styles.stepperCol}>
@@ -127,15 +127,10 @@ export function SettingsPanel({
             </View>
           </View>
           {currentUC + currentMW === 0 && (
-            <Text style={styles.warningText}>
-              {t(
-                'cameleon:settings.needAtLeastOneImpostor',
-                'Ajoute au moins 1 imposteur (Undercover ou Mr White) pour lancer la partie.',
-              )}
-            </Text>
+            <Text style={styles.warningText}>{t('cameleon:settings.needAtLeastOneImpostor')}</Text>
           )}
         </GameSetupSection>
-        <GameSetupSection label={t('cameleon:settings.themes', 'Thèmes')}>
+        <GameSetupSection label={t('cameleon:settings.themes')}>
           <ThemeGrid<CameleonTheme>
             options={CAMELEON_THEME_OPTIONS.map((opt) => ({
               value: opt.value,
@@ -155,7 +150,6 @@ export function SettingsPanel({
         </GameSetupSection>
         <DrinkModeToggle accentColor={T.mint} inline />
       </GameSetupCard>
-
     </ScrollView>
   );
 }
@@ -172,11 +166,7 @@ const styles = StyleSheet.create({
     borderRadius: T.rMd,
     borderWidth: 2,
     borderColor: T.ink,
-    shadowColor: T.ink,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
+    ...offsetShadow(4),
   },
   statValue: { color: T.ink, fontSize: 26, fontWeight: '900', letterSpacing: -1 },
   statLabel: {
@@ -216,11 +206,7 @@ const styles = StyleSheet.create({
     borderRadius: T.rMd,
     paddingHorizontal: 8,
     paddingVertical: 6,
-    shadowColor: T.ink,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
+    ...offsetShadow(4),
   },
   warningText: {
     marginTop: 10,
@@ -231,5 +217,4 @@ const styles = StyleSheet.create({
   },
   stepBtnText: { color: T.ink, fontSize: 20, fontWeight: '900', lineHeight: 22 },
   stepValue: { color: T.ink, fontSize: 22, fontWeight: '900', width: 36, textAlign: 'center' },
-
 });

@@ -8,18 +8,17 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { Avatar } from '../../../components/common/Avatar';
-import { T } from '../../../constants/flipTokens';
+import { noShadow, offsetShadow, T } from '../../../constants/flipTokens';
 
 interface RevealCardProps {
   name: string;
   color: string;
-  roleLabel: string;
   secretWord: string | null;
   onNext: () => void;
   t: TFunction;
 }
 
-export function RevealCard({ name, color, roleLabel, secretWord, onNext, t }: RevealCardProps) {
+export function RevealCard({ name, color, secretWord, onNext, t }: RevealCardProps) {
   const [revealed, setRevealed] = useState(false);
   const frontOpacity = useSharedValue(1);
   const backOpacity = useSharedValue(0);
@@ -111,9 +110,7 @@ function FlipButton({
         styles.btn,
         {
           backgroundColor: color,
-          shadowColor,
-          shadowOffset: pressed ? { width: 0, height: 0 } : { width: 4, height: 4 },
-          shadowOpacity: pressed ? 0 : 1,
+          ...(pressed ? noShadow : offsetShadow(4, shadowColor)),
           transform: pressed ? [{ translateX: 4 as number }, { translateY: 4 as number }] : [],
         },
       ]}
@@ -140,11 +137,7 @@ const styles = StyleSheet.create({
     padding: 24,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: T.ink,
-    shadowOffset: { width: 6, height: 6 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 5,
+    ...offsetShadow(6),
   },
   frontFace: { backgroundColor: T.ink },
   backFace: { backgroundColor: T.paper },
@@ -184,10 +177,7 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     marginBottom: 16,
     transform: [{ rotate: '-3deg' }],
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
+    ...offsetShadow(3),
   },
   mrWhiteBadgeText: {
     color: '#fff',
@@ -214,11 +204,7 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     alignItems: 'center',
     marginBottom: 14,
-    shadowColor: T.ink,
-    shadowOffset: { width: 5, height: 5 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 4,
+    ...offsetShadow(5),
   },
   wordText: {
     color: T.ink,
@@ -245,8 +231,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 28,
     alignSelf: 'stretch',
     alignItems: 'center',
-    shadowRadius: 0,
-    elevation: 4,
   },
   btnText: { fontSize: 17, fontWeight: '900', letterSpacing: -0.3 },
 });

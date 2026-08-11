@@ -11,7 +11,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
-import { T } from '../../constants/flipTokens';
+import { offsetShadow, T } from '../../constants/flipTokens';
 import { Player } from '../../types';
 import { Avatar } from './Avatar';
 
@@ -78,7 +78,11 @@ export function SwipeableCard({
     .onUpdate((event) => {
       if (!isActive) return;
       translateX.value = event.translationX;
-      if (downDirection && event.translationY > 0 && Math.abs(event.translationY) > Math.abs(event.translationX)) {
+      if (
+        downDirection &&
+        event.translationY > 0 &&
+        Math.abs(event.translationY) > Math.abs(event.translationX)
+      ) {
         translateY.value = event.translationY;
       } else {
         translateY.value = event.translationY * 0.12;
@@ -182,11 +186,7 @@ const styles = StyleSheet.create({
     width: CARD_WIDTH,
     height: CARD_HEIGHT,
     borderRadius: T.rLg,
-    shadowColor: T.ink,
-    shadowOffset: { width: 6, height: 6 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 8,
+    ...offsetShadow(6),
   },
 
   // Inner card — solid paper background + ink border

@@ -12,8 +12,9 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { ConfettiBurst } from '../components/common';
-import { T } from '../constants/flipTokens';
+import { offsetShadow, T } from '../constants/flipTokens';
 import type { CameleonAssignedPlayer } from '../games/cameleon';
+import { useBlockHardwareBack } from '../hooks';
 import { RootStackParamList } from '../types';
 
 type CameleonResultsRoute = RouteProp<RootStackParamList, 'CameleonResults'>;
@@ -23,6 +24,8 @@ export function CameleonResultsScreen() {
   const route = useRoute<CameleonResultsRoute>();
   const navigation = useNavigation();
   const { players } = route.params as { players: CameleonAssignedPlayer[] };
+
+  useBlockHardwareBack();
 
   const winner: 'civilians' | 'undercover' = useMemo(() => {
     const alive = players.filter((p) => !p.isEliminated);
@@ -84,15 +87,15 @@ export function CameleonResultsScreen() {
       {/* Hero result */}
       <View style={styles.hero}>
         <Animated.View entering={FadeIn} style={[styles.stickerBadge, winnerStyle]}>
-          <Text style={styles.stickerText}>{civilWin ? '🎉 BIEN VU' : '😈 RATÉ'}</Text>
+          <Text style={styles.stickerText}>
+            {civilWin ? t('cameleon:results.badgeWin') : t('cameleon:results.badgeLose')}
+          </Text>
         </Animated.View>
         <Text style={[styles.heroTitle, { color: civilWin ? T.ink : '#fff' }]}>
-          {civilWin
-            ? t('cameleon:outcome.civiliansWin', 'Démasqué !')
-            : t('cameleon:outcome.undercoverWin', 'Évadé.')}
+          {civilWin ? t('cameleon:outcome.civiliansWin') : t('cameleon:outcome.undercoverWin')}
         </Text>
         <Text style={[styles.heroSub, { color: civilWin ? T.inkSoft : 'rgba(255,255,255,0.8)' }]}>
-          {t('cameleon:results.subtitle', 'Résultats de la manche')}
+          {t('cameleon:results.subtitle')}
         </Text>
       </View>
 
@@ -173,11 +176,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 6,
     marginBottom: 16,
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
+    ...offsetShadow(3),
     transform: [{ rotate: '-3deg' }],
   },
   stickerText: {
@@ -209,11 +208,7 @@ const styles = StyleSheet.create({
     borderRadius: T.rLg,
     padding: 18,
     marginBottom: 16,
-    shadowColor: T.ink,
-    shadowOffset: { width: 5, height: 5 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 4,
+    ...offsetShadow(5),
   },
   scoresCardLabel: {
     color: T.muted,
@@ -262,11 +257,7 @@ const styles = StyleSheet.create({
     paddingVertical: 18,
     alignItems: 'center',
     marginBottom: 10,
-    shadowColor: T.paper,
-    shadowOffset: { width: 5, height: 5 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 5,
+    ...offsetShadow(5, T.paper),
   },
   primaryBtnText: { color: '#fff', fontSize: 18, fontWeight: '900', letterSpacing: -0.3 },
 
@@ -277,11 +268,7 @@ const styles = StyleSheet.create({
     borderRadius: T.rMd,
     paddingVertical: 16,
     alignItems: 'center',
-    shadowColor: T.ink,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 4,
+    ...offsetShadow(4),
   },
   secondaryBtnText: { color: T.ink, fontSize: 16, fontWeight: '800', letterSpacing: -0.3 },
 });

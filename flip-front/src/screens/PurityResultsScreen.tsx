@@ -5,7 +5,7 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 
 import { ConfettiBurst, DotBackground } from '../components';
-import { T } from '../constants/flipTokens';
+import { offsetShadow, T } from '../constants/flipTokens';
 import { THEME_COLORS, THEME_LABELS } from '../games/purity-test';
 import { RootStackParamList, Theme } from '../types';
 
@@ -128,12 +128,10 @@ export function PurityResultsScreen() {
       {/* Hero */}
       <View style={styles.hero}>
         <View style={styles.stickerBadge}>
-          <Text style={styles.stickerText}>😈 RÉSULTATS</Text>
+          <Text style={styles.stickerText}>{t('purityTest:results.badge')}</Text>
         </View>
-        <Text style={styles.heroTitle}>{t('purityTest:results.title', 'Test de Pureté')}</Text>
-        <Text style={styles.heroSub}>
-          {t('purityTest:results.subtitle', 'Qui est le plus corrompu ?')}
-        </Text>
+        <Text style={styles.heroTitle}>{t('purityTest:results.title')}</Text>
+        <Text style={styles.heroSub}>{t('purityTest:results.subtitle')}</Text>
       </View>
 
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
@@ -141,10 +139,7 @@ export function PurityResultsScreen() {
           const lvl = getImpurityLevel(result.impurityPercentage);
           const isWinner = result.rank === 1;
           return (
-            <View
-              key={result.player.id}
-              style={[styles.playerCard, isWinner && styles.winnerCard]}
-            >
+            <View key={result.player.id} style={[styles.playerCard, isWinner && styles.winnerCard]}>
               {isWinner && (
                 <View style={styles.crownRibbon}>
                   <Text style={styles.crownRibbonText}>{t('purityTest:results.crowned')}</Text>
@@ -174,17 +169,13 @@ export function PurityResultsScreen() {
 
               {/* Overall impurity bar */}
               <View style={styles.overallRow}>
-                <Text style={styles.overallLabel}>
-                  {t('purityTest:results.overallImpurity', 'Impureté globale')}
-                </Text>
+                <Text style={styles.overallLabel}>{t('purityTest:results.overallImpurity')}</Text>
               </View>
               <ProgressBar pct={result.impurityPercentage} color={lvl.color} thick />
 
               {/* Theme breakdown */}
               <View style={styles.themesDivider} />
-              <Text style={styles.themesLabel}>
-                {t('purityTest:results.themeDetails', 'Par thème')}
-              </Text>
+              <Text style={styles.themesLabel}>{t('purityTest:results.themeDetails')}</Text>
               <View style={styles.themeBars}>
                 {Object.entries(result.themePercentages).map(([key, pct], i) => {
                   const themeColor = THEME_COLORS[key as Theme] ?? T.violet;
@@ -196,12 +187,12 @@ export function PurityResultsScreen() {
                           {THEME_LABELS[key as Theme]}
                         </Text>
                         <ProgressBar pct={pct} color={themeColor} delay={200 + i * 90} />
-                        <Text style={styles.themePct} numberOfLines={1}>{pct}%</Text>
+                        <Text style={styles.themePct} numberOfLines={1}>
+                          {pct}%
+                        </Text>
                       </View>
                       {flair ? (
-                        <Text style={[styles.themeFlair, { color: themeColor }]}>
-                          {flair}
-                        </Text>
+                        <Text style={[styles.themeFlair, { color: themeColor }]}>{flair}</Text>
                       ) : null}
                     </View>
                   );
@@ -242,11 +233,7 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     alignSelf: 'flex-start',
     marginBottom: 10,
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
+    ...offsetShadow(3),
     transform: [{ rotate: '-3deg' }],
   },
   stickerText: {
@@ -273,17 +260,12 @@ const styles = StyleSheet.create({
     borderColor: T.ink,
     borderRadius: T.rLg,
     padding: 18,
-    shadowColor: T.ink,
-    shadowOffset: { width: 5, height: 5 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 4,
+    ...offsetShadow(5),
   },
   winnerCard: {
     borderColor: T.lemon,
     borderWidth: 3,
-    shadowColor: T.lemon,
-    shadowOffset: { width: 6, height: 6 },
+    ...offsetShadow(6, T.lemon),
   },
   crownRibbon: {
     alignSelf: 'flex-start',
@@ -295,11 +277,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     marginBottom: 12,
     transform: [{ rotate: '-2deg' }],
-    shadowColor: T.ink,
-    shadowOffset: { width: 2, height: 2 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 2,
+    ...offsetShadow(2),
   },
   crownRibbonText: {
     color: T.ink,
@@ -320,11 +298,7 @@ const styles = StyleSheet.create({
     borderRadius: T.rSm,
     paddingHorizontal: 12,
     paddingVertical: 8,
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
+    ...offsetShadow(3),
   },
   scoreText: { fontSize: 20, fontWeight: '900' },
 
@@ -390,11 +364,7 @@ const styles = StyleSheet.create({
     borderRadius: T.rMd,
     paddingVertical: 18,
     alignItems: 'center',
-    shadowColor: T.paper,
-    shadowOffset: { width: 5, height: 5 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 5,
+    ...offsetShadow(5, T.paper),
     marginTop: 8,
   },
   primaryBtnText: { color: '#fff', fontSize: 17, fontWeight: '900', letterSpacing: -0.3 },

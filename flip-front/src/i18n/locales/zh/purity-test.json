@@ -1,0 +1,1396 @@
+{
+  "game": {
+    "title": "纯洁度测试",
+    "subtitle": "滑动作答",
+    "instructions": "👈 向左滑 = 没有 • 向右滑 = 有过 👉",
+    "questionPrefix": "你有没有……",
+    "questionCounter": "第 {{current}} / {{total}} 题",
+    "remainingPlayers": "还剩 {{count}} 位玩家",
+    "hint": "← 没有 | 有过 →   ·   ↓ 超级 ×2",
+    "finished": {
+      "title": "🎉 测试完成！",
+      "subtitle": "所有玩家都回答完了 {{total}} 道题",
+      "viewResults": "查看结果"
+    },
+    "sipsIfYes_one": "🍻 是则喝 {{count}} 口",
+    "sipsIfYes_other": "🍻 是则喝 {{count}} 口",
+    "pointsIfYes_one": "+{{count}} 分",
+    "pointsIfYes_other": "+{{count}} 分"
+  },
+  "results": {
+    "title": "🏆 纯洁度测试结果",
+    "subtitle": "按「不纯度」百分比排名",
+    "themeDetails": "各主题明细：",
+    "overallImpurity": "总体不纯度",
+    "crowned": "👑 最不纯洁的人",
+    "backToHome": "返回首页",
+    "themeFlair": {
+      "sex": "🔥 这床上生活也太野了！",
+      "drugs": "🌿 行走的药箱",
+      "morality": "😈 道德？没听说过。",
+      "hygiene": "🧼 香皂和水都躲着你走"
+    },
+    "impurityLevels": {
+      "saint": "圣人",
+      "pure": "相当纯洁",
+      "mostlyPure": "还挺规矩",
+      "corrupted": "已被腐蚀",
+      "mixed": "半黑半白",
+      "naughty": "有点坏",
+      "sinner": "臭名昭著的罪人",
+      "veryImpure": "堕落的灵魂",
+      "demon": "恶魔的走狗",
+      "diabolical": "恶魔级",
+      "hellspawn": "敌基督",
+      "beyondEvil": "撒旦本旦"
+    },
+    "badge": "😈 结果"
+  },
+  "themes": {
+    "sex": "性",
+    "drugs": "酒与药",
+    "morality": "道德",
+    "hygiene": "卫生"
+  },
+  "questions": {
+    "sex": {
+      "level5": [
+        {
+          "id": "sex_l5_1",
+          "text": "在房间里还有别人的情况下做爱？",
+          "points": 5
+        },
+        {
+          "id": "sex_l5_2",
+          "text": "看过里番／工口动画？",
+          "points": 5
+        },
+        {
+          "id": "sex_l5_3",
+          "text": "和家族成员发生过关系？",
+          "points": 5
+        },
+        {
+          "id": "sex_l5_4",
+          "text": "参加过三人以上的性行为？",
+          "points": 5
+        },
+        {
+          "id": "sex_l5_5",
+          "text": "留着别人穿过的衣物／内衣，事后用来自慰？",
+          "points": 5
+        },
+        {
+          "id": "sex_l5_6",
+          "text": "为了钱和别人发生过关系？",
+          "points": 5
+        },
+        {
+          "id": "sex_l5_7",
+          "text": "出轨过？",
+          "points": 5
+        },
+        {
+          "id": "sex_l5_8",
+          "text": "偷偷录下并保存了私密视频？",
+          "points": 5
+        },
+        {
+          "id": "sex_l5_9",
+          "text": "和朋友的前任上过床？",
+          "points": 5
+        },
+        {
+          "id": "sex_l5_10",
+          "text": "和对你有职权关系的人发生过关系？",
+          "points": 5
+        },
+        {
+          "id": "sex_l5_11",
+          "text": "尝试过极端 BDSM？",
+          "points": 5
+        },
+        {
+          "id": "sex_l5_12",
+          "text": "在网上卖过私密内容？",
+          "points": 5
+        },
+        {
+          "id": "sex_l5_13",
+          "text": "参加过多人性爱？",
+          "points": 5
+        },
+        {
+          "id": "sex_l5_14",
+          "text": "背着伴侣劈腿过？",
+          "points": 5
+        }
+      ],
+      "level4": [
+        {
+          "id": "sex_l4_1",
+          "text": "和朋友上过床？",
+          "points": 4
+        },
+        {
+          "id": "sex_l4_2",
+          "text": "对老师、上司或家教产生过性幻想？",
+          "points": 4
+        },
+        {
+          "id": "sex_l4_3",
+          "text": "为了向别人证明什么而跟人上床？",
+          "points": 4
+        },
+        {
+          "id": "sex_l4_4",
+          "text": "在公共场合看过黄片？",
+          "points": 4
+        },
+        {
+          "id": "sex_l4_5",
+          "text": "把家里的日用品当情趣用品用过？",
+          "points": 4
+        },
+        {
+          "id": "sex_l4_6",
+          "text": "故意不戴套？",
+          "points": 4
+        },
+        {
+          "id": "sex_l4_7",
+          "text": "在完全不合时宜的场合达到过高潮？",
+          "points": 4
+        },
+        {
+          "id": "sex_l4_8",
+          "text": "现实中和陌生人对上一眼后，就去社交平台上蹲他？",
+          "points": 4
+        },
+        {
+          "id": "sex_l4_9",
+          "text": "把色情消息发错了人？",
+          "points": 4
+        },
+        {
+          "id": "sex_l4_10",
+          "text": "得过性病？",
+          "points": 4
+        },
+        {
+          "id": "sex_l4_11",
+          "text": "有过施虐／受虐的经历？",
+          "points": 4
+        },
+        {
+          "id": "sex_l4_12",
+          "text": "和有伴侣的人发生过关系？",
+          "points": 4
+        },
+        {
+          "id": "sex_l4_13",
+          "text": "在行驶的车里做过爱？",
+          "points": 4
+        },
+        {
+          "id": "sex_l4_14",
+          "text": "和伴侣一起看过黄片？",
+          "points": 4
+        },
+        {
+          "id": "sex_l4_15",
+          "text": "有过自己觉得非常禁忌的性幻想？",
+          "points": 4
+        },
+        {
+          "id": "sex_l4_16",
+          "text": "和一个连名字都不知道的人上过床？",
+          "points": 4
+        },
+        {
+          "id": "sex_l4_17",
+          "text": "在公共场所做过爱？",
+          "points": 4
+        }
+      ],
+      "level3": [
+        {
+          "id": "sex_l3_1",
+          "text": "对动画或游戏角色产生过性幻想？",
+          "points": 3
+        },
+        {
+          "id": "sex_l3_2",
+          "text": "为了迎合对方假装自己有某种癖好？",
+          "points": 3
+        },
+        {
+          "id": "sex_l3_3",
+          "text": "做爱做到一半却想着别人？",
+          "points": 3
+        },
+        {
+          "id": "sex_l3_4",
+          "text": "拍过性爱录像？",
+          "points": 3
+        },
+        {
+          "id": "sex_l3_5",
+          "text": "把发给别人的裸照又转发给了另一个人？",
+          "points": 3
+        },
+        {
+          "id": "sex_l3_6",
+          "text": "在床上让对方叫你「爸爸／妈妈」？",
+          "points": 3
+        },
+        {
+          "id": "sex_l3_7",
+          "text": "花钱买过性服务？",
+          "points": 3
+        },
+        {
+          "id": "sex_l3_8",
+          "text": "有过肛交？",
+          "points": 3
+        },
+        {
+          "id": "sex_l3_9",
+          "text": "同一周内和两个以上的人发生过关系？",
+          "points": 3
+        },
+        {
+          "id": "sex_l3_10",
+          "text": "和年龄是你两倍的人上过床？",
+          "points": 3
+        },
+        {
+          "id": "sex_l3_11",
+          "text": "舔过别人的脚？",
+          "points": 3
+        },
+        {
+          "id": "sex_l3_12",
+          "text": "看过那个著名的重口味视频？",
+          "points": 3
+        },
+        {
+          "id": "sex_l3_13",
+          "text": "在别人的办公室里看过黄片？",
+          "points": 3
+        },
+        {
+          "id": "sex_l3_14",
+          "text": "把私密照误发到了错误的群里？",
+          "points": 3
+        },
+        {
+          "id": "sex_l3_15",
+          "text": "有过双性恋经历？",
+          "points": 3
+        },
+        {
+          "id": "sex_l3_16",
+          "text": "试过在网上看到的姿势？",
+          "points": 3
+        },
+        {
+          "id": "sex_l3_6",
+          "text": "在床上让对方叫你「爸爸／妈妈」？",
+          "points": 3
+        },
+        {
+          "id": "sex_l3_7",
+          "text": "花钱买过性服务？",
+          "points": 3
+        },
+        {
+          "id": "sex_l3_8",
+          "text": "有过肛交？",
+          "points": 3
+        },
+        {
+          "id": "sex_l3_9",
+          "text": "同一周内和两个以上的人发生过关系？",
+          "points": 3
+        },
+        {
+          "id": "sex_l3_10",
+          "text": "和年龄是你两倍的人上过床？",
+          "points": 3
+        },
+        {
+          "id": "sex_l3_11",
+          "text": "舔过别人的脚？",
+          "points": 3
+        },
+        {
+          "id": "sex_l3_12",
+          "text": "看过那个著名的重口味视频？",
+          "points": 3
+        },
+        {
+          "id": "sex_l3_17",
+          "text": "给别人发过裸照？",
+          "points": 3
+        },
+        {
+          "id": "sex_l3_18",
+          "text": "有过一夜情？",
+          "points": 3
+        }
+      ],
+      "level2": [
+        {
+          "id": "sex_l2_1",
+          "text": "发过很黄的语音？",
+          "points": 2
+        },
+        {
+          "id": "sex_l2_2",
+          "text": "有过与自己性取向不符的性经历？",
+          "points": 2
+        },
+        {
+          "id": "sex_l2_3",
+          "text": "用过情趣玩具？",
+          "points": 2
+        },
+        {
+          "id": "sex_l2_4",
+          "text": "有人的第一次是给了你？",
+          "points": 2
+        },
+        {
+          "id": "sex_l2_5",
+          "text": "有过一夜情？",
+          "points": 2
+        },
+        {
+          "id": "sex_l2_6",
+          "text": "假装过高潮？",
+          "points": 2
+        },
+        {
+          "id": "sex_l2_7",
+          "text": "在公共场合露出过私处？",
+          "points": 2
+        },
+        {
+          "id": "sex_l2_8",
+          "text": "在半公开的场合自慰过？",
+          "points": 2
+        },
+        {
+          "id": "sex_l2_9",
+          "text": "发过让自己后悔的色情消息？",
+          "points": 2
+        },
+        {
+          "id": "sex_l2_10",
+          "text": "上班／上课时看过黄片？",
+          "points": 2
+        },
+        {
+          "id": "sex_l2_11",
+          "text": "在别人的办公桌上做过爱？",
+          "points": 2
+        },
+        {
+          "id": "sex_l2_12",
+          "text": "同一个晚上亲过两个不同的人？",
+          "points": 2
+        },
+        {
+          "id": "sex_l2_13",
+          "text": "大白天发过非常露骨的消息？",
+          "points": 2
+        },
+        {
+          "id": "sex_l2_14",
+          "text": "喜欢过同事？",
+          "points": 2
+        }
+      ],
+      "level1": [
+        {
+          "id": "sex_l1_1",
+          "text": "发生过性行为？",
+          "points": 1
+        },
+        {
+          "id": "sex_l1_2",
+          "text": "做过前戏？",
+          "points": 1
+        },
+        {
+          "id": "sex_l1_3",
+          "text": "帮别人自慰过？",
+          "points": 1
+        },
+        {
+          "id": "sex_l1_4",
+          "text": "有过现在很后悔的性关系？",
+          "points": 1
+        },
+        {
+          "id": "sex_l1_5",
+          "text": "亲过伴侣以外的人？",
+          "points": 1
+        },
+        {
+          "id": "sex_l1_6",
+          "text": "看过黄片？",
+          "points": 1
+        },
+        {
+          "id": "sex_l1_7",
+          "text": "和朋友聊过自己的性生活？",
+          "points": 1
+        },
+        {
+          "id": "sex_l1_8",
+          "text": "没做避孕就发生关系？",
+          "points": 1
+        },
+        {
+          "id": "sex_l1_9",
+          "text": "和交友软件上认识的人约会过？",
+          "points": 1
+        },
+        {
+          "id": "sex_l1_10",
+          "text": "同一个晚上亲过两个不同的人？",
+          "points": 1
+        }
+      ]
+    },
+    "drugs": {
+      "level5": [
+        {
+          "id": "drugs_l5_1",
+          "text": "吸食过量出过事？",
+          "points": 5
+        },
+        {
+          "id": "drugs_l5_2",
+          "text": "嗨了还开车？",
+          "points": 5
+        },
+        {
+          "id": "drugs_l5_3",
+          "text": "用鼻子吸食过什么东西？",
+          "points": 5
+        },
+        {
+          "id": "drugs_l5_4",
+          "text": "为了买药偷过东西？",
+          "points": 5
+        },
+        {
+          "id": "drugs_l5_5",
+          "text": "用过来路不明的实验性药物？",
+          "points": 5
+        },
+        {
+          "id": "drugs_l5_6",
+          "text": "看东西重影了还开车？",
+          "points": 5
+        },
+        {
+          "id": "drugs_l5_7",
+          "text": "注射过毒品？",
+          "points": 5
+        },
+        {
+          "id": "drugs_l5_8",
+          "text": "因为嗑药把命都搭进去过？",
+          "points": 5
+        },
+        {
+          "id": "drugs_l5_9",
+          "text": "需要去戒断治疗？",
+          "points": 5
+        },
+        {
+          "id": "drugs_l5_10",
+          "text": "一个人独自嗑过药？",
+          "points": 5
+        },
+        {
+          "id": "drugs_l5_11",
+          "text": "因为狂欢一夜进过急诊？",
+          "points": 5
+        }
+      ],
+      "level4": [
+        {
+          "id": "drugs_l4_1",
+          "text": "有一整晚彻底断片？",
+          "points": 4
+        },
+        {
+          "id": "drugs_l4_2",
+          "text": "一个人喝闷酒？",
+          "points": 4
+        },
+        {
+          "id": "drugs_l4_3",
+          "text": "上班／上课时用过？",
+          "points": 4
+        },
+        {
+          "id": "drugs_l4_4",
+          "text": "卖过毒品？",
+          "points": 4
+        },
+        {
+          "id": "drugs_l4_5",
+          "text": "抽过不知道是什么的东西？",
+          "points": 4
+        },
+        {
+          "id": "drugs_l4_6",
+          "text": "吃过药丸？",
+          "points": 4
+        },
+        {
+          "id": "drugs_l4_7",
+          "text": "早餐就开始喝酒？",
+          "points": 4
+        },
+        {
+          "id": "drugs_l4_8",
+          "text": "经历过糟糕的致幻体验？",
+          "points": 4
+        },
+        {
+          "id": "drugs_l4_9",
+          "text": "用过合成毒品？",
+          "points": 4
+        },
+        {
+          "id": "drugs_l4_10",
+          "text": "故意把酒和药混着来？",
+          "points": 4
+        },
+        {
+          "id": "drugs_l4_11",
+          "text": "当着父母的面抽过？",
+          "points": 4
+        },
+        {
+          "id": "drugs_l4_12",
+          "text": "用假身份证买过酒？",
+          "points": 4
+        },
+        {
+          "id": "drugs_l4_13",
+          "text": "至少试过一次硬性毒品？",
+          "points": 4
+        },
+        {
+          "id": "drugs_l4_14",
+          "text": "因为宿醉旷过一天工？",
+          "points": 4
+        }
+      ],
+      "level3": [
+        {
+          "id": "drugs_l3_1",
+          "text": "在夜店／网约车里吐过？",
+          "points": 3
+        },
+        {
+          "id": "drugs_l3_2",
+          "text": "没有工具也硬要卷一根？",
+          "points": 3
+        },
+        {
+          "id": "drugs_l3_3",
+          "text": "偷喝过父母的酒？",
+          "points": 3
+        },
+        {
+          "id": "drugs_l3_4",
+          "text": "在父母面前嗨过？",
+          "points": 3
+        },
+        {
+          "id": "drugs_l3_5",
+          "text": "在大街上对着瓶口喝酒？",
+          "points": 3
+        },
+        {
+          "id": "drugs_l3_6",
+          "text": "吐在自己或别人身上？",
+          "points": 3
+        },
+        {
+          "id": "drugs_l3_7",
+          "text": "被人强行请出过酒吧或夜店？",
+          "points": 3
+        },
+        {
+          "id": "drugs_l3_8",
+          "text": "在公共场所的厕所里抽过烟？",
+          "points": 3
+        },
+        {
+          "id": "drugs_l3_9",
+          "text": "向亲近的人隐瞒过自己的用量？",
+          "points": 3
+        },
+        {
+          "id": "drugs_l3_10",
+          "text": "重要场合之前先来一口？",
+          "points": 3
+        },
+        {
+          "id": "drugs_l3_11",
+          "text": "混着喝到自己都后悔？",
+          "points": 3
+        },
+        {
+          "id": "drugs_l3_12",
+          "text": "喝完酒还开车？",
+          "points": 3
+        }
+      ],
+      "level2": [
+        {
+          "id": "drugs_l2_1",
+          "text": "纯粹为了面子干过一杯？",
+          "points": 2
+        },
+        {
+          "id": "drugs_l2_2",
+          "text": "因为喝多了吐在马桶里？",
+          "points": 2
+        },
+        {
+          "id": "drugs_l2_3",
+          "text": "醉到需要别人给你盖被子？",
+          "points": 2
+        },
+        {
+          "id": "drugs_l2_4",
+          "text": "喝了别人剩下的酒？",
+          "points": 2
+        },
+        {
+          "id": "drugs_l2_5",
+          "text": "一口闷过一整杯？",
+          "points": 2
+        },
+        {
+          "id": "drugs_l2_6",
+          "text": "醒来完全不知道自己在哪？",
+          "points": 2
+        },
+        {
+          "id": "drugs_l2_7",
+          "text": "在公共场合吐过？",
+          "points": 2
+        },
+        {
+          "id": "drugs_l2_8",
+          "text": "狂欢时把手机弄丢了？",
+          "points": 2
+        },
+        {
+          "id": "drugs_l2_9",
+          "text": "把酒和药一起吃？",
+          "points": 2
+        },
+        {
+          "id": "drugs_l2_10",
+          "text": "喝到站不住摔倒？",
+          "points": 2
+        },
+        {
+          "id": "drugs_l2_11",
+          "text": "为了壮胆先喝一杯？",
+          "points": 2
+        },
+        {
+          "id": "drugs_l2_12",
+          "text": "抽过大麻烟？",
+          "points": 2
+        }
+      ],
+      "level1": [
+        {
+          "id": "drugs_l1_1",
+          "text": "没到法定年龄就喝过酒？",
+          "points": 1
+        },
+        {
+          "id": "drugs_l1_2",
+          "text": "用过 Poppers？",
+          "points": 1
+        },
+        {
+          "id": "drugs_l1_3",
+          "text": "抽过大麻烟？",
+          "points": 1
+        },
+        {
+          "id": "drugs_l1_4",
+          "text": "谎报过自己的用量？",
+          "points": 1
+        },
+        {
+          "id": "drugs_l1_5",
+          "text": "喝醉过？",
+          "points": 1
+        },
+        {
+          "id": "drugs_l1_6",
+          "text": "在厕所里睡着过？",
+          "points": 1
+        },
+        {
+          "id": "drugs_l1_7",
+          "text": "中午之前就喝了一杯？",
+          "points": 1
+        },
+        {
+          "id": "drugs_l1_8",
+          "text": "偷偷抽过烟？",
+          "points": 1
+        },
+        {
+          "id": "drugs_l1_9",
+          "text": "工作日毫无理由地喝酒？",
+          "points": 1
+        },
+        {
+          "id": "drugs_l1_10",
+          "text": "本来不抽烟，却在派对上抽了一根？",
+          "points": 1
+        }
+      ]
+    },
+    "morality": {
+      "level5": [
+        {
+          "id": "morality_l5_1",
+          "text": "搞过情感勒索？",
+          "points": 5
+        },
+        {
+          "id": "morality_l5_2",
+          "text": "明知故犯地毁掉了别人的人生？",
+          "points": 5
+        },
+        {
+          "id": "morality_l5_3",
+          "text": "把人揍了还毫无悔意？",
+          "points": 5
+        },
+        {
+          "id": "morality_l5_4",
+          "text": "为了自保出卖过朋友？",
+          "points": 5
+        },
+        {
+          "id": "morality_l5_5",
+          "text": "在宣誓／法庭上作过伪证？",
+          "points": 5
+        },
+        {
+          "id": "morality_l5_6",
+          "text": "让别人误以为发生过侵害事件？",
+          "points": 5
+        },
+        {
+          "id": "morality_l5_7",
+          "text": "趁人一时无自理能力时占过便宜？",
+          "points": 5
+        },
+        {
+          "id": "morality_l5_8",
+          "text": "让别人替你背锅？",
+          "points": 5
+        },
+        {
+          "id": "morality_l5_9",
+          "text": "干过一次数额很大的偷窃？",
+          "points": 5
+        },
+        {
+          "id": "morality_l5_10",
+          "text": "用照片或视频勒索过别人？",
+          "points": 5
+        },
+        {
+          "id": "morality_l5_11",
+          "text": "为了自己的好处辜负过亲近的人的信任？",
+          "points": 5
+        },
+        {
+          "id": "morality_l5_12",
+          "text": "让别人替你顶罪？",
+          "points": 5
+        }
+      ],
+      "level4": [
+        {
+          "id": "morality_l4_1",
+          "text": "背叛过一个很好的朋友？",
+          "points": 4
+        },
+        {
+          "id": "morality_l4_2",
+          "text": "打过伴侣？",
+          "points": 4
+        },
+        {
+          "id": "morality_l4_3",
+          "text": "让人显得像个疯子？",
+          "points": 4
+        },
+        {
+          "id": "morality_l4_4",
+          "text": "编造过恶毒的谣言？",
+          "points": 4
+        },
+        {
+          "id": "morality_l4_5",
+          "text": "匿名举报过同事？",
+          "points": 4
+        },
+        {
+          "id": "morality_l4_6",
+          "text": "幸灾乐祸过？",
+          "points": 4
+        },
+        {
+          "id": "morality_l4_7",
+          "text": "故意把别人弄哭？",
+          "points": 4
+        },
+        {
+          "id": "morality_l4_8",
+          "text": "骚扰过别人？",
+          "points": 4
+        },
+        {
+          "id": "morality_l4_9",
+          "text": "偷过一大笔钱？",
+          "points": 4
+        },
+        {
+          "id": "morality_l4_10",
+          "text": "故意当众羞辱别人？",
+          "points": 4
+        },
+        {
+          "id": "morality_l4_11",
+          "text": "破坏过别人的感情？",
+          "points": 4
+        },
+        {
+          "id": "morality_l4_12",
+          "text": "冒用身份骗过人？",
+          "points": 4
+        },
+        {
+          "id": "morality_l4_13",
+          "text": "在店里偷过东西？",
+          "points": 4
+        },
+        {
+          "id": "morality_l4_14",
+          "text": "向伴侣谎报过自己的行踪？",
+          "points": 4
+        }
+      ],
+      "level3": [
+        {
+          "id": "morality_l3_1",
+          "text": "为了追人编造过自己的过去？",
+          "points": 3
+        },
+        {
+          "id": "morality_l3_2",
+          "text": "为了约会放朋友鸽子？",
+          "points": 3
+        },
+        {
+          "id": "morality_l3_3",
+          "text": "在工作中隐瞒过重大失误？",
+          "points": 3
+        },
+        {
+          "id": "morality_l3_4",
+          "text": "偷过亲近的人的东西？",
+          "points": 3
+        },
+        {
+          "id": "morality_l3_5",
+          "text": "当众贬低过别人？",
+          "points": 3
+        },
+        {
+          "id": "morality_l3_6",
+          "text": "纯粹因为懒就断了一段友情？",
+          "points": 3
+        },
+        {
+          "id": "morality_l3_7",
+          "text": "纯粹因为赌气而拒绝帮忙？",
+          "points": 3
+        },
+        {
+          "id": "morality_l3_8",
+          "text": "嘲笑过身心有障碍的人？",
+          "points": 3
+        },
+        {
+          "id": "morality_l3_9",
+          "text": "被警方拘留过？",
+          "points": 3
+        },
+        {
+          "id": "morality_l3_10",
+          "text": "说过言不由衷的「我爱你」？",
+          "points": 3
+        },
+        {
+          "id": "morality_l3_11",
+          "text": "把别人的功劳算到自己头上？",
+          "points": 3
+        },
+        {
+          "id": "morality_l3_12",
+          "text": "在感情上误导过别人？",
+          "points": 3
+        },
+        {
+          "id": "morality_l3_13",
+          "text": "用内部信息为自己牟利？",
+          "points": 3
+        },
+        {
+          "id": "morality_l3_14",
+          "text": "偷看过别人的消息？",
+          "points": 3
+        },
+        {
+          "id": "morality_l3_15",
+          "text": "约会几次后就把人晾着不理？",
+          "points": 3
+        }
+      ],
+      "level2": [
+        {
+          "id": "morality_l2_1",
+          "text": "面试时撒过谎？",
+          "points": 2
+        },
+        {
+          "id": "morality_l2_2",
+          "text": "对正在受苦的人视而不见？",
+          "points": 2
+        },
+        {
+          "id": "morality_l2_3",
+          "text": "设局让朋友挨罚？",
+          "points": 2
+        },
+        {
+          "id": "morality_l2_4",
+          "text": "嘲笑过别人的倒霉事？",
+          "points": 2
+        },
+        {
+          "id": "morality_l2_5",
+          "text": "被警察抓过？",
+          "points": 2
+        },
+        {
+          "id": "morality_l2_6",
+          "text": "收留过来路不明的赃物？",
+          "points": 2
+        },
+        {
+          "id": "morality_l2_7",
+          "text": "为了逃避责任撒谎？",
+          "points": 2
+        },
+        {
+          "id": "morality_l2_8",
+          "text": "稍微用过一点情感施压？",
+          "points": 2
+        },
+        {
+          "id": "morality_l2_9",
+          "text": "坐公共交通逃过票？",
+          "points": 2
+        },
+        {
+          "id": "morality_l2_10",
+          "text": "为了打折撒过谎？",
+          "points": 2
+        }
+      ],
+      "level1": [
+        {
+          "id": "morality_l1_1",
+          "text": "为了避免麻烦撒过谎？",
+          "points": 1
+        },
+        {
+          "id": "morality_l1_2",
+          "text": "编借口把人晾着？",
+          "points": 1
+        },
+        {
+          "id": "morality_l1_3",
+          "text": "删过消息来掩饰什么？",
+          "points": 1
+        },
+        {
+          "id": "morality_l1_4",
+          "text": "该道歉的话你咽了回去？",
+          "points": 1
+        },
+        {
+          "id": "morality_l1_5",
+          "text": "无视过街头的流浪者？",
+          "points": 1
+        },
+        {
+          "id": "morality_l1_6",
+          "text": "装作在认真听？",
+          "points": 1
+        },
+        {
+          "id": "morality_l1_7",
+          "text": "把不是自己做的事揽到自己头上？",
+          "points": 1
+        },
+        {
+          "id": "morality_l1_8",
+          "text": "在学校作过弊？",
+          "points": 1
+        },
+        {
+          "id": "morality_l1_9",
+          "text": "假装喜欢一份其实很讨厌的礼物？",
+          "points": 1
+        },
+        {
+          "id": "morality_l1_10",
+          "text": "谎报过年龄？",
+          "points": 1
+        }
+      ],
+      "levelBonus": [
+        {
+          "id": "morality_bonus_1",
+          "text": "为公益组织工作过？",
+          "points": -1
+        },
+        {
+          "id": "morality_bonus_2",
+          "text": "给慈善机构捐过钱？",
+          "points": -1
+        },
+        {
+          "id": "morality_bonus_3",
+          "text": "不求回报地帮过别人？",
+          "points": -1
+        },
+        {
+          "id": "morality_bonus_4",
+          "text": "主动承认了本可以隐瞒的错误？",
+          "points": -1
+        }
+      ]
+    },
+    "hygiene": {
+      "level5": [
+        {
+          "id": "hygiene_l5_1",
+          "text": "在不该拉的地方拉过？",
+          "points": 5
+        },
+        {
+          "id": "hygiene_l5_2",
+          "text": "用脏东西清理身体或自慰？",
+          "points": 5
+        },
+        {
+          "id": "hygiene_l5_3",
+          "text": "「就是想试试」而舔／闻自己的分泌物？",
+          "points": 5
+        },
+        {
+          "id": "hygiene_l5_4",
+          "text": "故意碰过自己或别人的排泄物？",
+          "points": 5
+        },
+        {
+          "id": "hygiene_l5_5",
+          "text": "喜欢挤别人发炎的痘？",
+          "points": 5
+        },
+        {
+          "id": "hygiene_l5_6",
+          "text": "放屁放出了「事故」？",
+          "points": 5
+        },
+        {
+          "id": "hygiene_l5_7",
+          "text": "吃过掉在地上的东西？",
+          "points": 5
+        },
+        {
+          "id": "hygiene_l5_8",
+          "text": "憋大小便憋了好几天？",
+          "points": 5
+        },
+        {
+          "id": "hygiene_l5_9",
+          "text": "把脏内裤翻个面继续穿？",
+          "points": 5
+        },
+        {
+          "id": "hygiene_l5_10",
+          "text": "在人多的公共场合故意放屁？",
+          "points": 5
+        }
+      ],
+      "level4": [
+        {
+          "id": "hygiene_l4_1",
+          "text": "故意闻自己的脏内裤或臭袜子？",
+          "points": 4
+        },
+        {
+          "id": "hygiene_l4_2",
+          "text": "故意好几天不洗澡？",
+          "points": 4
+        },
+        {
+          "id": "hygiene_l4_3",
+          "text": "意识到自己有口臭？",
+          "points": 4
+        },
+        {
+          "id": "hygiene_l4_4",
+          "text": "把已经穿脏的内裤又穿了一次？",
+          "points": 4
+        },
+        {
+          "id": "hygiene_l4_5",
+          "text": "抠完鼻子没想太多就到处摸？",
+          "points": 4
+        },
+        {
+          "id": "hygiene_l4_6",
+          "text": "在泳池里尿过？",
+          "points": 4
+        },
+        {
+          "id": "hygiene_l4_7",
+          "text": "一整周穿同一套衣服？",
+          "points": 4
+        },
+        {
+          "id": "hygiene_l4_8",
+          "text": "东西掉地上了捡起来接着吃？",
+          "points": 4
+        },
+        {
+          "id": "hygiene_l4_9",
+          "text": "清醒状态下在公共场合尿过？",
+          "points": 4
+        },
+        {
+          "id": "hygiene_l4_10",
+          "text": "闻一下衣服判断还能不能穿，然后就穿了？",
+          "points": 4
+        },
+        {
+          "id": "hygiene_l4_11",
+          "text": "一个多月没换过床单还照睡？",
+          "points": 4
+        }
+      ],
+      "level3": [
+        {
+          "id": "hygiene_l3_1",
+          "text": "把指甲缝里的陈年泥抠出来？",
+          "points": 3
+        },
+        {
+          "id": "hygiene_l3_2",
+          "text": "睡在脏床单上，心想「明天再换」？",
+          "points": 3
+        },
+        {
+          "id": "hygiene_l3_3",
+          "text": "用香水／止汗剂掩盖真实的味道？",
+          "points": 3
+        },
+        {
+          "id": "hygiene_l3_4",
+          "text": "和别人共用过牙刷？",
+          "points": 3
+        },
+        {
+          "id": "hygiene_l3_5",
+          "text": "超过一个月没换床单？",
+          "points": 3
+        },
+        {
+          "id": "hygiene_l3_6",
+          "text": "用浴室里的杯子喝过水？",
+          "points": 3
+        },
+        {
+          "id": "hygiene_l3_7",
+          "text": "在地上反复吐痰？",
+          "points": 3
+        },
+        {
+          "id": "hygiene_l3_8",
+          "text": "上完厕所忘了洗手？",
+          "points": 3
+        },
+        {
+          "id": "hygiene_l3_9",
+          "text": "同一把牙刷用了一年以上？",
+          "points": 3
+        }
+      ],
+      "level2": [
+        {
+          "id": "hygiene_l2_1",
+          "text": "因为「穿着舒服」而留着汗湿的衣服？",
+          "points": 2
+        },
+        {
+          "id": "hygiene_l2_2",
+          "text": "运动完不洗澡？",
+          "points": 2
+        },
+        {
+          "id": "hygiene_l2_3",
+          "text": "没洗手就吃东西？",
+          "points": 2
+        },
+        {
+          "id": "hygiene_l2_4",
+          "text": "连着两天穿同一双袜子？",
+          "points": 2
+        },
+        {
+          "id": "hygiene_l2_5",
+          "text": "咳嗽时用手挡而不是用手肘？",
+          "points": 2
+        },
+        {
+          "id": "hygiene_l2_6",
+          "text": "东西掉地上五秒内捡起来照吃？",
+          "points": 2
+        },
+        {
+          "id": "hygiene_l2_7",
+          "text": "把地上捡起来的穿过的袜子又穿上？",
+          "points": 2
+        }
+      ],
+      "level1": [
+        {
+          "id": "hygiene_l1_1",
+          "text": "在被窝里放过屁？",
+          "points": 1
+        },
+        {
+          "id": "hygiene_l1_2",
+          "text": "赶时间那天忘了涂止汗剂？",
+          "points": 1
+        },
+        {
+          "id": "hygiene_l1_3",
+          "text": "挤过痘？",
+          "points": 1
+        },
+        {
+          "id": "hygiene_l1_4",
+          "text": "闻一下确认是不是「味道太大」？",
+          "points": 1
+        },
+        {
+          "id": "hygiene_l1_5",
+          "text": "故意睡前不刷牙？",
+          "points": 1
+        },
+        {
+          "id": "hygiene_l1_6",
+          "text": "喜欢闻自己放的屁？",
+          "points": 1
+        },
+        {
+          "id": "hygiene_l1_7",
+          "text": "闻一下衣服看还干不干净？",
+          "points": 1
+        },
+        {
+          "id": "hygiene_l1_8",
+          "text": "不穿袜子直接穿鞋？",
+          "points": 1
+        },
+        {
+          "id": "hygiene_l1_9",
+          "text": "连着两天穿同一条内裤？",
+          "points": 1
+        },
+        {
+          "id": "hygiene_l1_10",
+          "text": "纯粹因为懒而不洗澡？",
+          "points": 1
+        }
+      ]
+    }
+  },
+  "ui": {
+    "title": "纯洁度\n测试",
+    "tagline": "你身上背了多少「罪」？",
+    "modalTitle": "纯洁度测试",
+    "start": "开始游戏 ✨",
+    "steps": [
+      {
+        "n": "1",
+        "title": "读出问题",
+        "desc": "你做过吗？老实点（或者不老实也行）。"
+      },
+      {
+        "n": "2",
+        "title": "滑动选「有」或「没有」",
+        "desc": "右 = 有过，左 = 没有。每个「有过」都会加不纯度。"
+      },
+      {
+        "n": "3",
+        "title": "↓ 超级 ×2",
+        "desc": "这题简直是为某人量身定做？向下滑：不纯度惩罚翻倍 😈"
+      },
+      {
+        "n": "4",
+        "title": "结果",
+        "desc": "最终得分揭晓你的纯洁度……或者说不纯度 😈"
+      }
+    ],
+    "levelLabel": "问题等级",
+    "levelHelper": "只出现所选等级以内的问题",
+    "themeLabel": "主题分布",
+    "themeTotal": "共 {{count}} 道题",
+    "hint": "← 没有 | 有过 →",
+    "rulesBtn": "纯洁度测试"
+  }
+}

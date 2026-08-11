@@ -8,6 +8,7 @@ import {
 } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React, { useEffect, useRef, useState } from 'react';
+import { StatusBar } from 'expo-status-bar';
 import { ActivityIndicator, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
@@ -106,6 +107,9 @@ function ThemedAppNavigator() {
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+      {/* Android draws edge-to-edge, so the status bar sits over the cream
+          background and needs dark icons — iOS already picks these. */}
+      <StatusBar style="dark" />
       <NavigationContainer
         ref={navigationRef}
         theme={DefaultTheme}

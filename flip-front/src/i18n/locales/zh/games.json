@@ -1,0 +1,69 @@
+{
+  "selection": {
+    "title": "选择一个游戏",
+    "subtitle": "{{count}} 位玩家 · 准备好出洋相了",
+    "surprise": "随机来一个",
+    "minPlayersHint": "这个游戏至少需要 {{min}} 位玩家（{{label}}）。",
+    "maxPlayersHint": "这个游戏最多支持 {{max}} 位玩家（{{label}}）。"
+  },
+  "labels": {
+    "players": {
+      "redFlag": "1 人以上",
+      "casting": "3–11 人",
+      "apero": "2 人以上",
+      "medusa": "5 人以上",
+      "paranoia": "4 人以上",
+      "cameleon": "3 人以上",
+      "leftRight": "1 人以上",
+      "purityTest": "1 人以上",
+      "theBomb": "3 人以上"
+    },
+    "duration": {
+      "redFlag": "5 分钟",
+      "casting": "20 分钟",
+      "apero": "20 分钟",
+      "medusa": "10 分钟",
+      "paranoia": "15 分钟",
+      "cameleon": "15 分钟",
+      "leftRight": "10 分钟",
+      "purityTest": "5 分钟",
+      "theBomb": "10 分钟"
+    }
+  },
+  "purityTest": {
+    "title": "纯洁度测试",
+    "tagline": "你身上背了多少「罪」？"
+  },
+  "redFlag": {
+    "title": "你是「红旗」吗？",
+    "tagline": "你的前任们做梦都想让你做这个测试"
+  },
+  "casting": {
+    "title": "试镜现场",
+    "tagline": "把这场戏演出来，越夸张越好"
+  },
+  "apero": {
+    "title": "开胃酒",
+    "tagline": "猜猜庄家的牌"
+  },
+  "medusa": {
+    "title": "美杜莎",
+    "tagline": "抬头……别对上眼神"
+  },
+  "paranoia": {
+    "title": "疑心病",
+    "tagline": "谁说了你的名字……为什么？"
+  },
+  "cameleon": {
+    "title": "变色龙",
+    "tagline": "揪出卧底"
+  },
+  "leftRight": {
+    "title": "左派还是右派",
+    "tagline": "把这句话放到政治光谱上"
+  },
+  "theBomb": {
+    "title": "炸弹",
+    "tagline": "在爆炸前传出去"
+  }
+}

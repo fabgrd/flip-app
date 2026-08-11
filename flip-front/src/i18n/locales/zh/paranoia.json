@@ -1,0 +1,624 @@
+{
+  "title": "疑心病",
+  "tagline": "谁说了你的名字……为什么？",
+  "ui": {
+    "rules": {
+      "title": "疑心病",
+      "tagline": "谁说了你的名字……为什么？",
+      "start": "开始游戏 👁️",
+      "steps": [
+        {
+          "n": "1",
+          "title": "提问者看到一个问题",
+          "desc": "比如「谁在监狱里最先崩溃？」。他要保密。"
+        },
+        {
+          "n": "2",
+          "title": "被问的人看到问题并作答",
+          "desc": "他大声说出一个人的名字。"
+        },
+        {
+          "n": "3",
+          "title": "其他人只听到答案，听不到问题",
+          "desc": "全场慌了：为什么是我？"
+        },
+        {
+          "n": "4",
+          "title": "抛硬币——公布还是保密",
+          "desc": "如果被问的人输了，问题就会公开给所有人。"
+        }
+      ]
+    },
+    "handoff": {
+      "roleLabel": "身份 · {{role}}",
+      "givePhone": "把手机交给 {{name}}",
+      "ready": "是我 —— 显示",
+      "subtitleQuestioner": "你会看到一个问题。要保密。",
+      "subtitleTarget": "有个问题跟你有关。你会看到是哪一个。"
+    },
+    "questionShow": {
+      "chipQuestioner": "提问者 · {{name}}",
+      "secretLabel": "你的秘密问题",
+      "askTo": "你要问的人是",
+      "targetLabel": "目标",
+      "hint": "大声把问题问出去……但别把题目念出来 😶",
+      "passToTarget": "把手机传给 {{name}}"
+    },
+    "targetPick": {
+      "chipTarget": "目标 · {{name}}",
+      "questionLabel": "问题",
+      "pickTitle": "大声说出你的答案。",
+      "pickSub": "然后在 App 里选那个人。",
+      "coinFlip": "抛硬币 →"
+    },
+    "coinFlip": {
+      "chipTarget": "目标 · {{name}}",
+      "titleSecretKept": "秘密保住了 🤫",
+      "titleRevealed": "被公开了…… 😬",
+      "titleFlip": "抛硬币！",
+      "titleChoose": "选一面",
+      "sidePile": "正面",
+      "sideFace": "反面",
+      "flipCta": "抛 🪙",
+      "flipping": "转啊转……",
+      "seeVerdict": "查看结果 →"
+    },
+    "reveal": {
+      "badgeKept": "🤫 秘密保住",
+      "badgeRevealed": "😈 已公开",
+      "verdictKept": "逃过一劫。",
+      "verdictRevealed": "被抓包！",
+      "questionWas": "问题是",
+      "answerLabel": "答案 →",
+      "keptTextBefore": "把问题烂在肚子里。大家依然一头雾水。",
+      "keptTextAfter": " 可以在旁边偷着乐了。",
+      "drink": "{{name}} 喝 {{count}} 口{{plural}}",
+      "next": "下一轮 →"
+    },
+    "end": {
+      "badge": "游戏结束",
+      "title": "秘密\n 总结 🕵️",
+      "kept": "保密",
+      "revealed": "公开",
+      "statusRevealed": "被抓包",
+      "statusKept": "保密",
+      "answerShort": " · 答 ",
+      "playAgain": "再玩一局",
+      "backToHub": "返回大厅"
+    },
+    "roles": {
+      "questioner": "提问者",
+      "target": "目标"
+    }
+  },
+  "questions": [
+    {
+      "id": "p_001",
+      "text": "谁会成为最好的父母？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_002",
+      "text": "谁的音乐品味最差？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_003",
+      "text": "你最想和谁一起公路旅行？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_004",
+      "text": "谁撒谎最厉害？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_005",
+      "text": "谁喜欢的人最让人尴尬？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_006",
+      "text": "谁在监狱里最先崩溃？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_007",
+      "text": "谁会是最糟糕的前任？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_008",
+      "text": "谁的蜕变最惊人？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_009",
+      "text": "谁能在丧尸末日活下来？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_010",
+      "text": "谁柜子里的骷髅最多（黑历史最多）？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_011",
+      "text": "谁其实心最狠？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_012",
+      "text": "谁最适合上真人秀？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_013",
+      "text": "谁会是最糟糕的室友？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_014",
+      "text": "谁最爱吃醋？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_015",
+      "text": "谁分手后会疯狂发消息？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_016",
+      "text": "谁最爱小题大做？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_017",
+      "text": "谁最容易被收买？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_018",
+      "text": "谁能把任何东西卖给任何人？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_019",
+      "text": "谁会毫无理由地玩消失？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_020",
+      "text": "谁最可能因为丢人的理由在网上爆红？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_021",
+      "text": "谁最容易一见钟情？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_022",
+      "text": "谁最可能喝多了去纹身？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_023",
+      "text": "谁最可能不小心加入邪教？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_024",
+      "text": "谁生起气来最吓人？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_025",
+      "text": "谁会装病来逃避事情？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_026",
+      "text": "谁能忘掉自己的生日？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_027",
+      "text": "谁最可能偷偷关注前任？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_028",
+      "text": "谁最适合当劫匪？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_029",
+      "text": "谁最可能在局子里过一夜？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_030",
+      "text": "谁一个人在荒岛上撑得最短？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_031",
+      "text": "谁最可能一不小心传出谣言？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_032",
+      "text": "谁最适合被包养？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_033",
+      "text": "谁最可能一时冲动就结婚？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_034",
+      "text": "谁会为一个停车位跟人吵架？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_035",
+      "text": "谁的笑声最有传染性？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_036",
+      "text": "谁能消失三天不回消息？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_037",
+      "text": "谁的婚礼致辞会最灾难？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_038",
+      "text": "谁会为了蹭热度和明星谈恋爱？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_039",
+      "text": "谁最可能在夜店里哭出来？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_040",
+      "text": "谁最可能一不小心成了网红？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_041",
+      "text": "谁在不自觉中最会 PUA 别人？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_042",
+      "text": "谁能一天之内毁掉一次度假？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_043",
+      "text": "谁最可能因为离谱的理由被开除？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_044",
+      "text": "谁有花不完的钱会最危险？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_045",
+      "text": "谁可能私下有双重身份？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_046",
+      "text": "谁在荒野求生节目里表现最差？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_047",
+      "text": "谁可能在派对上把朋友落下不管？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_048",
+      "text": "谁的阴阳怪气最吓人？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_049",
+      "text": "谁最可能发出让自己后悔的消息？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_050",
+      "text": "谁可能一夜爆红？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_051",
+      "text": "谁会第一个进监狱？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_052",
+      "text": "谁在荒岛上最先崩溃？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_053",
+      "text": "谁的秘密最多？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_054",
+      "text": "谁会一晚上把钱花光？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_055",
+      "text": "谁会为了大冒险去亲陌生人？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_056",
+      "text": "谁看迪士尼电影会哭？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_057",
+      "text": "谁会忘记好朋友的生日？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_058",
+      "text": "谁最快发财？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_059",
+      "text": "谁最适合当间谍？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_060",
+      "text": "谁会为了约会放朋友鸽子？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_061",
+      "text": "谁最可能出名？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_062",
+      "text": "谁每两分钟就看一次手机？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_063",
+      "text": "在这群人里打起来谁会赢？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_064",
+      "text": "谁会第一个结婚？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_065",
+      "text": "谁会把你最丢人的事讲给所有人听？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_066",
+      "text": "这个月谁偷看过前任的动态？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_067",
+      "text": "谁在派对上自拍最多？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_068",
+      "text": "谁可能一夜之间变成网红？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_069",
+      "text": "谁最容易坠入爱河？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_070",
+      "text": "谁会毫不犹豫地玩消失？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_071",
+      "text": "谁会是最爱吃醋的另一半？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_072",
+      "text": "谁能一周不说话？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_073",
+      "text": "谁会爱上同事？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_074",
+      "text": "谁唱 K 最厉害？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_075",
+      "text": "谁敢现在就给暗恋的人发消息？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_076",
+      "text": "谁喝多了会做最蠢的事？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_077",
+      "text": "谁手机里存着最要命的截图？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_078",
+      "text": "和谁一起旅行最难受？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_079",
+      "text": "谁会为了钱背叛大家？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_080",
+      "text": "谁哭过是为了博关注？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_081",
+      "text": "谁会是最不称职的伴郎／伴娘？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_082",
+      "text": "谁会把最后一块钱给朋友？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_083",
+      "text": "谁有可能当上总统？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_084",
+      "text": "谁最藏不住秘密？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_085",
+      "text": "谁会变成最抠门的人？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_086",
+      "text": "谁最不懂得拒绝别人？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_087",
+      "text": "谁会在凌晨三点给前任发消息？",
+      "tier": "free",
+      "tags": []
+    },
+    {
+      "id": "p_088",
+      "text": "谁没了手机会最崩溃？",
+      "tier": "free",
+      "tags": []
+    }
+  ]
+}

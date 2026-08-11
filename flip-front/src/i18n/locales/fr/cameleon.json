@@ -14,7 +14,8 @@
     "mrWhite": "Mr White",
     "theme": "Thème",
     "themeHint": "Choisis l'ambiance avant de lancer la manche.",
-    "needAtLeastOneImpostor": "Ajoute au moins 1 imposteur (Undercover ou Mr White) pour lancer la partie."
+    "needAtLeastOneImpostor": "Ajoute au moins 1 imposteur (Undercover ou Mr White) pour lancer la partie.",
+    "themes": "Thèmes"
   },
   "actions": {
     "start": "Démarrer",
@@ -46,7 +47,9 @@
   },
   "results": {
     "title": "Résultats",
-    "subtitle": "Rôles et mots"
+    "subtitle": "Rôles et mots",
+    "badgeWin": "🎉 BIEN VU",
+    "badgeLose": "😈 RATÉ"
   },
   "outcome": {
     "civiliansWin": "Les civils gagnent !",

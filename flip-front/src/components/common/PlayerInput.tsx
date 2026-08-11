@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Alert, StyleSheet, Text, TextInput, View } from 'react-native';
-import Animated, { useAnimatedStyle, useSharedValue, withRepeat, withSequence, withTiming } from 'react-native-reanimated';
-import { T } from '../../constants/flipTokens';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withSequence,
+  withTiming,
+} from 'react-native-reanimated';
+import { offsetShadow, T } from '../../constants/flipTokens';
 import { FlatChunkyButton } from './FlatChunkyButton';
 
 interface PlayerInputProps {
@@ -41,10 +47,7 @@ export function PlayerInput({ onAddPlayer, maxPlayers, currentPlayerCount }: Pla
   useEffect(() => {
     if (shouldPulse) {
       scale.value = withRepeat(
-        withSequence(
-          withTiming(1.07, { duration: 600 }),
-          withTiming(1, { duration: 600 }),
-        ),
+        withSequence(withTiming(1.07, { duration: 600 }), withTiming(1, { duration: 600 })),
         -1,
         false,
       );
@@ -102,11 +105,7 @@ const styles = StyleSheet.create({
     borderColor: T.ink,
     borderRadius: T.rMd,
     padding: 6,
-    shadowColor: T.ink,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 4,
+    ...offsetShadow(4),
   },
   inputRowDisabled: { opacity: 0.5 },
 

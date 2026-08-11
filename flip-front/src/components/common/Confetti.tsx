@@ -87,7 +87,7 @@ export function ConfettiBurst({ visible, count = 22 }: { visible: boolean; count
   if (!visible) return null;
 
   return (
-    <View pointerEvents="none" style={StyleSheet.absoluteFillObject}>
+    <View pointerEvents="none" style={StyleSheet.absoluteFill}>
       {pieces.map((p) => (
         <ConfettiPiece key={p.id} piece={p} visible={visible} />
       ))}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
-import { T } from '../../constants/flipTokens';
+import { noShadow, offsetShadow, T } from '../../constants/flipTokens';
 import { getPlayerBgColor, getPlayerTextColor } from '../../constants/playerColors';
 
 export function InitialAvatar({
@@ -38,11 +38,7 @@ export function InitialAvatar({
           borderRadius: radius,
           backgroundColor: resolvedBgColor,
           borderColor,
-          shadowColor: shadowColor ?? undefined,
-          shadowOffset: shadowColor ? { width: 6, height: 6 } : undefined,
-          shadowOpacity: shadowColor ? 1 : 0,
-          shadowRadius: shadowColor ? 0 : undefined,
-          elevation: shadowColor ? 6 : 0,
+          ...(shadowColor ? offsetShadow(6, shadowColor) : noShadow),
         },
         style,
       ]}

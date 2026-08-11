@@ -16,7 +16,7 @@ import {
   PlayersList,
 } from '../components';
 import { MAX_PLAYERS_GLOBAL, MIN_PLAYERS_GLOBAL } from '../constants';
-import { T } from '../constants/flipTokens';
+import { offsetShadow, T } from '../constants/flipTokens';
 import { usePlayers } from '../contexts/PlayersContext';
 import { useEntitlements } from '../entitlements';
 import { usePaywall } from '../paywall';
@@ -143,11 +143,7 @@ export function HomeScreen() {
         >
           {t('home:actions.startCta')}
         </ChunkyButton>
-        {!canStart && (
-          <Text style={styles.ctaHint}>
-            {t('home:addPlayers.minPlayers')}
-          </Text>
-        )}
+        {!canStart && <Text style={styles.ctaHint}>{t('home:addPlayers.minPlayers')}</Text>}
       </View>
     </SafeAreaView>
   );
@@ -183,11 +179,7 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     paddingHorizontal: 10,
     paddingVertical: 5,
-    shadowColor: T.ink,
-    shadowOffset: { width: 2, height: 2 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 2,
+    ...offsetShadow(2),
   },
   vipBadgeText: {
     color: T.ink,
@@ -249,11 +241,7 @@ const styles = StyleSheet.create({
     borderRadius: T.rMd,
     paddingVertical: 18,
     alignItems: 'center',
-    shadowColor: T.ink,
-    shadowOffset: { width: 5, height: 5 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 5,
+    ...offsetShadow(5),
   },
   ctaBtnDisabled: { opacity: 0.4 },
   ctaBtnText: { color: '#fff', fontSize: 18, fontWeight: '900', letterSpacing: -0.3 },

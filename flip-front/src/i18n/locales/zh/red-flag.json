@@ -1,0 +1,1028 @@
+{
+  "categories": [
+    {
+      "id": "stalker",
+      "name": "跟踪狂",
+      "color": "#FF5B3A"
+    },
+    {
+      "id": "manipulateur",
+      "name": "操控者",
+      "color": "#9B5BFF"
+    },
+    {
+      "id": "narcisse",
+      "name": "自恋狂",
+      "color": "#FFD23F"
+    },
+    {
+      "id": "drama",
+      "name": "戏精",
+      "color": "#E63946"
+    },
+    {
+      "id": "collant",
+      "name": "黏人精",
+      "color": "#FF8FB1"
+    }
+  ],
+  "questions": [
+    {
+      "id": "stk_2_1",
+      "text": "被前任拉黑后，用小号去看他的动态",
+      "category": "stalker",
+      "points": 2
+    },
+    {
+      "id": "stk_2_2",
+      "text": "分手当天就去社交平台上搜前任的新对象",
+      "category": "stalker",
+      "points": 2
+    },
+    {
+      "id": "stk_2_3",
+      "text": "第一次约会前先把对方 Google 一遍",
+      "category": "stalker",
+      "points": 2
+    },
+    {
+      "id": "stk_2_4",
+      "text": "看了朋友手机上没锁屏的消息",
+      "category": "stalker",
+      "points": 2
+    },
+    {
+      "id": "stk_2_5",
+      "text": "去看谁看过某人的动态，好判断他在不在线",
+      "category": "stalker",
+      "points": 2
+    },
+    {
+      "id": "stk_3_1",
+      "text": "凌晨三点扒暗恋对象的前任的社交账号",
+      "category": "stalker",
+      "points": 3
+    },
+    {
+      "id": "stk_3_2",
+      "text": "偷偷查伴侣的关注列表，看他有没有关注新账号",
+      "category": "stalker",
+      "points": 3
+    },
+    {
+      "id": "stk_3_3",
+      "text": "研究某人 WhatsApp 的最后在线时间，推测他到底在干嘛",
+      "category": "stalker",
+      "points": 3
+    },
+    {
+      "id": "stk_3_4",
+      "text": "借朋友的账号去看把你拉黑的人",
+      "category": "stalker",
+      "points": 3
+    },
+    {
+      "id": "stk_3_5",
+      "text": "同一个晚上在 LinkedIn、Facebook 和 Instagram 上把同一个人搜了个遍",
+      "category": "stalker",
+      "points": 3
+    },
+    {
+      "id": "stk_3_6",
+      "text": "刚认识当天就把对方的主页翻到了 2018 年",
+      "category": "stalker",
+      "points": 3
+    },
+    {
+      "id": "stk_4_1",
+      "text": "因为伴侣给陌生人的照片点了赞就跟他吵一架",
+      "category": "stalker",
+      "points": 4
+    },
+    {
+      "id": "stk_4_2",
+      "text": "要求随时随地都知道伴侣在哪",
+      "category": "stalker",
+      "points": 4
+    },
+    {
+      "id": "stk_4_3",
+      "text": "替别人决定甚至强行安排他参加派对穿什么",
+      "category": "stalker",
+      "points": 4
+    },
+    {
+      "id": "stk_4_4",
+      "text": "以「这是信任问题」为由索要伴侣的手机密码",
+      "category": "stalker",
+      "points": 4
+    },
+    {
+      "id": "stk_4_5",
+      "text": "注册小号在社交平台上监视某人",
+      "category": "stalker",
+      "points": 4
+    },
+    {
+      "id": "stk_4_6",
+      "text": "假装「刚好路过」他家附近，只为确认他真的在他说的地方",
+      "category": "stalker",
+      "points": 4
+    },
+    {
+      "id": "stk_5_1",
+      "text": "偷偷在伴侣手机上装了定位软件",
+      "category": "stalker",
+      "points": 5
+    },
+    {
+      "id": "stk_5_2",
+      "text": "未经允许翻看别人的日记或私信",
+      "category": "stalker",
+      "points": 5
+    },
+    {
+      "id": "stk_5_3",
+      "text": "分手后为了报复公开对方的私密信息",
+      "category": "stalker",
+      "points": 5
+    },
+    {
+      "id": "stk_5_4",
+      "text": "盗过别人的账号",
+      "category": "stalker",
+      "points": 5
+    },
+    {
+      "id": "stk_5_5",
+      "text": "为了验证自己的怀疑私自闯进别人家",
+      "category": "stalker",
+      "points": 5
+    },
+    {
+      "id": "man_2_1",
+      "text": "嘴上说「都听你的」，心里想的完全相反",
+      "category": "manipulateur",
+      "points": 2
+    },
+    {
+      "id": "man_2_5",
+      "text": "用短信或托朋友转告的方式结束一段感情",
+      "category": "manipulateur",
+      "points": 2
+    },
+    {
+      "id": "man_2_6",
+      "text": "一边说自己很忙，一边在社交平台上发动态",
+      "category": "manipulateur",
+      "points": 2
+    },
+    {
+      "id": "man_2_2",
+      "text": "装病或装忙，取消自己不想去的约",
+      "category": "manipulateur",
+      "points": 2
+    },
+    {
+      "id": "man_2_3",
+      "text": "谎报过自己前任的确切数量",
+      "category": "manipulateur",
+      "points": 2
+    },
+    {
+      "id": "man_2_4",
+      "text": "假装忘了某个承诺，好不用兑现",
+      "category": "manipulateur",
+      "points": 2
+    },
+    {
+      "id": "man_3_1",
+      "text": "故意几个小时不回消息，制造「被想念」的感觉",
+      "category": "manipulateur",
+      "points": 3
+    },
+    {
+      "id": "man_3_2",
+      "text": "吵架时把对方私下告诉你的秘密拿出来伤他",
+      "category": "manipulateur",
+      "points": 3
+    },
+    {
+      "id": "man_3_3",
+      "text": "编造一个朋友或追求者，让伴侣吃醋",
+      "category": "manipulateur",
+      "points": 3
+    },
+    {
+      "id": "man_3_4",
+      "text": "为了留住对方保证会改，结果一点没变",
+      "category": "manipulateur",
+      "points": 3
+    },
+    {
+      "id": "man_3_5",
+      "text": "用明显不对劲的语气说「我没事」",
+      "category": "manipulateur",
+      "points": 3
+    },
+    {
+      "id": "man_3_6",
+      "text": "夸大某件事或某种不适，博取同情",
+      "category": "manipulateur",
+      "points": 3
+    },
+    {
+      "id": "man_3_7",
+      "text": "只为留住人而承诺改变，然后什么也没做",
+      "category": "manipulateur",
+      "points": 3
+    },
+    {
+      "id": "man_3_8",
+      "text": "装可怜来逃避责任",
+      "category": "manipulateur",
+      "points": 3
+    },
+    {
+      "id": "man_4_1",
+      "text": "为了赢下争吵或达到目的而战术性地哭",
+      "category": "manipulateur",
+      "points": 4
+    },
+    {
+      "id": "man_4_2",
+      "text": "让对方因为跟朋友出去而不是陪你而内疚",
+      "category": "manipulateur",
+      "points": 4
+    },
+    {
+      "id": "man_4_3",
+      "text": "吵架时故意翻旧账，只为伤人",
+      "category": "manipulateur",
+      "points": 4
+    },
+    {
+      "id": "man_4_4",
+      "text": "向朋友复述争吵时，把事实改成对自己有利的版本",
+      "category": "manipulateur",
+      "points": 4
+    },
+    {
+      "id": "man_4_5",
+      "text": "让对方觉得是他「太敏感」，好让自己不用担责",
+      "category": "manipulateur",
+      "points": 4
+    },
+    {
+      "id": "man_4_6",
+      "text": "为了避免冲突而谎报自己的行踪",
+      "category": "manipulateur",
+      "points": 4
+    },
+    {
+      "id": "man_4_7",
+      "text": "吵架后用冷暴力惩罚对方",
+      "category": "manipulateur",
+      "points": 4
+    },
+    {
+      "id": "man_4_8",
+      "text": "吵架时让对方怀疑自己的记忆",
+      "category": "manipulateur",
+      "points": 4
+    },
+    {
+      "id": "man_5_1",
+      "text": "吵架时拿分手当作控制对方的手段",
+      "category": "manipulateur",
+      "points": 5
+    },
+    {
+      "id": "man_5_2",
+      "text": "让对方相信他的朋友们不安好心，慢慢把他孤立起来",
+      "category": "manipulateur",
+      "points": 5
+    },
+    {
+      "id": "man_5_3",
+      "text": "让对方相信某件真实发生过的事是他记错了",
+      "category": "manipulateur",
+      "points": 5
+    },
+    {
+      "id": "man_5_4",
+      "text": "用愧疚感把人绑在自己身边",
+      "category": "manipulateur",
+      "points": 5
+    },
+    {
+      "id": "man_5_5",
+      "text": "把一个谎重复到让它变成「事实」",
+      "category": "manipulateur",
+      "points": 5
+    },
+    {
+      "id": "nar_2_1",
+      "text": "别人刚说完自己的烦恼，不到 30 秒你就把话题拉回自己身上",
+      "category": "narcisse",
+      "points": 2
+    },
+    {
+      "id": "nar_2_2",
+      "text": "发头像前修图修了 20 多分钟",
+      "category": "narcisse",
+      "points": 2
+    },
+    {
+      "id": "nar_2_3",
+      "text": "发完动态后每五分钟就去看一次点赞数",
+      "category": "narcisse",
+      "points": 2
+    },
+    {
+      "id": "nar_2_4",
+      "text": "真心觉得自己是派对上穿得最好看的人",
+      "category": "narcisse",
+      "points": 2
+    },
+    {
+      "id": "nar_2_5",
+      "text": "状态糟透了也照样自拍",
+      "category": "narcisse",
+      "points": 2
+    },
+    {
+      "id": "nar_2_6",
+      "text": "为了让人刮目相看，谎报了自己的成就",
+      "category": "narcisse",
+      "points": 2
+    },
+    {
+      "id": "nar_3_1",
+      "text": "真心认为前任再也找不到比你更好的人",
+      "category": "narcisse",
+      "points": 3
+    },
+    {
+      "id": "nar_3_2",
+      "text": "分手后立刻换头像，让前任看看错过了什么",
+      "category": "narcisse",
+      "points": 3
+    },
+    {
+      "id": "nar_3_3",
+      "text": "明知道某个特定的人会看到才发那条动态",
+      "category": "narcisse",
+      "points": 3
+    },
+    {
+      "id": "nar_3_4",
+      "text": "故意晚点回，免得显得自己太闲",
+      "category": "narcisse",
+      "points": 3
+    },
+    {
+      "id": "nar_3_5",
+      "text": "故意让对方等，好显得自己更忙、更抢手",
+      "category": "narcisse",
+      "points": 3
+    },
+    {
+      "id": "nar_3_6",
+      "text": "为了显得更酷，把故事的细节改了",
+      "category": "narcisse",
+      "points": 3
+    },
+    {
+      "id": "nar_4_1",
+      "text": "约会结束后心想：这人根本配不上我",
+      "category": "narcisse",
+      "points": 4
+    },
+    {
+      "id": "nar_4_2",
+      "text": "发那种意有所指的动态，比如「有些人真该少说两句……」",
+      "category": "narcisse",
+      "points": 4
+    },
+    {
+      "id": "nar_4_3",
+      "text": "为了拍照效果花的心思，比真正享受这次出行还多",
+      "category": "narcisse",
+      "points": 4
+    },
+    {
+      "id": "nar_4_4",
+      "text": "因为那天觉得自己状态不够好而取消了约",
+      "category": "narcisse",
+      "points": 4
+    },
+    {
+      "id": "nar_4_5",
+      "text": "删掉点赞太少的帖子，以维护自己的形象",
+      "category": "narcisse",
+      "points": 4
+    },
+    {
+      "id": "nar_4_6",
+      "text": "明知道自己错了也不肯承认，因为怕影响形象",
+      "category": "narcisse",
+      "points": 4
+    },
+    {
+      "id": "nar_4_7",
+      "text": "要求对方拿你的照片当作爱你的证明",
+      "category": "narcisse",
+      "points": 4
+    },
+    {
+      "id": "nar_4_8",
+      "text": "仅仅因为「我是我」就觉得自己该被特殊对待",
+      "category": "narcisse",
+      "points": 4
+    },
+    {
+      "id": "nar_5_1",
+      "text": "认为前任离开你是因为嫉妒你的成功或潜力",
+      "category": "narcisse",
+      "points": 5
+    },
+    {
+      "id": "nar_5_2",
+      "text": "觉得自己在感情里就该被特殊对待，因为你实在太优秀",
+      "category": "narcisse",
+      "points": 5
+    },
+    {
+      "id": "nar_5_3",
+      "text": "让朋友们给你的前任们打分，好确认自己更值钱",
+      "category": "narcisse",
+      "points": 5
+    },
+    {
+      "id": "dra_2_1",
+      "text": "明知自己反应过激，还是发了那条生气的消息",
+      "category": "drama",
+      "points": 2
+    },
+    {
+      "id": "dra_2_2",
+      "text": "用明显不对劲的语气说「没事」，然后等着对方来追问",
+      "category": "drama",
+      "points": 2
+    },
+    {
+      "id": "dra_2_3",
+      "text": "为了一件客观上很小的事赌气超过一天",
+      "category": "drama",
+      "points": 2
+    },
+    {
+      "id": "dra_2_4",
+      "text": "为了引起注意，对一点小不爽反应极大",
+      "category": "drama",
+      "points": 2
+    },
+    {
+      "id": "dra_2_5",
+      "text": "对方其实没做什么，你却冲他吼了",
+      "category": "drama",
+      "points": 2
+    },
+    {
+      "id": "dra_3_1",
+      "text": "在派对上公开跟别人调情，只为让伴侣吃醋",
+      "category": "drama",
+      "points": 3
+    },
+    {
+      "id": "dra_3_2",
+      "text": "处在恋爱关系中还留着「备胎」",
+      "category": "drama",
+      "points": 3
+    },
+    {
+      "id": "dra_3_3",
+      "text": "同一个晚上从「我爱你」变成「我们完了」",
+      "category": "drama",
+      "points": 3
+    },
+    {
+      "id": "dra_3_4",
+      "text": "发了一条很冲的消息，随即又删掉",
+      "category": "drama",
+      "points": 3
+    },
+    {
+      "id": "dra_3_5",
+      "text": "发了三分钟以上、满是抱怨的语音",
+      "category": "drama",
+      "points": 3
+    },
+    {
+      "id": "dra_3_6",
+      "text": "因为不高兴就在公共场合发作",
+      "category": "drama",
+      "points": 3
+    },
+    {
+      "id": "dra_4_1",
+      "text": "吵架后用连续几天的冷战当惩罚",
+      "category": "drama",
+      "points": 4
+    },
+    {
+      "id": "dra_4_2",
+      "text": "吵完架后不停打电话发消息，直到对方回你",
+      "category": "drama",
+      "points": 4
+    },
+    {
+      "id": "dra_4_3",
+      "text": "为了博取关注扬言要做出严重的事",
+      "category": "drama",
+      "points": 4
+    },
+    {
+      "id": "dra_4_4",
+      "text": "把争吵的经过刻意歪曲后讲给所有朋友听",
+      "category": "drama",
+      "points": 4
+    },
+    {
+      "id": "dra_4_5",
+      "text": "非常戏剧性地绝交，然后又装作什么都没发生地回头",
+      "category": "drama",
+      "points": 4
+    },
+    {
+      "id": "dra_4_6",
+      "text": "故意挑起争吵，只为测试对方是不是真的爱你",
+      "category": "drama",
+      "points": 4
+    },
+    {
+      "id": "dra_4_7",
+      "text": "用自伤或离开来威胁、操控对方",
+      "category": "drama",
+      "points": 4
+    },
+    {
+      "id": "dra_4_8",
+      "text": "反复拉黑又解除拉黑，只为折腾对方",
+      "category": "drama",
+      "points": 4
+    },
+    {
+      "id": "dra_5_1",
+      "text": "吵架时摔东西，好让对方看到你有多生气",
+      "category": "drama",
+      "points": 5
+    },
+    {
+      "id": "dra_5_2",
+      "text": "吵架时去联系对方的家人或老板",
+      "category": "drama",
+      "points": 5
+    },
+    {
+      "id": "dra_5_3",
+      "text": "为了报复出轨，策划了一场当众羞辱伴侣的戏",
+      "category": "drama",
+      "points": 5
+    },
+    {
+      "id": "dra_5_4",
+      "text": "用揭发秘密来威胁，逼对方照你说的做",
+      "category": "drama",
+      "points": 5
+    },
+    {
+      "id": "dra_5_5",
+      "text": "故意挑拨两个人吵架，只为看戏",
+      "category": "drama",
+      "points": 5
+    },
+    {
+      "id": "col_2_1",
+      "text": "一小时内给同一个人发了 5 条消息，对方一条没回",
+      "category": "collant",
+      "points": 2
+    },
+    {
+      "id": "col_2_2",
+      "text": "反复翻旧聊天记录，好让自己在感情里安心一点",
+      "category": "collant",
+      "points": 2
+    },
+    {
+      "id": "col_2_3",
+      "text": "毫无客观理由地就开始预感要分手",
+      "category": "collant",
+      "points": 2
+    },
+    {
+      "id": "col_2_4",
+      "text": "对方不回消息时，去查他是不是在线",
+      "category": "collant",
+      "points": 2
+    },
+    {
+      "id": "col_2_5",
+      "text": "因为对方没有秒回，就觉得他不爱你了",
+      "category": "collant",
+      "points": 2
+    },
+    {
+      "id": "col_2_6",
+      "text": "总觉得需要不停确认这段关系到底是什么状态",
+      "category": "collant",
+      "points": 2
+    },
+    {
+      "id": "col_3_1",
+      "text": "连发了 10 条消息，对方一条没回",
+      "category": "collant",
+      "points": 3
+    },
+    {
+      "id": "col_3_2",
+      "text": "刚吵完架就立刻要求对方确认还爱不爱你",
+      "category": "collant",
+      "points": 3
+    },
+    {
+      "id": "col_3_3",
+      "text": "把收到的每条消息逐字分析，硬找出负面含义",
+      "category": "collant",
+      "points": 3
+    },
+    {
+      "id": "col_3_4",
+      "text": "嫉妒伴侣的朋友，嫉妒到直接说了出来",
+      "category": "collant",
+      "points": 3
+    },
+    {
+      "id": "col_3_5",
+      "text": "因为对方不回消息，就安排一次「偶遇」",
+      "category": "collant",
+      "points": 3
+    },
+    {
+      "id": "col_3_6",
+      "text": "在收到的每条消息里找分手的前兆",
+      "category": "collant",
+      "points": 3
+    },
+    {
+      "id": "col_3_7",
+      "text": "一天里要人安慰你几十次",
+      "category": "collant",
+      "points": 3
+    },
+    {
+      "id": "col_3_8",
+      "text": "沉默五分钟就发了条追问的消息",
+      "category": "collant",
+      "points": 3
+    },
+    {
+      "id": "col_4_1",
+      "text": "认识不到一个月就说了「我爱你」",
+      "category": "collant",
+      "points": 4
+    },
+    {
+      "id": "col_4_2",
+      "text": "因为对方不回消息，就去联系他的朋友或家人",
+      "category": "collant",
+      "points": 4
+    },
+    {
+      "id": "col_4_3",
+      "text": "刚认识当天就把对方所有社交账号都关注了一遍",
+      "category": "collant",
+      "points": 4
+    },
+    {
+      "id": "col_4_4",
+      "text": "只要伴侣有空，就立刻取消跟朋友的约",
+      "category": "collant",
+      "points": 4
+    },
+    {
+      "id": "col_4_5",
+      "text": "要求成为对方除工作和家人之外唯一的优先项",
+      "category": "collant",
+      "points": 4
+    },
+    {
+      "id": "col_4_6",
+      "text": "因为对方不回消息，就不打招呼直接跑到他家",
+      "category": "collant",
+      "points": 4
+    },
+    {
+      "id": "col_4_7",
+      "text": "注册小号混进对方所在的群",
+      "category": "collant",
+      "points": 4
+    },
+    {
+      "id": "col_4_8",
+      "text": "需要对方一直不停地给你发消息",
+      "category": "collant",
+      "points": 4
+    },
+    {
+      "id": "col_5_1",
+      "text": "认识不到一个月就一起想好了未来孩子的名字",
+      "category": "collant",
+      "points": 5
+    },
+    {
+      "id": "col_5_2",
+      "text": "把自己的心理健康和日常快乐全压在对方身上",
+      "category": "collant",
+      "points": 5
+    },
+    {
+      "id": "col_5_3",
+      "text": "拒绝接受分手，连着好几周还一直联系对方",
+      "category": "collant",
+      "points": 5
+    },
+    {
+      "id": "stk_2_6",
+      "text": "开了通知提醒，暗恋的人一发动态你就知道",
+      "category": "stalker",
+      "points": 2
+    },
+    {
+      "id": "stk_2_7",
+      "text": "去看谁看过你的动态，只为确认某个人有没有看",
+      "category": "stalker",
+      "points": 2
+    },
+    {
+      "id": "stk_3_7",
+      "text": "注册小号去关注把你拉黑的人",
+      "category": "stalker",
+      "points": 3
+    },
+    {
+      "id": "stk_3_8",
+      "text": "对方从没告诉过你，你却把他的作息记得一清二楚",
+      "category": "stalker",
+      "points": 3
+    },
+    {
+      "id": "stk_4_7",
+      "text": "把暗恋对象的主页翻到 2016 年，一边祈祷别手滑点赞",
+      "category": "stalker",
+      "points": 4
+    },
+    {
+      "id": "stk_5_6",
+      "text": "横穿整座城市，只为「碰巧」遇到某个人",
+      "category": "stalker",
+      "points": 5
+    },
+    {
+      "id": "man_2_7",
+      "text": "求人办事前先送上一句恭维",
+      "category": "manipulateur",
+      "points": 2
+    },
+    {
+      "id": "man_2_8",
+      "text": "说「你随便决定」，然后又怪对方做的选择",
+      "category": "manipulateur",
+      "points": 2
+    },
+    {
+      "id": "man_3_9",
+      "text": "装可怜，好不用承认自己的错",
+      "category": "manipulateur",
+      "points": 3
+    },
+    {
+      "id": "man_3_10",
+      "text": "翻出以前帮过对方的旧账，好达到自己的目的",
+      "category": "manipulateur",
+      "points": 3
+    },
+    {
+      "id": "man_4_9",
+      "text": "为了自己的好处挑拨两个朋友反目",
+      "category": "manipulateur",
+      "points": 4
+    },
+    {
+      "id": "man_5_6",
+      "text": "明明是自己的错，却让对方内疚到来向你道歉",
+      "category": "manipulateur",
+      "points": 5
+    },
+    {
+      "id": "nar_2_7",
+      "text": "把别人夸你的话转发到自己动态，好让所有人都看到",
+      "category": "narcisse",
+      "points": 2
+    },
+    {
+      "id": "nar_2_8",
+      "text": "打断别人，只为讲一个「更精彩」的故事",
+      "category": "narcisse",
+      "points": 2
+    },
+    {
+      "id": "nar_3_7",
+      "text": "假装在听，其实只是在等轮到自己说",
+      "category": "narcisse",
+      "points": 3
+    },
+    {
+      "id": "nar_3_8",
+      "text": "纯粹为了拍照好看而选餐厅",
+      "category": "narcisse",
+      "points": 3
+    },
+    {
+      "id": "nar_4_9",
+      "text": "把自己的成绩拿去跟朋友比，只为体会优越感",
+      "category": "narcisse",
+      "points": 4
+    },
+    {
+      "id": "nar_5_4",
+      "text": "把别人的好消息硬扯到自己身上，把气氛毁了",
+      "category": "narcisse",
+      "points": 5
+    },
+    {
+      "id": "dra_2_6",
+      "text": "对一长段消息只回一个句号，以示不爽",
+      "category": "drama",
+      "points": 2
+    },
+    {
+      "id": "dra_2_7",
+      "text": "发一条含糊其辞的动态，就等着有人来问你怎么了",
+      "category": "drama",
+      "points": 2
+    },
+    {
+      "id": "dra_3_7",
+      "text": "吵到一半直接挂电话，只为那份戏剧效果",
+      "category": "drama",
+      "points": 3
+    },
+    {
+      "id": "dra_3_8",
+      "text": "把一点小误会闹成了三天的危机",
+      "category": "drama",
+      "points": 3
+    },
+    {
+      "id": "dra_4_9",
+      "text": "扬言要离开派对，就为了让大家挽留你",
+      "category": "drama",
+      "points": 4
+    },
+    {
+      "id": "dra_5_6",
+      "text": "把本该私下解决的事拿到台面上公开指责别人",
+      "category": "drama",
+      "points": 5
+    },
+    {
+      "id": "col_2_7",
+      "text": "每隔十分钟就去看某人在不在线",
+      "category": "collant",
+      "points": 2
+    },
+    {
+      "id": "col_2_8",
+      "text": "取消自己的安排，就盼着暗恋的人有空",
+      "category": "collant",
+      "points": 2
+    },
+    {
+      "id": "col_3_9",
+      "text": "同一天里问了好几次「我们没事吧？」",
+      "category": "collant",
+      "points": 3
+    },
+    {
+      "id": "col_3_10",
+      "text": "根据「最后上线」的时间来推算对方多久才回你",
+      "category": "collant",
+      "points": 3
+    },
+    {
+      "id": "col_4_9",
+      "text": "不请自来地出现在你知道某人会去的地方",
+      "category": "collant",
+      "points": 4
+    },
+    {
+      "id": "col_5_4",
+      "text": "因为伴侣回消息太慢就当场发作",
+      "category": "collant",
+      "points": 5
+    }
+  ],
+  "ui": {
+    "rules": {
+      "title": "你是不是\n红旗警告？",
+      "tagline": "你的前任们做梦都想让你做这个测试",
+      "modalTitle": "红旗警告",
+      "start": "开始游戏 🚩",
+      "levelLabel": "问题等级",
+      "levelHelper": "只出现所选等级以内的问题",
+      "themeLabel": "主题分布",
+      "themeHelper": "共 {{count}} 道题",
+      "steps": [
+        {
+          "n": "1",
+          "title": "读出问题",
+          "desc": "你做过吗？老实点。"
+        },
+        {
+          "n": "2",
+          "title": "做过就向右滑 →",
+          "desc": "右 = 做过 = 加分。左 = 没有 = 0 分。"
+        },
+        {
+          "n": "3",
+          "title": "↓ 超级 ×2",
+          "desc": "这题简直是为某人量身定做？向下滑：惩罚翻倍，超大红旗 🚩"
+        },
+        {
+          "n": "4",
+          "title": "结果",
+          "desc": "分数会揭晓你在感情里的「毒性」等级。"
+        }
+      ]
+    },
+    "play": {
+      "remaining_one": "还剩 {{count}}",
+      "remaining_other": "还剩 {{count}}",
+      "questionPrefix": "你有没有……",
+      "sipsIfYes_one": "🍻 做过就喝 {{count}} 口",
+      "sipsIfYes_other": "🍻 做过就喝 {{count}} 口",
+      "ptsIfYes": "🚩 +{{count}} 分",
+      "hint": "← 没有 | 做过 →   ·   ↓ 超级 ×2"
+    },
+    "verdicts": [
+      {
+        "pctMax": 15,
+        "title": "绝对绿旗",
+        "quote": "你健康得让人起疑。我们盯着你呢。"
+      },
+      {
+        "pctMax": 30,
+        "title": "勉强能处",
+        "quote": "红旗是有几面，但没有心理咨询解决不了的。"
+      },
+      {
+        "pctMax": 50,
+        "title": "心安理得的灰色地带",
+        "quote": "你的前任们大概建了个专门吐槽你的群。"
+      },
+      {
+        "pctMax": 70,
+        "title": "感情灾难现场",
+        "quote": "你能把一段关系毁掉还毫无察觉。佩服。"
+      },
+      {
+        "pctMax": 85,
+        "title": "公共危害",
+        "quote": "你的前任们做心理咨询应该能抵税。"
+      },
+      {
+        "pctMax": 101,
+        "title": "核弹级红旗",
+        "quote": "应该立法禁止你下载交友软件。"
+      }
+    ],
+    "results": {
+      "title": "🚩 结果",
+      "subtitle": "谁举的红旗最多？",
+      "crowned": "👑 至尊红旗",
+      "specialty": "拿手好戏",
+      "breakdown": "红旗明细",
+      "replay": "再玩一局",
+      "back": "返回",
+      "categoryFlair": {
+        "stalker": "👁️ 福尔摩斯级，但用错了地方。",
+        "manipulateur": "🎭 操控天才。",
+        "narcisse": "🪞 镜子是你最好的朋友。",
+        "drama": "🎬 你的人生就是一部狗血剧。",
+        "collant": "🧷 让人家喘两分钟气吧！"
+      }
+    }
+  }
+}

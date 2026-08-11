@@ -1,8 +1,9 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import Animated, { ZoomIn, ZoomOut } from 'react-native-reanimated';
-import { T } from '../../constants/flipTokens';
+import { offsetShadow, T } from '../../constants/flipTokens';
 import { Avatar } from './Avatar';
+import { KeyboardAvoider } from './KeyboardAvoider';
 
 export interface PopModalProps {
   visible: boolean;
@@ -27,23 +28,25 @@ export function PopModal({
   return (
     <Animated.View entering={ZoomIn} exiting={ZoomOut} style={styles.overlay}>
       <Pressable style={StyleSheet.absoluteFill} />
-      <View style={styles.card} pointerEvents="auto">
-        {name && (
-          <View style={styles.avatarWrapper}>
-            <Avatar name={name} color={color ?? T.tomato} size={80} />
-            {!!badgeEmoji && (
-              <Animated.Text
-                entering={ZoomIn}
-                style={[styles.badge, { color: badgeColor ?? T.tomato }]}
-              >
-                {badgeEmoji}
-              </Animated.Text>
-            )}
-          </View>
-        )}
-        {!!title && <Text style={styles.title}>{title}</Text>}
-        {children}
-      </View>
+      <KeyboardAvoider style={styles.avoider}>
+        <View style={styles.card} pointerEvents="auto">
+          {name && (
+            <View style={styles.avatarWrapper}>
+              <Avatar name={name} color={color ?? T.tomato} size={80} />
+              {!!badgeEmoji && (
+                <Animated.Text
+                  entering={ZoomIn}
+                  style={[styles.badge, { color: badgeColor ?? T.tomato }]}
+                >
+                  {badgeEmoji}
+                </Animated.Text>
+              )}
+            </View>
+          )}
+          {!!title && <Text style={styles.title}>{title}</Text>}
+          {children}
+        </View>
+      </KeyboardAvoider>
     </Animated.View>
   );
 }
@@ -60,6 +63,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(24,22,19,0.55)',
     zIndex: 100,
   },
+  avoider: { alignItems: 'center', justifyContent: 'center' },
   card: {
     backgroundColor: T.paper,
     borderWidth: 2,
@@ -69,11 +73,7 @@ const styles = StyleSheet.create({
     maxWidth: '86%',
     paddingHorizontal: 24,
     paddingVertical: 22,
-    shadowColor: T.ink,
-    shadowOffset: { width: 6, height: 6 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 8,
+    ...offsetShadow(6),
   },
   avatarWrapper: { alignItems: 'center', justifyContent: 'center', position: 'relative' },
   badge: { bottom: -8, fontSize: 24, position: 'absolute', right: -8 },

@@ -5,9 +5,10 @@ import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-nati
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { ConfettiBurst } from '../components';
-import { T } from '../constants/flipTokens';
+import { offsetShadow, T } from '../constants/flipTokens';
 import { POLITICAL_COLORS } from '../games/left-right';
 import { PoliticalResults } from '../games/left-right/types';
+import { useBlockHardwareBack } from '../hooks';
 import { RootStackParamList } from '../types';
 
 type LeftRightResultsRoute = RouteProp<RootStackParamList, 'LeftRightResults'>;
@@ -17,6 +18,8 @@ export function LeftRightResultsScreen() {
   const navigation = useNavigation();
   const { t } = useTranslation();
   const results = route.params?.results as PoliticalResults;
+
+  useBlockHardwareBack();
 
   const getOrientationLabel = (leftPct: number): string => {
     if (leftPct >= 80) return t('leftRight:orientations.veryLeft');
@@ -148,11 +151,7 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     alignSelf: 'flex-start',
     marginBottom: 10,
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
+    ...offsetShadow(3),
     transform: [{ rotate: '-2deg' }],
   },
   stickerText: {
@@ -173,11 +172,7 @@ const styles = StyleSheet.create({
     borderRadius: T.rLg,
     padding: 24,
     alignItems: 'center',
-    shadowColor: T.ink,
-    shadowOffset: { width: 5, height: 5 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 4,
+    ...offsetShadow(5),
   },
   crown: { fontSize: 32, marginBottom: 8 },
   winnerName: { color: T.ink, fontSize: 28, fontWeight: '900', letterSpacing: -1 },
@@ -196,11 +191,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 6,
     marginTop: 12,
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
+    ...offsetShadow(3),
   },
   orientationBadgeText: { color: '#fff', fontSize: 14, fontWeight: '900' },
 
@@ -222,11 +213,7 @@ const styles = StyleSheet.create({
     borderColor: T.ink,
     borderRadius: T.rMd,
     padding: 14,
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
+    ...offsetShadow(3),
   },
   rankBadge: {
     width: 28,
@@ -266,11 +253,7 @@ const styles = StyleSheet.create({
     paddingVertical: 18,
     alignItems: 'center',
     marginTop: 8,
-    shadowColor: T.paper,
-    shadowOffset: { width: 5, height: 5 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 5,
+    ...offsetShadow(5, T.paper),
   },
   primaryBtnText: { color: '#fff', fontSize: 17, fontWeight: '900', letterSpacing: -0.3 },
 
@@ -281,11 +264,7 @@ const styles = StyleSheet.create({
     borderRadius: T.rMd,
     paddingVertical: 16,
     alignItems: 'center',
-    shadowColor: T.ink,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 4,
+    ...offsetShadow(4),
   },
   secondaryBtnText: { color: T.ink, fontSize: 16, fontWeight: '800', letterSpacing: -0.3 },
 });

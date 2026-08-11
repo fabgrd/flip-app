@@ -12,6 +12,7 @@ import {
   PlayerPickerGrid,
   PopModal,
 } from '../components/common';
+import type { RulesStep } from '../components/common';
 import { ChameleonIcon } from '../components/icons';
 import { T } from '../constants/flipTokens';
 import { useCameleon, useCameleonThemeAccess } from '../games/cameleon';
@@ -26,7 +27,6 @@ import { useDrinksMode } from '../hooks';
 import { Player, RootStackParamList } from '../types';
 
 type CameleonRouteProp = RouteProp<RootStackParamList, 'Cameleon'>;
-
 
 export function CameleonScreen() {
   const route = useRoute<CameleonRouteProp>();
@@ -66,7 +66,8 @@ export function CameleonScreen() {
   const maxImpostors = Math.max(1, Math.floor(localPlayers.length / 2));
   const totalImpostors = currentUC + currentMW;
   const canStart = useMemo(
-    () => totalImpostors >= 1 && totalImpostors <= maxImpostors && totalImpostors < localPlayers.length,
+    () =>
+      totalImpostors >= 1 && totalImpostors <= maxImpostors && totalImpostors < localPlayers.length,
     [totalImpostors, maxImpostors, localPlayers.length],
   );
 
@@ -74,7 +75,10 @@ export function CameleonScreen() {
     const safeThemes = selectedThemes.includes('random')
       ? selectedThemes
       : filterAllowed(selectedThemes);
-    const pairsData = t('cameleon:wordPairsByTheme', { returnObjects: true }) as Record<string, Array<{ w: string; c: string }>>;
+    const pairsData = t('cameleon:wordPairsByTheme', { returnObjects: true }) as Record<
+      string,
+      Array<{ w: string; c: string }>
+    >;
     startGame({
       overrideDistribution: { undercovers: currentUC, mrWhites: currentMW },
       themes: safeThemes.length > 0 ? safeThemes : ['random'],
@@ -192,7 +196,10 @@ export function CameleonScreen() {
         title={t('cameleon:ui.title')}
         tagline={t('cameleon:ui.tagline')}
         icon={<ChameleonIcon size={86} />}
-        rulesModal={{ rules: t('cameleon:ui.steps', { returnObjects: true }) as any, title: t('cameleon:ui.modalTitle') }}
+        rulesModal={{
+          rules: t('cameleon:ui.steps', { returnObjects: true }) as RulesStep[],
+          title: t('cameleon:ui.modalTitle'),
+        }}
         players={localPlayers}
         onPlayersChange={setLocalPlayers}
         onExit={() => navigation.goBack()}
@@ -248,10 +255,10 @@ export function CameleonScreen() {
             floating
             tint={T.paper}
             onExit={resetGame}
-            onSettings={() => (navigation as any).navigate('Settings')}
+            onSettings={() => navigation.navigate('Settings')}
             rules={{
               title: t('cameleon:ui.modalTitle'),
-              rules: t('cameleon:ui.steps', { returnObjects: true }) as any,
+              rules: t('cameleon:ui.steps', { returnObjects: true }) as RulesStep[],
               accentColor: T.mint,
             }}
             players={localPlayers}
@@ -261,13 +268,6 @@ export function CameleonScreen() {
             key={currentRevealPlayer.id}
             name={currentRevealPlayer.name}
             color={currentRevealPlayer.color}
-            roleLabel={
-              currentRevealPlayer.role === 'mrWhite'
-                ? t('cameleon:roles.mrWhite')
-                : currentRevealPlayer.role === 'cameleon'
-                  ? t('cameleon:roles.cameleon')
-                  : t('cameleon:roles.civilian')
-            }
             secretWord={currentRevealPlayer.secretWord}
             onNext={revealNext}
             t={t}
@@ -281,10 +281,10 @@ export function CameleonScreen() {
           <GameHeader
             tint={T.paper}
             onExit={resetGame}
-            onSettings={() => (navigation as any).navigate('Settings')}
+            onSettings={() => navigation.navigate('Settings')}
             rules={{
               title: t('cameleon:ui.modalTitle'),
-              rules: t('cameleon:ui.steps', { returnObjects: true }) as any,
+              rules: t('cameleon:ui.steps', { returnObjects: true }) as RulesStep[],
               accentColor: T.mint,
             }}
             players={localPlayers}
@@ -303,7 +303,7 @@ export function CameleonScreen() {
             <Text style={styles.phaseTitle}>
               {displayPhase === 'vote' || displayPhase === 'results'
                 ? t('cameleon:ui.whoIsTitle')
-                : t('cameleon:game.title', 'Le Caméléon')}
+                : t('cameleon:game.title')}
             </Text>
             {(displayPhase === 'vote' || displayPhase === 'results') && (
               <Text style={styles.phaseSubtitle}>
@@ -314,9 +314,7 @@ export function CameleonScreen() {
           <PlayerPickerGrid
             players={orderedPlayers}
             selectedId={
-              displayPhase === 'vote' || displayPhase === 'results'
-                ? selectedForElimination
-                : null
+              displayPhase === 'vote' || displayPhase === 'results' ? selectedForElimination : null
             }
             onSelect={
               displayPhase === 'vote' || displayPhase === 'results'
@@ -332,16 +330,13 @@ export function CameleonScreen() {
               item.isEliminated ? (
                 <View style={cmStyles.eliminatedBadge}>
                   <Text style={cmStyles.eliminatedBadgeText}>
-                    {t('cameleon:badges.eliminated', 'Éliminé')}
+                    {t('cameleon:badges.eliminated')}
                   </Text>
                 </View>
               ) : (
                 <View style={[cmStyles.orderBadge, selected && cmStyles.orderBadgeSelected]}>
                   <Text
-                    style={[
-                      cmStyles.orderBadgeText,
-                      selected && cmStyles.orderBadgeTextSelected,
-                    ]}
+                    style={[cmStyles.orderBadgeText, selected && cmStyles.orderBadgeTextSelected]}
                   >
                     {index + 1}
                   </Text>

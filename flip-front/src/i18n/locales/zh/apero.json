@@ -1,0 +1,106 @@
+{
+    "bridge": {
+        "label": "牌桥 · {{count}} 张牌{{plural}}"
+    },
+    "rules": {
+        "modalTitle": "开胃酒",
+        "title": "开胃酒",
+        "tagline": "猜牌、吹牛、喝酒——牌可不等人。",
+        "chip": "游戏 #6",
+        "cardLabel": "怎么玩",
+        "start": "开始游戏 🍻",
+        "steps": [
+            {
+                "n": "1",
+                "title": "庄家抽一张牌",
+                "desc": "牌保持隐藏。当前玩家来猜这张牌。"
+            },
+            {
+                "n": "2",
+                "title": "第一次机会——大还是小？",
+                "desc": "玩家说一个数字，App 会回答「更大」或「更小」。"
+            },
+            {
+                "n": "3",
+                "title": "第二次机会——最后一搏",
+                "descDrink": "如果又猜错，玩家按猜测值与实际牌的差值喝几口。",
+                "descSober": "如果又猜错，玩家按猜测值与实际牌的差值记分。"
+            },
+            {
+                "n": "4",
+                "titleDrink": "猜中了？庄家喝",
+                "titleSober": "猜中了？庄家记分",
+                "descDrink": "有人猜中，庄家喝 2 口，连胜清零。",
+                "descSober": "有人猜中，庄家记 2 分，连胜清零。"
+            },
+            {
+                "n": "5",
+                "title": "3 轮无人猜中 = 换庄",
+                "desc": "如果 3 轮都没人猜中，庄家把手机传下去。"
+            },
+            {
+                "n": "★",
+                "title": "特殊规则：四张同点",
+                "descDrink": "当同一点数的 4 张牌全部出现时，它们会翻面，庄家再喝 2 口。",
+                "descSober": "当同一点数的 4 张牌全部出现时，它们会翻面，庄家再记 2 分。"
+            }
+        ]
+    },
+    "pickDealer": {
+        "badge": "谁来当庄家？",
+        "title": "选一个人\n 拿着手机",
+        "sub": "庄家负责抽牌，也要承担后果。"
+    },
+    "round": {
+        "guessTitle": "{{name}}，猜猜这张牌",
+        "firstTry": "第一次机会",
+        "hintBadge": "答案更{{hint}} {{arrow}}",
+        "youSaid": "你说的是 {{card}}（{{points}} 分）",
+        "secondTryChip": "比 {{card}} 更{{hint}}",
+        "secondChance": "第二次机会！",
+        "lastTry": "最后一次机会，{{name}}",
+        "found": "猜中了！",
+        "missed": "猜错了！",
+        "dealerResult": "{{name}} {{verb}} {{unit}}",
+        "resetStreak": "庄家连胜清零",
+        "nextCard": "下一张牌 →",
+        "seeSummary": "查看总结 →",
+        "passPile": "传递牌堆 →"
+    },
+    "special": {
+        "badge": "★ 四张同点！",
+        "title": "4 张 {{card}}\n 全部出现！",
+        "sub": "这 4 张牌在牌桥上翻面。",
+        "penaltyTitle": "{{name}} {{verb}} {{unit}}",
+        "penaltySub": "四张同点惩罚",
+        "continue": "继续 →"
+    },
+    "dealerPass": {
+        "badge": "传递牌堆",
+        "title": "{{name}}\n 把庄传下去",
+        "sub": "选择接手牌堆的人。"
+    },
+    "end": {
+        "badge": "游戏结束",
+        "title": "开胃酒\n总结",
+        "cards": "牌数",
+        "found": "猜中",
+        "ranking": "排行榜",
+        "playAgain": "再玩一局",
+        "backToHub": "返回大厅"
+    },
+    "hints": {
+        "higher": "大",
+        "lower": "小"
+    },
+    "cards": {
+        "A": "A",
+        "V": "J",
+        "D": "Q",
+        "R": "K"
+    },
+    "verbs": {
+        "drink": "喝",
+        "take": "记"
+    }
+}

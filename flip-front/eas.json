@@ -8,32 +8,52 @@
       "developmentClient": true,
       "distribution": "internal",
       "channel": "development",
+      "android": {
+        "buildType": "apk"
+      },
       "env": {
         "APP_ENV": "development",
         "SENTRY_DISABLE_AUTO_UPLOAD": "true",
-        "EXPO_PUBLIC_SENTRY_DSN": "https://ed9731e30a3bbdf87c57f674b5e3b0b5@o4511738753384448.ingest.de.sentry.io/4511738830782544"
+        "EXPO_PUBLIC_SENTRY_DSN": "https://ed9731e30a3bbdf87c57f674b5e3b0b5@o4511738753384448.ingest.de.sentry.io/4511738830782544",
+        "EXPO_PUBLIC_RC_API_KEY_IOS": "appl_JBwdoCBndaVCpUdoLSTAMPoCQrw",
+        "EXPO_PUBLIC_RC_API_KEY_ANDROID": "goog_REPLACE_ME"
       }
     },
     "preview": {
       "distribution": "internal",
       "channel": "preview",
+      "android": {
+        "buildType": "apk"
+      },
       "env": {
         "APP_ENV": "preview",
         "SENTRY_DISABLE_AUTO_UPLOAD": "true",
-        "EXPO_PUBLIC_SENTRY_DSN": "https://ed9731e30a3bbdf87c57f674b5e3b0b5@o4511738753384448.ingest.de.sentry.io/4511738830782544"
+        "EXPO_PUBLIC_SENTRY_DSN": "https://ed9731e30a3bbdf87c57f674b5e3b0b5@o4511738753384448.ingest.de.sentry.io/4511738830782544",
+        "EXPO_PUBLIC_RC_API_KEY_IOS": "appl_JBwdoCBndaVCpUdoLSTAMPoCQrw",
+        "EXPO_PUBLIC_RC_API_KEY_ANDROID": "goog_REPLACE_ME"
       }
     },
     "production": {
       "autoIncrement": true,
       "channel": "production",
+      "android": {
+        "buildType": "app-bundle"
+      },
       "env": {
         "APP_ENV": "production",
         "SENTRY_DISABLE_AUTO_UPLOAD": "true",
-        "EXPO_PUBLIC_SENTRY_DSN": "https://ed9731e30a3bbdf87c57f674b5e3b0b5@o4511738753384448.ingest.de.sentry.io/4511738830782544"
+        "EXPO_PUBLIC_SENTRY_DSN": "https://ed9731e30a3bbdf87c57f674b5e3b0b5@o4511738753384448.ingest.de.sentry.io/4511738830782544",
+        "EXPO_PUBLIC_RC_API_KEY_IOS": "appl_JBwdoCBndaVCpUdoLSTAMPoCQrw",
+        "EXPO_PUBLIC_RC_API_KEY_ANDROID": "goog_REPLACE_ME"
       }
     }
   },
   "submit": {
-    "production": {}
+    "production": {
+      "android": {
+        "track": "internal",
+        "releaseStatus": "draft"
+      }
+    }
   }
 }

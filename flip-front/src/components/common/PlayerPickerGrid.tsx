@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { T } from '../../constants/flipTokens';
+import { noShadow, offsetShadow, T } from '../../constants/flipTokens';
 import type { Player } from '../../types';
 import { Avatar } from './Avatar';
 
@@ -44,7 +44,7 @@ export function PlayerPickerGrid<P extends Player = Player>({
 
         const cardStyle = [
           styles.card,
-          { shadowColor, minHeight: minCardHeight },
+          { ...offsetShadow(4, shadowColor), minHeight: minCardHeight },
           selected && [styles.cardSelected, { backgroundColor: selectedColor }],
           disabled && styles.cardDisabled,
         ];
@@ -106,17 +106,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     alignItems: 'center',
     gap: 8,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
     justifyContent: 'center',
   },
   cardSelected: {
     transform: [{ translateX: 4 }, { translateY: 4 }],
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0,
-    elevation: 0,
+    ...noShadow,
   },
   cardDisabled: { opacity: 0.4 },
   name: {

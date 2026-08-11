@@ -4,7 +4,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleProp, StyleSheet, Text, TouchableOpacity, View, ViewStyle } from 'react-native';
 
-import { T } from '../../constants/flipTokens';
+import { offsetShadow, T } from '../../constants/flipTokens';
 import { useDrinksMode } from '../../hooks';
 import { usePaywall } from '../../paywall';
 import { BeerMugIcon } from '../icons/BeerMugIcon';
@@ -16,7 +16,11 @@ interface DrinkModeToggleProps {
   inline?: boolean;
 }
 
-export function DrinkModeToggle({ accentColor = T.mint, style, inline = false }: DrinkModeToggleProps) {
+export function DrinkModeToggle({
+  accentColor = T.mint,
+  style,
+  inline = false,
+}: DrinkModeToggleProps) {
   const { t } = useTranslation();
   const drinks = useDrinksMode();
   const { open: openPaywall } = usePaywall();
@@ -43,7 +47,7 @@ export function DrinkModeToggle({ accentColor = T.mint, style, inline = false }:
     >
       <BeerMugIcon size={28} />
       <View style={s.labelWrap}>
-        <Text style={s.label}>{t('settings:drinks.label', 'Gorgées')}</Text>
+        <Text style={s.label}>{t('settings:drinks.label')}</Text>
         {!drinks.available && (
           <View style={s.proBadge}>
             <Feather name="lock" size={9} color={T.lemon} />
@@ -72,11 +76,7 @@ const s = StyleSheet.create({
     borderRadius: 18,
     paddingHorizontal: 16,
     paddingVertical: 12,
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
+    ...offsetShadow(3),
   },
   inline: {
     flexDirection: 'row',

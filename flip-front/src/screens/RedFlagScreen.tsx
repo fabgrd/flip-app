@@ -2,7 +2,6 @@ import { Feather } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import * as Haptics from 'expo-haptics';
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -15,24 +14,21 @@ import {
   DrinkModeToggle,
   GameCard,
   GameHeader,
-  GameMenuActions,
   GameRulesScreen,
   GameSetupCard,
   GameSetupSection,
-  PlayersModal,
   RedFlagIcon,
-  RulesButton,
   SwipeableCard,
   SwipeableCardStack,
 } from '../components';
-import { T } from '../constants/flipTokens';
+import type { RulesStep } from '../components';
+import { offsetShadow, T } from '../constants/flipTokens';
 import { useEntitlements } from '../entitlements';
 import { useDrinksMode } from '../hooks';
 import type { RFCategoryId, RFLevelKey, RFQuestionConfig } from '../games/red-flag';
 import {
   RF_CATEGORIES,
   RF_CATEGORY_COLORS,
-  RF_CATEGORY_LABELS,
   RF_DEFAULT_CAT_COUNTS,
   RF_LEVEL_COLORS,
   RF_LEVEL_INDEX,
@@ -83,7 +79,10 @@ function getCatById(id: string, cats: typeof redFlagDataFr.categories) {
   return cats.find((c) => c.id === id) ?? { id, name: id, color: T.muted };
 }
 
-function getVerdict(pct: number, verdicts: { pctMax: number; title: string; quote: string; color: string }[]) {
+function getVerdict(
+  pct: number,
+  verdicts: { pctMax: number; title: string; quote: string; color: string }[],
+) {
   return verdicts.find((v) => pct <= v.pctMax) ?? verdicts[verdicts.length - 1];
 }
 
@@ -196,7 +195,7 @@ function RFRules({
   const { isLevelAllowed, requestUnlockFor } = useRedFlagLevelAccess();
   const catTotal = RF_CATEGORIES.reduce((sum, cat) => sum + (catCounts[cat] ?? 0), 0);
   const maxIdx = RF_LEVEL_INDEX[maxLevel];
-  const rfRules = t('redFlag:ui.rules.steps', { returnObjects: true }) as any[];
+  const rfRules = t('redFlag:ui.rules.steps', { returnObjects: true }) as RulesStep[];
 
   return (
     <GameRulesScreen
@@ -231,7 +230,10 @@ function RFRules({
                       style={[
                         rls.levelBtn,
                         isActive &&
-                          allowed && { backgroundColor: RF_LEVEL_COLORS[level], borderColor: T.ink },
+                          allowed && {
+                            backgroundColor: RF_LEVEL_COLORS[level],
+                            borderColor: T.ink,
+                          },
                         isSelected && allowed && rls.levelBtnSelected,
                         !allowed && rls.levelBtnLocked,
                       ]}
@@ -256,7 +258,9 @@ function RFRules({
               </View>
             </GameSetupSection>
             <GameSetupSection label={t('redFlag:ui.rules.themeLabel')}>
-              <Text style={rls.helperText}>{t('redFlag:ui.rules.themeHelper', { count: catTotal })}</Text>
+              <Text style={rls.helperText}>
+                {t('redFlag:ui.rules.themeHelper', { count: catTotal })}
+              </Text>
               {RF_CATEGORIES.map((cat) => (
                 <View key={cat} style={rls.sliderRow}>
                   <View style={rls.sliderHeader}>
@@ -322,11 +326,7 @@ const rls = StyleSheet.create({
     borderColor: T.ink,
     borderRadius: 24,
     padding: 20,
-    shadowColor: T.ink,
-    shadowOffset: { width: 5, height: 5 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 4,
+    ...offsetShadow(5),
   },
   cardLabel: {
     color: T.muted,
@@ -361,11 +361,7 @@ const rls = StyleSheet.create({
     position: 'relative',
   },
   levelBtnSelected: {
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
+    ...offsetShadow(3),
   },
   levelBtnText: { color: T.muted, fontSize: 11, fontWeight: '800', textAlign: 'center' },
   levelBtnTextActive: { color: T.ink },
@@ -440,7 +436,7 @@ function RFPlay({
         onSettings={onSettings}
         rules={{
           title: t('redFlag:ui.rules.modalTitle'),
-          rules: t('redFlag:ui.rules.steps', { returnObjects: true }) as any,
+          rules: t('redFlag:ui.rules.steps', { returnObjects: true }) as RulesStep[],
           accentColor: REDFLAG_BG,
         }}
         players={players}
@@ -545,11 +541,7 @@ const play = StyleSheet.create({
     marginBottom: 12,
     padding: 20,
     alignItems: 'center',
-    shadowColor: T.ink,
-    shadowOffset: { width: 5, height: 5 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 4,
+    ...offsetShadow(5),
   },
   catBadge: {
     borderWidth: 2,
@@ -558,11 +550,7 @@ const play = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 4,
     marginBottom: 10,
-    shadowColor: T.ink,
-    shadowOffset: { width: 2, height: 2 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 2,
+    ...offsetShadow(2),
   },
   catBadgeText: {
     color: '#fff',
@@ -602,7 +590,12 @@ const play = StyleSheet.create({
 
   cardsArea: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   hint: { alignItems: 'center', paddingBottom: 20 },
-  hintText: { color: 'rgba(255,255,255,0.85)', fontSize: 17, fontWeight: '800', letterSpacing: 0.3 },
+  hintText: {
+    color: 'rgba(255,255,255,0.85)',
+    fontSize: 17,
+    fontWeight: '800',
+    letterSpacing: 0.3,
+  },
 });
 
 // ─── RFResult ─────────────────────────────────────────────────────────────────
@@ -625,8 +618,13 @@ function RFResult({
   onExit: () => void;
 }) {
   const { t } = useTranslation();
-  const verdicts = (t('redFlag:ui.verdicts', { returnObjects: true }) as { pctMax: number; title: string; quote: string }[])
-    .map((v, i) => ({ ...v, color: RF_VERDICT_COLORS[i] as string }));
+  const verdicts = (
+    t('redFlag:ui.verdicts', { returnObjects: true }) as {
+      pctMax: number;
+      title: string;
+      quote: string;
+    }[]
+  ).map((v, i) => ({ ...v, color: RF_VERDICT_COLORS[i] as string }));
   const getRankEmoji = (rank: number) => ['👑', '🥈', '🥉'][rank - 1] ?? '🚩';
   const results = players
     .map((p) => {
@@ -679,9 +677,13 @@ function RFResult({
               )}
               <View style={res.playerHeader}>
                 <Text style={res.rankEmoji}>{getRankEmoji(rank)}</Text>
-                <Text style={res.playerName} numberOfLines={1}>{player.name}</Text>
+                <Text style={res.playerName} numberOfLines={1}>
+                  {player.name}
+                </Text>
                 <View style={[res.scoreBadge, { backgroundColor: verdict.color }]}>
-                  <Text style={res.scorePct} numberOfLines={1}>{pct}%</Text>
+                  <Text style={res.scorePct} numberOfLines={1}>
+                    {pct}%
+                  </Text>
                 </View>
               </View>
               <Text style={[res.verdictTitle, { color: verdict.color }]}>{verdict.title}</Text>
@@ -689,9 +691,7 @@ function RFResult({
 
               {topCat && topCategory && topCategory.catPct > 0 && (
                 <View style={[res.specialtyChip, { backgroundColor: topCat.color }]}>
-                  <Text style={res.specialtyLabel}>
-                    {t('redFlag:ui.results.specialty')}
-                  </Text>
+                  <Text style={res.specialtyLabel}>{t('redFlag:ui.results.specialty')}</Text>
                   <Text style={res.specialtyValue}>{topCat.name.toUpperCase()}</Text>
                 </View>
               )}
@@ -707,7 +707,9 @@ function RFResult({
                   return (
                     <View key={catId} style={res.catBlock}>
                       <View style={res.catRow}>
-                        <Text style={res.catName} numberOfLines={1}>{cat.name}</Text>
+                        <Text style={res.catName} numberOfLines={1}>
+                          {cat.name}
+                        </Text>
                         <View style={res.barTrack}>
                           <View
                             style={[
@@ -716,7 +718,9 @@ function RFResult({
                             ]}
                           />
                         </View>
-                        <Text style={res.catPct} numberOfLines={1}>{catPct}%</Text>
+                        <Text style={res.catPct} numberOfLines={1}>
+                          {catPct}%
+                        </Text>
                       </View>
                       {flair ? (
                         <Text style={[res.catFlair, { color: cat.color }]}>{flair}</Text>
@@ -753,11 +757,7 @@ const res = StyleSheet.create({
     borderRadius: 999,
     paddingHorizontal: 14,
     paddingVertical: 6,
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
+    ...offsetShadow(3),
     transform: [{ rotate: '-2deg' }],
   },
   heroBadgeText: {
@@ -778,11 +778,7 @@ const res = StyleSheet.create({
   winnerCard: {
     borderWidth: 3,
     borderColor: T.ink,
-    shadowColor: T.ink,
-    shadowOffset: { width: 6, height: 6 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 6,
+    ...offsetShadow(6),
   },
   crownRibbon: {
     position: 'absolute',
@@ -807,11 +803,7 @@ const res = StyleSheet.create({
     borderColor: T.ink,
     paddingHorizontal: 10,
     paddingVertical: 3,
-    shadowColor: T.ink,
-    shadowOffset: { width: 2, height: 2 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 2,
+    ...offsetShadow(2),
   },
   scorePct: { color: '#fff', fontSize: 15, fontWeight: '900' },
   verdictTitle: { fontSize: 17, fontWeight: '900', letterSpacing: -0.5, marginTop: 2 },

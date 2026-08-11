@@ -14,9 +14,10 @@ import {
   View,
 } from 'react-native';
 import Animated, { FadeIn, FadeOut, ZoomIn, ZoomOut } from 'react-native-reanimated';
-import { T } from '../../constants/flipTokens';
+import { offsetShadow, T } from '../../constants/flipTokens';
 import { supabase } from '../../lib/supabase';
 import { FlatChunkyButton } from './FlatChunkyButton';
+import { KeyboardAvoider } from './KeyboardAvoider';
 
 const LIKES_GOAL = 1000;
 
@@ -73,119 +74,128 @@ export function TikTokRewardButton() {
         <Feather name="chevron-right" size={18} color={T.muted} />
       </TouchableOpacity>
 
-      <Modal visible={visible} transparent animationType="none" onRequestClose={handleClose}>
+      <Modal
+        visible={visible}
+        transparent
+        animationType="none"
+        onRequestClose={handleClose}
+        statusBarTranslucent
+        navigationBarTranslucent
+      >
         <Animated.View
           entering={FadeIn.duration(150)}
           exiting={FadeOut.duration(150)}
           style={styles.overlay}
         >
           <TouchableOpacity style={StyleSheet.absoluteFill} onPress={handleClose} />
-          <Animated.View
-            entering={ZoomIn.duration(200)}
-            exiting={ZoomOut.duration(150)}
-            style={styles.card}
-          >
-            <View style={[styles.cardHeader, { backgroundColor: T.ink }]}>
-              <View style={styles.cardHeaderTitle}>
-                <FontAwesome5 name="tiktok" size={18} color="#fff" />
-                <Text style={styles.cardTitle}>{t('settings:tiktok.title')}</Text>
-              </View>
-              <FlatChunkyButton
-                size="xs"
-                square
-                color={T.paper}
-                textColor={T.ink}
-                metrics={{ height: 30, radius: 9, paddingH: 0, fontSize: 13 }}
-                onPress={handleClose}
-              >
-                <Text style={styles.closeBtnText}>✕</Text>
-              </FlatChunkyButton>
-            </View>
-
-            {submitted ? (
-              <View style={styles.successContent}>
-                <Text style={styles.successEmoji}>🎉</Text>
-                <Text style={styles.successTitle}>{t('settings:tiktok.successTitle')}</Text>
-                <Text style={styles.successDesc}>{t('settings:tiktok.successDesc')}</Text>
+          <KeyboardAvoider style={styles.avoider}>
+            <Animated.View
+              entering={ZoomIn.duration(200)}
+              exiting={ZoomOut.duration(150)}
+              style={styles.card}
+            >
+              <View style={[styles.cardHeader, { backgroundColor: T.ink }]}>
+                <View style={styles.cardHeaderTitle}>
+                  <FontAwesome5 name="tiktok" size={18} color="#fff" />
+                  <Text style={styles.cardTitle}>{t('settings:tiktok.title')}</Text>
+                </View>
                 <FlatChunkyButton
-                  size="sm"
-                  color={T.ink}
-                  textColor="#fff"
-                  style={styles.doneBtn}
+                  size="xs"
+                  square
+                  color={T.paper}
+                  textColor={T.ink}
+                  metrics={{ height: 30, radius: 9, paddingH: 0, fontSize: 13 }}
                   onPress={handleClose}
                 >
-                  {t('settings:tiktok.close')}
+                  <Text style={styles.closeBtnText}>✕</Text>
                 </FlatChunkyButton>
               </View>
-            ) : (
-              <ScrollView
-                contentContainerStyle={styles.formContent}
-                showsVerticalScrollIndicator={false}
-                keyboardShouldPersistTaps="handled"
-              >
-                <View style={styles.rewardBanner}>
-                  <Text style={styles.rewardBannerText}>{t('settings:tiktok.reward')}</Text>
+
+              {submitted ? (
+                <View style={styles.successContent}>
+                  <Text style={styles.successEmoji}>🎉</Text>
+                  <Text style={styles.successTitle}>{t('settings:tiktok.successTitle')}</Text>
+                  <Text style={styles.successDesc}>{t('settings:tiktok.successDesc')}</Text>
+                  <FlatChunkyButton
+                    size="sm"
+                    color={T.ink}
+                    textColor="#fff"
+                    style={styles.doneBtn}
+                    onPress={handleClose}
+                  >
+                    {t('settings:tiktok.close')}
+                  </FlatChunkyButton>
                 </View>
-
-                <Text style={styles.pitch}>{t('settings:tiktok.pitch')}</Text>
-
-                <View style={styles.steps}>
-                  {[1, 2, 3].map((n) => (
-                    <View key={n} style={styles.stepRow}>
-                      <View style={styles.stepBadge}>
-                        <Text style={styles.stepBadgeText}>{n}</Text>
-                      </View>
-                      <Text style={styles.stepText}>
-                        {t(`settings:tiktok.steps.${n}`, { likes: LIKES_GOAL })}
-                      </Text>
-                    </View>
-                  ))}
-                </View>
-
-                <Text style={[styles.sectionLabel, { marginTop: 16 }]}>
-                  {t('settings:tiktok.linkLabel')}
-                </Text>
-                <TextInput
-                  style={styles.textInput}
-                  value={link}
-                  onChangeText={setLink}
-                  placeholder={t('settings:tiktok.linkPlaceholder')}
-                  placeholderTextColor={T.muted}
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  keyboardType="url"
-                  returnKeyType="next"
-                />
-
-                <Text style={[styles.sectionLabel, { marginTop: 14 }]}>
-                  {t('settings:tiktok.handleLabel')}
-                </Text>
-                <TextInput
-                  style={styles.textInput}
-                  value={handle}
-                  onChangeText={setHandle}
-                  placeholder={t('settings:tiktok.handlePlaceholder')}
-                  placeholderTextColor={T.muted}
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  returnKeyType="done"
-                  blurOnSubmit
-                  onSubmitEditing={() => Keyboard.dismiss()}
-                />
-
-                <FlatChunkyButton
-                  size="sm"
-                  color={canSubmit ? T.ink : T.muted}
-                  textColor="#fff"
-                  style={styles.submitBtn}
-                  onPress={handleSubmit}
-                  disabled={!canSubmit || sending}
+              ) : (
+                <ScrollView
+                  contentContainerStyle={styles.formContent}
+                  showsVerticalScrollIndicator={false}
+                  keyboardShouldPersistTaps="handled"
                 >
-                  {sending ? <ActivityIndicator color="#fff" /> : t('settings:tiktok.submit')}
-                </FlatChunkyButton>
-              </ScrollView>
-            )}
-          </Animated.View>
+                  <View style={styles.rewardBanner}>
+                    <Text style={styles.rewardBannerText}>{t('settings:tiktok.reward')}</Text>
+                  </View>
+
+                  <Text style={styles.pitch}>{t('settings:tiktok.pitch')}</Text>
+
+                  <View style={styles.steps}>
+                    {[1, 2, 3].map((n) => (
+                      <View key={n} style={styles.stepRow}>
+                        <View style={styles.stepBadge}>
+                          <Text style={styles.stepBadgeText}>{n}</Text>
+                        </View>
+                        <Text style={styles.stepText}>
+                          {t(`settings:tiktok.steps.${n}`, { likes: LIKES_GOAL })}
+                        </Text>
+                      </View>
+                    ))}
+                  </View>
+
+                  <Text style={[styles.sectionLabel, { marginTop: 16 }]}>
+                    {t('settings:tiktok.linkLabel')}
+                  </Text>
+                  <TextInput
+                    style={styles.textInput}
+                    value={link}
+                    onChangeText={setLink}
+                    placeholder={t('settings:tiktok.linkPlaceholder')}
+                    placeholderTextColor={T.muted}
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    keyboardType="url"
+                    returnKeyType="next"
+                  />
+
+                  <Text style={[styles.sectionLabel, { marginTop: 14 }]}>
+                    {t('settings:tiktok.handleLabel')}
+                  </Text>
+                  <TextInput
+                    style={styles.textInput}
+                    value={handle}
+                    onChangeText={setHandle}
+                    placeholder={t('settings:tiktok.handlePlaceholder')}
+                    placeholderTextColor={T.muted}
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    returnKeyType="done"
+                    blurOnSubmit
+                    onSubmitEditing={() => Keyboard.dismiss()}
+                  />
+
+                  <FlatChunkyButton
+                    size="sm"
+                    color={canSubmit ? T.ink : T.muted}
+                    textColor="#fff"
+                    style={styles.submitBtn}
+                    onPress={handleSubmit}
+                    disabled={!canSubmit || sending}
+                  >
+                    {sending ? <ActivityIndicator color="#fff" /> : t('settings:tiktok.submit')}
+                  </FlatChunkyButton>
+                </ScrollView>
+              )}
+            </Animated.View>
+          </KeyboardAvoider>
         </Animated.View>
       </Modal>
     </>
@@ -214,6 +224,7 @@ const styles = StyleSheet.create({
   triggerLabel: { color: T.ink, fontSize: 16, fontWeight: '900' },
   triggerHint: { color: T.inkSoft, fontSize: 12, lineHeight: 16 },
 
+  avoider: { width: '100%', alignItems: 'center', justifyContent: 'center' },
   overlay: {
     flex: 1,
     backgroundColor: 'rgba(24,22,19,0.6)',
@@ -230,11 +241,7 @@ const styles = StyleSheet.create({
     width: '100%',
     maxHeight: '85%',
     overflow: 'hidden',
-    shadowColor: T.ink,
-    shadowOffset: { width: 6, height: 6 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 8,
+    ...offsetShadow(6),
   },
 
   cardHeader: {

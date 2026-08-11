@@ -1,27 +1,23 @@
 import { Feather } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import * as Haptics from 'expo-haptics';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
-  ChunkyButton,
   DotBackground,
   DrinkModeToggle,
   GameHeader,
-  GameMenuActions,
   GameRulesScreen,
   GameSetupCard,
   GameSetupSection,
-  PlayersModal,
   PureteIcon,
-  RulesButton,
 } from '../components';
-import { T } from '../constants/flipTokens';
+import type { RulesStep } from '../components';
+import { offsetShadow, T } from '../constants/flipTokens';
 import { CardStack } from '../games/purity-test/components';
-import { THEME_COLORS, THEME_LABELS } from '../games/purity-test/constants';
+import { THEME_COLORS } from '../games/purity-test/constants';
 import { usePurityTest } from '../games/purity-test/hooks/usePurityTest';
 import type { LevelKey, Theme } from '../games/purity-test/types';
 import { usePurityLevelAccess } from '../games/purity-test/usePurityLevelAccess';
@@ -84,7 +80,7 @@ function PurityRules({
   const { isLevelAllowed, requestUnlockFor } = usePurityLevelAccess();
   const themeTotal = Object.values(themeCounts).reduce((sum, val) => sum + val, 0);
   const maxIdx = LEVEL_KEYS.indexOf(maxLevel);
-  const purityRules = t('purityTest:ui.steps', { returnObjects: true }) as any[];
+  const purityRules = t('purityTest:ui.steps', { returnObjects: true }) as RulesStep[];
 
   return (
     <GameRulesScreen
@@ -143,7 +139,9 @@ function PurityRules({
               </View>
             </GameSetupSection>
             <GameSetupSection label={t('purityTest:ui.themeLabel')}>
-              <Text style={pr.helperText}>{t('purityTest:ui.themeTotal', { count: themeTotal })}</Text>
+              <Text style={pr.helperText}>
+                {t('purityTest:ui.themeTotal', { count: themeTotal })}
+              </Text>
               {(Object.keys(themeCounts) as Theme[]).map((theme) => (
                 <View key={theme} style={pr.sliderRow}>
                   <View style={pr.sliderHeader}>
@@ -208,11 +206,7 @@ const pr = StyleSheet.create({
     borderColor: T.ink,
     borderRadius: 24,
     padding: 20,
-    shadowColor: T.ink,
-    shadowOffset: { width: 5, height: 5 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 4,
+    ...offsetShadow(5),
   },
   cardLabel: {
     color: T.muted,
@@ -246,11 +240,7 @@ const pr = StyleSheet.create({
     justifyContent: 'center',
   },
   levelBtnSelected: {
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
+    ...offsetShadow(3),
   },
   levelBtnText: { color: T.muted, fontSize: 11, fontWeight: '800', textAlign: 'center' },
   levelBtnTextActive: { color: T.ink },
@@ -363,7 +353,7 @@ export function PurityTestScreen() {
         onSettings={() => navigation.navigate('Settings' as never)}
         rules={{
           title: t('purityTest:ui.rulesBtn'),
-          rules: t('purityTest:ui.steps', { returnObjects: true }) as any,
+          rules: t('purityTest:ui.steps', { returnObjects: true }) as RulesStep[],
           accentColor: T.violet,
         }}
         players={players}
@@ -385,15 +375,17 @@ export function PurityTestScreen() {
       {/* Question card */}
       <View style={styles.questionCard}>
         <View style={[styles.themeBadge, { backgroundColor: themeColor }]}>
-          <Text style={styles.themeBadgeText}>{t(`purityTest:themes.${currentQuestion.theme}`)}</Text>
+          <Text style={styles.themeBadgeText}>
+            {t(`purityTest:themes.${currentQuestion.theme}`)}
+          </Text>
         </View>
         <Text style={styles.questionPrefix}>{t('purityTest:game.questionPrefix')}</Text>
         <Text style={styles.questionText}>{currentQuestion.text}</Text>
         <View style={[styles.pointsBadge, drinksEnabled && styles.drinkBadge]}>
           <Text style={[styles.pointsText, drinksEnabled && styles.drinkText]}>
             {drinksEnabled
-              ? `🍻 ${currentQuestion.points.yes} gorgée${currentQuestion.points.yes > 1 ? 's' : ''} si oui`
-              : `+${currentQuestion.points.yes} pt${currentQuestion.points.yes > 1 ? 's' : ''}`}
+              ? t('purityTest:game.sipsIfYes', { count: currentQuestion.points.yes })
+              : t('purityTest:game.pointsIfYes', { count: currentQuestion.points.yes })}
           </Text>
         </View>
       </View>
@@ -475,11 +467,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     padding: 20,
     alignItems: 'center',
-    shadowColor: T.ink,
-    shadowOffset: { width: 5, height: 5 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 4,
+    ...offsetShadow(5),
   },
   themeBadge: {
     borderWidth: 2,
@@ -488,11 +476,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 4,
     marginBottom: 12,
-    shadowColor: T.ink,
-    shadowOffset: { width: 2, height: 2 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 2,
+    ...offsetShadow(2),
   },
   themeBadgeText: {
     color: '#fff',
@@ -533,5 +517,10 @@ const styles = StyleSheet.create({
   cardsArea: { flex: 1, alignItems: 'center', justifyContent: 'center' },
 
   hint: { alignItems: 'center', paddingBottom: 20 },
-  hintText: { color: 'rgba(255,255,255,0.85)', fontSize: 17, fontWeight: '800', letterSpacing: 0.3 },
+  hintText: {
+    color: 'rgba(255,255,255,0.85)',
+    fontSize: 17,
+    fontWeight: '800',
+    letterSpacing: 0.3,
+  },
 });

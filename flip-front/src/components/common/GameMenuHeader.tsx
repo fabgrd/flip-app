@@ -17,12 +17,13 @@ import {
 } from 'react-native';
 import Animated, { FadeIn, SlideInDown, SlideOutDown } from 'react-native-reanimated';
 
-import { T } from '../../constants/flipTokens';
+import { offsetShadow, T } from '../../constants/flipTokens';
 import { usePlayers } from '../../contexts/PlayersContext';
 import { Player } from '../../types';
 import { Avatar } from './Avatar';
 import { ChunkyButton } from './ChunkyButton';
 import { FlatChunkyButton } from './FlatChunkyButton';
+import { KeyboardAvoider } from './KeyboardAvoider';
 import { RulesButton } from './RulesModal';
 
 export interface GameRule {
@@ -77,90 +78,89 @@ export function PlayersModal({
       animationType="none"
       onRequestClose={onClose}
       statusBarTranslucent
+      navigationBarTranslucent
     >
       <Animated.View entering={FadeIn.duration(180)} style={pm.backdrop}>
         <Pressable style={StyleSheet.absoluteFill} onPress={onClose} />
 
-        <Animated.View
-          entering={SlideInDown.springify().damping(20).stiffness(140)}
-          exiting={SlideOutDown.duration(200)}
-          style={pm.sheet}
-        >
-          {/* Handle */}
-          <View style={pm.handle} />
-
-          {/* Header */}
-          <View style={pm.header}>
-            <Text style={pm.title}>{t('common:labels.players')}</Text>
-            <View style={pm.countBadge}>
-              <Text style={pm.countText}>{players.length}</Text>
-            </View>
-          </View>
-
-          {hint ? <Text style={pm.hint}>{hint}</Text> : null}
-
-          {/* Input */}
-          <View style={pm.inputRow}>
-            <TextInput
-              style={pm.input}
-              placeholder={t('common:labels.playerName')}
-              placeholderTextColor={T.muted}
-              value={name}
-              onChangeText={setName}
-              onSubmitEditing={handleAdd}
-              returnKeyType="done"
-              maxLength={20}
-              autoFocus={false}
-            />
-            <TouchableOpacity
-              style={[pm.addBtn, !name.trim() && pm.addBtnDisabled]}
-              onPress={handleAdd}
-              activeOpacity={0.8}
-              disabled={!name.trim()}
-            >
-              <Text style={pm.addBtnText}>{t('common:buttons.addPlus')}</Text>
-            </TouchableOpacity>
-          </View>
-
-          {/* Players list */}
-          <ScrollView
-            style={pm.list}
-            contentContainerStyle={pm.listContent}
-            showsVerticalScrollIndicator={false}
+        <KeyboardAvoider>
+          <Animated.View
+            entering={SlideInDown.springify().damping(20).stiffness(140)}
+            exiting={SlideOutDown.duration(200)}
+            style={pm.sheet}
           >
-            {players.length === 0 ? (
-              <View style={pm.empty}>
-                <Text style={pm.emptyText}>{t('common:messages.noPlayersAdded')}</Text>
+            {/* Handle */}
+            <View style={pm.handle} />
+
+            {/* Header */}
+            <View style={pm.header}>
+              <Text style={pm.title}>{t('common:labels.players')}</Text>
+              <View style={pm.countBadge}>
+                <Text style={pm.countText}>{players.length}</Text>
               </View>
-            ) : (
-              players.map((p) => (
-                <View key={p.id} style={pm.playerRow}>
-                  <Avatar name={p.name} color={p.color} size={26} />
-                  <Text style={pm.playerName} numberOfLines={1} ellipsizeMode="tail">{p.name}</Text>
-                  <TouchableOpacity
-                    style={pm.removeBtn}
-                    onPress={() => handleRemove(p.id)}
-                    activeOpacity={0.7}
-                    hitSlop={8}
-                  >
-                    <Text style={pm.removeBtnText}>✕</Text>
-                  </TouchableOpacity>
-                </View>
-              ))
-            )}
-          </ScrollView>
+            </View>
 
-          {/* Close */}
-          <ChunkyButton
-            onPress={onClose}
-            color={T.mint}
-            size="md"
-            full
-            style={pm.closeBtnWrap}
-          >
-            {t('common:buttons.allGood')}
-          </ChunkyButton>
-        </Animated.View>
+            {hint ? <Text style={pm.hint}>{hint}</Text> : null}
+
+            {/* Input */}
+            <View style={pm.inputRow}>
+              <TextInput
+                style={pm.input}
+                placeholder={t('common:labels.playerName')}
+                placeholderTextColor={T.muted}
+                value={name}
+                onChangeText={setName}
+                onSubmitEditing={handleAdd}
+                returnKeyType="done"
+                maxLength={20}
+                autoFocus={false}
+              />
+              <TouchableOpacity
+                style={[pm.addBtn, !name.trim() && pm.addBtnDisabled]}
+                onPress={handleAdd}
+                activeOpacity={0.8}
+                disabled={!name.trim()}
+              >
+                <Text style={pm.addBtnText}>{t('common:buttons.addPlus')}</Text>
+              </TouchableOpacity>
+            </View>
+
+            {/* Players list */}
+            <ScrollView
+              style={pm.list}
+              contentContainerStyle={pm.listContent}
+              showsVerticalScrollIndicator={false}
+            >
+              {players.length === 0 ? (
+                <View style={pm.empty}>
+                  <Text style={pm.emptyText}>{t('common:messages.noPlayersAdded')}</Text>
+                </View>
+              ) : (
+                players.map((p) => (
+                  <View key={p.id} style={pm.playerRow}>
+                    <Avatar name={p.name} color={p.color} size={26} />
+                    <Text style={pm.playerName} numberOfLines={1} ellipsizeMode="tail">
+                      {p.name}
+                    </Text>
+                    <TouchableOpacity
+                      style={pm.removeBtn}
+                      onPress={() => handleRemove(p.id)}
+                      activeOpacity={0.7}
+                      hitSlop={8}
+                    >
+                      <Text style={pm.removeBtnText}>✕</Text>
+                    </TouchableOpacity>
+                  </View>
+                ))
+              )}
+            </ScrollView>
+
+            {/* Close */}
+            <ChunkyButton onPress={onClose} color={T.mint} size="md" full style={pm.closeBtnWrap}>
+              {t('common:buttons.allGood')}
+            </ChunkyButton>
+          </Animated.View>
+        </KeyboardAvoider>
       </Animated.View>
     </Modal>
   );
@@ -183,11 +183,7 @@ const pm = StyleSheet.create({
     paddingBottom: 32,
     paddingTop: 12,
     height: '60%',
-    shadowColor: T.ink,
-    shadowOffset: { width: 0, height: -4 },
-    shadowOpacity: 0.12,
-    shadowRadius: 0,
-    elevation: 12,
+    ...offsetShadow([0, -4], T.ink, 0.12),
   },
   handle: {
     alignSelf: 'center',
@@ -246,11 +242,7 @@ const pm = StyleSheet.create({
     borderRadius: T.rMd,
     padding: 6,
     marginBottom: 14,
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
+    ...offsetShadow(3),
   },
   input: {
     flex: 1,
@@ -295,11 +287,7 @@ const pm = StyleSheet.create({
     paddingLeft: 6,
     paddingRight: 10,
     paddingVertical: 5,
-    shadowColor: T.ink,
-    shadowOffset: { width: 2, height: 2 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 2,
+    ...offsetShadow(2),
   },
   playerName: {
     color: T.ink,

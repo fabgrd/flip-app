@@ -1,0 +1,67 @@
+{
+  "title": "设置",
+  "language": {
+    "title": "语言",
+    "subtitle": "选择你偏好的语言",
+    "options": {
+      "fr": "Français",
+      "en": "English",
+      "es": "Español",
+      "pt": "Português",
+      "zh": "中文"
+    }
+  },
+  "about": {
+    "title": "关于",
+    "version": "版本 {{version}}",
+    "description": "FL!P —— 终极酒局游戏，让你的派对嗨到爆！"
+  },
+  "suggest": {
+    "label": "推荐一个问题",
+    "hint": "对某个游戏有好点子或好句子？",
+    "title": "推荐一个问题",
+    "gameLabel": "哪个游戏？",
+    "allGames": "所有游戏",
+    "questionLabel": "你的问题 / 句子",
+    "placeholder": "例如「你有没有站在水槽前把饭吃完过？」",
+    "submit": "提交我的建议",
+    "successTitle": "谢谢！",
+    "successDesc": "我们会认真看你的建议。最棒的问题会被加进游戏里 🤞",
+    "close": "关闭",
+    "errorTitle": "哎呀",
+    "errorDesc": "建议发送失败。请检查网络后再试一次。"
+  },
+  "drinks": {
+    "title": "喝酒模式",
+    "label": "发口数",
+    "description": "在各个游戏中开启「喝几口」的惩罚，把 Fl!p 变成真正的酒局游戏。",
+    "lockedHint": "解锁 Premium 才能开启喝酒模式"
+  },
+  "premium": {
+    "title": "订阅",
+    "activeLabel": "Fl!p VIP 已开通",
+    "activeHint": "所有功能已解锁"
+  },
+  "tiktok": {
+    "title": "赢取 1 年 VIP",
+    "label": "拍个 TikTok，赢 1 年 VIP",
+    "hint": "发一条 Fl!p 视频，点赞过 1000 就有奖 🎁",
+    "reward": "🎁 免费 1 年 Fl!p VIP",
+    "pitch": "拍一条关于 Fl!p 的 TikTok。点赞超过 1000，我们就送你一年 VIP。就这么简单。",
+    "steps": {
+      "1": "发布一条原创的 Fl!p TikTok 视频",
+      "2": "获得超过 {{likes}} 个赞",
+      "3": "把视频链接贴到这里"
+    },
+    "linkLabel": "你的 TikTok 链接",
+    "linkPlaceholder": "https://www.tiktok.com/@you/video/...",
+    "handleLabel": "你的 @ 或邮箱",
+    "handlePlaceholder": "@你的账号 或联系邮箱",
+    "submit": "领取奖励",
+    "successTitle": "收到！",
+    "successDesc": "我们会审核你的视频，并联系你开通 VIP 年卡。谢谢你帮 Fl!p 成长 💛",
+    "close": "关闭",
+    "errorTitle": "哎呀",
+    "errorDesc": "请求发送失败。请检查网络后再试一次。"
+  }
+}

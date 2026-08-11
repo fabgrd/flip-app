@@ -1,0 +1,7 @@
+{
+  "errors": {
+    "playerNameRequired": "请输入玩家名字。",
+    "playerNameAlreadyExists": "这个玩家名字已经存在。",
+    "playerLimitReached": "最多只能添加 {{maxPlayers}} 位玩家。"
+  }
+}

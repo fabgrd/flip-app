@@ -1,0 +1,60 @@
+{
+  "default": {
+    "title": "升级 Fl!p VIP",
+    "pitch": "全部解锁 · 随时可取消",
+    "benefits": [
+      {
+        "icon": "games",
+        "title": "解锁全部游戏",
+        "sub": "变色龙、纯洁度、疑心病 + 后续新游戏"
+      },
+      {
+        "icon": "drink",
+        "title": "解锁喝酒模式",
+        "sub": "把任何游戏都变成酒局"
+      },
+      {
+        "icon": "difficulty",
+        "title": "问题难度分级",
+        "sub": "温和、辛辣、硬核……强度由你掌控"
+      },
+      {
+        "icon": "themes",
+        "title": "解锁专属主题",
+        "sub": "堕落、火辣、禁忌、派对、重口味……"
+      },
+      {
+        "icon": "questions",
+        "title": "5000+ 道问题",
+        "sub": "每周更新专属新内容"
+      }
+    ]
+  },
+  "plans": {
+    "annual": "年付",
+    "monthly": "月付",
+    "weekly": "周付",
+    "perWeek": "{{price}}/周",
+    "label": "选择你的方案",
+    "discount": "−70%"
+  },
+  "cta": {
+    "trial": "免费试用",
+    "start": "开始",
+    "trialBadge": "7 天免费",
+    "subtextWeekly": "免费 7 天，之后 {{price}}/周",
+    "subtextMonthly": "按月续订，随时可取消",
+    "subtextYearly": "按年续订，随时可取消"
+  },
+  "footer": {
+    "secure": "通过 App Store 安全支付",
+    "restore": "恢复购买",
+    "terms": "条款",
+    "privacy": "隐私",
+    "redeem": "我有兑换码"
+  },
+  "success": {
+    "title": "VIP 订阅已开通！",
+    "subtitle": "现在所有内容都对你开放，好好享受 🎉"
+  }
+}

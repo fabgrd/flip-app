@@ -30,7 +30,7 @@ import {
   StickerBadge,
 } from '../components';
 import { getPlayerBgColor, getPlayerTextColor } from '../constants';
-import { T } from '../constants/flipTokens';
+import { noShadow, offsetShadow, T } from '../constants/flipTokens';
 import { MedusaPair, MedusaRoundHistory, MedusaStep } from '../games/medusa';
 import { useDrinksMode } from '../hooks';
 import { Player, RootStackParamList } from '../types';
@@ -152,7 +152,8 @@ function MDReady({
 
           <Text style={cal.name}>{t('medusa:ready.title')}</Text>
           <Text style={cal.sub}>
-            {t('medusa:ready.instruction')}{'\n'}
+            {t('medusa:ready.instruction')}
+            {'\n'}
             <Text style={cal.subAccent}>{t('medusa:ready.say')}</Text>
           </Text>
         </View>
@@ -202,10 +203,7 @@ const cal = StyleSheet.create({
     borderColor: T.paper,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowOffset: { width: 8, height: 8 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 8,
+    ...offsetShadow(8),
   },
   avatarText: { fontSize: 56, fontWeight: '900' },
   name: {
@@ -417,7 +415,9 @@ function MDReport({
       {/* Pairs list */}
       {pairs.length > 0 && (
         <View style={rep.pairsSection}>
-          <Text style={rep.pairsLabel}>{t('medusa:report.pairsLabel', { count: pairs.length })}</Text>
+          <Text style={rep.pairsLabel}>
+            {t('medusa:report.pairsLabel', { count: pairs.length })}
+          </Text>
           {pairs.map((pair, i) => (
             <View key={i} style={rep.pairRow}>
               <View style={[rep.pairDot, { backgroundColor: pBg(pair.a) }]} />
@@ -488,15 +488,11 @@ const rep = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10,
-    shadowColor: T.ink,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 4,
+    ...offsetShadow(4),
   },
   playerBtnSel: {
     backgroundColor: T.cobalt,
-    shadowOffset: { width: 0, height: 0 },
+    ...noShadow,
     transform: [{ translateX: 2 }, { translateY: 2 }],
   },
   playerAvatar: {
@@ -628,7 +624,9 @@ function MDResults({
                   {players[pair.b].name}
                 </Text>
                 <Text style={res.pairPenalty}>
-                  {t('medusa:roundResult.penaltyEach', { unit: drinkUnitLower(1, drinksEnabled).toUpperCase() })}
+                  {t('medusa:roundResult.penaltyEach', {
+                    unit: drinkUnitLower(1, drinksEnabled).toUpperCase(),
+                  })}
                 </Text>
               </View>
               <InitialAvatar index={pair.b} size={40} radius={12} />
@@ -711,15 +709,9 @@ function MDEnd({
 }) {
   const { t } = useTranslation();
   const { enabled: drinksEnabled } = useDrinksMode();
-  const totalContacts = useMemo(
-    () => history.reduce((s, r) => s + r.pairs.length, 0),
-    [history],
-  );
+  const totalContacts = useMemo(() => history.reduce((s, r) => s + r.pairs.length, 0), [history]);
   const ranked = useMemo(
-    () =>
-      players
-        .map((p, i) => ({ p, idx: i, pen: penalties[i] }))
-        .sort((a, b) => b.pen - a.pen),
+    () => players.map((p, i) => ({ p, idx: i, pen: penalties[i] })).sort((a, b) => b.pen - a.pen),
     [players, penalties],
   );
 
@@ -763,7 +755,11 @@ function MDEnd({
               <View style={{ flex: 1 }}>
                 <Text style={[en.rankName, { color: isTop ? '#fff' : T.ink }]}>{p.name}</Text>
                 <Text style={[en.rankSub, { color: isTop ? 'rgba(255,255,255,0.7)' : T.muted }]}>
-                  {isSafe ? t('medusa:end.intouchable') : isTop ? t('medusa:end.laMeduse') : drinkUnit(pen, drinksEnabled)}
+                  {isSafe
+                    ? t('medusa:end.intouchable')
+                    : isTop
+                      ? t('medusa:end.laMeduse')
+                      : drinkUnit(pen, drinksEnabled)}
                 </Text>
               </View>
               <Text style={[en.rankScore, { color: isTop ? T.lemon : isSafe ? T.mint : T.tomato }]}>
@@ -844,11 +840,7 @@ const en = StyleSheet.create({
     borderColor: T.ink,
     borderRadius: 18,
     padding: 12,
-    shadowColor: T.ink,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 4,
+    ...offsetShadow(4),
   },
   rankNum: {
     width: 28,
@@ -872,11 +864,7 @@ const en = StyleSheet.create({
     borderColor: T.ink,
     borderRadius: 14,
     padding: 10,
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
+    ...offsetShadow(3),
   },
   historyBadge: {
     borderWidth: 1.5,

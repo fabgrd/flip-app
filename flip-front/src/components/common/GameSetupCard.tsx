@@ -1,7 +1,7 @@
 import React, { Children, Fragment } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { T } from '../../constants/flipTokens';
+import { offsetShadow, T } from '../../constants/flipTokens';
 
 interface GameSetupCardProps {
   accentColor?: string;
@@ -48,11 +48,7 @@ const s = StyleSheet.create({
     borderWidth: 2,
     borderColor: T.ink,
     borderRadius: 20,
-    shadowColor: T.ink,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 4,
+    ...offsetShadow(4),
     overflow: 'hidden',
   },
   header: {

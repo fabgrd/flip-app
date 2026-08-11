@@ -1,0 +1,82 @@
+{
+  "rules": {
+    "title": "美杜莎",
+    "tagline": "抬头……别对上眼神",
+    "modalTitle": "美杜莎",
+    "start": "开始游戏 🐍",
+    "steps": [
+      {
+        "n": "1",
+        "title": "所有人低头",
+        "desc": "当前玩家喊「低头！」，大家闭眼低头。"
+      },
+      {
+        "n": "2",
+        "title": "3… 2… 1… 美杜莎！",
+        "desc": "听到信号，所有人抬头盯着另一位玩家。"
+      },
+      {
+        "n": "3",
+        "title": "对上眼神 = 受罚",
+        "descDrink": "如果两个人对上了眼神：各喝 1 口。",
+        "descSober": "如果两个人对上了眼神：各记 1 分。"
+      },
+      {
+        "n": "4",
+        "title": "没对上 = 安全",
+        "desc": "如果没人盯着你，你就活下来了。下一位，轮到你。"
+      }
+    ]
+  },
+  "ready": {
+    "round": "第 {{num}} / {{total}} 轮",
+    "title": "大家\n准备好了吗？",
+    "instruction": "把手机放在中间，然后喊：",
+    "say": "「低头！」",
+    "startBtn": "出发 →"
+  },
+  "countdown": {
+    "prepare": "准备好……",
+    "medusa": "美杜莎！",
+    "liftEyes": "抬头！"
+  },
+  "report": {
+    "chip": "美杜莎 · 结算",
+    "title": "谁\n对上眼神了？",
+    "sub": "点选对视的两位玩家。",
+    "selectHint": "点选和 {{name}} 对上眼神的玩家",
+    "pairsLabel": "对视次数 · {{count}}",
+    "confirmBtn_one": "确认 · {{count}} 对",
+    "confirmBtn_other": "确认 · {{count}} 对",
+    "noOneBtn": "没有人对上眼神"
+  },
+  "roundResult": {
+    "contact": "对上了！",
+    "allSafe": "全员安全",
+    "caught": "被抓到了！",
+    "niceTry": "干得漂亮！",
+    "contacts_one": "本轮 {{count}} 次对视",
+    "contacts_other": "本轮 {{count}} 次对视",
+    "noContact": "无人对视。厉害。",
+    "safeLabel": "本轮安全",
+    "penaltyEach": "各 {{unit}}",
+    "seeEnd": "查看最终总结",
+    "nextRound": "下一轮 →"
+  },
+  "end": {
+    "badge": "游戏结束",
+    "title": "对视\n总结",
+    "toursLabel": "已玩轮数",
+    "eyeContactsLabel": "对视次数",
+    "ranking": "排行榜",
+    "recap": "各轮回顾",
+    "intouchable": "无人可及",
+    "laMeduse": "美杜莎本莎",
+    "leads": "领先",
+    "noContact": "· 无对视",
+    "pairs_one": "· {{count}} 对",
+    "pairs_other": "· {{count}} 对",
+    "playAgain": "再玩一局",
+    "backToHub": "返回大厅"
+  }
+}

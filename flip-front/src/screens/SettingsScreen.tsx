@@ -3,18 +3,31 @@ import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { BeerMugIcon, ChunkyButton, CrownIcon, DotBackground, SuggestButton, TikTokRewardButton, ToggleSwitch } from '../components';
-import { T } from '../constants/flipTokens';
+import {
+  BeerMugIcon,
+  ChunkyButton,
+  CrownIcon,
+  DotBackground,
+  SuggestButton,
+  TikTokRewardButton,
+  ToggleSwitch,
+} from '../components';
+import { offsetShadow, T } from '../constants/flipTokens';
 import { useEntitlements } from '../entitlements';
 import { useDrinksMode } from '../hooks';
 import { usePaywall } from '../paywall';
 
+// Endonyms: each language is listed in its own language, so these are deliberately
+// not translated — a French speaker looking for Portuguese must find "Português".
+/* eslint-disable no-restricted-syntax */
 const LANGUAGES = [
   { code: 'fr', name: 'Français', flag: '🇫🇷' },
   { code: 'en', name: 'English', flag: '🇬🇧' },
   { code: 'es', name: 'Español', flag: '🇪🇸' },
   { code: 'pt', name: 'Português', flag: '🇵🇹' },
+  { code: 'zh', name: '中文', flag: '🇨🇳' },
 ];
+/* eslint-enable no-restricted-syntax */
 
 export function SettingsScreen() {
   const navigation = useNavigation();
@@ -47,13 +60,7 @@ export function SettingsScreen() {
     <SafeAreaView style={styles.container}>
       <DotBackground opacity={0.06} />
       <View style={styles.header}>
-        <ChunkyButton
-          size="sm"
-          square
-          color={T.paper}
-          textColor={T.ink}
-          onPress={handleBackPress}
-        >
+        <ChunkyButton size="sm" square color={T.paper} textColor={T.ink} onPress={handleBackPress}>
           <Feather name="arrow-left" size={18} color={T.ink} />
         </ChunkyButton>
         <View style={styles.headerTitleWrap}>
@@ -237,11 +244,7 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     paddingHorizontal: 16,
     paddingVertical: 12,
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
+    ...offsetShadow(3),
   },
 
   toggleRow: {
@@ -275,11 +278,7 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     paddingHorizontal: 14,
     paddingVertical: 12,
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
+    ...offsetShadow(3),
   },
   premiumCardLocked: {
     flexDirection: 'row',
@@ -291,11 +290,7 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     paddingHorizontal: 14,
     paddingVertical: 12,
-    shadowColor: T.ink,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
+    ...offsetShadow(3),
   },
   languageRow: {
     flexDirection: 'row',

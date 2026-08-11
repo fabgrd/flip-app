@@ -11,7 +11,11 @@
       "title": "🎉 Test terminé !",
       "subtitle": "Tous les joueurs ont répondu aux {{total}} questions",
       "viewResults": "Voir les résultats"
-    }
+    },
+    "sipsIfYes_one": "🍻 {{count}} gorgée si oui",
+    "sipsIfYes_other": "🍻 {{count}} gorgées si oui",
+    "pointsIfYes_one": "+{{count}} pt",
+    "pointsIfYes_other": "+{{count}} pts"
   },
   "results": {
     "title": "🏆 Résultats du tests",
@@ -39,7 +43,8 @@
       "diabolical": "Diabolique",
       "hellspawn": "Antéchrist",
       "beyondEvil": "Satan"
-    }
+    },
+    "badge": "😈 RÉSULTATS"
   },
   "themes": {
     "sex": "Sexualité",

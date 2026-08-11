@@ -10,7 +10,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { ChunkyButton, DotBackground, FlatChunkyButton, PlayersModal } from '../components';
 import { GAMES } from '../config';
-import { T } from '../constants/flipTokens';
+import { offsetShadow, T } from '../constants/flipTokens';
 import { navigateToGame } from '../constants/games';
 import { usePlayers } from '../contexts/PlayersContext';
 import { gameRegistry } from '../games/gameRegistry';
@@ -51,13 +51,13 @@ export function GameSelectScreen() {
   const playersModalHint = pendingGame
     ? players.length < pendingGame.minPlayers
       ? t('games:selection.minPlayersHint', {
-        min: pendingGame.minPlayers,
-        label: pendingGamePlayersLabel,
-      })
+          min: pendingGame.minPlayers,
+          label: pendingGamePlayersLabel,
+        })
       : t('games:selection.maxPlayersHint', {
-        max: pendingGame.maxPlayers,
-        label: pendingGamePlayersLabel,
-      })
+          max: pendingGame.maxPlayers,
+          label: pendingGamePlayersLabel,
+        })
     : undefined;
 
   return (
@@ -68,7 +68,9 @@ export function GameSelectScreen() {
           <Feather name="arrow-left" size={18} color={T.ink} />
         </ChunkyButton>
         <View style={{ flex: 1, flexShrink: 1 }}>
-          <Text style={styles.headerTitle} numberOfLines={1}>{t('games:selection.title')}</Text>
+          <Text style={styles.headerTitle} numberOfLines={1}>
+            {t('games:selection.title')}
+          </Text>
           <Text style={styles.headerSub}>
             {t('games:selection.subtitle', { count: players.length })}
           </Text>
@@ -160,7 +162,7 @@ export function GameSelectScreen() {
       <PlayersModal
         visible={playersModalVisible}
         onClose={handlePlayersModalClose}
-        onPlayersChange={() => { }}
+        onPlayersChange={() => {}}
         hint={playersModalHint}
       />
     </SafeAreaView>
@@ -197,11 +199,7 @@ const styles = StyleSheet.create({
     borderColor: T.ink,
     borderRadius: T.rLg,
     overflow: 'hidden',
-    shadowColor: T.ink,
-    shadowOffset: { width: 5, height: 5 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 4,
+    ...offsetShadow(5),
     minHeight: 120,
     position: 'relative',
   },
@@ -264,11 +262,7 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     paddingHorizontal: 10,
     paddingVertical: 4,
-    shadowColor: T.ink,
-    shadowOffset: { width: 2, height: 2 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
+    ...offsetShadow(2),
     transform: [{ rotate: '6deg' }],
   },
   favBadgeText: { color: '#fff', fontSize: 11, fontWeight: '900' },

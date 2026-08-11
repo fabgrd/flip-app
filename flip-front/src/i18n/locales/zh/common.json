@@ -1,0 +1,60 @@
+{
+  "new": "新",
+  "buttons": {
+    "back": "返回",
+    "continue": "继续",
+    "start": "开始",
+    "finish": "结束",
+    "cancel": "取消",
+    "save": "保存",
+    "delete": "删除",
+    "edit": "编辑",
+    "add": "添加",
+    "addPlus": "添加 +",
+    "close": "关闭",
+    "allGood": "搞定！",
+    "confirm": "确认",
+    "gotIt": "好的，明白了！",
+    "playAgain": "再玩一局",
+    "settings": "设置",
+    "howToPlay": "怎么玩"
+  },
+  "labels": {
+    "players": "玩家",
+    "player": "玩家",
+    "addPlayer": "添加玩家",
+    "playerName": "玩家名字",
+    "question": "问题",
+    "result": "结果",
+    "results": "结果",
+    "score": "得分",
+    "loading": "加载中…",
+    "error": "错误",
+    "readyToPlay": "准备开玩",
+    "rounds": "回合",
+    "setup": "设置",
+    "themes": "主题"
+  },
+  "emptyPlayers": {
+    "title": "今晚还差几位主角",
+    "sub": "谁敢上场？"
+  },
+  "messages": {
+    "success": "成功！",
+    "error": "出错了",
+    "noData": "暂无数据",
+    "remainingPlayers": " 位玩家剩余",
+    "selectGame": "选择一个游戏",
+    "noPlayersAdded": "还没有添加玩家",
+    "addAtLeastOnePlayerToStart": "至少添加 1 位玩家才能开始"
+  },
+  "actions": {
+    "playAgain": "再玩一局",
+    "backToHome": "返回首页"
+  },
+  "errors": {
+    "playerNameRequired": "请输入玩家名字。",
+    "playerLimitReached": "最多只能添加 {{maxPlayers}} 位玩家。",
+    "playerNameAlreadyExists": "这个名字已存在，或者已达到人数上限。"
+  }
+}

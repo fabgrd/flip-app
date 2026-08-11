@@ -24,7 +24,7 @@ import {
   StickerBadge,
   TheBombIcon,
 } from '../components';
-import { T } from '../constants/flipTokens';
+import { offsetShadow, T } from '../constants/flipTokens';
 import { useTheBomb } from '../games/the-bomb';
 import { useDrinksMode } from '../hooks';
 import { Player, RootStackParamList } from '../types';
@@ -495,11 +495,7 @@ const lv = StyleSheet.create({
     borderColor: T.ink,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: T.ink,
-    shadowOffset: { width: 5, height: 6 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 6,
+    ...offsetShadow([5, 6]),
   },
   passBtnText: { color: '#fff', fontSize: 30, fontWeight: '800', letterSpacing: -0.5 },
 });
@@ -829,11 +825,7 @@ const ex = StyleSheet.create({
     borderRadius: 16,
     paddingVertical: 12,
     paddingHorizontal: 16,
-    shadowColor: T.bombAccent,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 3,
+    ...offsetShadow(3, T.bombAccent),
   },
   drinkEmoji: { fontSize: 22 },
   drinkText: { flex: 1, color: T.ink, fontSize: 15, letterSpacing: -0.2 },
@@ -927,9 +919,9 @@ export function TheBombScreen() {
     restart,
   } = useTheBomb(route.params.players as Player[], categories);
 
-  const goBack = () => (navigation as any).goBack();
-  const goHome = () => (navigation as any).navigate('Home');
-  const goSettings = () => (navigation as any).navigate('Settings');
+  const goBack = () => navigation.goBack();
+  const goHome = () => navigation.navigate('Home');
+  const goSettings = () => navigation.navigate('Settings');
 
   if (step === 'rules') {
     return (
